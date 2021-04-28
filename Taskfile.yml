@@ -25,10 +25,9 @@ tasks:
       - ./scripts/builder.sh ./scripts/unittests.sh
   
   publish:
-    desc: pubish wheel package
+    desc: pubish wheel package (will require username and password)
     cmds:
-      - python3 -m pip install --user --upgrade twine
-      - python3 -m twine upload --repository testpypi dist/*
+      - ./scripts/builder.sh python3 -m twine upload --repository pypi dist/*
 
   wheel:
     desc: Builds python wheel package

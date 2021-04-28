@@ -7,29 +7,24 @@ import os
 from setuptools import setup, find_packages
 
 REPO_URL = 'https://github.com/jitsuin-inc/archivist-python/'
-NAME = "archivist-python"
+NAME = "jitsuin-archivist"
 
 with open('README.md') as FF:
     DESC = FF.read()
-
-with open('LICENSE') as FF:
-    LICENSE = FF.read()
 
 with open('requirements.txt') as FF:
     requirements=[f"{line.strip()}" for line in FF]
 
 setup(
     name=NAME,
-    version="0.1.0alpha1",
+    version="0.1.0alpha2",
     author="Jitsuin Inc.",
     author_email="support@jitsuin.com",
     description="Jitsuin Archivist Client",
     long_description=DESC,
     long_description_content_type="text/markdown",
-    url=REPO_URL + NAME + '/',
+    url=REPO_URL,
     packages=find_packages(exclude=( "examples", "unittests", )),
-    license=LICENSE,
-    download_url=REPO_URL + NAME + '/dist/',
     platforms=['any'],
     classifiers=[
         'Development Status :: 3 - Alpha', #pre-delivery
