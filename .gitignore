@@ -6,4 +6,4 @@ dist/
 *,cover
 *.xml
 htmlcov/
-pylint.d/
+.pylint.d/
