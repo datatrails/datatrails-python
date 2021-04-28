@@ -6,6 +6,7 @@ import json
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
+from archivist import confirm
 from archivist.constants import (
     ROOT,
     ASSETS_LABEL,
@@ -228,6 +229,11 @@ class TestEvents(TestCase):
 
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
+        self.confirm_MAX_TIME = confirm.MAX_TIME
+        confirm.MAX_TIME = 2
+
+    def tearDown(self):
+        confirm.MAX_TIME = self.confirm_MAX_TIME
 
     @mock.patch('requests.post')
     def test_events_create(self, mock_post):
@@ -307,10 +313,9 @@ class TestEvents(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch('archivist.events.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
-    def test_events_create_with_confirmation(self, mock_post, mock_get, mock_sleep):
+    def test_events_create_with_confirmation(self, mock_post, mock_get):
         '''
         Test event creation
         '''
@@ -319,24 +324,17 @@ class TestEvents(TestCase):
 
         event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
         self.assertEqual(
-            mock_sleep.call_args_list,
-            [],
-            msg="Incorrect call to sleep",
-        )
-        self.assertEqual(
             event,
             RESPONSE,
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch('archivist.events.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
     def test_events_create_with_confirmation_no_confirmed_status(
             self,
             mock_post,
             mock_get,
-            mock_sleep,
     ):
         '''
         Test asset confirmation
@@ -347,20 +345,12 @@ class TestEvents(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
 
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [],
-            msg="Incorrect call to sleep",
-        )
-
-    @mock.patch('archivist.events.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
     def test_events_create_with_confirmation_pending_status(
             self,
             mock_post,
             mock_get,
-            mock_sleep,
     ):
         '''
         Test asset confirmation
@@ -376,20 +366,13 @@ class TestEvents(TestCase):
             RESPONSE,
             msg="CREATE method called incorrectly",
         )
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0)],
-            msg="Incorrect call to sleep",
-        )
 
-    @mock.patch('archivist.events.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
     def test_events_create_with_confirmation_failed_status(
             self,
             mock_post,
             mock_get,
-            mock_sleep,
     ):
         '''
         Test asset confirmation
@@ -402,20 +385,12 @@ class TestEvents(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
 
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0)],
-            msg="Incorrect call to sleep",
-        )
-
-    @mock.patch('archivist.events.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
     def test_events_create_with_confirmation_always_pending_status(
             self,
             mock_post,
             mock_get,
-            mock_sleep,
     ):
         '''
         Test asset confirmation
@@ -426,16 +401,13 @@ class TestEvents(TestCase):
             MockResponse(200, **RESPONSE_PENDING),
             MockResponse(200, **RESPONSE_PENDING),
             MockResponse(200, **RESPONSE_PENDING),
+            MockResponse(200, **RESPONSE_PENDING),
+            MockResponse(200, **RESPONSE_PENDING),
+            MockResponse(200, **RESPONSE_PENDING),
         ]
         self.arch.events.timeout = 5
         with self.assertRaises(ArchivistUnconfirmedError):
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
-
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0), mock.call(1.25), mock.call(1.5625), mock.call(1.953125)],
-            msg="Incorrect call to sleep",
-        )
 
     @mock.patch('requests.get')
     def test_events_read(self, mock_get):
@@ -653,6 +625,60 @@ class TestEvents(TestCase):
             ),
             msg="GET method called incorrectly",
         )
+
+    @mock.patch('requests.get')
+    def test_events_wait_for_confirmed(self, mock_get):
+        '''
+        Test event counting
+        '''
+        ## last call to get looks for FAILED assets
+        status = ('PENDING', 'PENDING', 'FAILED')
+        mock_get.side_effect =[
+            MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 2},
+                assets=[
+                    RESPONSE_PENDING,
+                ],
+            ),
+            MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 0},
+                assets=[],
+            ),
+            MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 0},
+                assets=[],
+            ),
+        ]
+
+        self.arch.events.wait_for_confirmed()
+        for i, a in enumerate(mock_get.call_args_list):
+            self.assertEqual(
+                tuple(a),
+                (
+                    (
+                        (
+                            f"url/{ROOT}/{ASSETS_SUBPATH}"
+                            f"/{ASSETS_WILDCARD}"
+                            f"/{EVENTS_LABEL}"
+                            "?page_size=1"
+                            f"&confirmation_status={status[i]}"
+                        ),
+                    ),
+                    {
+                        'headers': {
+                            'content-type': 'application/json',
+                            'authorization': "Bearer authauthauth",
+                            HEADERS_REQUEST_TOTAL_COUNT: 'true',
+                        },
+                        'verify': True,
+                        'cert': None,
+                    },
+                ),
+                msg="GET method called incorrectly",
+            )
 
     @mock.patch('requests.get')
     def test_events_list(self, mock_get):

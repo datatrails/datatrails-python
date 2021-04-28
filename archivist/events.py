@@ -2,19 +2,14 @@
 """
 
 from copy import deepcopy
-from time import sleep
 
 from .constants import (
     SEP,
     ASSETS_SUBPATH,
     ASSETS_WILDCARD,
-    CONFIRMATION_STATUS,
-    CONFIRMATION_FAILED,
-    CONFIRMATION_CONFIRMED,
     EVENTS_LABEL,
 )
-from .errors import ArchivistUnconfirmedError
-from .logger import LOGGER
+from .confirm import wait_for_confirmation, wait_for_confirmed
 
 DEFAULT_PAGE_SIZE=500
 
@@ -22,9 +17,6 @@ DEFAULT_PAGE_SIZE=500
 class _EventsClient:
     """docstring
     """
-
-    backoff = 1.0
-    timeout = 1200
 
     def __init__(self, archivist):
         """docstring
@@ -53,40 +45,7 @@ class _EventsClient:
         if not confirm:
             return event
 
-        return self.wait_for_confirmation(event['identity'])
-
-    def wait_for_confirmation(self, identity):
-        """docstring
-
-        identity: full event identity
-        """
-        backoff = self.backoff
-        timeout = self.timeout
-
-        LOGGER.debug("event_id %s", identity)
-        while timeout > 0:
-            timeout -= backoff
-            event = self.read(identity)
-
-            if CONFIRMATION_STATUS not in event:
-                raise ArchivistUnconfirmedError(
-                    f"cannot confirm {identity} as confirmation_status is not present"
-                )
-
-            if event[CONFIRMATION_STATUS] == CONFIRMATION_FAILED:
-                raise ArchivistUnconfirmedError(
-                    f"confirmation for {identity} FAILED - this is unusable"
-                )
-
-            if event[CONFIRMATION_STATUS] != CONFIRMATION_CONFIRMED:
-                sleep(backoff)
-                backoff += backoff * 0.25
-            else:
-                return event
-
-        raise ArchivistUnconfirmedError(
-            f"confirmation for {identity} timed out after {self.timeout} seconds"
-        )
+        return wait_for_confirmation(self, event['identity'])
 
     def read(self, identity):
         """docstring
@@ -115,6 +74,11 @@ class _EventsClient:
             SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
             query=self.__query(props, attrs, asset_attrs)
         )
+
+    def wait_for_confirmed(self, *, asset_id=ASSETS_WILDCARD, props=None, attrs=None):
+        """docstring
+        """
+        return wait_for_confirmed(self, asset_id=asset_id, props=props, attrs=attrs)
 
     def list(
         self,

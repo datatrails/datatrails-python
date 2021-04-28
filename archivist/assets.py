@@ -4,18 +4,12 @@
 """
 
 from copy import deepcopy
-from time import sleep
 
 from .constants import (
     ASSETS_SUBPATH,
     ASSETS_LABEL,
-    CONFIRMATION_CONFIRMED,
-    CONFIRMATION_FAILED,
-    CONFIRMATION_STATUS,
-    CONFIRMATION_PENDING,
 )
-from .errors import ArchivistUnconfirmedError
-from .logger import LOGGER
+from .confirm import wait_for_confirmation, wait_for_confirmed
 
 DEFAULT_PAGE_SIZE=500
 
@@ -23,9 +17,6 @@ DEFAULT_PAGE_SIZE=500
 class _AssetsClient:
     """docstring
     """
-    backoff = 1.0
-    timeout = 1200
-
     def __init__(self, archivist):
         """docstring
         """
@@ -55,37 +46,7 @@ class _AssetsClient:
         if not confirm:
             return asset
 
-        return self.wait_for_confirmation(asset['identity'])
-
-    def wait_for_confirmation(self, identity):
-        """docstring
-        """
-        backoff = self.backoff
-        timeout = self.timeout
-
-        while timeout > 0:
-            timeout -= backoff
-            asset = self.read(identity)
-
-            if CONFIRMATION_STATUS not in asset:
-                raise ArchivistUnconfirmedError(
-                    f"cannot confirm {identity} as confirmation_status is not present"
-                )
-
-            if asset[CONFIRMATION_STATUS] == CONFIRMATION_FAILED:
-                raise ArchivistUnconfirmedError(
-                    f"confirmation for {identity} FAILED - this is unusable"
-                )
-
-            if asset[CONFIRMATION_STATUS] != CONFIRMATION_CONFIRMED:
-                sleep(backoff)
-                backoff += backoff * 0.25
-            else:
-                return asset
-
-        raise ArchivistUnconfirmedError(
-            f"confirmation for {identity} timed out after {self.timeout} seconds"
-        )
+        return wait_for_confirmation(self, asset['identity'])
 
     def read(self, identity):
         """docstring
@@ -113,33 +74,7 @@ class _AssetsClient:
     def wait_for_confirmed(self, *, props=None, attrs=None):
         """docstring
         """
-        backoff = self.backoff
-        timeout = self.timeout
-
-        newprops = deepcopy(props) if props else {}
-        newprops[CONFIRMATION_STATUS] = CONFIRMATION_PENDING
-
-        while timeout > 0:
-            timeout -= backoff
-            LOGGER.debug("Count unconfirmed assets %s, %s", newprops, attrs)
-            count = self.count(props=newprops, attrs=attrs)
-
-            if count == 0:
-                # did any fail
-                newprops = deepcopy(props) if props else {}
-                newprops[CONFIRMATION_STATUS] = CONFIRMATION_FAILED
-                count = self.count(props=newprops, attrs=attrs)
-                if count > 0:
-                    raise ArchivistUnconfirmedError(f"There are {count} FAILED assets")
-
-                return
-
-            sleep(backoff)
-            backoff += backoff * 0.25
-
-        raise ArchivistUnconfirmedError(
-            f"{count} pending assets still present after {self.timeout} seconds"
-        )
+        return wait_for_confirmed(self, props=props, attrs=attrs)
 
     def list(self, *, page_size=DEFAULT_PAGE_SIZE, props=None, attrs=None):
         """docstring

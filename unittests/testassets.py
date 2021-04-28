@@ -8,6 +8,7 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.assets import DEFAULT_PAGE_SIZE
+from archivist import confirm
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
@@ -123,6 +124,11 @@ class TestAssets(TestCase):
 
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
+        self.confirm_MAX_TIME = confirm.MAX_TIME
+        confirm.MAX_TIME = 2
+
+    def tearDown(self):
+        confirm.MAX_TIME = self.confirm_MAX_TIME
 
     @mock.patch('requests.post')
     def test_assets_create(self, mock_post):
@@ -169,36 +175,27 @@ class TestAssets(TestCase):
             msg="Incorrect name property",
         )
 
-    @mock.patch('archivist.assets.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
-    def test_assets_create_with_confirmation(self, mock_post, mock_get, mock_sleep):
+    def test_assets_create_with_confirmation(self, mock_post, mock_get):
         '''
         Test asset creation
         '''
         mock_post.return_value = MockResponse(200, **RESPONSE)
         mock_get.return_value = MockResponse(200, **RESPONSE)
-
         asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [],
-            msg="Incorrect call to sleep",
-        )
         self.assertEqual(
             asset,
             RESPONSE,
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch('archivist.assets.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
     def test_assets_create_with_confirmation_no_confirmed_status(
             self,
             mock_post,
             mock_get,
-            mock_sleep,
     ):
         '''
         Test asset confirmation
@@ -209,20 +206,12 @@ class TestAssets(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
 
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [],
-            msg="Incorrect call to sleep",
-        )
-
-    @mock.patch('archivist.assets.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
     def test_assets_create_with_confirmation_pending_status(
             self,
             mock_post,
             mock_get,
-            mock_sleep,
     ):
         '''
         Test asset confirmation
@@ -238,20 +227,13 @@ class TestAssets(TestCase):
             RESPONSE,
             msg="CREATE method called incorrectly",
         )
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0)],
-            msg="Incorrect call to sleep",
-        )
 
-    @mock.patch('archivist.assets.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
     def test_assets_create_with_confirmation_failed_status(
             self,
             mock_post,
             mock_get,
-            mock_sleep,
     ):
         '''
         Test asset confirmation
@@ -264,20 +246,12 @@ class TestAssets(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
 
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0)],
-            msg="Incorrect call to sleep",
-        )
-
-    @mock.patch('archivist.assets.sleep')
     @mock.patch('requests.get')
     @mock.patch('requests.post')
     def test_assets_create_with_confirmation_always_pending_status(
             self,
             mock_post,
             mock_get,
-            mock_sleep,
     ):
         '''
         Test asset confirmation
@@ -288,16 +262,12 @@ class TestAssets(TestCase):
             MockResponse(200, **RESPONSE_PENDING),
             MockResponse(200, **RESPONSE_PENDING),
             MockResponse(200, **RESPONSE_PENDING),
+            MockResponse(200, **RESPONSE_PENDING),
+            MockResponse(200, **RESPONSE_PENDING),
+            MockResponse(200, **RESPONSE_PENDING),
         ]
-        self.arch.assets.timeout = 5
         with self.assertRaises(ArchivistUnconfirmedError):
             asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
-
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0), mock.call(1.25), mock.call(1.5625), mock.call(1.953125)],
-            msg="Incorrect call to sleep",
-        )
 
     @mock.patch('requests.get')
     def test_assets_read_with_out_primary_image(self, mock_get):
@@ -440,9 +410,8 @@ class TestAssets(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch('archivist.assets.sleep')
     @mock.patch('requests.get')
-    def test_assets_wait_for_confirmed(self, mock_get, mock_sleep):
+    def test_assets_wait_for_confirmed(self, mock_get):
         '''
         Test asset counting
         '''
@@ -493,20 +462,34 @@ class TestAssets(TestCase):
                 msg="GET method called incorrectly",
             )
 
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0)],
-            msg="Incorrect call to sleep",
-        )
-
-    @mock.patch('archivist.assets.sleep')
     @mock.patch('requests.get')
-    def test_assets_wait_for_confirmed_timeout(self, mock_get, mock_sleep):
+    def test_assets_wait_for_confirmed_timeout(self, mock_get):
         '''
         Test asset counting
         '''
         ## last call to get looks for FAILED assets
         mock_get.side_effect =[
+            MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 2},
+                assets=[
+                    RESPONSE_PENDING,
+                ],
+            ),
+            MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 2},
+                assets=[
+                    RESPONSE_PENDING,
+                ],
+            ),
+            MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 2},
+                assets=[
+                    RESPONSE_PENDING,
+                ],
+            ),
             MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 2},
@@ -534,15 +517,8 @@ class TestAssets(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             self.arch.assets.wait_for_confirmed()
 
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0), mock.call(1.25), mock.call(1.5625)],
-            msg="Incorrect call to sleep",
-        )
-
-    @mock.patch('archivist.assets.sleep')
     @mock.patch('requests.get')
-    def test_assets_wait_for_confirmed_failed(self, mock_get, mock_sleep):
+    def test_assets_wait_for_confirmed_failed(self, mock_get):
         '''
         Test asset counting
         '''
@@ -571,12 +547,6 @@ class TestAssets(TestCase):
 
         with self.assertRaises(ArchivistUnconfirmedError):
             self.arch.assets.wait_for_confirmed()
-
-        self.assertEqual(
-            mock_sleep.call_args_list,
-            [mock.call(1.0), ],
-            msg="Incorrect call to sleep",
-        )
 
     @mock.patch('requests.get')
     def test_assets_list(self, mock_get):
