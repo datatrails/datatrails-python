@@ -1,0 +1,15 @@
+FROM python:3.6-buster
+
+COPY requirements.txt requirements-dev.txt /tmp/
+
+RUN pip3 install -r /tmp/requirements-dev.txt \
+  && rm -f /tmp/requirements-dev.txt \
+  && rm -f /tmp/requirements.txt
+
+ENV USER=builder
+ENV HOME=/home/${USER}
+ENV PATH=${HOME}/.local/bin:${PATH}
+RUN mkdir -p ${HOME}
+WORKDIR ${HOME}
+
+

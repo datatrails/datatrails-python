@@ -1,0 +1,7 @@
+backoff==1.10.0
+certifi==2020.12.5
+flatten-dict==0.3.0
+iso8601==0.1.13
+requests==2.22.0
+requests-toolbelt==0.9.1
+rfc3339==6.2
