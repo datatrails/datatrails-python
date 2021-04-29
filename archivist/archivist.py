@@ -264,14 +264,16 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             )
         )
 
-    def get_by_signature(self, path, field, *, query=None, headers=None):
-        """Reads an entity indirectly by suearching for its signature
+    def get_by_signature(self, path, field, query, *, headers=None):
+        """Reads an entity indirectly by searching for its signature
 
         It is expected that the query parameters will result in only a single entity
         being returned.
 
         path: e.g. v2/assets
-        query: query dictionary e.g. {"confirmation_status": "CONFIRMED", }
+        query: query dictionary e.g. {"attributes": {
+                                         "arc_display_name": "waste container no. 1", },
+                                     }
         """
 
         paging = "page_size=2"

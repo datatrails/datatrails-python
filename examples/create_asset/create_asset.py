@@ -29,7 +29,7 @@ def create_asset(arch):
     """Create an asset using Archivist Connection.
 
     Args:
-        aconn: archivist connection.
+        arch: archivist connection.
 
     Returns:
         newasset: a new asset created.

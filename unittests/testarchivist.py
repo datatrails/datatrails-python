@@ -843,12 +843,12 @@ class TestArchivistSignature(TestArchivistMethods):
                 },
             ],
         )
-        entity = self.arch.get_by_signature("path/path", "things")
+        entity = self.arch.get_by_signature("path/path", "things", {"field1": "value1"})
         for a in mock_get.call_args_list:
             self.assertEqual(
                 tuple(a),
                 (
-                    (f"url/{ROOT}/path/path?page_size=2", ),
+                    (f"url/{ROOT}/path/path?page_size=2&field1=value1", ),
                     {
                         'headers': {
                             'content-type': 'application/json',
@@ -871,7 +871,7 @@ class TestArchivistSignature(TestArchivistMethods):
             things=[],
         )
         with self.assertRaises(ArchivistNotFoundError):
-            entity = self.arch.get_by_signature("path/path", "things")
+            entity = self.arch.get_by_signature("path/path", "things", {"field1": "value1"})
 
     @mock.patch('requests.get')
     def test_get_by_signature_duplicate(self, mock_get):
@@ -890,7 +890,7 @@ class TestArchivistSignature(TestArchivistMethods):
             ],
         )
         with self.assertRaises(ArchivistDuplicateError):
-            entity = self.arch.get_by_signature("path/path", "things")
+            entity = self.arch.get_by_signature("path/path", "things", {"field1": "value1"})
 
     @mock.patch('requests.get')
     def test_get_by_signature_with_bad_field(self, mock_get):
@@ -906,4 +906,4 @@ class TestArchivistSignature(TestArchivistMethods):
             ],
         )
         with self.assertRaises(ArchivistBadFieldError):
-            entity = self.arch.get_by_signature("path/path", "badthings")
+            entity = self.arch.get_by_signature("path/path", "badthings", {"field1": "value1"})
