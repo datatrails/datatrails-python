@@ -1,0 +1,38 @@
+version: '3'
+
+tasks:
+
+  builder:
+    desc: Build a docker environment with the right dependencies and utilities
+    cmds:
+      - docker build --no-cache -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+
+  check:
+    desc: Check the style, bug and quality of the code
+    cmds:
+      - ./scripts/builder.sh pycodestyle --format=pylint archivist unittests examples
+      - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc archivist unittests examples
+
+  clean:
+    desc: Clean git repo
+    cmds:
+      - find -name '*,cover' -type f -delete
+      - git clean -fdX
+
+  unittests:
+    desc: Run unittests
+    cmds:
+      - ./scripts/builder.sh ./scripts/unittests.sh
+  
+  publish:
+    desc: pubish wheel package (will require username and password)
+    cmds:
+      - ./scripts/builder.sh python3 -m twine upload --repository pypi dist/*
+
+  wheel:
+    desc: Builds python wheel package
+    cmds:
+      - rm -rf *egg-info
+      - rm -rf build 
+      - rm -f dist/*
+      - python3 setup.py bdist_wheel
