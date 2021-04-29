@@ -17,7 +17,7 @@ with open('requirements.txt') as FF:
 
 setup(
     name=NAME,
-    version="0.1.0alpha2",
+    version="0.1.0alpha3",
     author="Jitsuin Inc.",
     author_email="support@jitsuin.com",
     description="Jitsuin Archivist Client",
