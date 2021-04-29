@@ -1,0 +1,10 @@
+-r requirements.txt
+
+# code quality
+autopep8==1.5.5
+coverage==5.4
+pycodestyle==2.6.0
+pylint==2.6.0
+
+# uploading to pypi
+twine==3.4.1
