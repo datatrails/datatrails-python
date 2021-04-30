@@ -36,3 +36,8 @@ tasks:
       - rm -rf build 
       - rm -f dist/*
       - python3 setup.py bdist_wheel
+  
+  format:
+    desc: Format code using black
+    cmds: 
+      - ./scripts/builder.sh black archivist examples unittests
