@@ -63,8 +63,14 @@ def __identity(response):
         req = response.request
         body = getattr(req, "body", None)
         if body:
-            body = json.loads(body)
-            identity = body.get("identity", "unknown")
+            # when uploading a file the body attribute is a
+            # MultiPartEncoder
+            try:
+                body = json.loads(body)
+            except TypeError:
+                pass
+            else:
+                identity = body.get('identity', "unknown")
 
     return identity
 
