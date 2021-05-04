@@ -11,21 +11,18 @@ from .constants import (
 )
 from .confirm import wait_for_confirmation, wait_for_confirmed
 
-DEFAULT_PAGE_SIZE=500
+DEFAULT_PAGE_SIZE = 500
 
 
 class _EventsClient:
-    """docstring
-    """
+    """docstring"""
 
     def __init__(self, archivist):
-        """docstring
-        """
+        """docstring"""
         self._archivist = archivist
 
     def create(self, asset_id, props, attrs, *, asset_attrs=None, confirm=False):
-        """docstring
-        """
+        """docstring"""
         return self.create_from_data(
             asset_id,
             self.__query(props, attrs, asset_attrs),
@@ -38,46 +35,48 @@ class _EventsClient:
         read request from data stream
         suitable for reading data from json.load,yaml.load from a file
         """
-        event = Event(**self._archivist.post(
-            SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
-            data,
-        ))
+        event = Event(
+            **self._archivist.post(
+                SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
+                data,
+            )
+        )
         if not confirm:
             return event
 
-        return wait_for_confirmation(self, event['identity'])
+        return wait_for_confirmation(self, event["identity"])
 
     def read(self, identity):
-        """docstring
-        """
-        return Event(**self._archivist.get(
-            ASSETS_SUBPATH,
-            identity,
-        ))
+        """docstring"""
+        return Event(
+            **self._archivist.get(
+                ASSETS_SUBPATH,
+                identity,
+            )
+        )
 
     @staticmethod
     def __query(props, attrs, asset_attrs):
-        """docstring
-        """
+        """docstring"""
         query = deepcopy(props) if props else {}
         if attrs:
-            query['event_attributes'] = attrs
+            query["event_attributes"] = attrs
         if asset_attrs:
-            query['asset_attributes'] = asset_attrs
+            query["asset_attributes"] = asset_attrs
 
         return query
 
-    def count(self, *, asset_id=ASSETS_WILDCARD, props=None, attrs=None, asset_attrs=None):
-        """docstring
-        """
+    def count(
+        self, *, asset_id=ASSETS_WILDCARD, props=None, attrs=None, asset_attrs=None
+    ):
+        """docstring"""
         return self._archivist.count(
             SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
-            query=self.__query(props, attrs, asset_attrs)
+            query=self.__query(props, attrs, asset_attrs),
         )
 
     def wait_for_confirmed(self, *, asset_id=ASSETS_WILDCARD, props=None, attrs=None):
-        """docstring
-        """
+        """docstring"""
         return wait_for_confirmed(self, asset_id=asset_id, props=props, attrs=attrs)
 
     def list(
@@ -89,14 +88,14 @@ class _EventsClient:
         attrs=None,
         asset_attrs=None,
     ):
-        """docstring
-        """
+        """docstring"""
         return (
-            Event(**a) for a in self._archivist.list(
+            Event(**a)
+            for a in self._archivist.list(
                 SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
                 EVENTS_LABEL,
                 page_size=page_size,
-                query=self.__query(props, attrs, asset_attrs)
+                query=self.__query(props, attrs, asset_attrs),
             )
         )
 
@@ -108,32 +107,31 @@ class _EventsClient:
         attrs=None,
         asset_attrs=None,
     ):
-        """docstring
-        """
-        return Event(**self._archivist.get_by_signature(
-            SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
-            EVENTS_LABEL,
-            query=self.__query(props, attrs, asset_attrs)
-        ))
+        """docstring"""
+        return Event(
+            **self._archivist.get_by_signature(
+                SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
+                EVENTS_LABEL,
+                query=self.__query(props, attrs, asset_attrs),
+            )
+        )
 
 
 class Event(dict):
-    """docstring
-    """
+    """docstring"""
 
     @property
     def when(self):
-        """docstring
-        """
+        """docstring"""
         try:
-            when = self['timestamp_declared']
+            when = self["timestamp_declared"]
         except KeyError:
             pass
         else:
             return when
 
         try:
-            when = self['timestamp_accepted']
+            when = self["timestamp_accepted"]
         except KeyError:
             pass
         else:
@@ -143,18 +141,17 @@ class Event(dict):
 
     @property
     def who(self):
-        """docstring
-        """
+        """docstring"""
 
         try:
-            who = self['principal_declared']['display_name']
+            who = self["principal_declared"]["display_name"]
         except (KeyError, TypeError):
             pass
         else:
             return who
 
         try:
-            who = self['principal_accepted']['display_name']
+            who = self["principal_accepted"]["display_name"]
         except (KeyError, TypeError):
             pass
         else:

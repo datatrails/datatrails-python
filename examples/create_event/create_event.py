@@ -53,8 +53,8 @@ def create_event(arch, asset):
         "principal_declared": {
             "issuer": "idp.synsation.io/1234",
             "subject": "phil.b",
-            "email": "phil.b@synsation.io"
-        }
+            "email": "phil.b@synsation.io",
+        },
     }
     attrs = {
         # Required Details of the RecordEvidence request
@@ -63,10 +63,10 @@ def create_event(arch, asset):
         "arc_evidence": "DVA Conformance Report attached",
         # Example Client can add any additional information in further attributes,
         # including free text or attachments
-        "conformance_report": "blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273"
+        "conformance_report": "blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273",
     }
 
-    return arch.events.create(asset['identity'], props=props, attrs=attrs)
+    return arch.events.create(asset["identity"], props=props, attrs=attrs)
 
 
 def create_asset(arch):
@@ -82,19 +82,25 @@ def create_asset(arch):
         "arc_display_name": "display_name",  # Asset's display name in the user interface
         "arc_description": "display_description",  # Asset's description in the user interface
         "arc_display_type": "desplay_type",  # Arc_display_type is a free text field
-                                             # allowing the creator of
-                                             # an asset to specify the asset
-                                             # type or class. Be careful when setting this:
-                                             # assets are grouped by type and
-                                             # sharing policies can be
-                                             # configured to share assets based on
-                                             # their arc_display_type.
-                                             # So a mistake here can result in asset data being
-                                             # under- or over-shared.
+        # allowing the creator of
+        # an asset to specify the asset
+        # type or class. Be careful when setting this:
+        # assets are grouped by type and
+        # sharing policies can be
+        # configured to share assets based on
+        # their arc_display_type.
+        # So a mistake here can result in asset data being
+        # under- or over-shared.
         "some_custom_attribute": "value"  # You can add any custom value as long as
-                                          # it does not start with arc_
+        # it does not start with arc_
     }
-    behaviours = ["Attachments", "Firmware", "LocationUpdate", "Maintenance", "RecordEvidence"]
+    behaviours = [
+        "Attachments",
+        "Firmware",
+        "LocationUpdate",
+        "Maintenance",
+        "RecordEvidence",
+    ]
 
     # The first argument is the behaviours of the asset
     # The second argument is the attributes of the asset
@@ -109,14 +115,14 @@ def create_asset(arch):
 
 
 def main():
-    """ Main function of create event.
+    """Main function of create event.
 
     Parse in user input of url and auth token and use them to
     create an example archivist connection and create an asset.
     The main function then uses the asset to create an event for
     the asset and fetch the event.
     """
-    with open(".auth_token", mode='r') as tokenfile:
+    with open(".auth_token", mode="r") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist
@@ -129,7 +135,7 @@ def main():
     # Create a new event
     new_event = create_event(arch, new_asset)
     # Fetch the event
-    unused_event = arch.events.read(new_event['identity'])
+    unused_event = arch.events.read(new_event["identity"])
 
 
 if __name__ == "__main__":

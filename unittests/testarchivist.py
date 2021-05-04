@@ -1,6 +1,6 @@
-'''
+"""
 Test archivist
-'''
+"""
 
 from io import BytesIO
 from unittest import TestCase, mock
@@ -24,13 +24,14 @@ from .mock_response import MockResponse
 
 
 class TestArchivist(TestCase):
-    '''
+    """
     Test Archivist class
-    '''
+    """
+
     def test_archivist(self):
-        '''
+        """
         Test default archivist creation
-        '''
+        """
         arch = Archivist("url", auth="authauthauth")
         self.assertEqual(
             arch.url,
@@ -40,8 +41,8 @@ class TestArchivist(TestCase):
         self.assertEqual(
             arch.headers,
             {
-                'content-type': 'application/json',
-                'authorization': "Bearer authauthauth",
+                "content-type": "application/json",
+                "authorization": "Bearer authauthauth",
             },
             msg="Incorrect auth headers",
         )
@@ -51,9 +52,9 @@ class TestArchivist(TestCase):
         )
 
     def test_archivist_no_verify(self):
-        '''
+        """
         Test archivist creation with no verify
-        '''
+        """
         arch = Archivist("url", auth="authauthauth", verify=False)
         self.assertFalse(
             arch.verify,
@@ -61,33 +62,33 @@ class TestArchivist(TestCase):
         )
 
     def test_archivist_with_neither_auth_and_cert(self):
-        '''
+        """
         Test archivist creation with both auth and cert
-        '''
+        """
         with self.assertRaises(ArchivistIllegalArgumentError):
             arch = Archivist("url")
 
     def test_archivist_with_both_auth_and_cert(self):
-        '''
+        """
         Test archivist creation with both auth and cert
-        '''
+        """
         with self.assertRaises(ArchivistIllegalArgumentError):
             arch = Archivist("url", auth="authauthauth", cert="/path/to/file")
 
-    @mock.patch('archivist.archivist.os_path_isfile')
+    @mock.patch("archivist.archivist.os_path_isfile")
     def test_archivist_with_nonexistent_cert(self, mock_isfile):
-        '''
+        """
         Test archivist creation with nonexistent cert
-        '''
+        """
         mock_isfile.return_value = False
         with self.assertRaises(ArchivistNotFoundError):
             arch = Archivist("url", cert="/path/to/file")
 
-    @mock.patch('archivist.archivist.os_path_isfile')
+    @mock.patch("archivist.archivist.os_path_isfile")
     def test_archivist_with_existent_cert(self, mock_isfile):
-        '''
+        """
         Test archivist creation with cert
-        '''
+        """
         mock_isfile.return_value = True
         arch = Archivist("url", cert="/path/to/file")
         self.assertEqual(
@@ -98,57 +99,59 @@ class TestArchivist(TestCase):
 
 
 class TestArchivistMethods(TestCase):
-    '''
+    """
     Test Archivist base method class
-    '''
+    """
+
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
 
 
 class TestArchivistPost(TestArchivistMethods):
-    '''
+    """
     Test Archivist POST method
-    '''
-    @mock.patch('requests.post')
+    """
+
+    @mock.patch("requests.post")
     def test_post(self, mock_post):
-        '''
+        """
         Test default post method
-        '''
+        """
         request = {"field1": "value1"}
         mock_post.return_value = MockResponse(200, request=request)
         resp = self.arch.post("path/path", request)
         self.assertEqual(
             tuple(mock_post.call_args),
             (
-                (f"url/{ROOT}/path/path", ),
+                (f"url/{ROOT}/path/path",),
                 {
-                    'data': '{"field1": "value1"}',
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "data": '{"field1": "value1"}',
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="POST method called incorrectly",
         )
 
-    @mock.patch('requests.post')
+    @mock.patch("requests.post")
     def test_post_with_error(self, mock_post):
-        '''
+        """
         Test post method with error
-        '''
+        """
         request = {"field1": "value1"}
         mock_post.return_value = MockResponse(400, request=request, field1="value1")
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.post("path/path", request)
 
-    @mock.patch('requests.post')
+    @mock.patch("requests.post")
     def test_post_with_headers(self, mock_post):
-        '''
+        """
         Test default post method
-        '''
+        """
         request = {"field1": "value1"}
         mock_post.return_value = MockResponse(200, request=request)
         resp = self.arch.post(
@@ -159,26 +162,26 @@ class TestArchivistPost(TestArchivistMethods):
         self.assertEqual(
             tuple(mock_post.call_args),
             (
-                (f"url/{ROOT}/path/path", ),
+                (f"url/{ROOT}/path/path",),
                 {
-                    'data': '{"field1": "value1"}',
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "data": '{"field1": "value1"}',
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="POST method called incorrectly",
         )
 
-    @mock.patch('requests.post')
+    @mock.patch("requests.post")
     def test_post_file(self, mock_post):
-        '''
+        """
         Test default post_file method
-        '''
+        """
         mock_post.return_value = MockResponse(200)
         resp = self.arch.post_file(
             "path/path",
@@ -201,17 +204,17 @@ class TestArchivistPost(TestArchivistMethods):
             4,
             msg="Incorrect number of keyword arguments",
         )
-        headers = kwargs.get('headers')
+        headers = kwargs.get("headers")
         self.assertNotEqual(
             headers,
             None,
             msg="Header does not exist",
         )
         self.assertTrue(
-            headers['content-type'].startswith('multipart/form-data'),
+            headers["content-type"].startswith("multipart/form-data"),
             msg="Incorrect content-type",
         )
-        data = kwargs.get('data')
+        data = kwargs.get("data")
         self.assertIsNotNone(
             data,
             msg="Incorrect data",
@@ -221,27 +224,27 @@ class TestArchivistPost(TestArchivistMethods):
             fields,
             msg="Incorrect fields",
         )
-        myfile = fields.get('file')
+        myfile = fields.get("file")
         self.assertIsNotNone(
             myfile,
             msg="Incorrect file key",
         )
         self.assertEqual(
             myfile[0],
-            'filename',
+            "filename",
             msg="Incorrect filename",
         )
         self.assertEqual(
             myfile[2],
-            'image/jpg',
+            "image/jpg",
             msg="Incorrect mimetype",
         )
 
-    @mock.patch('requests.post')
+    @mock.patch("requests.post")
     def test_post_file_with_error(self, mock_post):
-        '''
+        """
         Test post method with error
-        '''
+        """
         mock_post.return_value = MockResponse(400)
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.post_file(
@@ -252,46 +255,48 @@ class TestArchivistPost(TestArchivistMethods):
 
 
 class TestArchivistGet(TestArchivistMethods):
-    '''
+    """
     Test Archivist Get method
-    '''
-    @mock.patch('requests.get')
+    """
+
+    @mock.patch("requests.get")
     def test_get(self, mock_get):
-        '''
+        """
         Test default get method
-        '''
+        """
         mock_get.return_value = MockResponse(200)
         resp = self.arch.get("path/path", "entity/xxxxxxxx")
         self.assertEqual(
             tuple(mock_get.call_args),
             (
-                (f"url/{ROOT}/path/path/entity/xxxxxxxx", ),
+                (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="GET method called incorrectly",
         )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_get_with_error(self, mock_get):
-        '''
+        """
         Test get method with error
-        '''
+        """
         mock_get.return_value = MockResponse(404, identity="entity/xxxxxxxx")
         with self.assertRaises(ArchivistNotFoundError):
             resp = self.arch.get("path/path", "entity/xxxxxxxx")
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_get_file(self, mock_get):
-        '''
+        """
         Test default get method
-        '''
+        """
+
         def iter_content():
             i = 0
 
@@ -317,35 +322,35 @@ class TestArchivistGet(TestArchivistMethods):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (f"url/{ROOT}/path/path/entity/xxxxxxxx", ),
+                    (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                         },
-                        'verify': True,
-                        'cert': None,
-                        'stream': True,
+                        "verify": True,
+                        "cert": None,
+                        "stream": True,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_get_file_with_error(self, mock_get):
-        '''
+        """
         Test get method with error
-        '''
+        """
         mock_get.return_value = MockResponse(404, identity="entity/xxxxxxxx")
         with self.assertRaises(ArchivistNotFoundError):
             with BytesIO() as fd:
                 resp = self.arch.get_file("path/path", "entity/xxxxxxxx", fd)
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_get_with_headers(self, mock_get):
-        '''
+        """
         Test default get method
-        '''
+        """
         mock_get.return_value = MockResponse(200)
         resp = self.arch.get(
             "path/path",
@@ -355,15 +360,15 @@ class TestArchivistGet(TestArchivistMethods):
         self.assertEqual(
             tuple(mock_get.call_args),
             (
-                (f"url/{ROOT}/path/path/id/xxxxxxxx", ),
+                (f"url/{ROOT}/path/path/id/xxxxxxxx",),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="GET method called incorrectly",
@@ -371,46 +376,47 @@ class TestArchivistGet(TestArchivistMethods):
 
 
 class TestArchivistDelete(TestArchivistMethods):
-    '''
+    """
     Test Archivist Delete method
-    '''
-    @mock.patch('requests.delete')
+    """
+
+    @mock.patch("requests.delete")
     def test_delete(self, mock_delete):
-        '''
+        """
         Test default delete method
-        '''
+        """
         mock_delete.return_value = MockResponse(200)
         resp = self.arch.delete("path/path", "entity/xxxxxxxx")
         self.assertEqual(
             tuple(mock_delete.call_args),
             (
-                (f"url/{ROOT}/path/path/entity/xxxxxxxx", ),
+                (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="DELETE method called incorrectly",
         )
 
-    @mock.patch('requests.delete')
+    @mock.patch("requests.delete")
     def test_delete_with_error(self, mock_delete):
-        '''
+        """
         Test delete method with error
-        '''
+        """
         mock_delete.return_value = MockResponse(404, identity="entity/xxxxxxxx")
         with self.assertRaises(ArchivistNotFoundError):
             resp = self.arch.delete("path/path", "entity/xxxxxxxx")
 
-    @mock.patch('requests.delete')
+    @mock.patch("requests.delete")
     def test_delete_with_headers(self, mock_delete):
-        '''
+        """
         Test default delete method
-        '''
+        """
         mock_delete.return_value = MockResponse(200)
         resp = self.arch.delete(
             "path/path",
@@ -420,15 +426,15 @@ class TestArchivistDelete(TestArchivistMethods):
         self.assertEqual(
             tuple(mock_delete.call_args),
             (
-                (f"url/{ROOT}/path/path/id/xxxxxxxx", ),
+                (f"url/{ROOT}/path/path/id/xxxxxxxx",),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="DELETE method called incorrectly",
@@ -436,49 +442,50 @@ class TestArchivistDelete(TestArchivistMethods):
 
 
 class TestArchivistPatch(TestArchivistMethods):
-    '''
+    """
     Test Archivist PATCH method
-    '''
-    @mock.patch('requests.patch')
+    """
+
+    @mock.patch("requests.patch")
     def test_patch(self, mock_patch):
-        '''
+        """
         Test default patch method
-        '''
+        """
         request = {"field1": "value1"}
         mock_patch.return_value = MockResponse(200, request=request)
         resp = self.arch.patch("path/path", "entity/xxxx", request)
         self.assertEqual(
             tuple(mock_patch.call_args),
             (
-                (f"url/{ROOT}/path/path/entity/xxxx", ),
+                (f"url/{ROOT}/path/path/entity/xxxx",),
                 {
-                    'data': '{"field1": "value1"}',
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "data": '{"field1": "value1"}',
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="POST method called incorrectly",
         )
 
-    @mock.patch('requests.patch')
+    @mock.patch("requests.patch")
     def test_patch_with_error(self, mock_patch):
-        '''
+        """
         Test post method with error
-        '''
+        """
         request = {"field1": "value1"}
         mock_patch.return_value = MockResponse(400, request=request, field1="value1")
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.patch("path/path", "entity/xxxx", request)
 
-    @mock.patch('requests.patch')
+    @mock.patch("requests.patch")
     def test_patch_with_headers(self, mock_patch):
-        '''
+        """
         Test default patch method
-        '''
+        """
         request = {"field1": "value1"}
         mock_patch.return_value = MockResponse(200, request=request)
         resp = self.arch.patch(
@@ -490,16 +497,16 @@ class TestArchivistPatch(TestArchivistMethods):
         self.assertEqual(
             tuple(mock_patch.call_args),
             (
-                (f"url/{ROOT}/path/path/entity/xxxx", ),
+                (f"url/{ROOT}/path/path/entity/xxxx",),
                 {
-                    'data': '{"field1": "value1"}',
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "data": '{"field1": "value1"}',
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="PATCH method called incorrectly",
@@ -507,14 +514,15 @@ class TestArchivistPatch(TestArchivistMethods):
 
 
 class TestArchivistCount(TestArchivistMethods):
-    '''
+    """
     Test Archivist count method
-    '''
-    @mock.patch('requests.get')
+    """
+
+    @mock.patch("requests.get")
     def test_count(self, mock_get):
-        '''
+        """
         Test default count method
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             headers={HEADERS_TOTAL_COUNT: 1},
@@ -531,11 +539,11 @@ class TestArchivistCount(TestArchivistMethods):
             msg="incorrect count",
         )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_count_with_error(self, mock_get):
-        '''
+        """
         Test default count method with error
-        '''
+        """
         mock_get.return_value = MockResponse(
             400,
             things=[
@@ -549,14 +557,15 @@ class TestArchivistCount(TestArchivistMethods):
 
 
 class TestArchivistList(TestArchivistMethods):
-    '''
+    """
     Test Archivist list method
-    '''
-    @mock.patch('requests.get')
+    """
+
+    @mock.patch("requests.get")
     def test_list(self, mock_get):
-        '''
+        """
         Test default list method
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             things=[
@@ -576,24 +585,24 @@ class TestArchivistList(TestArchivistMethods):
             self.assertEqual(
                 tuple(a),
                 (
-                    (f"url/{ROOT}/path/path", ),
+                    (f"url/{ROOT}/path/path",),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                         },
-                        'verify': True,
-                        'cert': None,
+                        "verify": True,
+                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_list_with_error(self, mock_get):
-        '''
+        """
         Test default list method with error
-        '''
+        """
         mock_get.return_value = MockResponse(
             400,
             things=[
@@ -606,11 +615,11 @@ class TestArchivistList(TestArchivistMethods):
         with self.assertRaises(ArchivistBadRequestError):
             responses = [r for r in listing]
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_list_with_bad_field(self, mock_get):
-        '''
+        """
         Test default list method with error
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             things=[
@@ -623,11 +632,11 @@ class TestArchivistList(TestArchivistMethods):
         with self.assertRaises(ArchivistBadFieldError):
             responses = [r for r in listing]
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_list_with_headers(self, mock_get):
-        '''
+        """
         Test default list method
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             things=[
@@ -651,25 +660,25 @@ class TestArchivistList(TestArchivistMethods):
             self.assertEqual(
                 tuple(a),
                 (
-                    (f"url/{ROOT}/path/path", ),
+                    (f"url/{ROOT}/path/path",),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                             "headerfield1": "headervalue1",
                         },
-                        'verify': True,
-                        'cert': None,
+                        "verify": True,
+                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_list_with_query(self, mock_get):
-        '''
+        """
         Test default list method
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             things=[
@@ -693,24 +702,24 @@ class TestArchivistList(TestArchivistMethods):
             self.assertEqual(
                 tuple(a),
                 (
-                    (f"url/{ROOT}/path/path?queryfield1=queryvalue1", ),
+                    (f"url/{ROOT}/path/path?queryfield1=queryvalue1",),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                         },
-                        'verify': True,
-                        'cert': None,
+                        "verify": True,
+                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_list_with_page_size(self, mock_get):
-        '''
+        """
         Test default list method
-        '''
+        """
         values = ("value10", "value11")
         mock_get.return_value = MockResponse(
             200,
@@ -738,14 +747,14 @@ class TestArchivistList(TestArchivistMethods):
             self.assertEqual(
                 tuple(a),
                 (
-                    (f"url/{ROOT}/path/path?page_size=2", ),
+                    (f"url/{ROOT}/path/path?page_size=2",),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                         },
-                        'verify': True,
-                        'cert': None,
+                        "verify": True,
+                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -753,19 +762,19 @@ class TestArchivistList(TestArchivistMethods):
 
         for i, r in enumerate(responses):
             self.assertEqual(
-                r['field1'],
+                r["field1"],
                 values[i],
                 msg="Incorrect response body value",
             )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_list_with_multiple_pages(self, mock_get):
-        '''
+        """
         Test default list method
-        '''
+        """
         values = ("value10", "value11", "value12", "value13")
         paging = ("page_size=2", "page_token=token")
-        mock_get.side_effect =[
+        mock_get.side_effect = [
             MockResponse(
                 200,
                 things=[
@@ -805,14 +814,14 @@ class TestArchivistList(TestArchivistMethods):
             self.assertEqual(
                 tuple(a),
                 (
-                    (f"url/{ROOT}/path/path?{paging[i]}", ),
+                    (f"url/{ROOT}/path/path?{paging[i]}",),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                         },
-                        'verify': True,
-                        'cert': None,
+                        "verify": True,
+                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -820,21 +829,22 @@ class TestArchivistList(TestArchivistMethods):
 
         for i, r in enumerate(responses):
             self.assertEqual(
-                r['field1'],
+                r["field1"],
                 values[i],
                 msg="Incorrect response body value",
             )
 
 
 class TestArchivistSignature(TestArchivistMethods):
-    '''
+    """
     Test Archivist get_by_signature method
-    '''
-    @mock.patch('requests.get')
+    """
+
+    @mock.patch("requests.get")
     def test_get_by_signature(self, mock_get):
-        '''
+        """
         Test default get_by_signature method
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             things=[
@@ -848,36 +858,38 @@ class TestArchivistSignature(TestArchivistMethods):
             self.assertEqual(
                 tuple(a),
                 (
-                    (f"url/{ROOT}/path/path?page_size=2&field1=value1", ),
+                    (f"url/{ROOT}/path/path?page_size=2&field1=value1",),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                         },
-                        'verify': True,
-                        'cert': None,
+                        "verify": True,
+                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_get_by_signature_not_found(self, mock_get):
-        '''
+        """
         Test default get_by_signature method
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             things=[],
         )
         with self.assertRaises(ArchivistNotFoundError):
-            entity = self.arch.get_by_signature("path/path", "things", {"field1": "value1"})
+            entity = self.arch.get_by_signature(
+                "path/path", "things", {"field1": "value1"}
+            )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_get_by_signature_duplicate(self, mock_get):
-        '''
+        """
         Test default get_by_signature method
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             things=[
@@ -890,13 +902,15 @@ class TestArchivistSignature(TestArchivistMethods):
             ],
         )
         with self.assertRaises(ArchivistDuplicateError):
-            entity = self.arch.get_by_signature("path/path", "things", {"field1": "value1"})
+            entity = self.arch.get_by_signature(
+                "path/path", "things", {"field1": "value1"}
+            )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_get_by_signature_with_bad_field(self, mock_get):
-        '''
+        """
         Test default list method with error
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             things=[
@@ -906,4 +920,6 @@ class TestArchivistSignature(TestArchivistMethods):
             ],
         )
         with self.assertRaises(ArchivistBadFieldError):
-            entity = self.arch.get_by_signature("path/path", "badthings", {"field1": "value1"})
+            entity = self.arch.get_by_signature(
+                "path/path", "badthings", {"field1": "value1"}
+            )

@@ -1,6 +1,6 @@
-'''
+"""
 Test archivist
-'''
+"""
 
 import json
 from unittest import TestCase, mock
@@ -34,57 +34,54 @@ ATTRS = {
     "address": "Bridgewater, Somerset",
     "facility_type": "Manufacture",
     "support_email": "support@macclesfield.com",
-    "support_phone": "123 456 789"
+    "support_phone": "123 456 789",
 }
 
-IDENTITY = f'{LOCATIONS_LABEL}/xxxxxxxx'
-SUBPATH = f'{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}'
+IDENTITY = f"{LOCATIONS_LABEL}/xxxxxxxx"
+SUBPATH = f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}"
 
 RESPONSE = {
     **PROPS,
-    'identity': IDENTITY,
-    'attributes': ATTRS,
+    "identity": IDENTITY,
+    "attributes": ATTRS,
 }
 REQUEST = {
     **PROPS,
-    'attributes': ATTRS,
+    "attributes": ATTRS,
 }
 REQUEST_DATA = json.dumps(REQUEST)
 
 
 class TestLocations(TestCase):
-    '''
+    """
     Test Archivist Locations Create method
-    '''
+    """
+
     maxDiff = None
 
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
 
-    @mock.patch('requests.post')
+    @mock.patch("requests.post")
     def test_locations_create(self, mock_post):
-        '''
+        """
         Test location creation
-        '''
+        """
         mock_post.return_value = MockResponse(200, **RESPONSE)
 
         location = self.arch.locations.create(PROPS, attrs=ATTRS)
         self.assertEqual(
             tuple(mock_post.call_args),
             (
-                (
-                    (
-                        f"url/{ROOT}/{SUBPATH}"
-                    ),
-                ),
+                ((f"url/{ROOT}/{SUBPATH}"),),
                 {
-                    'data': REQUEST_DATA,
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "data": REQUEST_DATA,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="CREATE method called incorrectly",
@@ -95,48 +92,44 @@ class TestLocations(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_locations_read(self, mock_get):
-        '''
+        """
         Test asset reading
-        '''
+        """
         mock_get.return_value = MockResponse(200, **RESPONSE)
 
         asset = self.arch.locations.read(IDENTITY)
         self.assertEqual(
             tuple(mock_get.call_args),
             (
-                (
-                    (
-                        f"url/{ROOT}/{LOCATIONS_SUBPATH}/{IDENTITY}"
-                    ),
-                ),
+                ((f"url/{ROOT}/{LOCATIONS_SUBPATH}/{IDENTITY}"),),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="GET method called incorrectly",
         )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_locations_read_with_error(self, mock_get):
-        '''
+        """
         Test read method with error
-        '''
+        """
         mock_get.return_value = MockResponse(400)
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.locations.read(IDENTITY)
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_locations_count(self, mock_get):
-        '''
+        """
         Test location counting
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             headers={HEADERS_TOTAL_COUNT: 1},
@@ -149,20 +142,15 @@ class TestLocations(TestCase):
         self.assertEqual(
             tuple(mock_get.call_args),
             (
-                (
-                    (
-                        f"url/{ROOT}/{SUBPATH}"
-                        "?page_size=1"
-                    ),
-                ),
+                ((f"url/{ROOT}/{SUBPATH}" "?page_size=1"),),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
-                        HEADERS_REQUEST_TOTAL_COUNT: 'true',
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                        HEADERS_REQUEST_TOTAL_COUNT: "true",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="GET method called incorrectly",
@@ -173,11 +161,11 @@ class TestLocations(TestCase):
             msg="Incorrect count",
         )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_locations_count_with_props_query(self, mock_get):
-        '''
+        """
         Test location counting
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             headers={HEADERS_TOTAL_COUNT: 1},
@@ -200,23 +188,23 @@ class TestLocations(TestCase):
                     ),
                 ),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
-                        HEADERS_REQUEST_TOTAL_COUNT: 'true',
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                        HEADERS_REQUEST_TOTAL_COUNT: "true",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="GET method called incorrectly",
         )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_locations_count_with_attrs_query(self, mock_get):
-        '''
+        """
         Test location counting
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             headers={HEADERS_TOTAL_COUNT: 1},
@@ -239,23 +227,23 @@ class TestLocations(TestCase):
                     ),
                 ),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
-                        HEADERS_REQUEST_TOTAL_COUNT: 'true',
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                        HEADERS_REQUEST_TOTAL_COUNT: "true",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="GET method called incorrectly",
         )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_locations_list(self, mock_get):
-        '''
+        """
         Test location listing
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             locations=[
@@ -283,22 +271,22 @@ class TestLocations(TestCase):
                 (
                     (f"url/{ROOT}/{SUBPATH}?page_size={DEFAULT_PAGE_SIZE}",),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                         },
-                        'verify': True,
-                        'cert': None,
+                        "verify": True,
+                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_locations_list_with_query(self, mock_get):
-        '''
+        """
         Test location listing
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             locations=[
@@ -336,22 +324,22 @@ class TestLocations(TestCase):
                         ),
                     ),
                     {
-                        'headers': {
-                            'content-type': 'application/json',
-                            'authorization': "Bearer authauthauth",
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
                         },
-                        'verify': True,
-                        'cert': None,
+                        "verify": True,
+                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_locations_read_by_signature(self, mock_get):
-        '''
+        """
         Test location read_by_signature
-        '''
+        """
         mock_get.return_value = MockResponse(
             200,
             locations=[
@@ -371,12 +359,12 @@ class TestLocations(TestCase):
             (
                 (f"url/{ROOT}/{SUBPATH}?page_size=2",),
                 {
-                    'headers': {
-                        'content-type': 'application/json',
-                        'authorization': "Bearer authauthauth",
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                    'verify': True,
-                    'cert': None,
+                    "verify": True,
+                    "cert": None,
                 },
             ),
             msg="GET method called incorrectly",

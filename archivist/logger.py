@@ -8,11 +8,8 @@ import logging
 # base logger from which all loggers are propagated
 LOGGER = logging.getLogger()
 
-LOGFMT = (
-    '%(asctime)s.%(msecs)03d|%(threadName)s'
-    '|%(levelname)s|%(name)s|%(message)s'
-)
-DATEFMT = '%Y-%m-%d %H:%M:%S'
+LOGFMT = "%(asctime)s.%(msecs)03d|%(threadName)s|%(levelname)s|%(name)s|%(message)s"
+DATEFMT = "%Y-%m-%d %H:%M:%S"
 
 
 def set_logger(level):

@@ -1,6 +1,6 @@
-'''
+"""
 Mock response object
-'''
+"""
 
 import json
 
@@ -8,7 +8,9 @@ import json
 
 
 class MockResponse(dict):
-    def __init__(self, status_code, request=None, headers=None, iter_content=None, **kwargs):
+    def __init__(
+        self, status_code, request=None, headers=None, iter_content=None, **kwargs
+    ):
         super().__init__(**kwargs)
         self.status_code = status_code
         self._headers = headers

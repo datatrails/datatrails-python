@@ -7,3 +7,4 @@ dist/
 *.xml
 htmlcov/
 .pylint.d/
+.cache/
