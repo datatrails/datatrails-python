@@ -6,8 +6,8 @@
 ROOT = "archivist"
 SEP = "/"
 
-HEADERS_REQUEST_TOTAL_COUNT='x-request-total-count'
-HEADERS_TOTAL_COUNT='x-total-count'
+HEADERS_REQUEST_TOTAL_COUNT = "x-request-total-count"
+HEADERS_TOTAL_COUNT = "x-total-count"
 
 CONFIRMATION_STATUS = "confirmation_status"
 CONFIRMATION_PENDING = "PENDING"

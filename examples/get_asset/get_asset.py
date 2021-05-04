@@ -28,12 +28,12 @@ from archivist.archivist import Archivist
 
 
 def main():
-    """ Main function of get_asset.
+    """Main function of get_asset.
 
     Parse in user input of url and auth token and use them to
     create an example archivist connection and fetch all assets.
     """
-    with open(".auth_token", mode='r') as tokenfile:
+    with open(".auth_token", mode="r") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist
@@ -42,7 +42,7 @@ def main():
         auth=authtoken,
     )
     for asset in arch.assets.list():
-        print("asset id:", asset['identity'])
+        print("asset id:", asset["identity"])
 
 
 if __name__ == "__main__":

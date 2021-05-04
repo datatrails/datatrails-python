@@ -44,19 +44,17 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     Either auth or cert must be specified
     """
+
     def __init__(self, url, *, auth=None, cert=None, verify=True):
-        """docstring
-        """
-        self._headers = {'content-type': 'application/json'}
+        """docstring"""
+        self._headers = {"content-type": "application/json"}
         if auth is not None:
-            self._headers['authorization'] = 'Bearer ' + auth.strip()
+            self._headers["authorization"] = "Bearer " + auth.strip()
 
         self._url = url
         self._verify = verify
         if not cert and not auth:
-            raise ArchivistIllegalArgumentError(
-                "Either auth or cert must be specified"
-            )
+            raise ArchivistIllegalArgumentError("Either auth or cert must be specified")
 
         if cert and auth:
             raise ArchivistIllegalArgumentError(
@@ -65,9 +63,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         if cert:
             if not os_path_isfile(cert):
-                raise ArchivistNotFoundError(
-                    f"Cert file {cert} does not exist"
-                )
+                raise ArchivistNotFoundError(f"Cert file {cert} does not exist")
 
         self._cert = cert
 
@@ -78,31 +74,26 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     @property
     def headers(self):
-        """docstring
-        """
+        """docstring"""
         return self._headers
 
     @property
     def url(self):
-        """docstring
-        """
+        """docstring"""
         return self._url
 
     @property
     def verify(self):
-        """docstring
-        """
+        """docstring"""
         return self._verify
 
     @property
     def cert(self):
-        """docstring
-        """
+        """docstring"""
         return self._cert
 
     def __add_headers(self, headers):
-        """docstring
-        """
+        """docstring"""
         if headers is not None:
             newheaders = {**self.headers, **headers}
         else:
@@ -182,11 +173,11 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         multipart = MultipartEncoder(
             fields={
-                'file': ('filename', fd, mtype),
+                "file": ("filename", fd, mtype),
             }
         )
         headers = {
-            'content-type': multipart.content_type,
+            "content-type": multipart.content_type,
         }
         response = requests.post(
             SEP.join((self.url, ROOT, path)),
@@ -242,7 +233,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     def __list(self, path, args, *, headers=None):
         if args:
-            path = '?'.join((path, args))
+            path = "?".join((path, args))
 
         response = requests.get(
             SEP.join((self.url, ROOT, path)),
@@ -258,10 +249,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     @staticmethod
     def __query(query):
-        return query and '&'.join(
-            sorted(
-                f"{k}={v}" for k, v in flatten(query, reducer='dot').items()
-            )
+        return query and "&".join(
+            sorted(f"{k}={v}" for k, v in flatten(query, reducer="dot").items())
         )
 
     def get_by_signature(self, path, field, query, *, headers=None):
@@ -281,9 +270,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         response = self.__list(
             path,
-            '&'.join(
-                (a for a in (paging, qry) if a)
-            ),
+            "&".join((a for a in (paging, qry) if a)),
             headers=headers,
         )
 
@@ -311,15 +298,13 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         paging = "page_size=1"
         qry = self.__query(query)
-        headers = {HEADERS_REQUEST_TOTAL_COUNT: 'true'}
+        headers = {HEADERS_REQUEST_TOTAL_COUNT: "true"}
 
         # v2/assets?page_size=10&something=something...
 
         response = self.__list(
             path,
-            '&'.join(
-                (a for a in (paging, qry) if a)
-            ),
+            "&".join((a for a in (paging, qry) if a)),
             headers=headers,
         )
 
@@ -348,9 +333,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         while True:
             response = self.__list(
                 path,
-                '&'.join(
-                    (a for a in (paging, qry) if a)
-                ),
+                "&".join((a for a in (paging, qry) if a)),
                 headers=headers,
             )
             data = response.json()

@@ -28,7 +28,7 @@ from archivist.archivist import Archivist
 
 
 def main():
-    """ Main function of filtering events.
+    """Main function of filtering events.
 
     Parse in user input of url and auth token and use them to
     create an example archivist connection and passed-in properties
@@ -36,7 +36,7 @@ def main():
     attributes through function get_matching_events.
     """
 
-    with open(".auth_token", mode='r') as tokenfile:
+    with open(".auth_token", mode="r") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist
