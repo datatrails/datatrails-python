@@ -119,16 +119,17 @@ class TestErrors(TestCase):
         )
 
     def test_errors_403_multipartencoder(self):
-        '''
+        """
         Test errors
-        '''
+        """
+
         class Object:
             pass
 
         request = Object()
         request.body = MultipartEncoder(
             fields={
-                'file': ('filename', "filecontents", 'image/jpg'),
+                "file": ("filename", "filecontents", "image/jpg"),
             }
         )
         response = MockResponse(

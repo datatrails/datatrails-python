@@ -70,7 +70,7 @@ def __identity(response):
             except TypeError:
                 pass
             else:
-                identity = body.get('identity', "unknown")
+                identity = body.get("identity", "unknown")
 
     return identity
 
