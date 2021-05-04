@@ -124,6 +124,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         subpath: e.g. v2 or iam/v1
         identity: e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`
         fd: an iterable representing a file (usually from open())
+            the file must be opened in binary mode
         """
         response = requests.get(
             SEP.join((self.url, ROOT, subpath, identity)),
@@ -140,7 +141,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             if chunk:
                 fd.write(chunk)
 
-        return response.json()
+        return response
 
     def post(self, path, request, *, headers=None):
         """
@@ -168,6 +169,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         path: e.g. v1/blobs
         fd: an iterable representing a file (usually from open())
+            the file must be opened in binary mode
         mtype: mime tiype (image/jpg)
         """
 
