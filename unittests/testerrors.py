@@ -10,6 +10,8 @@ import json
 
 from unittest import TestCase
 
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+
 from archivist.errors import (
     parse_response,
     Archivist4xxError,
@@ -37,6 +39,7 @@ class TestErrors(TestCase):
         """
         response = MockResponse(200)
         error = parse_response(response)
+
         self.assertEqual(
             error,
             None,
@@ -49,6 +52,7 @@ class TestErrors(TestCase):
         """
         response = MockResponse(300)
         error = parse_response(response)
+
         self.assertEqual(
             error,
             None,
@@ -61,12 +65,14 @@ class TestErrors(TestCase):
         """
         response = MockResponse(400, error="some error")
         error = parse_response(response)
+
         self.assertIsNotNone(
             error,
             msg="error should not be None",
         )
         with self.assertRaises(ArchivistBadRequestError) as ex:
             raise error
+
         self.assertEqual(
             str(ex.exception),
             '{"error": "some error"} (400)',
@@ -79,12 +85,14 @@ class TestErrors(TestCase):
         """
         response = MockResponse(401, error="some error")
         error = parse_response(response)
+
         self.assertIsNotNone(
             error,
             msg="error should not be None",
         )
         with self.assertRaises(ArchivistUnauthenticatedError) as ex:
             raise error
+
         self.assertEqual(
             str(ex.exception),
             '{"error": "some error"} (401)',
@@ -97,12 +105,46 @@ class TestErrors(TestCase):
         """
         response = MockResponse(403, error="some error")
         error = parse_response(response)
+
         self.assertIsNotNone(
             error,
             msg="error should not be None",
         )
         with self.assertRaises(ArchivistForbiddenError) as ex:
             raise error
+
+        self.assertEqual(
+            str(ex.exception),
+            '{"error": "some error"} (403)',
+        )
+
+    def test_errors_403_multipartencoder(self):
+        """
+        Test errors
+        """
+
+        class Object:
+            pass
+
+        request = Object()
+        request.body = MultipartEncoder(
+            fields={
+                "file": ("filename", "filecontents", "image/jpg"),
+            }
+        )
+        response = MockResponse(
+            403,
+            request=request,
+            error="some error",
+        )
+        error = parse_response(response)
+        self.assertIsNotNone(
+            error,
+            msg="error should not be None",
+        )
+        with self.assertRaises(ArchivistForbiddenError) as ex:
+            raise error
+
         self.assertEqual(
             str(ex.exception),
             '{"error": "some error"} (403)',
