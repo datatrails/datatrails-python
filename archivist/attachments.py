@@ -23,13 +23,14 @@ class _AttachmentsClient:
         )
 
     def download(self, identity, fd):
-        """docstring"""
-        return Attachment(
-            **self._archivist.get_file(
-                ATTACHMENTS_SUBPATH,
-                identity,
-                fd,
-            )
+        """
+        Note that returns the response as the body will be consumed by the
+        fd iterator
+        """
+        return self._archivist.get_file(
+            ATTACHMENTS_SUBPATH,
+            identity,
+            fd,
         )
 
 
