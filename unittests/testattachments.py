@@ -1,6 +1,6 @@
-'''
+"""
 Test archivist
-'''
+"""
 
 from io import BytesIO
 import json
@@ -13,91 +13,89 @@ from .mock_response import MockResponse
 
 
 PROPS = {
-    "hash": {
-        "alg": "SHA256",
-        "value": "xxxxxxxxxxxxxxxxxxxxxxx"
-    },
+    "hash": {"alg": "SHA256", "value": "xxxxxxxxxxxxxxxxxxxxxxx"},
     "mime_type": "image/jpeg",
     "timestamp_accepted": "2019-11-07T15:31:49Z",
     "size": 31424,
 }
-IDENTITY = f'{ATTACHMENTS_LABEL}/xxxxxxxx'
-SUBPATH = f'{ATTACHMENTS_SUBPATH}/{ATTACHMENTS_LABEL}'
+IDENTITY = f"{ATTACHMENTS_LABEL}/xxxxxxxx"
+SUBPATH = f"{ATTACHMENTS_SUBPATH}/{ATTACHMENTS_LABEL}"
 
 RESPONSE = {
     **PROPS,
-    'identity': IDENTITY,
+    "identity": IDENTITY,
 }
 REQUEST_DATA = json.dumps(PROPS)
 
 
 class TestAttachments(TestCase):
-    '''
+    """
     Test Archivist Attachments Create method
-    '''
+    """
+
     maxDiff = None
 
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
         self.mockstream = BytesIO(b"somelongstring")
 
-    @mock.patch('requests.post')
+    @mock.patch("requests.post")
     def test_attachments_upload(self, mock_post):
-        '''
+        """
         Test attachment upload
-        '''
+        """
         mock_post.return_value = MockResponse(200, **RESPONSE)
 
         attachment = self.arch.attachments.upload(self.mockstream)
         args, kwargs = mock_post.call_args
         self.assertEqual(
             args,
-            (f'url/{ROOT}/{SUBPATH}',),
+            (f"url/{ROOT}/{SUBPATH}",),
             msg="UPLOAD method called incorrectly",
         )
         self.assertTrue(
-            'headers' in kwargs,
+            "headers" in kwargs,
             msg="UPLOAD no headers found",
         )
-        headers = kwargs['headers']
+        headers = kwargs["headers"]
         self.assertTrue(
-            'authorization' in headers,
+            "authorization" in headers,
             msg="UPLOAD no authorization found",
         )
         self.assertEqual(
-            headers['authorization'],
-            'Bearer authauthauth',
+            headers["authorization"],
+            "Bearer authauthauth",
             msg="UPLOAD incorrect authorization",
         )
         self.assertTrue(
-            headers['content-type'].startswith('multipart/form-data;'),
+            headers["content-type"].startswith("multipart/form-data;"),
             msg="UPLOAD incorrect content-type",
         )
         self.assertTrue(
-            kwargs['verify'],
+            kwargs["verify"],
             msg="UPLOAD method called incorrectly",
         )
         self.assertIsNone(
-            kwargs['cert'],
+            kwargs["cert"],
             msg="UPLOAD method called incorrectly",
         )
         self.assertTrue(
-            'data' in kwargs,
+            "data" in kwargs,
             msg="UPLOAD no data found",
         )
-        fields = kwargs['data'].fields
+        fields = kwargs["data"].fields
         self.assertTrue(
-            'file' in fields,
+            "file" in fields,
             msg="UPLOAD no file found",
         )
         self.assertEqual(
-            fields['file'][0],
-            'filename',
+            fields["file"][0],
+            "filename",
             msg="UPLOAD incorrect filename",
         )
         self.assertEqual(
-            fields['file'][2],
-            'image/jpg',
+            fields["file"][2],
+            "image/jpg",
             msg="UPLOAD incorrect filetype",
         )
         self.assertEqual(
@@ -106,11 +104,12 @@ class TestAttachments(TestCase):
             msg="UPLOAD method called incorrectly",
         )
 
-    @mock.patch('requests.get')
+    @mock.patch("requests.get")
     def test_attachments_download(self, mock_get):
-        '''
+        """
         Test attachment download
-        '''
+        """
+
         def iter_content():
             i = 0
 
@@ -136,19 +135,19 @@ class TestAttachments(TestCase):
             args, kwargs = mock_get.call_args
             self.assertEqual(
                 args,
-                (f'url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}',),
+                (f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}",),
                 msg="DOWNLOAD method called incorrectly",
             )
             self.assertEqual(
                 kwargs,
                 {
-                    'cert': None,
-                    'headers': {
-                        'authorization': 'Bearer authauthauth',
-                        'content-type': 'application/json',
+                    "cert": None,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                        "content-type": "application/json",
                     },
-                    'stream': True,
-                    'verify': True,
+                    "stream": True,
+                    "verify": True,
                 },
                 msg="DOWNLOAD method called incorrectly",
             )

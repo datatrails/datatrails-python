@@ -29,14 +29,14 @@ from archivist.archivist import Archivist
 
 
 def main():
-    """ Main function of filtering assets.
+    """Main function of filtering assets.
 
     Parse in user input of url and auth token and use them to
     create an example archivist connection and passed-in properties
     attributes to filter all assets of the selected properties and
     attributes through function get_matching_assets.
     """
-    with open(".auth_token", mode='r') as tokenfile:
+    with open(".auth_token", mode="r") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist

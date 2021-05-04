@@ -16,7 +16,7 @@ from .constants import (
 from .errors import ArchivistUnconfirmedError
 from .logger import LOGGER
 
-MAX_TIME=1200
+MAX_TIME = 1200
 
 
 def __lookup_max_time():
@@ -25,14 +25,16 @@ def __lookup_max_time():
 
 def __backoff_handler(details):
     LOGGER.debug("MAX_TIME %s", MAX_TIME)
-    LOGGER.debug("Backing off {wait:0.1f} seconds afters {tries} tries "
-          "calling function {target} with args {args} and kwargs "
-          "{kwargs}".format(**details))
+    LOGGER.debug(
+        "Backing off {wait:0.1f} seconds afters {tries} tries "
+        "calling function {target} with args {args} and kwargs "
+        "{kwargs}".format(**details)
+    )
 
 
 def __on_giveup_confirmation(details):
-    identity = details['args'][1]
-    elapsed = details['elapsed']
+    identity = details["args"][1]
+    elapsed = details["elapsed"]
     raise ArchivistUnconfirmedError(
         f"confirmation for {identity} timed out after {elapsed} seconds"
     )
@@ -46,8 +48,7 @@ def __on_giveup_confirmation(details):
     on_giveup=__on_giveup_confirmation,
 )
 def wait_for_confirmation(self, identity):
-    """docstring
-    """
+    """docstring"""
     entity = self.read(identity)
 
     if CONFIRMATION_STATUS not in entity:
@@ -67,9 +68,9 @@ def wait_for_confirmation(self, identity):
 
 
 def __on_giveup_confirmed(details):
-    self = details['args'][0]
+    self = details["args"][0]
     count = self.pending_count
-    elapsed = details['elapsed']
+    elapsed = details["elapsed"]
     raise ArchivistUnconfirmedError(
         f"{count} pending assets still present after {elapsed} seconds"
     )
@@ -83,8 +84,7 @@ def __on_giveup_confirmed(details):
     on_giveup=__on_giveup_confirmed,
 )
 def wait_for_confirmed(self, *, props=None, **kwargs):
-    """docstring
-    """
+    """docstring"""
     newprops = deepcopy(props) if props else {}
     newprops[CONFIRMATION_STATUS] = CONFIRMATION_PENDING
 

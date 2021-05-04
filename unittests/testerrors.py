@@ -1,6 +1,6 @@
-'''
+"""
 Test archivist
-'''
+"""
 
 # pylint: disable=attribute-defined-outside-init
 # pylint: disable=missing-docstring
@@ -27,13 +27,14 @@ from .mock_response import MockResponse
 
 
 class TestErrors(TestCase):
-    '''
+    """
     Test exceptions for archivist
-    '''
+    """
+
     def test_errors_200(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(200)
         error = parse_response(response)
         self.assertEqual(
@@ -43,9 +44,9 @@ class TestErrors(TestCase):
         )
 
     def test_errors_300(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(300)
         error = parse_response(response)
         self.assertEqual(
@@ -55,9 +56,9 @@ class TestErrors(TestCase):
         )
 
     def test_errors_400(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(400, error="some error")
         error = parse_response(response)
         self.assertIsNotNone(
@@ -73,9 +74,9 @@ class TestErrors(TestCase):
         )
 
     def test_errors_401(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(401, error="some error")
         error = parse_response(response)
         self.assertIsNotNone(
@@ -91,9 +92,9 @@ class TestErrors(TestCase):
         )
 
     def test_errors_403(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(403, error="some error")
         error = parse_response(response)
         self.assertIsNotNone(
@@ -108,14 +109,15 @@ class TestErrors(TestCase):
         )
 
     def test_errors_404(self):
-        '''
+        """
         Test errors
-        '''
+        """
+
         class Object:
             pass
 
         request = Object()
-        request.body = json.dumps({'identity': 'entity/xxxxx'})
+        request.body = json.dumps({"identity": "entity/xxxxx"})
         response = MockResponse(
             404,
             request=request,
@@ -130,14 +132,14 @@ class TestErrors(TestCase):
             raise error
         self.assertEqual(
             str(ex.exception),
-            'entity/xxxxx not found (404)',
+            "entity/xxxxx not found (404)",
             msg="incorrect error",
         )
 
     def test_errors_4xx(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(405, error="some error")
         error = parse_response(response)
         self.assertIsNotNone(
@@ -153,9 +155,9 @@ class TestErrors(TestCase):
         )
 
     def test_errors_500(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(500, error="some error")
         error = parse_response(response)
         self.assertIsNotNone(
@@ -171,9 +173,9 @@ class TestErrors(TestCase):
         )
 
     def test_errors_501(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(501, error="some error")
         error = parse_response(response)
         self.assertIsNotNone(
@@ -189,9 +191,9 @@ class TestErrors(TestCase):
         )
 
     def test_errors_503(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(503, error="some error")
         error = parse_response(response)
         self.assertIsNotNone(
@@ -207,9 +209,9 @@ class TestErrors(TestCase):
         )
 
     def test_errors_600(self):
-        '''
+        """
         Test errors
-        '''
+        """
         response = MockResponse(600, error="some error")
         error = parse_response(response)
         self.assertIsNotNone(
