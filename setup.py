@@ -6,18 +6,18 @@ Setup script for python build system
 import os
 from setuptools import setup, find_packages
 
+HERE = os.path.dirname(__file__)
 REPO_URL = 'https://github.com/jitsuin-inc/archivist-python/'
 NAME = "jitsuin-archivist"
 
-with open('README.md') as FF:
+with open(os.path.join(HERE, 'README.md')) as FF:
     DESC = FF.read()
 
-with open('requirements.txt') as FF:
+with open(os.path.join(HERE, 'requirements.txt')) as FF:
     requirements=[f"{line.strip()}" for line in FF]
 
 setup(
     name=NAME,
-    version="0.1.0alpha3",
     author="Jitsuin Inc.",
     author_email="support@jitsuin.com",
     description="Jitsuin Archivist Client",
@@ -36,6 +36,15 @@ setup(
         'Topic :: Utilities' # https://pypi.org/classifiers/ # check another option client-sdk
     ],
     install_requires=requirements,
+    version_config={
+        "template": "{tag}",
+        "dev_template": "{tag}.post{ccount}+git.{sha}",
+        "dirty_template": "{tag}.post{ccount}+git.{sha}.dirty",
+        "version_callback": None,
+        "version_file": None,
+        "count_commits_from_version_file": False,
+    },
+    setup_requires=['setuptools-git-versioning'],
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
