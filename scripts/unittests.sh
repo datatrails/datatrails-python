@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# run unittetss
+# run unittests
 #
 
 rm -f coverage.xml
