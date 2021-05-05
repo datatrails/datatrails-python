@@ -8,3 +8,4 @@ dist/
 htmlcov/
 .pylint.d/
 .cache/
+.eggs/
