@@ -21,7 +21,7 @@ class TestTimestamp(TestCase):
         """
         Test parse_timestamp
         """
-        unused = timestamp.parse_timestamp('date_string')
+        unused_result = timestamp.parse_timestamp('date_string')
         self.assertEqual(
             tuple(mock_parse_date.call_args),
             mock.call('date_string'),
@@ -33,7 +33,7 @@ class TestTimestamp(TestCase):
         """
         Test parse_timestamp
         """
-        unused = timestamp.make_timestamp('date_string')
+        unused_result = timestamp.make_timestamp('date_string')
         self.assertEqual(
             tuple(mock_rfc3339.call_args),
             mock.call('date_string'),
