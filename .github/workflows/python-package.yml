@@ -3,11 +3,7 @@
 
 name: Python Quality Control
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -30,7 +26,14 @@ jobs:
         python3 -m pip install -r requirements-dev.txt
     - name: Run integrity checks
       run: |
+        ./scripts/version.sh
         pycodestyle --format=pylint archivist unittests examples
         python3 -m pylint --rcfile=pylintrc archivist unittests examples
         black archivist examples unittests
+        modified=$(git status -s | wc -l)
+        if [ $modified -gt 0 ]
+        then
+            echo "there are $modified files that must be reformatted"
+            exit 1
+        fi
         ./scripts/unittests.sh
