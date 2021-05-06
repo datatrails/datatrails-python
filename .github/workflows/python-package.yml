@@ -30,5 +30,10 @@ jobs:
         pycodestyle --format=pylint archivist unittests examples
         python3 -m pylint --rcfile=pylintrc archivist unittests examples
         black archivist examples unittests
-        git status
+        modified=$(git status -s | wc -l)
+        if [ $modified -gt 0 ]
+        then
+            echo "there are $modified files that must be reformatted"
+            exit 1
+        fi
         ./scripts/unittests.sh
