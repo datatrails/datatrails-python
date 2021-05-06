@@ -3,7 +3,6 @@ Set up logging
 """
 import logging
 
-# pragma: no cover
 
 # base logger from which all loggers are propagated
 LOGGER = logging.getLogger()
@@ -17,8 +16,8 @@ def set_logger(level):
     Setup logger
     Also used by unittests
     """
-    LOGGER.setLevel(level)
-    if not LOGGER.hasHandlers():
+    LOGGER.setLevel(level)  # pragma: no cover
+    if not LOGGER.hasHandlers():  # pragma: no cover
         handler = logging.StreamHandler()
         handler.setFormatter(
             logging.Formatter(
