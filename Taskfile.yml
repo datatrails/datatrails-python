@@ -2,6 +2,13 @@ version: '3'
 
 tasks:
 
+  about:
+    desc: Generate about.py
+    cmds:
+      - ./scripts/version.sh
+    status:
+      - test -s archivist/about.py
+
   builder:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
@@ -9,6 +16,7 @@ tasks:
 
   check:
     desc: Check the style, bug and quality of the code
+    deps: [about]
     cmds:
       - ./scripts/builder.sh pycodestyle --format=pylint archivist unittests examples
       - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc archivist unittests examples
@@ -19,25 +27,29 @@ tasks:
       - find -name '*,cover' -type f -delete
       - git clean -fdX
 
-  unittests:
-    desc: Run unittests
-    cmds:
-      - ./scripts/builder.sh ./scripts/unittests.sh
-  
+  format:
+    desc: Format code using black
+    deps: [about]
+    cmds: 
+      - ./scripts/builder.sh black archivist examples unittests
+
   publish:
     desc: pubish wheel package (will require username and password)
+    deps: [about]
     cmds:
       - ./scripts/builder.sh python3 -m twine upload --repository pypi dist/*
 
+  unittests:
+    desc: Run unittests
+    deps: [about]
+    cmds:
+      - ./scripts/builder.sh ./scripts/unittests.sh
+  
   wheel:
     desc: Builds python wheel package
+    deps: [about]
     cmds:
       - rm -rf *egg-info
       - rm -rf build 
       - rm -f dist/*
       - python3 setup.py bdist_wheel
-  
-  format:
-    desc: Format code using black
-    cmds: 
-      - ./scripts/builder.sh black archivist examples unittests

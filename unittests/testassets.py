@@ -508,7 +508,7 @@ class TestAssets(TestCase):
             ),
         ]
 
-        self.arch.assets.timeout = 3
+        self.arch.assets.timeout = 2
         with self.assertRaises(ArchivistUnconfirmedError):
             self.arch.assets.wait_for_confirmed()
 

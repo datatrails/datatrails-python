@@ -407,7 +407,7 @@ class TestEvents(TestCase):
             MockResponse(200, **RESPONSE_PENDING),
             MockResponse(200, **RESPONSE_PENDING),
         ]
-        self.arch.events.timeout = 5
+        self.arch.events.timeout = 2
         with self.assertRaises(ArchivistUnconfirmedError):
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
 
