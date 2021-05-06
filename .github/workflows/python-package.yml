@@ -30,4 +30,5 @@ jobs:
         pycodestyle --format=pylint archivist unittests examples
         python3 -m pylint --rcfile=pylintrc archivist unittests examples
         black archivist examples unittests
+        git status
         ./scripts/unittests.sh
