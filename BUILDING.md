@@ -56,3 +56,64 @@ Note that this requires credentials and will only normally be done by a Jitsuin
 representative.
 
 
+## Testing Other Python Versions
+
+To build the docker builder image with default Python version 3.6:
+```bash
+task builder
+```
+
+To check the style
+```bash
+task check
+```
+
+To run the unittests:
+```bash
+task unittests
+```
+
+To build the docker builder image with Python 3.7:
+```bash
+task builder-3.7
+```
+
+To check the style
+```bash
+task check
+```
+
+To run the unittests:
+```bash
+task unittests
+```
+
+To build the docker builder image with Python 3.7:
+```bash
+task builder-3.8
+```
+
+To check the style
+```bash
+task check
+```
+
+To run the unittests:
+```bash
+task unittests
+```
+
+To build the docker builder image with Python 3.7:
+```bash
+task builder-3.8
+```
+
+To check the style
+```bash
+task check
+```
+
+To run the unittests:
+```bash
+task unittests
+```
