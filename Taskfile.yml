@@ -33,6 +33,7 @@ tasks:
     desc: Check the style, bug and quality of the code
     deps: [about]
     cmds:
+      - ./scripts/builder.sh python3 --version
       - ./scripts/builder.sh pycodestyle --format=pylint archivist unittests examples
       - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc archivist unittests examples
 

@@ -2,6 +2,7 @@
 #
 # run unittests
 #
+python3 --version
 
 rm -f coverage.xml
 rm -rf htmlcov
