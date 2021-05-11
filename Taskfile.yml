@@ -5,7 +5,7 @@ tasks:
   about:
     desc: Generate about.py
     cmds:
-      - ./scripts/version.sh
+      - ./scripts/builder.sh ./scripts/version.sh
     status:
       - test -s archivist/about.py
 

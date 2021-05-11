@@ -16,8 +16,8 @@ def set_logger(level):
     Setup logger
     Also used by unittests
     """
-    LOGGER.setLevel(level)  # pragma: no cover
-    if not LOGGER.hasHandlers():  # pragma: no cover
+    LOGGER.setLevel(level)
+    if not LOGGER.hasHandlers():
         handler = logging.StreamHandler()
         handler.setFormatter(
             logging.Formatter(
