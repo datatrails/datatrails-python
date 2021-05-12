@@ -67,10 +67,38 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         self._cert = cert
 
-        self.assets = _AssetsClient(self)
-        self.events = _EventsClient(self)
-        self.locations = _LocationsClient(self)
-        self.attachments = _AttachmentsClient(self)
+        self._assets = None
+        self._events = None
+        self._locations = None
+        self._attachments = None
+
+    @property
+    def assets(self):
+        """docstring"""
+        if self._assets is None:
+            self._assets = _AssetsClient(self)
+        return self._assets
+
+    @property
+    def events(self):
+        """docstring"""
+        if self._events is None:
+            self._events = _EventsClient(self)
+        return self._events
+
+    @property
+    def locations(self):
+        """docstring"""
+        if self._locations is None:
+            self._locations = _LocationsClient(self)
+        return self._locations
+
+    @property
+    def attachments(self):
+        """docstring"""
+        if self._attachments is None:
+            self._attachments = _AttachmentsClient(self)
+        return self._attachments
 
     @property
     def headers(self):

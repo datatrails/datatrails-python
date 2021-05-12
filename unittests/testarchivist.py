@@ -33,6 +33,30 @@ class TestArchivist(TestCase):
         Test default archivist creation
         """
         arch = Archivist("url", auth="authauthauth")
+        self.assertIsNotNone(
+            arch.assets,
+            msg="Incorrect assets",
+        )
+        self.assertIsNotNone(
+            arch.events,
+            msg="Incorrect events",
+        )
+        self.assertIsNotNone(
+            arch.locations,
+            msg="Incorrect locations",
+        )
+        self.assertIsNotNone(
+            arch.locations,
+            msg="Incorrect locations",
+        )
+        self.assertIsNotNone(
+            arch.attachments,
+            msg="Incorrect attachments",
+        )
+        self.assertIsNotNone(
+            arch.attachments,
+            msg="Incorrect attachments",
+        )
         self.assertEqual(
             arch.url,
             "url",
