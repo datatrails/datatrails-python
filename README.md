@@ -25,7 +25,7 @@ with open(".auth_token", mode='r') as tokenfile:
 
 # Initialize connection to Archivist - the URL for production will be different to this URL
 arch = Archivist(
-    "https://soak-0-avid.engineering-k8s-stage-2.dev.wild.jitsuin.io",
+    "https://rkvst.poc.jitsuin.io",
     auth=authtoken,
 )
 
