@@ -1,0 +1,18 @@
+---
+version: 2
+formats:
+  - htmlzip
+python:
+   version: 3.7
+   install:
+      - requirements: requirements.txt
+      - method: pip
+        path: .
+        extra_requirements:
+            - docs
+      - method: setuptools
+   system_packages: true
+sphinx:
+  builder: html
+  configuration: conf.py
+  fail_on_warning: false

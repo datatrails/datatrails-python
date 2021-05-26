@@ -13,7 +13,7 @@ from unittest import TestCase
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from archivist.errors import (
-    parse_response,
+    _parse_response,
     Archivist4xxError,
     Archivist5xxError,
     ArchivistBadRequestError,
@@ -38,7 +38,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(200)
-        error = parse_response(response)
+        error = _parse_response(response)
 
         self.assertEqual(
             error,
@@ -51,7 +51,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(300)
-        error = parse_response(response)
+        error = _parse_response(response)
 
         self.assertEqual(
             error,
@@ -64,7 +64,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(400, error="some error")
-        error = parse_response(response)
+        error = _parse_response(response)
 
         self.assertIsNotNone(
             error,
@@ -84,7 +84,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(401, error="some error")
-        error = parse_response(response)
+        error = _parse_response(response)
 
         self.assertIsNotNone(
             error,
@@ -104,7 +104,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(403, error="some error")
-        error = parse_response(response)
+        error = _parse_response(response)
 
         self.assertIsNotNone(
             error,
@@ -137,7 +137,7 @@ class TestErrors(TestCase):
             request=request,
             error="some error",
         )
-        error = parse_response(response)
+        error = _parse_response(response)
         self.assertIsNotNone(
             error,
             msg="error should not be None",
@@ -165,7 +165,7 @@ class TestErrors(TestCase):
             request=request,
             error="some error",
         )
-        error = parse_response(response)
+        error = _parse_response(response)
         self.assertIsNotNone(
             error,
             msg="error should not be None",
@@ -183,7 +183,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(405, error="some error")
-        error = parse_response(response)
+        error = _parse_response(response)
         self.assertIsNotNone(
             error,
             msg="error should not be None",
@@ -201,7 +201,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(500, error="some error")
-        error = parse_response(response)
+        error = _parse_response(response)
         self.assertIsNotNone(
             error,
             msg="error should not be None",
@@ -219,7 +219,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(501, error="some error")
-        error = parse_response(response)
+        error = _parse_response(response)
         self.assertIsNotNone(
             error,
             msg="error should not be None",
@@ -237,7 +237,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(503, error="some error")
-        error = parse_response(response)
+        error = _parse_response(response)
         self.assertIsNotNone(
             error,
             msg="error should not be None",
@@ -255,7 +255,7 @@ class TestErrors(TestCase):
         Test errors
         """
         response = MockResponse(600, error="some error")
-        error = parse_response(response)
+        error = _parse_response(response)
         self.assertIsNotNone(
             error,
             msg="error should not be None",

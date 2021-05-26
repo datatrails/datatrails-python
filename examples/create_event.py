@@ -1,29 +1,12 @@
-# Copyright 2019-2021 Jitsuin, inc
-
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-
-#        http://www.apache.org/licenses/LICENSE-2.0
-
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# This is API SAMPLE CODE, not for production use.
-
 """Create an event for an asset given url to Archivist and user Token.
 
-The module contains four functions: main, create_asset, create_event and fetch_event.
+The module contains four functions: main, create_asset and create_event.
 Main function parses in a url to the Archivist and a token, which is a user authorization.
 The main function would initialize an archivist connection using the url and
-the token, called "aconn", then call create_assets and pass in "aconn" and
+the token, called "arch", then call create_assets and pass in "arch" and
 create_assets will build create_asset, which is a archivist connection function
 to create a new asset for the archivist through archivist connection. The main funciton then
-calls create_event and pass in "aconn" and the created asset to create a new event for the asset.
-Main function calls fetch_event and pass in "aconn" and the identity of the event to get the event.
+calls create_event and pass in "arch" and the created asset to create a new event for the asset.
 """
 
 from archivist.archivist import Archivist
@@ -38,7 +21,9 @@ def create_event(arch, asset):
 
     Returns:
         new_event: a new event for the asset.
+
     """
+
     # props can be defined for different behaviours and the attributes associated with
     # different behaviours are also different. More details can be found here:
     # https://jitsuin-archivist.readthedocs.io/en/latest/assetv2/index.html
@@ -77,6 +62,7 @@ def create_asset(arch):
 
     Returns:
         newasset: a new asset created.
+
     """
     attrs = {
         "arc_display_name": "display_name",  # Asset's display name in the user interface
@@ -121,21 +107,23 @@ def main():
     create an example archivist connection and create an asset.
     The main function then uses the asset to create an event for
     the asset and fetch the event.
+
     """
     with open(".auth_token", mode="r") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist
     arch = Archivist(
-        "https://soak-0-avid.engineering-k8s-stage-2.dev.wild.jitsuin.io",
+        "https://rkvst.poc.jitsuin.io",
         auth=authtoken,
     )
     # Create a new asset
-    new_asset = create_asset(arch)
+    asset = create_asset(arch)
     # Create a new event
-    new_event = create_event(arch, new_asset)
+    event = create_event(arch, asset)
     # Fetch the event
-    unused_event = arch.events.read(new_event["identity"])
+    event = arch.events.read(event["identity"])
+    print("Event", event)
 
 
 if __name__ == "__main__":
