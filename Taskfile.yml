@@ -12,22 +12,22 @@ tasks:
   builder:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - docker build --no-cache --build-arg 3.6 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+      - docker build --no-cache --build-arg VERSION=3.6 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
 
   builder-3.7:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - docker build --no-cache --build-arg 3.7 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+      - docker build --no-cache --build-arg VERSION=3.7 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
 
   builder-3.8:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - docker build --no-cache --build-arg 3.8 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+      - docker build --no-cache --build-arg VERSION=3.8 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
   
   builder-3.9:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - docker build --no-cache --build-arg 3.9 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+      - docker build --no-cache --build-arg VERSION=3.9 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
 
   check:
     desc: Check the style, bug and quality of the code
@@ -42,6 +42,12 @@ tasks:
     cmds:
       - find -name '*,cover' -type f -delete
       - git clean -fdX
+
+  docs:
+    desc: Create sphinx documentation
+    deps: [about]
+    cmds: 
+      - ./scripts/builder.sh /bin/bash -c "cd docs && make html"
 
   format:
     desc: Format code using black
