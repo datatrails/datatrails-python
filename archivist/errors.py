@@ -1,5 +1,7 @@
 """Archivist exceptions
 
+   All exceptions are derived from a base ArchivistError class.
+
 """
 
 import json
@@ -18,7 +20,7 @@ class ArchivistUnconfirmedError(ArchivistError):
 
 
 class ArchivistIllegalArgumentError(ArchivistError):
-    """Option al keyword arguments are inconsistent"""
+    """Optional keyword arguments are inconsistent"""
 
 
 class ArchivistBadRequestError(ArchivistError):
@@ -30,7 +32,7 @@ class ArchivistDuplicateError(ArchivistError):
 
 
 class ArchivistUnauthenticatedError(ArchivistError):
-    """user is unknown 401)"""
+    """user is unknown (401)"""
 
 
 class ArchivistForbiddenError(ArchivistError):
@@ -50,7 +52,7 @@ class ArchivistNotImplementedError(ArchivistError):
 
 
 class ArchivistUnavailableError(ArchivistError):
-    """Service is unavailable REST verb (503)"""
+    """Service is unavailable (503)"""
 
 
 class Archivist5xxError(ArchivistError):
@@ -75,8 +77,19 @@ def __identity(response):
     return identity
 
 
-def parse_response(response):
-    """Return exception if appropriate"""
+def _parse_response(response):
+    """Parse REST response
+
+    Validates REST response. This is a convenience function called
+    by all REST calls.
+
+    Args:
+         response (response): response from underlying REST call
+
+    Returns:
+         suitable exception if validation fails, None otherwise
+
+    """
 
     status_code = response.status_code
     if status_code < 400:
