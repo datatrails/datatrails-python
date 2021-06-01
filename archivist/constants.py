@@ -27,3 +27,6 @@ ATTACHMENTS_LABEL = "blobs"
 
 ACCESS_POLICIES_SUBPATH = "iam/v1"
 ACCESS_POLICIES_LABEL = "access_policies"
+
+SUBJECTS_SUBPATH = "iam/v1"
+SUBJECTS_LABEL = "subjects"

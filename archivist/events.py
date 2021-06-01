@@ -83,7 +83,7 @@ class _EventsClient:
 
         Args:
             asset_id (str): asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-            attrs (dict): attributes and asset_attributes of created event.
+            attrs (dict): request body of event.
             confirm (bool): if True wait for event to be confirmed on DLT.
 
         Returns:

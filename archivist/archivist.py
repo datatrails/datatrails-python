@@ -53,12 +53,16 @@ from .assets import _AssetsClient
 from .events import _EventsClient
 from .locations import _LocationsClient
 from .attachments import _AttachmentsClient
+from .access_policies import _AccessPoliciesClient
+from .subjects import _SubjectsClient
 
 CLIENTS = {
     "assets": _AssetsClient,
     "events": _EventsClient,
     "locations": _LocationsClient,
     "attachments": _AttachmentsClient,
+    "access_policies": _AccessPoliciesClient,
+    "subjects": _SubjectsClient,
 }
 
 

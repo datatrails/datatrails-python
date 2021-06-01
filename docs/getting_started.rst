@@ -16,3 +16,8 @@ See the examples directory.
    create_event
    filter_events
 
+   access_policy_create
+   access_policies_filter
+
+   subject_create
+   subjects_filter
