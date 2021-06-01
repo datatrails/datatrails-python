@@ -255,20 +255,10 @@ Bring in latest changes from upstream:
 ```bash
 git fetch upstream
 git checkout main
-git pull --rebase upstream main
+git merge upstream/main
 git checkout dev/githubUserHandle/some-proposed-fix
 git rebase -i --autosquash main
 ```
-> Caveat
->
-> Note that we are rebasing to pull in upstream changes. This assumes that
-> the branch is only accessed/written by one person. If the branch is
-> collaborative the better option is to 'git merge main' as this is
-> safer but pollutes the git history with merge commits.
-> See https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing 
->
-> This caveat applies to all occurrences of 'git rebase' in this document.
-
 
 Ensure that your email and name are correct:
 
@@ -318,7 +308,7 @@ squash all your fixups after syncing upstream:
 ```bash
 git fetch upstream
 git checkout main
-git pull --rebase upstream main
+git merge upstream/main
 git checkout dev/githubUserHandle/some-proposed-fix
 git rebase -i --autosquash main
 git push -f
@@ -333,7 +323,7 @@ At this point one must tidy up the local fork:
 ```bash
 git fetch upstream
 git checkout main
-git pull
+git merge upstream/main
 git log
 git branch -d dev/githubUserHandle/some-proposed-fix
 ```
