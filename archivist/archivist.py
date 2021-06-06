@@ -54,6 +54,13 @@ from .events import _EventsClient
 from .locations import _LocationsClient
 from .attachments import _AttachmentsClient
 
+CLIENTS = {
+    "assets": _AssetsClient,
+    "events": _EventsClient,
+    "locations": _LocationsClient,
+    "attachments": _AttachmentsClient,
+}
+
 
 class Archivist:  # pylint: disable=too-many-instance-attributes
     """Base class for all Archivist endpoints.
@@ -100,57 +107,16 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self._locations = None
         self._attachments = None
 
-    @property
-    def assets(self):
-        """Assets endpoint
+    def __getattr__(self, value):
+        """Create endpoints on demand"""
+        client = CLIENTS.get(value)
 
-        Cached assets endpoint.
+        if client is None:
+            raise AttributeError
 
-        Returns:
-            instance of class that represents a CRUD interface to assets.
-        """
-        if self._assets is None:
-            self._assets = _AssetsClient(self)
-        return self._assets
-
-    @property
-    def events(self):
-        """events endpoint
-
-        Cached events endpoint.
-
-        Returns:
-            instance of class that represents a CRUD interface to events.
-        """
-        if self._events is None:
-            self._events = _EventsClient(self)
-        return self._events
-
-    @property
-    def locations(self):
-        """Locations endpoint
-
-        Cached locations endpoint.
-
-        Returns:
-            instance of class that represents a CRUD interface to locations.
-        """
-        if self._locations is None:
-            self._locations = _LocationsClient(self)
-        return self._locations
-
-    @property
-    def attachments(self):
-        """Attachments endpoint
-
-        Cached attachments endpoint.
-
-        Returns:
-            instance of class that represents a upload/download interface to attachments.
-        """
-        if self._attachments is None:
-            self._attachments = _AttachmentsClient(self)
-        return self._attachments
+        c = client(self)
+        super().__setattr__(value, c)
+        return c
 
     @property
     def headers(self):

@@ -74,6 +74,8 @@ class TestArchivist(TestCase):
             arch.verify,
             msg="verify must be True",
         )
+        with self.assertRaises(AttributeError):
+            e = arch.Illegal_endpoint
 
     def test_archivist_no_verify(self):
         """
