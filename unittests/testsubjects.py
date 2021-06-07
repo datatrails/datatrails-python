@@ -20,7 +20,6 @@ from .mock_response import MockResponse
 
 
 # pylint: disable=missing-docstring
-# pylint: disable=unnecessary-comprehension
 # pylint: disable=unused-variable
 
 DISPLAY_NAME = "Subject display name"

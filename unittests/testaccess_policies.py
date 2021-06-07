@@ -22,7 +22,6 @@ from .testassets import RESPONSE as ASSET
 
 
 # pylint: disable=missing-docstring
-# pylint: disable=unnecessary-comprehension
 # pylint: disable=unused-variable
 
 PROPS = {

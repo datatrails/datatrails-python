@@ -20,7 +20,6 @@ from .mock_response import MockResponse
 
 
 # pylint: disable=missing-docstring
-# pylint: disable=unnecessary-comprehension
 # pylint: disable=unused-variable
 
 PROPS = {
@@ -251,8 +250,7 @@ class TestLocations(TestCase):
             ],
         )
 
-        listing = self.arch.locations.list()
-        locations = [a for a in listing]
+        locations = list(self.arch.locations.list())
         self.assertEqual(
             len(locations),
             1,
@@ -294,11 +292,12 @@ class TestLocations(TestCase):
             ],
         )
 
-        listing = self.arch.locations.list(
-            props={"display_name": "Macclesfield, Cheshire"},
-            attrs={"director": "John Smith"},
+        locations = list(
+            self.arch.locations.list(
+                props={"display_name": "Macclesfield, Cheshire"},
+                attrs={"director": "John Smith"},
+            )
         )
-        locations = [a for a in listing]
         self.assertEqual(
             len(locations),
             1,
