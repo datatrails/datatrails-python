@@ -21,7 +21,6 @@ from archivist.errors import ArchivistUnconfirmedError
 from .mock_response import MockResponse
 
 # pylint: disable=missing-docstring
-# pylint: disable=unnecessary-comprehension
 # pylint: disable=unused-variable
 
 
@@ -555,8 +554,7 @@ class TestAssets(TestCase):
             ],
         )
 
-        listing = self.arch.assets.list()
-        assets = [a for a in listing]
+        assets = list(self.arch.assets.list())
         self.assertEqual(
             len(assets),
             1,
@@ -598,13 +596,14 @@ class TestAssets(TestCase):
             ],
         )
 
-        listing = self.arch.assets.list(
-            props={
-                "confirmation_status": "CONFIRMED",
-            },
-            attrs={"arc_firmware_version": "1.0"},
+        assets = list(
+            self.arch.assets.list(
+                props={
+                    "confirmation_status": "CONFIRMED",
+                },
+                attrs={"arc_firmware_version": "1.0"},
+            )
         )
-        assets = [a for a in listing]
         self.assertEqual(
             len(assets),
             1,

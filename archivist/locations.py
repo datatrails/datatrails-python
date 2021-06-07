@@ -39,7 +39,6 @@ class _LocationsClient:
     Args:
         archivist (Archivist): :class:`Archivist` instance
 
-
     """
 
     def __init__(self, archivist):
@@ -67,7 +66,7 @@ class _LocationsClient:
         Suitable for reading data from a file using json.load or yaml.load
 
         Args:
-            data (dict): list of accepted behaviours for this asset.
+            data (dict): request body of location.
 
         Returns:
             :class:`Location` instance

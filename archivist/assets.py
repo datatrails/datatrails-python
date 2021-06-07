@@ -49,7 +49,7 @@ class _AssetsClient:
     def __init__(self, archivist):
         self._archivist = archivist
 
-    def create(self, behaviours, attrs, confirm=False):
+    def create(self, behaviours, attrs, *, confirm=False):
         """Create asset
 
         Creates asset with defined behaviours and attributes.
@@ -71,14 +71,14 @@ class _AssetsClient:
             confirm=confirm,
         )
 
-    def create_from_data(self, data, confirm=False):
+    def create_from_data(self, data, *, confirm=False):
         """Create asset
 
         Creates asset with request body from data stream.
         Suitable for reading data from a file using json.load or yaml.load
 
         Args:
-            data (dict): list os accpted behaviours for this asset.
+            data (dict): request bosy of asset.
             confirm (bool): if True wait for asset to be confirmed on DLT.
 
         Returns:

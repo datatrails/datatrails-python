@@ -1,5 +1,5 @@
 """
-Test archivist
+Test subjects
 """
 
 import json
@@ -10,11 +10,11 @@ from archivist.constants import (
     ROOT,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
-    LOCATIONS_SUBPATH,
-    LOCATIONS_LABEL,
+    SUBJECTS_SUBPATH,
+    SUBJECTS_LABEL,
 )
 from archivist.errors import ArchivistBadRequestError
-from archivist.locations import DEFAULT_PAGE_SIZE
+from archivist.subjects import DEFAULT_PAGE_SIZE
 
 from .mock_response import MockResponse
 
@@ -22,38 +22,41 @@ from .mock_response import MockResponse
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
-PROPS = {
-    "display_name": "Macclesfield, Cheshire",
-    "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
-    "latitude": "53.2546799",
-    "longitude": "-2.1213956,14.54",
-}
-ATTRS = {
-    "director": "John Smith",
-    "address": "Bridgewater, Somerset",
-    "facility_type": "Manufacture",
-    "support_email": "support@macclesfield.com",
-    "support_phone": "123 456 789",
-}
-
-IDENTITY = f"{LOCATIONS_LABEL}/xxxxxxxx"
-SUBPATH = f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}"
+DISPLAY_NAME = "Subject display name"
+WALLET_PUB_KEYS = [
+    "wallet1",
+    "wallet2",
+]
+WALLET_ADDRESSES = [
+    "address1",
+    "address2",
+]
+TESSERA_PUB_KEYS = [
+    "tessera1",
+    "tessera2",
+]
+IDENTITY = f"{SUBJECTS_LABEL}/xxxxxxxx"
+SUBPATH = f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}"
 
 RESPONSE = {
-    **PROPS,
     "identity": IDENTITY,
-    "attributes": ATTRS,
+    "display_name": DISPLAY_NAME,
+    "wallet_pub_key": WALLET_PUB_KEYS,
+    "wallet_address": WALLET_ADDRESSES,
+    "tessera_pub_key": TESSERA_PUB_KEYS,
 }
 REQUEST = {
-    **PROPS,
-    "attributes": ATTRS,
+    "display_name": DISPLAY_NAME,
+    "wallet_pub_key": WALLET_PUB_KEYS,
+    "tessera_pub_key": TESSERA_PUB_KEYS,
 }
 REQUEST_DATA = json.dumps(REQUEST)
+UPDATE_DATA = json.dumps({"display_name": DISPLAY_NAME})
 
 
-class TestLocations(TestCase):
+class TestSubjects(TestCase):
     """
-    Test Archivist Locations Create method
+    Test Archivist Subjects Create method
     """
 
     maxDiff = None
@@ -62,13 +65,15 @@ class TestLocations(TestCase):
         self.arch = Archivist("url", auth="authauthauth")
 
     @mock.patch("requests.post")
-    def test_locations_create(self, mock_post):
+    def test_subjects_create(self, mock_post):
         """
-        Test location creation
+        Test subject creation
         """
         mock_post.return_value = MockResponse(200, **RESPONSE)
 
-        location = self.arch.locations.create(PROPS, attrs=ATTRS)
+        subject = self.arch.subjects.create(
+            DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+        )
         self.assertEqual(
             tuple(mock_post.call_args),
             (
@@ -86,23 +91,23 @@ class TestLocations(TestCase):
             msg="CREATE method called incorrectly",
         )
         self.assertEqual(
-            location,
+            subject,
             RESPONSE,
             msg="CREATE method called incorrectly",
         )
 
     @mock.patch("requests.get")
-    def test_locations_read(self, mock_get):
+    def test_subjects_read(self, mock_get):
         """
-        Test asset reading
+        Test subject reading
         """
         mock_get.return_value = MockResponse(200, **RESPONSE)
 
-        asset = self.arch.locations.read(IDENTITY)
+        subject = self.arch.subjects.read(IDENTITY)
         self.assertEqual(
             tuple(mock_get.call_args),
             (
-                ((f"url/{ROOT}/{LOCATIONS_SUBPATH}/{IDENTITY}"),),
+                ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
                 {
                     "headers": {
                         "content-type": "application/json",
@@ -115,29 +120,81 @@ class TestLocations(TestCase):
             msg="GET method called incorrectly",
         )
 
+    @mock.patch("requests.delete")
+    def test_subjects_delete(self, mock_delete):
+        """
+        Test subject deleting
+        """
+        mock_delete.return_value = MockResponse(200, {})
+
+        subject = self.arch.subjects.delete(IDENTITY)
+        self.assertEqual(
+            tuple(mock_delete.call_args),
+            (
+                ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
+                {
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                    "cert": None,
+                },
+            ),
+            msg="DELETE method called incorrectly",
+        )
+
+    @mock.patch("requests.patch")
+    def test_subjects_update(self, mock_patch):
+        """
+        Test subject deleting
+        """
+        mock_patch.return_value = MockResponse(200, **RESPONSE)
+
+        subject = self.arch.subjects.update(
+            IDENTITY,
+            display_name=DISPLAY_NAME,
+        )
+        self.assertEqual(
+            tuple(mock_patch.call_args),
+            (
+                ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
+                {
+                    "data": UPDATE_DATA,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                    "cert": None,
+                },
+            ),
+            msg="PATCH method called incorrectly",
+        )
+
     @mock.patch("requests.get")
-    def test_locations_read_with_error(self, mock_get):
+    def test_subjects_read_with_error(self, mock_get):
         """
         Test read method with error
         """
         mock_get.return_value = MockResponse(400)
         with self.assertRaises(ArchivistBadRequestError):
-            resp = self.arch.locations.read(IDENTITY)
+            resp = self.arch.subjects.read(IDENTITY)
 
     @mock.patch("requests.get")
-    def test_locations_count(self, mock_get):
+    def test_subjects_count(self, mock_get):
         """
-        Test location counting
+        Test subject counting
         """
         mock_get.return_value = MockResponse(
             200,
             headers={HEADERS_TOTAL_COUNT: 1},
-            locations=[
+            subjects=[
                 RESPONSE,
             ],
         )
 
-        count = self.arch.locations.count()
+        count = self.arch.subjects.count()
         self.assertEqual(
             tuple(mock_get.call_args),
             (
@@ -161,20 +218,20 @@ class TestLocations(TestCase):
         )
 
     @mock.patch("requests.get")
-    def test_locations_count_with_props_query(self, mock_get):
+    def test_subjects_count_by_name(self, mock_get):
         """
-        Test location counting
+        Test subject counting
         """
         mock_get.return_value = MockResponse(
             200,
             headers={HEADERS_TOTAL_COUNT: 1},
-            locations=[
+            subjects=[
                 RESPONSE,
             ],
         )
 
-        count = self.arch.locations.count(
-            props={"display_name": "Macclesfield, Cheshire"},
+        count = self.arch.subjects.count(
+            display_name="Subject display name",
         )
         self.assertEqual(
             tuple(mock_get.call_args),
@@ -183,7 +240,7 @@ class TestLocations(TestCase):
                     (
                         f"url/{ROOT}/{SUBPATH}"
                         "?page_size=1"
-                        "&display_name=Macclesfield, Cheshire"
+                        "&display_name=Subject display name"
                     ),
                 ),
                 {
@@ -200,67 +257,28 @@ class TestLocations(TestCase):
         )
 
     @mock.patch("requests.get")
-    def test_locations_count_with_attrs_query(self, mock_get):
+    def test_subjects_list(self, mock_get):
         """
-        Test location counting
+        Test subject listing
         """
         mock_get.return_value = MockResponse(
             200,
-            headers={HEADERS_TOTAL_COUNT: 1},
-            locations=[
+            subjects=[
                 RESPONSE,
             ],
         )
 
-        count = self.arch.locations.count(
-            attrs={"director": "John Smith"},
-        )
+        subjects = list(self.arch.subjects.list())
         self.assertEqual(
-            tuple(mock_get.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{SUBPATH}"
-                        "?page_size=1"
-                        "&attributes.director=John Smith"
-                    ),
-                ),
-                {
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                        HEADERS_REQUEST_TOTAL_COUNT: "true",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="GET method called incorrectly",
-        )
-
-    @mock.patch("requests.get")
-    def test_locations_list(self, mock_get):
-        """
-        Test location listing
-        """
-        mock_get.return_value = MockResponse(
-            200,
-            locations=[
-                RESPONSE,
-            ],
-        )
-
-        locations = list(self.arch.locations.list())
-        self.assertEqual(
-            len(locations),
+            len(subjects),
             1,
-            msg="incorrect number of locations",
+            msg="incorrect number of subjects",
         )
-        for location in locations:
+        for subject in subjects:
             self.assertEqual(
-                location,
+                subject,
                 RESPONSE,
-                msg="Incorrect location listed",
+                msg="Incorrect subject listed",
             )
 
         for a in mock_get.call_args_list:
@@ -281,33 +299,32 @@ class TestLocations(TestCase):
             )
 
     @mock.patch("requests.get")
-    def test_locations_list_with_query(self, mock_get):
+    def test_subjects_list_by_name(self, mock_get):
         """
-        Test location listing
+        Test subject listing
         """
         mock_get.return_value = MockResponse(
             200,
-            locations=[
+            subjects=[
                 RESPONSE,
             ],
         )
 
-        locations = list(
-            self.arch.locations.list(
-                props={"display_name": "Macclesfield, Cheshire"},
-                attrs={"director": "John Smith"},
+        subjects = list(
+            self.arch.subjects.list(
+                display_name="Subject display name",
             )
         )
         self.assertEqual(
-            len(locations),
+            len(subjects),
             1,
-            msg="incorrect number of locations",
+            msg="incorrect number of subjects",
         )
-        for location in locations:
+        for subject in subjects:
             self.assertEqual(
-                location,
+                subject,
                 RESPONSE,
-                msg="Incorrect location listed",
+                msg="Incorrect subject listed",
             )
 
         for a in mock_get.call_args_list:
@@ -318,8 +335,7 @@ class TestLocations(TestCase):
                         (
                             f"url/{ROOT}/{SUBPATH}"
                             f"?page_size={DEFAULT_PAGE_SIZE}"
-                            "&attributes.director=John Smith"
-                            "&display_name=Macclesfield, Cheshire"
+                            "&display_name=Subject display name"
                         ),
                     ),
                     {
@@ -333,38 +349,3 @@ class TestLocations(TestCase):
                 ),
                 msg="GET method called incorrectly",
             )
-
-    @mock.patch("requests.get")
-    def test_locations_read_by_signature(self, mock_get):
-        """
-        Test location read_by_signature
-        """
-        mock_get.return_value = MockResponse(
-            200,
-            locations=[
-                RESPONSE,
-            ],
-        )
-
-        location = self.arch.locations.read_by_signature()
-        self.assertEqual(
-            location,
-            RESPONSE,
-            msg="Incorrect location listed",
-        )
-
-        self.assertEqual(
-            tuple(mock_get.call_args),
-            (
-                (f"url/{ROOT}/{SUBPATH}?page_size=2",),
-                {
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="GET method called incorrectly",
-        )

@@ -23,7 +23,6 @@ from archivist.events import Event, DEFAULT_PAGE_SIZE
 from .mock_response import MockResponse
 
 # pylint: disable=missing-docstring
-# pylint: disable=unnecessary-comprehension
 # pylint: disable=unused-variable
 
 ASSET_ID = f"{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
@@ -696,8 +695,7 @@ class TestEvents(TestCase):
             ],
         )
 
-        listing = self.arch.events.list(asset_id=ASSET_ID)
-        events = [a for a in listing]
+        events = list(self.arch.events.list(asset_id=ASSET_ID))
         self.assertEqual(
             len(events),
             1,
@@ -746,14 +744,15 @@ class TestEvents(TestCase):
             ],
         )
 
-        listing = self.arch.events.list(
-            asset_id=ASSET_ID,
-            props={
-                "confirmation_status": "CONFIRMED",
-            },
-            attrs={"arc_firmware_version": "1.0"},
+        events = list(
+            self.arch.events.list(
+                asset_id=ASSET_ID,
+                props={
+                    "confirmation_status": "CONFIRMED",
+                },
+                attrs={"arc_firmware_version": "1.0"},
+            )
         )
-        events = [a for a in listing]
         self.assertEqual(
             len(events),
             1,
@@ -804,13 +803,14 @@ class TestEvents(TestCase):
             ],
         )
 
-        listing = self.arch.events.list(
-            props={
-                "confirmation_status": "CONFIRMED",
-            },
-            attrs={"arc_firmware_version": "1.0"},
+        events = list(
+            self.arch.events.list(
+                props={
+                    "confirmation_status": "CONFIRMED",
+                },
+                attrs={"arc_firmware_version": "1.0"},
+            )
         )
-        events = [a for a in listing]
         self.assertEqual(
             len(events),
             1,

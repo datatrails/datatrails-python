@@ -18,6 +18,8 @@ Jitsuin Archivist
    locations
    attachments
 
+   iam/index
+
    archivist
    timestamp
    errors
