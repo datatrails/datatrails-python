@@ -176,6 +176,21 @@ If ok run the unittests:
 task unittests
 ```
 
+If you have access to an archivist instance then one can run functional tests. The URL
+and authtoken are required. The authtoken must be stored in a file in the credentials
+subdirectory credentials/authtoken (say).
+
+These tests will create artefacts on the archivist instance so it is **not** recommended that 
+they be run in a production environment.
+
+Set 2 environment variables and execute:
+
+```bash
+export TEST_ARCHIVIST="https://rkvst.poc.jitsuin.io"
+export TEST_AUTHTOKEN=credentials/authtoken
+task functests
+```
+
 #### Testing Other Python Versions
 
 ##### Python 3.6

@@ -20,7 +20,6 @@ from .mock_response import MockResponse
 
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
-# pylint: disable=unnecessary-comprehension
 
 
 class TestArchivist(TestCase):
@@ -74,6 +73,8 @@ class TestArchivist(TestCase):
             arch.verify,
             msg="verify must be True",
         )
+        with self.assertRaises(AttributeError):
+            e = arch.Illegal_endpoint
 
     def test_archivist_no_verify(self):
         """
@@ -598,8 +599,7 @@ class TestArchivistList(TestArchivistMethods):
                 },
             ],
         )
-        listing = self.arch.list("path/path", "things")
-        responses = [r for r in listing]
+        responses = list(self.arch.list("path/path", "things"))
         self.assertEqual(
             len(responses),
             1,
@@ -635,9 +635,8 @@ class TestArchivistList(TestArchivistMethods):
                 },
             ],
         )
-        listing = self.arch.list("path/path", "things")
         with self.assertRaises(ArchivistBadRequestError):
-            responses = [r for r in listing]
+            responses = list(self.arch.list("path/path", "things"))
 
     @mock.patch("requests.get")
     def test_list_with_bad_field(self, mock_get):
@@ -652,9 +651,8 @@ class TestArchivistList(TestArchivistMethods):
                 },
             ],
         )
-        listing = self.arch.list("path/path", "badthings")
         with self.assertRaises(ArchivistBadFieldError):
-            responses = [r for r in listing]
+            responses = list(self.arch.list("path/path", "badthings"))
 
     @mock.patch("requests.get")
     def test_list_with_headers(self, mock_get):
@@ -669,12 +667,13 @@ class TestArchivistList(TestArchivistMethods):
                 },
             ],
         )
-        listing = self.arch.list(
-            "path/path",
-            "things",
-            headers={"headerfield1": "headervalue1"},
+        responses = list(
+            self.arch.list(
+                "path/path",
+                "things",
+                headers={"headerfield1": "headervalue1"},
+            )
         )
-        responses = [r for r in listing]
         self.assertEqual(
             len(responses),
             1,
@@ -711,12 +710,13 @@ class TestArchivistList(TestArchivistMethods):
                 },
             ],
         )
-        listing = self.arch.list(
-            "path/path",
-            "things",
-            query={"queryfield1": "queryvalue1"},
+        responses = list(
+            self.arch.list(
+                "path/path",
+                "things",
+                query={"queryfield1": "queryvalue1"},
+            )
         )
-        responses = [r for r in listing]
         self.assertEqual(
             len(responses),
             1,
@@ -756,12 +756,13 @@ class TestArchivistList(TestArchivistMethods):
                 },
             ],
         )
-        listing = self.arch.list(
-            "path/path",
-            "things",
-            page_size=2,
+        responses = list(
+            self.arch.list(
+                "path/path",
+                "things",
+                page_size=2,
+            )
         )
-        responses = [r for r in listing]
         self.assertEqual(
             len(responses),
             2,
@@ -823,12 +824,13 @@ class TestArchivistList(TestArchivistMethods):
                 ],
             ),
         ]
-        listing = self.arch.list(
-            "path/path",
-            "things",
-            page_size=2,
+        responses = list(
+            self.arch.list(
+                "path/path",
+                "things",
+                page_size=2,
+            )
         )
-        responses = [r for r in listing]
         self.assertEqual(
             len(responses),
             4,
