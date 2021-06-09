@@ -30,8 +30,9 @@ from .constants import (
 from .confirm import wait_for_confirmation, wait_for_confirmed
 
 
-#: Default page size - number of entities fetched in one call to the
-#: :func:`~_AssetsClient.list` method.
+#: Default page size - number of entities fetched in one REST GET in the
+#: :func:`~_AssetsClient.list` method. This can be overridden but should rarely
+#: be changed.
 DEFAULT_PAGE_SIZE = 500
 
 

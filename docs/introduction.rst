@@ -27,4 +27,4 @@ REST api (in any language):
     *  fully unittested - 100% coverage.
     *  code style managed and enforced. 
 
-See the **examples/** directory for code that creates assets and events and lists them.
+See the **examples/** directory for example code.

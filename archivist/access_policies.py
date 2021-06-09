@@ -17,7 +17,7 @@
           "https://rkvst.poc.jitsuin.io",
           auth=authtoken,
       )
-      asset = arch.access_policies.create(...)
+      access_policy = arch.access_policies.create(...)
 
 """
 
@@ -32,6 +32,9 @@ from .constants import (
 
 from .assets import Asset
 
+#: Default page size - number of entities fetched in one REST GET in the
+#: :func:`~_AccessPoliciesClient.list` method. This can be overridden but should rarely
+#: be changed.
 DEFAULT_PAGE_SIZE = 500
 
 
@@ -182,7 +185,7 @@ class _AccessPoliciesClient:
     ):
         """List access policies.
 
-        List access policiess that match criteria.
+        List access policies that match criteria.
 
         Args:
             display_name (str): display name (optional0
