@@ -86,7 +86,7 @@ class Manager():
 
         # wait for a number of seconds
         if wait_time > 0:
-            print("waiting for {} seconds".format(wait_time))
+            print("Waiting for {} seconds".format(wait_time))
             time.sleep(wait_time)
 
         # find an operation to run
@@ -193,6 +193,18 @@ class Manager():
         compliance = self.client.compliance.read(asset_identity)
         print("Compliance: {}".format(compliance["compliant"]))
 
+        # if there is a reason print it
+        for policy_outcome in compliance["compliance"]:
+
+            if policy_outcome["reason"] == "":
+                continue
+
+            # get the compliance policy
+            policy = self.client.compliance_policies.read(policy_outcome["compliance_policy_identity"])
+
+            # print the policy name and the reason
+            print("\tPolicy: {}. Reason: {}".format(policy["display_name"], policy_outcome["reason"]))
+
     def delete_compliance_policy(self, policy_id):
         """
         delete_compliance_policy deletes a given policy
@@ -215,5 +227,9 @@ class Manager():
             self.delete_compliance_policy(policy_id)
 
 
-manager = Manager(url, "token.txt", "richness_story.yaml")
-manager.run()
+def main():
+    manager = Manager(url, "token.txt", "richness_story.yaml")
+    manager.run()
+
+if __name__ == "__main__":
+    main()
