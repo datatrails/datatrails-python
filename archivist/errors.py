@@ -8,7 +8,7 @@ import json
 
 
 class ArchivistError(Exception):
-    """Base exception fot=r archivist package"""
+    """Base exception for archivist package"""
 
 
 class ArchivistBadFieldError(ArchivistError):

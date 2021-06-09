@@ -17,7 +17,7 @@
           "https://rkvst.poc.jitsuin.io",
           auth=authtoken,
       )
-      asset = arch.subjects.create(...)
+      subject = arch.subjects.create(...)
 
 """
 
@@ -26,6 +26,9 @@ from .constants import (
     SUBJECTS_LABEL,
 )
 
+#: Default page size - number of entities fetched in one REST GET in the
+#: :func:`~_SubjectsClient.list` method. This can be overridden but should rarely
+#: be changed.
 DEFAULT_PAGE_SIZE = 500
 
 

@@ -25,8 +25,9 @@
 from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 
 
-#: Default page size - number of entities fetched in one call to the
-#: :func:`~_LocationsClient.list` method.
+#: Default page size - number of entities fetched in one REST GET in the
+#: :func:`~_LocationsClient.list` method. This can be overridden but should rarely
+#: be changed.
 DEFAULT_PAGE_SIZE = 500
 
 
