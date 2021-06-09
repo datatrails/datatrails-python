@@ -19,7 +19,7 @@ class Operation(Enum):
     DELETE_COMPLIANCE = 5
 
 
-
+# TODO pass url in via argparser or something
 url = "https://dev-jgough-0-avid.scratch-6.dev.wild.jitsuin.io:443"
 
 def parse_arg(arg, key, default=None):
