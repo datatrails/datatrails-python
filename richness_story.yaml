@@ -47,7 +47,7 @@ operations:
 
 
   - operation: CREATE_COMPLIANCE_POLICY
-    to_print: Create a compliance policy that checks the weight of a radiation bag is less than 10kg.
+    to_print: Create a compliance policy that checks the weight of a radiation bag is less than or equal to 10kg.
     policy_id: weight saftey policy 1
     description: weight level safety policy
     display_name: weight saftey policy

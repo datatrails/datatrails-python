@@ -20,7 +20,12 @@ class Operation(Enum):
 
 
 # TODO pass url in via argparser or something
-url = "https://dev-jgough-0-avid.scratch-6.dev.wild.jitsuin.io:443"
+
+#url = "https://dev-jgough-0-avid.scratch-6.dev.wild.jitsuin.io:443"  # scratch deployment
+url = "https://qa.wild.jitsuin.io:443"  # qa deployment
+
+#token_file = "token.txt"  # scratch deployment
+token_file = "qa_token.txt"  # qa deployment
 
 def parse_arg(arg, key, default=None):
     """
@@ -163,14 +168,26 @@ class Manager():
         display_name = parse_arg(arg, "display_name")
         asset_filter = parse_arg(arg, "asset_filter")
         policy_type = parse_arg(arg, "policy_type")
+
+        # richness args
         richness_assertions = parse_arg(arg, "richness_assertions", default=[])
+
+        # dynamic tolerance args
+        event_display_type = parse_arg(arg, "event_display_type", default="")
+        closing_event_display_type = parse_arg(arg, "closing_event_display_type", default="")
+        dynamic_window = parse_arg(arg, "dynamic_window", 0)
+        dynamic_variability = parse_arg(arg, "dynamic_variability", 0.0)
 
         policy = self.client.compliance_policies.create(
             description,
             display_name,
             asset_filter,
             compliance_type=PolicyType[policy_type],
-            richness_assertions=richness_assertions
+            richness_assertions=richness_assertions,
+            event_display_type=event_display_type,
+            closing_event_display_type=closing_event_display_type,
+            dynamic_window=dynamic_window,
+            dynamic_variability=dynamic_variability,
         )
         print("Policy Created!")
 
@@ -228,7 +245,7 @@ class Manager():
 
 
 def main():
-    manager = Manager(url, "token.txt", "richness_story.yaml")
+    manager = Manager(url, token_file, "richness_story.yaml")
     manager.run()
 
 if __name__ == "__main__":

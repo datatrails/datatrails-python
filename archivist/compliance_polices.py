@@ -65,7 +65,8 @@ class _CompliancePoliciesClient:
         self._archivist = archivist
 
     def create(self, description, display_name, asset_filter, compliance_type=PolicyType.COMPLIANCE_TYPE_UNDEFINED,
-               richness_assertions=[], event_display_type="", time_period_seconds=0, dynamic_window=0, dynamic_variability=0.0):
+               richness_assertions=[], event_display_type="", closing_event_display_type="",
+               time_period_seconds=0, dynamic_window=0, dynamic_variability=0.0):
         """Create compliance policy
 
         Args:
@@ -75,6 +76,7 @@ class _CompliancePoliciesClient:
             compliance_type (PolicyType): policy type, e.g. `DYNAMIC_TOLERANCE`, default to `TYPE_UNDEFINED`.
             richness_assertions (filter): in the form [{"or":["foo<7",...]}...] required for RICHNESS
             event_display_type (string): target event display type (required for all policies but richness)
+            closing_event_display_type (string): closing event display type.
             time_period_seconds (int):  time delta - required for SINCE and PERIOD_OUTSTANDING
             dynamic_window (int): valid period for policy - required for DYNAMIC_TOLERANCE
             dynamic_variability (float): number of standard deviations - required for DYNAMIC_TOLERANCE
@@ -91,6 +93,7 @@ class _CompliancePoliciesClient:
                 "asset_filter": asset_filter,
                 "richness_assertions": richness_assertions,
                 "event_display_type": event_display_type,
+                "closing_event_display_type": closing_event_display_type,
                 "time_period_seconds": time_period_seconds,
                 "dynamic_window": dynamic_window,
                 "dynamic_variability": dynamic_variability,
