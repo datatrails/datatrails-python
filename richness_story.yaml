@@ -1,0 +1,112 @@
+operations:
+
+  - operation: CREATE_ASSET
+    to_print: Create an empty radiation bag with id 1.
+    asset_id: radiation bag 1
+    behaviours: 
+      - RecordEvidence
+    attributes:
+      radioactive: "true"
+      radiation_level: "0"
+
+  - operation: CREATE_ASSET
+    to_print: Create an empty radiation bag with id 2.
+    asset_id: radiation bag 2
+    behaviours: 
+      - RecordEvidence
+    attributes:
+      radioactive: "true"
+      radiation_level: "0"
+
+  - operation: CREATE_ASSET
+    to_print: Create an empty radiation bag with id 3.
+    asset_id: radiation bag 3
+    behaviours: 
+      - RecordEvidence
+    attributes:
+      radioactive: "true"
+      radiation_level: "0"
+
+  - operation: CREATE_COMPLIANCE_POLICY
+    to_print: Create a compliance policy that checks the radiation level of radiation bags is less than 7 rads.
+    policy_id: radiation saftey policy 1
+    description: radiation level safety policy
+    display_name: radiation saftey policy
+    policy_type: COMPLIANCE_RICHNESS
+    asset_filter:
+      - or:
+        - attributes.radioactive=true
+    richness_assertions:
+      - or: 
+        - radiation_level<7 # set the radiation level to be below 7
+
+  # setup the radiation bags to have a varing amount of radiactive waste
+
+  - operation: CREATE_EVENT
+    to_print: Create Event adding 3 rads of radiation to bag 1.
+    asset_id: radiation bag 1
+    properties:
+      operation: Record
+      behaviour: RecordEvidence
+    attributes:
+      arc_description: add waste to bag
+      arc_evidence: see attached report
+    asset_attributes:
+      radiation_level: "3"
+
+  - operation: CREATE_EVENT
+    to_print: Create Event adding 2 rads of radiation to bag 2.
+    asset_id: radiation bag 2
+    properties:
+      operation: Record
+      behaviour: RecordEvidence
+    attributes:
+      arc_description: add waste to bag
+      arc_evidence: see attached report
+    asset_attributes:
+      radiation_level: "2"
+
+  - operation: CREATE_EVENT
+    to_print: Create Event adding 5 rads of radiation to bag 3.
+    asset_id: radiation bag 3
+    properties:
+      operation: Record
+      behaviour: RecordEvidence
+    attributes:
+      arc_description: add waste to bag
+      arc_evidence: see attached report
+    asset_attributes:
+      radiation_level: "5"
+
+  # check compliance for all 3 bags
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of bag 1.
+    asset_id: radiation bag 1
+
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of bag 2.
+    asset_id: radiation bag 2
+
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of bag 3.
+    asset_id: radiation bag 3
+
+
+  # now attempt to add waste to tip one over the edge
+
+  - operation: CREATE_EVENT
+    to_print: Now Create Event adding 4 rads of radiation to bag 3. This brings the total radiation level to 9 rads.
+    asset_id: radiation bag 3
+    properties:
+      operation: Record
+      behaviour: RecordEvidence
+    attributes:
+      arc_description: add waste to bag
+      arc_evidence: see attached report
+    asset_attributes:
+      radiation_level: "9"
+
+  # check the compliance
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of bag 3.
+    asset_id: radiation bag 3

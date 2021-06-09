@@ -1,0 +1,36 @@
+operations:
+
+  - operation: CREATE_ASSET
+    asset_id: asset 1
+    behaviours: 
+      - UserAttributes
+    attributes:
+      foo: "7"
+
+  - operation: CREATE_COMPLIANCE_POLICY
+    policy_id: policy 1
+    description: test policy
+    display_name: test display_name
+    policy_type: COMPLIANCE_RICHNESS
+    asset_filter:
+      - or:
+        - foo=7
+        - foo=5
+    richness_assertions:
+      - or: 
+        - foo<7
+
+  - operation: CHECK_COMPLIANCE
+    asset_id: asset 1
+
+  - operation: CREATE_EVENT
+    asset_id: asset 1
+    wait_time: 20
+    properties:
+      operation: Set
+      behaviour: UserAttributes
+    asset_attributes:
+      foo: "5"
+
+  - operation: CHECK_COMPLIANCE
+    asset_id: asset 1

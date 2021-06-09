@@ -55,6 +55,8 @@ from .locations import _LocationsClient
 from .attachments import _AttachmentsClient
 from .access_policies import _AccessPoliciesClient
 from .subjects import _SubjectsClient
+from .compliance_polices import _CompliancePoliciesClient
+from .compliance import _ComplianceClient
 
 CLIENTS = {
     "assets": _AssetsClient,
@@ -63,6 +65,8 @@ CLIENTS = {
     "attachments": _AttachmentsClient,
     "access_policies": _AccessPoliciesClient,
     "subjects": _SubjectsClient,
+    "compliance_policies": _CompliancePoliciesClient,
+    "compliance": _ComplianceClient,
 }
 
 
@@ -151,13 +155,14 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return newheaders
 
-    def get(self, subpath, identity, *, headers=None):
+    def get(self, subpath, identity, *, headers=None, params=None):
         """GET method (REST)
 
         Args:
             subpath (str): e.g. v2 or iam/v1...
             identity (str): e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`
             headers (dict): optional REST headers
+            params (dict): optional query strings
 
         Returns:
             dict representing the response body (entity).
@@ -168,6 +173,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             headers=self.__add_headers(headers),
             verify=self.verify,
             cert=self.cert,
+            params=params,
         )
 
         error = _parse_response(response)
