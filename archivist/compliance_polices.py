@@ -21,9 +21,9 @@
 
 """
 
+from _typeshed import NoneType
 from copy import deepcopy
 from enum import Enum
-from types import SimpleNamespace
 
 from .constants import (
     COMPLIANCE_POLICIES_SUBPATH,
@@ -64,8 +64,9 @@ class _CompliancePoliciesClient:
     def __init__(self, archivist):
         self._archivist = archivist
 
-    def create(self, description, display_name, asset_filter, compliance_type=PolicyType.COMPLIANCE_TYPE_UNDEFINED,
-               richness_assertions=[], event_display_type="", closing_event_display_type="",
+    def create(self, description, display_name, asset_filter,
+               compliance_type=PolicyType.COMPLIANCE_TYPE_UNDEFINED,
+               richness_assertions=None, event_display_type="", closing_event_display_type="",
                time_period_seconds=0, dynamic_window=0, dynamic_variability=0.0):
         """Create compliance policy
 
@@ -73,25 +74,26 @@ class _CompliancePoliciesClient:
             description (string): the policy description.
             display_name (string): the policy non-unique name.
             asset_filter (filter): in the form [{"or":["identity=foo",...],...}]
-            compliance_type (PolicyType): policy type, e.g. `DYNAMIC_TOLERANCE`, default to `TYPE_UNDEFINED`.
-            richness_assertions (filter): in the form [{"or":["foo<7",...]}...] required for RICHNESS
-            event_display_type (string): target event display type (required for all policies but richness)
+            compliance_type (PolicyType): policy type, default to `TYPE_UNDEFINED`.
+            richness_assertions (filter): format [{"or":["foo<7",...]}...] required for RICHNESS
+            event_display_type (string): target event display type (not needed for richness)
             closing_event_display_type (string): closing event display type.
             time_period_seconds (int):  time delta - required for SINCE and PERIOD_OUTSTANDING
             dynamic_window (int): valid period for policy - required for DYNAMIC_TOLERANCE
-            dynamic_variability (float): number of standard deviations - required for DYNAMIC_TOLERANCE
+            dynamic_variability (float): % of stddevs allowed, required for DYNAMIC_TOLERANCE
 
         Returns:
             :class:`CompliancePolicy` instance
 
         """
-        return self.create_from_data(
+        #pylint: disable=too-many-arguments
+
+        data = self.create_from_data(
             {
                 "compliance_type": compliance_type.name,  # get the name of the enum
                 "description": description,
                 "display_name": display_name,
                 "asset_filter": asset_filter,
-                "richness_assertions": richness_assertions,
                 "event_display_type": event_display_type,
                 "closing_event_display_type": closing_event_display_type,
                 "time_period_seconds": time_period_seconds,
@@ -99,6 +101,11 @@ class _CompliancePoliciesClient:
                 "dynamic_variability": dynamic_variability,
             },
         )
+
+        if richness_assertions is not None:
+            data["richness_assertions"] = richness_assertions
+
+        return data
 
     def create_from_data(self, data):
         """Create compliance_policy
@@ -142,7 +149,7 @@ class _CompliancePoliciesClient:
         Reads compliance policy.
 
         Args:
-            identity (str): compliance policy identity e.g. compliance_policies/xxxxxxxxxxxxxxxxxxxxxxx
+            identity (str): compliance policy id e.g. compliance_policies/xxxxxxxxxxxxxxxxxxxxxxx
 
         Returns:
             :class:`CompliancePolicy` instance

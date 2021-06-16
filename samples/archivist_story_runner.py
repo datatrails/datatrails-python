@@ -204,7 +204,7 @@ class ArchivistStoryRunner():
         policy_type = parse_arg(arg, "policy_type")
 
         # richness args
-        richness_assertions = parse_arg(arg, "richness_assertions", default=[])
+        richness_assertions = parse_arg(arg, "richness_assertions", default=None)
 
         # dynamic tolerance args
         event_display_type = parse_arg(arg, "event_display_type", default="")

@@ -21,10 +21,6 @@
 
 """
 
-from copy import deepcopy
-from enum import Enum
-from types import SimpleNamespace
-
 from .constants import (
     COMPLIANCE_SUBPATH,
     COMPLIANCE_LABEL,
@@ -46,6 +42,7 @@ class _ComplianceClient:
         archivist (Archivist): :class:`Archivist` instance
 
     """
+    # pylint: disable=too-few-public-methods
 
     def __init__(self, archivist):
         self._archivist = archivist
@@ -58,14 +55,14 @@ class _ComplianceClient:
         Args:
             identity (str): asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx
             compliant_at (str): datetime to check compliance at a particular time (optional).
-                                format: https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#rfc.section.5.6
+                format: https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#rfc.section.5.6
 
         Returns:
             :class:`Compliance` instance
 
         """
-        return Compliance(**self._archivist.get(f"{COMPLIANCE_SUBPATH}/{COMPLIANCE_LABEL}", identity,
-                          params={"compliant_at": complaint_at}))
+        return Compliance(**self._archivist.get(f"{COMPLIANCE_SUBPATH}/{COMPLIANCE_LABEL}",
+                          identity, params={"compliant_at": complaint_at}))
 
 
 class Compliance(dict):
