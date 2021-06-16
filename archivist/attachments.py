@@ -17,7 +17,8 @@
           "https://rkvst.poc.jitsuin.io",
           auth=authtoken,
       )
-      attachment = arch.attachments.create(...)
+      with open("something.jpg") as fd:
+          attachment = arch.attachments.upload(fd)
 
 """
 
@@ -46,7 +47,7 @@ class _AttachmentsClient:
         Creates attachment from opened file or other data source.
 
         Args:
-            fd (file): opened file escriptor or other file-type iterable.
+            fd (file): opened file descriptor or other file-type iterable.
             mtype (str): mimetype of data.
 
         Returns:

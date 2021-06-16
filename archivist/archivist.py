@@ -7,7 +7,8 @@
 
    The REST methods in this class should only be used directly when
    a CRUD endpoint for the specific type of entity is unavaliable.
-   Current CRUD endpoints are assets, events, locations and attachments.
+   Current CRUD endpoints are assets, events, locations, attachments.
+   IAM subjects and IAM access policies.
 
    Instantiation of this class encapsulates the URL and authentication
    parameters:
@@ -23,8 +24,8 @@
           auth=authtoken,
       )
 
-    The arch variable now has additonal endpoints assets,events,locations and
-    attachments documented elsewhere.
+    The arch variable now has additonal endpoints assets,events,locations,
+    attachments, IAM subjects and IAM access policies documented elsewhere.
 
 """
 
