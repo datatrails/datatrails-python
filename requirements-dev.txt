@@ -14,6 +14,6 @@ twine==3.4.1
 sphinx==3.4.3
 sphinx-rtd-theme==0.5.1
 
-# samples
+# examples
 pyyaml==5.1.2
 urllib3==1.25.7
