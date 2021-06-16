@@ -35,7 +35,7 @@ tasks:
     cmds:
       - ./scripts/builder.sh python3 --version
       - ./scripts/builder.sh pycodestyle --format=pylint archivist functests unittests examples
-      - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc archivist functests unittests examples
+      - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc archivist functests unittests examples samples
 
   clean:
     desc: Clean git repo

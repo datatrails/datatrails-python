@@ -3,17 +3,18 @@
 It then runs the defined operations.
 """
 
-from archivist.compliance_polices import PolicyType
-from archivist.archivist import Archivist
+import time
+from enum import Enum
+import argparse
+import yaml
 
 # remove warning from console
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-import time
-from enum import Enum
-import yaml
-import argparse
 
+
+from archivist.compliance_polices import PolicyType
+from archivist.archivist import Archivist
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -108,7 +109,8 @@ class ArchivistStoryRunner():
             wait_time = parse_arg(operation, "wait_time", 0)
             to_print = parse_arg(operation, "to_print", "")
 
-            self.run_operation(operation["operation"], operation, to_print=to_print, wait_time=wait_time)
+            self.run_operation(operation["operation"], operation, to_print=to_print,
+                               wait_time=wait_time)
 
         # cleanup all policies
         print("Cleanup!")
@@ -151,7 +153,7 @@ class ArchivistStoryRunner():
         """
         create_asset creates an asset given its behaviours and attributes and adds it to the
                      asset list.
-        :asset_id: is a unique identity python can use to identify the asset (IT IS NOT Archivist related)
+        :asset_id: is a unique id python can use to identify the asset (IT ISN'T Archivist related)
         :param attributes: the attributes in key value form.
         :type dictionary:
         """
@@ -170,7 +172,7 @@ class ArchivistStoryRunner():
         """
         create_event creates an event for the given asset, based on its id.
 
-        :param asset_id: a unique identity python can use to identify the asset (IT IS NOT Archivist related)
+        :param asset_id: an id python can use to identify the asset (IT ISN'T Archivist related)
         """
 
         # parse the args
@@ -184,7 +186,8 @@ class ArchivistStoryRunner():
         asset_identity = self.assets[asset_id]["identity"]
 
         # create the event
-        event = self.client.events.create(asset_identity, props=properties, attrs=attributes, asset_attrs=asset_attributes, confirm=True)
+        event = self.client.events.create(asset_identity, props=properties, attrs=attributes,
+                                          asset_attrs=asset_attributes, confirm=True)
         print("Event created!")
 
         self.events.append(event)
@@ -192,7 +195,7 @@ class ArchivistStoryRunner():
     def create_compliance_policy(self, *args):
         """
         create_compliance_policy creates a compliance policy
-        :param policy_id: a unique identity python can use to identify the policy (IT IS NOT Archivist related)
+        :param policy_id: an id python can use to identify the policy (IT ISN'T Archivist related)
         """
 
         # parse arguments
@@ -235,7 +238,6 @@ class ArchivistStoryRunner():
         # parse args
         arg = args[0]
         asset_id = parse_arg(arg, "asset_id")
-        seconds_ago = parse_arg(arg, "seconds_ago", default=0)
 
         # find the asset identity
         asset_identity = self.assets[asset_id]["identity"]
@@ -251,15 +253,18 @@ class ArchivistStoryRunner():
                 continue
 
             # get the compliance policy
-            policy = self.client.compliance_policies.read(policy_outcome["compliance_policy_identity"])
+            policy = self.client.compliance_policies.read(
+                policy_outcome["compliance_policy_identity"]
+            )
 
             # print the policy name and the reason
-            print("\tPolicy: {}. Reason: {}".format(policy["display_name"], policy_outcome["reason"]))
+            print("\tPolicy: {}. Reason: {}".format(policy["display_name"],
+                  policy_outcome["reason"]))
 
     def delete_compliance_policy(self, policy_id):
         """
         delete_compliance_policy deletes a given policy
-        :param policy_id: a unique identity python can use to identify the policy (IT IS NOT Archivist related)
+        :param policy_id: an id python can use to identify the policy (IT ISN'T Archivist related)
         """
 
         # find the asset identity
@@ -274,12 +279,15 @@ class ArchivistStoryRunner():
         delete_all_policies deletes all compliance policies that were created.
         """
 
-        for policy_id in self.policies.keys():
+        for policy_id in self.policies:
             self.delete_compliance_policy(policy_id)
 
 
 def main():
-
+    """
+    main creates a ArchivistStoryRunner and runs all the operations defined
+      in the given yaml file.
+    """
     # create the argparser
     parser = argparse.ArgumentParser()
 
