@@ -21,7 +21,6 @@
 
 """
 
-from _typeshed import NoneType
 from copy import deepcopy
 from enum import Enum
 
