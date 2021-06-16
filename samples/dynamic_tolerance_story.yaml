@@ -22,7 +22,7 @@ operations:
     event_display_type: Maintenance Requested
     closing_event_display_type:  Maintenance Performed
     dynamic_window: 700 # a large window
-    dynamic_variability: 1.4 # 140%  tolerance from the stddev away from the mean
+    dynamic_variability: 1.5 # 150%  tolerance from the stddev away from the mean
 
   # setup the ev pump to have maintainance requests and servicings
 

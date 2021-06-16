@@ -9,14 +9,13 @@ import argparse
 import yaml
 
 # remove warning from console
-import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
+import urllib3
 
 from archivist.compliance_polices import PolicyType
 from archivist.archivist import Archivist
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+# stop printing to console that the request is insecure
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class Operation(Enum):
@@ -206,8 +205,10 @@ class ArchivistStoryRunner():
         asset_filter = parse_arg(arg, "asset_filter")
         policy_type = parse_arg(arg, "policy_type")
 
-        # richness args
-        richness_assertions = parse_arg(arg, "richness_assertions", default=None)
+        # richness args (can't pass None as that is no default)
+        richness_assertions = parse_arg(arg, "richness_assertions", default="None")
+        if richness_assertions == "None":
+            richness_assertions = None
 
         # dynamic tolerance args
         event_display_type = parse_arg(arg, "event_display_type", default="")
