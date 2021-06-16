@@ -1,3 +1,8 @@
+"""archivist story runner takes a yaml config file listing operations to be conducted serially.
+
+It then runs the defined operations.
+"""
+
 from archivist.compliance_polices import PolicyType
 from archivist.archivist import Archivist
 
@@ -7,25 +12,21 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import time
 from enum import Enum
 import yaml
+import argparse
+
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 class Operation(Enum):
+    """
+    Operation are the allowed archivist operations to be run.
+    """
 
     CREATE_ASSET = 1
     CREATE_EVENT = 2
     CREATE_COMPLIANCE_POLICY = 3
     CHECK_COMPLIANCE = 4
     DELETE_COMPLIANCE = 5
-
-
-# TODO pass url in via argparser or something
-
-#url = "https://dev-jgough-0-avid.scratch-6.dev.wild.jitsuin.io:443"  # scratch deployment
-url = "https://qa.wild.jitsuin.io:443"  # qa deployment
-
-#token_file = "token.txt"  # scratch deployment
-token_file = "qa_token.txt"  # qa deployment
 
 def parse_arg(arg, key, default=None):
     """
@@ -41,9 +42,38 @@ def parse_arg(arg, key, default=None):
 
         return default
 
-class Manager():
+class ArchivistStoryRunner():
     """
-    Manager class manages the stuff.
+    ArchivistStoryRunner takes a url, token_file and a yaml config_file.
+
+    The yaml config_file contains a list of `operations` to be performed serially, e.g.
+
+    ```
+    operations:
+
+        - operation: CREATE_ASSET
+            to_print: Create an empty radiation bag with id 1.
+            wait_time: 10
+            asset_id: radiation bag 1
+            behaviours: 
+              - RecordEvidence
+            attributes:
+              radioactive: "true"
+              radiation_level: "0"
+              weight: "0"
+    ```
+
+    where:
+     - `operation` is the operation to perform (see Operation Enum for options).
+     - `to_print` is what to print to the console.
+     - `wait_time` is time to wait before running the operation.
+     - `asset_id` is the local reference to the asset, so can be referenced in other operations.
+     - `behaviours` are a list of asset behaviours
+     - `attributes are the asset's attributes
+
+    please see example yaml files for other operation examples.
+
+    To perform all the operations call the `run` method.
     """
 
     assets = dict()  # dict of assets created
@@ -54,7 +84,8 @@ class Manager():
         """
         constructor
         :param url: the url of the archivist instance.
-        :param token: the token auth for the archivist instance.
+        :param token_file: the token auth for the archivist instance.
+        :param config_file: the yaml config file listing all the operations to perform.
         """
 
         with open(token_file, mode="r") as tokenfile:
@@ -82,7 +113,7 @@ class Manager():
 
     def run_operation(self, operation, operation_args, to_print="", wait_time=0):
         """
-        run_operation runs an operation based on the Operation enum.
+        run_operation runs an operation based on the given Operation enum.
         """
 
         # print out the story of the operation
@@ -245,7 +276,17 @@ class Manager():
 
 
 def main():
-    manager = Manager(url, token_file, "richness_story.yaml")
+
+    # create the argparser
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("url", help="the archivist url.")
+    parser.add_argument("tokenfile", help="the auth token file location.")
+    parser.add_argument("yamlfile", help="the yaml file describing the operations to conduct")
+
+    args = parser.parse_args()
+
+    manager = ArchivistStoryRunner(args.url, args.tokenfile, args.yamlfile)
     manager.run()
 
 if __name__ == "__main__":
