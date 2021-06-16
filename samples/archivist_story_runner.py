@@ -17,6 +17,7 @@ import argparse
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+
 class Operation(Enum):
     """
     Operation are the allowed archivist operations to be run.
@@ -28,6 +29,7 @@ class Operation(Enum):
     CHECK_COMPLIANCE = 4
     DELETE_COMPLIANCE = 5
 
+
 def parse_arg(arg, key, default=None):
     """
     parse_arg parses a dictionary arg, and returns the value of a key.
@@ -37,10 +39,11 @@ def parse_arg(arg, key, default=None):
     try:
         return arg[key]
     except KeyError as ke:
-        if default == None:
+        if default is None:
             raise ke
 
         return default
+
 
 class ArchivistStoryRunner():
     """
@@ -55,7 +58,7 @@ class ArchivistStoryRunner():
             to_print: Create an empty radiation bag with id 1.
             wait_time: 10
             asset_id: radiation bag 1
-            behaviours: 
+            behaviours:
               - RecordEvidence
             attributes:
               radioactive: "true"

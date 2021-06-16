@@ -58,7 +58,7 @@ class _ComplianceClient:
         Args:
             identity (str): asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx
             compliant_at (str): datetime to check compliance at a particular time (optional).
-                                format: https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#rfc.section.5.6 
+                                format: https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#rfc.section.5.6
 
         Returns:
             :class:`Compliance` instance
