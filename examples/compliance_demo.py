@@ -1,4 +1,4 @@
-"""archivist story runner takes a yaml config file listing operations to be conducted serially.
+"""compliance demo takes a yaml config file listing operations to be conducted serially.
 
 It then runs the defined operations.
 """
