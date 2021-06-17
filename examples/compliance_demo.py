@@ -102,7 +102,7 @@ class ArchivistStoryRunner:
                 wait_time=operation["wait_time"],
             )
 
-    def run_operation(self, operation, args, to_print=None, wait_time=0):
+    def run_operation(self, operation, args, *, to_print=None, wait_time=0):
         """Runs an operation given parameters and the type of operation.
 
             Args:
