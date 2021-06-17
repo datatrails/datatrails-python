@@ -8,14 +8,8 @@ from enum import Enum
 import argparse
 import yaml
 
-# remove warning from console
-import urllib3
-
-from archivist.compliance_polices import PolicyType
 from archivist.archivist import Archivist
-
-# stop printing to console that the request is insecure
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from archivist.errors import ArchivistError
 
 
 class Operation(Enum):
@@ -25,27 +19,13 @@ class Operation(Enum):
 
     CREATE_ASSET = 1
     CREATE_EVENT = 2
-    CREATE_COMPLIANCE_POLICY = 3
-    CHECK_COMPLIANCE = 4
-    DELETE_COMPLIANCE = 5
+    CREATE_RICHNESS_COMPLIANCE_POLICY = 3
+    CREATE_DYNAMIC_COMPLIANCE_POLICY = 4
+    CHECK_COMPLIANCE = 5
+    DELETE_COMPLIANCE = 6
 
 
-def parse_arg(arg, key, default=None):
-    """
-    parse_arg parses a dictionary arg, and returns the value of a key.
-              if the key doesn't exist within the dictionary the default is returned.
-              if the default is None, then KeyError is raised.
-    """
-    try:
-        return arg[key]
-    except KeyError as ke:
-        if default is None:
-            raise ke
-
-        return default
-
-
-class ArchivistStoryRunner():
+class ArchivistStoryRunner:
     """
     ArchivistStoryRunner takes a url, token_file and a yaml config_file.
 
@@ -76,20 +56,14 @@ class ArchivistStoryRunner():
 
     please see example yaml files for other operation examples.
 
-    To perform all the operations call the `run` method.
+    To perform all the operations call the class instance.
     """
 
-    assets = dict()  # dict of assets created
-    events = list()  # list of events created
-    policies = dict()  # dict of policies created
+    assets = {}  # dict of assets created
+    events = []  # list of events created
+    policies = {}  # dict of policies created
 
     def __init__(self, url, token_file, config_file):
-        """
-        constructor
-        :param url: the url of the archivist instance.
-        :param token_file: the token auth for the archivist instance.
-        :param config_file: the yaml config file listing all the operations to perform.
-        """
 
         with open(token_file, mode="r") as tokenfile:
             token = tokenfile.read().strip()
@@ -97,31 +71,49 @@ class ArchivistStoryRunner():
             self.client = Archivist(url, auth=token, verify=False)
 
         # read and save the config file
-        yaml_stream = open(config_file, 'r')
+        yaml_stream = open(config_file, "r")
         self.yaml_object = yaml.load(yaml_stream, Loader=yaml.SafeLoader)
 
-    def run(self):
-        """
-        run runs all operations defined in self.yaml_object
+    def __call__(self):
+
+        try:
+            self.run_operations()
+
+            # cleanup all policies
+            print("Cleanup!")
+            self.delete_all_policies()
+
+        except (ArchivistError, KeyError):
+            # always cleanup policies
+            print("Cleanup!")
+            self.delete_all_policies()
+
+    def run_operations(self):
+        """Runs all defined operations in self.yaml_object.
         """
         for operation in self.yaml_object["operations"]:
-            wait_time = parse_arg(operation, "wait_time", 0)
-            to_print = parse_arg(operation, "to_print", "")
+            operation.setdefault("wait_time", 0)
+            operation.setdefault("to_print", None)
 
-            self.run_operation(operation["operation"], operation, to_print=to_print,
-                               wait_time=wait_time)
+            self.run_operation(
+                operation["operation"],
+                operation,
+                to_print=operation["to_print"],
+                wait_time=operation["wait_time"],
+            )
 
-        # cleanup all policies
-        print("Cleanup!")
-        self.delete_all_policies()
+    def run_operation(self, operation, args, to_print=None, wait_time=0):
+        """Runs an operation given parameters and the type of operation.
 
-    def run_operation(self, operation, operation_args, to_print="", wait_time=0):
-        """
-        run_operation runs an operation based on the given Operation enum.
+            Args:
+                operation (string): the type of operation to run.
+                args (dict): the operation arguments.
+                to_print (string): string to print to console.
+                wait_time (int): the time to wait before running the operation
         """
 
         # print out the story of the operation
-        if to_print != "":
+        if to_print is not None:
             print(to_print)
 
         # wait for a number of seconds
@@ -131,114 +123,182 @@ class ArchivistStoryRunner():
 
         # find an operation to run
         if operation == Operation.CREATE_ASSET.name:
-            self.create_asset(operation_args)
+            args.setdefault("behaviours", None)
+            args.setdefault("attribute", None)
+
+            self.create_asset(
+                args["asset_id"],
+                behaviours=args["behaviours"],
+                attributes=args["attributes"]
+            )
 
         if operation == Operation.CREATE_EVENT.name:
-            self.create_event(operation_args)
+            args.setdefault("properties", None)
+            args.setdefault("attributes", None)
+            args.setdefault("asset_attributes", None)
 
-        if operation == Operation.CREATE_COMPLIANCE_POLICY.name:
-            self.create_compliance_policy(operation_args)
+            self.create_event(
+                args["asset_id"],
+                properties=args["properties"],
+                attributes=args["attributes"],
+                asset_attributes=args["asset_attributes"]
+            )
+
+        if operation == Operation.CREATE_RICHNESS_COMPLIANCE_POLICY.name:
+            self.create_richness_compliance_policy(
+                args["policy_id"],
+                args["description"],
+                args["display_name"],
+                args["asset_filter"],
+                args["richness_assertions"],
+            )
+
+        if operation == Operation.CREATE_DYNAMIC_COMPLIANCE_POLICY.name:
+            self.create_dynamic_compliance_policy(
+                args["policy_id"],
+                args["description"],
+                args["display_name"],
+                args["asset_filter"],
+                args["event_display_type"],
+                args["closing_event_display_type"],
+                args["dynamic_window"],
+                args["dynamic_variability"]
+            )
 
         if operation == Operation.CHECK_COMPLIANCE.name:
-            self.check_compliance_policy(operation_args)
+            self.check_compliance_policy(args["asset_id"])
 
         if operation == Operation.DELETE_COMPLIANCE.name:
-            self.delete_compliance_policy("policy 1")
+            self.delete_compliance_policy(args["policy_id"])
 
         # new line at the end of every operation
         print("")
 
-    def create_asset(self, *args):
-        """
-        create_asset creates an asset given its behaviours and attributes and adds it to the
-                     asset list.
-        :asset_id: is a unique id python can use to identify the asset (IT ISN'T Archivist related)
-        :param attributes: the attributes in key value form.
-        :type dictionary:
+    def create_asset(self, asset_id, *, behaviours=None, attributes=None):
+        """Creates an asset given its behaviours and attributes and adds it to the
+           asset list.
+
+            Args:
+                asset_id (string): the unique local asset identity.
+                behaviours (list): the behaviours associated with the asset
+                attributes (dict): the attributes associated with the asset
         """
 
-        # parse the expected arguments
-        arg = args[0]
-        asset_id = parse_arg(arg, "asset_id")
-        attributes = parse_arg(arg, "attributes")
-        behaviours = parse_arg(arg, "behaviours", default=[])
+        if behaviours is None:
+            behaviours = []
+
+        if attributes is None:
+            attributes = {}
 
         asset = self.client.assets.create(behaviours, attrs=attributes, confirm=True)
         print("Asset Created!")
         self.assets[asset_id] = asset
 
-    def create_event(self, *args):
-        """
-        create_event creates an event for the given asset, based on its id.
+    def create_event(self, asset_id, *, properties=None, attributes=None, asset_attributes=None):
+        """Creates an event for the given asset, based on its id.
 
-        :param asset_id: an id python can use to identify the asset (IT ISN'T Archivist related)
+            Args:
+                asset_id (string): the unique local asset identity.
+                properties (dict): the properties associated with the event
+                attributes (dict): the attributes associated with the event
+                asset_attributes (dict): the asset attributes associated with the event
         """
 
-        # parse the args
-        arg = args[0]
-        asset_id = parse_arg(arg, "asset_id")
-        properties = parse_arg(arg, "properties", default={})
-        attributes = parse_arg(arg, "attributes", default={})
-        asset_attributes = parse_arg(arg, "asset_attributes", default={})
+        if properties is None:
+            properties = {}
+
+        if attributes is None:
+            attributes = {}
+
+        if asset_attributes is None:
+            asset_attributes = {}
 
         # find the asset identity
         asset_identity = self.assets[asset_id]["identity"]
 
         # create the event
-        event = self.client.events.create(asset_identity, props=properties, attrs=attributes,
-                                          asset_attrs=asset_attributes, confirm=True)
+        event = self.client.events.create(
+            asset_identity,
+            props=properties,
+            attrs=attributes,
+            asset_attrs=asset_attributes,
+            confirm=True,
+        )
         print("Event created!")
 
         self.events.append(event)
 
-    def create_compliance_policy(self, *args):
+    def create_richness_compliance_policy(
+        self,
+        policy_id,
+        description,
+        display_name,
+        asset_filter,
+        richness_assertions,
+    ):
+        """Creates a richness compliance policy and adds it to the local policies.
+
+            Args:
+                policy_id (string): the unique local policy identity.
+                description (string): the policy description
+                display_name (string): the policy display name, non unique
+                asset_filter (filter): in the form [{"or":["identity=foo",...],...}]
+                richness_assertions (filter): format [{"or":["foo<7",...]}...]
         """
-        create_compliance_policy creates a compliance policy
-        :param policy_id: an id python can use to identify the policy (IT ISN'T Archivist related)
-        """
 
-        # parse arguments
-        arg = args[0]
-        policy_id = parse_arg(arg, "policy_id")
-        description = parse_arg(arg, "description")
-        display_name = parse_arg(arg, "display_name")
-        asset_filter = parse_arg(arg, "asset_filter")
-        policy_type = parse_arg(arg, "policy_type")
-
-        # richness args (can't pass None as that is no default)
-        richness_assertions = parse_arg(arg, "richness_assertions", default="None")
-        if richness_assertions == "None":
-            richness_assertions = None
-
-        # dynamic tolerance args
-        event_display_type = parse_arg(arg, "event_display_type", default="")
-        closing_event_display_type = parse_arg(arg, "closing_event_display_type", default="")
-        dynamic_window = parse_arg(arg, "dynamic_window", 0)
-        dynamic_variability = parse_arg(arg, "dynamic_variability", 0.0)
-
-        policy = self.client.compliance_policies.create(
+        policy = self.client.compliance_policies.create_richness(
             description,
             display_name,
             asset_filter,
-            compliance_type=PolicyType[policy_type],
-            richness_assertions=richness_assertions,
-            event_display_type=event_display_type,
-            closing_event_display_type=closing_event_display_type,
-            dynamic_window=dynamic_window,
-            dynamic_variability=dynamic_variability,
+            richness_assertions,
         )
         print("Policy Created!")
 
         self.policies[policy_id] = policy
 
-    def check_compliance_policy(self, *args):
-        """
-        check_compliance_policy checks if the asset is compliant
+    def create_dynamic_compliance_policy(
+        self,
+        policy_id,
+        description,
+        display_name,
+        asset_filter,
+        event_display_type,
+        closing_event_display_type,
+        dynamic_window,
+        dynamic_variability,
+    ):
+        """Create dynamic tolerance compliance policy and adds it to the local policies
+
+        Args:
+            policy_id (string): the unique local policy identity.
+            description (string): the policy description.
+            display_name (string): the policy non-unique name.
+            asset_filter (filter): in the form [{"or":["identity=foo",...],...}]
+            event_display_type (string): target event display type
+            closing_event_display_type (string): closing event display type.
+            dynamic_window (int): valid period for policy
+            dynamic_variability (float): % of stddevs allowed
         """
 
-        # parse args
-        arg = args[0]
-        asset_id = parse_arg(arg, "asset_id")
+        policy = self.client.compliance_policies.create_dynamic_tolerance(
+            description,
+            display_name,
+            asset_filter,
+            event_display_type,
+            closing_event_display_type,
+            dynamic_window,
+            dynamic_variability,
+        )
+        print("Policy Created!")
+
+        self.policies[policy_id] = policy
+
+    def check_compliance_policy(self, asset_id):
+        """Checks an asset against all its applicable compliance policies.
+
+            Args:
+                asset_id (string): the unique local asset identity.
+        """
 
         # find the asset identity
         asset_identity = self.assets[asset_id]["identity"]
@@ -259,13 +319,17 @@ class ArchivistStoryRunner():
             )
 
             # print the policy name and the reason
-            print("\tPolicy: {}. Reason: {}".format(policy["display_name"],
-                  policy_outcome["reason"]))
+            print(
+                "\tPolicy: {}. Reason: {}".format(
+                    policy["display_name"], policy_outcome["reason"]
+                )
+            )
 
     def delete_compliance_policy(self, policy_id):
-        """
-        delete_compliance_policy deletes a given policy
-        :param policy_id: an id python can use to identify the policy (IT ISN'T Archivist related)
+        """Delete a compliance policy, given its local id.
+
+            Args:
+                policy_id (string): the unique local policy identity.
         """
 
         # find the asset identity
@@ -294,12 +358,14 @@ def main():
 
     parser.add_argument("url", help="the archivist url.")
     parser.add_argument("tokenfile", help="the auth token file location.")
-    parser.add_argument("yamlfile", help="the yaml file describing the operations to conduct")
+    parser.add_argument(
+        "yamlfile", help="the yaml file describing the operations to conduct"
+    )
 
     args = parser.parse_args()
 
-    manager = ArchivistStoryRunner(args.url, args.tokenfile, args.yamlfile)
-    manager.run()
+    runner = ArchivistStoryRunner(args.url, args.tokenfile, args.yamlfile)
+    runner()
 
 
 if __name__ == "__main__":

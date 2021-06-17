@@ -121,7 +121,7 @@ operations:
       arc_display_type: Maintenance Requested
 
   - operation: CREATE_EVENT
-    to_print: Create Event after 7 seconds, for EV pump 1, stating maintainance occured.
+    to_print: Create Event after 20 seconds, for EV pump 1, stating maintainance occured.
     wait_time: 20
     asset_id: ev pump 1
     properties:

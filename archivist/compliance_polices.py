@@ -63,48 +63,173 @@ class _CompliancePoliciesClient:
     def __init__(self, archivist):
         self._archivist = archivist
 
-    def create(self, description, display_name, asset_filter,
-               compliance_type=PolicyType.COMPLIANCE_TYPE_UNDEFINED,
-               richness_assertions=None, event_display_type="", closing_event_display_type="",
-               time_period_seconds=0, dynamic_window=0, dynamic_variability=0.0):
-        """Create compliance policy
+    def create_richness(
+        self,
+        description,
+        display_name,
+        asset_filter,
+        richness_assertions
+    ):
+        """Create Richness compliance policy
 
         Args:
             description (string): the policy description.
             display_name (string): the policy non-unique name.
             asset_filter (filter): in the form [{"or":["identity=foo",...],...}]
-            compliance_type (PolicyType): policy type, default to `TYPE_UNDEFINED`.
-            richness_assertions (filter): format [{"or":["foo<7",...]}...] required for RICHNESS
-            event_display_type (string): target event display type (not needed for richness)
-            closing_event_display_type (string): closing event display type.
-            time_period_seconds (int):  time delta - required for SINCE and PERIOD_OUTSTANDING
-            dynamic_window (int): valid period for policy - required for DYNAMIC_TOLERANCE
-            dynamic_variability (float): % of stddevs allowed, required for DYNAMIC_TOLERANCE
+            richness_assertions (filter): format [{"or":["foo<7",...]}...]
 
         Returns:
             :class:`CompliancePolicy` instance
 
         """
-        #pylint: disable=too-many-arguments
-
-        data = self.create_from_data(
+        return self.create_from_data(
             {
-                "compliance_type": compliance_type.name,  # get the name of the enum
+                "compliance_type": PolicyType.COMPLIANCE_RICHNESS.name,
+                "description": description,
+                "display_name": display_name,
+                "asset_filter": asset_filter,
+                "richness_assertions": richness_assertions,
+            },
+        )
+
+    def create_dynamic_tolerance(
+        self,
+        description,
+        display_name,
+        asset_filter,
+        event_display_type,
+        closing_event_display_type,
+        dynamic_window,
+        dynamic_variability,
+    ):
+        """Create dynamic tolerance compliance policy
+
+        Args:
+            description (string): the policy description.
+            display_name (string): the policy non-unique name.
+            asset_filter (filter): in the form [{"or":["identity=foo",...],...}]
+            event_display_type (string): target event display type
+            closing_event_display_type (string): closing event display type.
+            dynamic_window (int): valid period for policy
+            dynamic_variability (float): % of stddevs allowed
+
+        Returns:
+            :class:`CompliancePolicy` instance
+
+        """
+        return self.create_from_data(
+            {
+                "compliance_type": PolicyType.COMPLIANCE_DYNAMIC_TOLERANCE.name,
+                "description": description,
+                "display_name": display_name,
+                "asset_filter": asset_filter,
+                "event_display_type": event_display_type,
+                "closing_event_display_type": closing_event_display_type,
+                "dynamic_window": dynamic_window,
+                "dynamic_variability": dynamic_variability,
+            },
+        )
+
+    def create_since(
+        self,
+        description,
+        display_name,
+        asset_filter,
+        event_display_type,
+        time_period_seconds
+    ):
+        """Create since compliance policy
+
+        Args:
+            description (string): the policy description.
+            display_name (string): the policy non-unique name.
+            asset_filter (filter): in the form [{"or":["identity=foo",...],...}]
+            event_display_type (string): target event display type
+            time_period_seconds (int):  time delta
+
+        Returns:
+            :class:`CompliancePolicy` instance
+
+        """
+        return self.create_from_data(
+            {
+                "compliance_type": PolicyType.COMPLIANCE_SINCE.name,
+                "description": description,
+                "display_name": display_name,
+                "asset_filter": asset_filter,
+                "event_display_type": event_display_type,
+                "time_period_seconds": time_period_seconds,
+            },
+        )
+
+    def create_current_outstanding(
+        self,
+        description,
+        display_name,
+        asset_filter,
+        event_display_type="",
+        closing_event_display_type="",
+    ):
+        """Create current outstanding compliance policy
+
+        Args:
+            description (string): the policy description.
+            display_name (string): the policy non-unique name.
+            asset_filter (filter): in the form [{"or":["identity=foo",...],...}]
+            event_display_type (string): target event display type, e.g. MaintainaceRequested
+            closing_event_display_type (string): closing event e.g. MaintainacePerformed
+
+        Returns:
+            :class:`CompliancePolicy` instance
+
+        """
+
+        return self.create_from_data(
+            {
+                "compliance_type": PolicyType.COMPLIANCE_CURRENT_OUTSTANDING.name,
+                "description": description,
+                "display_name": display_name,
+                "asset_filter": asset_filter,
+                "event_display_type": event_display_type,
+                "closing_event_display_type": closing_event_display_type,
+            },
+        )
+
+    def create_period_outstanding(
+        self,
+        description,
+        display_name,
+        asset_filter,
+        event_display_type,
+        closing_event_display_type,
+        time_period_seconds,
+    ):
+        """Create period outstanding compliance policy
+
+        Args:
+            description (string): the policy description.
+            display_name (string): the policy non-unique name.
+            asset_filter (filter): in the form [{"or":["identity=foo",...],...}]
+            event_display_type (string): target event display type, e.g. MaintainaceRequested
+            closing_event_display_type (string): closing event e.g. MaintainacePerformed
+            time_period_seconds (int):  time delta
+
+        Returns:
+            :class:`CompliancePolicy` instance
+
+        """
+
+        return self.create_from_data(
+            {
+                "compliance_type": PolicyType.COMPLIANCE_PERIOD_OUTSTANDING.name,
                 "description": description,
                 "display_name": display_name,
                 "asset_filter": asset_filter,
                 "event_display_type": event_display_type,
                 "closing_event_display_type": closing_event_display_type,
                 "time_period_seconds": time_period_seconds,
-                "dynamic_window": dynamic_window,
-                "dynamic_variability": dynamic_variability,
             },
         )
-
-        if richness_assertions is not None:
-            data["richness_assertions"] = richness_assertions
-
-        return data
 
     def create_from_data(self, data):
         """Create compliance_policy
@@ -154,7 +279,9 @@ class _CompliancePoliciesClient:
             :class:`CompliancePolicy` instance
 
         """
-        return CompliancePolicy(**self._archivist.get(COMPLIANCE_POLICIES_SUBPATH, identity))
+        return CompliancePolicy(
+            **self._archivist.get(COMPLIANCE_POLICIES_SUBPATH, identity)
+        )
 
     @staticmethod
     def __query(props):
@@ -174,7 +301,8 @@ class _CompliancePoliciesClient:
 
         """
         return self._archivist.count(
-            f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}", query=self.__query(props)
+            f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}",
+            query=self.__query(props),
         )
 
     def list(self, *, page_size=DEFAULT_PAGE_SIZE, props=None):
