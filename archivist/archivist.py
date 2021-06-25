@@ -31,6 +31,7 @@
 
 import json
 from os.path import isfile as os_path_isfile
+from typing import Optional
 
 from flatten_dict import flatten
 import requests
@@ -111,6 +112,11 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self._events = None
         self._locations = None
         self._attachments = None
+
+        self.assets: Optional[_AssetsClient]
+        self.events: Optional[_EventsClient]
+        self.locations: Optional[_LocationsClient]
+        self.attachments: Optional[_AttachmentsClient]
 
     def __getattr__(self, value):
         """Create endpoints on demand"""
