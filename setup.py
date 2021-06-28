@@ -46,10 +46,4 @@ setup(
     },
     setup_requires=['setuptools-git-versioning'],
     python_requires='>=3.6',
-    entry_points={
-        'console_scripts': [
-            'create_asset = archivist:entry.create_asset',
-            'create_event = archivist:entry.create_event',
-        ],
-    },
 )
