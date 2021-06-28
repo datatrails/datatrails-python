@@ -66,6 +66,41 @@ else:
 
 ```
 
+## Logging
+
+Follows the Django model as described here: https://docs.djangoproject.com/en/3.2/topics/logging/
+
+The base logger for this pacakage is rooted at "archivist" with subloggers for each endpoint:
+
+- "archivist.archivist"
+- "archivist.assets"
+- ...
+
+etc. etc.
+
+Logging is configured by either defining a root logger with suitable handlers, formatters etc. or
+by using dictionary configuration as described here: https://docs.python.org/3/library/logging.config.html#logging-config-dictschema
+
+A recommended minimum configuration would be:
+
+```python
+import logging
+
+logging.dictConfig({
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+})
+```
+
 # Development
 
 ## Pre-requisites

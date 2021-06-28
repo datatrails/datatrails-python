@@ -21,6 +21,8 @@
 
 """
 
+import logging
+
 from copy import deepcopy
 
 from .constants import (
@@ -36,6 +38,8 @@ from .assets import Asset
 #: :func:`~_AccessPoliciesClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+LOGGER = logging.getLogger(__name__)
 
 
 class _AccessPoliciesClient:
@@ -66,6 +70,7 @@ class _AccessPoliciesClient:
             :class:`AccessPolicy` instance
 
         """
+        LOGGER.debug("Create Access Policy %s", props)
         return self.create_from_data(
             self.__query(props, filters=filters, access_permissions=access_permissions),
         )

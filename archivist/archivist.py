@@ -29,9 +29,10 @@
 
 """
 
+import logging
+
 import json
 from os.path import isfile as os_path_isfile
-from typing import Optional
 
 from flatten_dict import flatten
 import requests
@@ -57,6 +58,8 @@ from .locations import _LocationsClient
 from .attachments import _AttachmentsClient
 from .access_policies import _AccessPoliciesClient
 from .subjects import _SubjectsClient
+
+LOGGER = logging.getLogger(__name__)
 
 CLIENTS = {
     "assets": _AssetsClient,
@@ -107,16 +110,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
                 raise ArchivistNotFoundError(f"Cert file {cert} does not exist")
 
         self._cert = cert
-
-        self._assets = None
-        self._events = None
-        self._locations = None
-        self._attachments = None
-
-        self.assets: Optional[_AssetsClient]
-        self.events: Optional[_EventsClient]
-        self.locations: Optional[_LocationsClient]
-        self.attachments: Optional[_AttachmentsClient]
 
     def __getattr__(self, value):
         """Create endpoints on demand"""
@@ -170,6 +163,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             dict representing the response body (entity).
 
         """
+        LOGGER.debug("get %s/%s", subpath, identity)
         response = requests.get(
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),

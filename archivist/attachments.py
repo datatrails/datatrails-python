@@ -24,7 +24,11 @@
 
 # pylint:disable=too-few-public-methods
 
+import logging
+
 from .constants import ATTACHMENTS_SUBPATH, ATTACHMENTS_LABEL
+
+LOGGER = logging.getLogger(__name__)
 
 
 class _AttachmentsClient:
@@ -55,6 +59,7 @@ class _AttachmentsClient:
 
         """
 
+        LOGGER.debug("Upload Attachment")
         return Attachment(
             **self._archivist.post_file(
                 f"{ATTACHMENTS_SUBPATH}/{ATTACHMENTS_LABEL}",

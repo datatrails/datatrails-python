@@ -21,6 +21,8 @@
 
 """
 
+import logging
+
 from copy import deepcopy
 
 from .constants import (
@@ -34,6 +36,8 @@ from .confirm import wait_for_confirmation, wait_for_confirmed
 #: :func:`~_AssetsClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+LOGGER = logging.getLogger(__name__)
 
 
 class _AssetsClient:
@@ -64,6 +68,7 @@ class _AssetsClient:
             :class:`Asset` instance
 
         """
+        LOGGER.debug("Create Asset %s", attrs)
         return self.create_from_data(
             {
                 "behaviours": behaviours,

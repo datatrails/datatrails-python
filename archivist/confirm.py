@@ -3,6 +3,8 @@
    Wrap base methods with constants for assets (path, etc...
 """
 
+import logging
+
 from copy import deepcopy
 
 import backoff
@@ -14,9 +16,10 @@ from .constants import (
     CONFIRMATION_STATUS,
 )
 from .errors import ArchivistUnconfirmedError
-from .logger import LOGGER
 
 MAX_TIME = 1200
+
+LOGGER = logging.getLogger(__name__)
 
 
 def __lookup_max_time():
