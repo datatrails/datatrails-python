@@ -33,6 +33,7 @@ import logging
 
 import json
 from os.path import isfile as os_path_isfile
+from typing import Optional
 
 from flatten_dict import flatten
 import requests
@@ -61,6 +62,7 @@ from .subjects import _SubjectsClient
 
 LOGGER = logging.getLogger(__name__)
 
+# also change the type hints in __init__ below
 CLIENTS = {
     "assets": _AssetsClient,
     "events": _EventsClient,
@@ -110,6 +112,14 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
                 raise ArchivistNotFoundError(f"Cert file {cert} does not exist")
 
         self._cert = cert
+
+        # keep these in sync with CLIENTS map above
+        self.assets: Optional[_AssetsClient]
+        self.events: Optional[_EventsClient]
+        self.locations: Optional[_LocationsClient]
+        self.attachments: Optional[_AttachmentsClient]
+        self.access_policies: Optional[_AccessPoliciesClient]
+        self.subjects: Optional[_SubjectsClient]
 
     def __getattr__(self, value):
         """Create endpoints on demand"""
