@@ -21,6 +21,8 @@
 
 """
 
+import logging
+
 from .constants import (
     SUBJECTS_SUBPATH,
     SUBJECTS_LABEL,
@@ -30,6 +32,8 @@ from .constants import (
 #: :func:`~_SubjectsClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+LOGGER = logging.getLogger(__name__)
 
 
 class _SubjectsClient:
@@ -60,6 +64,7 @@ class _SubjectsClient:
             :class:`Subject` instance
 
         """
+        LOGGER.debug("Create Subject %s", display_name)
         return self.create_from_data(
             self.__query(
                 display_name=display_name,

@@ -22,6 +22,8 @@
 
 """
 
+import logging
+
 from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 
 
@@ -29,6 +31,8 @@ from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 #: :func:`~_LocationsClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+LOGGER = logging.getLogger(__name__)
 
 
 class _LocationsClient:
@@ -58,6 +62,7 @@ class _LocationsClient:
             :class:`Location` instance
 
         """
+        LOGGER.debug("Create Location %s", props)
         return self.create_from_data(self.__query(props, attrs))
 
     def create_from_data(self, data):

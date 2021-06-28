@@ -22,6 +22,8 @@
 
 """
 
+import logging
+
 from copy import deepcopy
 
 from .constants import (
@@ -37,6 +39,8 @@ from .confirm import wait_for_confirmation, wait_for_confirmed
 #: :func:`~_EventsClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+LOGGER = logging.getLogger(__name__)
 
 
 class _EventsClient:
@@ -70,6 +74,7 @@ class _EventsClient:
 
         """
 
+        LOGGER.debug("Create Event %s/%s", asset_id, props)
         return self.create_from_data(
             asset_id,
             self.__query(props, attrs, asset_attrs),
