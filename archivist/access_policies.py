@@ -21,9 +21,13 @@
 
 """
 
+from typing import List, Optional
 import logging
-
 from copy import deepcopy
+
+# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
+# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+from archivist import archivist as type_helper
 
 from .constants import (
     SEP,
@@ -42,10 +46,14 @@ DEFAULT_PAGE_SIZE = 500
 LOGGER = logging.getLogger(__name__)
 
 
+class AccessPolicy(dict):
+    """AccessPolicy object"""
+
+
 class _AccessPoliciesClient:
     """AccessPoliciesClient
 
-    Access to access_policies entitiies using CRUD interface. This class is usually
+    Access to access_policies entities using CRUD interface. This class is usually
     accessed as an attribute of the Archivist class.
 
     Args:
@@ -53,10 +61,12 @@ class _AccessPoliciesClient:
 
     """
 
-    def __init__(self, archivist):
+    def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def create(self, props, filters, access_permissions):
+    def create(
+        self, props: dict, filters: List, access_permissions: List
+    ) -> AccessPolicy:
         """Create access policy
 
         Creates access policy with defined attributes.
@@ -75,7 +85,7 @@ class _AccessPoliciesClient:
             self.__query(props, filters=filters, access_permissions=access_permissions),
         )
 
-    def create_from_data(self, data):
+    def create_from_data(self, data: dict) -> AccessPolicy:
         """Create access policy
 
         Creates access policy with request body from data stream.
@@ -95,7 +105,7 @@ class _AccessPoliciesClient:
             )
         )
 
-    def read(self, identity):
+    def read(self, identity: str) -> AccessPolicy:
         """Read Access Policy
 
         Reads access policy.
@@ -114,7 +124,13 @@ class _AccessPoliciesClient:
             )
         )
 
-    def update(self, identity, props=None, filters=None, access_permissions=None):
+    def update(
+        self,
+        identity,
+        props: Optional[dict] = None,
+        filters: Optional[list] = None,
+        access_permissions: Optional[list] = None,
+    ) -> AccessPolicy:
         """Update Access Policy
 
         Update access policy.
@@ -139,7 +155,7 @@ class _AccessPoliciesClient:
             )
         )
 
-    def delete(self, identity):
+    def delete(self, identity: str) -> dict:
         """Delete Access Policy
 
         Deletes access policy.
@@ -164,7 +180,7 @@ class _AccessPoliciesClient:
 
         return query
 
-    def count(self, *, display_name=None):
+    def count(self, *, display_name: Optional[str] = None) -> int:
         """Count access policies.
 
         Counts number of access policies that match criteria.
@@ -183,10 +199,7 @@ class _AccessPoliciesClient:
         )
 
     def list(
-        self,
-        *,
-        page_size=DEFAULT_PAGE_SIZE,
-        display_name=None,
+        self, *, page_size: int = DEFAULT_PAGE_SIZE, display_name: Optional[str] = None
     ):
         """List access policies.
 
@@ -212,10 +225,10 @@ class _AccessPoliciesClient:
         )
 
     # additional queries on different endpoints
-    def count_matching_assets(self, access_policy_id):
+    def count_matching_assets(self, access_policy_id: str) -> int:
         """Count assets that match access_policy.
 
-        Counts number of assets that match an access_polocy.
+        Counts number of assets that match an access_policy.
 
         Args:
             access_policy_id (str): e.g. access_policies/xxxxxxxxxxxxxxx
@@ -229,10 +242,7 @@ class _AccessPoliciesClient:
         )
 
     def list_matching_assets(
-        self,
-        access_policy_id,
-        *,
-        page_size=DEFAULT_PAGE_SIZE,
+        self, access_policy_id: str, *, page_size: int = DEFAULT_PAGE_SIZE
     ):
         """List matching assets.
 
@@ -255,7 +265,7 @@ class _AccessPoliciesClient:
             )
         )
 
-    def count_matching_access_policies(self, asset_id):
+    def count_matching_access_policies(self, asset_id: str) -> int:
         """Count access policies that match asset.
 
         Counts number of access policies that match asset.
@@ -271,7 +281,9 @@ class _AccessPoliciesClient:
             SEP.join((ACCESS_POLICIES_SUBPATH, asset_id, ACCESS_POLICIES_LABEL)),
         )
 
-    def list_matching_access_policies(self, asset_id, *, page_size=DEFAULT_PAGE_SIZE):
+    def list_matching_access_policies(
+        self, asset_id: str, *, page_size: int = DEFAULT_PAGE_SIZE
+    ):
         """List matching access policies.
 
         List access policies that match asset.
@@ -292,7 +304,3 @@ class _AccessPoliciesClient:
                 page_size=page_size,
             )
         )
-
-
-class AccessPolicy(dict):
-    """AccessPolicy object"""

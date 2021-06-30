@@ -40,7 +40,7 @@ class ArchivistForbiddenError(ArchivistError):
 
 
 class ArchivistNotFoundError(ArchivistError):
-    """Enetity does not exist (404)"""
+    """Entity does not exist (404)"""
 
 
 class Archivist4xxError(ArchivistError):
