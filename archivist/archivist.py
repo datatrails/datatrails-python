@@ -6,7 +6,7 @@
    the basic REST verbs to GET, POST, PATCH and DELETE entities..
 
    The REST methods in this class should only be used directly when
-   a CRUD endpoint for the specific type of entity is unavaliable.
+   a CRUD endpoint for the specific type of entity is unavailable.
    Current CRUD endpoints are assets, events, locations, attachments.
    IAM subjects and IAM access policies.
 
@@ -24,7 +24,7 @@
           auth=authtoken,
       )
 
-    The arch variable now has additonal endpoints assets,events,locations,
+    The arch variable now has additional endpoints assets,events,locations,
     attachments, IAM subjects and IAM access policies documented elsewhere.
 
 """
@@ -33,7 +33,8 @@ import logging
 
 import json
 from os.path import isfile as os_path_isfile
-from typing import Optional
+from typing import IO, Optional
+from requests.models import Response
 
 from flatten_dict import flatten
 import requests
@@ -92,7 +93,15 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     """
 
-    def __init__(self, url, *, auth=None, cert=None, verify=True):
+    def __init__(
+        self,
+        url: str,
+        *,
+        auth: Optional[str] = None,
+        cert: Optional[str] = None,
+        verify: bool = True,
+    ):
+
         self._headers = {"content-type": "application/json"}
         if auth is not None:
             self._headers["authorization"] = "Bearer " + auth.strip()
@@ -114,14 +123,14 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self._cert = cert
 
         # keep these in sync with CLIENTS map above
-        self.assets: Optional[_AssetsClient]
-        self.events: Optional[_EventsClient]
-        self.locations: Optional[_LocationsClient]
-        self.attachments: Optional[_AttachmentsClient]
-        self.access_policies: Optional[_AccessPoliciesClient]
-        self.subjects: Optional[_SubjectsClient]
+        self.assets: _AssetsClient
+        self.events: _EventsClient
+        self.locations: _LocationsClient
+        self.attachments: _AttachmentsClient
+        self.access_policies: _AccessPoliciesClient
+        self.subjects: _SubjectsClient
 
-    def __getattr__(self, value):
+    def __getattr__(self, value: str):
         """Create endpoints on demand"""
         client = CLIENTS.get(value)
 
@@ -133,22 +142,22 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return c
 
     @property
-    def headers(self):
+    def headers(self) -> dict:
         """dict: Headers REST headers from response"""
         return self._headers
 
     @property
-    def url(self):
+    def url(self) -> str:
         """str: URL of Archivist endpoint"""
         return self._url
 
     @property
-    def verify(self):
+    def verify(self) -> bool:
         """bool: Returns True if https connections are to be verified"""
         return self._verify
 
     @property
-    def cert(self):
+    def cert(self) -> str:
         """str: filepath containing authorisation certificate."""
         return self._cert
 
@@ -161,7 +170,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return newheaders
 
-    def get(self, subpath, identity, *, headers=None):
+    def get(
+        self, subpath: str, identity: str, *, headers: Optional[dict] = None
+    ) -> dict:
         """GET method (REST)
 
         Args:
@@ -173,7 +184,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             dict representing the response body (entity).
 
         """
-        LOGGER.debug("get %s/%s", subpath, identity)
         response = requests.get(
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),
@@ -187,7 +197,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
-    def get_file(self, subpath, identity, fd, *, headers=None):
+    def get_file(
+        self, subpath: str, identity: str, fd: IO, *, headers: Optional[dict] = None
+    ) -> Response:
         """GET method (REST) - chunked
 
         Downloads a binary object from upstream storage.
@@ -220,7 +232,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response
 
-    def post(self, path, request, *, headers=None):
+    def post(self, path: str, request: dict, *, headers: Optional[dict] = None) -> dict:
         """POST method (REST)
 
         Creates an entity
@@ -249,7 +261,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
-    def post_file(self, path, fd, mtype):
+    def post_file(self, path: str, fd: IO, mtype: str) -> dict:
         """POST method (REST) - upload binary
 
         Uploads a file to an endpoint
@@ -286,7 +298,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
-    def delete(self, subpath, identity, *, headers=None):
+    def delete(
+        self, subpath: str, identity: str, *, headers: Optional[dict] = None
+    ) -> dict:
         """DELETE method (REST)
 
         Deletes an entity
@@ -313,7 +327,14 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
-    def patch(self, subpath, identity, request, *, headers=None):
+    def patch(
+        self,
+        subpath: str,
+        identity: str,
+        request: dict,
+        *,
+        headers: Optional[dict] = None,
+    ) -> dict:
         """PATCH method (REST)
 
         Updates the specified entity.
@@ -365,7 +386,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             sorted(f"{k}={v}" for k, v in flatten(query, reducer="dot").items())
         )
 
-    def get_by_signature(self, path, field, query, *, headers=None):
+    def get_by_signature(
+        self, path: str, field: str, query: dict, *, headers: Optional[dict] = None
+    ) -> dict:
         """GET method (REST) with query string
 
         Reads an entity indirectly by searching for its signature
@@ -413,7 +436,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return records[0]
 
-    def count(self, path, *, query=None):
+    def count(self, path: str, *, query: Optional[dict] = None) -> int:
         """GET method (REST) with query string
 
         Returns the count of objects that match query
@@ -439,7 +462,15 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return int(response.headers[HEADERS_TOTAL_COUNT])
 
-    def list(self, path, field, *, page_size=None, query=None, headers=None):
+    def list(
+        self,
+        path: str,
+        field: str,
+        *,
+        page_size: Optional[int] = None,
+        query: Optional[dict] = None,
+        headers: Optional[dict] = None,
+    ):
         """GET method (REST) with query string
 
         Lists entities that match the query dictionary.

@@ -22,6 +22,11 @@
 """
 
 import logging
+from typing import List, Optional
+
+# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
+# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+from archivist import archivist as type_helper
 
 from .constants import (
     SUBJECTS_SUBPATH,
@@ -36,10 +41,14 @@ DEFAULT_PAGE_SIZE = 500
 LOGGER = logging.getLogger(__name__)
 
 
+class Subject(dict):
+    """Subject object"""
+
+
 class _SubjectsClient:
     """SubjectsClient
 
-    Access to subjects entitiies using CRUD interface. This class is usually
+    Access to subjects entities using CRUD interface. This class is usually
     accessed as an attribute of the Archivist class.
 
     Args:
@@ -47,16 +56,18 @@ class _SubjectsClient:
 
     """
 
-    def __init__(self, archivist):
+    def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def create(self, display_name, wallet_pub_keys, tessera_pub_keys):
+    def create(
+        self, display_name: str, wallet_pub_keys: List, tessera_pub_keys: List
+    ) -> Subject:
         """Create subject
 
         Creates subject with defined attributes.
 
         Args:
-            display_name (str): dispaly name of subject.
+            display_name (str): display name of subject.
             wallet_pub_keys (list): wallet public keys
             tessera_pub_keys (list): tessera public keys
 
@@ -73,7 +84,7 @@ class _SubjectsClient:
             ),
         )
 
-    def create_from_data(self, data):
+    def create_from_data(self, data: dict) -> Subject:
         """Create subject
 
         Creates subject with request body from data stream.
@@ -93,7 +104,7 @@ class _SubjectsClient:
             )
         )
 
-    def read(self, identity):
+    def read(self, identity: str) -> Subject:
         """Read Subject
 
         Reads subject.
@@ -114,12 +125,12 @@ class _SubjectsClient:
 
     def update(
         self,
-        identity,
+        identity: str,
         *,
-        display_name=None,
-        wallet_pub_keys=None,
-        tessera_pub_keys=None,
-    ):
+        display_name: Optional[dict] = None,
+        wallet_pub_keys: Optional[dict] = None,
+        tessera_pub_keys: Optional[dict] = None,
+    ) -> Subject:
         """Update Subject
 
         Update subject.
@@ -146,7 +157,7 @@ class _SubjectsClient:
             )
         )
 
-    def delete(self, identity):
+    def delete(self, identity: str):
         """Delete Subject
 
         Deletes subject.
@@ -175,13 +186,13 @@ class _SubjectsClient:
 
         return query
 
-    def count(self, *, display_name=None):
+    def count(self, *, display_name: Optional[str] = None) -> int:
         """Count subjects.
 
         Counts number of subjects that match criteria.
 
         Args:
-            display_name (str): display name (optional0
+            display_name (str): display name (optional)
 
         Returns:
             integer count of subjects.
@@ -195,8 +206,8 @@ class _SubjectsClient:
     def list(
         self,
         *,
-        page_size=DEFAULT_PAGE_SIZE,
-        display_name=None,
+        page_size: int = DEFAULT_PAGE_SIZE,
+        display_name: Optional[str] = None,
     ):
         """List subjects.
 
@@ -220,7 +231,3 @@ class _SubjectsClient:
                 query=self.__query(display_name=display_name),
             )
         )
-
-
-class Subject(dict):
-    """Subject object"""
