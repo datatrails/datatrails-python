@@ -23,6 +23,11 @@
 """
 
 import logging
+from typing import Optional
+
+# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
+# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+from archivist import archivist as type_helper
 
 from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 
@@ -33,6 +38,14 @@ from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 DEFAULT_PAGE_SIZE = 500
 
 LOGGER = logging.getLogger(__name__)
+
+
+class Location(dict):
+    """Location
+
+    Location object has dictionary attributes.
+
+    """
 
 
 class _LocationsClient:
@@ -46,10 +59,10 @@ class _LocationsClient:
 
     """
 
-    def __init__(self, archivist):
+    def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def create(self, props, *, attrs=None):
+    def create(self, props: dict, *, attrs: Optional[dict] = None) -> Location:
         """Create location
 
         Creates location with defined properties and attributes.
@@ -65,7 +78,7 @@ class _LocationsClient:
         LOGGER.debug("Create Location %s", props)
         return self.create_from_data(self.__query(props, attrs))
 
-    def create_from_data(self, data):
+    def create_from_data(self, data: dict) -> Location:
         """Create location
 
         Creates location with request body from data stream.
@@ -85,7 +98,7 @@ class _LocationsClient:
             )
         )
 
-    def read(self, identity):
+    def read(self, identity: str) -> Location:
         """Read location
 
         Reads location.
@@ -112,7 +125,9 @@ class _LocationsClient:
 
         return query
 
-    def count(self, *, props=None, attrs=None):
+    def count(
+        self, *, props: Optional[dict] = None, attrs: Optional[dict] = None
+    ) -> int:
         """Count locations.
 
         Counts number of locations that match criteria.
@@ -129,7 +144,13 @@ class _LocationsClient:
             f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}", query=self.__query(props, attrs)
         )
 
-    def list(self, *, page_size=DEFAULT_PAGE_SIZE, props=None, attrs=None):
+    def list(
+        self,
+        *,
+        page_size: int = DEFAULT_PAGE_SIZE,
+        props: Optional[dict] = None,
+        attrs: Optional[dict] = None,
+    ):
         """List locations.
 
         Lists locations that match criteria.
@@ -154,7 +175,9 @@ class _LocationsClient:
             )
         )
 
-    def read_by_signature(self, *, props=None, attrs=None):
+    def read_by_signature(
+        self, *, props: Optional[dict] = None, attrs: Optional[dict] = None
+    ) -> Location:
         """Read location by signature.
 
         Reads location that meets criteria. Only one location is expected.
@@ -174,11 +197,3 @@ class _LocationsClient:
                 query=self.__query(props, attrs),
             )
         )
-
-
-class Location(dict):
-    """Location
-
-    Location object has dictionary attributes.
-
-    """

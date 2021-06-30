@@ -24,17 +24,32 @@
 
 # pylint:disable=too-few-public-methods
 
+from typing import IO
 import logging
+
+from requests.models import Response
+
+# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
+# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+from archivist import archivist as type_helper
 
 from .constants import ATTACHMENTS_SUBPATH, ATTACHMENTS_LABEL
 
 LOGGER = logging.getLogger(__name__)
 
 
+class Attachment(dict):
+    """Attachment
+
+    Attachment object has dictionary attributes.
+
+    """
+
+
 class _AttachmentsClient:
     """AttachmentsClient
 
-    Access to attachments entitiies using CRUD interface. This class is usually
+    Access to attachments entities using CRUD interface. This class is usually
     accessed as an attribute of the Archivist class.
 
     Args:
@@ -42,10 +57,10 @@ class _AttachmentsClient:
 
     """
 
-    def __init__(self, archivist):
+    def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def upload(self, fd, *, mtype="image/jpg"):
+    def upload(self, fd: IO, *, mtype: str = "image/jpg") -> Attachment:
         """Create attachment
 
         Creates attachment from opened file or other data source.
@@ -68,7 +83,7 @@ class _AttachmentsClient:
             )
         )
 
-    def download(self, identity, fd):
+    def download(self, identity: str, fd: IO) -> Response:
         """Read attachment
 
         Reads attachment into data sink (usually a file opened for write)..
@@ -88,11 +103,3 @@ class _AttachmentsClient:
             identity,
             fd,
         )
-
-
-class Attachment(dict):
-    """Attachment
-
-    Attachment object has dictionary attributes.
-
-    """

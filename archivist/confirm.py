@@ -86,7 +86,7 @@ def __on_giveup_confirmed(details):
     on_backoff=__backoff_handler,
     on_giveup=__on_giveup_confirmed,
 )
-def wait_for_confirmed(self, *, props=None, **kwargs):
+def wait_for_confirmed(self, *, props=None, **kwargs) -> bool:
     """docstring"""
     newprops = deepcopy(props) if props else {}
     newprops[CONFIRMATION_STATUS] = CONFIRMATION_PENDING
