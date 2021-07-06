@@ -46,7 +46,7 @@ attrs = {
         "some_custom_attribute": "value"  # You can add any custom value as long as
                                       # it does not start with arc_
 }
-behaviours = ["Attachments", "Firmware", "LocationUpdate", "Maintenance", "RecordEvidence"]
+behaviours = ["Attachments", "RecordEvidence"]
 
 # The first argument is the behaviours of the asset
 # The second argument is the attributes of the asset
