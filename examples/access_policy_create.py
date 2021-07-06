@@ -54,7 +54,7 @@ def main():
         {
             "asset_attributes_read": ["toner_colour", "toner_type"],
             "asset_attributes_write": ["toner_colour"],
-            "behaviours": ["Attachments", "Firmware", "Maintenance", "RecordEvidence"],
+            "behaviours": ["Attachments", "RecordEvidence"],
             "event_arc_display_type_read": ["toner_type", "toner_colour"],
             "event_arc_display_type_write": ["toner_replacement"],
             "include_attributes": [

@@ -25,10 +25,7 @@ from .mock_response import MockResponse
 
 
 BEHAVIOURS = [
-    "Firmware",
-    "Maintenance",
     "RecordEvidence",
-    "LocationUpdate",
     "Attachments",
 ]
 PRIMARY_IMAGE = {

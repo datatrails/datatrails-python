@@ -54,7 +54,7 @@ ACCESS_PERMISSIONS = [
             "subjects/6a951b62-0a26-4c22-a886-1082297b063b",
             "subjects/a24306e5-dc06-41ba-a7d6-2b6b3e1df48d",
         ],
-        "behaviours": ["Attachments", "Firmware", "Maintenance", "RecordEvidence"],
+        "behaviours": ["Attachments", "RecordEvidence"],
         "include_attributes": [
             "arc_display_name",
             "arc_display_type",

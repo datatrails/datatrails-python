@@ -37,9 +37,6 @@ def create_asset(arch):
     }
     behaviours = [
         "Attachments",
-        "Firmware",
-        "LocationUpdate",
-        "Maintenance",
         "RecordEvidence",
     ]
 
