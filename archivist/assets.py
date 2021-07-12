@@ -22,8 +22,9 @@
 """
 
 import logging
-from typing import List, Optional
+from typing import Dict, List, Optional
 from copy import deepcopy
+from archivist.type_aliases import NoneOnError
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -53,7 +54,7 @@ class Asset(dict):
     """
 
     @property
-    def primary_image(self):
+    def primary_image(self) -> NoneOnError[str]:
         """Primary Image
 
         Attachment that is the primary image of the asset.
@@ -80,7 +81,7 @@ class Asset(dict):
         return None
 
     @property
-    def name(self):
+    def name(self) -> NoneOnError[str]:
         """str: name of the asset"""
         try:
             name = self["attributes"]["arc_display_name"]
@@ -106,7 +107,9 @@ class _AssetsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def create(self, behaviours: List, attrs: dict, *, confirm: bool = False) -> Asset:
+    def create(
+        self, behaviours: List, attrs: Dict, *, confirm: bool = False
+    ) -> NoneOnError[Asset]:
         """Create asset
 
         Creates asset with defined behaviours and attributes.
@@ -129,7 +132,9 @@ class _AssetsClient:
             confirm=confirm,
         )
 
-    def create_from_data(self, data: dict, *, confirm: bool = False) -> Asset:
+    def create_from_data(
+        self, data: Dict, *, confirm: bool = False
+    ) -> NoneOnError[Asset]:
         """Create asset
 
         Creates asset with request body from data stream.
@@ -169,7 +174,7 @@ class _AssetsClient:
         return Asset(**self._archivist.get(ASSETS_SUBPATH, identity))
 
     @staticmethod
-    def __query(props, attrs):
+    def __query(props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
         query = deepcopy(props) if props else {}
         if attrs:
             query["attributes"] = attrs
@@ -177,7 +182,7 @@ class _AssetsClient:
         return query
 
     def count(
-        self, *, props: Optional[dict] = None, attrs: Optional[dict] = None
+        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
     ) -> int:
         """Count assets.
 
@@ -196,7 +201,7 @@ class _AssetsClient:
         )
 
     def wait_for_confirmed(
-        self, *, props: Optional[dict] = None, attrs: Optional[dict] = None
+        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
     ) -> bool:
         """Wait for assets to be confirmed.
 
@@ -216,8 +221,8 @@ class _AssetsClient:
         self,
         *,
         page_size: int = DEFAULT_PAGE_SIZE,
-        props: Optional[dict] = None,
-        attrs: Optional[dict] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
     ):
         """List assets.
 
@@ -243,7 +248,7 @@ class _AssetsClient:
         )
 
     def read_by_signature(
-        self, *, props: Optional[dict] = None, attrs: Optional[dict] = None
+        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
     ) -> Asset:
         """Read Asset by signature.
 
