@@ -33,7 +33,7 @@ import logging
 
 import json
 from os.path import isfile as os_path_isfile
-from typing import IO, Optional
+from typing import BinaryIO, Dict, Optional
 from requests.models import Response
 
 from flatten_dict import flatten
@@ -142,7 +142,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return c
 
     @property
-    def headers(self) -> dict:
+    def headers(self) -> Dict:
         """dict: Headers REST headers from response"""
         return self._headers
 
@@ -157,11 +157,11 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return self._verify
 
     @property
-    def cert(self) -> str:
+    def cert(self) -> Optional[str]:
         """str: filepath containing authorisation certificate."""
         return self._cert
 
-    def __add_headers(self, headers):
+    def __add_headers(self, headers: Optional[Dict]) -> Dict:
         """docstring"""
         if headers is not None:
             newheaders = {**self.headers, **headers}
@@ -171,8 +171,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return newheaders
 
     def get(
-        self, subpath: str, identity: str, *, headers: Optional[dict] = None
-    ) -> dict:
+        self, subpath: str, identity: str, *, headers: Optional[Dict] = None
+    ) -> Dict:
         """GET method (REST)
 
         Args:
@@ -198,7 +198,12 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return response.json()
 
     def get_file(
-        self, subpath: str, identity: str, fd: IO, *, headers: Optional[dict] = None
+        self,
+        subpath: str,
+        identity: str,
+        fd: BinaryIO,
+        *,
+        headers: Optional[Dict] = None,
     ) -> Response:
         """GET method (REST) - chunked
 
@@ -232,7 +237,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response
 
-    def post(self, path: str, request: dict, *, headers: Optional[dict] = None) -> dict:
+    def post(self, path: str, request: Dict, *, headers: Optional[Dict] = None) -> Dict:
         """POST method (REST)
 
         Creates an entity
@@ -261,7 +266,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
-    def post_file(self, path: str, fd: IO, mtype: str) -> dict:
+    def post_file(self, path: str, fd: BinaryIO, mtype: str) -> Dict:
         """POST method (REST) - upload binary
 
         Uploads a file to an endpoint
@@ -286,7 +291,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         }
         response = requests.post(
             SEP.join((self.url, ROOT, path)),
-            data=multipart,
+            data=multipart,  # type: ignore      https://github.com/requests/toolbelt/issues/312
             headers=self.__add_headers(headers),
             verify=self.verify,
             cert=self.cert,
@@ -299,8 +304,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return response.json()
 
     def delete(
-        self, subpath: str, identity: str, *, headers: Optional[dict] = None
-    ) -> dict:
+        self, subpath: str, identity: str, *, headers: Optional[Dict] = None
+    ) -> Dict:
         """DELETE method (REST)
 
         Deletes an entity
@@ -331,10 +336,10 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self,
         subpath: str,
         identity: str,
-        request: dict,
+        request: Dict,
         *,
-        headers: Optional[dict] = None,
-    ) -> dict:
+        headers: Optional[Dict] = None,
+    ) -> Dict:
         """PATCH method (REST)
 
         Updates the specified entity.
@@ -364,7 +369,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
-    def __list(self, path, args, *, headers=None):
+    def __list(self, path, args, *, headers=None) -> Response:
         if args:
             path = "?".join((path, args))
 
@@ -381,14 +386,14 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return response
 
     @staticmethod
-    def __query(query):
+    def __query(query: Optional[Dict]):
         return query and "&".join(
             sorted(f"{k}={v}" for k, v in flatten(query, reducer="dot").items())
         )
 
     def get_by_signature(
-        self, path: str, field: str, query: dict, *, headers: Optional[dict] = None
-    ) -> dict:
+        self, path: str, field: str, query: Dict, *, headers: Optional[Dict] = None
+    ) -> Dict:
         """GET method (REST) with query string
 
         Reads an entity indirectly by searching for its signature
@@ -417,7 +422,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         response = self.__list(
             path,
-            "&".join((a for a in (paging, qry) if a)),
+            "&".join((a for a in (paging, qry) if a)),  # type: ignore
             headers=headers,
         )
 
@@ -436,7 +441,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return records[0]
 
-    def count(self, path: str, *, query: Optional[dict] = None) -> int:
+    def count(self, path: str, *, query: Optional[Dict] = None) -> int:
         """GET method (REST) with query string
 
         Returns the count of objects that match query
@@ -456,7 +461,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         response = self.__list(
             path,
-            "&".join((a for a in (paging, qry) if a)),
+            "&".join((a for a in (paging, qry) if a)),  # type: ignore
             headers=headers,
         )
 
@@ -467,9 +472,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         path: str,
         field: str,
         *,
-        page_size: Optional[int] = None,
-        query: Optional[dict] = None,
-        headers: Optional[dict] = None,
+        page_size: int = None,
+        query: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
     ):
         """GET method (REST) with query string
 
@@ -502,7 +507,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         while True:
             response = self.__list(
                 path,
-                "&".join((a for a in (paging, qry) if a)),
+                "&".join((a for a in (paging, qry) if a)),  # type: ignore
                 headers=headers,
             )
             data = response.json()

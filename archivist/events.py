@@ -23,8 +23,9 @@
 """
 
 import logging
-from typing import Optional
+from typing import Dict, Optional
 from copy import deepcopy
+from archivist.type_aliases import NoneOnError
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -119,12 +120,12 @@ class _EventsClient:
     def create(
         self,
         asset_id: str,
-        props: dict,
-        attrs: dict,
+        props: Dict,
+        attrs: Dict,
         *,
-        asset_attrs: Optional[dict] = None,
+        asset_attrs: Optional[Dict] = None,
         confirm: bool = False,
-    ) -> Event:
+    ) -> NoneOnError[Event]:
         """Create event
 
         Creates event for given asset.
@@ -148,7 +149,9 @@ class _EventsClient:
             confirm=confirm,
         )
 
-    def create_from_data(self, asset_id: str, data: dict, *, confirm=False) -> Event:
+    def create_from_data(
+        self, asset_id: str, data: Dict, *, confirm=False
+    ) -> NoneOnError[Event]:
         """Create event
 
         Creates event for given asset from data.
@@ -194,7 +197,9 @@ class _EventsClient:
         )
 
     @staticmethod
-    def __query(props, attrs, asset_attrs):
+    def __query(
+        props: Optional[Dict], attrs: Optional[Dict], asset_attrs: Optional[Dict]
+    ) -> Dict:
         query = deepcopy(props) if props else {}
         if attrs:
             query["event_attributes"] = attrs
@@ -207,9 +212,9 @@ class _EventsClient:
         self,
         *,
         asset_id: str = ASSETS_WILDCARD,
-        props: Optional[dict] = None,
-        attrs: Optional[dict] = None,
-        asset_attrs: Optional[dict] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
+        asset_attrs: Optional[Dict] = None,
     ) -> int:
         """Count events.
 
@@ -235,9 +240,9 @@ class _EventsClient:
         self,
         *,
         asset_id: str = ASSETS_WILDCARD,
-        props: Optional[dict] = None,
-        attrs: Optional[dict] = None,
-        asset_attrs: Optional[dict] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
+        asset_attrs: Optional[Dict] = None,
     ) -> bool:
         """Wait for events to be confirmed.
 
@@ -262,9 +267,9 @@ class _EventsClient:
         *,
         asset_id: str = ASSETS_WILDCARD,
         page_size: int = DEFAULT_PAGE_SIZE,
-        props: Optional[dict] = None,
-        attrs: Optional[dict] = None,
-        asset_attrs: Optional[dict] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
+        asset_attrs: Optional[Dict] = None,
     ):
         """List events.
 
@@ -295,9 +300,9 @@ class _EventsClient:
         self,
         *,
         asset_id: str = ASSETS_WILDCARD,
-        props: Optional[dict] = None,
-        attrs: Optional[dict] = None,
-        asset_attrs: Optional[dict] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
+        asset_attrs: Optional[Dict] = None,
     ) -> Event:
         """Read event by signature.
 

@@ -12,3 +12,5 @@ htmlcov/
 .cache/
 .eggs/
 .task/
+*.pyi
+.vscode

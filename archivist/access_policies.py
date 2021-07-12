@@ -21,7 +21,7 @@
 
 """
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 import logging
 from copy import deepcopy
 
@@ -65,7 +65,7 @@ class _AccessPoliciesClient:
         self._archivist = archivist
 
     def create(
-        self, props: dict, filters: List, access_permissions: List
+        self, props: Dict, filters: List, access_permissions: List
     ) -> AccessPolicy:
         """Create access policy
 
@@ -85,7 +85,7 @@ class _AccessPoliciesClient:
             self.__query(props, filters=filters, access_permissions=access_permissions),
         )
 
-    def create_from_data(self, data: dict) -> AccessPolicy:
+    def create_from_data(self, data: Dict) -> AccessPolicy:
         """Create access policy
 
         Creates access policy with request body from data stream.
@@ -127,9 +127,9 @@ class _AccessPoliciesClient:
     def update(
         self,
         identity,
-        props: Optional[dict] = None,
-        filters: Optional[list] = None,
-        access_permissions: Optional[list] = None,
+        props: Optional[Dict] = None,
+        filters: Optional[List] = None,
+        access_permissions: Optional[List] = None,
     ) -> AccessPolicy:
         """Update Access Policy
 
@@ -155,7 +155,7 @@ class _AccessPoliciesClient:
             )
         )
 
-    def delete(self, identity: str) -> dict:
+    def delete(self, identity: str) -> Dict:
         """Delete Access Policy
 
         Deletes access policy.
@@ -170,7 +170,12 @@ class _AccessPoliciesClient:
         return self._archivist.delete(ACCESS_POLICIES_SUBPATH, identity)
 
     @staticmethod
-    def __query(props, *, filters=None, access_permissions=None):
+    def __query(
+        props: Optional[Dict],
+        *,
+        filters: Optional[List] = None,
+        access_permissions: Optional[List] = None,
+    ) -> Dict:
         query = deepcopy(props) if props else {}
         if filters is not None:
             query["filters"] = filters
