@@ -24,7 +24,7 @@
 
 # pylint:disable=too-few-public-methods
 
-from typing import IO
+from typing import BinaryIO
 import logging
 
 from requests.models import Response
@@ -60,7 +60,7 @@ class _AttachmentsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def upload(self, fd: IO, *, mtype: str = "image/jpg") -> Attachment:
+    def upload(self, fd: BinaryIO, *, mtype: str = "image/jpg") -> Attachment:
         """Create attachment
 
         Creates attachment from opened file or other data source.
@@ -83,7 +83,7 @@ class _AttachmentsClient:
             )
         )
 
-    def download(self, identity: str, fd: IO) -> Response:
+    def download(self, identity: str, fd: BinaryIO) -> Response:
         """Read attachment
 
         Reads attachment into data sink (usually a file opened for write)..

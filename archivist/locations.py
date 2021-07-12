@@ -23,7 +23,7 @@
 """
 
 import logging
-from typing import Optional
+from typing import Dict, Optional
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -62,7 +62,7 @@ class _LocationsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def create(self, props: dict, *, attrs: Optional[dict] = None) -> Location:
+    def create(self, props: Dict, *, attrs: Optional[Dict] = None) -> Location:
         """Create location
 
         Creates location with defined properties and attributes.
@@ -78,7 +78,7 @@ class _LocationsClient:
         LOGGER.debug("Create Location %s", props)
         return self.create_from_data(self.__query(props, attrs))
 
-    def create_from_data(self, data: dict) -> Location:
+    def create_from_data(self, data: Dict) -> Location:
         """Create location
 
         Creates location with request body from data stream.
@@ -118,7 +118,7 @@ class _LocationsClient:
         )
 
     @staticmethod
-    def __query(props, attrs):
+    def __query(props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
         query = props or {}
         if attrs:
             query["attributes"] = attrs
@@ -126,7 +126,7 @@ class _LocationsClient:
         return query
 
     def count(
-        self, *, props: Optional[dict] = None, attrs: Optional[dict] = None
+        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
     ) -> int:
         """Count locations.
 
@@ -148,8 +148,8 @@ class _LocationsClient:
         self,
         *,
         page_size: int = DEFAULT_PAGE_SIZE,
-        props: Optional[dict] = None,
-        attrs: Optional[dict] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
     ):
         """List locations.
 
@@ -176,7 +176,7 @@ class _LocationsClient:
         )
 
     def read_by_signature(
-        self, *, props: Optional[dict] = None, attrs: Optional[dict] = None
+        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
     ) -> Location:
         """Read location by signature.
 

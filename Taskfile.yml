@@ -23,7 +23,7 @@ tasks:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
       - docker build --no-cache --build-arg VERSION=3.8 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
-  
+
   builder-3.9:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
@@ -46,13 +46,13 @@ tasks:
   docs:
     desc: Create sphinx documentation
     deps: [about]
-    cmds: 
+    cmds:
       - ./scripts/builder.sh /bin/bash -c "cd docs && make html"
 
   format:
     desc: Format code using black
     deps: [about]
-    cmds: 
+    cmds:
       - ./scripts/builder.sh black archivist examples functests unittests
 
   functests:
@@ -60,9 +60,9 @@ tasks:
     deps: [about]
     cmds:
       - ./scripts/builder.sh ./scripts/functests.sh
-  
+
   publish:
-    desc: pubish wheel package (will require username and password)
+    desc: publish wheel package (will require username and password)
     deps: [about]
     cmds:
       - ./scripts/builder.sh python3 -m twine upload --repository pypi dist/*
@@ -72,12 +72,12 @@ tasks:
     deps: [about]
     cmds:
       - ./scripts/builder.sh ./scripts/unittests.sh
-  
+
   wheel:
     desc: Builds python wheel package
     deps: [about]
     cmds:
       - rm -rf *egg-info
-      - rm -rf build 
+      - rm -rf build
       - rm -f dist/*
       - python3 setup.py bdist_wheel

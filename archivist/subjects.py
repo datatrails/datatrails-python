@@ -22,7 +22,7 @@
 """
 
 import logging
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -84,7 +84,7 @@ class _SubjectsClient:
             ),
         )
 
-    def create_from_data(self, data: dict) -> Subject:
+    def create_from_data(self, data: Dict) -> Subject:
         """Create subject
 
         Creates subject with request body from data stream.
@@ -127,9 +127,9 @@ class _SubjectsClient:
         self,
         identity: str,
         *,
-        display_name: Optional[dict] = None,
-        wallet_pub_keys: Optional[dict] = None,
-        tessera_pub_keys: Optional[dict] = None,
+        display_name: str = None,
+        wallet_pub_keys: Optional[List[str]] = None,
+        tessera_pub_keys: Optional[List[str]] = None,
     ) -> Subject:
         """Update Subject
 
@@ -157,7 +157,7 @@ class _SubjectsClient:
             )
         )
 
-    def delete(self, identity: str):
+    def delete(self, identity: str) -> Dict:
         """Delete Subject
 
         Deletes subject.
@@ -172,7 +172,13 @@ class _SubjectsClient:
         return self._archivist.delete(SUBJECTS_SUBPATH, identity)
 
     @staticmethod
-    def __query(*, display_name=None, wallet_pub_keys=None, tessera_pub_keys=None):
+    def __query(
+        *,
+        display_name: Optional[str] = None,
+        wallet_pub_keys: Optional[List[str]] = None,
+        tessera_pub_keys: Optional[List[str]] = None,
+    ) -> Dict:
+
         query = {}
 
         if display_name is not None:
