@@ -33,7 +33,8 @@ import logging
 
 import json
 from os.path import isfile as os_path_isfile
-from typing import BinaryIO, Dict, Optional
+from typing import BinaryIO, Dict, List, Optional
+from collections import deque
 from requests.models import Response
 
 from flatten_dict import flatten
@@ -93,6 +94,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     """
 
+    RING_BUFFER_MAX_LEN = 10
+
     def __init__(
         self,
         url: str,
@@ -121,6 +124,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
                 raise ArchivistNotFoundError(f"Cert file {cert} does not exist")
 
         self._cert = cert
+        self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
 
         # keep these in sync with CLIENTS map above
         self.assets: _AssetsClient
@@ -191,6 +195,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             cert=self.cert,
         )
 
+        self._response_ring_buffer.appendleft(response)
+
         error = _parse_response(response)
         if error is not None:
             raise error
@@ -227,6 +233,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             cert=self.cert,
             stream=True,
         )
+
+        self._response_ring_buffer.appendleft(response)
+
         error = _parse_response(response)
         if error is not None:
             raise error
@@ -297,6 +306,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             cert=self.cert,
         )
 
+        self._response_ring_buffer.appendleft(response)
+
         error = _parse_response(response)
         if error is not None:
             raise error
@@ -325,6 +336,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             verify=self.verify,
             cert=self.cert,
         )
+
+        self._response_ring_buffer.appendleft(response)
 
         error = _parse_response(response)
         if error is not None:
@@ -363,6 +376,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             cert=self.cert,
         )
 
+        self._response_ring_buffer.appendleft(response)
+
         error = _parse_response(response)
         if error is not None:
             raise error
@@ -379,11 +394,22 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             verify=self.verify,
             cert=self.cert,
         )
+
+        self._response_ring_buffer.appendleft(response)
+
         error = _parse_response(response)
         if error is not None:
             raise error
 
         return response
+
+    def last_response(self, *, responses: int = 1) -> List[Response]:
+        """Returns the requested number of response objects from the response ring buffer
+        args:
+            responses (int): Number of responses to be returned in a list
+        """
+
+        return list(self._response_ring_buffer)[:responses]
 
     @staticmethod
     def __query(query: Optional[Dict]):
