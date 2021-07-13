@@ -3,7 +3,7 @@
 The standard Jitsuin Archivist python client.
 
 Please note that the canonical API for Jitsuin Archivist is always the REST API
-documented at https://jitsuin-archivist.readthedocs.io
+documented at https://docs.jitsuin.com
 
 # Installation
 
