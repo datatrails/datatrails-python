@@ -308,6 +308,16 @@ class TestArchivistGet(TestArchivistMethods):
         )
 
     @mock.patch("requests.get")
+    def test_ring_buffer(self, mock_get):
+        """
+        Test That the ring buffer for response objects works as expected
+        """
+        mock_get.return_value = MockResponse(200)
+        resp = self.arch.get("path/path", "entity/xxxxxxxx")
+        last_response = self.arch.last_response()
+        self.assertEqual(last_response, [mock_get.return_value])
+
+    @mock.patch("requests.get")
     def test_get_with_error(self, mock_get):
         """
         Test get method with error
