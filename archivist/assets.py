@@ -109,7 +109,7 @@ class _AssetsClient:
 
     def create(
         self, behaviours: List, attrs: Dict, *, confirm: bool = False
-    ) -> NoneOnError[Asset]:
+    ) -> Asset:
         """Create asset
 
         Creates asset with defined behaviours and attributes.
@@ -134,7 +134,7 @@ class _AssetsClient:
 
     def create_from_data(
         self, data: Dict, *, confirm: bool = False
-    ) -> NoneOnError[Asset]:
+    ) -> Asset:
         """Create asset
 
         Creates asset with request body from data stream.
@@ -157,7 +157,7 @@ class _AssetsClient:
         if not confirm:
             return asset
 
-        return wait_for_confirmation(self, asset["identity"])
+        return wait_for_confirmation(self, asset["identity"])   # type: ignore  The None return is unreachable
 
     def read(self, identity: str) -> Asset:
         """Read asset
