@@ -148,9 +148,7 @@ class _EventsClient:
             confirm=confirm,
         )
 
-    def create_from_data(
-        self, asset_id: str, data: Dict, *, confirm=False
-    ) -> Event:
+    def create_from_data(self, asset_id: str, data: Dict, *, confirm=False) -> Event:
         """Create event
 
         Creates event for given asset from data.
@@ -174,7 +172,7 @@ class _EventsClient:
         if not confirm:
             return event
 
-        return wait_for_confirmation(self, event["identity"])   # type: ignore  The None return is unreachable
+        return wait_for_confirmation(self, event["identity"])  # type: ignore
 
     def read(self, identity: str) -> Event:
         """Read event

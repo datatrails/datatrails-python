@@ -107,9 +107,7 @@ class _AssetsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def create(
-        self, behaviours: List, attrs: Dict, *, confirm: bool = False
-    ) -> Asset:
+    def create(self, behaviours: List, attrs: Dict, *, confirm: bool = False) -> Asset:
         """Create asset
 
         Creates asset with defined behaviours and attributes.
@@ -132,9 +130,7 @@ class _AssetsClient:
             confirm=confirm,
         )
 
-    def create_from_data(
-        self, data: Dict, *, confirm: bool = False
-    ) -> Asset:
+    def create_from_data(self, data: Dict, *, confirm: bool = False) -> Asset:
         """Create asset
 
         Creates asset with request body from data stream.
@@ -157,7 +153,7 @@ class _AssetsClient:
         if not confirm:
             return asset
 
-        return wait_for_confirmation(self, asset["identity"])   # type: ignore  The None return is unreachable
+        return wait_for_confirmation(self, asset["identity"])  # type: ignore
 
     def read(self, identity: str) -> Asset:
         """Read asset
