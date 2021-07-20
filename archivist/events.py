@@ -25,7 +25,6 @@
 import logging
 from typing import Dict, Optional
 from copy import deepcopy
-from archivist.type_aliases import NoneOnError
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -125,7 +124,7 @@ class _EventsClient:
         *,
         asset_attrs: Optional[Dict] = None,
         confirm: bool = False,
-    ) -> NoneOnError[Event]:
+    ) -> Event:
         """Create event
 
         Creates event for given asset.
@@ -151,7 +150,7 @@ class _EventsClient:
 
     def create_from_data(
         self, asset_id: str, data: Dict, *, confirm=False
-    ) -> NoneOnError[Event]:
+    ) -> Event:
         """Create event
 
         Creates event for given asset from data.
@@ -175,7 +174,7 @@ class _EventsClient:
         if not confirm:
             return event
 
-        return wait_for_confirmation(self, event["identity"])
+        return wait_for_confirmation(self, event["identity"])   # type: ignore  The None return is unreachable
 
     def read(self, identity: str) -> Event:
         """Read event
