@@ -17,6 +17,7 @@ from archivist.constants import (
     ROOT,
 )
 from archivist.errors import ArchivistUnconfirmedError
+from archivist.storage_integrity import StorageIntegrity
 
 from .mock_response import MockResponse
 
@@ -78,6 +79,7 @@ SUBPATH = f"{ASSETS_SUBPATH}/{ASSETS_LABEL}"
 # TBD: add properties as well
 REQUEST = {
     "behaviours": BEHAVIOURS,
+    "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
     "attributes": ATTRS,
 }
 REQUEST_DATA = json.dumps(REQUEST)

@@ -7,6 +7,7 @@ the token, called "arch", then call arch.assets.create() and the asset will be c
 """
 
 from archivist.archivist import Archivist
+from archivist.storage_integrity import StorageIntegrity
 
 
 def create_asset(arch):
@@ -39,17 +40,33 @@ def create_asset(arch):
         "Attachments",
         "RecordEvidence",
     ]
+    #
+    # store asset on the DLT or not. If DLT is not enabled for the user an error will occur if
+    # StorageIntegrity.LEDGER is specified. If unspecified then TENANT_STORAGE is used
+    # i.e. not stored on the DLT...
+    # storage_integrity = StorageIntegrity.TENANT_STORAGE
+    storage_integrity = StorageIntegrity.LEDGER
 
     # The first argument is the behaviours of the asset
     # The second argument is the attributes of the asset
-    # The third argument is wait for confirmation:
+    # The third argument indicates whether the asset is stored on the DLT or not.
+    #   If not specifed the asset is not stored on the DLT (TENANT_STORAGE)
+    # The fourth argument is wait for confirmation:
     #   If @confirm@ is True then this function will not
     #   return until the asset is confirmed on the blockchain and ready
     #   to accept events (or an error occurs)
-    #   After an asset is submitted to the blockchain (submitted),
+    #
+    # If storage_integrity = StorageIntegrity.LEDGER:
+    #   After an asset is submitted to the blockchain,
     #   it will be in the "Pending" status.
     #   Once it is added to the blockchain, the status will be changed to "Confirmed"
-    return arch.assets.create(behaviours, attrs=attrs, confirm=True)
+    #
+    # If storage_integrity = StorageIntegrity.TENANT_STORAGE:
+    #   The asset is simply stored in the backend (and not on the blockchain)
+    #   and, once stored, the status will be changed to "Confirmed".
+    return arch.assets.create(
+        behaviours, attrs, storage_integrity=storage_integrity, confirm=True
+    )
 
 
 def main():
