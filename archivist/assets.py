@@ -24,6 +24,8 @@
 import logging
 from typing import Dict, List, Optional
 from copy import deepcopy
+
+from archivist.storage_integrity import StorageIntegrity
 from archivist.type_aliases import NoneOnError
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
@@ -107,7 +109,14 @@ class _AssetsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def create(self, behaviours: List, attrs: Dict, *, confirm: bool = False) -> Asset:
+    def create(
+        self,
+        behaviours: List,
+        attrs: Dict,
+        *,
+        storage_integrity: StorageIntegrity = StorageIntegrity.TENANT_STORAGE,
+        confirm: bool = False,
+    ) -> Asset:
         """Create asset
 
         Creates asset with defined behaviours and attributes.
@@ -115,7 +124,8 @@ class _AssetsClient:
         Args:
             behaviours (list): list of accepted behaviours for this asset.
             attrs (dict): attributes of created asset.
-            confirm (bool): if True wait for asset to be confirmed on DLT.
+            storage_integrity (StorageIntegrity): store asset on either ledger or tenant storage
+            confirm (bool): if True wait for asset to be confirmed.
 
         Returns:
             :class:`Asset` instance
@@ -125,6 +135,7 @@ class _AssetsClient:
         return self.create_from_data(
             {
                 "behaviours": behaviours,
+                "storage_integrity": storage_integrity.name,
                 "attributes": attrs,
             },
             confirm=confirm,

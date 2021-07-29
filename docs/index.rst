@@ -23,6 +23,7 @@ Jitsuin Archivist
    archivist
    timestamp
    errors
+   storage_integrity
 
 Indices and tables
 ==================
