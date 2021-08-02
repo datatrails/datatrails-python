@@ -125,7 +125,7 @@ login is 'githubUserHandle'):
 > rights. If using ~/.ssh/config to manage ssh identities then replace all mentions of
 > 'git@github.com' with the clause name in ~/.ssh/config which references the appropriate
 > ssh key::
-> 
+>
 > For example:
 ```
 Host ssh-githubUserHandle
@@ -215,14 +215,14 @@ If you have access to an archivist instance then one can run functional tests. T
 and authtoken are required. The authtoken must be stored in a file in the credentials
 subdirectory credentials/authtoken (say).
 
-These tests will create artefacts on the archivist instance so it is **not** recommended that 
+These tests will create artefacts on the archivist instance so it is **not** recommended that
 they be run in a production environment.
 
 Set 2 environment variables and execute:
 
 ```bash
 export TEST_ARCHIVIST="https://rkvst.poc.jitsuin.io"
-export TEST_AUTHTOKEN=credentials/authtoken
+export TEST_AUTHTOKEN_FILENAME=credentials/authtoken
 task functests
 ```
 
@@ -333,7 +333,7 @@ Push the changes upstream(the set-upstream option is only required the first tim
 git push --set-upstream origin dev/githubUserHandle/some-proposed-fix
 ```
 
-Enter the github ui at https://github.com/jitsuin-inc/archivist-python and 
+Enter the github ui at https://github.com/jitsuin-inc/archivist-python and
 generate a pull request.
 
 Reviewers will be notified when a PR is generated and you will receive feedback.

@@ -61,7 +61,7 @@ class TestLocations(TestCase):
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_locations_create(self, mock_post):
         """
         Test location creation
@@ -91,7 +91,7 @@ class TestLocations(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_locations_read(self, mock_get):
         """
         Test asset reading
@@ -115,7 +115,7 @@ class TestLocations(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_locations_read_with_error(self, mock_get):
         """
         Test read method with error
@@ -124,7 +124,7 @@ class TestLocations(TestCase):
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.locations.read(IDENTITY)
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_locations_count(self, mock_get):
         """
         Test location counting
@@ -160,7 +160,7 @@ class TestLocations(TestCase):
             msg="Incorrect count",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_locations_count_with_props_query(self, mock_get):
         """
         Test location counting
@@ -199,7 +199,7 @@ class TestLocations(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_locations_count_with_attrs_query(self, mock_get):
         """
         Test location counting
@@ -238,7 +238,7 @@ class TestLocations(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_locations_list(self, mock_get):
         """
         Test location listing
@@ -280,7 +280,7 @@ class TestLocations(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_locations_list_with_query(self, mock_get):
         """
         Test location listing
@@ -334,7 +334,7 @@ class TestLocations(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_locations_read_by_signature(self, mock_get):
         """
         Test location read_by_signature
