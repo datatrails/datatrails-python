@@ -7,14 +7,14 @@ then
     echo "TEST_ARCHIVIST is undefined"
     exit 1
 fi
-if [ -z "${TEST_AUTHTOKEN}" ]
+if [ -z "${TEST_AUTHTOKEN_FILENAME}" ]
 then
-    echo "TEST_AUTHTOKEN is undefined"
+    echo "TEST_AUTHTOKEN_FILENAME is undefined"
     exit 1
 fi
-if [ ! -s "${TEST_AUTHTOKEN}" ]
+if [ ! -s "${TEST_AUTHTOKEN_FILENAME}" ]
 then
-    echo "${TEST_AUTHTOKEN} does not exist"
+    echo "${TEST_AUTHTOKEN_FILENAME} does not exist"
     exit 1
 fi
 

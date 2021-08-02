@@ -93,7 +93,7 @@ class TestAccessPolicies(TestCase):
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_access_policies_create(self, mock_post):
         """
         Test access_policy creation
@@ -125,7 +125,7 @@ class TestAccessPolicies(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_read(self, mock_get):
         """
         Test access_policy reading
@@ -149,7 +149,7 @@ class TestAccessPolicies(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.delete")
+    @mock.patch("requests.Session.delete")
     def test_access_policies_delete(self, mock_delete):
         """
         Test access_policy deleting
@@ -173,7 +173,7 @@ class TestAccessPolicies(TestCase):
             msg="DELETE method called incorrectly",
         )
 
-    @mock.patch("requests.patch")
+    @mock.patch("requests.Session.patch")
     def test_access_policies_update(self, mock_patch):
         """
         Test access_policy deleting
@@ -201,7 +201,7 @@ class TestAccessPolicies(TestCase):
             msg="PATCH method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_read_with_error(self, mock_get):
         """
         Test read method with error
@@ -210,7 +210,7 @@ class TestAccessPolicies(TestCase):
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.access_policies.read(IDENTITY)
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_count(self, mock_get):
         """
         Test access_policy counting
@@ -246,7 +246,7 @@ class TestAccessPolicies(TestCase):
             msg="Incorrect count",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_count_by_name(self, mock_get):
         """
         Test access_policy counting
@@ -285,7 +285,7 @@ class TestAccessPolicies(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_list(self, mock_get):
         """
         Test access_policy listing
@@ -327,7 +327,7 @@ class TestAccessPolicies(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_list_by_name(self, mock_get):
         """
         Test access_policy listing
@@ -379,7 +379,7 @@ class TestAccessPolicies(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_count_matching_access_policies(self, mock_get):
         """
         Test access_policy counting
@@ -420,7 +420,7 @@ class TestAccessPolicies(TestCase):
             msg="Incorrect count",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_list_matching_access_policies(self, mock_get):
         """
         Test access_policy counting
@@ -467,7 +467,7 @@ class TestAccessPolicies(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_count_matching_assets(self, mock_get):
         """
         Test access_policy counting
@@ -508,7 +508,7 @@ class TestAccessPolicies(TestCase):
             msg="Incorrect count",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_access_policies_list_matching_assets(self, mock_get):
         """
         Test access_policy counting

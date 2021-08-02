@@ -125,6 +125,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         self._cert = cert
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
+        self._session = requests.Session()
 
         # keep these in sync with CLIENTS map above
         self.assets: _AssetsClient
@@ -188,7 +189,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             dict representing the response body (entity).
 
         """
-        response = requests.get(
+        response = self._session.get(
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),
             verify=self.verify,
@@ -226,7 +227,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             REST response (not the response body)
 
         """
-        response = requests.get(
+        response = self._session.get(
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),
             verify=self.verify,
@@ -261,7 +262,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         """
 
-        response = requests.post(
+        response = self._session.post(
             SEP.join((self.url, ROOT, path)),
             data=json.dumps(request),
             headers=self.__add_headers(headers),
@@ -298,7 +299,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         headers = {
             "content-type": multipart.content_type,
         }
-        response = requests.post(
+        response = self._session.post(
             SEP.join((self.url, ROOT, path)),
             data=multipart,  # type: ignore      https://github.com/requests/toolbelt/issues/312
             headers=self.__add_headers(headers),
@@ -330,7 +331,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             dict representing the response body (entity).
 
         """
-        response = requests.delete(
+        response = self._session.delete(
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),
             verify=self.verify,
@@ -368,7 +369,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         """
 
-        response = requests.patch(
+        response = self._session.patch(
             SEP.join((self.url, ROOT, subpath, identity)),
             data=json.dumps(request),
             headers=self.__add_headers(headers),
@@ -388,7 +389,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         if args:
             path = "?".join((path, args))
 
-        response = requests.get(
+        response = self._session.get(
             SEP.join((self.url, ROOT, path)),
             headers=self.__add_headers(headers),
             verify=self.verify,

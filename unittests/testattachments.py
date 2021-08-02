@@ -39,7 +39,7 @@ class TestAttachments(TestCase):
         self.arch = Archivist("url", auth="authauthauth")
         self.mockstream = BytesIO(b"somelongstring")
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_attachments_upload(self, mock_post):
         """
         Test attachment upload
@@ -104,7 +104,7 @@ class TestAttachments(TestCase):
             msg="UPLOAD method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_attachments_download(self, mock_get):
         """
         Test attachment download

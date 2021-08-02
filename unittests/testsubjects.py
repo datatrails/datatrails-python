@@ -64,7 +64,7 @@ class TestSubjects(TestCase):
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_subjects_create(self, mock_post):
         """
         Test subject creation
@@ -96,7 +96,7 @@ class TestSubjects(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_subjects_read(self, mock_get):
         """
         Test subject reading
@@ -120,7 +120,7 @@ class TestSubjects(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.delete")
+    @mock.patch("requests.Session.delete")
     def test_subjects_delete(self, mock_delete):
         """
         Test subject deleting
@@ -144,7 +144,7 @@ class TestSubjects(TestCase):
             msg="DELETE method called incorrectly",
         )
 
-    @mock.patch("requests.patch")
+    @mock.patch("requests.Session.patch")
     def test_subjects_update(self, mock_patch):
         """
         Test subject deleting
@@ -172,7 +172,7 @@ class TestSubjects(TestCase):
             msg="PATCH method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_subjects_read_with_error(self, mock_get):
         """
         Test read method with error
@@ -181,7 +181,7 @@ class TestSubjects(TestCase):
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.subjects.read(IDENTITY)
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_subjects_count(self, mock_get):
         """
         Test subject counting
@@ -217,7 +217,7 @@ class TestSubjects(TestCase):
             msg="Incorrect count",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_subjects_count_by_name(self, mock_get):
         """
         Test subject counting
@@ -256,7 +256,7 @@ class TestSubjects(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_subjects_list(self, mock_get):
         """
         Test subject listing
@@ -298,7 +298,7 @@ class TestSubjects(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_subjects_list_by_name(self, mock_get):
         """
         Test subject listing

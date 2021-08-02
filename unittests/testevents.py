@@ -236,7 +236,7 @@ class TestEvents(TestCase):
     def tearDown(self):
         confirm.MAX_TIME = self.confirm_MAX_TIME
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_events_create(self, mock_post):
         """
         Test event creation
@@ -272,7 +272,7 @@ class TestEvents(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_events_create_with_asset_attrs(self, mock_post):
         """
         Test event creation
@@ -314,8 +314,8 @@ class TestEvents(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_events_create_with_confirmation(self, mock_post, mock_get):
         """
         Test event creation
@@ -330,8 +330,8 @@ class TestEvents(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_events_create_with_confirmation_no_confirmed_status(
         self,
         mock_post,
@@ -346,8 +346,8 @@ class TestEvents(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_events_create_with_confirmation_pending_status(
         self,
         mock_post,
@@ -368,8 +368,8 @@ class TestEvents(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_events_create_with_confirmation_failed_status(
         self,
         mock_post,
@@ -386,8 +386,8 @@ class TestEvents(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_events_create_with_confirmation_always_pending_status(
         self,
         mock_post,
@@ -406,11 +406,11 @@ class TestEvents(TestCase):
             MockResponse(200, **RESPONSE_PENDING),
             MockResponse(200, **RESPONSE_PENDING),
         ]
-        self.arch.events.timeout = 2
+
         with self.assertRaises(ArchivistUnconfirmedError):
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_read(self, mock_get):
         """
         Test event counting
@@ -445,7 +445,7 @@ class TestEvents(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_read_with_no_principal(self, mock_get):
         """
         Test event counting
@@ -459,7 +459,7 @@ class TestEvents(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_count(self, mock_get):
         """
         Test event counting
@@ -502,7 +502,7 @@ class TestEvents(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_count_with_props_query(self, mock_get):
         """
         Test event counting
@@ -546,7 +546,7 @@ class TestEvents(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_count_with_attrs_query(self, mock_get):
         """
         Test event counting
@@ -588,7 +588,7 @@ class TestEvents(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_count_with_wildcard_asset(self, mock_get):
         """
         Test event counting
@@ -629,7 +629,7 @@ class TestEvents(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_wait_for_confirmed(self, mock_get):
         """
         Test event counting
@@ -683,7 +683,7 @@ class TestEvents(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_list(self, mock_get):
         """
         Test event listing
@@ -732,7 +732,7 @@ class TestEvents(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_list_with_query(self, mock_get):
         """
         Test event listing
@@ -791,7 +791,7 @@ class TestEvents(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_list_with_wildcard_asset(self, mock_get):
         """
         Test event listing
@@ -849,7 +849,7 @@ class TestEvents(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_events_read_by_signature(self, mock_get):
         """
         Test event listing
