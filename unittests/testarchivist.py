@@ -137,7 +137,7 @@ class TestArchivistPost(TestArchivistMethods):
     Test Archivist POST method
     """
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_post(self, mock_post):
         """
         Test default post method
@@ -162,7 +162,7 @@ class TestArchivistPost(TestArchivistMethods):
             msg="POST method called incorrectly",
         )
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_post_with_error(self, mock_post):
         """
         Test post method with error
@@ -172,7 +172,7 @@ class TestArchivistPost(TestArchivistMethods):
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.post("path/path", request)
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_post_with_headers(self, mock_post):
         """
         Test default post method
@@ -202,7 +202,7 @@ class TestArchivistPost(TestArchivistMethods):
             msg="POST method called incorrectly",
         )
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_post_file(self, mock_post):
         """
         Test default post_file method
@@ -265,7 +265,7 @@ class TestArchivistPost(TestArchivistMethods):
             msg="Incorrect mimetype",
         )
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_post_file_with_error(self, mock_post):
         """
         Test post method with error
@@ -284,7 +284,7 @@ class TestArchivistGet(TestArchivistMethods):
     Test Archivist Get method
     """
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get(self, mock_get):
         """
         Test default get method
@@ -307,7 +307,7 @@ class TestArchivistGet(TestArchivistMethods):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_ring_buffer(self, mock_get):
         """
         Test That the ring buffer for response objects works as expected
@@ -317,7 +317,7 @@ class TestArchivistGet(TestArchivistMethods):
         last_response = self.arch.last_response()
         self.assertEqual(last_response, [mock_get.return_value])
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get_with_error(self, mock_get):
         """
         Test get method with error
@@ -326,7 +326,7 @@ class TestArchivistGet(TestArchivistMethods):
         with self.assertRaises(ArchivistNotFoundError):
             resp = self.arch.get("path/path", "entity/xxxxxxxx")
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get_file(self, mock_get):
         """
         Test default get method
@@ -371,7 +371,7 @@ class TestArchivistGet(TestArchivistMethods):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get_file_with_error(self, mock_get):
         """
         Test get method with error
@@ -381,7 +381,7 @@ class TestArchivistGet(TestArchivistMethods):
             with BytesIO() as fd:
                 resp = self.arch.get_file("path/path", "entity/xxxxxxxx", fd)
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get_with_headers(self, mock_get):
         """
         Test default get method
@@ -415,7 +415,7 @@ class TestArchivistDelete(TestArchivistMethods):
     Test Archivist Delete method
     """
 
-    @mock.patch("requests.delete")
+    @mock.patch("requests.Session.delete")
     def test_delete(self, mock_delete):
         """
         Test default delete method
@@ -438,7 +438,7 @@ class TestArchivistDelete(TestArchivistMethods):
             msg="DELETE method called incorrectly",
         )
 
-    @mock.patch("requests.delete")
+    @mock.patch("requests.Session.delete")
     def test_delete_with_error(self, mock_delete):
         """
         Test delete method with error
@@ -447,7 +447,7 @@ class TestArchivistDelete(TestArchivistMethods):
         with self.assertRaises(ArchivistNotFoundError):
             resp = self.arch.delete("path/path", "entity/xxxxxxxx")
 
-    @mock.patch("requests.delete")
+    @mock.patch("requests.Session.delete")
     def test_delete_with_headers(self, mock_delete):
         """
         Test default delete method
@@ -481,7 +481,7 @@ class TestArchivistPatch(TestArchivistMethods):
     Test Archivist PATCH method
     """
 
-    @mock.patch("requests.patch")
+    @mock.patch("requests.Session.patch")
     def test_patch(self, mock_patch):
         """
         Test default patch method
@@ -506,7 +506,7 @@ class TestArchivistPatch(TestArchivistMethods):
             msg="POST method called incorrectly",
         )
 
-    @mock.patch("requests.patch")
+    @mock.patch("requests.Session.patch")
     def test_patch_with_error(self, mock_patch):
         """
         Test post method with error
@@ -516,7 +516,7 @@ class TestArchivistPatch(TestArchivistMethods):
         with self.assertRaises(ArchivistBadRequestError):
             resp = self.arch.patch("path/path", "entity/xxxx", request)
 
-    @mock.patch("requests.patch")
+    @mock.patch("requests.Session.patch")
     def test_patch_with_headers(self, mock_patch):
         """
         Test default patch method
@@ -553,7 +553,7 @@ class TestArchivistCount(TestArchivistMethods):
     Test Archivist count method
     """
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_count(self, mock_get):
         """
         Test default count method
@@ -574,7 +574,7 @@ class TestArchivistCount(TestArchivistMethods):
             msg="incorrect count",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_count_with_error(self, mock_get):
         """
         Test default count method with error
@@ -596,7 +596,7 @@ class TestArchivistList(TestArchivistMethods):
     Test Archivist list method
     """
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_list(self, mock_get):
         """
         Test default list method
@@ -632,7 +632,7 @@ class TestArchivistList(TestArchivistMethods):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_list_with_error(self, mock_get):
         """
         Test default list method with error
@@ -648,7 +648,7 @@ class TestArchivistList(TestArchivistMethods):
         with self.assertRaises(ArchivistBadRequestError):
             responses = list(self.arch.list("path/path", "things"))
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_list_with_bad_field(self, mock_get):
         """
         Test default list method with error
@@ -664,7 +664,7 @@ class TestArchivistList(TestArchivistMethods):
         with self.assertRaises(ArchivistBadFieldError):
             responses = list(self.arch.list("path/path", "badthings"))
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_list_with_headers(self, mock_get):
         """
         Test default list method
@@ -707,7 +707,7 @@ class TestArchivistList(TestArchivistMethods):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_list_with_query(self, mock_get):
         """
         Test default list method
@@ -749,7 +749,7 @@ class TestArchivistList(TestArchivistMethods):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_list_with_page_size(self, mock_get):
         """
         Test default list method
@@ -802,7 +802,7 @@ class TestArchivistList(TestArchivistMethods):
                 msg="Incorrect response body value",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_list_with_multiple_pages(self, mock_get):
         """
         Test default list method
@@ -876,7 +876,7 @@ class TestArchivistSignature(TestArchivistMethods):
     Test Archivist get_by_signature method
     """
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get_by_signature(self, mock_get):
         """
         Test default get_by_signature method
@@ -907,7 +907,7 @@ class TestArchivistSignature(TestArchivistMethods):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get_by_signature_not_found(self, mock_get):
         """
         Test default get_by_signature method
@@ -921,7 +921,7 @@ class TestArchivistSignature(TestArchivistMethods):
                 "path/path", "things", {"field1": "value1"}
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get_by_signature_duplicate(self, mock_get):
         """
         Test default get_by_signature method
@@ -942,7 +942,7 @@ class TestArchivistSignature(TestArchivistMethods):
                 "path/path", "things", {"field1": "value1"}
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_get_by_signature_with_bad_field(self, mock_get):
         """
         Test default list method with error

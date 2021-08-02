@@ -12,6 +12,6 @@ docker run \
     -v $(pwd):/home/builder \
     -u $(id -u):$(id -g) \
     -e TEST_ARCHIVIST \
-    -e TEST_AUTHTOKEN \
+    -e TEST_AUTHTOKEN_FILENAME \
     jitsuin-archivist-python-builder \
     "$@"

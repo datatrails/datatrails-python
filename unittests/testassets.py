@@ -131,7 +131,7 @@ class TestAssets(TestCase):
     def tearDown(self):
         confirm.MAX_TIME = self.confirm_MAX_TIME
 
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.post")
     def test_assets_create(self, mock_post):
         """
         Test asset creation
@@ -171,8 +171,8 @@ class TestAssets(TestCase):
             msg="Incorrect name property",
         )
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_assets_create_with_confirmation(self, mock_post, mock_get):
         """
         Test asset creation
@@ -186,8 +186,8 @@ class TestAssets(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_assets_create_with_confirmation_no_confirmed_status(
         self,
         mock_post,
@@ -202,8 +202,8 @@ class TestAssets(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_assets_create_with_confirmation_pending_status(
         self,
         mock_post,
@@ -224,8 +224,8 @@ class TestAssets(TestCase):
             msg="CREATE method called incorrectly",
         )
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_assets_create_with_confirmation_failed_status(
         self,
         mock_post,
@@ -242,8 +242,8 @@ class TestAssets(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
 
-    @mock.patch("requests.get")
-    @mock.patch("requests.post")
+    @mock.patch("requests.Session.get")
+    @mock.patch("requests.Session.post")
     def test_assets_create_with_confirmation_always_pending_status(
         self,
         mock_post,
@@ -265,7 +265,7 @@ class TestAssets(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_read_with_out_primary_image(self, mock_get):
         """
         Test asset reading
@@ -287,7 +287,7 @@ class TestAssets(TestCase):
             msg="There should be no name property",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_count(self, mock_get):
         """
         Test asset counting
@@ -323,7 +323,7 @@ class TestAssets(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_count_with_props_query(self, mock_get):
         """
         Test asset counting
@@ -364,7 +364,7 @@ class TestAssets(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_count_with_attrs_query(self, mock_get):
         """
         Test asset counting
@@ -403,7 +403,7 @@ class TestAssets(TestCase):
             msg="GET method called incorrectly",
         )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_wait_for_confirmed(self, mock_get):
         """
         Test asset counting
@@ -455,7 +455,7 @@ class TestAssets(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_wait_for_confirmed_timeout(self, mock_get):
         """
         Test asset counting
@@ -506,11 +506,10 @@ class TestAssets(TestCase):
             ),
         ]
 
-        self.arch.assets.timeout = 2
         with self.assertRaises(ArchivistUnconfirmedError):
             self.arch.assets.wait_for_confirmed()
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_wait_for_confirmed_failed(self, mock_get):
         """
         Test asset counting
@@ -541,7 +540,7 @@ class TestAssets(TestCase):
         with self.assertRaises(ArchivistUnconfirmedError):
             self.arch.assets.wait_for_confirmed()
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_list(self, mock_get):
         """
         Test asset listing
@@ -583,7 +582,7 @@ class TestAssets(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_list_with_query(self, mock_get):
         """
         Test asset listing
@@ -639,7 +638,7 @@ class TestAssets(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.get")
+    @mock.patch("requests.Session.get")
     def test_assets_read_by_signature(self, mock_get):
         """
         Test asset listing
