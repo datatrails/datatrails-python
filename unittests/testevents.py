@@ -23,6 +23,7 @@ from archivist.events import Event, DEFAULT_PAGE_SIZE
 from .mock_response import MockResponse
 
 # pylint: disable=missing-docstring
+# pylint: disable=protected-access
 # pylint: disable=unused-variable
 
 ASSET_ID = f"{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
@@ -236,438 +237,253 @@ class TestEvents(TestCase):
     def tearDown(self):
         confirm.MAX_TIME = self.confirm_MAX_TIME
 
-    @mock.patch("requests.Session.post")
-    def test_events_create(self, mock_post):
+    def test_events_create(self):
         """
         Test event creation
         """
-        mock_post.return_value = MockResponse(200, **RESPONSE)
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
 
-        event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=False)
-        self.assertEqual(
-            tuple(mock_post.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}"
-                    ),
-                ),
-                {
-                    "data": REQUEST_DATA,
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="CREATE method called incorrectly",
-        )
-        self.assertEqual(
-            event,
-            RESPONSE,
-            msg="CREATE method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.post")
-    def test_events_create_with_asset_attrs(self, mock_post):
-        """
-        Test event creation
-        """
-        mock_post.return_value = MockResponse(200, **RESPONSE_WITH_ASSET_ATTRS)
-
-        event = self.arch.events.create(
-            ASSET_ID,
-            PROPS,
-            EVENT_ATTRS,
-            asset_attrs=ASSET_ATTRS,
-            confirm=False,
-        )
-        self.assertEqual(
-            tuple(mock_post.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}"
-                    ),
-                ),
-                {
-                    "data": REQUEST_DATA_WITH_ASSET_ATTRS,
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="CREATE method called incorrectly",
-        )
-        self.assertEqual(
-            event,
-            RESPONSE_WITH_ASSET_ATTRS,
-            msg="CREATE method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    @mock.patch("requests.Session.post")
-    def test_events_create_with_confirmation(self, mock_post, mock_get):
-        """
-        Test event creation
-        """
-        mock_post.return_value = MockResponse(200, **RESPONSE)
-        mock_get.return_value = MockResponse(200, **RESPONSE)
-
-        event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
-        self.assertEqual(
-            event,
-            RESPONSE,
-            msg="CREATE method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    @mock.patch("requests.Session.post")
-    def test_events_create_with_confirmation_no_confirmed_status(
-        self,
-        mock_post,
-        mock_get,
-    ):
-        """
-        Test asset confirmation
-        """
-        mock_post.return_value = MockResponse(200, **RESPONSE)
-        mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
-
-        with self.assertRaises(ArchivistUnconfirmedError):
-            event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
-
-    @mock.patch("requests.Session.get")
-    @mock.patch("requests.Session.post")
-    def test_events_create_with_confirmation_pending_status(
-        self,
-        mock_post,
-        mock_get,
-    ):
-        """
-        Test asset confirmation
-        """
-        mock_post.return_value = MockResponse(200, **RESPONSE)
-        mock_get.side_effect = [
-            MockResponse(200, **RESPONSE_PENDING),
-            MockResponse(200, **RESPONSE),
-        ]
-        event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
-        self.assertEqual(
-            event,
-            RESPONSE,
-            msg="CREATE method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    @mock.patch("requests.Session.post")
-    def test_events_create_with_confirmation_failed_status(
-        self,
-        mock_post,
-        mock_get,
-    ):
-        """
-        Test asset confirmation
-        """
-        mock_post.return_value = MockResponse(200, **RESPONSE)
-        mock_get.side_effect = [
-            MockResponse(200, **RESPONSE_PENDING),
-            MockResponse(200, **RESPONSE_FAILED),
-        ]
-        with self.assertRaises(ArchivistUnconfirmedError):
-            event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
-
-    @mock.patch("requests.Session.get")
-    @mock.patch("requests.Session.post")
-    def test_events_create_with_confirmation_always_pending_status(
-        self,
-        mock_post,
-        mock_get,
-    ):
-        """
-        Test asset confirmation
-        """
-        mock_post.return_value = MockResponse(200, **RESPONSE)
-        mock_get.side_effect = [
-            MockResponse(200, **RESPONSE_PENDING),
-            MockResponse(200, **RESPONSE_PENDING),
-            MockResponse(200, **RESPONSE_PENDING),
-            MockResponse(200, **RESPONSE_PENDING),
-            MockResponse(200, **RESPONSE_PENDING),
-            MockResponse(200, **RESPONSE_PENDING),
-            MockResponse(200, **RESPONSE_PENDING),
-        ]
-
-        with self.assertRaises(ArchivistUnconfirmedError):
-            event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
-
-    @mock.patch("requests.Session.get")
-    def test_events_read(self, mock_get):
-        """
-        Test event counting
-        """
-        mock_get.return_value = MockResponse(200, **RESPONSE)
-
-        event = self.arch.events.read(IDENTITY)
-        self.assertEqual(
-            tuple(mock_get.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                    ),
-                ),
-                {
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="GET method called incorrectly",
-        )
-        self.assertEqual(
-            event,
-            RESPONSE,
-            msg="GET method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    def test_events_read_with_no_principal(self, mock_get):
-        """
-        Test event counting
-        """
-        mock_get.return_value = MockResponse(200, **RESPONSE)
-
-        event = self.arch.events.read(IDENTITY)
-        self.assertEqual(
-            event,
-            RESPONSE,
-            msg="GET method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    def test_events_count(self, mock_get):
-        """
-        Test event counting
-        """
-        mock_get.return_value = MockResponse(
-            200,
-            headers={HEADERS_TOTAL_COUNT: 1},
-            events=[
-                RESPONSE,
-            ],
-        )
-
-        count = self.arch.events.count(asset_id=ASSET_ID)
-        self.assertEqual(
-            count,
-            1,
-            msg="Incorrect count",
-        )
-        self.assertEqual(
-            tuple(mock_get.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}"
-                        "?page_size=1"
-                    ),
-                ),
-                {
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                        HEADERS_REQUEST_TOTAL_COUNT: "true",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="GET method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    def test_events_count_with_props_query(self, mock_get):
-        """
-        Test event counting
-        """
-        mock_get.return_value = MockResponse(
-            200,
-            headers={HEADERS_TOTAL_COUNT: 1},
-            events=[
-                RESPONSE,
-            ],
-        )
-
-        count = self.arch.events.count(
-            asset_id=ASSET_ID,
-            props={
-                "confirmation_status": "CONFIRMED",
-            },
-        )
-        self.assertEqual(
-            tuple(mock_get.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}"
-                        "?page_size=1"
-                        "&confirmation_status=CONFIRMED"
-                    ),
-                ),
-                {
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                        HEADERS_REQUEST_TOTAL_COUNT: "true",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="GET method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    def test_events_count_with_attrs_query(self, mock_get):
-        """
-        Test event counting
-        """
-        mock_get.return_value = MockResponse(
-            200,
-            headers={HEADERS_TOTAL_COUNT: 1},
-            events=[
-                RESPONSE,
-            ],
-        )
-
-        count = self.arch.events.count(
-            asset_id=ASSET_ID,
-            attrs={"arc_firmware_version": "1.0"},
-        )
-        self.assertEqual(
-            tuple(mock_get.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}"
-                        "?page_size=1"
-                        "&event_attributes.arc_firmware_version=1.0"
-                    ),
-                ),
-                {
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                        HEADERS_REQUEST_TOTAL_COUNT: "true",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="GET method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    def test_events_count_with_wildcard_asset(self, mock_get):
-        """
-        Test event counting
-        """
-        mock_get.return_value = MockResponse(
-            200,
-            headers={HEADERS_TOTAL_COUNT: 1},
-            events=[
-                RESPONSE,
-            ],
-        )
-
-        count = self.arch.events.count(
-            attrs={"arc_firmware_version": "1.0"},
-        )
-        self.assertEqual(
-            tuple(mock_get.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_WILDCARD}"
-                        f"/{EVENTS_LABEL}"
-                        "?page_size=1"
-                        "&event_attributes.arc_firmware_version=1.0"
-                    ),
-                ),
-                {
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                        HEADERS_REQUEST_TOTAL_COUNT: "true",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="GET method called incorrectly",
-        )
-
-    @mock.patch("requests.Session.get")
-    def test_events_wait_for_confirmed(self, mock_get):
-        """
-        Test event counting
-        """
-        ## last call to get looks for FAILED assets
-        status = ("PENDING", "PENDING", "FAILED")
-        mock_get.side_effect = [
-            MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 2},
-                assets=[
-                    RESPONSE_PENDING,
-                ],
-            ),
-            MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 0},
-                assets=[],
-            ),
-            MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 0},
-                assets=[],
-            ),
-        ]
-
-        self.arch.events.wait_for_confirmed()
-        for i, a in enumerate(mock_get.call_args_list):
+            event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=False)
             self.assertEqual(
-                tuple(a),
+                tuple(mock_post.call_args),
                 (
                     (
                         (
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
-                            f"/{ASSETS_WILDCARD}"
+                            f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                            f"/{EVENTS_LABEL}"
+                        ),
+                    ),
+                    {
+                        "data": REQUEST_DATA,
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "verify": True,
+                        "cert": None,
+                    },
+                ),
+                msg="CREATE method called incorrectly",
+            )
+            self.assertEqual(
+                event,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_asset_attrs(self):
+        """
+        Test event creation
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE_WITH_ASSET_ATTRS)
+
+            event = self.arch.events.create(
+                ASSET_ID,
+                PROPS,
+                EVENT_ATTRS,
+                asset_attrs=ASSET_ATTRS,
+                confirm=False,
+            )
+            self.assertEqual(
+                tuple(mock_post.call_args),
+                (
+                    (
+                        (
+                            f"url/{ROOT}/{ASSETS_SUBPATH}"
+                            f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                            f"/{EVENTS_LABEL}"
+                        ),
+                    ),
+                    {
+                        "data": REQUEST_DATA_WITH_ASSET_ATTRS,
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "verify": True,
+                        "cert": None,
+                    },
+                ),
+                msg="CREATE method called incorrectly",
+            )
+            self.assertEqual(
+                event,
+                RESPONSE_WITH_ASSET_ATTRS,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_confirmation(self):
+        """
+        Test event creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+
+            event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
+            self.assertEqual(
+                event,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_confirmation_no_confirmed_status(self):
+        """
+        Test asset confirmation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
+
+            with self.assertRaises(ArchivistUnconfirmedError):
+                event = self.arch.events.create(
+                    ASSET_ID, PROPS, EVENT_ATTRS, confirm=True
+                )
+
+    def test_events_create_with_confirmation_pending_status(self):
+        """
+        Test asset confirmation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE),
+            ]
+            event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
+            self.assertEqual(
+                event,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_confirmation_failed_status(self):
+        """
+        Test asset confirmation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE_FAILED),
+            ]
+            with self.assertRaises(ArchivistUnconfirmedError):
+                event = self.arch.events.create(
+                    ASSET_ID, PROPS, EVENT_ATTRS, confirm=True
+                )
+
+    def test_events_create_with_confirmation_always_pending_status(self):
+        """
+        Test asset confirmation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE_PENDING),
+            ]
+
+            with self.assertRaises(ArchivistUnconfirmedError):
+                event = self.arch.events.create(
+                    ASSET_ID, PROPS, EVENT_ATTRS, confirm=True
+                )
+
+    def test_events_read(self):
+        """
+        Test event counting
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+
+            event = self.arch.events.read(IDENTITY)
+            self.assertEqual(
+                tuple(mock_get.call_args),
+                (
+                    (
+                        (
+                            f"url/{ROOT}/{ASSETS_SUBPATH}"
+                            f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                            f"/{EVENTS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                        ),
+                    ),
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "verify": True,
+                        "cert": None,
+                    },
+                ),
+                msg="GET method called incorrectly",
+            )
+            self.assertEqual(
+                event,
+                RESPONSE,
+                msg="GET method called incorrectly",
+            )
+
+    def test_events_read_with_no_principal(self):
+        """
+        Test event counting
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+
+            event = self.arch.events.read(IDENTITY)
+            self.assertEqual(
+                event,
+                RESPONSE,
+                msg="GET method called incorrectly",
+            )
+
+    def test_events_count(self):
+        """
+        Test event counting
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 1},
+                events=[
+                    RESPONSE,
+                ],
+            )
+
+            count = self.arch.events.count(asset_id=ASSET_ID)
+            self.assertEqual(
+                count,
+                1,
+                msg="Incorrect count",
+            )
+            self.assertEqual(
+                tuple(mock_get.call_args),
+                (
+                    (
+                        (
+                            f"url/{ROOT}/{ASSETS_SUBPATH}"
+                            f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                             f"/{EVENTS_LABEL}"
                             "?page_size=1"
-                            f"&confirmation_status={status[i]}"
                         ),
                     ),
                     {
@@ -683,47 +499,42 @@ class TestEvents(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.Session.get")
-    def test_events_list(self, mock_get):
+    def test_events_count_with_props_query(self):
         """
-        Test event listing
+        Test event counting
         """
-        mock_get.return_value = MockResponse(
-            200,
-            events=[
-                RESPONSE,
-            ],
-        )
-
-        events = list(self.arch.events.list(asset_id=ASSET_ID))
-        self.assertEqual(
-            len(events),
-            1,
-            msg="incorrect number of events",
-        )
-        for event in events:
-            self.assertEqual(
-                event,
-                RESPONSE,
-                msg="Incorrect event listed",
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 1},
+                events=[
+                    RESPONSE,
+                ],
             )
 
-        for a in mock_get.call_args_list:
+            count = self.arch.events.count(
+                asset_id=ASSET_ID,
+                props={
+                    "confirmation_status": "CONFIRMED",
+                },
+            )
             self.assertEqual(
-                tuple(a),
+                tuple(mock_get.call_args),
                 (
                     (
                         (
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
                             f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                             f"/{EVENTS_LABEL}"
-                            f"?page_size={DEFAULT_PAGE_SIZE}"
+                            "?page_size=1"
+                            "&confirmation_status=CONFIRMED"
                         ),
                     ),
                     {
                         "headers": {
                             "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
+                            HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
                         "cert": None,
@@ -732,50 +543,32 @@ class TestEvents(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.Session.get")
-    def test_events_list_with_query(self, mock_get):
+    def test_events_count_with_attrs_query(self):
         """
-        Test event listing
+        Test event counting
         """
-        mock_get.return_value = MockResponse(
-            200,
-            events=[
-                RESPONSE,
-            ],
-        )
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 1},
+                events=[
+                    RESPONSE,
+                ],
+            )
 
-        events = list(
-            self.arch.events.list(
+            count = self.arch.events.count(
                 asset_id=ASSET_ID,
-                props={
-                    "confirmation_status": "CONFIRMED",
-                },
                 attrs={"arc_firmware_version": "1.0"},
             )
-        )
-        self.assertEqual(
-            len(events),
-            1,
-            msg="incorrect number of events",
-        )
-        for event in events:
             self.assertEqual(
-                event,
-                RESPONSE,
-                msg="Incorrect event listed",
-            )
-
-        for a in mock_get.call_args_list:
-            self.assertEqual(
-                tuple(a),
+                tuple(mock_get.call_args),
                 (
                     (
                         (
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
                             f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                             f"/{EVENTS_LABEL}"
-                            f"?page_size={DEFAULT_PAGE_SIZE}"
-                            "&confirmation_status=CONFIRMED"
+                            "?page_size=1"
                             "&event_attributes.arc_firmware_version=1.0"
                         ),
                     ),
@@ -783,6 +576,7 @@ class TestEvents(TestCase):
                         "headers": {
                             "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
+                            HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
                         "cert": None,
@@ -791,50 +585,295 @@ class TestEvents(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    @mock.patch("requests.Session.get")
-    def test_events_list_with_wildcard_asset(self, mock_get):
+    def test_events_count_with_wildcard_asset(self):
         """
-        Test event listing
+        Test event counting
         """
-        mock_get.return_value = MockResponse(
-            200,
-            events=[
-                RESPONSE,
-            ],
-        )
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                headers={HEADERS_TOTAL_COUNT: 1},
+                events=[
+                    RESPONSE,
+                ],
+            )
 
-        events = list(
-            self.arch.events.list(
-                props={
-                    "confirmation_status": "CONFIRMED",
-                },
+            count = self.arch.events.count(
                 attrs={"arc_firmware_version": "1.0"},
             )
-        )
-        self.assertEqual(
-            len(events),
-            1,
-            msg="incorrect number of events",
-        )
-        for event in events:
             self.assertEqual(
-                event,
-                RESPONSE,
-                msg="Incorrect event listed",
-            )
-
-        for a in mock_get.call_args_list:
-            self.assertEqual(
-                tuple(a),
+                tuple(mock_get.call_args),
                 (
                     (
                         (
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
                             f"/{ASSETS_WILDCARD}"
                             f"/{EVENTS_LABEL}"
-                            f"?page_size={DEFAULT_PAGE_SIZE}"
-                            "&confirmation_status=CONFIRMED"
+                            "?page_size=1"
                             "&event_attributes.arc_firmware_version=1.0"
+                        ),
+                    ),
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                            HEADERS_REQUEST_TOTAL_COUNT: "true",
+                        },
+                        "verify": True,
+                        "cert": None,
+                    },
+                ),
+                msg="GET method called incorrectly",
+            )
+
+    def test_events_wait_for_confirmed(self):
+        """
+        Test event counting
+        """
+        ## last call to get looks for FAILED assets
+        status = ("PENDING", "PENDING", "FAILED")
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = [
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 2},
+                    assets=[
+                        RESPONSE_PENDING,
+                    ],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 0},
+                    assets=[],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 0},
+                    assets=[],
+                ),
+            ]
+
+            self.arch.events.wait_for_confirmed()
+            for i, a in enumerate(mock_get.call_args_list):
+                self.assertEqual(
+                    tuple(a),
+                    (
+                        (
+                            (
+                                f"url/{ROOT}/{ASSETS_SUBPATH}"
+                                f"/{ASSETS_WILDCARD}"
+                                f"/{EVENTS_LABEL}"
+                                "?page_size=1"
+                                f"&confirmation_status={status[i]}"
+                            ),
+                        ),
+                        {
+                            "headers": {
+                                "content-type": "application/json",
+                                "authorization": "Bearer authauthauth",
+                                HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            },
+                            "verify": True,
+                            "cert": None,
+                        },
+                    ),
+                    msg="GET method called incorrectly",
+                )
+
+    def test_events_list(self):
+        """
+        Test event listing
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                events=[
+                    RESPONSE,
+                ],
+            )
+
+            events = list(self.arch.events.list(asset_id=ASSET_ID))
+            self.assertEqual(
+                len(events),
+                1,
+                msg="incorrect number of events",
+            )
+            for event in events:
+                self.assertEqual(
+                    event,
+                    RESPONSE,
+                    msg="Incorrect event listed",
+                )
+
+            for a in mock_get.call_args_list:
+                self.assertEqual(
+                    tuple(a),
+                    (
+                        (
+                            (
+                                f"url/{ROOT}/{ASSETS_SUBPATH}"
+                                f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                                f"/{EVENTS_LABEL}"
+                                f"?page_size={DEFAULT_PAGE_SIZE}"
+                            ),
+                        ),
+                        {
+                            "headers": {
+                                "content-type": "application/json",
+                                "authorization": "Bearer authauthauth",
+                            },
+                            "verify": True,
+                            "cert": None,
+                        },
+                    ),
+                    msg="GET method called incorrectly",
+                )
+
+    def test_events_list_with_query(self):
+        """
+        Test event listing
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                events=[
+                    RESPONSE,
+                ],
+            )
+
+            events = list(
+                self.arch.events.list(
+                    asset_id=ASSET_ID,
+                    props={
+                        "confirmation_status": "CONFIRMED",
+                    },
+                    attrs={"arc_firmware_version": "1.0"},
+                )
+            )
+            self.assertEqual(
+                len(events),
+                1,
+                msg="incorrect number of events",
+            )
+            for event in events:
+                self.assertEqual(
+                    event,
+                    RESPONSE,
+                    msg="Incorrect event listed",
+                )
+
+            for a in mock_get.call_args_list:
+                self.assertEqual(
+                    tuple(a),
+                    (
+                        (
+                            (
+                                f"url/{ROOT}/{ASSETS_SUBPATH}"
+                                f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                                f"/{EVENTS_LABEL}"
+                                f"?page_size={DEFAULT_PAGE_SIZE}"
+                                "&confirmation_status=CONFIRMED"
+                                "&event_attributes.arc_firmware_version=1.0"
+                            ),
+                        ),
+                        {
+                            "headers": {
+                                "content-type": "application/json",
+                                "authorization": "Bearer authauthauth",
+                            },
+                            "verify": True,
+                            "cert": None,
+                        },
+                    ),
+                    msg="GET method called incorrectly",
+                )
+
+    def test_events_list_with_wildcard_asset(self):
+        """
+        Test event listing
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                events=[
+                    RESPONSE,
+                ],
+            )
+
+            events = list(
+                self.arch.events.list(
+                    props={
+                        "confirmation_status": "CONFIRMED",
+                    },
+                    attrs={"arc_firmware_version": "1.0"},
+                )
+            )
+            self.assertEqual(
+                len(events),
+                1,
+                msg="incorrect number of events",
+            )
+            for event in events:
+                self.assertEqual(
+                    event,
+                    RESPONSE,
+                    msg="Incorrect event listed",
+                )
+
+            for a in mock_get.call_args_list:
+                self.assertEqual(
+                    tuple(a),
+                    (
+                        (
+                            (
+                                f"url/{ROOT}/{ASSETS_SUBPATH}"
+                                f"/{ASSETS_WILDCARD}"
+                                f"/{EVENTS_LABEL}"
+                                f"?page_size={DEFAULT_PAGE_SIZE}"
+                                "&confirmation_status=CONFIRMED"
+                                "&event_attributes.arc_firmware_version=1.0"
+                            ),
+                        ),
+                        {
+                            "headers": {
+                                "content-type": "application/json",
+                                "authorization": "Bearer authauthauth",
+                            },
+                            "verify": True,
+                            "cert": None,
+                        },
+                    ),
+                    msg="GET method called incorrectly",
+                )
+
+    def test_events_read_by_signature(self):
+        """
+        Test event listing
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                events=[
+                    RESPONSE,
+                ],
+            )
+
+            event = self.arch.events.read_by_signature(asset_id=ASSET_ID)
+            self.assertEqual(
+                event,
+                RESPONSE,
+                msg="Incorrect event listed",
+            )
+
+            self.assertEqual(
+                tuple(mock_get.call_args),
+                (
+                    (
+                        (
+                            f"url/{ROOT}/{ASSETS_SUBPATH}"
+                            f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                            f"/{EVENTS_LABEL}"
+                            f"?page_size=2"
                         ),
                     ),
                     {
@@ -848,45 +887,3 @@ class TestEvents(TestCase):
                 ),
                 msg="GET method called incorrectly",
             )
-
-    @mock.patch("requests.Session.get")
-    def test_events_read_by_signature(self, mock_get):
-        """
-        Test event listing
-        """
-        mock_get.return_value = MockResponse(
-            200,
-            events=[
-                RESPONSE,
-            ],
-        )
-
-        event = self.arch.events.read_by_signature(asset_id=ASSET_ID)
-        self.assertEqual(
-            event,
-            RESPONSE,
-            msg="Incorrect event listed",
-        )
-
-        self.assertEqual(
-            tuple(mock_get.call_args),
-            (
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}"
-                        f"?page_size=2"
-                    ),
-                ),
-                {
-                    "headers": {
-                        "content-type": "application/json",
-                        "authorization": "Bearer authauthauth",
-                    },
-                    "verify": True,
-                    "cert": None,
-                },
-            ),
-            msg="GET method called incorrectly",
-        )
