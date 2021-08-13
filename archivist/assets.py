@@ -36,8 +36,10 @@ from archivist import archivist as type_helper
 from .constants import (
     ASSETS_SUBPATH,
     ASSETS_LABEL,
+    CONFIRMATION_STATUS,
 )
-from .confirm import wait_for_confirmation, wait_for_confirmed
+from .confirm import _wait_for_confirmation, _wait_for_confirmed
+from .errors import ArchivistNotFoundError
 
 
 #: Default page size - number of entities fetched in one REST GET in the
@@ -164,7 +166,7 @@ class _AssetsClient:
         if not confirm:
             return asset
 
-        return wait_for_confirmation(self, asset["identity"])  # type: ignore
+        return _wait_for_confirmation(self, asset["identity"])  # type: ignore
 
     def wait_for_confirmation(self, identity: str) -> bool:
         """Wait for asset to be confirmed.
@@ -178,7 +180,7 @@ class _AssetsClient:
             True if asset is confirmed.
 
         """
-        return wait_for_confirmation(self, identity)
+        return _wait_for_confirmation(self, identity)
 
     def read(self, identity: str) -> Asset:
         """Read asset
@@ -236,7 +238,16 @@ class _AssetsClient:
             True if all assets are confirmed.
 
         """
-        return wait_for_confirmed(self, props=props, attrs=attrs)
+        # check that entities exist
+        newprops = deepcopy(props) if props else {}
+        newprops.pop(CONFIRMATION_STATUS, None)
+
+        LOGGER.debug("Count assets %s", newprops)
+        count = self.count(props=newprops, attrs=attrs)
+        if count == 0:
+            raise ArchivistNotFoundError("No assets exist")
+
+        return _wait_for_confirmed(self, props=newprops, attrs=attrs)
 
     def list(
         self,

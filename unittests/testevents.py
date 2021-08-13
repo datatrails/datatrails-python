@@ -17,7 +17,7 @@ from archivist.constants import (
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
 )
-from archivist.errors import ArchivistUnconfirmedError
+from archivist.errors import ArchivistNotFoundError, ArchivistUnconfirmedError
 from archivist.events import Event, DEFAULT_PAGE_SIZE
 
 from .mock_response import MockResponse
@@ -651,7 +651,7 @@ class TestEvents(TestCase):
         Test event counting
         """
         ## last call to get looks for FAILED assets
-        status = ("PENDING", "PENDING", "FAILED")
+        status = ("", "&confirmation_status=PENDING", "&confirmation_status=FAILED")
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
@@ -684,7 +684,7 @@ class TestEvents(TestCase):
                                 f"/{ASSETS_WILDCARD}"
                                 f"/{EVENTS_LABEL}"
                                 "?page_size=1"
-                                f"&confirmation_status={status[i]}"
+                                f"{status[i]}"
                             ),
                         ),
                         {
@@ -699,6 +699,24 @@ class TestEvents(TestCase):
                     ),
                     msg="GET method called incorrectly",
                 )
+
+    def test_events_wait_for_confirmed_not_found(self):
+        """
+        Test event counting
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = [
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 0},
+                    assets=[
+                        RESPONSE_PENDING,
+                    ],
+                ),
+            ]
+
+            with self.assertRaises(ArchivistNotFoundError):
+                self.arch.events.wait_for_confirmed()
 
     def test_events_list(self):
         """
