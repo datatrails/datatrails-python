@@ -34,9 +34,11 @@ from .constants import (
     SEP,
     ASSETS_SUBPATH,
     ASSETS_WILDCARD,
+    CONFIRMATION_STATUS,
     EVENTS_LABEL,
 )
-from .confirm import wait_for_confirmation, wait_for_confirmed
+from .confirm import _wait_for_confirmation, _wait_for_confirmed
+from .errors import ArchivistNotFoundError
 
 
 #: Default page size - number of entities fetched in one REST GET in the
@@ -172,7 +174,7 @@ class _EventsClient:
         if not confirm:
             return event
 
-        return wait_for_confirmation(self, event["identity"])  # type: ignore
+        return _wait_for_confirmation(self, event["identity"])  # type: ignore
 
     def wait_for_confirmation(self, identity: str) -> bool:
         """Wait for event to be confirmed.
@@ -186,7 +188,7 @@ class _EventsClient:
             True if event is confirmed.
 
         """
-        return wait_for_confirmation(self, identity)
+        return _wait_for_confirmation(self, identity)
 
     def read(self, identity: str) -> Event:
         """Read event
@@ -269,7 +271,18 @@ class _EventsClient:
             True if all events are confirmed.
 
         """
-        return wait_for_confirmed(
+        # check that entities exist
+        newprops = deepcopy(props) if props else {}
+        newprops.pop(CONFIRMATION_STATUS, None)
+
+        LOGGER.debug("Count events %s", newprops)
+        count = self.count(
+            asset_id=asset_id, props=newprops, attrs=attrs, asset_attrs=asset_attrs
+        )
+        if count == 0:
+            raise ArchivistNotFoundError("No events exist")
+
+        return _wait_for_confirmed(
             self, asset_id=asset_id, props=props, attrs=attrs, asset_attrs=asset_attrs
         )
 
