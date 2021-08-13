@@ -174,6 +174,20 @@ class _EventsClient:
 
         return wait_for_confirmation(self, event["identity"])  # type: ignore
 
+    def wait_for_confirmation(self, identity: str) -> bool:
+        """Wait for event to be confirmed.
+
+        Waits for event to be confirmed.
+
+        Args:
+            identity (str): identity of event
+
+        Returns:
+            True if event is confirmed.
+
+        """
+        return wait_for_confirmation(self, identity)
+
     def read(self, identity: str) -> Event:
         """Read event
 

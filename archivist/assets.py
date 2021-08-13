@@ -166,6 +166,20 @@ class _AssetsClient:
 
         return wait_for_confirmation(self, asset["identity"])  # type: ignore
 
+    def wait_for_confirmation(self, identity: str) -> bool:
+        """Wait for asset to be confirmed.
+
+        Waits asset to be confirmed.
+
+        Args:
+            identity (str): identity of asset
+
+        Returns:
+            True if asset is confirmed.
+
+        """
+        return wait_for_confirmation(self, identity)
+
     def read(self, identity: str) -> Asset:
         """Read asset
 

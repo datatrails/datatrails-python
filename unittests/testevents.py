@@ -25,6 +25,7 @@ from .mock_response import MockResponse
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
+# pylint: disable=too-many-public-methods
 
 ASSET_ID = f"{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
 
@@ -327,6 +328,25 @@ class TestEvents(TestCase):
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
+            self.assertEqual(
+                event,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_explicit_confirmation(self):
+        """
+        Test event creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+
+            event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=False)
+            self.arch.events.wait_for_confirmation(event["identity"])
             self.assertEqual(
                 event,
                 RESPONSE,
