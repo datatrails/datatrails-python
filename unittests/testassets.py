@@ -16,7 +16,7 @@ from archivist.constants import (
     HEADERS_TOTAL_COUNT,
     ROOT,
 )
-from archivist.errors import ArchivistUnconfirmedError
+from archivist.errors import ArchivistNotFoundError, ArchivistUnconfirmedError
 from archivist.storage_integrity import StorageIntegrity
 
 from .mock_response import MockResponse
@@ -415,7 +415,7 @@ class TestAssets(TestCase):
         Test asset counting
         """
         ## last call to get looks for FAILED assets
-        status = ("PENDING", "PENDING", "FAILED")
+        status = ("", "&confirmation_status=PENDING", "&confirmation_status=FAILED")
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
@@ -442,13 +442,7 @@ class TestAssets(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (
-                            (
-                                f"url/{ROOT}/{SUBPATH}"
-                                "?page_size=1"
-                                f"&confirmation_status={status[i]}"
-                            ),
-                        ),
+                        ((f"url/{ROOT}/{SUBPATH}" "?page_size=1" f"{status[i]}"),),
                         {
                             "headers": {
                                 "content-type": "application/json",
@@ -461,6 +455,24 @@ class TestAssets(TestCase):
                     ),
                     msg="GET method called incorrectly",
                 )
+
+    def test_assets_wait_for_confirmed_not_found(self):
+        """
+        Test asset counting
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = [
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 0},
+                    assets=[
+                        RESPONSE_PENDING,
+                    ],
+                ),
+            ]
+
+            with self.assertRaises(ArchivistNotFoundError):
+                self.arch.assets.wait_for_confirmed()
 
     def test_assets_wait_for_confirmed_timeout(self):
         """

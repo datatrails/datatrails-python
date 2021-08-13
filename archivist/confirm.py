@@ -50,7 +50,7 @@ def __on_giveup_confirmation(details):
     on_backoff=__backoff_handler,
     on_giveup=__on_giveup_confirmation,
 )
-def wait_for_confirmation(self, identity):
+def _wait_for_confirmation(self, identity):
     """docstring"""
     entity = self.read(identity)
 
@@ -89,12 +89,14 @@ def __on_giveup_confirmed(details):
     on_backoff=__backoff_handler,
     on_giveup=__on_giveup_confirmed,
 )
-def wait_for_confirmed(self, *, props=None, **kwargs) -> bool:
+def _wait_for_confirmed(self, *, props=None, **kwargs) -> bool:
     """docstring"""
+
+    # look for unconfirmed entities
     newprops = deepcopy(props) if props else {}
     newprops[CONFIRMATION_STATUS] = CONFIRMATION_PENDING
 
-    LOGGER.debug("Count unconfirmed assets %s", newprops)
+    LOGGER.debug("Count unconfirmed entities %s", newprops)
     count = self.count(props=newprops, **kwargs)
 
     if count == 0:
@@ -103,7 +105,7 @@ def wait_for_confirmed(self, *, props=None, **kwargs) -> bool:
         newprops[CONFIRMATION_STATUS] = CONFIRMATION_FAILED
         count = self.count(props=newprops, **kwargs)
         if count > 0:
-            raise ArchivistUnconfirmedError(f"There are {count} FAILED assets")
+            raise ArchivistUnconfirmedError(f"There are {count} FAILED entities")
 
         return True
 
