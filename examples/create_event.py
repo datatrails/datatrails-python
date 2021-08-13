@@ -51,7 +51,16 @@ def create_event(arch, asset):
         "conformance_report": "blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273",
     }
 
-    return arch.events.create(asset["identity"], props=props, attrs=attrs)
+    return arch.events.create(asset["identity"], props=props, attrs=attrs, confirm=True)
+    # alternatively if some work can be done whilst the event is confirmed then this call can be
+    # replaced by a two-step alternative:
+
+    # event = arch.events.create(asset["identity"], props=props, attrs=attrs, confirm=False)
+
+    # ... do something else here
+    # and then wait for confirmation
+
+    # self.arch.events.wait_for_confirmation(event['identity'])
 
 
 def create_asset(arch):
