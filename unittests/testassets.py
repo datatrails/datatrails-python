@@ -188,6 +188,23 @@ class TestAssets(TestCase):
                 msg="CREATE method called incorrectly",
             )
 
+    def test_assets_create_with_explicit_confirmation(self):
+        """
+        Test asset creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+            asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=False)
+            self.arch.assets.wait_for_confirmation(asset["identity"])
+            self.assertEqual(
+                asset,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
     def test_assets_create_with_confirmation_no_confirmed_status(self):
         """
         Test asset confirmation

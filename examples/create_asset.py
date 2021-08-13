@@ -67,6 +67,17 @@ def create_asset(arch):
     return arch.assets.create(
         behaviours, attrs, storage_integrity=storage_integrity, confirm=True
     )
+    # alternatively if some work can be done whilst the asset is confirmed then this call can be
+    # replaced by a two-step alternative:
+
+    # asset = arch.assets.create(
+    #    behaviours, attrs, storage_integrity=storage_integrity, confirm=False
+    # )
+
+    # ... do something else here
+    # and then wait for confirmation
+
+    # self.arch.assets.wait_for_confirmation(asset['identity']))
 
 
 def main():
