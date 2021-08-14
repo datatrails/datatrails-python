@@ -38,9 +38,8 @@ from .constants import (
     ASSETS_LABEL,
     CONFIRMATION_STATUS,
 )
-from .confirm import _wait_for_confirmation, _wait_for_confirmed
+from . import confirmer
 from .errors import ArchivistNotFoundError
-
 
 #: Default page size - number of entities fetched in one REST GET in the
 #: :func:`~_AssetsClient.list` method. This can be overridden but should rarely
@@ -166,7 +165,7 @@ class _AssetsClient:
         if not confirm:
             return asset
 
-        return _wait_for_confirmation(self, asset["identity"])  # type: ignore
+        return self.wait_for_confirmation(asset["identity"])
 
     def wait_for_confirmation(self, identity: str) -> bool:
         """Wait for asset to be confirmed.
@@ -180,7 +179,9 @@ class _AssetsClient:
             True if asset is confirmed.
 
         """
-        return _wait_for_confirmation(self, identity)
+        confirmer.MAX_TIME = self._archivist.max_time
+        # pylint: disable=protected-access
+        return confirmer._wait_for_confirmation(self, identity)
 
     def read(self, identity: str) -> Asset:
         """Read asset
@@ -247,7 +248,9 @@ class _AssetsClient:
         if count == 0:
             raise ArchivistNotFoundError("No assets exist")
 
-        return _wait_for_confirmed(self, props=newprops, attrs=attrs)
+        confirmer.MAX_TIME = self._archivist.max_time
+        # pylint: disable=protected-access
+        return confirmer._wait_for_confirmed(self, props=newprops, attrs=attrs)
 
     def list(
         self,

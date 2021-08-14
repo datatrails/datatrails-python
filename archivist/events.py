@@ -37,7 +37,7 @@ from .constants import (
     CONFIRMATION_STATUS,
     EVENTS_LABEL,
 )
-from .confirm import _wait_for_confirmation, _wait_for_confirmed
+from . import confirmer
 from .errors import ArchivistNotFoundError
 
 
@@ -174,7 +174,7 @@ class _EventsClient:
         if not confirm:
             return event
 
-        return _wait_for_confirmation(self, event["identity"])  # type: ignore
+        return self.wait_for_confirmation(event["identity"])
 
     def wait_for_confirmation(self, identity: str) -> bool:
         """Wait for event to be confirmed.
@@ -188,7 +188,9 @@ class _EventsClient:
             True if event is confirmed.
 
         """
-        return _wait_for_confirmation(self, identity)
+        confirmer.MAX_TIME = self._archivist.max_time
+        # pylint: disable=protected-access
+        return confirmer._wait_for_confirmation(self, identity)
 
     def read(self, identity: str) -> Event:
         """Read event
@@ -282,7 +284,9 @@ class _EventsClient:
         if count == 0:
             raise ArchivistNotFoundError("No events exist")
 
-        return _wait_for_confirmed(
+        confirmer.MAX_TIME = self._archivist.max_time
+        # pylint: disable=protected-access
+        return confirmer._wait_for_confirmed(
             self, asset_id=asset_id, props=props, attrs=attrs, asset_attrs=asset_attrs
         )
 

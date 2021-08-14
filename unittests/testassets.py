@@ -8,7 +8,6 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.assets import DEFAULT_PAGE_SIZE
-from archivist import confirm
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
@@ -125,12 +124,10 @@ class TestAssets(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
-        self.confirm_MAX_TIME = confirm.MAX_TIME
-        confirm.MAX_TIME = 2
+        self.arch = Archivist("url", auth="authauthauth", max_time=2)
 
     def tearDown(self):
-        confirm.MAX_TIME = self.confirm_MAX_TIME
+        self.arch = None
 
     def test_assets_create(self):
         """

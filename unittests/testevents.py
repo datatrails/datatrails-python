@@ -6,7 +6,6 @@ import json
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist import confirm
 from archivist.constants import (
     ROOT,
     ASSETS_LABEL,
@@ -231,12 +230,10 @@ class TestEvents(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
-        self.confirm_MAX_TIME = confirm.MAX_TIME
-        confirm.MAX_TIME = 2
+        self.arch = Archivist("url", auth="authauthauth", max_time=2)
 
     def tearDown(self):
-        confirm.MAX_TIME = self.confirm_MAX_TIME
+        self.arch = None
 
     def test_events_create(self):
         """

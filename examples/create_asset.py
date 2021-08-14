@@ -90,10 +90,14 @@ def main():
     with open(".auth_token", mode="r") as tokenfile:
         authtoken = tokenfile.read().strip()
 
-    # Initialize connection to Archivist
+    # Initialize connection to Archivist. max_time is the time to wait for confirmation
+    # of an asset or event creation - the default is 1200 seconds but one can optionally
+    # specify a differnet value here particularly when creating assets on TENANT_STORAGE
+    # (rather than LEDGER) as confirmation times are much shorter in this case.
     arch = Archivist(
         "https://rkvst.poc.jitsuin.io",
         auth=authtoken,
+        max_time=300,
     )
     # Create a new asset
     asset = create_asset(arch)
