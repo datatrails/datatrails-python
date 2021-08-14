@@ -56,6 +56,7 @@ from .errors import (
 )
 
 from .assets import _AssetsClient
+from .confirmer import MAX_TIME
 from .events import _EventsClient
 from .locations import _LocationsClient
 from .attachments import _AttachmentsClient
@@ -86,6 +87,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         auth: string representing JWT token.
         cert: filepath containing both private key and certificate
         verify: if True the certificate is verified
+        max_time (int): maximum time in seconds to wait for confirmation
 
     Raises:
         ArchivistIllegalArgumentError: if neither 'auth' and 'cert' or if
@@ -103,6 +105,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         auth: Optional[str] = None,
         cert: Optional[str] = None,
         verify: bool = True,
+        max_time: int = MAX_TIME,
     ):
 
         self._headers = {"content-type": "application/json"}
@@ -126,6 +129,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self._cert = cert
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
         self._session = requests.Session()
+        self._max_time = max_time
 
         # keep these in sync with CLIENTS map above
         self.assets: _AssetsClient
@@ -160,6 +164,11 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
     def verify(self) -> bool:
         """bool: Returns True if https connections are to be verified"""
         return self._verify
+
+    @property
+    def max_time(self) -> int:
+        """bool: Returns maximum time in seconds to wait for confirmation"""
+        return self._max_time
 
     @property
     def cert(self) -> Optional[str]:
