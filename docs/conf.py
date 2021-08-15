@@ -22,6 +22,7 @@ project = 'Jitsuin Archivist'
 copyright = '2021, support@jitsuin.com'
 author = 'support@jitsuin.com'
 
+version = about.__version__
 release = about.__version__
 
 
@@ -34,6 +35,7 @@ extensions = [
     "sphinx_rtd_theme",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
+    "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
@@ -45,7 +47,7 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'scripts', 'unittests']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'scripts', 'unittests', 'functests']
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -54,11 +56,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'scripts', 'unittests']
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
-html_theme_options = {
-    'logo_only': True,
-    'collapse_navigation': True,
-}
-html_logo = '_static/Jitsuin_Logo_RGB.png'
+html_logo = '_static/RKVST_Logo_RGB.jpg'
 html_show_sourcelink = False
 html_show_sphinx = False
 

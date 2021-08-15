@@ -6,13 +6,15 @@
 Jitsuin Archivist
 =============================================
 
+.. include:: ../README.rst
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   introduction
-   installation
+   features
    getting_started
+   archivist
    assets
    events
    locations
@@ -20,7 +22,6 @@ Jitsuin Archivist
 
    iam/index
 
-   archivist
    timestamp
    errors
    storage_integrity

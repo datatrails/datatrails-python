@@ -25,12 +25,10 @@ def create_event(arch, asset):
     """
 
     # props can be defined for different behaviours and the attributes associated with
-    # different behaviours are also different. More details can be found here:
-    # https://jitsuin-archivist.readthedocs.io/en/latest/assetv2/index.html
+    # different behaviours are also different.
     props = {
         "operation": "Record",
-        # This event is used to record evidence, more behaviour explanation can be found here:
-        # https://jitsuin-archivist.readthedocs.io/en/latest/assetv2/index.html
+        # This event is used to record evidence.
         "behaviour": "RecordEvidence",
         # Optional Client-claimed time at which the maintenance was performed
         "timestamp_declared": "2019-11-27T14:44:19Z",
@@ -116,7 +114,7 @@ def main():
 
     # Initialize connection to Archivist
     arch = Archivist(
-        "https://rkvst.poc.jitsuin.io",
+        "https://app.rkvst.io",
         auth=authtoken,
     )
     # Create a new asset

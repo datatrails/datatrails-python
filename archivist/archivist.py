@@ -11,7 +11,7 @@
    IAM subjects and IAM access policies.
 
    Instantiation of this class encapsulates the URL and authentication
-   parameters:
+   parameters (the max_time paramater is optional):
 
    .. code-block:: python
 
@@ -20,8 +20,9 @@
 
       # Initialize connection to Archivist
       arch = Archivist(
-          "https://rkvst.poc.jitsuin.io",
+          "https://app.rkvst.io",
           auth=authtoken,
+          max_time=1200,
       )
 
     The arch variable now has additional endpoints assets,events,locations,
@@ -415,8 +416,13 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     def last_response(self, *, responses: int = 1) -> List[Response]:
         """Returns the requested number of response objects from the response ring buffer
-        args:
+
+        Args:
             responses (int): Number of responses to be returned in a list
+
+        Returns:
+            list of responses.
+
         """
 
         return list(self._response_ring_buffer)[:responses]
