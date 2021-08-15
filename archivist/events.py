@@ -14,7 +14,7 @@
 
       # Initialize connection to Archivist
       arch = Archivist(
-          "https://rkvst.poc.jitsuin.io",
+          "https://app.rkvst.io",
           auth=authtoken,
       )
       asset = arch.assets.create(...)

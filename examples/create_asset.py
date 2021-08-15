@@ -79,7 +79,7 @@ def main():
     # specify a differnet value here particularly when creating assets on TENANT_STORAGE
     # (rather than LEDGER) as confirmation times are much shorter in this case.
     arch = Archivist(
-        "https://rkvst.poc.jitsuin.io",
+        "https://app.rkvst.io",
         auth=authtoken,
         max_time=300,
     )

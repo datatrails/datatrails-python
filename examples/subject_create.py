@@ -21,7 +21,7 @@ def main():
 
     # Initialize connection to Archivist
     arch = Archivist(
-        "https://rkvst.poc.jitsuin.io",
+        "https://app.rkvst.io",
         auth=authtoken,
     )
 

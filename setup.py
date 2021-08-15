@@ -10,7 +10,7 @@ HERE = os.path.dirname(__file__)
 REPO_URL = 'https://github.com/jitsuin-inc/archivist-python/'
 NAME = "jitsuin-archivist"
 
-with open(os.path.join(HERE, 'README.md')) as FF:
+with open(os.path.join(HERE, 'README.rst')) as FF:
     DESC = FF.read()
 
 with open(os.path.join(HERE, 'requirements.txt')) as FF:
@@ -24,7 +24,7 @@ setup(
     long_description=DESC,
     long_description_content_type="text/markdown",
     url=REPO_URL,
-    packages=find_packages(exclude=( "examples", "unittests", )),
+    packages=find_packages(exclude=( "examples", "unittests", "functests")),
     platforms=['any'],
     classifiers=[
         'Development Status :: 3 - Alpha', #pre-delivery
