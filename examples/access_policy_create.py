@@ -21,7 +21,7 @@ def main():
         authtoken = tokenfile.read().strip()
 
     arch = Archivist(
-        "https://rkvst.poc.jitsuin.io",
+        "https://app.rkvst.io",
         auth=authtoken,
     )
 

@@ -47,7 +47,7 @@ tasks:
     desc: Create sphinx documentation
     deps: [about]
     cmds:
-      - ./scripts/builder.sh /bin/bash -c "cd docs && make html"
+      - ./scripts/builder.sh /bin/bash -c "cd docs && make clean && make html"
 
   format:
     desc: Format code using black
