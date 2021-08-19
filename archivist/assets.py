@@ -22,10 +22,9 @@
 """
 
 import logging
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from copy import deepcopy
 
-from archivist.storage_integrity import StorageIntegrity
 from archivist.type_aliases import NoneOnError
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
@@ -45,6 +44,13 @@ from .errors import ArchivistNotFoundError
 #: :func:`~_AssetsClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+# These are now hardcoded and not user-selectable. Eventually they will be removed from
+# the backend API and removed from this package.
+BEHAVIOURS = [
+    "Attachments",
+    "RecordEvidence",
+]
 
 LOGGER = logging.getLogger(__name__)
 
@@ -112,20 +118,18 @@ class _AssetsClient:
 
     def create(
         self,
-        behaviours: List,
+        props: Dict,
         attrs: Dict,
         *,
-        storage_integrity: StorageIntegrity = StorageIntegrity.TENANT_STORAGE,
         confirm: bool = False,
     ) -> Asset:
         """Create asset
 
-        Creates asset with defined behaviours and attributes.
+        Creates asset with defined properties and attributes.
 
         Args:
-            behaviours (list): list of accepted behaviours for this asset.
+            props (list): Properties - usually only the storage_integrity setting
             attrs (dict): attributes of created asset.
-            storage_integrity (StorageIntegrity): store asset on either ledger or tenant storage
             confirm (bool): if True wait for asset to be confirmed.
 
         Returns:
@@ -133,14 +137,9 @@ class _AssetsClient:
 
         """
         LOGGER.debug("Create Asset %s", attrs)
-        return self.create_from_data(
-            {
-                "behaviours": behaviours,
-                "storage_integrity": storage_integrity.name,
-                "attributes": attrs,
-            },
-            confirm=confirm,
-        )
+        data = self.__query(props, attrs)
+        data["behaviours"] = BEHAVIOURS
+        return self.create_from_data(data, confirm=confirm)
 
     def create_from_data(self, data: Dict, *, confirm: bool = False) -> Asset:
         """Create asset

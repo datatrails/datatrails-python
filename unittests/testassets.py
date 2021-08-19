@@ -7,7 +7,7 @@ import json
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist.assets import DEFAULT_PAGE_SIZE
+from archivist.assets import BEHAVIOURS, DEFAULT_PAGE_SIZE
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
@@ -25,10 +25,6 @@ from .mock_response import MockResponse
 # pylint: disable=unused-variable
 
 
-BEHAVIOURS = [
-    "RecordEvidence",
-    "Attachments",
-]
 PRIMARY_IMAGE = {
     "arc_display_name": "arc_primary_image",
     "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
@@ -76,11 +72,13 @@ ATTRS_NO_ATTACHMENTS = {
 IDENTITY = f"{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 SUBPATH = f"{ASSETS_SUBPATH}/{ASSETS_LABEL}"
 
-# TBD: add properties as well
+PROPS = {
+    "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
+}
 REQUEST = {
-    "behaviours": BEHAVIOURS,
     "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
     "attributes": ATTRS,
+    "behaviours": BEHAVIOURS,
 }
 REQUEST_DATA = json.dumps(REQUEST)
 
@@ -136,7 +134,7 @@ class TestAssets(TestCase):
         with mock.patch.object(self.arch._session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=False)
+            asset = self.arch.assets.create(PROPS, ATTRS, confirm=False)
             self.assertEqual(
                 tuple(mock_post.call_args),
                 (
@@ -178,7 +176,7 @@ class TestAssets(TestCase):
         ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
-            asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
+            asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
             self.assertEqual(
                 asset,
                 RESPONSE,
@@ -194,7 +192,7 @@ class TestAssets(TestCase):
         ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
-            asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=False)
+            asset = self.arch.assets.create(PROPS, ATTRS, confirm=False)
             self.arch.assets.wait_for_confirmation(asset["identity"])
             self.assertEqual(
                 asset,
@@ -213,7 +211,7 @@ class TestAssets(TestCase):
             mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
 
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
+                asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
 
     def test_assets_create_with_confirmation_pending_status(self):
         """
@@ -227,7 +225,7 @@ class TestAssets(TestCase):
                 MockResponse(200, **RESPONSE_PENDING),
                 MockResponse(200, **RESPONSE),
             ]
-            asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
+            asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
             self.assertEqual(
                 asset,
                 RESPONSE,
@@ -247,7 +245,7 @@ class TestAssets(TestCase):
                 MockResponse(200, **RESPONSE_FAILED),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
+                asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
 
     def test_assets_create_with_confirmation_always_pending_status(self):
         """
@@ -267,7 +265,7 @@ class TestAssets(TestCase):
                 MockResponse(200, **RESPONSE_PENDING),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(BEHAVIOURS, ATTRS, confirm=True)
+                asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
 
     def test_assets_read_with_out_primary_image(self):
         """

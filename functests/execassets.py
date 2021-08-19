@@ -13,10 +13,7 @@ from archivist.storage_integrity import StorageIntegrity
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
-BEHAVIOURS = [
-    "RecordEvidence",
-    "Attachments",
-]
+PROPS = {}
 ATTRS = {
     "arc_firmware_version": "1.0",
     "arc_serial_number": "vtl-x4-07",
@@ -46,7 +43,7 @@ class TestAssetCreate(TestCase):
         Test asset creation on tenant storage
         """
         asset = self.arch.assets.create(
-            BEHAVIOURS,
+            PROPS,
             self.attrs,
             confirm=True,
         )
@@ -61,9 +58,10 @@ class TestAssetCreate(TestCase):
         Test asset creation on ledger
         """
         asset = self.arch.assets.create(
-            BEHAVIOURS,
+            {
+                "storage_integrity": StorageIntegrity.LEDGER,
+            },
             self.attrs,
-            storage_integrity=StorageIntegrity.LEDGER,
             confirm=True,
         )
         self.assertEqual(
