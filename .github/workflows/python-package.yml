@@ -27,9 +27,9 @@ jobs:
     - name: Run integrity checks
       run: |
         ./scripts/version.sh
-        pycodestyle --format=pylint archivist unittests examples
-        python3 -m pylint --rcfile=pylintrc archivist unittests examples
-        black archivist examples unittests
+        pycodestyle --format=pylint archivist unittests examples functests
+        python3 -m pylint --rcfile=pylintrc archivist unittests examples functests
+        black archivist examples unittests functests
         modified=$(git status -s | wc -l)
         if [ $modified -gt 0 ]
         then
