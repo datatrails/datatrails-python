@@ -36,43 +36,27 @@ def create_asset(arch):
         "some_custom_attribute": "value"  # You can add any custom value as long as
         # it does not start with arc_
     }
-    behaviours = [
-        "Attachments",
-        "RecordEvidence",
-    ]
     #
     # store asset on the DLT or not. If DLT is not enabled for the user an error will occur if
     # StorageIntegrity.LEDGER is specified. If unspecified then TENANT_STORAGE is used
     # i.e. not stored on the DLT...
     # storage_integrity = StorageIntegrity.TENANT_STORAGE
-    storage_integrity = StorageIntegrity.LEDGER
+    props = {
+        "storage_integrity": StorageIntegrity.LEDGER,
+    }
 
-    # The first argument is the behaviours of the asset
-    # The second argument is the attributes of the asset
-    # The third argument indicates whether the asset is stored on the DLT or not.
-    #   If not specifed the asset is not stored on the DLT (TENANT_STORAGE)
-    # The fourth argument is wait for confirmation:
+    # The first argument are the properties of the asset
+    # The second argument are the attributes of the asset
+    # The third argument is wait for confirmation:
     #   If @confirm@ is True then this function will not
     #   return until the asset is confirmed on the blockchain and ready
     #   to accept events (or an error occurs)
     #
-    # If storage_integrity = StorageIntegrity.LEDGER:
-    #   After an asset is submitted to the blockchain,
-    #   it will be in the "Pending" status.
-    #   Once it is added to the blockchain, the status will be changed to "Confirmed"
-    #
-    # If storage_integrity = StorageIntegrity.TENANT_STORAGE:
-    #   The asset is simply stored in the backend (and not on the blockchain)
-    #   and, once stored, the status will be changed to "Confirmed".
-    return arch.assets.create(
-        behaviours, attrs, storage_integrity=storage_integrity, confirm=True
-    )
+    return arch.assets.create(props, attrs, confirm=True)
     # alternatively if some work can be done whilst the asset is confirmed then this call can be
     # replaced by a two-step alternative:
 
-    # asset = arch.assets.create(
-    #    behaviours, attrs, storage_integrity=storage_integrity, confirm=False
-    # )
+    # asset = arch.assets.create(props, attrs, confirm=False)
 
     # ... do something else here
     # and then wait for confirmation
