@@ -87,17 +87,15 @@ def create_asset(arch):
         "some_custom_attribute": "value"  # You can add any custom value as long as
         # it does not start with arc_
     }
-    props = {}
-    # The first argument is the properties of the asset
-    # The second argument is the attributes of the asset
-    # The third argument is wait for confirmation:
+    # The first argument is the attributes of the asset
+    # The second argument is wait for confirmation:
     #   If @confirm@ is True then this function will not
     #   return until the asset is confirmed on the blockchain and ready
     #   to accept events (or an error occurs)
     #   After an asset is submitted to the blockchain (submitted),
     #   it will be in the "Pending" status.
     #   Once it is added to the blockchain, the status will be changed to "Confirmed"
-    return arch.assets.create(props, attrs, confirm=True)
+    return arch.assets.create(attrs=attrs, confirm=True)
 
 
 def main():
