@@ -25,6 +25,7 @@ REST api (in any language):
        certain criteria to become confirmed.
     *  a **read_by_signature()** method that allows one to retrieve an asset or event with a 
        unique signature without knowing the identity.
+    *  predefined **fixtures** that allow specifying common attributes of assets/events
     *  comprehensive exception handling - clear specific exceptions.
     *  easily extensible - obeys the open-closed principle of SOLID where new endpoints 
        can be implemented by **extending** the package as opposed to modifying it.

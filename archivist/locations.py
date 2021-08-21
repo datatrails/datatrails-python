@@ -30,12 +30,16 @@ from typing import Dict, Optional
 from archivist import archivist as type_helper
 
 from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
+from .dictmerge import _deepmerge
 
 
 #: Default page size - number of entities fetched in one REST GET in the
 #: :func:`~_LocationsClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+FIXTURE_LABEL = "locations"
+
 
 LOGGER = logging.getLogger(__name__)
 
@@ -117,13 +121,12 @@ class _LocationsClient:
             )
         )
 
-    @staticmethod
-    def __query(props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
+    def __query(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
         query = props or {}
         if attrs:
             query["attributes"] = attrs
 
-        return query
+        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
 
     def count(
         self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None

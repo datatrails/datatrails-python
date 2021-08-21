@@ -26,6 +26,7 @@ One can then use the examples code to create assets (see examples directory):
     
     from archivist.archivist import Archivist
     from archivist.errors import ArchivistError
+    from archivist.storage_integrity import StorageIntegrity
     
     # Oauth2 token that grants access
     with open(".auth_token", mode='r') as tokenfile:
@@ -54,9 +55,16 @@ One can then use the examples code to create assets (see examples directory):
             "some_custom_attribute": "value"  # You can add any custom value as long as
                                           # it does not start with arc_
     }
-    behaviours = ["Attachments", "RecordEvidence"]
-    
-    # The first argument is the behaviours of the asset
+    #
+    # store asset on the DLT or not. If DLT is not enabled for the user an error will occur if
+    # StorageIntegrity.LEDGER is specified. If unspecified then TENANT_STORAGE is used
+    # i.e. not stored on the DLT...
+    # storage_integrity = StorageIntegrity.TENANT_STORAGE
+    props = {
+        "storage_integrity": StorageIntegrity.LEDGER.name,
+    }
+
+    # The first argument is the properties of the asset
     # The second argument is the attributes of the asset
     # The third argument is wait for confirmation:
     #   If @confirm@ is True then this function will not
@@ -66,7 +74,7 @@ One can then use the examples code to create assets (see examples directory):
     #   it will be in the "Pending" status.
     #   Once it is added to the blockchain, the status will be changed to "Confirmed"
     try:
-        asset = arch.assets.create(behaviours, attrs=attrs, confirm=True)
+        asset = arch.assets.create(props=props, attrs=attrs, confirm=True)
     except Archivisterror as ex:
         print("error", ex)
     else:

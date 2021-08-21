@@ -134,7 +134,7 @@ class TestAssets(TestCase):
         with mock.patch.object(self.arch._session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            asset = self.arch.assets.create(PROPS, ATTRS, confirm=False)
+            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
             self.assertEqual(
                 tuple(mock_post.call_args),
                 (
@@ -176,7 +176,7 @@ class TestAssets(TestCase):
         ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
-            asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
+            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
             self.assertEqual(
                 asset,
                 RESPONSE,
@@ -192,7 +192,7 @@ class TestAssets(TestCase):
         ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
-            asset = self.arch.assets.create(PROPS, ATTRS, confirm=False)
+            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
             self.arch.assets.wait_for_confirmation(asset["identity"])
             self.assertEqual(
                 asset,
@@ -211,7 +211,7 @@ class TestAssets(TestCase):
             mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
 
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
+                asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
 
     def test_assets_create_with_confirmation_pending_status(self):
         """
@@ -225,7 +225,7 @@ class TestAssets(TestCase):
                 MockResponse(200, **RESPONSE_PENDING),
                 MockResponse(200, **RESPONSE),
             ]
-            asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
+            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
             self.assertEqual(
                 asset,
                 RESPONSE,
@@ -245,7 +245,7 @@ class TestAssets(TestCase):
                 MockResponse(200, **RESPONSE_FAILED),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
+                asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
 
     def test_assets_create_with_confirmation_always_pending_status(self):
         """
@@ -265,7 +265,7 @@ class TestAssets(TestCase):
                 MockResponse(200, **RESPONSE_PENDING),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(PROPS, ATTRS, confirm=True)
+                asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
 
     def test_assets_read_with_out_primary_image(self):
         """

@@ -35,6 +35,7 @@ from .constants import (
     ACCESS_POLICIES_LABEL,
     ASSETS_LABEL,
 )
+from .dictmerge import _deepmerge
 
 from .assets import Asset
 
@@ -42,6 +43,9 @@ from .assets import Asset
 #: :func:`~_AccessPoliciesClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+FIXTURE_LABEL = "access_policies"
+
 
 LOGGER = logging.getLogger(__name__)
 
@@ -169,8 +173,8 @@ class _AccessPoliciesClient:
         """
         return self._archivist.delete(ACCESS_POLICIES_SUBPATH, identity)
 
-    @staticmethod
     def __query(
+        self,
         props: Optional[Dict],
         *,
         filters: Optional[List] = None,
@@ -183,7 +187,7 @@ class _AccessPoliciesClient:
         if access_permissions is not None:
             query["access_permissions"] = access_permissions
 
-        return query
+        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
 
     def count(self, *, display_name: Optional[str] = None) -> int:
         """Count access policies.

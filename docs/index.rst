@@ -14,6 +14,7 @@ Jitsuin Archivist
 
    features
    getting_started
+   fixtures
    archivist
    assets
    events
