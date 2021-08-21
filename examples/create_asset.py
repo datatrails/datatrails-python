@@ -40,9 +40,9 @@ def create_asset(arch):
     # store asset on the DLT or not. If DLT is not enabled for the user an error will occur if
     # StorageIntegrity.LEDGER is specified. If unspecified then TENANT_STORAGE is used
     # i.e. not stored on the DLT...
-    # storage_integrity = StorageIntegrity.TENANT_STORAGE
+    # storage_integrity = StorageIntegrity.TENANT_STORAGE.name
     props = {
-        "storage_integrity": StorageIntegrity.LEDGER,
+        "storage_integrity": StorageIntegrity.LEDGER.name,
     }
 
     # The first argument are the properties of the asset
@@ -52,11 +52,11 @@ def create_asset(arch):
     #   return until the asset is confirmed on the blockchain and ready
     #   to accept events (or an error occurs)
     #
-    return arch.assets.create(props, attrs, confirm=True)
+    return arch.assets.create(props=props, attrs=attrs, confirm=True)
     # alternatively if some work can be done whilst the asset is confirmed then this call can be
     # replaced by a two-step alternative:
 
-    # asset = arch.assets.create(props, attrs, confirm=False)
+    # asset = arch.assets.create(props=props, attrs=attrs, confirm=False)
 
     # ... do something else here
     # and then wait for confirmation

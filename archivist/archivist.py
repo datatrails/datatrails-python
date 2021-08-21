@@ -38,7 +38,6 @@ from typing import BinaryIO, Dict, List, Optional
 from collections import deque
 from requests.models import Response
 
-from flatten_dict import flatten
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
@@ -48,6 +47,7 @@ from .constants import (
     ROOT,
     SEP,
 )
+from .dictmerge import _deepmerge, _dotstring
 from .errors import (
     _parse_response,
     ArchivistBadFieldError,
@@ -105,6 +105,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         *,
         auth: Optional[str] = None,
         cert: Optional[str] = None,
+        fixtures: Optional[str] = None,
         verify: bool = True,
         max_time: int = MAX_TIME,
     ):
@@ -131,6 +132,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
         self._session = requests.Session()
         self._max_time = max_time
+        self._fixtures = fixtures or {}
 
         # keep these in sync with CLIENTS map above
         self.assets: _AssetsClient
@@ -176,8 +178,17 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         """str: filepath containing authorisation certificate."""
         return self._cert
 
+    @property
+    def fixtures(self) -> Optional[dict]:
+        """dict: Contains predefined attributes for each endpoint"""
+        return self._fixtures
+
+    @fixtures.setter
+    def fixtures(self, fixtures: dict):
+        """dict: Contains predefined attributes for each endpoint"""
+        self._fixtures = _deepmerge(self._fixtures, fixtures)
+
     def __add_headers(self, headers: Optional[Dict]) -> Dict:
-        """docstring"""
         if headers is not None:
             newheaders = {**self.headers, **headers}
         else:
@@ -429,9 +440,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     @staticmethod
     def __query(query: Optional[Dict]):
-        return query and "&".join(
-            sorted(f"{k}={v}" for k, v in flatten(query, reducer="dot").items())
-        )
+        return query and "&".join(sorted(f"{k}={v}" for k, v in _dotstring(query)))
 
     def get_by_signature(
         self, path: str, field: str, query: Dict, *, headers: Optional[Dict] = None

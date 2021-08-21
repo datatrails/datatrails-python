@@ -38,6 +38,7 @@ from .constants import (
     EVENTS_LABEL,
 )
 from . import confirmer
+from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 
 
@@ -45,6 +46,8 @@ from .errors import ArchivistNotFoundError
 #: :func:`~_EventsClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+FIXTURE_LABEL = "events"
 
 LOGGER = logging.getLogger(__name__)
 
@@ -211,9 +214,8 @@ class _EventsClient:
             )
         )
 
-    @staticmethod
     def __query(
-        props: Optional[Dict], attrs: Optional[Dict], asset_attrs: Optional[Dict]
+        self, props: Optional[Dict], attrs: Optional[Dict], asset_attrs: Optional[Dict]
     ) -> Dict:
         query = deepcopy(props) if props else {}
         if attrs:
@@ -221,7 +223,7 @@ class _EventsClient:
         if asset_attrs:
             query["asset_attributes"] = asset_attrs
 
-        return query
+        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
 
     def count(
         self,

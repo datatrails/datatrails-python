@@ -38,6 +38,7 @@ from .constants import (
     CONFIRMATION_STATUS,
 )
 from . import confirmer
+from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 
 #: Default page size - number of entities fetched in one REST GET in the
@@ -102,6 +103,9 @@ class Asset(dict):
         return None
 
 
+FIXTURE_LABEL = "assets"
+
+
 class _AssetsClient:
     """AssetsClient
 
@@ -118,9 +122,9 @@ class _AssetsClient:
 
     def create(
         self,
-        props: Dict,
-        attrs: Dict,
         *,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
         confirm: bool = False,
     ) -> Asset:
         """Create asset
@@ -196,13 +200,12 @@ class _AssetsClient:
         """
         return Asset(**self._archivist.get(ASSETS_SUBPATH, identity))
 
-    @staticmethod
-    def __query(props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
+    def __query(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
         query = deepcopy(props) if props else {}
         if attrs:
             query["attributes"] = attrs
 
-        return query
+        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
 
     def count(
         self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None

@@ -32,11 +32,15 @@ from .constants import (
     SUBJECTS_SUBPATH,
     SUBJECTS_LABEL,
 )
+from .dictmerge import _deepmerge
 
 #: Default page size - number of entities fetched in one REST GET in the
 #: :func:`~_SubjectsClient.list` method. This can be overridden but should rarely
 #: be changed.
 DEFAULT_PAGE_SIZE = 500
+
+FIXTURE_LABEL = "subjects"
+
 
 LOGGER = logging.getLogger(__name__)
 
@@ -171,8 +175,8 @@ class _SubjectsClient:
         """
         return self._archivist.delete(SUBJECTS_SUBPATH, identity)
 
-    @staticmethod
     def __query(
+        self,
         *,
         display_name: Optional[str] = None,
         wallet_pub_keys: Optional[List[str]] = None,
@@ -190,7 +194,7 @@ class _SubjectsClient:
         if tessera_pub_keys is not None:
             query["tessera_pub_key"] = tessera_pub_keys
 
-        return query
+        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
 
     def count(self, *, display_name: Optional[str] = None) -> int:
         """Count subjects.
