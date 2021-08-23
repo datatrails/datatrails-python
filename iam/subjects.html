@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>IAM Subjects &mdash; Jitsuin Archivist 0.4.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Timestamp" href="../timestamp.html" />
+    <link rel="prev" title="IAM Access Policies" href="access_policies.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="../_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../attachments.html">Attachments</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Identity and Access Management (IAM)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="access_policies.html">IAM Access Policies</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">IAM Subjects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage_integrity.html">Storage Integrity</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Identity and Access Management (IAM)</a> &raquo;</li>
+        
+      <li>IAM Subjects</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-archivist.subjects">
+<span id="iam-subjects"></span><span id="subjects"></span><h1>IAM Subjects<a class="headerlink" href="#module-archivist.subjects" title="Permalink to this headline">¶</a></h1>
+<p>Subjects interface</p>
+<p>Access to the subjects endpoint.</p>
+<p>The user is not expected to use this class directly. It is an attribute of the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> class.</p>
+<p>For example instantiate an Archivist instance and execute the methods of the class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
+    <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="c1"># Initialize connection to Archivist</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+    <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">subject</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py data">
+<dt id="archivist.subjects.DEFAULT_PAGE_SIZE">
+<code class="sig-prename descclassname"><span class="pre">archivist.subjects.</span></code><code class="sig-name descname"><span class="pre">DEFAULT_PAGE_SIZE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">500</span></em><a class="headerlink" href="#archivist.subjects.DEFAULT_PAGE_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default page size - number of entities fetched in one REST GET in the
+<a class="reference internal" href="#archivist.subjects._SubjectsClient.list" title="archivist.subjects._SubjectsClient.list"><code class="xref py py-func docutils literal notranslate"><span class="pre">list()</span></code></a> method. This can be overridden but should rarely
+be changed.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="archivist.subjects.Subject">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.subjects.</span></code><code class="sig-name descname"><span class="pre">Subject</span></code><a class="reference internal" href="../_modules/archivist/subjects.html#Subject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects.Subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subject object</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="archivist.subjects._SubjectsClient">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.subjects.</span></code><code class="sig-name descname"><span class="pre">_SubjectsClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>SubjectsClient</p>
+<p>Access to subjects entities using CRUD interface. This class is usually
+accessed as an attribute of the Archivist class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="archivist.subjects._SubjectsClient.count">
+<code class="sig-name descname"><span class="pre">count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count subjects.</p>
+<p>Counts number of subjects that match criteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>display_name</strong> (<em>str</em>) – display name (optional)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>integer count of subjects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.subjects._SubjectsClient.create">
+<code class="sig-name descname"><span class="pre">create</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet_pub_keys</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tessera_pub_keys</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><span class="pre">archivist.subjects.Subject</span></a><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create subject</p>
+<p>Creates subject with defined attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display_name</strong> (<em>str</em>) – display name of subject.</p></li>
+<li><p><strong>wallet_pub_keys</strong> (<em>list</em>) – wallet public keys</p></li>
+<li><p><strong>tessera_pub_keys</strong> (<em>list</em>) – tessera public keys</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subject</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.subjects._SubjectsClient.create_from_data">
+<code class="sig-name descname"><span class="pre">create_from_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><span class="pre">archivist.subjects.Subject</span></a><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.create_from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.create_from_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create subject</p>
+<p>Creates subject with request body from data stream.
+Suitable for reading data from a file using json.load or yaml.load</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – request body of subject.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subject</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.subjects._SubjectsClient.delete">
+<code class="sig-name descname"><span class="pre">delete</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete Subject</p>
+<p>Deletes subject.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – subjects identity e.g. subjects/xxxxxxxxxxxxxxxxxxxxxxx</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subject</span></code></a> instance - empty?</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.subjects._SubjectsClient.list">
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List subjects.</p>
+<p>List subjects that match criteria.
+TODO: filtering on display_name does not currently work</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display_name</strong> (<em>str</em>) – display name (optional)</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) – optional page size. (Rarely used).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable that returns <a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subject</span></code></a> instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.subjects._SubjectsClient.read">
+<code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><span class="pre">archivist.subjects.Subject</span></a><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read Subject</p>
+<p>Reads subject.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – subjects identity e.g. subjects/xxxxxxxxxxxxxxxxxxxxxxx</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subject</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.subjects._SubjectsClient.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wallet_pub_keys</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tessera_pub_keys</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><span class="pre">archivist.subjects.Subject</span></a><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update Subject</p>
+<p>Update subject.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identity</strong> (<em>str</em>) – subjects identity e.g. subjects/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
+<li><p><strong>display_name</strong> (<em>str</em>) – display name of subject.</p></li>
+<li><p><strong>wallet_pub_keys</strong> (<em>list</em>) – wallet public keys</p></li>
+<li><p><strong>tessera_pub_keys</strong> (<em>list</em>) – tessera public keys</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subject</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../timestamp.html" class="btn btn-neutral float-right" title="Timestamp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="access_policies.html" class="btn btn-neutral float-left" title="IAM Access Policies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

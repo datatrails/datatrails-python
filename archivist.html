@@ -1,0 +1,538 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Archivist &mdash; Jitsuin Archivist 0.4.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Assets" href="assets.html" />
+    <link rel="prev" title="Fixtures" href="fixtures.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Archivist</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="archivist">
+<span id="id1"></span><h1>Archivist<a class="headerlink" href="#archivist" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-archivist.archivist"></span><p>Archivist connection interface</p>
+<p>This module contains the base Archivist class which manages
+the connection parameters to a Jitsuin Archivist instance and
+the basic REST verbs to GET, POST, PATCH and DELETE entities..</p>
+<p>The REST methods in this class should only be used directly when
+a CRUD endpoint for the specific type of entity is unavailable.
+Current CRUD endpoints are assets, events, locations, attachments.
+IAM subjects and IAM access policies.</p>
+<p>Instantiation of this class encapsulates the URL and authentication
+parameters (the max_time paramater is optional):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
+      <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+  <span class="c1"># Initialize connection to Archivist</span>
+  <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+      <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+      <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+      <span class="n">max_time</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span>
+  <span class="p">)</span>
+
+<span class="n">The</span> <span class="n">arch</span> <span class="n">variable</span> <span class="n">now</span> <span class="n">has</span> <span class="n">additional</span> <span class="n">endpoints</span> <span class="n">assets</span><span class="p">,</span><span class="n">events</span><span class="p">,</span><span class="n">locations</span><span class="p">,</span>
+<span class="n">attachments</span><span class="p">,</span> <span class="n">IAM</span> <span class="n">subjects</span> <span class="ow">and</span> <span class="n">IAM</span> <span class="n">access</span> <span class="n">policies</span> <span class="n">documented</span> <span class="n">elsewhere</span><span class="o">.</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt id="archivist.archivist.Archivist">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.archivist.</span></code><code class="sig-name descname"><span class="pre">Archivist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixtures</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all Archivist endpoints.</p>
+<p>This class manages the connection to an Archivist instance and provides
+basic methods that represent the underlying REST interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – URL of archivist endpoint</p></li>
+<li><p><strong>auth</strong> – string representing JWT token.</p></li>
+<li><p><strong>cert</strong> – filepath containing both private key and certificate</p></li>
+<li><p><strong>verify</strong> – if True the certificate is verified</p></li>
+<li><p><strong>max_time</strong> (<em>int</em>) – maximum time in seconds to wait for confirmation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistIllegalArgumentError" title="archivist.errors.ArchivistIllegalArgumentError"><strong>ArchivistIllegalArgumentError</strong></a> – if neither ‘auth’ and ‘cert’ or if
+    both ‘auth’ or ‘cert’</p></li>
+<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistNotFoundError" title="archivist.errors.ArchivistNotFoundError"><strong>ArchivistNotFoundError</strong></a> – if ‘cert’ filepath is not readable.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.cert">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">cert</span></code><a class="headerlink" href="#archivist.archivist.Archivist.cert" title="Permalink to this definition">¶</a></dt>
+<dd><p>filepath containing authorisation certificate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.count">
+<code class="sig-name descname"><span class="pre">count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>GET method (REST) with query string</p>
+<p>Returns the count of objects that match query</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
+<li><p><strong>query</strong> (<em>dict</em>) – selector e.g. {“attributes”:{“arc_display_name”:”container no. 1”}}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>integer count of entities found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.delete">
+<code class="sig-name descname"><span class="pre">delete</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subpath</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>DELETE method (REST)</p>
+<p>Deletes an entity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subpath</strong> (<em>str</em>) – e.g. v2 or iam/v1</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) – e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict representing the response body (entity).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.fixtures">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">fixtures</span></code><a class="headerlink" href="#archivist.archivist.Archivist.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains predefined attributes for each endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.get">
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subpath</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>GET method (REST)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subpath</strong> (<em>str</em>) – e.g. v2 or iam/v1…</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) – e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict representing the response body (entity).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.get_by_signature">
+<code class="sig-name descname"><span class="pre">get_by_signature</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.get_by_signature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.get_by_signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>GET method (REST) with query string</p>
+<p>Reads an entity indirectly by searching for its signature</p>
+<p>It is expected that the query parameters will result in only a single entity
+being found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
+<li><p><strong>field</strong> (<em>str</em>) – name of collection of entities e.g assets</p></li>
+<li><p><strong>query</strong> (<em>dict</em>) – selector e.g. {“attributes”: {“arc_display_name”:”container no. 1”}}</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict representing the entity found.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistBadFieldError" title="archivist.errors.ArchivistBadFieldError"><strong>ArchivistBadFieldError</strong></a> – field has incorrect value.</p></li>
+<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistNotFoundError" title="archivist.errors.ArchivistNotFoundError"><strong>ArchivistNotFoundError</strong></a> – No entity found</p></li>
+<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistDuplicateError" title="archivist.errors.ArchivistDuplicateError"><strong>ArchivistDuplicateError</strong></a> – More than one entity matching signature found</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.get_file">
+<code class="sig-name descname"><span class="pre">get_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subpath</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">requests.models.Response</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.get_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.get_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>GET method (REST) - chunked</p>
+<p>Downloads a binary object from upstream storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subpath</strong> (<em>str</em>) – e.g. v2 or iam/v1</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) – e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
+<li><p><strong>fd</strong> (<em>file</em>) – an iterable representing a file (usually from open())
+the file must be opened in binary mode</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>REST response (not the response body)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.headers">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">headers</span></code><a class="headerlink" href="#archivist.archivist.Archivist.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Headers REST headers from response</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.last_response">
+<code class="sig-name descname"><span class="pre">last_response</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">responses</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">requests.models.Response</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.last_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.last_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the requested number of response objects from the response ring buffer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>responses</strong> (<em>int</em>) – Number of responses to be returned in a list</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of responses.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.list">
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>GET method (REST) with query string</p>
+<p>Lists entities that match the query dictionary.</p>
+<p>If page size is specified return the list of records in batches of page_size
+until next_page_token in response is null.</p>
+<p>If page size is unspecified return up to the internal limit of records.
+(different for each endpoint)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
+<li><p><strong>field</strong> (<em>str</em>) – name of collection of entities e.g assets</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) – optional number of items per request e.g. 500</p></li>
+<li><p><strong>query</strong> (<em>dict</em>) – selector e.g. {“confirmation_status”: “CONFIRMED”, }</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable that lists entities</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistBadFieldError" title="archivist.errors.ArchivistBadFieldError"><strong>ArchivistBadFieldError</strong></a> – field has incorrect value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.max_time">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">max_time</span></code><a class="headerlink" href="#archivist.archivist.Archivist.max_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns maximum time in seconds to wait for confirmation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.patch">
+<code class="sig-name descname"><span class="pre">patch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subpath</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.patch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>PATCH method (REST)</p>
+<p>Updates the specified entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subpath</strong> (<em>str</em>) – e.g. v2 or iam/v1</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) – e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
+<li><p><strong>request</strong> (<em>dict</em>) – request body defining the entity changes.</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict representing the response body (entity).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.post">
+<code class="sig-name descname"><span class="pre">post</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>POST method (REST)</p>
+<p>Creates an entity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
+<li><p><strong>request</strong> (<em>dict</em>) – request body defining the entity</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict representing the response body (entity).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.post_file">
+<code class="sig-name descname"><span class="pre">post_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mtype</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.post_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.post_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>POST method (REST) - upload binary</p>
+<p>Uploads a file to an endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
+<li><p><strong>fd</strong> – iterable representing the contents of a file.</p></li>
+<li><p><strong>mtype</strong> (<em>str</em>) – me-ime type e.g. image/jpeg</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict representing the response body (entity).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.url">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">url</span></code><a class="headerlink" href="#archivist.archivist.Archivist.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL of Archivist endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.archivist.Archivist.verify">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">verify</span></code><a class="headerlink" href="#archivist.archivist.Archivist.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if https connections are to be verified</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="assets.html" class="btn btn-neutral float-right" title="Assets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="fixtures.html" class="btn btn-neutral float-left" title="Fixtures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

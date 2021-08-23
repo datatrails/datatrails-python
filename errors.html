@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Errors &mdash; Jitsuin Archivist 0.4.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Storage Integrity" href="storage_integrity.html" />
+    <link rel="prev" title="Timestamp" href="timestamp.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Errors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="errors">
+<span id="id1"></span><h1>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-archivist.errors"></span><p>Archivist exceptions</p>
+<p>All exceptions are derived from a base ArchivistError class.</p>
+<dl class="py exception">
+<dt id="archivist.errors.Archivist4xxError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">Archivist4xxError</span></code><a class="reference internal" href="_modules/archivist/errors.html#Archivist4xxError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.Archivist4xxError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any other 4xx error</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.Archivist5xxError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">Archivist5xxError</span></code><a class="reference internal" href="_modules/archivist/errors.html#Archivist5xxError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.Archivist5xxError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any other 5xx error</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistBadFieldError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistBadFieldError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistBadFieldError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistBadFieldError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Incorrect field name in list() method</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistBadRequestError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistBadRequestError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistBadRequestError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistBadRequestError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ill-formed request or validation error (400)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistDuplicateError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistDuplicateError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistDuplicateError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistDuplicateError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read by signature returns more than one asset</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base exception for archivist package</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistForbiddenError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistForbiddenError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistForbiddenError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistForbiddenError" title="Permalink to this definition">¶</a></dt>
+<dd><p>User does not have permission (403)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistIllegalArgumentError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistIllegalArgumentError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistIllegalArgumentError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistIllegalArgumentError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional keyword arguments are inconsistent</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistNotFoundError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistNotFoundError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistNotFoundError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Entity does not exist (404)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistNotImplementedError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistNotImplementedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistNotImplementedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistNotImplementedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Illegal REST verb (501)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistUnauthenticatedError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistUnauthenticatedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistUnauthenticatedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistUnauthenticatedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>user is unknown (401)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistUnavailableError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistUnavailableError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistUnavailableError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistUnavailableError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Service is unavailable (503)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistUnconfirmedError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistUnconfirmedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistUnconfirmedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistUnconfirmedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>asset or event failed to confirm after fixed timeout</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="storage_integrity.html" class="btn btn-neutral float-right" title="Storage Integrity" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="timestamp.html" class="btn btn-neutral float-left" title="Timestamp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

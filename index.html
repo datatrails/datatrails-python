@@ -1,1 +1,364 @@
-Initial commit
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Jitsuin Archivist &mdash; Jitsuin Archivist 0.4.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Features" href="features.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Jitsuin Archivist</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="jitsuin-archivist">
+<h1>Jitsuin Archivist<a class="headerlink" href="#jitsuin-archivist" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="jitsuin-archivist-client">
+<span id="readme"></span><h1>Jitsuin Archivist Client<a class="headerlink" href="#jitsuin-archivist-client" title="Permalink to this headline">¶</a></h1>
+<p>The standard Jitsuin Archivist python client.</p>
+<p>Please note that the canonical API for Jitsuin Archivist is always the REST API
+documented at <a class="reference external" href="https://docs.rkvst.com">https://docs.rkvst.com</a></p>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>Use standard python pip utility:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m pip install jitsuin-archivist
+</pre></div>
+</div>
+</div>
+<div class="section" id="example">
+<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
+<p>One can then use the examples code to create assets (see examples directory):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+<span class="kn">from</span> <span class="nn">archivist.errors</span> <span class="kn">import</span> <span class="n">ArchivistError</span>
+<span class="kn">from</span> <span class="nn">archivist.storage_integrity</span> <span class="kn">import</span> <span class="n">StorageIntegrity</span>
+
+<span class="c1"># Oauth2 token that grants access</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
+    <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="c1"># Initialize connection to Archivist - the URL for production will be different to this URL</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+    <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Create a new asset</span>
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s display name in the user interface</span>
+    <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;display_description&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s description in the user interface</span>
+    <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;desplay_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
+                                         <span class="c1"># allowing the creator of</span>
+                                         <span class="c1"># an asset to specify the asset</span>
+                                         <span class="c1"># type or class. Be careful when setting this:</span>
+                                         <span class="c1"># assets are grouped by type and</span>
+                                         <span class="c1"># sharing policies can be</span>
+                                         <span class="c1"># configured to share assets based on</span>
+                                         <span class="c1"># their arc_display_type.</span>
+                                         <span class="c1"># So a mistake here can result in asset data being</span>
+                                         <span class="c1"># under- or over-shared.</span>
+        <span class="s2">&quot;some_custom_attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span>  <span class="c1"># You can add any custom value as long as</span>
+                                      <span class="c1"># it does not start with arc_</span>
+<span class="p">}</span>
+<span class="c1">#</span>
+<span class="c1"># store asset on the DLT or not. If DLT is not enabled for the user an error will occur if</span>
+<span class="c1"># StorageIntegrity.LEDGER is specified. If unspecified then TENANT_STORAGE is used</span>
+<span class="c1"># i.e. not stored on the DLT...</span>
+<span class="c1"># storage_integrity = StorageIntegrity.TENANT_STORAGE</span>
+<span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;storage_integrity&quot;</span><span class="p">:</span> <span class="n">StorageIntegrity</span><span class="o">.</span><span class="n">LEDGER</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># The first argument is the properties of the asset</span>
+<span class="c1"># The second argument is the attributes of the asset</span>
+<span class="c1"># The third argument is wait for confirmation:</span>
+<span class="c1">#   If @confirm@ is True then this function will not</span>
+<span class="c1">#   return until the asset is confirmed on the blockchain and ready</span>
+<span class="c1">#   to accept events (or an error occurs)</span>
+<span class="c1">#   After an asset is submitted to the blockchain (submitted),</span>
+<span class="c1">#   it will be in the &quot;Pending&quot; status.</span>
+<span class="c1">#   Once it is added to the blockchain, the status will be changed to &quot;Confirmed&quot;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">asset</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">Archivisterror</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging">
+<h1>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
+<p>Follows the Django model as described here: <a class="reference external" href="https://docs.djangoproject.com/en/3.2/topics/logging/">https://docs.djangoproject.com/en/3.2/topics/logging/</a></p>
+<p>The base logger for this package is rooted at “archivist” with subloggers for each endpoint:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt>archivist.archivist</dt><dd><p>sublogger for archivist submodule</p>
+</dd>
+<dt>archivist.assets</dt><dd><p>sublogger for assets submodule</p>
+</dd>
+</dl>
+</div>
+<p>and for other endpoints.</p>
+<p>Logging is configured by either defining a root logger with suitable handlers, formatters etc. or
+by using dictionary configuration as described here: <a class="reference external" href="https://docs.python.org/3/library/logging.config.html#logging-config-dictschema">https://docs.python.org/3/library/logging.config.html#logging-config-dictschema</a></p>
+<p>A recommended minimum configuration would be:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">({</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;disable_existing_loggers&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;handlers&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;console&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;root&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;handlers&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;console&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_events.html">Filter Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_filter.html">Filter IAM subjects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="iam/access_policies.html">IAM Access Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iam/subjects.html">IAM Subjects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="features.html" class="btn btn-neutral float-right" title="Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

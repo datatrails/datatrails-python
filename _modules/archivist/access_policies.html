@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>archivist.access_policies &mdash; Jitsuin Archivist 0.4.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="../../_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../storage_integrity.html">Storage Integrity</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>archivist.access_policies</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for archivist.access_policies</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Access_Policies interface</span>
+
+<span class="sd">   Access to the access_policies endpoint.</span>
+
+<span class="sd">   The user is not expected to use this class directly. It is an attribute of the</span>
+<span class="sd">   :class:`Archivist` class.</span>
+
+<span class="sd">   For example instantiate an Archivist instance and execute the methods of the class:</span>
+
+<span class="sd">   .. code-block:: python</span>
+
+<span class="sd">      with open(&quot;.auth_token&quot;, mode=&quot;r&quot;) as tokenfile:</span>
+<span class="sd">          authtoken = tokenfile.read().strip()</span>
+
+<span class="sd">      # Initialize connection to Archivist</span>
+<span class="sd">      arch = Archivist(</span>
+<span class="sd">          &quot;https://app.rkvst.io&quot;,</span>
+<span class="sd">          auth=authtoken,</span>
+<span class="sd">      )</span>
+<span class="sd">      access_policy = arch.access_policies.create(...)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+<span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
+<span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
+<span class="kn">from</span> <span class="nn">archivist</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SEP</span><span class="p">,</span>
+    <span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span>
+    <span class="n">ACCESS_POLICIES_LABEL</span><span class="p">,</span>
+    <span class="n">ASSETS_LABEL</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
+
+<span class="kn">from</span> <span class="nn">.assets</span> <span class="kn">import</span> <span class="n">Asset</span>
+
+<span class="c1">#: Default page size - number of entities fetched in one REST GET in the</span>
+<span class="c1">#: :func:`~_AccessPoliciesClient.list` method. This can be overridden but should rarely</span>
+<span class="c1">#: be changed.</span>
+<span class="n">DEFAULT_PAGE_SIZE</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="n">FIXTURE_LABEL</span> <span class="o">=</span> <span class="s2">&quot;access_policies&quot;</span>
+
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AccessPolicy"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies.AccessPolicy">[docs]</a><span class="k">class</span> <span class="nc">AccessPolicy</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;AccessPolicy object&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="_AccessPoliciesClient"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient">[docs]</a><span class="k">class</span> <span class="nc">_AccessPoliciesClient</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;AccessPoliciesClient</span>
+
+<span class="sd">    Access to access_policies entities using CRUD interface. This class is usually</span>
+<span class="sd">    accessed as an attribute of the Archivist class.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        archivist (Archivist): :class:`Archivist` instance</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.create"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">access_permissions</span><span class="p">:</span> <span class="n">List</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create access policy</span>
+
+<span class="sd">        Creates access policy with defined attributes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            props (dict): properties of created access policy.</span>
+<span class="sd">            filters (list): assets filters</span>
+<span class="sd">            access permissions (list): list of access permissions</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`AccessPolicy` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create Access Policy </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span> <span class="n">access_permissions</span><span class="o">=</span><span class="n">access_permissions</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.create_from_data"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create access policy</span>
+
+<span class="sd">        Creates access policy with request body from data stream.</span>
+<span class="sd">        Suitable for reading data from a file using json.load or yaml.load</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict): request body of access policy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`AccessPolicy` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AccessPolicy</span><span class="p">(</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ACCESS_POLICIES_SUBPATH}</span><span class="s2">/</span><span class="si">{ACCESS_POLICIES_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">data</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.read"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Read Access Policy</span>
+
+<span class="sd">        Reads access policy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            identity (str): access_policies identity e.g. access_policies/xxxxxxxxxxxxxxxxxxxxxxx</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`AccessPolicy` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AccessPolicy</span><span class="p">(</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span>
+                <span class="n">identity</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.update"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">identity</span><span class="p">,</span>
+        <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">filters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">access_permissions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Update Access Policy</span>
+
+<span class="sd">        Update access policy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            identity (str): access_policies identity e.g. access_policies/xxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">            props (dict): properties of created access policy.</span>
+<span class="sd">            filters (list): assets filters</span>
+<span class="sd">            access permissions (list): list of access permissions</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`AccessPolicy` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AccessPolicy</span><span class="p">(</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span>
+                <span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span>
+                <span class="n">identity</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span>
+                    <span class="n">props</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span> <span class="n">access_permissions</span><span class="o">=</span><span class="n">access_permissions</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.delete"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Delete Access Policy</span>
+
+<span class="sd">        Deletes access policy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            identity (str): access_policies identity e.g. access_policies/xxxxxxxxxxxxxxxxxxxxxxx</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`AccessPolicy` instance - empty?</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__query</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">filters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">access_permissions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">props</span><span class="p">)</span> <span class="k">if</span> <span class="n">props</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">filters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">query</span><span class="p">[</span><span class="s2">&quot;filters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filters</span>
+
+        <span class="k">if</span> <span class="n">access_permissions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">query</span><span class="p">[</span><span class="s2">&quot;access_permissions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">access_permissions</span>
+
+        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">FIXTURE_LABEL</span><span class="p">),</span> <span class="n">query</span><span class="p">)</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.count"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Count access policies.</span>
+
+<span class="sd">        Counts number of access policies that match criteria.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            display_name (str): display name (optional0</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            integer count of access policies.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">}</span> <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ACCESS_POLICIES_SUBPATH}</span><span class="s2">/</span><span class="si">{ACCESS_POLICIES_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.list"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_PAGE_SIZE</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List access policies.</span>
+
+<span class="sd">        List access policies that match criteria.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            display_name (str): display name (optional0</span>
+<span class="sd">            page_size (int): optional page size. (Rarely used).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            iterable that returns :class:`AccessPolicy` instances</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">}</span> <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">AccessPolicy</span><span class="p">(</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ACCESS_POLICIES_SUBPATH}</span><span class="s2">/</span><span class="si">{ACCESS_POLICIES_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">ACCESS_POLICIES_LABEL</span><span class="p">,</span>
+                <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
+                <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># additional queries on different endpoints</span>
+<div class="viewcode-block" id="_AccessPoliciesClient.count_matching_assets"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count_matching_assets">[docs]</a>    <span class="k">def</span> <span class="nf">count_matching_assets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_policy_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Count assets that match access_policy.</span>
+
+<span class="sd">        Counts number of assets that match an access_policy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            access_policy_id (str): e.g. access_policies/xxxxxxxxxxxxxxx</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            integer count of assets.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
+            <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span> <span class="n">access_policy_id</span><span class="p">,</span> <span class="n">ASSETS_LABEL</span><span class="p">)),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.list_matching_assets"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list_matching_assets">[docs]</a>    <span class="k">def</span> <span class="nf">list_matching_assets</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">access_policy_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_PAGE_SIZE</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List matching assets.</span>
+
+<span class="sd">        List assets that match access policy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            access_policy_id (str): e.g. access_policies/xxxxxxxxxxxxxxx</span>
+<span class="sd">            page_size (int): optional page size. (Rarely used).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            iterable that returns :class:`Asset` instances</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">Asset</span><span class="p">(</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
+                <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span> <span class="n">access_policy_id</span><span class="p">,</span> <span class="n">ASSETS_LABEL</span><span class="p">)),</span>
+                <span class="n">ASSETS_LABEL</span><span class="p">,</span>
+                <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.count_matching_access_policies"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count_matching_access_policies">[docs]</a>    <span class="k">def</span> <span class="nf">count_matching_access_policies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Count access policies that match asset.</span>
+
+<span class="sd">        Counts number of access policies that match asset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            asset_id (str): e.g. assets/xxxxxxxxxxxxxxx</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            integer count of access policies.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
+            <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="n">ACCESS_POLICIES_LABEL</span><span class="p">)),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.list_matching_access_policies"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list_matching_access_policies">[docs]</a>    <span class="k">def</span> <span class="nf">list_matching_access_policies</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_PAGE_SIZE</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List matching access policies.</span>
+
+<span class="sd">        List access policies that match asset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            asset_id (str): e.g. assets/xxxxxxxxxxxxxxx</span>
+<span class="sd">            page_size (int): optional page size. (Rarely used).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            iterable that returns :class:`AccessPolicy` instances</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">AccessPolicy</span><span class="p">(</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
+                <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="n">ACCESS_POLICIES_LABEL</span><span class="p">)),</span>
+                <span class="n">ACCESS_POLICIES_LABEL</span><span class="p">,</span>
+                <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

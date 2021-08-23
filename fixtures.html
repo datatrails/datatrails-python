@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Fixtures &mdash; Jitsuin Archivist 0.4.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Archivist" href="archivist.html" />
+    <link rel="prev" title="Filter IAM subjects" href="subjects_filter.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Fixtures</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="fixtures">
+<span id="id1"></span><h1>Fixtures<a class="headerlink" href="#fixtures" title="Permalink to this headline">¶</a></h1>
+<p>One can specify common attributes when creating/counting/querying assets, events
+and locations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+<span class="kn">from</span> <span class="nn">archivist.errors</span> <span class="kn">import</span> <span class="n">ArchivistError</span>
+<span class="kn">from</span> <span class="nn">archivist.storage_integrity</span> <span class="kn">import</span> <span class="n">StorageIntegrity</span>
+
+<span class="c1"># Oauth2 token that grants access</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
+    <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="c1"># Initialize connection to Archivist - for assets on DLT.</span>
+<span class="n">ledger</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+    <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+    <span class="n">fixtures</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;assets&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;storage_integrity&quot;</span><span class="p">:</span> <span class="n">StorageIntegrity</span><span class="o">.</span><span class="n">LEDGER</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="c1"># lets define doors in our namespace that reside on the ledger...</span>
+<span class="n">doors</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">ledger</span><span class="p">)</span>
+<span class="n">doors</span><span class="o">.</span><span class="n">fixtures</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;assets&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;door&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_namespace&quot;</span><span class="p">:</span> <span class="s2">&quot;project xyz&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c1"># a red front door</span>
+<span class="n">door</span> <span class="o">=</span> <span class="n">doors</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;front door&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;colour&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># a green back door</span>
+<span class="n">door</span> <span class="o">=</span> <span class="n">doors</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;back door&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;colour&quot;</span><span class="p">:</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># no need to specify arc_display_type...</span>
+<span class="n">no_of_doors</span> <span class="o">=</span> <span class="n">doors</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">doors</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="archivist.html" class="btn btn-neutral float-right" title="Archivist" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="subjects_filter.html" class="btn btn-neutral float-left" title="Filter IAM subjects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

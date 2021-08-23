@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Features &mdash; Jitsuin Archivist 0.4.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="getting_started.html" />
+    <link rel="prev" title="Jitsuin Archivist" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Features</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="features">
+<span id="id1"></span><h1>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h1>
+<p>This package provides a python interface to the Jitsuin
+Archivist.</p>
+<p>The definitive guide to the REST API is defined here: <a class="reference external" href="https://docs.rkvst.com">https://docs.rkvst.com</a></p>
+<p>This python SDK offers a number of advantages over a simple
+REST api (in any language):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>versioned package for the python 3.6,3.7,3.8,3.9 ecosystem.</p></li>
+<li><p>automatic confirmation of assets and events: just set <strong>confirm=True</strong> when
+creating the asset or event and a sophisticated retry and exponential backoff
+algorithm will take care of everything.</p></li>
+<li><p><strong>list()</strong> method: one can easily get an iterable of assets or events that
+correspond to a particular signature. The list method is optimised for use in
+loop (for a in srch.assets.list():…) but can easily be converted to a list
+using the python list() function.</p></li>
+<li><p>simple <strong>count()</strong> method: one can easily get a count of assets or events that
+correspond to a particular signature.</p></li>
+<li><p>a <strong>wait_for_confirmed()</strong> method that waits for all assets or events that meet
+certain criteria to become confirmed.</p></li>
+<li><p>a <strong>read_by_signature()</strong> method that allows one to retrieve an asset or event with a
+unique signature without knowing the identity.</p></li>
+<li><p>predefined <strong>fixtures</strong> that allow specifying common attributes of assets/events</p></li>
+<li><p>comprehensive exception handling - clear specific exceptions.</p></li>
+<li><p>easily extensible - obeys the open-closed principle of SOLID where new endpoints
+can be implemented by <strong>extending</strong> the package as opposed to modifying it.</p></li>
+<li><p>fully unittested - 100% coverage.</p></li>
+<li><p>code style managed and enforced using <strong>pycodestyle</strong>, <strong>pylint</strong> and <strong>black</strong>.</p></li>
+</ul>
+</div></blockquote>
+<p>See the <strong>examples/</strong> directory for example code.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Jitsuin Archivist" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Create Event &mdash; Jitsuin Archivist 0.4.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Filter Events" href="filter_events.html" />
+    <link rel="prev" title="Filter Assets" href="filter_assets.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Create Event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_events.html">Filter Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_filter.html">Filter IAM subjects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="getting_started.html">Getting started</a> &raquo;</li>
+        
+      <li>Create Event</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="create-event">
+<span id="id1"></span><h1>Create Event<a class="headerlink" href="#create-event" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an event for an asset given url to Archivist and user Token.</span>
+
+<span class="sd">The module contains four functions: main, create_asset and create_event.</span>
+<span class="sd">Main function parses in a url to the Archivist and a token, which is a user authorization.</span>
+<span class="sd">The main function would initialize an archivist connection using the url and</span>
+<span class="sd">the token, called &quot;arch&quot;, then call create_assets and pass in &quot;arch&quot; and</span>
+<span class="sd">create_assets will build create_asset, which is a archivist connection function</span>
+<span class="sd">to create a new asset for the archivist through archivist connection. The main funciton then</span>
+<span class="sd">calls create_event and pass in &quot;arch&quot; and the created asset to create a new event for the asset.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+
+
+<span class="k">def</span> <span class="nf">create_event</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">asset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create an event for the passed-in asset.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        arch: archivist connection.</span>
+<span class="sd">        asset: an asset created using aconn</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        new_event: a new event for the asset.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># props can be defined for different behaviours and the attributes associated with</span>
+    <span class="c1"># different behaviours are also different.</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;Record&quot;</span><span class="p">,</span>
+        <span class="c1"># This event is used to record evidence.</span>
+        <span class="s2">&quot;behaviour&quot;</span><span class="p">:</span> <span class="s2">&quot;RecordEvidence&quot;</span><span class="p">,</span>
+        <span class="c1"># Optional Client-claimed time at which the maintenance was performed</span>
+        <span class="s2">&quot;timestamp_declared&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-11-27T14:44:19Z&quot;</span><span class="p">,</span>
+        <span class="c1"># Optional Client-claimed identity of person performing the operation</span>
+        <span class="s2">&quot;principal_declared&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;issuer&quot;</span><span class="p">:</span> <span class="s2">&quot;idp.synsation.io/1234&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;phil.b&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;phil.b@synsation.io&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># Required Details of the RecordEvidence request</span>
+        <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;Safety conformance approved for version 1.6.&quot;</span><span class="p">,</span>
+        <span class="c1"># Required The evidence to be retained in the asset history</span>
+        <span class="s2">&quot;arc_evidence&quot;</span><span class="p">:</span> <span class="s2">&quot;DVA Conformance Report attached&quot;</span><span class="p">,</span>
+        <span class="c1"># Example Client can add any additional information in further attributes,</span>
+        <span class="c1"># including free text or attachments</span>
+        <span class="s2">&quot;conformance_report&quot;</span><span class="p">:</span> <span class="s2">&quot;blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span> <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># alternatively if some work can be done whilst the event is confirmed then this call can be</span>
+    <span class="c1"># replaced by a two-step alternative:</span>
+
+    <span class="c1"># event = arch.events.create(asset[&quot;identity&quot;], props=props, attrs=attrs, confirm=False)</span>
+
+    <span class="c1"># ... do something else here</span>
+    <span class="c1"># and then wait for confirmation</span>
+
+    <span class="c1"># self.arch.events.wait_for_confirmation(event[&#39;identity&#39;])</span>
+
+
+<span class="k">def</span> <span class="nf">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create an asset using Archivist Connection.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        arch: archivist connection.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        newasset: a new asset created.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s display name in the user interface</span>
+        <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;display_description&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s description in the user interface</span>
+        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;desplay_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
+        <span class="c1"># allowing the creator of</span>
+        <span class="c1"># an asset to specify the asset</span>
+        <span class="c1"># type or class. Be careful when setting this:</span>
+        <span class="c1"># assets are grouped by type and</span>
+        <span class="c1"># sharing policies can be</span>
+        <span class="c1"># configured to share assets based on</span>
+        <span class="c1"># their arc_display_type.</span>
+        <span class="c1"># So a mistake here can result in asset data being</span>
+        <span class="c1"># under- or over-shared.</span>
+        <span class="s2">&quot;some_custom_attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span>  <span class="c1"># You can add any custom value as long as</span>
+        <span class="c1"># it does not start with arc_</span>
+    <span class="p">}</span>
+    <span class="c1"># The first argument is the attributes of the asset</span>
+    <span class="c1"># The second argument is wait for confirmation:</span>
+    <span class="c1">#   If @confirm@ is True then this function will not</span>
+    <span class="c1">#   return until the asset is confirmed on the blockchain and ready</span>
+    <span class="c1">#   to accept events (or an error occurs)</span>
+    <span class="c1">#   After an asset is submitted to the blockchain (submitted),</span>
+    <span class="c1">#   it will be in the &quot;Pending&quot; status.</span>
+    <span class="c1">#   Once it is added to the blockchain, the status will be changed to &quot;Confirmed&quot;</span>
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Main function of create event.</span>
+
+<span class="sd">    Parse in user input of url and auth token and use them to</span>
+<span class="sd">    create an example archivist connection and create an asset.</span>
+<span class="sd">    The main function then uses the asset to create an event for</span>
+<span class="sd">    the asset and fetch the event.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
+        <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># Initialize connection to Archivist</span>
+    <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+        <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+        <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># Create a new asset</span>
+    <span class="n">asset</span> <span class="o">=</span> <span class="n">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+    <span class="c1"># Create a new event</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">create_event</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
+    <span class="c1"># Fetch the event</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="filter_events.html" class="btn btn-neutral float-right" title="Filter Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="filter_assets.html" class="btn btn-neutral float-left" title="Filter Assets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
