@@ -141,8 +141,10 @@ class _AssetsClient:
 
         """
         LOGGER.debug("Create Asset %s", attrs)
-        data = self.__query(props, attrs)
-        data["behaviours"] = BEHAVIOURS
+        # default behaviours  are added first - any set in user-specified fixtures or
+        # in the method args will overide...
+        newprops = _deepmerge({"behaviours": BEHAVIOURS}, props)
+        data = self.__query(newprops, attrs)
         return self.create_from_data(data, confirm=confirm)
 
     def create_from_data(self, data: Dict, *, confirm: bool = False) -> Asset:
