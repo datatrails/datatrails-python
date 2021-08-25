@@ -76,9 +76,9 @@ PROPS = {
     "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
 }
 REQUEST = {
+    "behaviours": BEHAVIOURS,
     "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
     "attributes": ATTRS,
-    "behaviours": BEHAVIOURS,
 }
 REQUEST_DATA = json.dumps(REQUEST)
 
