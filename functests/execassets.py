@@ -2,7 +2,7 @@
 Test assets creation
 """
 
-from copy import deepcopy
+from copy import copy, deepcopy
 from os import environ
 from unittest import TestCase
 from uuid import uuid4
@@ -33,7 +33,9 @@ class TestAssetCreate(TestCase):
     def setUpClass(cls):
         with open(environ["TEST_AUTHTOKEN_FILENAME"]) as fd:
             auth = fd.read().strip()
-        cls.arch = Archivist(environ["TEST_ARCHIVIST"], auth=auth, verify=False)
+        cls.arch = Archivist(
+            environ["TEST_ARCHIVIST"], auth=auth, verify=False, max_time=300
+        )
         cls.attrs = deepcopy(ATTRS)
         cls.traffic_light = deepcopy(ATTRS)
         cls.traffic_light["arc_display_type"] = "Traffic light with violation camera"
@@ -80,7 +82,7 @@ class TestAssetCreate(TestCase):
         Test creation with fixtures
         """
         # creates tenant_storage endpoint
-        tenant_storage = deepcopy(self.arch)
+        tenant_storage = copy(self.arch)
         tenant_storage.fixtures = {
             "assets": {
                 "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
@@ -88,7 +90,7 @@ class TestAssetCreate(TestCase):
         }
 
         # create traffic lights endpoint from tenant_storage
-        traffic_lights = deepcopy(tenant_storage)
+        traffic_lights = copy(tenant_storage)
         traffic_lights.fixtures = {
             "assets": {
                 "attributes": {
@@ -105,4 +107,23 @@ class TestAssetCreate(TestCase):
             traffic_lights.assets.count(),
             1,
             msg="Incorrect number of traffic_lights",
+        )
+
+        # create fancy traffic lights endpoint from traffic lights
+        fancy_traffic_lights = copy(traffic_lights)
+        fancy_traffic_lights.fixtures = {
+            "assets": {
+                "attributes": {
+                    "arc_namespace1": f"functests {uuid4()}",
+                },
+            },
+        }
+        fancy_traffic_light = fancy_traffic_lights.assets.create(
+            attrs=self.attrs,
+            confirm=True,
+        )
+        self.assertEqual(
+            fancy_traffic_lights.assets.count(),
+            1,
+            msg="Incorrect number of fancy_traffic_lights",
         )

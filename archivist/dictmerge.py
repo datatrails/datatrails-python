@@ -12,7 +12,12 @@ def _deepmerge(dct1: dict, dct2: dict) -> dict:
     The settings from dct2 overwrite or add to dct1
     """
     if dct1 is None:
+        if dct2 is None:
+            return {}
         return deepcopy(dct2)
+
+    if dct2 is None:
+        return deepcopy(dct1)
 
     return unflatten({**flatten(dct1), **flatten(dct2)})
 
