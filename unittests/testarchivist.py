@@ -2,6 +2,7 @@
 Test archivist
 """
 
+from copy import copy
 from io import BytesIO
 from unittest import TestCase, mock
 
@@ -76,6 +77,33 @@ class TestArchivist(TestCase):
         )
         with self.assertRaises(AttributeError):
             e = arch.Illegal_endpoint
+
+    def test_archivist_copy(self):
+        """
+        Test archivist copy
+        """
+        arch = Archivist("url", auth="authauthauth", verify=False)
+        arch1 = copy(arch)
+        self.assertEqual(
+            arch.url,
+            arch1.url,
+            msg="Incorrect url",
+        )
+        self.assertEqual(
+            arch.headers,
+            arch1.headers,
+            msg="Incorrect auth headers",
+        )
+        self.assertEqual(
+            arch.verify,
+            arch1.verify,
+            msg="Incorrect verify",
+        )
+        self.assertEqual(
+            arch.fixtures,
+            arch1.fixtures,
+            msg="Incorrect fixtures",
+        )
 
     def test_archivist_no_verify(self):
         """
