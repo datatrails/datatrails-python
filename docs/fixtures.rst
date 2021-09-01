@@ -8,7 +8,7 @@ and locations.
 
 .. code-block:: python
     
-    from copy import deepcopy
+    from copy import copy
 
     from archivist.archivist import Archivist
     from archivist.errors import ArchivistError
@@ -30,7 +30,7 @@ and locations.
     )
     
     # lets define doors in our namespace that reside on the ledger...
-    doors = deepcopy(ledger)
+    doors = copy(ledger)
     doors.fixtures = {
         "assets": {
             "attributes": {

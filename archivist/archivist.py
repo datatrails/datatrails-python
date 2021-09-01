@@ -36,6 +36,7 @@ import json
 from os.path import isfile as os_path_isfile
 from typing import BinaryIO, Dict, List, Optional
 from collections import deque
+from copy import deepcopy
 from requests.models import Response
 
 import requests
@@ -113,7 +114,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self._headers = {"content-type": "application/json"}
         if auth is not None:
             self._headers["authorization"] = "Bearer " + auth.strip()
-
+        self._auth = auth
         self._url = url
         self._verify = verify
         if not cert and not auth:
@@ -187,6 +188,16 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
     def fixtures(self, fixtures: dict):
         """dict: Contains predefined attributes for each endpoint"""
         self._fixtures = _deepmerge(self._fixtures, fixtures)
+
+    def __copy__(self):
+        return Archivist(
+            self._url,
+            auth=self._auth,
+            cert=self._cert,
+            fixtures=deepcopy(self._fixtures),
+            verify=self._verify,
+            max_time=self._max_time,
+        )
 
     def __add_headers(self, headers: Optional[Dict]) -> Dict:
         if headers is not None:

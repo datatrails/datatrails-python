@@ -2,7 +2,7 @@
 Test archivist fixtures
 """
 
-from copy import deepcopy
+from copy import copy
 
 from unittest import TestCase
 
@@ -80,8 +80,8 @@ class TestFixtures(TestCase):
             msg="Incorrect fixtures",
         )
 
-        # prove that deepcopy recreates all underlying fixtures
-        newarch = deepcopy(arch)
+        # prove that copy recreates all underlying fixtures
+        newarch = copy(arch)
 
         newarch.fixtures = FIXTURE2
         self.assertEqual(
