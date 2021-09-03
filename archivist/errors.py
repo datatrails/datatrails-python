@@ -39,6 +39,10 @@ class ArchivistForbiddenError(ArchivistError):
     """User does not have permission (403)"""
 
 
+class ArchivistPaymentRequiredError(ArchivistError):
+    """A quota has been reached (402)"""
+
+
 class ArchivistNotFoundError(ArchivistError):
     """Entity does not exist (404)"""
 
@@ -101,6 +105,7 @@ def _parse_response(response):
         return {
             400: ArchivistBadRequestError(f"{text} ({status_code})"),
             401: ArchivistUnauthenticatedError(f"{text} ({status_code})"),
+            402: ArchivistPaymentRequiredError(f"{text} ({status_code})"),
             403: ArchivistForbiddenError(f"{text} ({status_code})"),
             404: ArchivistNotFoundError(
                 f"{__identity(response)} not found ({status_code})"
