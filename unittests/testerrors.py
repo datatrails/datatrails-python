@@ -21,6 +21,7 @@ from archivist.errors import (
     ArchivistForbiddenError,
     ArchivistNotFoundError,
     ArchivistNotImplementedError,
+    ArchivistPaymentRequiredError,
     ArchivistUnauthenticatedError,
     ArchivistUnavailableError,
 )
@@ -96,6 +97,28 @@ class TestErrors(TestCase):
         self.assertEqual(
             str(ex.exception),
             '{"error": "some error"} (401)',
+            msg="incorrect error",
+        )
+
+    def test_errors_402(self):
+        """
+        Test errors
+        """
+        response = MockResponse(
+            402, error="Entity QuotaReached", description="Current quota is 10"
+        )
+        error = _parse_response(response)
+
+        self.assertIsNotNone(
+            error,
+            msg="error should not be None",
+        )
+        with self.assertRaises(ArchivistPaymentRequiredError) as ex:
+            raise error
+
+        self.assertEqual(
+            str(ex.exception),
+            '{"error": "Entity QuotaReached", "description": "Current quota is 10"} (402)',
             msg="incorrect error",
         )
 
