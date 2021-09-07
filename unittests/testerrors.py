@@ -22,6 +22,7 @@ from archivist.errors import (
     ArchivistNotFoundError,
     ArchivistNotImplementedError,
     ArchivistPaymentRequiredError,
+    ArchivistTooManyRequestsError,
     ArchivistUnauthenticatedError,
     ArchivistUnavailableError,
 )
@@ -198,6 +199,35 @@ class TestErrors(TestCase):
         self.assertEqual(
             str(ex.exception),
             "entity/xxxxx not found (404)",
+            msg="incorrect error",
+        )
+
+    def test_errors_429(self):
+        """
+        Test errors
+        """
+
+        class Object:
+            pass
+
+        request = Object()
+        request.body = json.dumps({"identity": "entity/xxxxx"})
+        response = MockResponse(
+            429,
+            request=request,
+            error="some error",
+        )
+        error = _parse_response(response)
+        self.assertIsNotNone(
+            error,
+            msg="error should not be None",
+        )
+        with self.assertRaises(ArchivistTooManyRequestsError) as ex:
+            raise error
+
+        self.assertEqual(
+            str(ex.exception),
+            '{"error": "some error"} (429)',
             msg="incorrect error",
         )
 

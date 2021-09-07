@@ -56,6 +56,8 @@ from .errors import (
     ArchivistIllegalArgumentError,
     ArchivistNotFoundError,
 )
+from .headers import _headers_get
+from .retry429 import retry_429
 
 from .assets import _AssetsClient
 from .confirmer import MAX_TIME
@@ -207,6 +209,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return newheaders
 
+    @retry_429
     def get(
         self, subpath: str, identity: str, *, headers: Optional[Dict] = None
     ) -> Dict:
@@ -236,6 +239,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
+    @retry_429
     def get_file(
         self,
         subpath: str,
@@ -279,6 +283,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response
 
+    @retry_429
     def post(self, path: str, request: Dict, *, headers: Optional[Dict] = None) -> Dict:
         """POST method (REST)
 
@@ -308,6 +313,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
+    @retry_429
     def post_file(self, path: str, fd: BinaryIO, mtype: str) -> Dict:
         """POST method (REST) - upload binary
 
@@ -347,6 +353,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
+    @retry_429
     def delete(
         self, subpath: str, identity: str, *, headers: Optional[Dict] = None
     ) -> Dict:
@@ -378,6 +385,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
+    @retry_429
     def patch(
         self,
         subpath: str,
@@ -417,6 +425,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return response.json()
 
+    @retry_429
     def __list(self, path, args, *, headers=None) -> Response:
         if args:
             path = "?".join((path, args))
@@ -527,7 +536,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             headers=headers,
         )
 
-        return int(response.headers[HEADERS_TOTAL_COUNT])
+        return int(_headers_get(response.headers, HEADERS_TOTAL_COUNT))
 
     def list(
         self,

@@ -3,17 +3,17 @@ Test archivist
 """
 
 from copy import copy
-from io import BytesIO
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist.constants import ROOT, HEADERS_TOTAL_COUNT
+from archivist.constants import ROOT, HEADERS_TOTAL_COUNT, HEADERS_RETRY_AFTER
 from archivist.errors import (
     ArchivistBadFieldError,
     ArchivistBadRequestError,
     ArchivistDuplicateError,
     ArchivistIllegalArgumentError,
     ArchivistNotFoundError,
+    ArchivistTooManyRequestsError,
 )
 
 from .mock_response import MockResponse
@@ -161,351 +161,6 @@ class TestArchivistMethods(TestCase):
         self.arch = Archivist("url", auth="authauthauth")
 
 
-class TestArchivistPost(TestArchivistMethods):
-    """
-    Test Archivist POST method
-    """
-
-    def test_post(self):
-        """
-        Test default post method
-        """
-        request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
-            mock_post.return_value = MockResponse(200, request=request)
-            resp = self.arch.post("path/path", request)
-            self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    (f"url/{ROOT}/path/path",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
-                        "cert": None,
-                    },
-                ),
-                msg="POST method called incorrectly",
-            )
-
-    def test_post_with_error(self):
-        """
-        Test post method with error
-        """
-        request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
-            mock_post.return_value = MockResponse(400, request=request, field1="value1")
-            with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.post("path/path", request)
-
-    def test_post_with_headers(self):
-        """
-        Test default post method
-        """
-        request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
-            mock_post.return_value = MockResponse(200, request=request)
-            resp = self.arch.post(
-                "path/path",
-                request,
-                headers={"headerfield1": "headervalue1"},
-            )
-            self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    (f"url/{ROOT}/path/path",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                            "headerfield1": "headervalue1",
-                        },
-                        "verify": True,
-                        "cert": None,
-                    },
-                ),
-                msg="POST method called incorrectly",
-            )
-
-    def test_post_file(self):
-        """
-        Test default post_file method
-        """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
-            mock_post.return_value = MockResponse(200)
-            resp = self.arch.post_file(
-                "path/path",
-                BytesIO(b"lotsofbytes"),
-                "image/jpg",
-            )
-            args, kwargs = mock_post.call_args
-            self.assertEqual(
-                len(args),
-                1,
-                msg="Incorrect number of arguments",
-            )
-            self.assertEqual(
-                args[0],
-                f"url/{ROOT}/path/path",
-                msg="Incorrect first argument",
-            )
-            self.assertEqual(
-                len(kwargs),
-                4,
-                msg="Incorrect number of keyword arguments",
-            )
-            headers = kwargs.get("headers")
-            self.assertNotEqual(
-                headers,
-                None,
-                msg="Header does not exist",
-            )
-            self.assertTrue(
-                headers["content-type"].startswith("multipart/form-data"),
-                msg="Incorrect content-type",
-            )
-            data = kwargs.get("data")
-            self.assertIsNotNone(
-                data,
-                msg="Incorrect data",
-            )
-            fields = data.fields
-            self.assertIsNotNone(
-                fields,
-                msg="Incorrect fields",
-            )
-            myfile = fields.get("file")
-            self.assertIsNotNone(
-                myfile,
-                msg="Incorrect file key",
-            )
-            self.assertEqual(
-                myfile[0],
-                "filename",
-                msg="Incorrect filename",
-            )
-            self.assertEqual(
-                myfile[2],
-                "image/jpg",
-                msg="Incorrect mimetype",
-            )
-
-    def test_post_file_with_error(self):
-        """
-        Test post method with error
-        """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
-            mock_post.return_value = MockResponse(400)
-            with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.post_file(
-                    "path/path",
-                    BytesIO(b"lotsofbytes"),
-                    "image/jpg",
-                )
-
-
-class TestArchivistGet(TestArchivistMethods):
-    """
-    Test Archivist Get method
-    """
-
-    def test_get(self):
-        """
-        Test default get method
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(200)
-            resp = self.arch.get("path/path", "entity/xxxxxxxx")
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
-                    {
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
-                        "cert": None,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-
-    def test_ring_buffer(self):
-        """
-        Test That the ring buffer for response objects works as expected
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(200)
-            resp = self.arch.get("path/path", "entity/xxxxxxxx")
-            last_response = self.arch.last_response()
-            self.assertEqual(last_response, [mock_get.return_value])
-
-    def test_get_with_error(self):
-        """
-        Test get method with error
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(404, identity="entity/xxxxxxxx")
-            with self.assertRaises(ArchivistNotFoundError):
-                resp = self.arch.get("path/path", "entity/xxxxxxxx")
-
-    def test_get_file(self):
-        """
-        Test default get method
-        """
-
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-
-            def iter_content():
-                i = 0
-
-                def filedata(chunk_size=4096):  # pylint: disable=unused-argument
-                    nonlocal i
-                    while i < 4:
-                        i += 1
-
-                        if i == 2:
-                            yield None
-
-                        yield b"chunkofbytes"
-
-                return filedata
-
-            mock_get.return_value = MockResponse(
-                200,
-                identity="entity/xxxxxxxx",
-                iter_content=iter_content(),
-            )
-            with BytesIO() as fd:
-                resp = self.arch.get_file("path/path", "entity/xxxxxxxx", fd)
-                self.assertEqual(
-                    tuple(mock_get.call_args),
-                    (
-                        (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
-                        {
-                            "headers": {
-                                "content-type": "application/json",
-                                "authorization": "Bearer authauthauth",
-                            },
-                            "verify": True,
-                            "cert": None,
-                            "stream": True,
-                        },
-                    ),
-                    msg="GET method called incorrectly",
-                )
-
-    def test_get_file_with_error(self):
-        """
-        Test get method with error
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(404, identity="entity/xxxxxxxx")
-            with self.assertRaises(ArchivistNotFoundError):
-                with BytesIO() as fd:
-                    resp = self.arch.get_file("path/path", "entity/xxxxxxxx", fd)
-
-    def test_get_with_headers(self):
-        """
-        Test default get method
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(200)
-            resp = self.arch.get(
-                "path/path",
-                "id/xxxxxxxx",
-                headers={"headerfield1": "headervalue1"},
-            )
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    (f"url/{ROOT}/path/path/id/xxxxxxxx",),
-                    {
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                            "headerfield1": "headervalue1",
-                        },
-                        "verify": True,
-                        "cert": None,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-
-
-class TestArchivistDelete(TestArchivistMethods):
-    """
-    Test Archivist Delete method
-    """
-
-    def test_delete(self):
-        """
-        Test default delete method
-        """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
-            mock_delete.return_value = MockResponse(200)
-            resp = self.arch.delete("path/path", "entity/xxxxxxxx")
-            self.assertEqual(
-                tuple(mock_delete.call_args),
-                (
-                    (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
-                    {
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
-                        "cert": None,
-                    },
-                ),
-                msg="DELETE method called incorrectly",
-            )
-
-    def test_delete_with_error(self):
-        """
-        Test delete method with error
-        """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
-            mock_delete.return_value = MockResponse(404, identity="entity/xxxxxxxx")
-            with self.assertRaises(ArchivistNotFoundError):
-                resp = self.arch.delete("path/path", "entity/xxxxxxxx")
-
-    def test_delete_with_headers(self):
-        """
-        Test default delete method
-        """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
-            mock_delete.return_value = MockResponse(200)
-            resp = self.arch.delete(
-                "path/path",
-                "id/xxxxxxxx",
-                headers={"headerfield1": "headervalue1"},
-            )
-            self.assertEqual(
-                tuple(mock_delete.call_args),
-                (
-                    (f"url/{ROOT}/path/path/id/xxxxxxxx",),
-                    {
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                            "headerfield1": "headervalue1",
-                        },
-                        "verify": True,
-                        "cert": None,
-                    },
-                ),
-                msg="DELETE method called incorrectly",
-            )
-
-
 class TestArchivistPatch(TestArchivistMethods):
     """
     Test Archivist PATCH method
@@ -579,6 +234,85 @@ class TestArchivistPatch(TestArchivistMethods):
                 msg="PATCH method called incorrectly",
             )
 
+    def test_patch_with_429(self):
+        """
+        Test patch method with error
+        """
+        request = {"field1": "value1"}
+        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+            mock_patch.return_value = MockResponse(429, request=request)
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                resp = self.arch.patch(
+                    "path/path",
+                    "id/xxxxxxxx",
+                    request,
+                )
+
+    def test_patch_with_429_retry_and_fail(self):
+        """
+        Test patch method with 429 retry and fail
+        """
+        request = {"field1": "value1"}
+        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+            mock_patch.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
+                MockResponse(429, request=request),
+            )
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                resp = self.arch.patch(
+                    "path/path",
+                    "id/xxxxxxxx",
+                    request,
+                )
+
+    def test_patch_with_429_retry_and_retries_fail(self):
+        """
+        Test patch method with 429 retry and retries_fail
+        """
+        request = {"field1": "value1"}
+        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+            mock_patch.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
+            )
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                resp = self.arch.patch(
+                    "path/path",
+                    "id/xxxxxxxx",
+                    request,
+                )
+
+    def test_patch_with_429_retry_and_success(self):
+        """
+        Test patch method with 429 retry and success
+        """
+        request = {"field1": "value1"}
+        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+            mock_patch.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
+                MockResponse(200, request=request),
+            )
+            resp = self.arch.patch("path/path", "entity/xxxxxxxx", request)
+            self.assertEqual(
+                tuple(mock_patch.call_args),
+                (
+                    (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
+                    {
+                        "data": '{"field1": "value1"}',
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "verify": True,
+                        "cert": None,
+                    },
+                ),
+                msg="PATCH method called incorrectly",
+            )
+
 
 class TestArchivistCount(TestArchivistMethods):
     """
@@ -592,7 +326,7 @@ class TestArchivistCount(TestArchivistMethods):
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
-                headers={HEADERS_TOTAL_COUNT: 1},
+                headers={HEADERS_TOTAL_COUNT.lower(): 1},
                 things=[
                     {
                         "field1": "value1",
@@ -621,6 +355,66 @@ class TestArchivistCount(TestArchivistMethods):
             )
             with self.assertRaises(ArchivistBadRequestError):
                 count = self.arch.count("path/path")
+
+    def test_count_with_429(self):
+        """
+        Test count method with error
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(429)
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                count = self.arch.count("path/path")
+
+    def test_count_with_429_retry_and_fail(self):
+        """
+        Test count method with 429 retry and fail
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429),
+            )
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                count = self.arch.count("path/path")
+
+    def test_count_with_429_retry_and_retries_fail(self):
+        """
+        Test count method with 429 retry and retries_fail
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+            )
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                count = self.arch.count("path/path")
+
+    def test_count_with_429_retry_and_success(self):
+        """
+        Test count method with 429 retry and success
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 1},
+                    things=[
+                        {
+                            "field1": "value1",
+                        },
+                    ],
+                ),
+            )
+            count = self.arch.count("path/path")
+            self.assertEqual(
+                count,
+                1,
+                msg="incorrect count",
+            )
 
 
 class TestArchivistList(TestArchivistMethods):
@@ -900,6 +694,82 @@ class TestArchivistList(TestArchivistMethods):
                     r["field1"],
                     values[i],
                     msg="Incorrect response body value",
+                )
+
+    def test_list_with_429(self):
+        """
+        Test list method with error
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(429)
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                things = list(self.arch.list("path/path", "things"))
+
+    def test_list_with_429_retry_and_fail(self):
+        """
+        Test list method with 429 retry and fail
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429),
+            )
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                things = list(self.arch.list("path/path", "things"))
+
+    def test_list_with_429_retry_and_retries_fail(self):
+        """
+        Test list method with 429 retry and retries_fail
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+            )
+            with self.assertRaises(ArchivistTooManyRequestsError):
+                things = list(self.arch.list("path/path", "things"))
+
+    def test_list_with_429_retry_and_success(self):
+        """
+        Test list method with 429 retry and success
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = (
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 1},
+                    things=[
+                        {
+                            "field1": "value1",
+                        },
+                    ],
+                ),
+            )
+            things = list(self.arch.list("path/path", "things"))
+            self.assertEqual(
+                len(things),
+                1,
+                msg="incorrect number of things",
+            )
+            for a in mock_get.call_args_list:
+                self.assertEqual(
+                    tuple(a),
+                    (
+                        (f"url/{ROOT}/path/path",),
+                        {
+                            "headers": {
+                                "content-type": "application/json",
+                                "authorization": "Bearer authauthauth",
+                            },
+                            "verify": True,
+                            "cert": None,
+                        },
+                    ),
+                    msg="GET method called incorrectly",
                 )
 
 
