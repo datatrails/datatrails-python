@@ -6,6 +6,9 @@
 
 import json
 
+from .constants import HEADERS_RETRY_AFTER
+from .headers import _headers_get
+
 
 class ArchivistError(Exception):
     """Base exception for archivist package"""
@@ -35,16 +38,24 @@ class ArchivistUnauthenticatedError(ArchivistError):
     """user is unknown (401)"""
 
 
-class ArchivistForbiddenError(ArchivistError):
-    """User does not have permission (403)"""
-
-
 class ArchivistPaymentRequiredError(ArchivistError):
     """A quota has been reached (402)"""
 
 
+class ArchivistForbiddenError(ArchivistError):
+    """User does not have permission (403)"""
+
+
 class ArchivistNotFoundError(ArchivistError):
     """Entity does not exist (404)"""
+
+
+class ArchivistTooManyRequestsError(ArchivistError):
+    """Too many reqests in too short a time (429)"""
+
+    def __init__(self, retry: str, *args):
+        self.retry = float(retry) if retry is not None else 0
+        super().__init__(*args)
 
 
 class Archivist4xxError(ArchivistError):
@@ -101,21 +112,30 @@ def _parse_response(response):
 
     text = response.text or ""
 
+    if status_code == 429:
+        return ArchivistTooManyRequestsError(
+            _headers_get(response.headers, HEADERS_RETRY_AFTER),
+            f"{text} ({status_code})",
+        )
+
     if 400 <= status_code < 500:
-        return {
-            400: ArchivistBadRequestError(f"{text} ({status_code})"),
-            401: ArchivistUnauthenticatedError(f"{text} ({status_code})"),
-            402: ArchivistPaymentRequiredError(f"{text} ({status_code})"),
-            403: ArchivistForbiddenError(f"{text} ({status_code})"),
-            404: ArchivistNotFoundError(
-                f"{__identity(response)} not found ({status_code})"
+        err, arg = {
+            400: (ArchivistBadRequestError, f"{text} ({status_code})"),
+            401: (ArchivistUnauthenticatedError, f"{text} ({status_code})"),
+            402: (ArchivistPaymentRequiredError, f"{text} ({status_code})"),
+            403: (ArchivistForbiddenError, f"{text} ({status_code})"),
+            404: (
+                ArchivistNotFoundError,
+                f"{__identity(response)} not found ({status_code})",
             ),
-        }.get(status_code, Archivist4xxError(f"{text} ({status_code})"))
+        }.get(status_code, (Archivist4xxError, f"{text} ({status_code})"))
+        return err(arg)
 
     if 500 <= status_code < 600:
-        return {
-            501: ArchivistNotImplementedError(f"{text} ({status_code})"),
-            503: ArchivistUnavailableError(f"{text} ({status_code})"),
-        }.get(status_code, Archivist5xxError(f"{text} ({status_code})"))
+        err, arg = {
+            501: (ArchivistNotImplementedError, f"{text} ({status_code})"),
+            503: (ArchivistUnavailableError, f"{text} ({status_code})"),
+        }.get(status_code, (Archivist5xxError, f"{text} ({status_code})"))
+        return err(arg)
 
     return ArchivistError(f"{text} ({status_code})")

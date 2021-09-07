@@ -68,9 +68,7 @@ def _wait_for_confirmation(self, identity):
         return entity
 
     return None  # this line is unreachable to function that use it
-    # But will mess up any linters that use type hints
-    # Remember to ignore the return type if you use this
-    # Function
+    # But will mess up any linters that use type hints.
 
 
 def __on_giveup_confirmed(details):

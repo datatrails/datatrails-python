@@ -6,8 +6,10 @@
 ROOT = "archivist"
 SEP = "/"
 
-HEADERS_REQUEST_TOTAL_COUNT = "x-request-total-count"
-HEADERS_TOTAL_COUNT = "x-total-count"
+# define in MIME canonical form
+HEADERS_REQUEST_TOTAL_COUNT = "X-Request-Total-Count"
+HEADERS_TOTAL_COUNT = "X-Total-Count"
+HEADERS_RETRY_AFTER = "Archivist-Rate-Limit-Reset"
 
 CONFIRMATION_STATUS = "confirmation_status"
 CONFIRMATION_PENDING = "PENDING"
