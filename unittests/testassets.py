@@ -16,7 +16,7 @@ from archivist.constants import (
     ROOT,
 )
 from archivist.errors import ArchivistNotFoundError, ArchivistUnconfirmedError
-from archivist.storage_integrity import StorageIntegrity
+from archivist.proof_mechanism import ProofMechanism
 
 from .mock_response import MockResponse
 
@@ -73,11 +73,11 @@ IDENTITY = f"{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 SUBPATH = f"{ASSETS_SUBPATH}/{ASSETS_LABEL}"
 
 PROPS = {
-    "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
+    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
 }
 REQUEST = {
     "behaviours": BEHAVIOURS,
-    "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
+    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": ATTRS,
 }
 REQUEST_DATA = json.dumps(REQUEST)

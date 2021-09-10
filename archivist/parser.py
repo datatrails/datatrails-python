@@ -12,7 +12,7 @@ from sys import exit as sys_exit
 
 from .archivist import Archivist
 from .logger import set_logger
-from .storage_integrity import StorageIntegrity
+from .proof_mechanism import ProofMechanism
 
 LOGGER = logging.getLogger(__name__)
 
@@ -70,13 +70,13 @@ def common_parser(description):
         help="location of Archivist service",
     )
     parser.add_argument(
-        "-i",
-        "--storage-integrity",
-        type=StorageIntegrity,
+        "-p",
+        "--proof-mechanism",
+        type=ProofMechanism,
         action=EnumAction,
-        dest="storage_integrity",
-        default=StorageIntegrity.TENANT_STORAGE,
-        help="Assets will be created on the ledger or on tenant storage",
+        dest="proof_mechanism",
+        default=ProofMechanism.SIMPLE_HASH,
+        help="mechanism for proving the evidence for events on the Asset",
     )
 
     security = parser.add_mutually_exclusive_group(required=True)
@@ -114,7 +114,7 @@ def endpoint(args):
     LOGGER.info("Initialising connection to Jitsuin Archivist...")
     fixtures = {
         "assets": {
-            "storage_integrity": args.storage_integrity.name,
+            "proof_mechanism": args.proof_mechanism.name,
         },
     }
 

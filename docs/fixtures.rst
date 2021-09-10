@@ -12,7 +12,7 @@ and locations.
 
     from archivist.archivist import Archivist
     from archivist.errors import ArchivistError
-    from archivist.storage_integrity import StorageIntegrity
+    from archivist.proof_mechanism import ProofMechanism
     
     # Oauth2 token that grants access
     with open(".auth_token", mode='r') as tokenfile:
@@ -24,7 +24,7 @@ and locations.
         auth=authtoken,
         fixtures = {
             "assets": {
-                "storage_integrity": StorageIntegrity.LEDGER.name,
+                "proof_mechanism": ProofMechanism.KHIPU.name,
             }
         },
     )

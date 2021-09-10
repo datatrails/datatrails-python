@@ -9,6 +9,7 @@ Jitsuin Archivist
 .. include:: ../README.rst
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Contents:
 
@@ -25,7 +26,7 @@ Jitsuin Archivist
 
    timestamp
    errors
-   storage_integrity
+   proof_mechanism
 
 Indices and tables
 ==================
