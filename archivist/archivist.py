@@ -11,7 +11,7 @@
    IAM subjects and IAM access policies.
 
    Instantiation of this class encapsulates the URL and authentication
-   parameters (the max_time paramater is optional):
+   parameters (the max_time parameter is optional):
 
    .. code-block:: python
 

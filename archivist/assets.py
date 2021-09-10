@@ -132,7 +132,7 @@ class _AssetsClient:
         Creates asset with defined properties and attributes.
 
         Args:
-            props (dict): Properties - usually only the storage_integrity setting
+            props (dict): Properties - usually only the proof_mechanism setting
             attrs (dict): attributes of created asset.
             confirm (bool): if True wait for asset to be confirmed.
 
