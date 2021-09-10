@@ -3,12 +3,13 @@ Test assets creation
 """
 
 from copy import copy, deepcopy
+import json
 from os import environ
 from unittest import TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
-from archivist.storage_integrity import StorageIntegrity
+from archivist.proof_mechanism import ProofMechanism
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -46,51 +47,51 @@ class TestAssetCreate(TestCase):
         cls.attrs = None
         cls.traffic_light = None
 
-    def test_asset_create_tenant_storage(self):
+    def test_asset_create_simple_hash(self):
         """
-        Test asset creation on tenant storage
+        Test asset creation uses simple hash proof mechanism
         """
         asset = self.arch.assets.create(
             attrs=self.traffic_light,
             confirm=True,
         )
         self.assertEqual(
-            asset["storage_integrity"],
-            StorageIntegrity.TENANT_STORAGE.name,
-            msg="Incorrect asset storage integrity",
+            asset["proof_mechanism"],
+            ProofMechanism.SIMPLE_HASH.name,
+            msg="Incorrect asset proof mechanism",
         )
 
-    def test_asset_create_ledger(self):
+    def test_asset_create_khipu(self):
         """
-        Test asset creation on ledger
+        Test asset creation using khipu proof mechanism
         """
         asset = self.arch.assets.create(
             props={
-                "storage_integrity": StorageIntegrity.LEDGER.name,
+                "proof_mechanism": ProofMechanism.KHIPU.name,
             },
             attrs=self.traffic_light,
             confirm=True,
         )
         self.assertEqual(
-            asset["storage_integrity"],
-            StorageIntegrity.LEDGER.name,
-            msg="Incorrect asset storage integrity",
+            asset["proof_mechanism"],
+            ProofMechanism.KHIPU.name,
+            msg="Incorrect asset proof mechanism",
         )
 
     def test_asset_create_with_fixtures(self):
         """
         Test creation with fixtures
         """
-        # creates tenant_storage endpoint
-        tenant_storage = copy(self.arch)
-        tenant_storage.fixtures = {
+        # creates simple_hash endpoint
+        simple_hash = copy(self.arch)
+        simple_hash.fixtures = {
             "assets": {
-                "storage_integrity": StorageIntegrity.TENANT_STORAGE.name,
+                "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             },
         }
 
-        # create traffic lights endpoint from tenant_storage
-        traffic_lights = copy(tenant_storage)
+        # create traffic lights endpoint from simple_hash
+        traffic_lights = copy(simple_hash)
         traffic_lights.fixtures = {
             "assets": {
                 "attributes": {
@@ -127,3 +128,42 @@ class TestAssetCreate(TestCase):
             1,
             msg="Incorrect number of fancy_traffic_lights",
         )
+
+    def test_asset_create_event(self):
+        """
+        Test list
+        """
+        # get identity of first asset
+        for asset in self.arch.assets.list():
+            print("asset", json.dumps(asset, sort_keys=True, indent=4))
+            identity = asset["identity"]
+            break
+
+        # different behaviours are also different.
+        props = {
+            "operation": "Record",
+            # This event is used to record evidence.
+            "behaviour": "RecordEvidence",
+            # Optional Client-claimed time at which the maintenance was performed
+            "timestamp_declared": "2019-11-27T14:44:19Z",
+            # Optional Client-claimed identity of person performing the operation
+            "principal_declared": {
+                "issuer": "idp.synsation.io/1234",
+                "subject": "phil.b",
+                "email": "phil.b@synsation.io",
+            },
+        }
+        attrs = {
+            # Required Details of the RecordEvidence request
+            "arc_description": "Safety conformance approved for version 1.6.",
+            # Required The evidence to be retained in the asset history
+            "arc_evidence": "DVA Conformance Report attached",
+            # Example Client can add any additional information in further attributes,
+            # including free text or attachments
+            "conformance_report": "blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273",
+        }
+
+        event = self.arch.events.create(
+            identity, props=props, attrs=attrs, confirm=True
+        )
+        print("event", json.dumps(event, sort_keys=True, indent=4))

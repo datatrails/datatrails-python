@@ -7,7 +7,7 @@ the token, called "arch", then call arch.assets.create() and the asset will be c
 """
 
 from archivist.archivist import Archivist
-from archivist.storage_integrity import StorageIntegrity
+from archivist.proof_mechanism import ProofMechanism
 
 
 def create_asset(arch):
@@ -37,12 +37,12 @@ def create_asset(arch):
         # it does not start with arc_
     }
     #
-    # store asset on the DLT or not. If DLT is not enabled for the user an error will occur if
-    # StorageIntegrity.LEDGER is specified. If unspecified then TENANT_STORAGE is used
-    # i.e. not stored on the DLT...
-    # storage_integrity = StorageIntegrity.TENANT_STORAGE.name
+    # Select the mechanism used to prove evidence for the asset.  If the selected proof
+    # mechanism is not enabled for your tenant then an error will occur.
+    # If unspecified then SIMPLE_HASH is used.
+    # proof_mechanism = ProofMechanism.KHIPU.name
     props = {
-        "storage_integrity": StorageIntegrity.LEDGER.name,
+        "proof_mechanism": ProofMechanism.KHIPU.name,
     }
 
     # The first argument are the properties of the asset
@@ -76,8 +76,8 @@ def main():
 
     # Initialize connection to Archivist. max_time is the time to wait for confirmation
     # of an asset or event creation - the default is 1200 seconds but one can optionally
-    # specify a differnet value here particularly when creating assets on TENANT_STORAGE
-    # (rather than LEDGER) as confirmation times are much shorter in this case.
+    # specify a different value here particularly when creating assets on SIMPLE_HASH
+    # (rather than KHIPU) as confirmation times are much shorter in this case.
     arch = Archivist(
         "https://app.rkvst.io",
         auth=authtoken,

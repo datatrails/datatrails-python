@@ -26,7 +26,7 @@ One can then use the examples code to create assets (see examples directory):
     
     from archivist.archivist import Archivist
     from archivist.errors import ArchivistError
-    from archivist.storage_integrity import StorageIntegrity
+    from archivist.proof_mechanism import ProofMechanism
     
     # Oauth2 token that grants access
     with open(".auth_token", mode='r') as tokenfile:
@@ -57,11 +57,11 @@ One can then use the examples code to create assets (see examples directory):
     }
     #
     # store asset on the DLT or not. If DLT is not enabled for the user an error will occur if
-    # StorageIntegrity.LEDGER is specified. If unspecified then TENANT_STORAGE is used
+    # ProofMechanism.KHIPU is specified. If unspecified then SIMPLE_HASH is used
     # i.e. not stored on the DLT...
-    # storage_integrity = StorageIntegrity.TENANT_STORAGE
+    # proof_mechanism = ProofMechanism.KHIPU
     props = {
-        "storage_integrity": StorageIntegrity.LEDGER.name,
+        "proof_mechanism": ProofMechanism.KHIPU.name,
     }
 
     # The first argument is the properties of the asset
