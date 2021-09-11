@@ -63,7 +63,7 @@ class Archivist4xxError(ArchivistError):
 
 
 class ArchivistNotImplementedError(ArchivistError):
-    """Illegal REST verb (501)"""
+    """Illegal REST verb (501) or option"""
 
 
 class ArchivistUnavailableError(ArchivistError):
