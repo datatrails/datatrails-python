@@ -13,6 +13,7 @@ from archivist.errors import (
     ArchivistDuplicateError,
     ArchivistIllegalArgumentError,
     ArchivistNotFoundError,
+    ArchivistNotImplementedError,
     ArchivistTooManyRequestsError,
 )
 
@@ -129,27 +130,32 @@ class TestArchivist(TestCase):
         with self.assertRaises(ArchivistIllegalArgumentError):
             arch = Archivist("url", auth="authauthauth", cert="/path/to/file")
 
-    @mock.patch("archivist.archivist.os_path_isfile")
-    def test_archivist_with_nonexistent_cert(self, mock_isfile):
+    # @mock.patch("archivist.archivist.os_path_isfile")
+    # def test_archivist_with_nonexistent_cert(self, mock_isfile):
+    def test_archivist_with_nonexistent_cert(self):
         """
         Test archivist creation with nonexistent cert
         """
-        mock_isfile.return_value = False
-        with self.assertRaises(ArchivistNotFoundError):
+        # mock_isfile.return_value = False
+        # with self.assertRaises(ArchivistNotFoundError):
+        with self.assertRaises(ArchivistNotImplementedError):
             arch = Archivist("url", cert="/path/to/file")
 
-    @mock.patch("archivist.archivist.os_path_isfile")
-    def test_archivist_with_existent_cert(self, mock_isfile):
+    # @mock.patch("archivist.archivist.os_path_isfile")
+    # def test_archivist_with_existent_cert(self, mock_isfile):
+    def test_archivist_with_existent_cert(self):
         """
-        Test archivist creation with cert
+        Test archivist creation with cert - not currently implemented
         """
-        mock_isfile.return_value = True
-        arch = Archivist("url", cert="/path/to/file")
-        self.assertEqual(
-            arch.cert,
-            "/path/to/file",
-            msg="verify must be False",
-        )
+        with self.assertRaises(ArchivistNotImplementedError):
+            arch = Archivist("url", cert="/path/to/file")
+        # mock_isfile.return_value = True
+        # arch = Archivist("url", cert="/path/to/file")
+        # self.assertEqual(
+        #    arch.cert,
+        #    "/path/to/file",
+        #    msg="verify must be False",
+        # )
 
 
 class TestArchivistMethods(TestCase):

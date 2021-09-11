@@ -33,7 +33,8 @@
 import logging
 
 import json
-from os.path import isfile as os_path_isfile
+
+# from os.path import isfile as os_path_isfile
 from typing import BinaryIO, Dict, List, Optional
 from collections import deque
 from copy import deepcopy
@@ -55,6 +56,7 @@ from .errors import (
     ArchivistDuplicateError,
     ArchivistIllegalArgumentError,
     ArchivistNotFoundError,
+    ArchivistNotImplementedError,
 )
 from .headers import _headers_get
 from .retry429 import retry_429
@@ -89,7 +91,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
     Args:
         url (str): URL of archivist endpoint
         auth: string representing JWT token.
-        cert: filepath containing both private key and certificate
+        cert: filepath containing both private key and certificate (not implemented)
         verify: if True the certificate is verified
         max_time (int): maximum time in seconds to wait for confirmation
 
@@ -128,8 +130,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             )
 
         if cert:
-            if not os_path_isfile(cert):
-                raise ArchivistNotFoundError(f"Cert file {cert} does not exist")
+            raise ArchivistNotImplementedError("Cert option is not implemented")
+            # if not os_path_isfile(cert):
+            #    raise ArchivistNotFoundError(f"Cert file {cert} does not exist")
 
         self._cert = cert
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
