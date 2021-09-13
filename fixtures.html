@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Fixtures &mdash; Jitsuin Archivist 0.4.1b1 documentation</title>
+  <title>Fixtures &mdash; Jitsuin Archivist 0.5.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.4.1b1
+                0.5.0
               </div>
             
           
@@ -174,7 +174,7 @@
 <span id="id1"></span><h1>Fixtures<a class="headerlink" href="#fixtures" title="Permalink to this headline">¶</a></h1>
 <p>One can specify common attributes when creating/counting/querying assets, events
 and locations.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.errors</span> <span class="kn">import</span> <span class="n">ArchivistError</span>
@@ -196,7 +196,7 @@ and locations.</p>
 <span class="p">)</span>
 
 <span class="c1"># lets define doors in our namespace that reside on the ledger...</span>
-<span class="n">doors</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">ledger</span><span class="p">)</span>
+<span class="n">doors</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">ledger</span><span class="p">)</span>
 <span class="n">doors</span><span class="o">.</span><span class="n">fixtures</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;assets&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>

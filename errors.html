@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Errors &mdash; Jitsuin Archivist 0.4.1b1 documentation</title>
+  <title>Errors &mdash; Jitsuin Archivist 0.5.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.4.1b1
+                0.5.0
               </div>
             
           
@@ -231,7 +231,19 @@
 <dl class="py exception">
 <dt id="archivist.errors.ArchivistNotImplementedError">
 <em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistNotImplementedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistNotImplementedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistNotImplementedError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Illegal REST verb (501)</p>
+<dd><p>Illegal REST verb (501) or option</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistPaymentRequiredError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistPaymentRequiredError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistPaymentRequiredError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistPaymentRequiredError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A quota has been reached (402)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistTooManyRequestsError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistTooManyRequestsError</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retry</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/errors.html#ArchivistTooManyRequestsError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistTooManyRequestsError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Too many reqests in too short a time (429)</p>
 </dd></dl>
 
 <dl class="py exception">

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.errors &mdash; Jitsuin Archivist 0.4.1b1 documentation</title>
+  <title>archivist.errors &mdash; Jitsuin Archivist 0.5.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.4.1b1
+                0.5.0
               </div>
             
           
@@ -177,6 +177,9 @@
 
 <span class="kn">import</span> <span class="nn">json</span>
 
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">HEADERS_RETRY_AFTER</span>
+<span class="kn">from</span> <span class="nn">.headers</span> <span class="kn">import</span> <span class="n">_headers_get</span>
+
 
 <div class="viewcode-block" id="ArchivistError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base exception for archivist package&quot;&quot;&quot;</span></div>
@@ -206,6 +209,10 @@
     <span class="sd">&quot;&quot;&quot;user is unknown (401)&quot;&quot;&quot;</span></div>
 
 
+<div class="viewcode-block" id="ArchivistPaymentRequiredError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistPaymentRequiredError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistPaymentRequiredError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A quota has been reached (402)&quot;&quot;&quot;</span></div>
+
+
 <div class="viewcode-block" id="ArchivistForbiddenError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistForbiddenError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistForbiddenError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;User does not have permission (403)&quot;&quot;&quot;</span></div>
 
@@ -214,12 +221,20 @@
     <span class="sd">&quot;&quot;&quot;Entity does not exist (404)&quot;&quot;&quot;</span></div>
 
 
+<div class="viewcode-block" id="ArchivistTooManyRequestsError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistTooManyRequestsError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistTooManyRequestsError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Too many reqests in too short a time (429)&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">retry</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">retry</span><span class="p">)</span> <span class="k">if</span> <span class="n">retry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Archivist4xxError"><a class="viewcode-back" href="../../errors.html#archivist.errors.Archivist4xxError">[docs]</a><span class="k">class</span> <span class="nc">Archivist4xxError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Any other 4xx error&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistNotImplementedError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistNotImplementedError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistNotImplementedError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Illegal REST verb (501)&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;Illegal REST verb (501) or option&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistUnavailableError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistUnavailableError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistUnavailableError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
@@ -268,21 +283,31 @@
 
     <span class="n">text</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
 
+    <span class="k">if</span> <span class="n">status_code</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ArchivistTooManyRequestsError</span><span class="p">(</span>
+            <span class="n">_headers_get</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">HEADERS_RETRY_AFTER</span><span class="p">),</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
     <span class="k">if</span> <span class="mi">400</span> <span class="o">&lt;=</span> <span class="n">status_code</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="mi">400</span><span class="p">:</span> <span class="n">ArchivistBadRequestError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
-            <span class="mi">401</span><span class="p">:</span> <span class="n">ArchivistUnauthenticatedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
-            <span class="mi">403</span><span class="p">:</span> <span class="n">ArchivistForbiddenError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
-            <span class="mi">404</span><span class="p">:</span> <span class="n">ArchivistNotFoundError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;{__identity(response)} not found (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span>
+        <span class="n">err</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">400</span><span class="p">:</span> <span class="p">(</span><span class="n">ArchivistBadRequestError</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
+            <span class="mi">401</span><span class="p">:</span> <span class="p">(</span><span class="n">ArchivistUnauthenticatedError</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
+            <span class="mi">402</span><span class="p">:</span> <span class="p">(</span><span class="n">ArchivistPaymentRequiredError</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
+            <span class="mi">403</span><span class="p">:</span> <span class="p">(</span><span class="n">ArchivistForbiddenError</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
+            <span class="mi">404</span><span class="p">:</span> <span class="p">(</span>
+                <span class="n">ArchivistNotFoundError</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;{__identity(response)} not found (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="n">Archivist4xxError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">))</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="p">(</span><span class="n">Archivist4xxError</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">err</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="mi">500</span> <span class="o">&lt;=</span> <span class="n">status_code</span> <span class="o">&lt;</span> <span class="mi">600</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="mi">501</span><span class="p">:</span> <span class="n">ArchivistNotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
-            <span class="mi">503</span><span class="p">:</span> <span class="n">ArchivistUnavailableError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
-        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="n">Archivist5xxError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">))</span>
+        <span class="n">err</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">501</span><span class="p">:</span> <span class="p">(</span><span class="n">ArchivistNotImplementedError</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
+            <span class="mi">503</span><span class="p">:</span> <span class="p">(</span><span class="n">ArchivistUnavailableError</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">),</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="p">(</span><span class="n">Archivist5xxError</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">err</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">ArchivistError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{text}</span><span class="s2"> (</span><span class="si">{status_code}</span><span class="s2">)&quot;</span><span class="p">)</span>
 </pre></div>
