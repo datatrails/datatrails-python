@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.storage_integrity &mdash; Jitsuin Archivist 0.5.0 documentation</title>
+  <title>archivist.proof_mechanism &mdash; Jitsuin Archivist 0.6.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
             
           
@@ -102,7 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../storage_integrity.html">Storage Integrity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism</a></li>
 </ul>
 
             
@@ -153,7 +153,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>archivist.storage_integrity</li>
+      <li>archivist.proof_mechanism</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -168,10 +168,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for archivist.storage_integrity</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Archivist Storage integrity</span>
+  <h1>Source code for archivist.proof_mechanism</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Archivist Proof Mechanism</span>
 
-<span class="sd">   Enumerated type that allows user to select the storage option when</span>
+<span class="sd">   Enumerated type that allows user to select the proof_mechanism option when</span>
 <span class="sd">   creating an asset.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
@@ -179,13 +179,13 @@
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 
-<div class="viewcode-block" id="StorageIntegrity"><a class="viewcode-back" href="../../storage_integrity.html#archivist.storage_integrity.StorageIntegrity">[docs]</a><span class="k">class</span> <span class="nc">StorageIntegrity</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Enumerate storage integrity options&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ProofMechanism"><a class="viewcode-back" href="../../proof_mechanism.html#archivist.proof_mechanism.ProofMechanism">[docs]</a><span class="k">class</span> <span class="nc">ProofMechanism</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumerate proof mechanism options&quot;&quot;&quot;</span>
 
-    <span class="c1">#: Assets are stored on the DLT</span>
-    <span class="n">LEDGER</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="c1">#: Assets are not stored on the DLT</span>
-    <span class="n">TENANT_STORAGE</span> <span class="o">=</span> <span class="mi">2</span></div>
+    <span class="c1">#: Assets and events are proven using Jitsuin Khipus on the ledger</span>
+    <span class="n">KHIPU</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1">#: Assets and events are proven using a hash of the originator&#39;s evidence</span>
+    <span class="n">SIMPLE_HASH</span> <span class="o">=</span> <span class="mi">2</span></div>
 </pre></div>
 
            </div>

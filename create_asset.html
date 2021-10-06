@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Create Asset &mdash; Jitsuin Archivist 0.5.0 documentation</title>
+  <title>Create Asset &mdash; Jitsuin Archivist 0.6.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
             
           
@@ -115,7 +115,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism</a></li>
 </ul>
 
             
@@ -194,7 +194,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
-<span class="kn">from</span> <span class="nn">archivist.storage_integrity</span> <span class="kn">import</span> <span class="n">StorageIntegrity</span>
+<span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
 
 
 <span class="k">def</span> <span class="nf">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
@@ -224,12 +224,12 @@
         <span class="c1"># it does not start with arc_</span>
     <span class="p">}</span>
     <span class="c1">#</span>
-    <span class="c1"># store asset on the DLT or not. If DLT is not enabled for the user an error will occur if</span>
-    <span class="c1"># StorageIntegrity.LEDGER is specified. If unspecified then TENANT_STORAGE is used</span>
-    <span class="c1"># i.e. not stored on the DLT...</span>
-    <span class="c1"># storage_integrity = StorageIntegrity.TENANT_STORAGE.name</span>
+    <span class="c1"># Select the mechanism used to prove evidence for the asset.  If the selected proof</span>
+    <span class="c1"># mechanism is not enabled for your tenant then an error will occur.</span>
+    <span class="c1"># If unspecified then SIMPLE_HASH is used.</span>
+    <span class="c1"># proof_mechanism = ProofMechanism.KHIPU.name</span>
     <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;storage_integrity&quot;</span><span class="p">:</span> <span class="n">StorageIntegrity</span><span class="o">.</span><span class="n">LEDGER</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">KHIPU</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="c1"># The first argument are the properties of the asset</span>
@@ -263,8 +263,8 @@
 
     <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
     <span class="c1"># of an asset or event creation - the default is 1200 seconds but one can optionally</span>
-    <span class="c1"># specify a differnet value here particularly when creating assets on TENANT_STORAGE</span>
-    <span class="c1"># (rather than LEDGER) as confirmation times are much shorter in this case.</span>
+    <span class="c1"># specify a different value here particularly when creating assets on SIMPLE_HASH</span>
+    <span class="c1"># (rather than KHIPU) as confirmation times are much shorter in this case.</span>
     <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
         <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>

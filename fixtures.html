@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Fixtures &mdash; Jitsuin Archivist 0.5.0 documentation</title>
+  <title>Fixtures &mdash; Jitsuin Archivist 0.6.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
             
           
@@ -104,7 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism</a></li>
 </ul>
 
             
@@ -178,7 +178,7 @@ and locations.</p>
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.errors</span> <span class="kn">import</span> <span class="n">ArchivistError</span>
-<span class="kn">from</span> <span class="nn">archivist.storage_integrity</span> <span class="kn">import</span> <span class="n">StorageIntegrity</span>
+<span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
 
 <span class="c1"># Oauth2 token that grants access</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
@@ -190,7 +190,7 @@ and locations.</p>
     <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
     <span class="n">fixtures</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;assets&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;storage_integrity&quot;</span><span class="p">:</span> <span class="n">StorageIntegrity</span><span class="o">.</span><span class="n">LEDGER</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">KHIPU</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
         <span class="p">}</span>
     <span class="p">},</span>
 <span class="p">)</span>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; Jitsuin Archivist 0.5.0 documentation</title>
+  <title>Index &mdash; Jitsuin Archivist 0.6.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
             
           
@@ -102,7 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="storage_integrity.html">Storage Integrity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism</a></li>
 </ul>
 
             
@@ -180,13 +180,13 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
+ | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
- | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
@@ -269,10 +269,10 @@
 </li>
       </ul></li>
       <li>
-    archivist.storage_integrity
+    archivist.proof_mechanism
 
       <ul>
-        <li><a href="storage_integrity.html#module-archivist.storage_integrity">module</a>
+        <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">module</a>
 </li>
       </ul></li>
       <li>
@@ -448,12 +448,18 @@
   </ul></td>
 </tr></table>
 
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism.KHIPU">KHIPU (archivist.proof_mechanism.ProofMechanism attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="archivist.html#archivist.archivist.Archivist.last_response">last_response() (archivist.archivist.Archivist method)</a>
-</li>
-      <li><a href="storage_integrity.html#archivist.storage_integrity.StorageIntegrity.LEDGER">LEDGER (archivist.storage_integrity.StorageIntegrity attribute)</a>
 </li>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list">list() (archivist.access_policies._AccessPoliciesClient method)</a>
 
@@ -505,7 +511,7 @@
 </li>
         <li><a href="locations.html#module-archivist.locations">archivist.locations</a>
 </li>
-        <li><a href="storage_integrity.html#module-archivist.storage_integrity">archivist.storage_integrity</a>
+        <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">archivist.proof_mechanism</a>
 </li>
         <li><a href="iam/subjects.html#module-archivist.subjects">archivist.subjects</a>
 </li>
@@ -530,13 +536,15 @@
 </li>
       <li><a href="archivist.html#archivist.archivist.Archivist.patch">patch() (archivist.archivist.Archivist method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="archivist.html#archivist.archivist.Archivist.post">post() (archivist.archivist.Archivist method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="archivist.html#archivist.archivist.Archivist.post_file">post_file() (archivist.archivist.Archivist method)</a>
 </li>
       <li><a href="assets.html#archivist.assets.Asset.primary_image">primary_image() (archivist.assets.Asset property)</a>
+</li>
+      <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism">ProofMechanism (class in archivist.proof_mechanism)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -572,19 +580,11 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="storage_integrity.html#archivist.storage_integrity.StorageIntegrity">StorageIntegrity (class in archivist.storage_integrity)</a>
+      <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism.SIMPLE_HASH">SIMPLE_HASH (archivist.proof_mechanism.ProofMechanism attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="iam/subjects.html#archivist.subjects.Subject">Subject (class in archivist.subjects)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="T">T</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="storage_integrity.html#archivist.storage_integrity.StorageIntegrity.TENANT_STORAGE">TENANT_STORAGE (archivist.storage_integrity.StorageIntegrity attribute)</a>
 </li>
   </ul></td>
 </tr></table>
