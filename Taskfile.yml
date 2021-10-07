@@ -29,6 +29,11 @@ tasks:
     cmds:
       - docker build --no-cache --build-arg VERSION=3.9 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
 
+  builder-3.10:
+    desc: Build a docker environment with the right dependencies and utilities
+    cmds:
+      - docker build --no-cache --build-arg VERSION=3.10 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+
   check:
     desc: Check the style, bug and quality of the code
     deps: [about]
