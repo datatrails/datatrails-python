@@ -26,6 +26,7 @@ def __lookup_max_time():
     return MAX_TIME
 
 
+# pylint: disable=consider-using-f-string
 def __backoff_handler(details):
     LOGGER.debug("MAX_TIME %s", MAX_TIME)
     LOGGER.debug(

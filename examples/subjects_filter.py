@@ -12,7 +12,7 @@ from archivist.archivist import Archivist
 
 def main():
     """Main function of filtering subjects."""
-    with open(".auth_token", mode="r") as tokenfile:
+    with open(".auth_token", mode="r", encoding="utf-8") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist

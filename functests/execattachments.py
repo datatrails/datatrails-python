@@ -25,7 +25,7 @@ class TestAssetCreate(TestCase):
 
     @classmethod
     def setUp(cls):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"]) as fd:
+        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
             auth = fd.read().strip()
         cls.arch = Archivist(environ["TEST_ARCHIVIST"], auth=auth, verify=False)
         cls.file_uuid: str = ""

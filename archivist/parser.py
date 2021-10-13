@@ -10,7 +10,7 @@ from enum import Enum
 import logging
 from sys import exit as sys_exit
 
-from .archivist import Archivist
+from . import archivist
 from .logger import set_logger
 from .proof_mechanism import ProofMechanism
 
@@ -119,13 +119,15 @@ def endpoint(args):
     }
 
     if args.auth_token_file:
-        with open(args.auth_token_file, mode="r") as tokenfile:
+        with open(args.auth_token_file, mode="r", encoding="utf-8") as tokenfile:
             authtoken = tokenfile.read().strip()
 
-        arch = Archivist(args.url, auth=authtoken, verify=False, fixtures=fixtures)
+        arch = archivist.Archivist(
+            args.url, auth=authtoken, verify=False, fixtures=fixtures
+        )
 
     elif args.client_cert_name:
-        arch = Archivist(
+        arch = archivist.Archivist(
             args.url, cert=args.client_cert_name, verify=False, fixtures=fixtures
         )
 
