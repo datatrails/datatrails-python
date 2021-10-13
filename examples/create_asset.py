@@ -71,7 +71,7 @@ def main():
     create an example archivist connection and create an asset.
 
     """
-    with open(".auth_token", mode="r") as tokenfile:
+    with open(".auth_token", mode="r", encoding="utf-8") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist. max_time is the time to wait for confirmation

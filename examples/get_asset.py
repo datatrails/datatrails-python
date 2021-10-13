@@ -18,7 +18,7 @@ def main():
     Parse in user input of url and auth token and use them to
     create an example archivist connection and fetch all assets.
     """
-    with open(".auth_token", mode="r") as tokenfile:
+    with open(".auth_token", mode="r", encoding="utf-8") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist
