@@ -18,7 +18,7 @@ def main():
     attributes to filter all assets of the selected properties and
     attributes through function get_matching_assets.
     """
-    with open(".auth_token", mode="r") as tokenfile:
+    with open(".auth_token", mode="r", encoding="utf-8") as tokenfile:
         authtoken = tokenfile.read().strip()
 
     # Initialize connection to Archivist

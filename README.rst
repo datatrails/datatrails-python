@@ -29,7 +29,7 @@ One can then use the examples code to create assets (see examples directory):
     from archivist.proof_mechanism import ProofMechanism
     
     # Oauth2 token that grants access
-    with open(".auth_token", mode='r') as tokenfile:
+    with open(".auth_token", mode='r', encoding="utf-8") as tokenfile:
         authtoken = tokenfile.read().strip()
     
     # Initialize connection to Archivist - the URL for production will be different to this URL

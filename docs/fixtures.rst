@@ -15,7 +15,7 @@ and locations.
     from archivist.proof_mechanism import ProofMechanism
     
     # Oauth2 token that grants access
-    with open(".auth_token", mode='r') as tokenfile:
+    with open(".auth_token", mode='r', encoding="utf-8") as tokenfile:
         authtoken = tokenfile.read().strip()
     
     # Initialize connection to Archivist - for assets on DLT.

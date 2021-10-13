@@ -10,10 +10,10 @@ HERE = os.path.dirname(__file__)
 REPO_URL = 'https://github.com/jitsuin-inc/archivist-python/'
 NAME = "jitsuin-archivist"
 
-with open(os.path.join(HERE, 'README.rst')) as FF:
+with open(os.path.join(HERE, 'README.rst'), encoding="utf-8") as FF:
     DESC = FF.read()
 
-with open(os.path.join(HERE, 'requirements.txt')) as FF:
+with open(os.path.join(HERE, 'requirements.txt'), encoding="utf-8") as FF:
     requirements=[f"{line.strip()}" for line in FF]
 
 setup(

@@ -9,7 +9,7 @@
 
    .. code-block:: python
 
-      with open(".auth_token", mode="r") as tokenfile:
+      with open(".auth_token", mode="r", encoding="utf-8") as tokenfile:
           authtoken = tokenfile.read().strip()
 
       # Initialize connection to Archivist

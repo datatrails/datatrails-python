@@ -1,15 +1,15 @@
 -r requirements.txt
 
 # code quality
-autopep8==1.5.5
-black==21.4b2
-coverage==5.4
-pycodestyle==2.6.0
-pylint==2.6.0
+autopep8~=1.5
+black~=21.4b2
+coverage~=5.4
+pycodestyle~=2.6
+pylint~=2.6
 
 # uploading to pypi
-twine==3.4.1
+twine~=3.4
 
 # documentation
-sphinx==3.5.4
-sphinx-rtd-theme==0.5.2
+sphinx~=3.5
+sphinx-rtd-theme~=0.5.2
