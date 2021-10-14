@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Attachments &mdash; Jitsuin Archivist 0.7.0 documentation</title>
+  <title>Attachments &mdash; Jitsuin Archivist 0.7.1 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.7.0
+                0.7.1
               </div>
             
           
@@ -177,7 +177,7 @@
 <p>The user is not expected to use this class directly. It is an attribute of the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> class.</p>
 <p>For example instantiate an Archivist instance and execute the methods of the class:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
     <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
 <span class="c1"># Initialize connection to Archivist</span>
