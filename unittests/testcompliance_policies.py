@@ -1,5 +1,5 @@
 """
-Test archivist
+Test compliance policies
 """
 
 import json
@@ -10,11 +10,17 @@ from archivist.constants import (
     ROOT,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
-    LOCATIONS_SUBPATH,
-    LOCATIONS_LABEL,
+    COMPLIANCE_POLICIES_SUBPATH,
+    COMPLIANCE_POLICIES_LABEL,
 )
 from archivist.errors import ArchivistBadRequestError
-from archivist.locations import DEFAULT_PAGE_SIZE
+from archivist.compliance_policies import (
+    CompliancePolicy,
+    DEFAULT_PAGE_SIZE,
+)
+from archivist.compliance_policy_requests import (
+    CompliancePolicySince,
+)
 
 from .mock_response import MockResponse
 
@@ -23,38 +29,62 @@ from .mock_response import MockResponse
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
-PROPS = {
-    "display_name": "Macclesfield, Cheshire",
-    "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
-    "latitude": "53.2546799",
-    "longitude": "-2.1213956,14.54",
-}
-ATTRS = {
-    "director": "John Smith",
-    "address": "Bridgewater, Somerset",
-    "facility_type": "Manufacture",
-    "support_email": "support@macclesfield.com",
-    "support_phone": "123 456 789",
-}
+SINCE_POLICY = CompliancePolicySince(
+    description="since description",
+    display_name="since display_name",
+    asset_filter=[
+        ["a", "b"],
+        ["x", "z"],
+    ],
+    event_display_type="since event_display_type",
+    time_period_seconds=10,
+)
+SINCE_POLICY_REQUEST = SINCE_POLICY.dict()
 
-IDENTITY = f"{LOCATIONS_LABEL}/xxxxxxxx"
-SUBPATH = f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}"
+IDENTITY = f"{COMPLIANCE_POLICIES_LABEL}/xxxxxxxx"
+SUBPATH = f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}"
 
-RESPONSE = {
-    **PROPS,
+SINCE_RESPONSE = {
+    **SINCE_POLICY_REQUEST,
     "identity": IDENTITY,
-    "attributes": ATTRS,
+    "compliance_type": "SINCE",
 }
-REQUEST = {
-    **PROPS,
-    "attributes": ATTRS,
+SINCE_REQUEST = {
+    **SINCE_POLICY_REQUEST,
 }
-REQUEST_DATA = json.dumps(REQUEST)
+SINCE_REQUEST_DATA = json.dumps(SINCE_REQUEST)
 
 
-class TestLocations(TestCase):
+class TestCompliancePolicy(TestCase):
     """
-    Test Archivist Locations Create method
+    Test Archivist CompliancePolicy
+    """
+
+    maxDiff = None
+
+    def test_compliance_policy(self):
+        """
+        Test compliance_policy
+        """
+        self.assertEqual(
+            CompliancePolicy(**SINCE_RESPONSE).name,
+            "since display_name",
+            msg="Incorrct name property",
+        )
+
+    def test_compliance_policy_without_name(self):
+        """
+        Test compliance_policy
+        """
+        self.assertIsNone(
+            CompliancePolicy(**{"description": "descriptton"}).name,
+            msg="Incorrct name property",
+        )
+
+
+class TestCompliancePolicies(TestCase):
+    """
+    Test Archivist CompliancePolicies Create method
     """
 
     maxDiff = None
@@ -62,20 +92,22 @@ class TestLocations(TestCase):
     def setUp(self):
         self.arch = Archivist("url", auth="authauthauth")
 
-    def test_locations_create(self):
+    def test_compliance_policies_create(self):
         """
-        Test location creation
+        Test compliance_policy creation
         """
         with mock.patch.object(self.arch._session, "post") as mock_post:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_post.return_value = MockResponse(200, **SINCE_RESPONSE)
 
-            location = self.arch.locations.create(PROPS, attrs=ATTRS)
+            compliance_policy = self.arch.compliance_policies.create(
+                SINCE_POLICY,
+            )
             self.assertEqual(
                 tuple(mock_post.call_args),
                 (
                     ((f"url/{ROOT}/{SUBPATH}"),),
                     {
-                        "data": REQUEST_DATA,
+                        "data": SINCE_REQUEST_DATA,
                         "headers": {
                             "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
@@ -87,23 +119,23 @@ class TestLocations(TestCase):
                 msg="CREATE method called incorrectly",
             )
             self.assertEqual(
-                location,
-                RESPONSE,
+                compliance_policy,
+                SINCE_RESPONSE,
                 msg="CREATE method called incorrectly",
             )
 
-    def test_locations_read(self):
+    def test_compliance_policies_read(self):
         """
-        Test asset reading
+        Test compliance_policy reading
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **SINCE_RESPONSE)
 
-            asset = self.arch.locations.read(IDENTITY)
+            compliance_policy = self.arch.compliance_policies.read(IDENTITY)
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    ((f"url/{ROOT}/{LOCATIONS_SUBPATH}/{IDENTITY}"),),
+                    ((f"url/{ROOT}/{COMPLIANCE_POLICIES_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
                             "content-type": "application/json",
@@ -117,29 +149,53 @@ class TestLocations(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    def test_locations_read_with_error(self):
+    def test_compliance_policies_delete(self):
+        """
+        Test compliance_policy deleting
+        """
+        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+            mock_delete.return_value = MockResponse(200, {})
+
+            compliance_policy = self.arch.compliance_policies.delete(IDENTITY)
+            self.assertEqual(
+                tuple(mock_delete.call_args),
+                (
+                    ((f"url/{ROOT}/{COMPLIANCE_POLICIES_SUBPATH}/{IDENTITY}"),),
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "verify": True,
+                        "cert": None,
+                    },
+                ),
+                msg="DELETE method called incorrectly",
+            )
+
+    def test_compliance_policies_read_with_error(self):
         """
         Test read method with error
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.locations.read(IDENTITY)
+                resp = self.arch.compliance_policies.read(IDENTITY)
 
-    def test_locations_count(self):
+    def test_compliance_policies_count(self):
         """
-        Test location counting
+        Test compliance_policy counting
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
-                locations=[
-                    RESPONSE,
+                compliance_policies=[
+                    SINCE_RESPONSE,
                 ],
             )
 
-            count = self.arch.locations.count()
+            count = self.arch.compliance_policies.count()
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -162,21 +218,21 @@ class TestLocations(TestCase):
                 msg="Incorrect count",
             )
 
-    def test_locations_count_with_props_query(self):
+    def test_compliance_policies_count_by_name(self):
         """
-        Test location counting
+        Test compliance_policy counting
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
-                locations=[
-                    RESPONSE,
+                compliance_policies=[
+                    SINCE_RESPONSE,
                 ],
             )
 
-            count = self.arch.locations.count(
-                props={"display_name": "Macclesfield, Cheshire"},
+            count = self.arch.compliance_policies.count(
+                props={"compliance_type": "SINCE"},
             )
             self.assertEqual(
                 tuple(mock_get.call_args),
@@ -185,7 +241,7 @@ class TestLocations(TestCase):
                         (
                             f"url/{ROOT}/{SUBPATH}"
                             "?page_size=1"
-                            "&display_name=Macclesfield, Cheshire"
+                            "&compliance_type=SINCE"
                         ),
                     ),
                     {
@@ -201,68 +257,29 @@ class TestLocations(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    def test_locations_count_with_attrs_query(self):
+    def test_compliance_policies_list(self):
         """
-        Test location counting
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 1},
-                locations=[
-                    RESPONSE,
-                ],
-            )
-
-            count = self.arch.locations.count(
-                attrs={"director": "John Smith"},
-            )
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    (
-                        (
-                            f"url/{ROOT}/{SUBPATH}"
-                            "?page_size=1"
-                            "&attributes.director=John Smith"
-                        ),
-                    ),
-                    {
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                            HEADERS_REQUEST_TOTAL_COUNT: "true",
-                        },
-                        "verify": True,
-                        "cert": None,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-
-    def test_locations_list(self):
-        """
-        Test location listing
+        Test compliance_policy listing
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
-                locations=[
-                    RESPONSE,
+                compliance_policies=[
+                    SINCE_RESPONSE,
                 ],
             )
 
-            locations = list(self.arch.locations.list())
+            compliance_policies = list(self.arch.compliance_policies.list())
             self.assertEqual(
-                len(locations),
+                len(compliance_policies),
                 1,
-                msg="incorrect number of locations",
+                msg="incorrect number of compliance_policies",
             )
-            for location in locations:
+            for compliance_policy in compliance_policies:
                 self.assertEqual(
-                    location,
-                    RESPONSE,
-                    msg="Incorrect location listed",
+                    compliance_policy,
+                    SINCE_RESPONSE,
+                    msg="Incorrect compliance_policy listed",
                 )
 
             for a in mock_get.call_args_list:
@@ -282,34 +299,33 @@ class TestLocations(TestCase):
                     msg="GET method called incorrectly",
                 )
 
-    def test_locations_list_with_query(self):
+    def test_compliance_policies_list_by_name(self):
         """
-        Test location listing
+        Test compliance_policy listing
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
-                locations=[
-                    RESPONSE,
+                compliance_policies=[
+                    SINCE_RESPONSE,
                 ],
             )
 
-            locations = list(
-                self.arch.locations.list(
-                    props={"display_name": "Macclesfield, Cheshire"},
-                    attrs={"director": "John Smith"},
+            compliance_policies = list(
+                self.arch.compliance_policies.list(
+                    props={"compliance_type": "SINCE"},
                 )
             )
             self.assertEqual(
-                len(locations),
+                len(compliance_policies),
                 1,
-                msg="incorrect number of locations",
+                msg="incorrect number of compliance_policies",
             )
-            for location in locations:
+            for compliance_policy in compliance_policies:
                 self.assertEqual(
-                    location,
-                    RESPONSE,
-                    msg="Incorrect location listed",
+                    compliance_policy,
+                    SINCE_RESPONSE,
+                    msg="Incorrect compliance_policy listed",
                 )
 
             for a in mock_get.call_args_list:
@@ -320,8 +336,7 @@ class TestLocations(TestCase):
                             (
                                 f"url/{ROOT}/{SUBPATH}"
                                 f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&attributes.director=John Smith"
-                                "&display_name=Macclesfield, Cheshire"
+                                "&compliance_type=SINCE"
                             ),
                         ),
                         {
@@ -336,23 +351,23 @@ class TestLocations(TestCase):
                     msg="GET method called incorrectly",
                 )
 
-    def test_locations_read_by_signature(self):
+    def test_compliance_policies_read_by_signature(self):
         """
-        Test location read_by_signature
+        Test compliance policies read_by_signature
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
-                locations=[
-                    RESPONSE,
+                compliance_policies=[
+                    SINCE_RESPONSE,
                 ],
             )
 
-            location = self.arch.locations.read_by_signature()
+            policy = self.arch.compliance_policies.read_by_signature()
             self.assertEqual(
-                location,
-                RESPONSE,
-                msg="Incorrect location listed",
+                policy,
+                SINCE_RESPONSE,
+                msg="Incorrect compliance_policy listed",
             )
 
             self.assertEqual(

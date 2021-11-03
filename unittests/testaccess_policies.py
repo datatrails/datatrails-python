@@ -143,6 +143,7 @@ class TestAccessPolicies(TestCase):
                             "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
+                        "params": None,
                         "verify": True,
                         "cert": None,
                     },

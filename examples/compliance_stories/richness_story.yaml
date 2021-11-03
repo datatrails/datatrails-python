@@ -1,0 +1,135 @@
+operations:
+
+  - operation: CREATE_ASSET
+    to_print: Create an empty radiation bag with id 1.
+    args:
+      attrs:
+        arc_description: radiation bag 1
+        radioactive: "true"
+        radiation_level: "0"
+        weight: "0"
+      confirm: true
+
+  - operation: CREATE_ASSET
+    to_print: Create an empty radiation bag with id 2.
+    args:
+      attrs:
+        arc_description: radiation bag 2
+        radioactive: "true"
+        radiation_level: "0"
+        weight: "0"
+      confirm: true
+
+  - operation: CREATE_ASSET
+    to_print: Create an empty radiation bag with id 3.
+    args:
+      attrs:
+        arc_description: radiation bag 3
+        radioactive: "true"
+        radiation_level: "0"
+        weight: "0"
+      confirm: true
+
+
+  # create some policies
+  - operation: CREATE_COMPLIANCE_POLICY_RICHNESS
+    to_print: Create a compliance policy that checks the radiation level of radiation bags is less than 7 rads.
+    policy_id: radiation safety policy 1
+    args:
+      description: radiation level safety policy
+      display_name: radiation safety policy
+      asset_filter: [ [ "attributes.radioactive=true" ] ]
+      richness_assertions: [ [ "radiation_level<7" ] ]  # set the radiation level to be below 7
+
+
+  - operation: CREATE_COMPLIANCE_POLICY_RICHNESS
+    to_print: Create a compliance policy that checks the weight of a radiation bag is less than or equal to 10kg.
+    policy_id: weight safety policy 1
+    args:
+      description: weight level safety policy
+      display_name: weight saftey policy
+      asset_filter: [ [ "attributes.radioactive=true" ] ]
+      richness_assertions: [ [ "weight<=10" ] ]
+
+  # setup the radiation bags to have a varing amount of radiactive waste
+
+  - operation: CREATE_EVENT
+    to_print: Create Event adding 3 rads of radiation to bag 1, increasing its weight by 1kg.
+    asset_id: radiation bag 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_description: add waste to bag
+        arc_evidence: see attached report
+      asset_attrs:
+        radiation_level: "3"
+        weight: "1"
+      confirm: true
+
+  - operation: CREATE_EVENT
+    to_print: Create Event adding 2 rads of radiation to bag 2, increasing its weight by 5kg.
+    asset_id: radiation bag 2
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_description: add waste to bag
+        arc_evidence: see attached report
+      asset_attrs:
+        radiation_level: "2"
+        weight: "5"
+      confirm: true
+
+  - operation: CREATE_EVENT
+    to_print: Create Event adding 5 rads of radiation to bag 3, increasing its weight by 7kg.
+    asset_id: radiation bag 3
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_description: add waste to bag
+        arc_evidence: see attached report
+      asset_attrs:
+        radiation_level: "5"
+        weight: "7"
+      confirm: true
+
+  # check compliance for all 3 bags
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of bag 1.
+    asset_id: radiation bag 1
+
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of bag 2.
+    asset_id: radiation bag 2
+
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of bag 3.
+    asset_id: radiation bag 3
+
+
+  # now attempt to add waste to tip one over the edge
+  - operation: CREATE_EVENT
+    to_print: Now Create Event adding 4 rads of radiation to bag 3 increasing its weight by 1kg.
+              This brings the total radiation level to 9 rads and weight to 8kg.
+    asset_id: radiation bag 3
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_description: add waste to bag
+        arc_evidence: see attached report
+      asset_attrs:
+        radiation_level: "9"
+        weight: "8"
+      confirm: true
+
+  # check the compliance
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of bag 3.
+    asset_id: radiation bag 3

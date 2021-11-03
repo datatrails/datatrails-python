@@ -1,0 +1,153 @@
+operations:
+
+  - operation: CREATE_ASSET
+    to_print: Create new EV Pump with id 1.
+    args:
+      attrs:
+        arc_description: ev pump 1
+        ev_pump: "true"
+      confirm: true
+
+
+  # create some policies
+  - operation: CREATE_COMPLIANCE_POLICY_DYNAMIC_TOLERANCE
+    to_print: Create a compliance policy that checks an EV pump maintenance requests are serviced within a reasonable time frame.
+    policy_id: ev maintenance policy 1
+    args:
+      description: ev maintenance policy
+      display_name: ev maintenance policy
+      asset_filter: [ [ "attributes.ev_pump=true" ] ]
+      event_display_type: Maintenance Requested
+      closing_event_display_type:  Maintenance Performed
+      dynamic_window: 700 # a large window
+      dynamic_variability: 1.5 # 150%  tolerance from the stddev away from the mean
+
+  # setup the ev pump to have maintenance requests and servicings
+
+  - operation: CREATE_EVENT
+    to_print: Create Event requesting EV pump 1 needs maintenance.
+    asset_id: ev pump 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_correlation_value: "EV Maintenance 1"
+        arc_description: request maintenance
+        arc_evidence: see attached report
+        arc_display_type: Maintenance Requested
+      confirm: true
+
+  - operation: CREATE_EVENT
+    to_print: Create Event after 1 seconds, for EV pump 1, stating maintenance occurred.
+    wait_time: 1
+    asset_id: ev pump 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_correlation_value: "EV Maintenance 1"
+        arc_description: perform maintenance
+        arc_evidence: see attached report
+        arc_display_type: Maintenance Performed
+      confirm: true
+
+  - operation: CREATE_EVENT
+    to_print: Create Event requesting EV pump 1 needs maintenance.
+    asset_id: ev pump 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_correlation_value: "EV Maintenance 2"
+        arc_description: request maintenance
+        arc_evidence: see attached report
+        arc_display_type: Maintenance Requested
+      confirm: true
+
+  - operation: CREATE_EVENT
+    to_print: Create Event after 2 seconds, for EV pump 1, stating maintenance occurred.
+    wait_time: 2
+    asset_id: ev pump 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_correlation_value: "EV Maintenance 2"
+        arc_description: perform maintenance
+        arc_evidence: see attached report
+        arc_display_type: Maintenance Performed
+      confirm: true
+
+  - operation: CREATE_EVENT
+    to_print: Create Event requesting EV pump 1 needs maintenance.
+    asset_id: ev pump 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_correlation_value: "EV Maintenance 3"
+        arc_description: request maintenance
+        arc_evidence: see attached report
+        arc_display_type: Maintenance Requested
+      confirm: true
+
+  - operation: CREATE_EVENT
+    to_print: Create Event after 3 seconds, for EV pump 1, stating maintenance occurred.
+    wait_time: 3
+    asset_id: ev pump 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_correlation_value: "EV Maintenance 3"
+        arc_description: perform maintenance
+        arc_evidence: see attached report
+        arc_display_type: Maintenance Performed
+      confirm: true
+
+  # check compliance for ev pump
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of EV pump 1.
+    asset_id: ev pump 1
+
+  # now create an event that throws the Standard deviation out of whack
+
+  - operation: CREATE_EVENT
+    to_print: Create Event requesting EV pump 1 needs maintenance.
+    asset_id: ev pump 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_correlation_value: "EV Maintenance 4"
+        arc_description: request maintenance
+        arc_evidence: see attached report
+        arc_display_type: Maintenance Requested
+      confirm: true
+
+  - operation: CREATE_EVENT
+    to_print: Create Event after 20 seconds, for EV pump 1, stating maintenance occurred.
+    wait_time: 20
+    asset_id: ev pump 1
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      attrs:
+        arc_correlation_value: "EV Maintenance 4"
+        arc_description: perform maintenance
+        arc_evidence: see attached report
+        arc_display_type: Maintenance Performed
+      confirm: true
+
+  # check compliance for ev pump
+  - operation: CHECK_COMPLIANCE
+    to_print: Check Compliance of EV pump 1.
+    asset_id: ev pump 1

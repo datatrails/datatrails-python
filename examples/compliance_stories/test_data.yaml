@@ -1,0 +1,33 @@
+operations:
+
+  - operation: CREATE_ASSET
+    args:
+      attrs:
+        arc_description: asset 1
+        foo: "7"
+      confirm: true
+
+  - operation: CREATE_COMPLIANCE_POLICY_RICHNESS
+    policy_id: policy 1
+    args:
+      description: test policy
+      display_name: test display_name
+      asset_filter: [ [ "foo=7",  "foo=5" ] ]
+      richness_assertions: [ [ "foo<7" ] ]
+
+  - operation: CHECK_COMPLIANCE
+    asset_id: asset 1
+
+  - operation: CREATE_EVENT
+    asset_id: asset 1
+    wait_time: 20
+    args:
+      props:
+        operation: Record
+        behaviour: RecordEvidence
+      asset_attr:
+        foo: "5"
+      confirm: true
+
+  - operation: CHECK_COMPLIANCE
+    asset_id: asset 1

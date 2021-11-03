@@ -26,6 +26,8 @@ version = about.__version__
 release = about.__version__
 
 
+autodoc_member_order = 'bysource'
+
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -34,6 +36,7 @@ release = about.__version__
 extensions = [
     "sphinx_rtd_theme",
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosectionlabel",
     "sphinx.ext.autosummary",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
