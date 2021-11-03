@@ -21,3 +21,7 @@ See the examples directory.
 
    subject_create
    subjects_filter
+
+   compliance_policies_demo
+   compliance_policies_demo_richness
+   compliance_policies_demo_dynamic_tolerance
