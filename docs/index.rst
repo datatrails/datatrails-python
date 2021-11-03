@@ -21,6 +21,7 @@ Jitsuin Archivist
    events
    locations
    attachments
+   compliance_policies/index
 
    iam/index
 
