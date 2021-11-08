@@ -114,7 +114,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         *,
         auth: Optional[str] = None,
         cert: Optional[str] = None,
-        fixtures: Optional[str] = None,
+        fixtures: Optional[Dict] = None,
         verify: bool = True,
         max_time: int = MAX_TIME,
     ):
@@ -189,12 +189,12 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return self._cert
 
     @property
-    def fixtures(self) -> Optional[dict]:
+    def fixtures(self) -> Dict:
         """dict: Contains predefined attributes for each endpoint"""
         return self._fixtures
 
     @fixtures.setter
-    def fixtures(self, fixtures: dict):
+    def fixtures(self, fixtures: Dict):
         """dict: Contains predefined attributes for each endpoint"""
         self._fixtures = _deepmerge(self._fixtures, fixtures)
 
@@ -550,7 +550,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             headers=headers,
         )
 
-        return int(_headers_get(response.headers, HEADERS_TOTAL_COUNT))
+        return int(_headers_get(response.headers, HEADERS_TOTAL_COUNT))  # type: ignore
 
     def list(
         self,

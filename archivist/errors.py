@@ -5,6 +5,7 @@
 """
 
 import json
+from typing import Optional
 
 from .constants import HEADERS_RETRY_AFTER
 from .headers import _headers_get
@@ -53,7 +54,7 @@ class ArchivistNotFoundError(ArchivistError):
 class ArchivistTooManyRequestsError(ArchivistError):
     """Too many reqests in too short a time (429)"""
 
-    def __init__(self, retry: str, *args):
+    def __init__(self, retry: Optional[str], *args):
         self.retry = float(retry) if retry is not None else 0
         super().__init__(*args)
 

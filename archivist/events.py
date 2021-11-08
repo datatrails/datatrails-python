@@ -28,7 +28,7 @@ from copy import deepcopy
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from archivist import archivist as type_helper
+import archivist as type_helper
 
 from .constants import (
     SEP,
@@ -179,7 +179,7 @@ class _EventsClient:
 
         return self.wait_for_confirmation(event["identity"])
 
-    def wait_for_confirmation(self, identity: str) -> bool:
+    def wait_for_confirmation(self, identity: str) -> Event:
         """Wait for event to be confirmed.
 
         Waits for event to be confirmed.
@@ -193,7 +193,7 @@ class _EventsClient:
         """
         confirmer.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
-        return confirmer._wait_for_confirmation(self, identity)
+        return confirmer._wait_for_confirmation(self, identity)  # type: ignore
 
     def read(self, identity: str) -> Event:
         """Read event

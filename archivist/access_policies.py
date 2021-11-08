@@ -27,7 +27,7 @@ from copy import deepcopy
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from archivist import archivist as type_helper
+import archivist as type_helper
 
 from .constants import (
     SEP,
