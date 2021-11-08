@@ -68,8 +68,10 @@ def _wait_for_confirmation(self, identity):
     if entity[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
         return entity
 
-    return None  # this line is unreachable to function that use it
-    # But will mess up any linters that use type hints.
+    return None  # type: ignore
+    # pylance does not correctly interoperate the decorator usage, and thinks that
+    # None can be returned to the calling function, which is not possible.
+    # This will mess up any linters that use type hints.
 
 
 def __on_giveup_confirmed(details):

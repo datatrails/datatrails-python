@@ -111,6 +111,7 @@ def endpoint(args):
     else:
         set_logger("INFO")
 
+    arch = None
     LOGGER.info("Initialising connection to Jitsuin Archivist...")
     fixtures = {
         "assets": {

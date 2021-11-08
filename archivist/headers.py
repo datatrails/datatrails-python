@@ -4,7 +4,10 @@
 """
 
 
-def _headers_get(headers: dict, key: str) -> str:
+from typing import Dict, Optional
+
+
+def _headers_get(headers: Dict, key: str) -> Optional[str]:
     if headers is not None:
         ret = headers.get(key)
         if ret is not None:
