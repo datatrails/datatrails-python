@@ -2,11 +2,12 @@
 """
 
 from copy import deepcopy
+from typing import Optional
 
 from flatten_dict import flatten, unflatten
 
 
-def _deepmerge(dct1: dict, dct2: dict) -> dict:
+def _deepmerge(dct1: Optional[dict], dct2: Optional[dict]) -> dict:
     """Deep merge 2 dictionaries
 
     The settings from dct2 overwrite or add to dct1
@@ -22,6 +23,6 @@ def _deepmerge(dct1: dict, dct2: dict) -> dict:
     return unflatten({**flatten(dct1), **flatten(dct2)})
 
 
-def _dotstring(dct: dict) -> str:
+def _dotstring(dct: dict):
     """Emit nested dictionary as dot delimited string"""
     return flatten(dct, reducer="dot").items()

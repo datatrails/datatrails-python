@@ -45,10 +45,11 @@ class ArchivistStoryRunner:
             to_print: Create an empty radiation bag with id 1.
             wait_time: 10
             asset_id: radiation bag 1
-            attributes:
-              radioactive: "true"
-              radiation_level: "0"
-              weight: "0"
+            args:
+              attrs:
+                radioactive: "true"
+                radiation_level: "0"
+                weight: "0"
     ```
 
     where:
@@ -56,8 +57,7 @@ class ArchivistStoryRunner:
      - `to_print` is what to print to the console.
      - `wait_time` is time to wait before running the operation.
      - `asset_id` is the local reference to the asset, so can be referenced in other operations.
-     - `behaviours` are a list of asset behaviours
-     - `attributes are the asset's attributes
+     - `attrs are the asset's attributes
 
     please see example yaml files for other operation examples.
 

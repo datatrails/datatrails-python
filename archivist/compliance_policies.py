@@ -27,11 +27,11 @@
 
 from copy import deepcopy
 import logging
-from typing import Dict, Optional
+from typing import Dict, Optional, Union
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from archivist import archivist as type_helper
+import archivist as type_helper
 
 from .compliance_policy_requests import (
     CompliancePolicySince,
@@ -94,7 +94,7 @@ class _CompliancePoliciesClient:
 
     def create(
         self,
-        policy: [
+        policy: Union[
             CompliancePolicySince,
             CompliancePolicyCurrentOutstanding,
             CompliancePolicyPeriodOutstanding,
@@ -171,7 +171,7 @@ class _CompliancePoliciesClient:
         """
         return self._archivist.delete(COMPLIANCE_POLICIES_SUBPATH, identity)
 
-    def __query(self, props: Dict) -> Dict:
+    def __query(self, props: Optional[Dict]) -> Dict:
         query = deepcopy(props) if props else {}
         # pylint: disable=protected-access
         return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
