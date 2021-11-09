@@ -52,7 +52,7 @@ class ArchivistNotFoundError(ArchivistError):
 
 
 class ArchivistTooManyRequestsError(ArchivistError):
-    """Too many reqests in too short a time (429)"""
+    """Too many requests in too short a time (429)"""
 
     def __init__(self, retry: Optional[str], *args):
         self.retry = float(retry) if retry is not None else 0
@@ -65,6 +65,10 @@ class Archivist4xxError(ArchivistError):
 
 class ArchivistNotImplementedError(ArchivistError):
     """Illegal REST verb (501) or option"""
+
+
+class ArchivistHeaderError(ArchivistError):
+    """When the expected header is not received"""
 
 
 class ArchivistUnavailableError(ArchivistError):

@@ -54,6 +54,7 @@ from .errors import (
     _parse_response,
     ArchivistBadFieldError,
     ArchivistDuplicateError,
+    ArchivistHeaderError,
     ArchivistIllegalArgumentError,
     ArchivistNotFoundError,
     ArchivistNotImplementedError,
@@ -353,7 +354,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         }
         response = self._session.post(
             SEP.join((self.url, ROOT, path)),
-            data=multipart,  # type: ignore      https://github.com/requests/toolbelt/issues/312
+            data=multipart,  # type: ignore    https://github.com/requests/toolbelt/issues/312
             headers=self.__add_headers(headers),
             verify=self.verify,
             cert=self.cert,
@@ -538,6 +539,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         Returns:
             integer count of entities found.
 
+        Raises:
+            ArchivistHeaderError: If the expected count header is not present
+
         """
 
         paging = "page_size=1"
@@ -550,7 +554,12 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             headers=headers,
         )
 
-        return int(_headers_get(response.headers, HEADERS_TOTAL_COUNT))  # type: ignore
+        count = _headers_get(response.headers, HEADERS_TOTAL_COUNT)  # type: ignore
+
+        if count is None:
+            raise ArchivistHeaderError("Did not get a count in the header")
+
+        return int(count)
 
     def list(
         self,

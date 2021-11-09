@@ -6,6 +6,7 @@
 import logging
 
 from copy import deepcopy
+from typing import overload
 
 import backoff
 
@@ -16,6 +17,12 @@ from .constants import (
     CONFIRMATION_STATUS,
 )
 from .errors import ArchivistUnconfirmedError
+
+
+# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
+# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+from . import assets
+from . import events
 
 MAX_TIME = 1200
 
@@ -44,6 +51,26 @@ def __on_giveup_confirmation(details):
     )
 
 
+# These overloads are used for type hinting, if self is events client then
+# an event will be returned. If self is Asset client then an asset will be
+# returned. Overloads are evaluated at startup but not at runtime, therefore
+# no test coverage be done directly.
+
+
+@overload
+def _wait_for_confirmation(
+    self: "assets._AssetsClient", identity: str
+) -> "assets.Asset":
+    ...  # pragma: no cover
+
+
+@overload
+def _wait_for_confirmation(
+    self: "events._EventsClient", identity: str
+) -> "events.Event":
+    ...  # pragma: no cover
+
+
 @backoff.on_predicate(
     backoff.expo,
     logger=LOGGER,
@@ -68,10 +95,7 @@ def _wait_for_confirmation(self, identity):
     if entity[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
         return entity
 
-    return None  # type: ignore
-    # pylance does not correctly interoperate the decorator usage, and thinks that
-    # None can be returned to the calling function, which is not possible.
-    # This will mess up any linters that use type hints.
+    return None
 
 
 def __on_giveup_confirmed(details):
