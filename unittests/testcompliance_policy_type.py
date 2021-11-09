@@ -17,7 +17,7 @@ class TestCompliancePolicyType(TestCase):
 
     def test_compliance_policy_type(self):
         """
-        Test ompliance policy type
+        Test compliance policy type
         """
         self.assertEqual(
             CompliancePolicyType.COMPLIANCE_SINCE.value, 1, msg="Incorrect value"
