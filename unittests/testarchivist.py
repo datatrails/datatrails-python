@@ -11,6 +11,7 @@ from archivist.errors import (
     ArchivistBadFieldError,
     ArchivistBadRequestError,
     ArchivistDuplicateError,
+    ArchivistHeaderError,
     ArchivistIllegalArgumentError,
     ArchivistNotFoundError,
     ArchivistNotImplementedError,
@@ -360,6 +361,23 @@ class TestArchivistCount(TestArchivistMethods):
                 ],
             )
             with self.assertRaises(ArchivistBadRequestError):
+                count = self.arch.count("path/path")
+
+    def test_count_with_missing_count_error(self):
+        """
+        Tests the default count method raises a ArchivistHeaderError when the
+        expected count header field is missing
+        """
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                things=[
+                    {
+                        "field1": "value1",
+                    },
+                ],
+            )
+            with self.assertRaises(ArchivistHeaderError):
                 count = self.arch.count("path/path")
 
     def test_count_with_429(self):

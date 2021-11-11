@@ -29,7 +29,7 @@ from archivist.type_aliases import NoneOnError
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-import archivist as type_helper
+from . import archivist as type_helper
 
 
 from .constants import (
@@ -186,7 +186,7 @@ class _AssetsClient:
         """
         confirmer.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
-        return confirmer._wait_for_confirmation(self, identity)  # type: ignore
+        return confirmer._wait_for_confirmation(self, identity)
 
     def read(self, identity: str) -> Asset:
         """Read asset
