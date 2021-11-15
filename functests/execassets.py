@@ -5,7 +5,7 @@ Test assets creation
 from copy import copy, deepcopy
 import json
 from os import environ
-from unittest import TestCase
+from unittest import skip, TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -61,6 +61,7 @@ class TestAssetCreate(TestCase):
             msg="Incorrect asset proof mechanism",
         )
 
+    @skip("takes too long")
     def test_asset_create_khipu(self):
         """
         Test asset creation using khipu proof mechanism
@@ -134,10 +135,16 @@ class TestAssetCreate(TestCase):
         Test list
         """
         # get identity of first asset
+        identity = None
         for asset in self.arch.assets.list():
             print("asset", json.dumps(asset, sort_keys=True, indent=4))
             identity = asset["identity"]
             break
+
+        self.assertIsNotNone(
+            identity,
+            msg="Identity is None",
+        )
 
         # different behaviours are also different.
         props = {

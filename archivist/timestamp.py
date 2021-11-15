@@ -4,6 +4,7 @@
 
 """
 
+from datetime import datetime
 from iso8601 import parse_date
 from rfc3339 import rfc3339
 
@@ -35,4 +36,16 @@ def make_timestamp(date_object):
         string representation of time
 
     """
-    return rfc3339(date_object)
+    return rfc3339(date_object, utc=True, use_system_timezone=False)
+
+
+def now_timestamp():
+    """Return Now as an Archivist format timestamp string
+
+    See https://pypi.org/project/rfc3339/
+
+    Returns:
+        string representation of now
+
+    """
+    return make_timestamp(datetime.now())
