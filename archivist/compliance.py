@@ -70,8 +70,8 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
         Args:
             asset_id (str): asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx
             compliant_at (str): datetime to check compliance at a particular time (optional).
-               format: rfc3339 - UTC only
-                       https://datatracker.ietf.org/doc/html/rfc3339#section-4.1
+                                format: rfc3339 - UTC only
+                                https://datatracker.ietf.org/doc/html/rfc3339#section-4.1
             page_size (int): optional page size. (Rarely used).
 
         Returns:

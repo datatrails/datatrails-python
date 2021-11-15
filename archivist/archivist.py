@@ -62,28 +62,31 @@ from .errors import (
 from .headers import _headers_get
 from .retry429 import retry_429
 
-from .assets import _AssetsClient
 from .confirmer import MAX_TIME
+
+from .assets import _AssetsClient
+from .access_policies import _AccessPoliciesClient
+from .attachments import _AttachmentsClient
+from .compliance import _ComplianceClient
+from .compliance_policies import _CompliancePoliciesClient
 from .events import _EventsClient
 from .locations import _LocationsClient
-from .attachments import _AttachmentsClient
-from .access_policies import _AccessPoliciesClient
+from .sboms import _SBOMSClient
 from .subjects import _SubjectsClient
-from .compliance_policies import _CompliancePoliciesClient
-from .compliance import _ComplianceClient
 
 LOGGER = logging.getLogger(__name__)
 
 # also change the type hints in __init__ below
 CLIENTS = {
+    "access_policies": _AccessPoliciesClient,
     "assets": _AssetsClient,
+    "attachments": _AttachmentsClient,
+    "compliance": _ComplianceClient,
+    "compliance_policies": _CompliancePoliciesClient,
     "events": _EventsClient,
     "locations": _LocationsClient,
-    "attachments": _AttachmentsClient,
-    "access_policies": _AccessPoliciesClient,
+    "sboms": _SBOMSClient,
     "subjects": _SubjectsClient,
-    "compliance_policies": _CompliancePoliciesClient,
-    "compliance": _ComplianceClient,
 }
 
 
@@ -144,14 +147,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self._session = requests.Session()
         self._max_time = max_time
         self._fixtures = fixtures or {}
-
-        # keep these in sync with CLIENTS map above
-        self.assets: _AssetsClient
-        self.events: _EventsClient
-        self.locations: _LocationsClient
-        self.attachments: _AttachmentsClient
-        self.access_policies: _AccessPoliciesClient
-        self.subjects: _SubjectsClient
 
     def __getattr__(self, value: str):
         """Create endpoints on demand"""
@@ -225,12 +220,15 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         *,
         headers: Optional[Dict] = None,
         params: Optional[Dict] = None,
+        tail: Optional[str] = None,
     ) -> Dict:
         """GET method (REST)
 
         Args:
             subpath (str): e.g. v2 or iam/v1...
             identity (str): e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+            tail (str): endpoint tail e.g. metadata
+                        adds extra selector to tail of the endpoint
             headers (dict): optional REST headers
             params (dict): optional query strings
 
@@ -239,7 +237,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         """
         response = self._session.get(
-            SEP.join((self.url, ROOT, subpath, identity)),
+            SEP.join([f for f in (self.url, ROOT, subpath, identity, tail) if f]),
             headers=self.__add_headers(headers),
             verify=self.verify,
             cert=self.cert,
@@ -329,7 +327,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return response.json()
 
     @retry_429
-    def post_file(self, path: str, fd: BinaryIO, mtype: str) -> Dict:
+    def post_file(
+        self, path: str, fd: BinaryIO, mtype: str, *, form: Optional[str] = "file"
+    ) -> Dict:
         """POST method (REST) - upload binary
 
         Uploads a file to an endpoint
@@ -337,7 +337,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         Args:
             path (str): e.g. v2/assets
             fd : iterable representing the contents of a file.
-            mtype (str): me-ime type e.g. image/jpeg
+            mtype (str): mime type e.g. image/jpg
 
         Returns:
             dict representing the response body (entity).
@@ -346,7 +346,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         multipart = MultipartEncoder(
             fields={
-                "file": ("filename", fd, mtype),
+                form: ("filename", fd, mtype),
             }
         )
         headers = {

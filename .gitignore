@@ -5,8 +5,8 @@ dist/
 *egg-info/
 .coverage
 *,cover
-*.xml
 htmlcov/
+coverage.xml
 .cache/
 .local/
 .python_history

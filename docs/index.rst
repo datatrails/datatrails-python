@@ -22,7 +22,7 @@ Jitsuin Archivist
    locations
    attachments
    compliance_policies/index
-
+   sboms/index
    iam/index
 
    timestamp
