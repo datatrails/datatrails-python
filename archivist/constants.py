@@ -21,9 +21,6 @@ ASSETS_LABEL = "assets"
 ASSETS_WILDCARD = "assets/-"
 EVENTS_LABEL = "events"
 
-LOCATIONS_SUBPATH = "v2"
-LOCATIONS_LABEL = "locations"
-
 ATTACHMENTS_SUBPATH = "v1"
 ATTACHMENTS_LABEL = "blobs"
 
@@ -35,6 +32,14 @@ COMPLIANCE_LABEL = "compliance"
 
 COMPLIANCE_POLICIES_SUBPATH = "v1"
 COMPLIANCE_POLICIES_LABEL = "compliance_policies"
+
+LOCATIONS_SUBPATH = "v2"
+LOCATIONS_LABEL = "locations"
+
+SBOMS_SUBPATH = "v1"
+SBOMS_LABEL = "sboms"
+SBOMS_WILDCARD = "-/metadata"
+SBOMS_METADATA = "metadata"
 
 SUBJECTS_SUBPATH = "iam/v1"
 SUBJECTS_LABEL = "subjects"
