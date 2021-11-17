@@ -148,6 +148,17 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self._max_time = max_time
         self._fixtures = fixtures or {}
 
+        # Type hints for IDE autocomplete, keep in sync with CLIENTS map above
+        self.access_policies: _AccessPoliciesClient
+        self.assets: _AssetsClient
+        self.attachments: _AttachmentsClient
+        self.compliance: _ComplianceClient
+        self.compliance_policies: _CompliancePoliciesClient
+        self.events: _EventsClient
+        self.locations: _LocationsClient
+        self.sboms: _SBOMSClient
+        self.subjects: _SubjectsClient
+
     def __getattr__(self, value: str):
         """Create endpoints on demand"""
         client = CLIENTS.get(value)
