@@ -32,8 +32,8 @@ class SBOM:
     uploaded_by: str
     trusted: bool
     lifecycle_status: str
-    # withdrawn_date: str
-    # published_date: str
+    withdrawn_date: str
+    published_date: str
 
     def dict(self):
         """Emit dictionary representation"""
