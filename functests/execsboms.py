@@ -8,12 +8,16 @@ from time import sleep
 from unittest import TestCase
 
 from archivist.archivist import Archivist
+from archivist.logger import set_logger
 from archivist.timestamp import now_timestamp
 
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
+
+if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
+    set_logger(environ["TEST_DEBUG"])
 
 
 class TestSBOM(TestCase):
@@ -76,4 +80,38 @@ class TestSBOM(TestCase):
             metadatas[0],
             metadata,
             msg="Metadata not correct",
+        )
+
+        sleep(1)  # otherwise test fails
+        metadata2 = self.arch.sboms.publish(identity)
+        self.assertNotEqual(
+            metadata1.published_date,
+            metadata2.published_date,
+            msg="Published_date not correct",
+        )
+        metadata3 = self.arch.sboms.publish(identity)
+        self.assertEqual(
+            metadata2.published_date,
+            metadata3.published_date,
+            msg="Published_date not correct",
+        )
+
+        sleep(1)  # otherwise test fails
+        metadata4 = self.arch.sboms.withdraw(identity)
+        self.assertNotEqual(
+            metadata3.withdrawn_date,
+            metadata4.withdrawn_date,
+            msg="Withdrawn_date not correct",
+        )
+        self.assertEqual(
+            metadata2.published_date,
+            metadata4.published_date,
+            msg="Published_date not correct",
+        )
+
+        metadata5 = self.arch.sboms.withdraw(identity)
+        self.assertEqual(
+            metadata4.withdrawn_date,
+            metadata5.withdrawn_date,
+            msg="Withdrawn_date not correct",
         )

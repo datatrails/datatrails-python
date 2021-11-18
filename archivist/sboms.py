@@ -35,14 +35,21 @@ from requests.models import Response
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from . import archivist as type_helper
 
-from .constants import SBOMS_SUBPATH, SBOMS_LABEL, SBOMS_METADATA, SBOMS_WILDCARD
+from .constants import (
+    SBOMS_SUBPATH,
+    SBOMS_LABEL,
+    SBOMS_METADATA,
+    SBOMS_WILDCARD,
+    SBOMS_WITHDRAW,
+    SBOMS_PUBLISH,
+)
 from .dictmerge import _deepmerge
 from .sbommetadata import SBOM
 
 #: Default page size - number of entities fetched in one REST GET in the
 #: :func:`~_AssetsClient.list` method. This can be overridden but should rarely
 #: be changed.
-DEFAULT_PAGE_SIZE = 500
+DEFAULT_PAGE_SIZE = 50
 
 LOGGER = logging.getLogger(__name__)
 
@@ -164,5 +171,47 @@ class _SBOMSClient:
                 SBOMS_LABEL,
                 page_size=page_size,
                 query=query,
+            )
+        )
+
+    def publish(self, identity: str) -> SBOM:
+        """Publish SBOMt
+
+        Makes an SBOM public.
+
+        Args:
+            identity (str): identity of SBOM
+
+        Returns:
+            :class:`SBOM` instance
+
+        """
+        LOGGER.debug("Publish SBOM %s", identity)
+        return SBOM(
+            **self._archivist.post(
+                f"{SBOMS_SUBPATH}/{identity}",
+                None,
+                verb=SBOMS_PUBLISH,
+            )
+        )
+
+    def withdraw(self, identity: str) -> SBOM:
+        """Withdraw SBOM
+
+        Withdraws an SBOM.
+
+        Args:
+            identity (str): identity of SBOM
+
+        Returns:
+            :class:`SBOM` instance
+
+        """
+        LOGGER.debug("Withdraw SBOM %s", identity)
+        return SBOM(
+            **self._archivist.post(
+                f"{SBOMS_SUBPATH}/{identity}",
+                None,
+                verb=SBOMS_WITHDRAW,
             )
         )

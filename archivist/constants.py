@@ -5,6 +5,7 @@
 # these are in separate file to stop import loops
 ROOT = "archivist"
 SEP = "/"
+VERBSEP = ":"
 
 # define in MIME canonical form
 HEADERS_REQUEST_TOTAL_COUNT = "X-Request-Total-Count"
@@ -40,6 +41,8 @@ SBOMS_SUBPATH = "v1"
 SBOMS_LABEL = "sboms"
 SBOMS_WILDCARD = "-/metadata"
 SBOMS_METADATA = "metadata"
+SBOMS_PUBLISH = "publish"
+SBOMS_WITHDRAW = "withdraw"
 
 SUBJECTS_SUBPATH = "iam/v1"
 SUBJECTS_LABEL = "subjects"

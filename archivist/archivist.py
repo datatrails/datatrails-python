@@ -48,6 +48,7 @@ from .constants import (
     HEADERS_TOTAL_COUNT,
     ROOT,
     SEP,
+    VERBSEP,
 )
 from .dictmerge import _deepmerge, _dotstring
 from .errors import (
@@ -297,7 +298,14 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return response
 
     @retry_429
-    def post(self, path: str, request: Dict, *, headers: Optional[Dict] = None) -> Dict:
+    def post(
+        self,
+        path: str,
+        request: Optional[Dict],
+        *,
+        headers: Optional[Dict] = None,
+        verb: Optional[str] = None,
+    ) -> Dict:
         """POST method (REST)
 
         Creates an entity
@@ -306,15 +314,19 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             path (str): e.g. v2/assets
             request (dict): request body defining the entity
             headers (dict): optional REST headers
+            verb (str): optional REST verb
 
         Returns:
             dict representing the response body (entity).
 
         """
-
+        data = json.dumps(request) if request else None
+        url = SEP.join((self.url, ROOT, VERBSEP.join([f for f in (path, verb) if f])))
+        LOGGER.debug("POST URL %s", url)
+        LOGGER.debug("POST data %s", data)
         response = self._session.post(
-            SEP.join((self.url, ROOT, path)),
-            data=json.dumps(request),
+            url,
+            data=data,
             headers=self.__add_headers(headers),
             verify=self.verify,
             cert=self.cert,

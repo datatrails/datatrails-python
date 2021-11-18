@@ -14,7 +14,9 @@ from archivist.constants import (
     SBOMS_SUBPATH,
     SBOMS_LABEL,
     SBOMS_METADATA,
+    SBOMS_PUBLISH,
     SBOMS_WILDCARD,
+    SBOMS_WITHDRAW,
 )
 
 from .mock_response import MockResponse
@@ -35,6 +37,8 @@ PROPS = {
     "uploaded_by": "",
     "trusted": False,
     "lifecycle_status": "Active",
+    "published_date": "2021-11-11T17:02:06Z",
+    "withdrawn_date": "2021-11-11T17:02:06Z",
 }
 
 IDENTITY = f"{SBOMS_LABEL}/xxxxxxxx"
@@ -205,6 +209,56 @@ class TestSBOMS(TestCase):
                     },
                 ),
                 msg="GET method called incorrectly",
+            )
+
+    def test_sbom_publish(self):
+        """
+        Test SBOM publish
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+
+            sbom = self.arch.sboms.publish(IDENTITY)
+            self.assertEqual(
+                tuple(mock_post.call_args),
+                (
+                    ((f"url/{ROOT}/{SBOMS_SUBPATH}/{IDENTITY}:{SBOMS_PUBLISH}"),),
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "data": None,
+                        "verify": True,
+                        "cert": None,
+                    },
+                ),
+                msg="POST method called incorrectly",
+            )
+
+    def test_sbom_withdraw(self):
+        """
+        Test SBOM withdraw
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+
+            sbom = self.arch.sboms.withdraw(IDENTITY)
+            self.assertEqual(
+                tuple(mock_post.call_args),
+                (
+                    ((f"url/{ROOT}/{SBOMS_SUBPATH}/{IDENTITY}:{SBOMS_WITHDRAW}"),),
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "data": None,
+                        "verify": True,
+                        "cert": None,
+                    },
+                ),
+                msg="POST method called incorrectly",
             )
 
     def test_sboms_list(self):
