@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Errors &mdash; Jitsuin Archivist 0.7.1 documentation</title>
+  <title>Errors &mdash; Jitsuin Archivist 0.8.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.8.0
               </div>
             
           
@@ -101,6 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Errors</a></li>
@@ -175,21 +177,27 @@
 <span class="target" id="module-archivist.errors"></span><p>Archivist exceptions</p>
 <p>All exceptions are derived from a base ArchivistError class.</p>
 <dl class="py exception">
-<dt id="archivist.errors.Archivist4xxError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">Archivist4xxError</span></code><a class="reference internal" href="_modules/archivist/errors.html#Archivist4xxError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.Archivist4xxError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Any other 4xx error</p>
-</dd></dl>
-
-<dl class="py exception">
-<dt id="archivist.errors.Archivist5xxError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">Archivist5xxError</span></code><a class="reference internal" href="_modules/archivist/errors.html#Archivist5xxError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.Archivist5xxError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Any other 5xx error</p>
+<dt id="archivist.errors.ArchivistError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base exception for archivist package</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt id="archivist.errors.ArchivistBadFieldError">
 <em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistBadFieldError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistBadFieldError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistBadFieldError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Incorrect field name in list() method</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistUnconfirmedError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistUnconfirmedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistUnconfirmedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistUnconfirmedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>asset or event failed to confirm after fixed timeout</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistIllegalArgumentError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistIllegalArgumentError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistIllegalArgumentError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistIllegalArgumentError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional keyword arguments are inconsistent</p>
 </dd></dl>
 
 <dl class="py exception">
@@ -205,33 +213,9 @@
 </dd></dl>
 
 <dl class="py exception">
-<dt id="archivist.errors.ArchivistError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base exception for archivist package</p>
-</dd></dl>
-
-<dl class="py exception">
-<dt id="archivist.errors.ArchivistForbiddenError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistForbiddenError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistForbiddenError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistForbiddenError" title="Permalink to this definition">¶</a></dt>
-<dd><p>User does not have permission (403)</p>
-</dd></dl>
-
-<dl class="py exception">
-<dt id="archivist.errors.ArchivistIllegalArgumentError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistIllegalArgumentError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistIllegalArgumentError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistIllegalArgumentError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Optional keyword arguments are inconsistent</p>
-</dd></dl>
-
-<dl class="py exception">
-<dt id="archivist.errors.ArchivistNotFoundError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistNotFoundError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistNotFoundError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistNotFoundError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Entity does not exist (404)</p>
-</dd></dl>
-
-<dl class="py exception">
-<dt id="archivist.errors.ArchivistNotImplementedError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistNotImplementedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistNotImplementedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistNotImplementedError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Illegal REST verb (501) or option</p>
+<dt id="archivist.errors.ArchivistUnauthenticatedError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistUnauthenticatedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistUnauthenticatedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistUnauthenticatedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>user is unknown (401)</p>
 </dd></dl>
 
 <dl class="py exception">
@@ -241,15 +225,39 @@
 </dd></dl>
 
 <dl class="py exception">
-<dt id="archivist.errors.ArchivistTooManyRequestsError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistTooManyRequestsError</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retry</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/errors.html#ArchivistTooManyRequestsError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistTooManyRequestsError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Too many reqests in too short a time (429)</p>
+<dt id="archivist.errors.ArchivistForbiddenError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistForbiddenError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistForbiddenError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistForbiddenError" title="Permalink to this definition">¶</a></dt>
+<dd><p>User does not have permission (403)</p>
 </dd></dl>
 
 <dl class="py exception">
-<dt id="archivist.errors.ArchivistUnauthenticatedError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistUnauthenticatedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistUnauthenticatedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistUnauthenticatedError" title="Permalink to this definition">¶</a></dt>
-<dd><p>user is unknown (401)</p>
+<dt id="archivist.errors.ArchivistNotFoundError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistNotFoundError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistNotFoundError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Entity does not exist (404)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistTooManyRequestsError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistTooManyRequestsError</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retry</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/errors.html#ArchivistTooManyRequestsError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistTooManyRequestsError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Too many requests in too short a time (429)</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.Archivist4xxError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">Archivist4xxError</span></code><a class="reference internal" href="_modules/archivist/errors.html#Archivist4xxError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.Archivist4xxError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any other 4xx error</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistNotImplementedError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistNotImplementedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistNotImplementedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistNotImplementedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Illegal REST verb (501) or option</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="archivist.errors.ArchivistHeaderError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistHeaderError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistHeaderError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistHeaderError" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the expected header is not received</p>
 </dd></dl>
 
 <dl class="py exception">
@@ -259,9 +267,9 @@
 </dd></dl>
 
 <dl class="py exception">
-<dt id="archivist.errors.ArchivistUnconfirmedError">
-<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">ArchivistUnconfirmedError</span></code><a class="reference internal" href="_modules/archivist/errors.html#ArchivistUnconfirmedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.ArchivistUnconfirmedError" title="Permalink to this definition">¶</a></dt>
-<dd><p>asset or event failed to confirm after fixed timeout</p>
+<dt id="archivist.errors.Archivist5xxError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.errors.</span></code><code class="sig-name descname"><span class="pre">Archivist5xxError</span></code><a class="reference internal" href="_modules/archivist/errors.html#Archivist5xxError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.errors.Archivist5xxError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any other 5xx error</p>
 </dd></dl>
 
 </div>

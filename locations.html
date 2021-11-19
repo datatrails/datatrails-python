@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Locations &mdash; Jitsuin Archivist 0.7.1 documentation</title>
+  <title>Locations &mdash; Jitsuin Archivist 0.8.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.8.0
               </div>
             
           
@@ -101,6 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Locations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
@@ -214,24 +216,6 @@ accessed as an attribute of the Archivist class.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="archivist.locations._LocationsClient.count">
-<code class="sig-name descname"><span class="pre">count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count locations.</p>
-<p>Counts number of locations that match criteria.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“display_name”: “Macclesfield” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“director”: “john smith” }</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>integer count of locations.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="archivist.locations._LocationsClient.create">
 <code class="sig-name descname"><span class="pre">create</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><span class="pre">archivist.locations.Location</span></a><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create location</p>
@@ -266,6 +250,39 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="archivist.locations._LocationsClient.read">
+<code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><span class="pre">archivist.locations.Location</span></a><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read location</p>
+<p>Reads location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – location identity e.g. locations/xxxxxxxxxxxxxxxxxxxxxxx</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.locations._LocationsClient.count">
+<code class="sig-name descname"><span class="pre">count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count locations.</p>
+<p>Counts number of locations that match criteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“display_name”: “Macclesfield” }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“director”: “john smith” }</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>integer count of locations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="archivist.locations._LocationsClient.list">
 <code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.list" title="Permalink to this definition">¶</a></dt>
 <dd><p>List locations.</p>
@@ -280,21 +297,6 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>iterable that returns <a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a> instances</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="archivist.locations._LocationsClient.read">
-<code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><span class="pre">archivist.locations.Location</span></a><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.read" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read location</p>
-<p>Reads location.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – location identity e.g. locations/xxxxxxxxxxxxxxxxxxxxxxx</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a> instance</p>
 </dd>
 </dl>
 </dd></dl>

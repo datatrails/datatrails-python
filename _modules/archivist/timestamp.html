@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.timestamp &mdash; Jitsuin Archivist 0.7.1 documentation</title>
+  <title>archivist.timestamp &mdash; Jitsuin Archivist 0.8.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.8.0
               </div>
             
           
@@ -99,6 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors</a></li>
@@ -175,6 +177,7 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">iso8601</span> <span class="kn">import</span> <span class="n">parse_date</span>
 <span class="kn">from</span> <span class="nn">rfc3339</span> <span class="kn">import</span> <span class="n">rfc3339</span>
 
@@ -206,7 +209,19 @@
 <span class="sd">        string representation of time</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">rfc3339</span><span class="p">(</span><span class="n">date_object</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">rfc3339</span><span class="p">(</span><span class="n">date_object</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_system_timezone</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="now_timestamp"><a class="viewcode-back" href="../../timestamp.html#archivist.timestamp.now_timestamp">[docs]</a><span class="k">def</span> <span class="nf">now_timestamp</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Return Now as an Archivist format timestamp string</span>
+
+<span class="sd">    See https://pypi.org/project/rfc3339/</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        string representation of now</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">make_timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span></div>
 </pre></div>
 
            </div>

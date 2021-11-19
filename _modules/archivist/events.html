@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.events &mdash; Jitsuin Archivist 0.7.1 documentation</title>
+  <title>archivist.events &mdash; Jitsuin Archivist 0.8.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.8.0
               </div>
             
           
@@ -99,6 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors</a></li>
@@ -199,7 +201,7 @@
 
 <span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
-<span class="kn">from</span> <span class="nn">archivist</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">SEP</span><span class="p">,</span>
@@ -350,7 +352,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_confirmation</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="_EventsClient.wait_for_confirmation"><a class="viewcode-back" href="../../events.html#archivist.events._EventsClient.wait_for_confirmation">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="_EventsClient.wait_for_confirmation"><a class="viewcode-back" href="../../events.html#archivist.events._EventsClient.wait_for_confirmation">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Event</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Wait for event to be confirmed.</span>
 
 <span class="sd">        Waits for event to be confirmed.</span>

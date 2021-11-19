@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Timestamp &mdash; Jitsuin Archivist 0.7.1 documentation</title>
+  <title>Timestamp &mdash; Jitsuin Archivist 0.8.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.8.0
               </div>
             
           
@@ -101,6 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
@@ -175,6 +177,21 @@
 <span class="target" id="module-archivist.timestamp"></span><p>Timestamp manipulation</p>
 <p>Defines timestamp policy for Archivist.</p>
 <dl class="py function">
+<dt id="archivist.timestamp.parse_timestamp">
+<code class="sig-prename descclassname"><span class="pre">archivist.timestamp.</span></code><code class="sig-name descname"><span class="pre">parse_timestamp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/timestamp.html#parse_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.timestamp.parse_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse an Archivist timestamp to a datetime object</p>
+<p>See <a class="reference external" href="https://pypi.org/project/iso8601/">https://pypi.org/project/iso8601/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>date_string</strong> (<em>str</em>) – a string representing date and time in ISO8601 format.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>datetime object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="archivist.timestamp.make_timestamp">
 <code class="sig-prename descclassname"><span class="pre">archivist.timestamp.</span></code><code class="sig-name descname"><span class="pre">make_timestamp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/timestamp.html#make_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.timestamp.make_timestamp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Format a datetime object into an Archivist format timestamp string</p>
@@ -190,16 +207,13 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="archivist.timestamp.parse_timestamp">
-<code class="sig-prename descclassname"><span class="pre">archivist.timestamp.</span></code><code class="sig-name descname"><span class="pre">parse_timestamp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/timestamp.html#parse_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.timestamp.parse_timestamp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse an Archivist timestamp to a datetime object</p>
-<p>See <a class="reference external" href="https://pypi.org/project/iso8601/">https://pypi.org/project/iso8601/</a></p>
+<dt id="archivist.timestamp.now_timestamp">
+<code class="sig-prename descclassname"><span class="pre">archivist.timestamp.</span></code><code class="sig-name descname"><span class="pre">now_timestamp</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/timestamp.html#now_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.timestamp.now_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return Now as an Archivist format timestamp string</p>
+<p>See <a class="reference external" href="https://pypi.org/project/rfc3339/">https://pypi.org/project/rfc3339/</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>date_string</strong> (<em>str</em>) – a string representing date and time in ISO8601 format.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>datetime object</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>string representation of now</p>
 </dd>
 </dl>
 </dd></dl>

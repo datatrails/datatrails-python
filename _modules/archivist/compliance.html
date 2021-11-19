@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>archivist.compliance &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="../../_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.8.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>archivist.compliance</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for archivist.compliance</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Compliance interface</span>
+
+<span class="sd">   Access to the compliance endpoint.</span>
+
+<span class="sd">   The user is not expected to use this class directly. It is an attribute of the</span>
+<span class="sd">   :class:`Archivist` class.</span>
+
+<span class="sd">   For example instantiate an Archivist instance and execute the methods of the class:</span>
+
+<span class="sd">   .. code-block:: python</span>
+
+<span class="sd">      with open(&quot;.auth_token&quot;, mode=&quot;r&quot;) as tokenfile:</span>
+<span class="sd">          authtoken = tokenfile.read().strip()</span>
+
+<span class="sd">      # Initialize connection to Archivist</span>
+<span class="sd">      arch = Archivist(</span>
+<span class="sd">          &quot;https://rkvst.poc.jitsuin.io&quot;,</span>
+<span class="sd">          auth=authtoken,</span>
+<span class="sd">      )</span>
+<span class="sd">      asset = arch.compliance.compliant_at(...)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
+<span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+
+
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">COMPLIANCE_SUBPATH</span><span class="p">,</span>
+    <span class="n">COMPLIANCE_LABEL</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Compliance"><a class="viewcode-back" href="../../compliance_policies/compliance.html#archivist.compliance.Compliance">[docs]</a><span class="k">class</span> <span class="nc">Compliance</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compliance</span>
+
+<span class="sd">    Compliance object has dictionary of all the compliance attributes.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<span class="c1"># pylint: disable=too-few-public-methods</span>
+<div class="viewcode-block" id="_ComplianceClient"><a class="viewcode-back" href="../../compliance_policies/compliance.html#archivist.compliance._ComplianceClient">[docs]</a><span class="k">class</span> <span class="nc">_ComplianceClient</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
+    <span class="sd">&quot;&quot;&quot;ComplianceClient</span>
+
+<span class="sd">    Access to compliance entities using CRUD interface. This class is usually</span>
+<span class="sd">    accessed as an attribute of the Archivist class.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        archivist (Archivist): :class:`Archivist` instance</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
+
+<div class="viewcode-block" id="_ComplianceClient.compliant_at"><a class="viewcode-back" href="../../compliance_policies/compliance.html#archivist.compliance._ComplianceClient.compliant_at">[docs]</a>    <span class="k">def</span> <span class="nf">compliant_at</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">compliant_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Compliance</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads compliance of a particular asset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            asset_id (str): asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">            compliant_at (str): datetime to check compliance at a particular time (optional).</span>
+<span class="sd">                                format: rfc3339 - UTC only</span>
+<span class="sd">                                https://datatracker.ietf.org/doc/html/rfc3339#section-4.1</span>
+<span class="sd">            page_size (int): optional page size. (Rarely used).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`Compliance` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;compliant_at&quot;</span><span class="p">:</span> <span class="n">compliant_at</span><span class="p">}</span> <span class="k">if</span> <span class="n">compliant_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{COMPLIANCE_SUBPATH}</span><span class="s2">/</span><span class="si">{COMPLIANCE_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">asset_id</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+        <span class="p">)</span>  <span class="c1"># type: ignore</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

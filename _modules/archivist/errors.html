@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.errors &mdash; Jitsuin Archivist 0.7.1 documentation</title>
+  <title>archivist.errors &mdash; Jitsuin Archivist 0.8.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.8.0
               </div>
             
           
@@ -99,6 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors</a></li>
@@ -176,6 +178,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">HEADERS_RETRY_AFTER</span>
 <span class="kn">from</span> <span class="nn">.headers</span> <span class="kn">import</span> <span class="n">_headers_get</span>
@@ -222,9 +225,9 @@
 
 
 <div class="viewcode-block" id="ArchivistTooManyRequestsError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistTooManyRequestsError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistTooManyRequestsError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Too many reqests in too short a time (429)&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Too many requests in too short a time (429)&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">retry</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">retry</span><span class="p">)</span> <span class="k">if</span> <span class="n">retry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
@@ -235,6 +238,10 @@
 
 <div class="viewcode-block" id="ArchivistNotImplementedError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistNotImplementedError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistNotImplementedError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Illegal REST verb (501) or option&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ArchivistHeaderError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistHeaderError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistHeaderError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;When the expected header is not received&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistUnavailableError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistUnavailableError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistUnavailableError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>

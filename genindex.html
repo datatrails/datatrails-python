@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; Jitsuin Archivist 0.7.1 documentation</title>
+  <title>Index &mdash; Jitsuin Archivist 0.8.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.7.1
+                0.8.0
               </div>
             
           
@@ -99,6 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
@@ -201,11 +203,17 @@
 </li>
       <li><a href="attachments.html#archivist.attachments._AttachmentsClient">_AttachmentsClient (class in archivist.attachments)</a>
 </li>
+      <li><a href="compliance_policies/compliance.html#archivist.compliance._ComplianceClient">_ComplianceClient (class in archivist.compliance)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient">_CompliancePoliciesClient (class in archivist.compliance_policies)</a>
+</li>
       <li><a href="events.html#archivist.events._EventsClient">_EventsClient (class in archivist.events)</a>
 </li>
       <li><a href="locations.html#archivist.locations._LocationsClient">_LocationsClient (class in archivist.locations)</a>
+</li>
+      <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient">_SBOMSClient (class in archivist.sboms)</a>
 </li>
       <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient">_SubjectsClient (class in archivist.subjects)</a>
 </li>
@@ -248,6 +256,34 @@
 </li>
       </ul></li>
       <li>
+    archivist.compliance
+
+      <ul>
+        <li><a href="compliance_policies/compliance.html#module-archivist.compliance">module</a>
+</li>
+      </ul></li>
+      <li>
+    archivist.compliance_policies
+
+      <ul>
+        <li><a href="compliance_policies/compliance_policies.html#module-archivist.compliance_policies">module</a>
+</li>
+      </ul></li>
+      <li>
+    archivist.compliance_policy_requests
+
+      <ul>
+        <li><a href="compliance_policies/compliance_policy_requests.html#module-archivist.compliance_policy_requests">module</a>
+</li>
+      </ul></li>
+      <li>
+    archivist.compliance_policy_type
+
+      <ul>
+        <li><a href="compliance_policies/compliance_policies_type.html#module-archivist.compliance_policy_type">module</a>
+</li>
+      </ul></li>
+      <li>
     archivist.errors
 
       <ul>
@@ -275,6 +311,22 @@
         <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    archivist.sbommetadata
+
+      <ul>
+        <li><a href="sboms/sbommetadata.html#module-archivist.sbommetadata">module</a>
+</li>
+      </ul></li>
+      <li>
+    archivist.sboms
+
+      <ul>
+        <li><a href="sboms/sboms.html#module-archivist.sboms">module</a>
+</li>
+      </ul></li>
       <li>
     archivist.subjects
 
@@ -282,8 +334,6 @@
         <li><a href="iam/subjects.html#module-archivist.subjects">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     archivist.timestamp
 
@@ -304,6 +354,8 @@
       <li><a href="errors.html#archivist.errors.ArchivistError">ArchivistError</a>
 </li>
       <li><a href="errors.html#archivist.errors.ArchivistForbiddenError">ArchivistForbiddenError</a>
+</li>
+      <li><a href="errors.html#archivist.errors.ArchivistHeaderError">ArchivistHeaderError</a>
 </li>
       <li><a href="errors.html#archivist.errors.ArchivistIllegalArgumentError">ArchivistIllegalArgumentError</a>
 </li>
@@ -333,12 +385,44 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="archivist.html#archivist.archivist.Archivist.cert">cert() (archivist.archivist.Archivist property)</a>
 </li>
+      <li><a href="compliance_policies/compliance.html#archivist.compliance.Compliance">Compliance (class in archivist.compliance)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType.COMPLIANCE_CURRENT_OUTSTANDING">COMPLIANCE_CURRENT_OUTSTANDING (archivist.compliance_policy_type.CompliancePolicyType attribute)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType.COMPLIANCE_DYNAMIC_TOLERANCE">COMPLIANCE_DYNAMIC_TOLERANCE (archivist.compliance_policy_type.CompliancePolicyType attribute)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType.COMPLIANCE_PERIOD_OUTSTANDING">COMPLIANCE_PERIOD_OUTSTANDING (archivist.compliance_policy_type.CompliancePolicyType attribute)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType.COMPLIANCE_RICHNESS">COMPLIANCE_RICHNESS (archivist.compliance_policy_type.CompliancePolicyType attribute)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType.COMPLIANCE_SINCE">COMPLIANCE_SINCE (archivist.compliance_policy_type.CompliancePolicyType attribute)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies.CompliancePolicy">CompliancePolicy (class in archivist.compliance_policies)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyBase">CompliancePolicyBase (class in archivist.compliance_policy_requests)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyCurrentOutstanding">CompliancePolicyCurrentOutstanding (class in archivist.compliance_policy_requests)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyDynamicTolerance">CompliancePolicyDynamicTolerance (class in archivist.compliance_policy_requests)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyPeriodOutstanding">CompliancePolicyPeriodOutstanding (class in archivist.compliance_policy_requests)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyRichness">CompliancePolicyRichness (class in archivist.compliance_policy_requests)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicySince">CompliancePolicySince (class in archivist.compliance_policy_requests)</a>
+</li>
+      <li><a href="compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType">CompliancePolicyType (class in archivist.compliance_policy_type)</a>
+</li>
+      <li><a href="compliance_policies/compliance.html#archivist.compliance._ComplianceClient.compliant_at">compliant_at() (archivist.compliance._ComplianceClient method)</a>
+</li>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count">count() (archivist.access_policies._AccessPoliciesClient method)</a>
 
       <ul>
         <li><a href="archivist.html#archivist.archivist.Archivist.count">(archivist.archivist.Archivist method)</a>
 </li>
         <li><a href="assets.html#archivist.assets._AssetsClient.count">(archivist.assets._AssetsClient method)</a>
+</li>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.count">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
         <li><a href="events.html#archivist.events._EventsClient.count">(archivist.events._EventsClient method)</a>
 </li>
@@ -347,16 +431,18 @@
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.count">(archivist.subjects._SubjectsClient method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count_matching_access_policies">count_matching_access_policies() (archivist.access_policies._AccessPoliciesClient method)</a>
 </li>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count_matching_assets">count_matching_assets() (archivist.access_policies._AccessPoliciesClient method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create">create() (archivist.access_policies._AccessPoliciesClient method)</a>
 
       <ul>
         <li><a href="assets.html#archivist.assets._AssetsClient.create">(archivist.assets._AssetsClient method)</a>
+</li>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.create">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
         <li><a href="events.html#archivist.events._EventsClient.create">(archivist.events._EventsClient method)</a>
 </li>
@@ -369,6 +455,8 @@
 
       <ul>
         <li><a href="assets.html#archivist.assets._AssetsClient.create_from_data">(archivist.assets._AssetsClient method)</a>
+</li>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.create_from_data">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
         <li><a href="events.html#archivist.events._EventsClient.create_from_data">(archivist.events._EventsClient method)</a>
 </li>
@@ -388,25 +476,43 @@
       <ul>
         <li><a href="assets.html#archivist.assets.DEFAULT_PAGE_SIZE">(in module archivist.assets)</a>
 </li>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies.DEFAULT_PAGE_SIZE">(in module archivist.compliance_policies)</a>
+</li>
         <li><a href="events.html#archivist.events.DEFAULT_PAGE_SIZE">(in module archivist.events)</a>
 </li>
         <li><a href="locations.html#archivist.locations.DEFAULT_PAGE_SIZE">(in module archivist.locations)</a>
 </li>
+        <li><a href="sboms/sboms.html#archivist.sboms.DEFAULT_PAGE_SIZE">(in module archivist.sboms)</a>
+</li>
         <li><a href="iam/subjects.html#archivist.subjects.DEFAULT_PAGE_SIZE">(in module archivist.subjects)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.delete">delete() (archivist.access_policies._AccessPoliciesClient method)</a>
 
       <ul>
         <li><a href="archivist.html#archivist.archivist.Archivist.delete">(archivist.archivist.Archivist method)</a>
 </li>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.delete">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
+</li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.delete">(archivist.subjects._SubjectsClient method)</a>
 </li>
       </ul></li>
-      <li><a href="attachments.html#archivist.attachments._AttachmentsClient.download">download() (archivist.attachments._AttachmentsClient method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyBase.dict">dict() (archivist.compliance_policy_requests.CompliancePolicyBase method)</a>
+
+      <ul>
+        <li><a href="compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyRichness.dict">(archivist.compliance_policy_requests.CompliancePolicyRichness method)</a>
 </li>
+        <li><a href="sboms/sbommetadata.html#archivist.sbommetadata.SBOM.dict">(archivist.sbommetadata.SBOM method)</a>
+</li>
+      </ul></li>
+      <li><a href="attachments.html#archivist.attachments._AttachmentsClient.download">download() (archivist.attachments._AttachmentsClient method)</a>
+
+      <ul>
+        <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.download">(archivist.sboms._SBOMSClient method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -468,9 +574,13 @@
 </li>
         <li><a href="assets.html#archivist.assets._AssetsClient.list">(archivist.assets._AssetsClient method)</a>
 </li>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.list">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
+</li>
         <li><a href="events.html#archivist.events._EventsClient.list">(archivist.events._EventsClient method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.list">(archivist.locations._LocationsClient method)</a>
+</li>
+        <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.list">(archivist.sboms._SBOMSClient method)</a>
 </li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.list">(archivist.subjects._SubjectsClient method)</a>
 </li>
@@ -505,6 +615,14 @@
 </li>
         <li><a href="attachments.html#module-archivist.attachments">archivist.attachments</a>
 </li>
+        <li><a href="compliance_policies/compliance.html#module-archivist.compliance">archivist.compliance</a>
+</li>
+        <li><a href="compliance_policies/compliance_policies.html#module-archivist.compliance_policies">archivist.compliance_policies</a>
+</li>
+        <li><a href="compliance_policies/compliance_policy_requests.html#module-archivist.compliance_policy_requests">archivist.compliance_policy_requests</a>
+</li>
+        <li><a href="compliance_policies/compliance_policies_type.html#module-archivist.compliance_policy_type">archivist.compliance_policy_type</a>
+</li>
         <li><a href="errors.html#module-archivist.errors">archivist.errors</a>
 </li>
         <li><a href="events.html#module-archivist.events">archivist.events</a>
@@ -512,6 +630,10 @@
         <li><a href="locations.html#module-archivist.locations">archivist.locations</a>
 </li>
         <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">archivist.proof_mechanism</a>
+</li>
+        <li><a href="sboms/sbommetadata.html#module-archivist.sbommetadata">archivist.sbommetadata</a>
+</li>
+        <li><a href="sboms/sboms.html#module-archivist.sboms">archivist.sboms</a>
 </li>
         <li><a href="iam/subjects.html#module-archivist.subjects">archivist.subjects</a>
 </li>
@@ -525,6 +647,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="assets.html#archivist.assets.Asset.name">name() (archivist.assets.Asset property)</a>
+
+      <ul>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies.CompliancePolicy.name">(archivist.compliance_policies.CompliancePolicy property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="timestamp.html#archivist.timestamp.now_timestamp">now_timestamp() (in module archivist.timestamp)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -546,6 +676,8 @@
 </li>
       <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism">ProofMechanism (class in archivist.proof_mechanism)</a>
 </li>
+      <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.publish">publish() (archivist.sboms._SBOMSClient method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -557,9 +689,13 @@
       <ul>
         <li><a href="assets.html#archivist.assets._AssetsClient.read">(archivist.assets._AssetsClient method)</a>
 </li>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.read">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
+</li>
         <li><a href="events.html#archivist.events._EventsClient.read">(archivist.events._EventsClient method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.read">(archivist.locations._LocationsClient method)</a>
+</li>
+        <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.read">(archivist.sboms._SBOMSClient method)</a>
 </li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.read">(archivist.subjects._SubjectsClient method)</a>
 </li>
@@ -569,6 +705,8 @@
       <li><a href="assets.html#archivist.assets._AssetsClient.read_by_signature">read_by_signature() (archivist.assets._AssetsClient method)</a>
 
       <ul>
+        <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.read_by_signature">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
+</li>
         <li><a href="events.html#archivist.events._EventsClient.read_by_signature">(archivist.events._EventsClient method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.read_by_signature">(archivist.locations._LocationsClient method)</a>
@@ -580,10 +718,12 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism.SIMPLE_HASH">SIMPLE_HASH (archivist.proof_mechanism.ProofMechanism attribute)</a>
+      <li><a href="sboms/sbommetadata.html#archivist.sbommetadata.SBOM">SBOM (class in archivist.sbommetadata)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism.SIMPLE_HASH">SIMPLE_HASH (archivist.proof_mechanism.ProofMechanism attribute)</a>
+</li>
       <li><a href="iam/subjects.html#archivist.subjects.Subject">Subject (class in archivist.subjects)</a>
 </li>
   </ul></td>
@@ -601,7 +741,11 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="attachments.html#archivist.attachments._AttachmentsClient.upload">upload() (archivist.attachments._AttachmentsClient method)</a>
+
+      <ul>
+        <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.upload">(archivist.sboms._SBOMSClient method)</a>
 </li>
+      </ul></li>
       <li><a href="archivist.html#archivist.archivist.Archivist.url">url() (archivist.archivist.Archivist property)</a>
 </li>
   </ul></td>
@@ -635,6 +779,8 @@
       <li><a href="events.html#archivist.events.Event.when">when() (archivist.events.Event property)</a>
 </li>
       <li><a href="events.html#archivist.events.Event.who">who() (archivist.events.Event property)</a>
+</li>
+      <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.withdraw">withdraw() (archivist.sboms._SBOMSClient method)</a>
 </li>
   </ul></td>
 </tr></table>
