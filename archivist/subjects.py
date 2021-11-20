@@ -34,11 +34,6 @@ from .constants import (
 )
 from .dictmerge import _deepmerge
 
-#: Default page size - number of entities fetched in one REST GET in the
-#: :func:`~_SubjectsClient.list` method. This can be overridden but should rarely
-#: be changed.
-DEFAULT_PAGE_SIZE = 500
-
 FIXTURE_LABEL = "subjects"
 
 
@@ -216,7 +211,7 @@ class _SubjectsClient:
     def list(
         self,
         *,
-        page_size: int = DEFAULT_PAGE_SIZE,
+        page_size: Optional[int] = None,
         display_name: Optional[str] = None,
     ):
         """List subjects.

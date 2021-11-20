@@ -14,7 +14,6 @@ from archivist.constants import (
     LOCATIONS_LABEL,
 )
 from archivist.errors import ArchivistBadRequestError
-from archivist.locations import DEFAULT_PAGE_SIZE
 
 from .mock_response import MockResponse
 
@@ -269,7 +268,7 @@ class TestLocations(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/{SUBPATH}?page_size={DEFAULT_PAGE_SIZE}",),
+                        (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
                                 "content-type": "application/json",
@@ -319,8 +318,7 @@ class TestLocations(TestCase):
                         (
                             (
                                 f"url/{ROOT}/{SUBPATH}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&attributes.director=John Smith"
+                                "?attributes.director=John Smith"
                                 "&display_name=Macclesfield, Cheshire"
                             ),
                         ),

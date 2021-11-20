@@ -47,11 +47,6 @@ from .constants import (
 )
 from .dictmerge import _deepmerge
 
-
-#: Default page size - number of entities fetched in one call to the
-#: :func:`~_AssetsClient.list` method.
-DEFAULT_PAGE_SIZE = 500
-
 FIXTURE_LABEL = "compliance_policies"
 
 
@@ -193,7 +188,7 @@ class _CompliancePoliciesClient:
             query=self.__query(props),
         )
 
-    def list(self, *, page_size: int = DEFAULT_PAGE_SIZE, props: Dict = None):
+    def list(self, *, page_size: Optional[int] = None, props: Dict = None):
         """List compliance policies.
 
         Lists compliance policies that match criteria.

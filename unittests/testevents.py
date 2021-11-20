@@ -17,7 +17,7 @@ from archivist.constants import (
     HEADERS_TOTAL_COUNT,
 )
 from archivist.errors import ArchivistNotFoundError, ArchivistUnconfirmedError
-from archivist.events import Event, DEFAULT_PAGE_SIZE
+from archivist.events import Event
 
 from .mock_response import MockResponse
 
@@ -750,7 +750,6 @@ class TestEvents(TestCase):
                                 f"url/{ROOT}/{ASSETS_SUBPATH}"
                                 f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                                 f"/{EVENTS_LABEL}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
                             ),
                         ),
                         {
@@ -807,8 +806,7 @@ class TestEvents(TestCase):
                                 f"url/{ROOT}/{ASSETS_SUBPATH}"
                                 f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                                 f"/{EVENTS_LABEL}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&confirmation_status=CONFIRMED"
+                                "?confirmation_status=CONFIRMED"
                                 "&event_attributes.arc_firmware_version=1.0"
                             ),
                         ),
@@ -865,8 +863,7 @@ class TestEvents(TestCase):
                                 f"url/{ROOT}/{ASSETS_SUBPATH}"
                                 f"/{ASSETS_WILDCARD}"
                                 f"/{EVENTS_LABEL}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&confirmation_status=CONFIRMED"
+                                "?confirmation_status=CONFIRMED"
                                 "&event_attributes.arc_firmware_version=1.0"
                             ),
                         ),

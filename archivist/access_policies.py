@@ -39,11 +39,6 @@ from .dictmerge import _deepmerge
 
 from .assets import Asset
 
-#: Default page size - number of entities fetched in one REST GET in the
-#: :func:`~_AccessPoliciesClient.list` method. This can be overridden but should rarely
-#: be changed.
-DEFAULT_PAGE_SIZE = 500
-
 FIXTURE_LABEL = "access_policies"
 
 
@@ -208,7 +203,7 @@ class _AccessPoliciesClient:
         )
 
     def list(
-        self, *, page_size: int = DEFAULT_PAGE_SIZE, display_name: Optional[str] = None
+        self, *, page_size: Optional[int] = None, display_name: Optional[str] = None
     ):
         """List access policies.
 
@@ -251,7 +246,7 @@ class _AccessPoliciesClient:
         )
 
     def list_matching_assets(
-        self, access_policy_id: str, *, page_size: int = DEFAULT_PAGE_SIZE
+        self, access_policy_id: str, *, page_size: Optional[int] = None
     ):
         """List matching assets.
 
@@ -291,7 +286,7 @@ class _AccessPoliciesClient:
         )
 
     def list_matching_access_policies(
-        self, asset_id: str, *, page_size: int = DEFAULT_PAGE_SIZE
+        self, asset_id: str, *, page_size: Optional[int] = None
     ):
         """List matching access policies.
 

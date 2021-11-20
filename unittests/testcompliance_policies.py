@@ -16,7 +16,6 @@ from archivist.constants import (
 from archivist.errors import ArchivistBadRequestError
 from archivist.compliance_policies import (
     CompliancePolicy,
-    DEFAULT_PAGE_SIZE,
 )
 from archivist.compliance_policy_requests import (
     CompliancePolicySince,
@@ -286,7 +285,7 @@ class TestCompliancePolicies(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/{SUBPATH}?page_size={DEFAULT_PAGE_SIZE}",),
+                        (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
                                 "content-type": "application/json",
@@ -332,13 +331,7 @@ class TestCompliancePolicies(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (
-                            (
-                                f"url/{ROOT}/{SUBPATH}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&compliance_type=SINCE"
-                            ),
-                        ),
+                        ((f"url/{ROOT}/{SUBPATH}?compliance_type=SINCE"),),
                         {
                             "headers": {
                                 "content-type": "application/json",

@@ -589,7 +589,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         path: str,
         field: str,
         *,
-        page_size: int = None,
+        page_size: Optional[int] = None,
         query: Optional[Dict] = None,
         headers: Optional[Dict] = None,
     ):
