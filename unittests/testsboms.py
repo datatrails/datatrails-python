@@ -8,7 +8,6 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.sbommetadata import SBOM
-from archivist.sboms import DEFAULT_PAGE_SIZE
 from archivist.constants import (
     ROOT,
     SBOMS_SUBPATH,
@@ -290,9 +289,7 @@ class TestSBOMS(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (
-                            f"url/{ROOT}/{SUBPATH}/{SBOMS_WILDCARD}?page_size={DEFAULT_PAGE_SIZE}",
-                        ),
+                        (f"url/{ROOT}/{SUBPATH}/{SBOMS_WILDCARD}",),
                         {
                             "headers": {
                                 "content-type": "application/json",
@@ -344,8 +341,7 @@ class TestSBOMS(TestCase):
                         (
                             (
                                 f"url/{ROOT}/{SUBPATH}/{SBOMS_WILDCARD}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&lifecycle_status=ACTIVE"
+                                "?lifecycle_status=ACTIVE"
                                 "&version=10.0.2"
                             ),
                         ),

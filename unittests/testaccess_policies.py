@@ -15,7 +15,6 @@ from archivist.constants import (
     ASSETS_LABEL,
 )
 from archivist.errors import ArchivistBadRequestError
-from archivist.access_policies import DEFAULT_PAGE_SIZE
 
 from .mock_response import MockResponse
 from .testassets import RESPONSE as ASSET
@@ -316,7 +315,7 @@ class TestAccessPolicies(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/{SUBPATH}?page_size={DEFAULT_PAGE_SIZE}",),
+                        (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
                                 "content-type": "application/json",
@@ -365,8 +364,7 @@ class TestAccessPolicies(TestCase):
                         (
                             (
                                 f"url/{ROOT}/{SUBPATH}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&display_name=Policy display name"
+                                "?display_name=Policy display name"
                             ),
                         ),
                         {
@@ -456,8 +454,7 @@ class TestAccessPolicies(TestCase):
                     (
                         (
                             f"url/{ROOT}/"
-                            f"{ACCESS_POLICIES_SUBPATH}/{ASSET_ID}/{ACCESS_POLICIES_LABEL}"
-                            f"?page_size={DEFAULT_PAGE_SIZE}",
+                            f"{ACCESS_POLICIES_SUBPATH}/{ASSET_ID}/{ACCESS_POLICIES_LABEL}",
                         ),
                         {
                             "headers": {
@@ -542,8 +539,7 @@ class TestAccessPolicies(TestCase):
                     tuple(a),
                     (
                         (
-                            f"url/{ROOT}/{ACCESS_POLICIES_SUBPATH}/{IDENTITY}/{ASSETS_LABEL}"
-                            f"?page_size={DEFAULT_PAGE_SIZE}",
+                            f"url/{ROOT}/{ACCESS_POLICIES_SUBPATH}/{IDENTITY}/{ASSETS_LABEL}",
                         ),
                         {
                             "headers": {

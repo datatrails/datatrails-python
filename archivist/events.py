@@ -42,11 +42,6 @@ from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 
 
-#: Default page size - number of entities fetched in one REST GET in the
-#: :func:`~_EventsClient.list` method. This can be overridden but should rarely
-#: be changed.
-DEFAULT_PAGE_SIZE = 500
-
 FIXTURE_LABEL = "events"
 
 LOGGER = logging.getLogger(__name__)
@@ -296,7 +291,7 @@ class _EventsClient:
         self,
         *,
         asset_id: str = ASSETS_WILDCARD,
-        page_size: int = DEFAULT_PAGE_SIZE,
+        page_size: Optional[int] = None,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
         asset_attrs: Optional[Dict] = None,
