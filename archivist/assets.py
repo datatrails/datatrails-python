@@ -41,11 +41,6 @@ from . import confirmer
 from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 
-#: Default page size - number of entities fetched in one REST GET in the
-#: :func:`~_AssetsClient.list` method. This can be overridden but should rarely
-#: be changed.
-DEFAULT_PAGE_SIZE = 500
-
 # These are now hardcoded and not user-selectable. Eventually they will be removed from
 # the backend API and removed from this package.
 BEHAVIOURS = [
@@ -259,7 +254,7 @@ class _AssetsClient:
     def list(
         self,
         *,
-        page_size: int = DEFAULT_PAGE_SIZE,
+        page_size: Optional[int] = None,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
     ):

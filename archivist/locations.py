@@ -33,11 +33,6 @@ from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 from .dictmerge import _deepmerge
 
 
-#: Default page size - number of entities fetched in one REST GET in the
-#: :func:`~_LocationsClient.list` method. This can be overridden but should rarely
-#: be changed.
-DEFAULT_PAGE_SIZE = 500
-
 FIXTURE_LABEL = "locations"
 
 
@@ -150,7 +145,7 @@ class _LocationsClient:
     def list(
         self,
         *,
-        page_size: int = DEFAULT_PAGE_SIZE,
+        page_size: Optional[int] = None,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
     ):

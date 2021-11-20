@@ -7,7 +7,7 @@ import json
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist.assets import BEHAVIOURS, DEFAULT_PAGE_SIZE
+from archivist.assets import BEHAVIOURS
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
@@ -583,7 +583,7 @@ class TestAssets(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/{SUBPATH}?page_size={DEFAULT_PAGE_SIZE}",),
+                        (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
                                 "content-type": "application/json",
@@ -635,8 +635,7 @@ class TestAssets(TestCase):
                         (
                             (
                                 f"url/{ROOT}/{SUBPATH}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&attributes.arc_firmware_version=1.0"
+                                "?attributes.arc_firmware_version=1.0"
                                 "&confirmation_status=CONFIRMED"
                             ),
                         ),

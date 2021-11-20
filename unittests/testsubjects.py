@@ -14,7 +14,6 @@ from archivist.constants import (
     SUBJECTS_LABEL,
 )
 from archivist.errors import ArchivistBadRequestError
-from archivist.subjects import DEFAULT_PAGE_SIZE
 
 from .mock_response import MockResponse
 
@@ -287,7 +286,7 @@ class TestSubjects(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/{SUBPATH}?page_size={DEFAULT_PAGE_SIZE}",),
+                        (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
                                 "content-type": "application/json",
@@ -336,8 +335,7 @@ class TestSubjects(TestCase):
                         (
                             (
                                 f"url/{ROOT}/{SUBPATH}"
-                                f"?page_size={DEFAULT_PAGE_SIZE}"
-                                "&display_name=Subject display name"
+                                "?display_name=Subject display name"
                             ),
                         ),
                         {
