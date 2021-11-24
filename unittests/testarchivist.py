@@ -12,9 +12,7 @@ from archivist.errors import (
     ArchivistBadRequestError,
     ArchivistDuplicateError,
     ArchivistHeaderError,
-    ArchivistIllegalArgumentError,
     ArchivistNotFoundError,
-    ArchivistNotImplementedError,
     ArchivistTooManyRequestsError,
 )
 
@@ -24,6 +22,21 @@ from .mock_response import MockResponse
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
+
+CLIENT_ID = "client_id-2f78-4fa0-9425-d59314845bc5"
+CLIENT_SECRET = "client_secret-388f5187e32d930d83"
+ACCESS_TOKEN = "access_token-xbXATAWrEpepR7TklOxRB-yud92AsD6DGGasiEGN7MZKT0AIQ4Rw9s"
+REQUEST = {
+    "grant_type": "client_credentials",
+    "client_id": CLIENT_ID,
+    "client_secret": CLIENT_SECRET,
+}
+
+RESPONSE = {
+    "access_token": ACCESS_TOKEN,
+    "expires_in": 660,
+    "token_type": "Bearer",
+}
 
 
 class TestArchivist(TestCase):
@@ -35,7 +48,7 @@ class TestArchivist(TestCase):
         """
         Test default archivist creation
         """
-        arch = Archivist("url", auth="authauthauth")
+        arch = Archivist("url", "authauthauth")
         self.assertIsNotNone(
             arch.assets,
             msg="Incorrect assets",
@@ -69,9 +82,13 @@ class TestArchivist(TestCase):
             arch.headers,
             {
                 "content-type": "application/json",
-                "authorization": "Bearer authauthauth",
             },
-            msg="Incorrect auth headers",
+            msg="Incorrect headers",
+        )
+        self.assertEqual(
+            arch.auth,
+            "authauthauth",
+            msg="Incorrect auth",
         )
         self.assertTrue(
             arch.verify,
@@ -80,11 +97,24 @@ class TestArchivist(TestCase):
         with self.assertRaises(AttributeError):
             e = arch.Illegal_endpoint
 
+    def test_archivist_token(self):
+        """
+        Test archivist creation with app registration
+        """
+        arch = Archivist("url", (CLIENT_ID, CLIENT_SECRET))
+        with mock.patch.object(arch.appidp, "token") as mock_token:
+            mock_token.return_value = RESPONSE
+            self.assertEqual(
+                arch.auth,
+                ACCESS_TOKEN,
+                msg="Incorrect auth",
+            )
+
     def test_archivist_copy(self):
         """
         Test archivist copy
         """
-        arch = Archivist("url", auth="authauthauth", verify=False)
+        arch = Archivist("url", "authauthauth", verify=False)
         arch1 = copy(arch)
         self.assertEqual(
             arch.url,
@@ -111,52 +141,11 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with no verify
         """
-        arch = Archivist("url", auth="authauthauth", verify=False)
+        arch = Archivist("url", "authauthauth", verify=False)
         self.assertFalse(
             arch.verify,
             msg="verify must be False",
         )
-
-    def test_archivist_with_neither_auth_and_cert(self):
-        """
-        Test archivist creation with both auth and cert
-        """
-        with self.assertRaises(ArchivistIllegalArgumentError):
-            arch = Archivist("url")
-
-    def test_archivist_with_both_auth_and_cert(self):
-        """
-        Test archivist creation with both auth and cert
-        """
-        with self.assertRaises(ArchivistIllegalArgumentError):
-            arch = Archivist("url", auth="authauthauth", cert="/path/to/file")
-
-    # @mock.patch("archivist.archivist.os_path_isfile")
-    # def test_archivist_with_nonexistent_cert(self, mock_isfile):
-    def test_archivist_with_nonexistent_cert(self):
-        """
-        Test archivist creation with nonexistent cert
-        """
-        # mock_isfile.return_value = False
-        # with self.assertRaises(ArchivistNotFoundError):
-        with self.assertRaises(ArchivistNotImplementedError):
-            arch = Archivist("url", cert="/path/to/file")
-
-    # @mock.patch("archivist.archivist.os_path_isfile")
-    # def test_archivist_with_existent_cert(self, mock_isfile):
-    def test_archivist_with_existent_cert(self):
-        """
-        Test archivist creation with cert - not currently implemented
-        """
-        with self.assertRaises(ArchivistNotImplementedError):
-            arch = Archivist("url", cert="/path/to/file")
-        # mock_isfile.return_value = True
-        # arch = Archivist("url", cert="/path/to/file")
-        # self.assertEqual(
-        #    arch.cert,
-        #    "/path/to/file",
-        #    msg="verify must be False",
-        # )
 
 
 class TestArchivistMethods(TestCase):
@@ -165,7 +154,7 @@ class TestArchivistMethods(TestCase):
     """
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
+        self.arch = Archivist("url", "authauthauth")
 
 
 class TestArchivistPatch(TestArchivistMethods):
@@ -192,7 +181,6 @@ class TestArchivistPatch(TestArchivistMethods):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="POST method called incorrectly",
@@ -235,7 +223,6 @@ class TestArchivistPatch(TestArchivistMethods):
                             "headerfield1": "headervalue1",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="PATCH method called incorrectly",
@@ -314,7 +301,6 @@ class TestArchivistPatch(TestArchivistMethods):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="PATCH method called incorrectly",
@@ -476,7 +462,6 @@ class TestArchivistList(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -551,7 +536,6 @@ class TestArchivistList(TestArchivistMethods):
                                 "headerfield1": "headervalue1",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -593,7 +577,6 @@ class TestArchivistList(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -639,7 +622,6 @@ class TestArchivistList(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -707,7 +689,6 @@ class TestArchivistList(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -790,7 +771,6 @@ class TestArchivistList(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -829,7 +809,6 @@ class TestArchivistSignature(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",

@@ -91,7 +91,7 @@ class TestAccessPolicies(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
+        self.arch = Archivist("url", "authauthauth")
 
     def test_access_policies_create(self):
         """
@@ -114,7 +114,6 @@ class TestAccessPolicies(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="CREATE method called incorrectly",
@@ -144,7 +143,6 @@ class TestAccessPolicies(TestCase):
                         },
                         "params": None,
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -168,7 +166,6 @@ class TestAccessPolicies(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="DELETE method called incorrectly",
@@ -196,7 +193,6 @@ class TestAccessPolicies(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="PATCH method called incorrectly",
@@ -236,7 +232,6 @@ class TestAccessPolicies(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -280,7 +275,6 @@ class TestAccessPolicies(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -322,7 +316,6 @@ class TestAccessPolicies(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -373,7 +366,6 @@ class TestAccessPolicies(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -410,7 +402,6 @@ class TestAccessPolicies(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -462,7 +453,6 @@ class TestAccessPolicies(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -498,7 +488,6 @@ class TestAccessPolicies(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -547,7 +536,6 @@ class TestAccessPolicies(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",

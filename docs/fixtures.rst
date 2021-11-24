@@ -21,7 +21,7 @@ and locations.
     # Initialize connection to Archivist - for assets on DLT.
     ledger = Archivist(
         "https://app.rkvst.io",
-        auth=authtoken,
+        authtoken,
         fixtures = {
             "assets": {
                 "proof_mechanism": ProofMechanism.KHIPU.name,

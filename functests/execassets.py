@@ -35,7 +35,7 @@ class TestAssetCreate(TestCase):
         with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
             auth = fd.read().strip()
         cls.arch = Archivist(
-            environ["TEST_ARCHIVIST"], auth=auth, verify=False, max_time=300
+            environ["TEST_ARCHIVIST"], auth, verify=False, max_time=300
         )
         cls.attrs = deepcopy(ATTRS)
         cls.traffic_light = deepcopy(ATTRS)

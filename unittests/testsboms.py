@@ -58,7 +58,7 @@ class TestSBOMS(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
+        self.arch = Archivist("url", "authauthauth")
         self.mockstream = BytesIO(b"somelongstring")
 
     def test_SBOMS_upload(self):
@@ -95,10 +95,6 @@ class TestSBOMS(TestCase):
             )
             self.assertTrue(
                 kwargs["verify"],
-                msg="UPLOAD method called incorrectly",
-            )
-            self.assertIsNone(
-                kwargs["cert"],
                 msg="UPLOAD method called incorrectly",
             )
             self.assertTrue(
@@ -169,7 +165,6 @@ class TestSBOMS(TestCase):
                 self.assertEqual(
                     kwargs,
                     {
-                        "cert": None,
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             "content-type": "application/json",
@@ -204,7 +199,6 @@ class TestSBOMS(TestCase):
                         },
                         "params": None,
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -229,7 +223,6 @@ class TestSBOMS(TestCase):
                         },
                         "data": None,
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="POST method called incorrectly",
@@ -254,7 +247,6 @@ class TestSBOMS(TestCase):
                         },
                         "data": None,
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="POST method called incorrectly",
@@ -296,7 +288,6 @@ class TestSBOMS(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -351,7 +342,6 @@ class TestSBOMS(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",

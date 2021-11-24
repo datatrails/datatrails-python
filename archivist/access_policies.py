@@ -15,7 +15,7 @@
       # Initialize connection to Archivist
       arch = Archivist(
           "https://app.rkvst.io",
-          auth=authtoken,
+          authtoken,
       )
       access_policy = arch.access_policies.create(...)
 

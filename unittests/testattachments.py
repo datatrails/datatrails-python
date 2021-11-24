@@ -38,7 +38,7 @@ class TestAttachments(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
+        self.arch = Archivist("url", "authauthauth")
         self.mockstream = BytesIO(b"somelongstring")
 
     def test_attachments_upload(self):
@@ -75,10 +75,6 @@ class TestAttachments(TestCase):
             )
             self.assertTrue(
                 kwargs["verify"],
-                msg="UPLOAD method called incorrectly",
-            )
-            self.assertIsNone(
-                kwargs["cert"],
                 msg="UPLOAD method called incorrectly",
             )
             self.assertTrue(
@@ -144,7 +140,6 @@ class TestAttachments(TestCase):
                 self.assertEqual(
                     kwargs,
                     {
-                        "cert": None,
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             "content-type": "application/json",
