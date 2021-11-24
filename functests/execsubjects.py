@@ -2,6 +2,7 @@
 Test subjects
 """
 
+from json import dumps as json_dumps
 from os import environ
 from unittest import TestCase
 from uuid import uuid4
@@ -93,14 +94,16 @@ class TestSubjects(TestCase):
         """
         Test subject list
         """
-        # TODO: filtering on display_name does not currently work...
         subjects = self.arch.subjects.list(display_name=self.display_name)
+        for i, subject in enumerate(subjects):
+            print(i, ":", json_dumps(subject, indent=4))
+
         for subject in subjects:
-            # self.assertEqual(
-            #    subject["display_name"],
-            #    self.display_name,
-            #    msg="Incorrect display name",
-            # )
+            self.assertEqual(
+                subject["display_name"],
+                self.display_name,
+                msg="Incorrect display name",
+            )
             self.assertGreater(
                 len(subject["display_name"]),
                 0,

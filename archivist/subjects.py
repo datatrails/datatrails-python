@@ -217,7 +217,6 @@ class _SubjectsClient:
         """List subjects.
 
         List subjects that match criteria.
-        TODO: filtering on display_name does not currently work
 
         Args:
             display_name (str): display name (optional)
