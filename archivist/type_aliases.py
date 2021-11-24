@@ -7,7 +7,9 @@ the type hinting.
 - Look at TypedDict for explicit formatting of dictionaries
 """
 
-from typing import Optional
+from typing import Optional, Tuple
 
 NoneOnError = Optional
 """Means the function returns None if a Error occurs upstream"""
+
+MachineAuth = Tuple[str, str]

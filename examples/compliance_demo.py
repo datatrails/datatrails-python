@@ -73,7 +73,7 @@ class ArchivistStoryRunner:
         with open(token_file, mode="r", encoding="utf-8") as tokenfile:
             token = tokenfile.read().strip()
 
-            self.client = Archivist(url, auth=token, verify=False)
+            self.client = Archivist(url, token, verify=False)
 
         # read and save the config file
         with open(config_file, "r", encoding="utf-8") as y:

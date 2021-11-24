@@ -23,7 +23,7 @@ def main():
     # Initialize connection to Archivist
     arch = Archivist(
         "https://app.rkvst.io",
-        auth=authtoken,
+        authtoken,
     )
     # Get all events with required attributes and properties
     props = {"confirmation_status": "CONFIRMED"}

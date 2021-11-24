@@ -15,7 +15,7 @@
       # Initialize connection to Archivist
       arch = Archivist(
           "https://app.rkvst.io",
-          auth=authtoken,
+          authtoken,
       )
       with open("bom.xml") as fd:
           sbom = arch.sboms.upload(fd)
@@ -143,6 +143,8 @@ class _SBOMSClient:
         """List SBOMS.
 
         Lists SBOMS that match optional criteria:
+
+        .. code-block:: python
 
             sboms = self.arch.sboms.list(metadata={
                 "trusted": True,

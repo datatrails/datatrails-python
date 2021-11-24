@@ -25,3 +25,5 @@ See the examples directory.
    compliance_policies_demo
    compliance_policies_demo_richness
    compliance_policies_demo_dynamic_tolerance
+
+   applications_registration

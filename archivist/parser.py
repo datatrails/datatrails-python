@@ -87,18 +87,8 @@ def common_parser(description):
         dest="auth_token_file",
         action="store",
         default=".auth_token",
+        reqyuired=True,
         help="FILE containing API authentication token",
-    )
-    security.add_argument(
-        "-c",
-        "--clientcert",
-        type=str,
-        dest="client_cert_name",
-        action="store",
-        help=(
-            "name of TLS client cert (.key and .pem with matching name must"
-            "be in current directory)"
-        ),
     )
 
     return parser, security
@@ -123,14 +113,7 @@ def endpoint(args):
         with open(args.auth_token_file, mode="r", encoding="utf-8") as tokenfile:
             authtoken = tokenfile.read().strip()
 
-        arch = archivist.Archivist(
-            args.url, auth=authtoken, verify=False, fixtures=fixtures
-        )
-
-    elif args.client_cert_name:
-        arch = archivist.Archivist(
-            args.url, cert=args.client_cert_name, verify=False, fixtures=fixtures
-        )
+        arch = archivist.Archivist(args.url, authtoken, verify=False, fixtures=fixtures)
 
     if arch is None:
         LOGGER.error("Critical error.  Aborting.")

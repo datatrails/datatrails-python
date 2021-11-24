@@ -22,7 +22,7 @@ def main():
 
     arch = Archivist(
         "https://app.rkvst.io",
-        auth=authtoken,
+        authtoken,
     )
 
     props = {

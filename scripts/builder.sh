@@ -11,6 +11,7 @@ docker run \
     --rm -it \
     -v $(pwd):/home/builder \
     -u $(id -u):$(id -g) \
+    -e FUNCTEST \
     -e UNITTEST \
     -e TEST_ARCHIVIST \
     -e TEST_AUTHTOKEN_FILENAME \

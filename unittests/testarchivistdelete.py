@@ -25,7 +25,7 @@ class TestArchivistMethods(TestCase):
     """
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
+        self.arch = Archivist("url", "authauthauth")
 
 
 class TestArchivistDelete(TestArchivistMethods):
@@ -50,7 +50,6 @@ class TestArchivistDelete(TestArchivistMethods):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="DELETE method called incorrectly",
@@ -87,7 +86,6 @@ class TestArchivistDelete(TestArchivistMethods):
                             "headerfield1": "headervalue1",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="DELETE method called incorrectly",
@@ -153,7 +151,6 @@ class TestArchivistDelete(TestArchivistMethods):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="DELETE method called incorrectly",

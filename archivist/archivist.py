@@ -21,7 +21,7 @@
       # Initialize connection to Archivist
       arch = Archivist(
           "https://app.rkvst.io",
-          auth=authtoken,
+          authtoken,
           max_time=1200,
       )
 
@@ -34,13 +34,13 @@ import logging
 
 import json
 
-# from os.path import isfile as os_path_isfile
-from typing import BinaryIO, Dict, List, Optional
 from collections import deque
 from copy import deepcopy
-from requests.models import Response
+from time import time
+from typing import BinaryIO, Dict, List, Optional, Union
 
 import requests
+from requests.models import Response
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from .constants import (
@@ -56,17 +56,17 @@ from .errors import (
     ArchivistBadFieldError,
     ArchivistDuplicateError,
     ArchivistHeaderError,
-    ArchivistIllegalArgumentError,
     ArchivistNotFoundError,
-    ArchivistNotImplementedError,
 )
 from .headers import _headers_get
 from .retry429 import retry_429
 
 from .confirmer import MAX_TIME
 
-from .assets import _AssetsClient
 from .access_policies import _AccessPoliciesClient
+from .appidp import _AppIDPClient
+from .applications import _ApplicationsClient
+from .assets import _AssetsClient
 from .attachments import _AttachmentsClient
 from .compliance import _ComplianceClient
 from .compliance_policies import _CompliancePoliciesClient
@@ -74,6 +74,7 @@ from .events import _EventsClient
 from .locations import _LocationsClient
 from .sboms import _SBOMSClient
 from .subjects import _SubjectsClient
+from .type_aliases import MachineAuth
 
 LOGGER = logging.getLogger(__name__)
 
@@ -81,6 +82,8 @@ LOGGER = logging.getLogger(__name__)
 CLIENTS = {
     "access_policies": _AccessPoliciesClient,
     "assets": _AssetsClient,
+    "appidp": _AppIDPClient,
+    "applications": _ApplicationsClient,
     "attachments": _AttachmentsClient,
     "compliance": _ComplianceClient,
     "compliance_policies": _CompliancePoliciesClient,
@@ -100,14 +103,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
     Args:
         url (str): URL of archivist endpoint
         auth: string representing JWT token.
-        cert: filepath containing both private key and certificate (not implemented)
         verify: if True the certificate is verified
         max_time (int): maximum time in seconds to wait for confirmation
-
-    Raises:
-        ArchivistIllegalArgumentError: if neither 'auth' and 'cert' or if
-            both 'auth' or 'cert'
-        ArchivistNotFoundError: if 'cert' filepath is not readable.
 
     """
 
@@ -116,34 +113,26 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
     def __init__(
         self,
         url: str,
+        auth: Union[str, MachineAuth],
         *,
-        auth: Optional[str] = None,
-        cert: Optional[str] = None,
         fixtures: Optional[Dict] = None,
         verify: bool = True,
         max_time: int = MAX_TIME,
     ):
 
         self._headers = {"content-type": "application/json"}
-        if auth is not None:
-            self._headers["authorization"] = "Bearer " + auth.strip()
-        self._auth = auth
+        if isinstance(auth, tuple):
+            self._auth = None
+            self._client_id = auth[0]
+            self._client_secret = auth[1]
+        else:
+            self._auth = auth
+            self._client_id = None
+            self._client_secret = None
+
+        self._expires_at = 0
         self._url = url
         self._verify = verify
-        if not cert and not auth:
-            raise ArchivistIllegalArgumentError("Either auth or cert must be specified")
-
-        if cert and auth:
-            raise ArchivistIllegalArgumentError(
-                "Either auth or cert must be specified but not both"
-            )
-
-        if cert:
-            raise ArchivistNotImplementedError("Cert option is not implemented")
-            # if not os_path_isfile(cert):
-            #    raise ArchivistNotFoundError(f"Cert file {cert} does not exist")
-
-        self._cert = cert
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
         self._session = requests.Session()
         self._max_time = max_time
@@ -151,6 +140,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         # Type hints for IDE autocomplete, keep in sync with CLIENTS map above
         self.access_policies: _AccessPoliciesClient
+        self.appidp: _AppIDPClient
+        self.applications: _ApplicationsClient
         self.assets: _AssetsClient
         self.attachments: _AttachmentsClient
         self.compliance: _ComplianceClient
@@ -192,9 +183,14 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return self._max_time
 
     @property
-    def cert(self) -> Optional[str]:
-        """str: filepath containing authorisation certificate."""
-        return self._cert
+    def auth(self) -> str:
+        """str: authorization token."""
+        if self._client_id is not None and self._expires_at < time():
+            apptoken = self.appidp.token(self._client_id, self._client_secret)  # type: ignore
+            self._auth = apptoken["access_token"]
+            self._expires_at = time() + apptoken["expires_in"] - 10  # fudge factor
+
+        return self._auth  # type: ignore
 
     @property
     def fixtures(self) -> Dict:
@@ -209,8 +205,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
     def __copy__(self):
         return Archivist(
             self._url,
-            auth=self._auth,
-            cert=self._cert,
+            self.auth,
             fixtures=deepcopy(self._fixtures),
             verify=self._verify,
             max_time=self._max_time,
@@ -222,6 +217,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         else:
             newheaders = self.headers
 
+        auth = self.auth  # this may trigger a refetch so only do it once here
+        newheaders["authorization"] = "Bearer " + auth.strip()
         return newheaders
 
     @retry_429
@@ -252,7 +249,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             SEP.join([f for f in (self.url, ROOT, subpath, identity, tail) if f]),
             headers=self.__add_headers(headers),
             verify=self.verify,
-            cert=self.cert,
             params=params,
         )
 
@@ -292,7 +288,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),
             verify=self.verify,
-            cert=self.cert,
             stream=True,
         )
 
@@ -316,6 +311,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         *,
         headers: Optional[Dict] = None,
         verb: Optional[str] = None,
+        noheaders: bool = False,
     ) -> Dict:
         """POST method (REST)
 
@@ -326,21 +322,26 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             request (dict): request body defining the entity
             headers (dict): optional REST headers
             verb (str): optional REST verb
+            noheaders (bool): do not add headers and do not jsnify data
 
         Returns:
             dict representing the response body (entity).
 
         """
-        data = json.dumps(request) if request else None
         url = SEP.join((self.url, ROOT, VERBSEP.join([f for f in (path, verb) if f])))
         LOGGER.debug("POST URL %s", url)
+        if noheaders:
+            data = request
+        else:
+            headers = self.__add_headers(headers)
+            data = json.dumps(request) if request else None
+
         LOGGER.debug("POST data %s", data)
         response = self._session.post(
             url,
             data=data,
-            headers=self.__add_headers(headers),
+            headers=headers,
             verify=self.verify,
-            cert=self.cert,
         )
 
         error = _parse_response(response)
@@ -380,7 +381,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             data=multipart,  # type: ignore    https://github.com/requests/toolbelt/issues/312
             headers=self.__add_headers(headers),
             verify=self.verify,
-            cert=self.cert,
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -412,7 +412,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),
             verify=self.verify,
-            cert=self.cert,
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -452,7 +451,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             data=json.dumps(request),
             headers=self.__add_headers(headers),
             verify=self.verify,
-            cert=self.cert,
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -472,7 +470,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             SEP.join((self.url, ROOT, path)),
             headers=self.__add_headers(headers),
             verify=self.verify,
-            cert=self.cert,
         )
 
         self._response_ring_buffer.appendleft(response)
