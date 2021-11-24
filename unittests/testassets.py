@@ -122,7 +122,7 @@ class TestAssets(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth", max_time=2)
+        self.arch = Archivist("url", "authauthauth", max_time=2)
 
     def tearDown(self):
         self.arch = None
@@ -146,7 +146,6 @@ class TestAssets(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="CREATE method called incorrectly",
@@ -319,7 +318,6 @@ class TestAssets(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -360,7 +358,6 @@ class TestAssets(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -399,7 +396,6 @@ class TestAssets(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -445,7 +441,6 @@ class TestAssets(TestCase):
                                 HEADERS_REQUEST_TOTAL_COUNT: "true",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -590,7 +585,6 @@ class TestAssets(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -645,7 +639,6 @@ class TestAssets(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -680,7 +673,6 @@ class TestAssets(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",

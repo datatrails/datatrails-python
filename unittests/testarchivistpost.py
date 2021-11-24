@@ -26,7 +26,7 @@ class TestArchivistMethods(TestCase):
     """
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
+        self.arch = Archivist("url", "authauthauth")
 
 
 class TestArchivistPost(TestArchivistMethods):
@@ -53,7 +53,6 @@ class TestArchivistPost(TestArchivistMethods):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="POST method called incorrectly",
@@ -130,7 +129,6 @@ class TestArchivistPost(TestArchivistMethods):
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="POST method called incorrectly",
@@ -160,7 +158,6 @@ class TestArchivistPost(TestArchivistMethods):
                             "headerfield1": "headervalue1",
                         },
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="POST method called incorrectly",
@@ -190,7 +187,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 len(kwargs),
-                4,
+                3,
                 msg="Incorrect number of keyword arguments",
             )
             headers = kwargs.get("headers")
@@ -318,7 +315,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 len(kwargs),
-                4,
+                3,
                 msg="Incorrect number of keyword arguments",
             )
             headers = kwargs.get("headers")

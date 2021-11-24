@@ -26,7 +26,7 @@ class TestArchivistMethods(TestCase):
     """
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
+        self.arch = Archivist("url", "authauthauth")
 
 
 class TestArchivistGet(TestArchivistMethods):
@@ -52,7 +52,6 @@ class TestArchivistGet(TestArchivistMethods):
                         },
                         "params": None,
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -116,7 +115,6 @@ class TestArchivistGet(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                             "stream": True,
                         },
                     ),
@@ -214,7 +212,6 @@ class TestArchivistGet(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                             "stream": True,
                         },
                     ),
@@ -244,7 +241,6 @@ class TestArchivistGet(TestArchivistMethods):
                         },
                         "params": None,
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -311,7 +307,6 @@ class TestArchivistGet(TestArchivistMethods):
                         },
                         "params": None,
                         "verify": True,
-                        "cert": None,
                     },
                 ),
                 msg="GET method called incorrectly",

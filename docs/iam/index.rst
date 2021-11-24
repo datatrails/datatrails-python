@@ -9,4 +9,6 @@ Identity and Access Management (IAM)
 
    access_policies
    subjects
+   appregistrations
+   appidp
 

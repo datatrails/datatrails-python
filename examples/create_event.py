@@ -113,7 +113,7 @@ def main():
     # Initialize connection to Archivist
     arch = Archivist(
         "https://app.rkvst.io",
-        auth=authtoken,
+        authtoken,
     )
     # Create a new asset
     asset = create_asset(arch)

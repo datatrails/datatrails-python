@@ -35,7 +35,7 @@ One can then use the examples code to create assets (see examples directory):
     # Initialize connection to Archivist - the URL for production will be different to this URL
     arch = Archivist(
         "https://app.rkvst.io",
-        auth=authtoken,
+        authtoken,
     )
     
     # Create a new asset

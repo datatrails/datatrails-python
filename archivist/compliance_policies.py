@@ -15,7 +15,7 @@
       # Initialize connection to Archivist
       arch = Archivist(
           "https://rkvst.poc.jitsuin.io",
-          auth=authtoken,
+          authtoken,
       )
 
       # A 'Since' policy

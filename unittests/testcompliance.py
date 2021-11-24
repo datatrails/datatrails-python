@@ -41,7 +41,7 @@ class TestCompliance(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", auth="authauthauth")
+        self.arch = Archivist("url", "authauthauth")
 
     def test_compliance(self):
         """
@@ -90,7 +90,6 @@ class TestCompliance(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
-                            "cert": None,
                             "params": None,
                         },
                     ),

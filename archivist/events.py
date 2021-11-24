@@ -15,7 +15,7 @@
       # Initialize connection to Archivist
       arch = Archivist(
           "https://app.rkvst.io",
-          auth=authtoken,
+          authtoken,
       )
       asset = arch.assets.create(...)
       event = arch.events.create(asset['identity'], ...)

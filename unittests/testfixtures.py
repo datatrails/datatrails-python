@@ -67,7 +67,7 @@ class TestFixtures(TestCase):
         """
         Test default archivist creation
         """
-        arch = Archivist("url", auth="authauthauth")
+        arch = Archivist("url", "authauthauth")
         self.assertEqual(
             arch.fixtures,
             {},

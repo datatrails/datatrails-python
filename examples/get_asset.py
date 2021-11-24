@@ -24,7 +24,7 @@ def main():
     # Initialize connection to Archivist
     arch = Archivist(
         "https://app.rkvst.io",
-        auth=authtoken,
+        authtoken,
     )
     try:
         asset = arch.assets.read_by_signature(

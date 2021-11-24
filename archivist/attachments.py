@@ -15,7 +15,7 @@
       # Initialize connection to Archivist
       arch = Archivist(
           "https://app.rkvst.io",
-          auth=authtoken,
+          authtoken,
       )
       with open("something.jpg") as fd:
           attachment = arch.attachments.upload(fd)

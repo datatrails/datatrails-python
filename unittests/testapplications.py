@@ -1,5 +1,5 @@
 """
-Test subjects
+Test applications
 """
 
 import json
@@ -8,10 +8,9 @@ from unittest import TestCase, mock
 from archivist.archivist import Archivist
 from archivist.constants import (
     ROOT,
-    HEADERS_REQUEST_TOTAL_COUNT,
-    HEADERS_TOTAL_COUNT,
-    SUBJECTS_SUBPATH,
-    SUBJECTS_LABEL,
+    APPLICATIONS_SUBPATH,
+    APPLICATIONS_LABEL,
+    APPLICATIONS_REGENERATE,
 )
 from archivist.errors import ArchivistBadRequestError
 
@@ -22,41 +21,39 @@ from .mock_response import MockResponse
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
-DISPLAY_NAME = "Subject display name"
-WALLET_PUB_KEYS = [
-    "wallet1",
-    "wallet2",
-]
-WALLET_ADDRESSES = [
-    "address1",
-    "address2",
-]
-TESSERA_PUB_KEYS = [
-    "tessera1",
-    "tessera2",
-]
-IDENTITY = f"{SUBJECTS_LABEL}/xxxxxxxx"
-SUBPATH = f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}"
+DISPLAY_NAME = "Application display name"
+CUSTOM_CLAIMS = {
+    "serial_number": "TL1000000101",
+    "has_cyclist_light": "true",
+}
+IDENTITY = f"{APPLICATIONS_LABEL}/xxxxxxxx"
+SUBPATH = f"{APPLICATIONS_SUBPATH}/{APPLICATIONS_LABEL}"
 
 RESPONSE = {
     "identity": IDENTITY,
     "display_name": DISPLAY_NAME,
-    "wallet_pub_key": WALLET_PUB_KEYS,
-    "wallet_address": WALLET_ADDRESSES,
-    "tessera_pub_key": TESSERA_PUB_KEYS,
+    "custom_claims": CUSTOM_CLAIMS,
+    "client_id": "d1fb6c87-faa9-4d56-b2fd-a5b70a9af065",
+    "tenant_id": "tenant/53e6bed7-6f4c-4a37-8c4f-cf889f2b1aa6",
+    "credentials": [
+        {
+            "secret": "a0c09972b6ac912a4d67815fef88093c81a99b49977d35ecf6d162631aa29173",
+            "valid_from": "2021-09-21T16:43:19Z",
+            "valid_until": "2022-09-21T16:43:19Z",
+        }
+    ],
 }
 REQUEST = {
     "display_name": DISPLAY_NAME,
-    "wallet_pub_key": WALLET_PUB_KEYS,
-    "tessera_pub_key": TESSERA_PUB_KEYS,
+    "custom_claims": CUSTOM_CLAIMS,
 }
 REQUEST_DATA = json.dumps(REQUEST)
 UPDATE_DATA = json.dumps({"display_name": DISPLAY_NAME})
 
 
-class TestSubjects(TestCase):
+class TestApplications(TestCase):
     """
-    Test Archivist Subjects Create method
+    Test Archivist Applications Create method
     """
 
     maxDiff = None
@@ -64,15 +61,16 @@ class TestSubjects(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
-    def test_subjects_create(self):
+    def test_applications_create(self):
         """
-        Test subject creation
+        Test application creation
         """
         with mock.patch.object(self.arch._session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            subject = self.arch.subjects.create(
-                DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+            application = self.arch.applications.create(
+                DISPLAY_NAME,
+                CUSTOM_CLAIMS,
             )
             self.assertEqual(
                 tuple(mock_post.call_args),
@@ -90,23 +88,23 @@ class TestSubjects(TestCase):
                 msg="CREATE method called incorrectly",
             )
             self.assertEqual(
-                subject,
+                application,
                 RESPONSE,
                 msg="CREATE method called incorrectly",
             )
 
-    def test_subjects_read(self):
+    def test_applications_read(self):
         """
-        Test subject reading
+        Test application reading
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
-            subject = self.arch.subjects.read(IDENTITY)
+            application = self.arch.applications.read(IDENTITY)
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
+                    ((f"url/{ROOT}/{APPLICATIONS_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
                             "content-type": "application/json",
@@ -119,18 +117,18 @@ class TestSubjects(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    def test_subjects_delete(self):
+    def test_applications_delete(self):
         """
-        Test subject deleting
+        Test application deleting
         """
         with mock.patch.object(self.arch._session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
-            subject = self.arch.subjects.delete(IDENTITY)
+            application = self.arch.applications.delete(IDENTITY)
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
-                    ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
+                    ((f"url/{ROOT}/{APPLICATIONS_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
                             "content-type": "application/json",
@@ -142,21 +140,21 @@ class TestSubjects(TestCase):
                 msg="DELETE method called incorrectly",
             )
 
-    def test_subjects_update(self):
+    def test_applications_update(self):
         """
-        Test subject deleting
+        Test application deleting
         """
         with mock.patch.object(self.arch._session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, **RESPONSE)
 
-            subject = self.arch.subjects.update(
+            application = self.arch.applications.update(
                 IDENTITY,
                 display_name=DISPLAY_NAME,
             )
             self.assertEqual(
                 tuple(mock_patch.call_args),
                 (
-                    ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
+                    ((f"url/{ROOT}/{APPLICATIONS_SUBPATH}/{IDENTITY}"),),
                     {
                         "data": UPDATE_DATA,
                         "headers": {
@@ -169,111 +167,38 @@ class TestSubjects(TestCase):
                 msg="PATCH method called incorrectly",
             )
 
-    def test_subjects_read_with_error(self):
+    def test_applications_read_with_error(self):
         """
         Test read method with error
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.subjects.read(IDENTITY)
+                resp = self.arch.applications.read(IDENTITY)
 
-    def test_subjects_count(self):
+    def test_applications_list(self):
         """
-        Test subject counting
+        Test application listing
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
-                headers={HEADERS_TOTAL_COUNT: 1},
-                subjects=[
+                applications=[
                     RESPONSE,
                 ],
             )
 
-            count = self.arch.subjects.count()
+            applications = list(self.arch.applications.list())
             self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}" "?page_size=1"),),
-                    {
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                            HEADERS_REQUEST_TOTAL_COUNT: "true",
-                        },
-                        "verify": True,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-            self.assertEqual(
-                count,
+                len(applications),
                 1,
-                msg="Incorrect count",
+                msg="incorrect number of applications",
             )
-
-    def test_subjects_count_by_name(self):
-        """
-        Test subject counting
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 1},
-                subjects=[
-                    RESPONSE,
-                ],
-            )
-
-            count = self.arch.subjects.count(
-                display_name="Subject display name",
-            )
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    (
-                        (
-                            f"url/{ROOT}/{SUBPATH}"
-                            "?page_size=1"
-                            "&display_name=Subject display name"
-                        ),
-                    ),
-                    {
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                            HEADERS_REQUEST_TOTAL_COUNT: "true",
-                        },
-                        "verify": True,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-
-    def test_subjects_list(self):
-        """
-        Test subject listing
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                subjects=[
-                    RESPONSE,
-                ],
-            )
-
-            subjects = list(self.arch.subjects.list())
-            self.assertEqual(
-                len(subjects),
-                1,
-                msg="incorrect number of subjects",
-            )
-            for subject in subjects:
+            for application in applications:
                 self.assertEqual(
-                    subject,
+                    application,
                     RESPONSE,
-                    msg="Incorrect subject listed",
+                    msg="Incorrect application listed",
                 )
 
             for a in mock_get.call_args_list:
@@ -292,33 +217,33 @@ class TestSubjects(TestCase):
                     msg="GET method called incorrectly",
                 )
 
-    def test_subjects_list_by_name(self):
+    def test_applications_list_by_name(self):
         """
-        Test subject listing
+        Test application listing
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
-                subjects=[
+                applications=[
                     RESPONSE,
                 ],
             )
 
-            subjects = list(
-                self.arch.subjects.list(
-                    display_name="Subject display name",
+            applications = list(
+                self.arch.applications.list(
+                    display_name="Application display name",
                 )
             )
             self.assertEqual(
-                len(subjects),
+                len(applications),
                 1,
-                msg="incorrect number of subjects",
+                msg="incorrect number of applications",
             )
-            for subject in subjects:
+            for application in applications:
                 self.assertEqual(
-                    subject,
+                    application,
                     RESPONSE,
-                    msg="Incorrect subject listed",
+                    msg="Incorrect application listed",
                 )
 
             for a in mock_get.call_args_list:
@@ -328,7 +253,7 @@ class TestSubjects(TestCase):
                         (
                             (
                                 f"url/{ROOT}/{SUBPATH}"
-                                "?display_name=Subject display name"
+                                "?display_name=Application display name"
                             ),
                         ),
                         {
@@ -341,3 +266,32 @@ class TestSubjects(TestCase):
                     ),
                     msg="GET method called incorrectly",
                 )
+
+    def test_applications_regenerate(self):
+        """
+        Test Application regenerate
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+
+            sbom = self.arch.applications.regenerate(IDENTITY)
+            self.assertEqual(
+                tuple(mock_post.call_args),
+                (
+                    (
+                        (
+                            f"url/{ROOT}/{APPLICATIONS_SUBPATH}/{IDENTITY}"
+                            f":{APPLICATIONS_REGENERATE}"
+                        ),
+                    ),
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "data": None,
+                        "verify": True,
+                    },
+                ),
+                msg="POST method called incorrectly",
+            )

@@ -24,7 +24,7 @@ def main():
     # Initialize connection to Archivist
     arch = Archivist(
         "https://app.rkvst.io",
-        auth=authtoken,
+        authtoken,
     )
 
     # list all assets with required attributes and properties

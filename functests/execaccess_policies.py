@@ -66,7 +66,7 @@ class TestAccessPolicies(TestCase):
     def setUpClass(cls):
         with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
             auth = fd.read().strip()
-        cls.arch = Archivist(environ["TEST_ARCHIVIST"], auth=auth, verify=False)
+        cls.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
         cls.props = deepcopy(PROPS)
         cls.props["display_name"] = f"{DISPLAY_NAME} {uuid4()}"
 
