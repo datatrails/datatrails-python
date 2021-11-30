@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Archivist &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>Archivist &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -190,7 +190,7 @@ parameters (the max_time parameter is optional):</p>
   <span class="c1"># Initialize connection to Archivist</span>
   <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
       <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
-      <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+      <span class="n">authtoken</span><span class="p">,</span>
       <span class="n">max_time</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span>
   <span class="p">)</span>
 
@@ -200,7 +200,7 @@ parameters (the max_time parameter is optional):</p>
 </div>
 <dl class="py class">
 <dt id="archivist.archivist.Archivist">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.archivist.</span></code><code class="sig-name descname"><span class="pre">Archivist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixtures</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.archivist.</span></code><code class="sig-name descname"><span class="pre">Archivist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixtures</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for all Archivist endpoints.</p>
 <p>This class manages the connection to an Archivist instance and provides
 basic methods that represent the underlying REST interface.</p>
@@ -209,16 +209,8 @@ basic methods that represent the underlying REST interface.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>url</strong> (<em>str</em>) – URL of archivist endpoint</p></li>
 <li><p><strong>auth</strong> – string representing JWT token.</p></li>
-<li><p><strong>cert</strong> – filepath containing both private key and certificate (not implemented)</p></li>
 <li><p><strong>verify</strong> – if True the certificate is verified</p></li>
 <li><p><strong>max_time</strong> (<em>int</em>) – maximum time in seconds to wait for confirmation</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistIllegalArgumentError" title="archivist.errors.ArchivistIllegalArgumentError"><strong>ArchivistIllegalArgumentError</strong></a> – if neither ‘auth’ and ‘cert’ or if
-    both ‘auth’ or ‘cert’</p></li>
-<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistNotFoundError" title="archivist.errors.ArchivistNotFoundError"><strong>ArchivistNotFoundError</strong></a> – if ‘cert’ filepath is not readable.</p></li>
 </ul>
 </dd>
 </dl>
@@ -267,9 +259,9 @@ basic methods that represent the underlying REST interface.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="archivist.archivist.Archivist.cert">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">cert</span></code><a class="headerlink" href="#archivist.archivist.Archivist.cert" title="Permalink to this definition">¶</a></dt>
-<dd><p>filepath containing authorisation certificate.</p>
+<dt id="archivist.archivist.Archivist.auth">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">auth</span></code><a class="headerlink" href="#archivist.archivist.Archivist.auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>authorization token.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
@@ -332,7 +324,7 @@ the file must be opened in binary mode</p></li>
 
 <dl class="py method">
 <dt id="archivist.archivist.Archivist.post">
-<code class="sig-name descname"><span class="pre">post</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.post" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">post</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noheaders</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.post" title="Permalink to this definition">¶</a></dt>
 <dd><p>POST method (REST)</p>
 <p>Creates an entity</p>
 <dl class="field-list simple">
@@ -342,6 +334,7 @@ the file must be opened in binary mode</p></li>
 <li><p><strong>request</strong> (<em>dict</em>) – request body defining the entity</p></li>
 <li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
 <li><p><strong>verb</strong> (<em>str</em>) – optional REST verb</p></li>
+<li><p><strong>noheaders</strong> (<em>bool</em>) – do not add headers and do not jsnify data</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

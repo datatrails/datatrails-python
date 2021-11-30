@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>IAM Access Policies &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>IAM Access Policies &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -106,6 +106,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Identity and Access Management (IAM)</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">IAM Access Policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects.html">IAM Subjects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appregistrations.html">IAM Application Registrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appidp.html">IAM Application Get Token</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp</a></li>
@@ -191,19 +193,11 @@
 <span class="c1"># Initialize connection to Archivist</span>
 <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
     <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
-    <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+    <span class="n">authtoken</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">access_policy</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="py data">
-<dt id="archivist.access_policies.DEFAULT_PAGE_SIZE">
-<code class="sig-prename descclassname"><span class="pre">archivist.access_policies.</span></code><code class="sig-name descname"><span class="pre">DEFAULT_PAGE_SIZE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">500</span></em><a class="headerlink" href="#archivist.access_policies.DEFAULT_PAGE_SIZE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default page size - number of entities fetched in one REST GET in the
-<a class="reference internal" href="#archivist.access_policies._AccessPoliciesClient.list" title="archivist.access_policies._AccessPoliciesClient.list"><code class="xref py py-func docutils literal notranslate"><span class="pre">list()</span></code></a> method. This can be overridden but should rarely
-be changed.</p>
-</dd></dl>
-
 <dl class="py class">
 <dt id="archivist.access_policies.AccessPolicy">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.access_policies.</span></code><code class="sig-name descname"><span class="pre">AccessPolicy</span></code><a class="reference internal" href="../_modules/archivist/access_policies.html#AccessPolicy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.access_policies.AccessPolicy" title="Permalink to this definition">¶</a></dt>
@@ -323,7 +317,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 
 <dl class="py method">
 <dt id="archivist.access_policies._AccessPoliciesClient.list">
-<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/access_policies.html#_AccessPoliciesClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.access_policies._AccessPoliciesClient.list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/access_policies.html#_AccessPoliciesClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.access_policies._AccessPoliciesClient.list" title="Permalink to this definition">¶</a></dt>
 <dd><p>List access policies.</p>
 <p>List access policies that match criteria.</p>
 <dl class="field-list simple">
@@ -356,7 +350,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 
 <dl class="py method">
 <dt id="archivist.access_policies._AccessPoliciesClient.list_matching_assets">
-<code class="sig-name descname"><span class="pre">list_matching_assets</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">access_policy_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/access_policies.html#_AccessPoliciesClient.list_matching_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.access_policies._AccessPoliciesClient.list_matching_assets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">list_matching_assets</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">access_policy_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/access_policies.html#_AccessPoliciesClient.list_matching_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.access_policies._AccessPoliciesClient.list_matching_assets" title="Permalink to this definition">¶</a></dt>
 <dd><p>List matching assets.</p>
 <p>List assets that match access policy.</p>
 <dl class="field-list simple">
@@ -389,7 +383,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 
 <dl class="py method">
 <dt id="archivist.access_policies._AccessPoliciesClient.list_matching_access_policies">
-<code class="sig-name descname"><span class="pre">list_matching_access_policies</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/access_policies.html#_AccessPoliciesClient.list_matching_access_policies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.access_policies._AccessPoliciesClient.list_matching_access_policies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">list_matching_access_policies</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/access_policies.html#_AccessPoliciesClient.list_matching_access_policies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.access_policies._AccessPoliciesClient.list_matching_access_policies" title="Permalink to this definition">¶</a></dt>
 <dd><p>List matching access policies.</p>
 <p>List access policies that match asset.</p>
 <dl class="field-list simple">

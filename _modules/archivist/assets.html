@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.assets &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>archivist.assets &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -188,7 +188,7 @@
 <span class="sd">      # Initialize connection to Archivist</span>
 <span class="sd">      arch = Archivist(</span>
 <span class="sd">          &quot;https://app.rkvst.io&quot;,</span>
-<span class="sd">          auth=authtoken,</span>
+<span class="sd">          authtoken,</span>
 <span class="sd">      )</span>
 <span class="sd">      asset = arch.assets.create(...)</span>
 
@@ -213,11 +213,6 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">confirmer</span>
 <span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">ArchivistNotFoundError</span>
-
-<span class="c1">#: Default page size - number of entities fetched in one REST GET in the</span>
-<span class="c1">#: :func:`~_AssetsClient.list` method. This can be overridden but should rarely</span>
-<span class="c1">#: be changed.</span>
-<span class="n">DEFAULT_PAGE_SIZE</span> <span class="o">=</span> <span class="mi">500</span>
 
 <span class="c1"># These are now hardcoded and not user-selectable. Eventually they will be removed from</span>
 <span class="c1"># the backend API and removed from this package.</span>
@@ -432,7 +427,7 @@
 <div class="viewcode-block" id="_AssetsClient.list"><a class="viewcode-back" href="../../assets.html#archivist.assets._AssetsClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_PAGE_SIZE</span><span class="p">,</span>
+        <span class="n">page_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>

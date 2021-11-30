@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>SBOMS &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>SBOMS &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -191,20 +191,12 @@
 <span class="c1"># Initialize connection to Archivist</span>
 <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
     <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
-    <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+    <span class="n">authtoken</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;bom.xml&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
     <span class="n">sbom</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">sboms</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="py data">
-<dt id="archivist.sboms.DEFAULT_PAGE_SIZE">
-<code class="sig-prename descclassname"><span class="pre">archivist.sboms.</span></code><code class="sig-name descname"><span class="pre">DEFAULT_PAGE_SIZE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">50</span></em><a class="headerlink" href="#archivist.sboms.DEFAULT_PAGE_SIZE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default page size - number of entities fetched in one REST GET in the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">list()</span></code> method. This can be overridden but should rarely
-be changed.</p>
-</dd></dl>
-
 <dl class="py class">
 <dt id="archivist.sboms._SBOMSClient">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.sboms.</span></code><code class="sig-name descname"><span class="pre">_SBOMSClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient" title="Permalink to this definition">¶</a></dt>
@@ -271,18 +263,16 @@ fd iterator</p>
 
 <dl class="py method">
 <dt id="archivist.sboms._SBOMSClient.list">
-<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.list" title="Permalink to this definition">¶</a></dt>
 <dd><p>List SBOMS.</p>
 <p>Lists SBOMS that match optional criteria:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>sboms = self.arch.sboms.list(metadata={</dt><dd><p>“trusted”: True,
-“uploaded_before”: “2021-11-17T11:28:31Z”,
-“uploaded_since”: “2021-11-16T11:28:31Z”,</p>
-</dd>
-</dl>
-<p>})</p>
-</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sboms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arch</span><span class="o">.</span><span class="n">sboms</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">&quot;trusted&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;uploaded_before&quot;</span><span class="p">:</span> <span class="s2">&quot;2021-11-17T11:28:31Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;uploaded_since&quot;</span><span class="p">:</span> <span class="s2">&quot;2021-11-16T11:28:31Z&quot;</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.archivist &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>archivist.archivist &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -194,7 +194,7 @@
 <span class="sd">      # Initialize connection to Archivist</span>
 <span class="sd">      arch = Archivist(</span>
 <span class="sd">          &quot;https://app.rkvst.io&quot;,</span>
-<span class="sd">          auth=authtoken,</span>
+<span class="sd">          authtoken,</span>
 <span class="sd">          max_time=1200,</span>
 <span class="sd">      )</span>
 
@@ -207,13 +207,13 @@
 
 <span class="kn">import</span> <span class="nn">json</span>
 
-<span class="c1"># from os.path import isfile as os_path_isfile</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">requests.models</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.models</span> <span class="kn">import</span> <span class="n">Response</span>
 <span class="kn">from</span> <span class="nn">requests_toolbelt.multipart.encoder</span> <span class="kn">import</span> <span class="n">MultipartEncoder</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
@@ -229,17 +229,17 @@
     <span class="n">ArchivistBadFieldError</span><span class="p">,</span>
     <span class="n">ArchivistDuplicateError</span><span class="p">,</span>
     <span class="n">ArchivistHeaderError</span><span class="p">,</span>
-    <span class="n">ArchivistIllegalArgumentError</span><span class="p">,</span>
     <span class="n">ArchivistNotFoundError</span><span class="p">,</span>
-    <span class="n">ArchivistNotImplementedError</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.headers</span> <span class="kn">import</span> <span class="n">_headers_get</span>
 <span class="kn">from</span> <span class="nn">.retry429</span> <span class="kn">import</span> <span class="n">retry_429</span>
 
 <span class="kn">from</span> <span class="nn">.confirmer</span> <span class="kn">import</span> <span class="n">MAX_TIME</span>
 
-<span class="kn">from</span> <span class="nn">.assets</span> <span class="kn">import</span> <span class="n">_AssetsClient</span>
 <span class="kn">from</span> <span class="nn">.access_policies</span> <span class="kn">import</span> <span class="n">_AccessPoliciesClient</span>
+<span class="kn">from</span> <span class="nn">.appidp</span> <span class="kn">import</span> <span class="n">_AppIDPClient</span>
+<span class="kn">from</span> <span class="nn">.applications</span> <span class="kn">import</span> <span class="n">_ApplicationsClient</span>
+<span class="kn">from</span> <span class="nn">.assets</span> <span class="kn">import</span> <span class="n">_AssetsClient</span>
 <span class="kn">from</span> <span class="nn">.attachments</span> <span class="kn">import</span> <span class="n">_AttachmentsClient</span>
 <span class="kn">from</span> <span class="nn">.compliance</span> <span class="kn">import</span> <span class="n">_ComplianceClient</span>
 <span class="kn">from</span> <span class="nn">.compliance_policies</span> <span class="kn">import</span> <span class="n">_CompliancePoliciesClient</span>
@@ -247,6 +247,7 @@
 <span class="kn">from</span> <span class="nn">.locations</span> <span class="kn">import</span> <span class="n">_LocationsClient</span>
 <span class="kn">from</span> <span class="nn">.sboms</span> <span class="kn">import</span> <span class="n">_SBOMSClient</span>
 <span class="kn">from</span> <span class="nn">.subjects</span> <span class="kn">import</span> <span class="n">_SubjectsClient</span>
+<span class="kn">from</span> <span class="nn">.type_aliases</span> <span class="kn">import</span> <span class="n">MachineAuth</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -254,6 +255,8 @@
 <span class="n">CLIENTS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;access_policies&quot;</span><span class="p">:</span> <span class="n">_AccessPoliciesClient</span><span class="p">,</span>
     <span class="s2">&quot;assets&quot;</span><span class="p">:</span> <span class="n">_AssetsClient</span><span class="p">,</span>
+    <span class="s2">&quot;appidp&quot;</span><span class="p">:</span> <span class="n">_AppIDPClient</span><span class="p">,</span>
+    <span class="s2">&quot;applications&quot;</span><span class="p">:</span> <span class="n">_ApplicationsClient</span><span class="p">,</span>
     <span class="s2">&quot;attachments&quot;</span><span class="p">:</span> <span class="n">_AttachmentsClient</span><span class="p">,</span>
     <span class="s2">&quot;compliance&quot;</span><span class="p">:</span> <span class="n">_ComplianceClient</span><span class="p">,</span>
     <span class="s2">&quot;compliance_policies&quot;</span><span class="p">:</span> <span class="n">_CompliancePoliciesClient</span><span class="p">,</span>
@@ -273,14 +276,8 @@
 <span class="sd">    Args:</span>
 <span class="sd">        url (str): URL of archivist endpoint</span>
 <span class="sd">        auth: string representing JWT token.</span>
-<span class="sd">        cert: filepath containing both private key and certificate (not implemented)</span>
 <span class="sd">        verify: if True the certificate is verified</span>
 <span class="sd">        max_time (int): maximum time in seconds to wait for confirmation</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ArchivistIllegalArgumentError: if neither &#39;auth&#39; and &#39;cert&#39; or if</span>
-<span class="sd">            both &#39;auth&#39; or &#39;cert&#39;</span>
-<span class="sd">        ArchivistNotFoundError: if &#39;cert&#39; filepath is not readable.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -289,34 +286,26 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">auth</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MachineAuth</span><span class="p">],</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">auth</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">cert</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">fixtures</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verify</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">max_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">MAX_TIME</span><span class="p">,</span>
     <span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;content-type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
-        <span class="k">if</span> <span class="n">auth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s2">&quot;authorization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Bearer &quot;</span> <span class="o">+</span> <span class="n">auth</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="o">=</span> <span class="n">auth</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span> <span class="o">=</span> <span class="n">auth</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="n">auth</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify</span> <span class="o">=</span> <span class="n">verify</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">cert</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">auth</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArchivistIllegalArgumentError</span><span class="p">(</span><span class="s2">&quot;Either auth or cert must be specified&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">cert</span> <span class="ow">and</span> <span class="n">auth</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArchivistIllegalArgumentError</span><span class="p">(</span>
-                <span class="s2">&quot;Either auth or cert must be specified but not both&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">cert</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArchivistNotImplementedError</span><span class="p">(</span><span class="s2">&quot;Cert option is not implemented&quot;</span><span class="p">)</span>
-            <span class="c1"># if not os_path_isfile(cert):</span>
-            <span class="c1">#    raise ArchivistNotFoundError(f&quot;Cert file {cert} does not exist&quot;)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cert</span> <span class="o">=</span> <span class="n">cert</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_response_ring_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">RING_BUFFER_MAX_LEN</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="o">=</span> <span class="n">max_time</span>
@@ -324,6 +313,8 @@
 
         <span class="c1"># Type hints for IDE autocomplete, keep in sync with CLIENTS map above</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_policies</span><span class="p">:</span> <span class="n">_AccessPoliciesClient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appidp</span><span class="p">:</span> <span class="n">_AppIDPClient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applications</span><span class="p">:</span> <span class="n">_ApplicationsClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span> <span class="n">_AssetsClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attachments</span><span class="p">:</span> <span class="n">_AttachmentsClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compliance</span><span class="p">:</span> <span class="n">_ComplianceClient</span>
@@ -365,9 +356,14 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cert</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;str: filepath containing authorisation certificate.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cert</span>
+    <span class="k">def</span> <span class="nf">auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;str: authorization token.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span> <span class="o">&lt;</span> <span class="n">time</span><span class="p">():</span>
+            <span class="n">apptoken</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="n">apptoken</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">apptoken</span><span class="p">[</span><span class="s2">&quot;expires_in&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">10</span>  <span class="c1"># fudge factor</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span>  <span class="c1"># type: ignore</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fixtures</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
@@ -382,8 +378,7 @@
     <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Archivist</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="p">,</span>
-            <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_auth</span><span class="p">,</span>
-            <span class="n">cert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cert</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span>
             <span class="n">fixtures</span><span class="o">=</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fixtures</span><span class="p">),</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_verify</span><span class="p">,</span>
             <span class="n">max_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span><span class="p">,</span>
@@ -395,6 +390,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">newheaders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span>
 
+        <span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span>  <span class="c1"># this may trigger a refetch so only do it once here</span>
+        <span class="n">newheaders</span><span class="p">[</span><span class="s2">&quot;authorization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Bearer &quot;</span> <span class="o">+</span> <span class="n">auth</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">newheaders</span>
 
 <div class="viewcode-block" id="Archivist.get"><a class="viewcode-back" href="../../archivist.html#archivist.archivist.Archivist.get">[docs]</a>    <span class="nd">@retry_429</span>
@@ -425,7 +422,6 @@
             <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">ROOT</span><span class="p">,</span> <span class="n">subpath</span><span class="p">,</span> <span class="n">identity</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="p">]),</span>
             <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span>
-            <span class="n">cert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert</span><span class="p">,</span>
             <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -465,7 +461,6 @@
             <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">ROOT</span><span class="p">,</span> <span class="n">subpath</span><span class="p">,</span> <span class="n">identity</span><span class="p">)),</span>
             <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span>
-            <span class="n">cert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert</span><span class="p">,</span>
             <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -489,6 +484,7 @@
         <span class="o">*</span><span class="p">,</span>
         <span class="n">headers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">noheaders</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;POST method (REST)</span>
 
@@ -499,21 +495,26 @@
 <span class="sd">            request (dict): request body defining the entity</span>
 <span class="sd">            headers (dict): optional REST headers</span>
 <span class="sd">            verb (str): optional REST verb</span>
+<span class="sd">            noheaders (bool): do not add headers and do not jsnify data</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict representing the response body (entity).</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="k">if</span> <span class="n">request</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">ROOT</span><span class="p">,</span> <span class="n">VERBSEP</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">verb</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="p">])))</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;POST URL </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">noheaders</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">request</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="k">if</span> <span class="n">request</span> <span class="k">else</span> <span class="kc">None</span>
+
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;POST data </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
             <span class="n">url</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span>
-            <span class="n">cert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">error</span> <span class="o">=</span> <span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
@@ -553,7 +554,6 @@
             <span class="n">data</span><span class="o">=</span><span class="n">multipart</span><span class="p">,</span>  <span class="c1"># type: ignore    https://github.com/requests/toolbelt/issues/312</span>
             <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span>
-            <span class="n">cert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_response_ring_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
@@ -585,7 +585,6 @@
             <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">ROOT</span><span class="p">,</span> <span class="n">subpath</span><span class="p">,</span> <span class="n">identity</span><span class="p">)),</span>
             <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span>
-            <span class="n">cert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_response_ring_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
@@ -625,7 +624,6 @@
             <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">request</span><span class="p">),</span>
             <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span>
-            <span class="n">cert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_response_ring_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
@@ -645,7 +643,6 @@
             <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">ROOT</span><span class="p">,</span> <span class="n">path</span><span class="p">)),</span>
             <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span>
-            <span class="n">cert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_response_ring_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
@@ -762,7 +759,7 @@
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">page_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">query</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">headers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>

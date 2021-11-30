@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Locations &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>Locations &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -185,19 +185,11 @@
 <span class="c1"># Initialize connection to Archivist</span>
 <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
     <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
-    <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+    <span class="n">authtoken</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">location</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="py data">
-<dt id="archivist.locations.DEFAULT_PAGE_SIZE">
-<code class="sig-prename descclassname"><span class="pre">archivist.locations.</span></code><code class="sig-name descname"><span class="pre">DEFAULT_PAGE_SIZE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">500</span></em><a class="headerlink" href="#archivist.locations.DEFAULT_PAGE_SIZE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default page size - number of entities fetched in one REST GET in the
-<a class="reference internal" href="#archivist.locations._LocationsClient.list" title="archivist.locations._LocationsClient.list"><code class="xref py py-func docutils literal notranslate"><span class="pre">list()</span></code></a> method. This can be overridden but should rarely
-be changed.</p>
-</dd></dl>
-
 <dl class="py class">
 <dt id="archivist.locations.Location">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.locations.</span></code><code class="sig-name descname"><span class="pre">Location</span></code><a class="reference internal" href="_modules/archivist/locations.html#Location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations.Location" title="Permalink to this definition">¶</a></dt>
@@ -284,7 +276,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 
 <dl class="py method">
 <dt id="archivist.locations._LocationsClient.list">
-<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.list" title="Permalink to this definition">¶</a></dt>
 <dd><p>List locations.</p>
 <p>Lists locations that match criteria.</p>
 <dl class="field-list simple">

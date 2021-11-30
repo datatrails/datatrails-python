@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>IAM Subjects &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>IAM Subjects &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Timestamp" href="../timestamp.html" />
+    <link rel="next" title="IAM Application Registrations" href="appregistrations.html" />
     <link rel="prev" title="IAM Access Policies" href="access_policies.html" /> 
 </head>
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -106,6 +106,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Identity and Access Management (IAM)</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="access_policies.html">IAM Access Policies</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">IAM Subjects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appregistrations.html">IAM Application Registrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appidp.html">IAM Application Get Token</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp</a></li>
@@ -191,19 +193,11 @@
 <span class="c1"># Initialize connection to Archivist</span>
 <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
     <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
-    <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+    <span class="n">authtoken</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">subject</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="py data">
-<dt id="archivist.subjects.DEFAULT_PAGE_SIZE">
-<code class="sig-prename descclassname"><span class="pre">archivist.subjects.</span></code><code class="sig-name descname"><span class="pre">DEFAULT_PAGE_SIZE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">500</span></em><a class="headerlink" href="#archivist.subjects.DEFAULT_PAGE_SIZE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default page size - number of entities fetched in one REST GET in the
-<a class="reference internal" href="#archivist.subjects._SubjectsClient.list" title="archivist.subjects._SubjectsClient.list"><code class="xref py py-func docutils literal notranslate"><span class="pre">list()</span></code></a> method. This can be overridden but should rarely
-be changed.</p>
-</dd></dl>
-
 <dl class="py class">
 <dt id="archivist.subjects.Subject">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.subjects.</span></code><code class="sig-name descname"><span class="pre">Subject</span></code><a class="reference internal" href="../_modules/archivist/subjects.html#Subject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects.Subject" title="Permalink to this definition">¶</a></dt>
@@ -323,10 +317,9 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 
 <dl class="py method">
 <dt id="archivist.subjects._SubjectsClient.list">
-<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.list" title="Permalink to this definition">¶</a></dt>
 <dd><p>List subjects.</p>
-<p>List subjects that match criteria.
-TODO: filtering on display_name does not currently work</p>
+<p>List subjects that match criteria.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -350,7 +343,7 @@ TODO: filtering on display_name does not currently work</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../timestamp.html" class="btn btn-neutral float-right" title="Timestamp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="appregistrations.html" class="btn btn-neutral float-right" title="IAM Application Registrations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="access_policies.html" class="btn btn-neutral float-left" title="IAM Access Policies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

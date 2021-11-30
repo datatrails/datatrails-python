@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Compliance Policies &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>Compliance Policies &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -193,7 +193,7 @@
 <span class="c1"># Initialize connection to Archivist</span>
 <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
     <span class="s2">&quot;https://rkvst.poc.jitsuin.io&quot;</span><span class="p">,</span>
-    <span class="n">auth</span><span class="o">=</span><span class="n">authtoken</span><span class="p">,</span>
+    <span class="n">authtoken</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="c1"># A &#39;Since&#39; policy</span>
@@ -202,13 +202,6 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-<dl class="py data">
-<dt id="archivist.compliance_policies.DEFAULT_PAGE_SIZE">
-<code class="sig-prename descclassname"><span class="pre">archivist.compliance_policies.</span></code><code class="sig-name descname"><span class="pre">DEFAULT_PAGE_SIZE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">500</span></em><a class="headerlink" href="#archivist.compliance_policies.DEFAULT_PAGE_SIZE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default page size - number of entities fetched in one call to the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">list()</span></code> method.</p>
-</dd></dl>
-
 <dl class="py class">
 <dt id="archivist.compliance_policies.CompliancePolicy">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.compliance_policies.</span></code><code class="sig-name descname"><span class="pre">CompliancePolicy</span></code><a class="reference internal" href="../_modules/archivist/compliance_policies.html#CompliancePolicy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance_policies.CompliancePolicy" title="Permalink to this definition">¶</a></dt>
@@ -325,7 +318,7 @@ e.g. compliance_policies/xxxxxxxxxxxxxxxxxxxxxxx</p>
 
 <dl class="py method">
 <dt id="archivist.compliance_policies._CompliancePoliciesClient.list">
-<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance_policies.html#_CompliancePoliciesClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance_policies._CompliancePoliciesClient.list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance_policies.html#_CompliancePoliciesClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance_policies._CompliancePoliciesClient.list" title="Permalink to this definition">¶</a></dt>
 <dd><p>List compliance policies.</p>
 <p>Lists compliance policies that match criteria.</p>
 <dl class="field-list simple">

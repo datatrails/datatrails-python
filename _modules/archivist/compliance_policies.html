@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.compliance_policies &mdash; Jitsuin Archivist 0.8.0 documentation</title>
+  <title>archivist.compliance_policies &mdash; Jitsuin Archivist 0.9.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.8.0
+                0.9.0
               </div>
             
           
@@ -188,7 +188,7 @@
 <span class="sd">      # Initialize connection to Archivist</span>
 <span class="sd">      arch = Archivist(</span>
 <span class="sd">          &quot;https://rkvst.poc.jitsuin.io&quot;,</span>
-<span class="sd">          auth=authtoken,</span>
+<span class="sd">          authtoken,</span>
 <span class="sd">      )</span>
 
 <span class="sd">      # A &#39;Since&#39; policy</span>
@@ -219,11 +219,6 @@
     <span class="n">COMPLIANCE_POLICIES_LABEL</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
-
-
-<span class="c1">#: Default page size - number of entities fetched in one call to the</span>
-<span class="c1">#: :func:`~_AssetsClient.list` method.</span>
-<span class="n">DEFAULT_PAGE_SIZE</span> <span class="o">=</span> <span class="mi">500</span>
 
 <span class="n">FIXTURE_LABEL</span> <span class="o">=</span> <span class="s2">&quot;compliance_policies&quot;</span>
 
@@ -366,7 +361,7 @@
             <span class="n">query</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span><span class="n">props</span><span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_CompliancePoliciesClient.list"><a class="viewcode-back" href="../../compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_PAGE_SIZE</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="_CompliancePoliciesClient.list"><a class="viewcode-back" href="../../compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;List compliance policies.</span>
 
 <span class="sd">        Lists compliance policies that match criteria.</span>
