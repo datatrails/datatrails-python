@@ -9,6 +9,12 @@ tasks:
     status:
       - test -s archivist/about.py
 
+  audit:
+    desc: Audit the code
+    deps: [about]
+    cmds:
+      - ./scripts/builder.sh pip-audit -r requirements.txt
+
   builder:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
