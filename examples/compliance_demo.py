@@ -5,6 +5,7 @@ It then runs the defined operations.
 
 import argparse
 from enum import Enum
+from os import getenv
 import time
 import warnings
 import yaml
@@ -68,12 +69,20 @@ class ArchivistStoryRunner:
     events = []  # list of events created
     policies = {}  # dict of policies created
 
-    def __init__(self, url, token_file, config_file):
+    def __init__(self, url, config_file):
 
-        with open(token_file, mode="r", encoding="utf-8") as tokenfile:
-            token = tokenfile.read().strip()
+        # client id and client secret is obtained from the appidp endpoint - see the
+        # application registrations example code in examples/applications_registration.py
+        #
+        # client id is an environment variable. client_secret is stored in a file in a
+        # directory that has 0700 permissions. The location of this file is set in
+        # the client_secret_file environment variable.
+        client_id = getenv("ARCHIVIST_CLIENT_ID")
+        client_secret_file = getenv("ARCHIVIST_CLIENT_SECRET_FILE")
+        with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
+            client_secret = tokenfile.read().strip()
 
-            self.client = Archivist(url, token, verify=False)
+        self.client = Archivist(url, (client_id, client_secret), verify=False)
 
         # read and save the config file
         with open(config_file, "r", encoding="utf-8") as y:
@@ -236,14 +245,13 @@ def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("url", help="the archivist url.")
-    parser.add_argument("tokenfile", help="the auth token file location.")
     parser.add_argument(
         "yamlfile", help="the yaml file describing the operations to conduct"
     )
 
     args = parser.parse_args()
 
-    runner = ArchivistStoryRunner(args.url, args.tokenfile, args.yamlfile)
+    runner = ArchivistStoryRunner(args.url, args.yamlfile)
     runner()
 
 

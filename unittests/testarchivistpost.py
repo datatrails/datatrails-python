@@ -353,3 +353,35 @@ class TestArchivistPost(TestArchivistMethods):
                 "image/jpg",
                 msg="Incorrect mimetype",
             )
+
+
+class TestArchivistPostWithoutAuth(TestCase):
+    """
+    Test Archivist base method class
+    """
+
+    def setUp(self):
+        self.arch = Archivist("url", None)
+
+    def test_post_without_auth(self):
+        """
+        Test default post method
+        """
+        request = {"field1": "value1"}
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, request=request)
+            resp = self.arch.post("path/path", request)
+            self.assertEqual(
+                tuple(mock_post.call_args),
+                (
+                    (f"url/{ROOT}/path/path",),
+                    {
+                        "data": '{"field1": "value1"}',
+                        "headers": {
+                            "content-type": "application/json",
+                        },
+                        "verify": True,
+                    },
+                ),
+                msg="POST method called incorrectly",
+            )

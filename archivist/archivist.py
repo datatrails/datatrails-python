@@ -113,7 +113,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
     def __init__(
         self,
         url: str,
-        auth: Union[str, MachineAuth],
+        auth: Union[None, str, MachineAuth],
         *,
         fixtures: Optional[Dict] = None,
         verify: bool = True,
@@ -189,6 +189,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             apptoken = self.appidp.token(self._client_id, self._client_secret)  # type: ignore
             self._auth = apptoken["access_token"]
             self._expires_at = time() + apptoken["expires_in"] - 10  # fudge factor
+            LOGGER.debug("Refresh token")
 
         return self._auth  # type: ignore
 
@@ -218,7 +219,10 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             newheaders = self.headers
 
         auth = self.auth  # this may trigger a refetch so only do it once here
-        newheaders["authorization"] = "Bearer " + auth.strip()
+        # for appidp endpoint there may not be an authtoken
+        if auth is not None:
+            newheaders["authorization"] = "Bearer " + auth.strip()
+
         return newheaders
 
     @retry_429
@@ -336,7 +340,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             headers = self.__add_headers(headers)
             data = json.dumps(request) if request else None
 
-        LOGGER.debug("POST data %s", data)
         response = self._session.post(
             url,
             data=data,
