@@ -7,7 +7,6 @@ import json
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist.sbommetadata import SBOM
 from archivist.constants import (
     ROOT,
     SBOMS_SUBPATH,
@@ -17,6 +16,8 @@ from archivist.constants import (
     SBOMS_WILDCARD,
     SBOMS_WITHDRAW,
 )
+from archivist.errors import ArchivistUnpublishedError, ArchivistUnwithdrawnError
+from archivist.sbommetadata import SBOM
 
 from .mock_response import MockResponse
 
@@ -36,15 +37,25 @@ PROPS = {
     "uploaded_by": "",
     "trusted": False,
     "lifecycle_status": "Active",
-    "published_date": "2021-11-11T17:02:06Z",
-    "withdrawn_date": "2021-11-11T17:02:06Z",
+    "published_date": "",
+    "withdrawn_date": "",
 }
+PUBLISHED_PROPS = {**PROPS, **{"published_date": "2021-11-11T17:02:06Z"}}
+WITHDRAWN_PROPS = {**PROPS, **{"withdrawn_date": "2021-11-11T17:02:06Z"}}
 
 IDENTITY = f"{SBOMS_LABEL}/xxxxxxxx"
 SUBPATH = f"{SBOMS_SUBPATH}/{SBOMS_LABEL}"
 
 RESPONSE = {
     **PROPS,
+    "identity": IDENTITY,
+}
+PUBLISHED_RESPONSE = {
+    **PUBLISHED_PROPS,
+    "identity": IDENTITY,
+}
+WITHDRAWN_RESPONSE = {
+    **WITHDRAWN_PROPS,
     "identity": IDENTITY,
 }
 REQUEST_DATA = json.dumps(PROPS)
@@ -58,7 +69,7 @@ class TestSBOMS(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", "authauthauth")
+        self.arch = Archivist("url", "authauthauth", max_time=2)
         self.mockstream = BytesIO(b"somelongstring")
 
     def test_SBOMS_upload(self):
@@ -228,6 +239,42 @@ class TestSBOMS(TestCase):
                 msg="POST method called incorrectly",
             )
 
+    def test_sbom_publish_with_confirmation(self):
+        """
+        Test sbom publication
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **PUBLISHED_RESPONSE)
+            sbom = self.arch.sboms.publish(IDENTITY, confirm=True)
+            self.assertEqual(
+                sbom.dict(),
+                PUBLISHED_RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_sbom_publish_with_confirmation_never_published(self):
+        """
+        Test publish confirmation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+            ]
+            with self.assertRaises(ArchivistUnpublishedError):
+                sbom = self.arch.sboms.publish(IDENTITY, confirm=True)
+
     def test_sbom_withdraw(self):
         """
         Test SBOM withdraw
@@ -251,6 +298,42 @@ class TestSBOMS(TestCase):
                 ),
                 msg="POST method called incorrectly",
             )
+
+    def test_sbom_withdraw_with_confirmation(self):
+        """
+        Test sbom withdrawal
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **WITHDRAWN_RESPONSE)
+            sbom = self.arch.sboms.withdraw(IDENTITY, confirm=True)
+            self.assertEqual(
+                sbom.dict(),
+                WITHDRAWN_RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_sbom_withdraw_with_confirmation_never_withdrawn(self):
+        """
+        Test withdawan confirmation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+                MockResponse(200, **RESPONSE),
+            ]
+            with self.assertRaises(ArchivistUnwithdrawnError):
+                sbom = self.arch.sboms.withdraw(IDENTITY, confirm=True)
 
     def test_sboms_list(self):
         """
