@@ -1,13 +1,14 @@
 """Create an event for an asset given url to Archivist and user Token.
 
 The module contains four functions: main, create_asset and create_event.
-Main function parses in a url to the Archivist and a token, which is a user authorization.
+Main function parses in a url to the Archivist and credentials, which is a user authorization.
 The main function would initialize an archivist connection using the url and
-the token, called "arch", then call create_assets and pass in "arch" and
+the credentials, called "arch", then call create_assets and pass in "arch" and
 create_assets will build create_asset, which is a archivist connection function
 to create a new asset for the archivist through archivist connection. The main funciton then
 calls create_event and pass in "arch" and the created asset to create a new event for the asset.
 """
+from os import getenv
 
 from archivist.archivist import Archivist
 
@@ -107,13 +108,21 @@ def main():
     the asset and fetch the event.
 
     """
-    with open(".auth_token", mode="r", encoding="utf-8") as tokenfile:
-        authtoken = tokenfile.read().strip()
+    # client id and client secret is obtained from the appidp endpoint - see the
+    # application registrations example code in examples/applications_registration.py
+    #
+    # client id is an environment variable. client_scret is stored in a file in a
+    # directory that has 0700 permissions. The location of this file is set in
+    # the client_secret_file environment variable.
+    client_id = getenv("ARCHIVIST_CLIENT_ID")
+    client_secret_file = getenv("ARCHIVIST_CLIENT_SECRET_FILE")
+    with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
+        client_secret = tokenfile.read().strip()
 
     # Initialize connection to Archivist
     arch = Archivist(
         "https://app.rkvst.io",
-        authtoken,
+        (client_id, client_secret),
     )
     # Create a new asset
     asset = create_asset(arch)

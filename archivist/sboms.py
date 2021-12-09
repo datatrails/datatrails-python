@@ -43,6 +43,7 @@ from .constants import (
     SBOMS_WITHDRAW,
     SBOMS_PUBLISH,
 )
+from . import publisher, withdrawer
 from .dictmerge import _deepmerge
 from .sbommetadata import SBOM
 
@@ -171,44 +172,86 @@ class _SBOMSClient:
             )
         )
 
-    def publish(self, identity: str) -> SBOM:
+    def publish(self, identity: str, confirm: bool = False) -> SBOM:
         """Publish SBOMt
 
         Makes an SBOM public.
 
         Args:
             identity (str): identity of SBOM
+            confirm (bool): if True wait for sbom to be published.
 
         Returns:
             :class:`SBOM` instance
 
         """
         LOGGER.debug("Publish SBOM %s", identity)
-        return SBOM(
+        sbom = SBOM(
             **self._archivist.post(
                 f"{SBOMS_SUBPATH}/{identity}",
                 None,
                 verb=SBOMS_PUBLISH,
             )
         )
+        if not confirm:
+            return sbom
 
-    def withdraw(self, identity: str) -> SBOM:
+        return self.wait_for_publication(sbom.identity)
+
+    def wait_for_publication(self, identity: str) -> SBOM:
+        """Wait for sbom to be published.
+
+        Waits for sbom to be published.
+
+        Args:
+            identity (str): identity of sbom
+
+        Returns:
+            True if sbom is confirmed.
+
+        """
+        publisher.MAX_TIME = self._archivist.max_time
+        # pylint: disable=protected-access
+        return publisher._wait_for_publication(self, identity)
+
+    def withdraw(self, identity: str, confirm: bool = False) -> SBOM:
         """Withdraw SBOM
 
         Withdraws an SBOM.
 
         Args:
             identity (str): identity of SBOM
+            confirm (bool): if True wait for sbom to be withdrawn.
 
         Returns:
             :class:`SBOM` instance
 
         """
         LOGGER.debug("Withdraw SBOM %s", identity)
-        return SBOM(
+        sbom = SBOM(
             **self._archivist.post(
                 f"{SBOMS_SUBPATH}/{identity}",
                 None,
                 verb=SBOMS_WITHDRAW,
             )
         )
+        if not confirm:
+            return sbom
+
+        return self.wait_for_withdrawn(sbom.identity)
+
+    def wait_for_withdrawn(self, identity: str) -> SBOM:
+        """Wait for sbom to be withdrawn.
+
+        Waits for sbom to be withdrawn.
+
+        Args:
+            identity (str): identity of sbom
+
+        Returns:
+            True if sbom is confirmed.
+
+        """
+        withdrawer.MAX_TIME = self._archivist.max_time
+        # pylint: disable=protected-access
+        return withdrawer._wait_for_withdrawn(self, identity)
