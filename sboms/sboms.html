@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>SBOMS &mdash; Jitsuin Archivist 0.9.1 documentation</title>
+  <title>SBOMS &mdash; Jitsuin Archivist 0.9.2 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.9.1
+                0.9.2
               </div>
             
           
@@ -288,12 +288,15 @@ fd iterator</p>
 
 <dl class="py method">
 <dt id="archivist.sboms._SBOMSClient.publish">
-<code class="sig-name descname"><span class="pre">publish</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.publish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.publish" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">publish</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.publish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.publish" title="Permalink to this definition">¶</a></dt>
 <dd><p>Publish SBOMt</p>
 <p>Makes an SBOM public.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of SBOM</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identity</strong> (<em>str</em>) – identity of SBOM</p></li>
+<li><p><strong>confirm</strong> (<em>bool</em>) – if True wait for sbom to be published.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instance</p>
@@ -302,16 +305,49 @@ fd iterator</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="archivist.sboms._SBOMSClient.wait_for_publication">
+<code class="sig-name descname"><span class="pre">wait_for_publication</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.wait_for_publication"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.wait_for_publication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for sbom to be published.</p>
+<p>Waits for sbom to be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of sbom</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if sbom is confirmed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="archivist.sboms._SBOMSClient.withdraw">
-<code class="sig-name descname"><span class="pre">withdraw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.withdraw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.withdraw" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">withdraw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.withdraw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.withdraw" title="Permalink to this definition">¶</a></dt>
 <dd><p>Withdraw SBOM</p>
 <p>Withdraws an SBOM.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of SBOM</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identity</strong> (<em>str</em>) – identity of SBOM</p></li>
+<li><p><strong>confirm</strong> (<em>bool</em>) – if True wait for sbom to be withdrawn.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.sboms._SBOMSClient.wait_for_withdrawn">
+<code class="sig-name descname"><span class="pre">wait_for_withdrawn</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.wait_for_withdrawn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.wait_for_withdrawn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for sbom to be withdrawn.</p>
+<p>Waits for sbom to be withdrawn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of sbom</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if sbom is confirmed.</p>
 </dd>
 </dl>
 </dd></dl>
