@@ -79,7 +79,7 @@ def _wait_for_confirmation(
     on_giveup=__on_giveup_confirmation,
 )
 def _wait_for_confirmation(self, identity):
-    """docstring"""
+    """Return None until entity is confirmed"""
     entity = self.read(identity)
 
     if CONFIRMATION_STATUS not in entity:
@@ -115,7 +115,7 @@ def __on_giveup_confirmed(details):
     on_giveup=__on_giveup_confirmed,
 )
 def _wait_for_confirmed(self, *, props=None, **kwargs) -> bool:
-    """docstring"""
+    """Return False until all entities are confirmed"""
 
     # look for unconfirmed entities
     newprops = deepcopy(props) if props else {}
