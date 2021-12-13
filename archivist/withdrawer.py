@@ -5,8 +5,6 @@
 
 import logging
 
-from typing import overload
-
 import backoff
 
 from .errors import ArchivistUnwithdrawnError
@@ -43,19 +41,6 @@ def __on_giveup_withdrawn(details):
     )
 
 
-# These overloads are used for type hinting, if self is sboms client then
-# an SBOM metadata will be returned.
-# Overloads are evaluated at startup but not at runtime, therefore
-# no test coverage be done directly.
-
-
-@overload
-def _wait_for_publication(
-    self: "sboms._SbomsClient", identity: str
-) -> "sbommetadata.SBOM":
-    ...  # pragma: no cover
-
-
 @backoff.on_predicate(
     backoff.expo,
     logger=LOGGER,
@@ -64,7 +49,7 @@ def _wait_for_publication(
     on_giveup=__on_giveup_withdrawn,
 )
 def _wait_for_withdrawn(self, identity):
-    """docstring"""
+    """Return None until withdrawn date is set"""
     entity = self.read(identity)
 
     if entity.withdrawn_date:

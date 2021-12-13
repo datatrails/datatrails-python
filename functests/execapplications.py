@@ -174,7 +174,9 @@ class TestApplications(TestCase):
     def test_archivist_token(self):
         """
         Test archivist with client id/secret
+        WARN: this test takes over 10 minutes
         """
+        print("This test takes over 10 minutes...")
         application = self.arch.applications.create(
             self.display_name,
             CUSTOM_CLAIMS,
@@ -187,6 +189,7 @@ class TestApplications(TestCase):
         )
 
         # archivist using app registration
+        print("New Arch")
         new_arch = Archivist(
             environ["TEST_ARCHIVIST"],
             (application["client_id"], application["credentials"][0]["secret"]),
@@ -198,6 +201,9 @@ class TestApplications(TestCase):
         traffic_light = deepcopy(ATTRS)
         traffic_light["arc_display_type"] = "Traffic light with violation camera"
         asset = new_arch.assets.create(
+            props={
+                "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
+            },
             attrs=traffic_light,
             confirm=True,
         )

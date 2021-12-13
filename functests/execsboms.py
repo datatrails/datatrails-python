@@ -57,12 +57,60 @@ class TestSBOM(TestCase):
         with suppress(FileNotFoundError):
             remove(TEST_SBOM_DOWNLOAD_PATH)
 
+    def test_sbom_upload_with_public_privacy(self):
+        """
+        Test sbom upload with privacy
+        """
+        now = now_timestamp()
+        print("Title:", self.title, now)
+        with open(TEST_SBOM_PATH, "rb") as fd:
+            metadata = self.arch.sboms.upload(
+                fd, confirm=True, params={"privacy": "PUBLIC"}
+            )
+        print("first upload", json_dumps(metadata.dict(), indent=4))
+        identity = metadata.identity
+
+        metadata1 = self.arch.sboms.read(identity)
+        print("read", json_dumps(metadata1.dict(), indent=4))
+        self.assertEqual(
+            metadata,
+            metadata1,
+            msg="Metadata not correct",
+        )
+
+    def test_sbom_upload_with_confirmation(self):
+        """
+        Test sbom upload with confirmation
+        """
+        now = now_timestamp()
+        print("Title:", self.title, now)
+        with open(TEST_SBOM_PATH, "rb") as fd:
+            metadata = self.arch.sboms.upload(fd, confirm=True)
+        print("first upload", json_dumps(metadata.dict(), indent=4))
+        identity = metadata.identity
+
+        metadata1 = self.arch.sboms.read(identity)
+        print("read", json_dumps(metadata1.dict(), indent=4))
+        self.assertEqual(
+            metadata,
+            metadata1,
+            msg="Metadata not correct",
+        )
+
+        sleep(1)  # the data may have not reached cogsearch
+        metadatas = list(self.arch.sboms.list(metadata={"uploaded_since": now}))
+        self.assertEqual(
+            len(metadatas),
+            1,
+            msg="No. of SBOMS should be 1",
+        )
+
     def test_sbom_upload_and_download(self):
         """
         Test sbom upload and download through the SDK
         """
-        print("Title:", self.title)
         now = now_timestamp()
+        print("Title:", self.title, now)
         with open(TEST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(fd)
 
@@ -83,11 +131,8 @@ class TestSBOM(TestCase):
             msg="Metadata not correct",
         )
 
-        sleep(1)  # otherwise test fails
+        sleep(1)  # the data may have not reached cogsearch
         metadatas = list(self.arch.sboms.list(metadata={"uploaded_since": now}))
-        for i, m in enumerate(metadatas):
-            print(i, ":", json_dumps(m.dict(), indent=4))
-
         self.assertEqual(
             len(metadatas),
             1,
@@ -98,6 +143,9 @@ class TestSBOM(TestCase):
             metadata,
             msg="Metadata not correct",
         )
+
+        for i, m in enumerate(metadatas):
+            print(i, ":", json_dumps(m.dict(), indent=4))
 
         metadata2 = self.arch.sboms.publish(identity, confirm=True)
         print("publish", json_dumps(metadata2.dict(), indent=4))
@@ -135,7 +183,6 @@ class TestSBOM(TestCase):
             msg="Withdrawn_date not correct",
         )
 
-        sleep(1)  # otherwise test fails
         metadatas = list(
             self.arch.sboms.list(
                 page_size=50,

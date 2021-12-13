@@ -43,7 +43,7 @@ from .constants import (
     SBOMS_WITHDRAW,
     SBOMS_PUBLISH,
 )
-from . import publisher, withdrawer
+from . import publisher, uploader, withdrawer
 from .dictmerge import _deepmerge
 from .sbommetadata import SBOM
 
@@ -66,14 +66,23 @@ class _SBOMSClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
-    def upload(self, fd: BinaryIO, *, mtype: str = "text/xml") -> SBOM:
+    def upload(
+        self,
+        fd: BinaryIO,
+        *,
+        confirm: bool = False,
+        mtype: str = "text/xml",
+        params: Optional[Dict] = None,
+    ) -> SBOM:
         """Create SBOM
 
         Creates SBOM from opened file or other data source.
 
         Args:
             fd (file): opened file descriptor or other file-type iterable.
+            confirm (bool): if True wait for sbom to be uploaded.
             mtype (str): mimetype of data.
+            params (dict): optional e.g. {"sbomType": "cyclonedx-xml", "privacy": "PUBLIC" }
 
         Returns:
             :class:`SBOM` instance
@@ -81,14 +90,36 @@ class _SBOMSClient:
         """
 
         LOGGER.debug("Upload SBOM")
-        return SBOM(
+
+        sbom = SBOM(
             **self._archivist.post_file(
                 f"{SBOMS_SUBPATH}/{SBOMS_LABEL}",
                 fd,
                 mtype,
                 form="sbom",
+                params=params,
             )
         )
+        if not confirm:
+            return sbom
+
+        return self.wait_for_uploading(sbom.identity)
+
+    def wait_for_uploading(self, identity: str) -> SBOM:
+        """Wait for sbom to be uploaded.
+
+        Waits for sbom to be uploaded.
+
+        Args:
+            identity (str): identity of sbom
+
+        Returns:
+            True if sbom is uploaded.
+
+        """
+        uploader.MAX_TIME = self._archivist.max_time
+        # pylint: disable=protected-access
+        return uploader._wait_for_uploading(self, identity)  # type: ignore
 
     def download(self, identity: str, fd: BinaryIO) -> Response:
         """Read SBOM
@@ -212,7 +243,7 @@ class _SBOMSClient:
         """
         publisher.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
-        return publisher._wait_for_publication(self, identity)
+        return publisher._wait_for_publication(self, identity)  # type: ignore
 
     def withdraw(self, identity: str, confirm: bool = False) -> SBOM:
         """Withdraw SBOM
@@ -254,4 +285,4 @@ class _SBOMSClient:
         """
         withdrawer.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
-        return withdrawer._wait_for_withdrawn(self, identity)
+        return withdrawer._wait_for_withdrawn(self, identity)  # type: ignore

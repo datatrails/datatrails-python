@@ -1,13 +1,11 @@
-"""publisher interface
-
-   Wrap base methods with constants for assets (path, etc...
+"""uploader interface
 """
 
 import logging
 
 import backoff
 
-from .errors import ArchivistUnpublishedError
+from .errors import ArchivistNotFoundError
 
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
@@ -33,11 +31,11 @@ def __backoff_handler(details):
     )
 
 
-def __on_giveup_publication(details):
-    identity = details["args"][1]
+def __on_giveup_uploading(details):
+    identity = details["args"][1]  # first argument to wait_for_uploading
     elapsed = details["elapsed"]
-    raise ArchivistUnpublishedError(
-        f"publication for {identity} timed out after {elapsed} seconds"
+    raise ArchivistNotFoundError(
+        f"uploading for {identity} timed out after {elapsed} seconds"
     )
 
 
@@ -46,13 +44,14 @@ def __on_giveup_publication(details):
     logger=LOGGER,
     max_time=__lookup_max_time,
     on_backoff=__backoff_handler,
-    on_giveup=__on_giveup_publication,
+    on_giveup=__on_giveup_uploading,
 )
-def _wait_for_publication(self, identity):
-    """Return None until published date is set"""
-    entity = self.read(identity)
+def _wait_for_uploading(self, identity):
+    """Return None until identity is found"""
+    try:
+        LOGGER.debug("Uploader Read %s", identity)
+        entity = self.read(identity)
+    except ArchivistNotFoundError:
+        return None
 
-    if entity.published_date:
-        return entity
-
-    return None
+    return entity
