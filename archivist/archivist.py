@@ -355,7 +355,13 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     @retry_429
     def post_file(
-        self, path: str, fd: BinaryIO, mtype: str, *, form: Optional[str] = "file"
+        self,
+        path: str,
+        fd: BinaryIO,
+        mtype: str,
+        *,
+        form: Optional[str] = "file",
+        params: Optional[Dict] = None,
     ) -> Dict:
         """POST method (REST) - upload binary
 
@@ -365,6 +371,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             path (str): e.g. v2/assets
             fd : iterable representing the contents of a file.
             mtype (str): mime type e.g. image/jpg
+            params (dict): dictiuonary of optional path params
 
         Returns:
             dict representing the response body (entity).
@@ -379,6 +386,10 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         headers = {
             "content-type": multipart.content_type,
         }
+        if params:
+            qry = "&".join(sorted(f"{k}={v}" for k, v in _dotstring(params)))
+            path = "?".join((path, qry))
+
         response = self._session.post(
             SEP.join((self.url, ROOT, path)),
             data=multipart,  # type: ignore    https://github.com/requests/toolbelt/issues/312

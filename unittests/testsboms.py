@@ -4,6 +4,7 @@ Test SBOMS
 
 from io import BytesIO
 import json
+from os import environ
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -16,7 +17,12 @@ from archivist.constants import (
     SBOMS_WILDCARD,
     SBOMS_WITHDRAW,
 )
-from archivist.errors import ArchivistUnpublishedError, ArchivistUnwithdrawnError
+from archivist.errors import (
+    ArchivistNotFoundError,
+    ArchivistUnpublishedError,
+    ArchivistUnwithdrawnError,
+)
+from archivist.logger import set_logger
 from archivist.sbommetadata import SBOM
 
 from .mock_response import MockResponse
@@ -24,6 +30,8 @@ from .mock_response import MockResponse
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
+if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
+    set_logger(environ["TEST_DEBUG"])
 
 PROPS = {
     "identity": "sboms/c3da0d3a-32bf-4f5f-a8c6-b342a8356480",
@@ -137,6 +145,47 @@ class TestSBOMS(TestCase):
                 RESPONSE,
                 msg="UPLOAD method called incorrectly",
             )
+
+    def test_sbom_upload_with_confirmation(self):
+        """
+        Test sbom upload
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE),
+            ]
+            sbom = self.arch.sboms.upload(self.mockstream, confirm=True)
+            self.assertEqual(
+                sbom.dict(),
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_sbom_upload_with_confirmation_never_uploaded(self):
+        """
+        Test upload confirmation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+                ArchivistNotFoundError("sbom not found"),
+            ]
+            with self.assertRaises(ArchivistNotFoundError):
+                sbom = self.arch.sboms.upload(self.mockstream, confirm=True)
 
     def test_SBOMS_download(self):
         """

@@ -26,7 +26,6 @@ rm -rf htmlcov
 COVERAGE="coverage"
 ${COVERAGE} --version
 ${COVERAGE} run --branch --source archivist -m unittest -v 
-${COVERAGE} annotate
 ${COVERAGE} html
 ${COVERAGE} xml
 ${COVERAGE} report

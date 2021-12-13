@@ -226,6 +226,70 @@ class TestArchivistPost(TestArchivistMethods):
                 msg="Incorrect mimetype",
             )
 
+    def test_post_file_with_params(self):
+        """
+        Test default post_file method
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200)
+            resp = self.arch.post_file(
+                "path/path",
+                BytesIO(b"lotsofbytes"),
+                "image/jpg",
+                params={"field1": "value1", "field2": "value2"},
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                len(args),
+                1,
+                msg="Incorrect number of arguments",
+            )
+            self.assertEqual(
+                args[0],
+                f"url/{ROOT}/path/path?field1=value1&field2=value2",
+                msg="Incorrect first argument",
+            )
+            self.assertEqual(
+                len(kwargs),
+                3,
+                msg="Incorrect number of keyword arguments",
+            )
+            headers = kwargs.get("headers")
+            self.assertNotEqual(
+                headers,
+                None,
+                msg="Header does not exist",
+            )
+            self.assertTrue(
+                headers["content-type"].startswith("multipart/form-data"),
+                msg="Incorrect content-type",
+            )
+            data = kwargs.get("data")
+            self.assertIsNotNone(
+                data,
+                msg="Incorrect data",
+            )
+            fields = data.fields
+            self.assertIsNotNone(
+                fields,
+                msg="Incorrect fields",
+            )
+            myfile = fields.get("file")
+            self.assertIsNotNone(
+                myfile,
+                msg="Incorrect file key",
+            )
+            self.assertEqual(
+                myfile[0],
+                "filename",
+                msg="Incorrect filename",
+            )
+            self.assertEqual(
+                myfile[2],
+                "image/jpg",
+                msg="Incorrect mimetype",
+            )
+
     def test_post_file_with_error(self):
         """
         Test post method with error

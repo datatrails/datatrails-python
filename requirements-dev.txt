@@ -3,7 +3,7 @@
 # code quality
 autopep8~=1.5
 black~=21.4b2
-coverage~=5.4
+coverage~=6.2
 pip-audit~=1.0.0
 pycodestyle~=2.6
 pylint~=2.6
