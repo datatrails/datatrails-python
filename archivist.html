@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Archivist &mdash; Jitsuin Archivist 0.9.2 documentation</title>
+  <title>Archivist &mdash; Jitsuin Archivist 0.9.3 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.9.2
+                0.9.3
               </div>
             
           
@@ -345,7 +345,7 @@ the file must be opened in binary mode</p></li>
 
 <dl class="py method">
 <dt id="archivist.archivist.Archivist.post_file">
-<code class="sig-name descname"><span class="pre">post_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mtype</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'file'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.post_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.post_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">post_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mtype</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'file'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/archivist/archivist.html#Archivist.post_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.archivist.Archivist.post_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>POST method (REST) - upload binary</p>
 <p>Uploads a file to an endpoint</p>
 <dl class="field-list simple">
@@ -354,6 +354,7 @@ the file must be opened in binary mode</p></li>
 <li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
 <li><p><strong>fd</strong> – iterable representing the contents of a file.</p></li>
 <li><p><strong>mtype</strong> (<em>str</em>) – mime type e.g. image/jpg</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) – dictiuonary of optional path params</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

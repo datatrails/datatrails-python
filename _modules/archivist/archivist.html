@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.archivist &mdash; Jitsuin Archivist 0.9.2 documentation</title>
+  <title>archivist.archivist &mdash; Jitsuin Archivist 0.9.3 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.9.2
+                0.9.3
               </div>
             
           
@@ -528,7 +528,13 @@
 
 <div class="viewcode-block" id="Archivist.post_file"><a class="viewcode-back" href="../../archivist.html#archivist.archivist.Archivist.post_file">[docs]</a>    <span class="nd">@retry_429</span>
     <span class="k">def</span> <span class="nf">post_file</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">mtype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">form</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;file&quot;</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">fd</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span>
+        <span class="n">mtype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">form</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;POST method (REST) - upload binary</span>
 
@@ -538,6 +544,7 @@
 <span class="sd">            path (str): e.g. v2/assets</span>
 <span class="sd">            fd : iterable representing the contents of a file.</span>
 <span class="sd">            mtype (str): mime type e.g. image/jpg</span>
+<span class="sd">            params (dict): dictiuonary of optional path params</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict representing the response body (entity).</span>
@@ -552,6 +559,10 @@
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;content-type&quot;</span><span class="p">:</span> <span class="n">multipart</span><span class="o">.</span><span class="n">content_type</span><span class="p">,</span>
         <span class="p">}</span>
+        <span class="k">if</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">qry</span> <span class="o">=</span> <span class="s2">&quot;&amp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{k}</span><span class="s2">=</span><span class="si">{v}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_dotstring</span><span class="p">(</span><span class="n">params</span><span class="p">)))</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">path</span><span class="p">,</span> <span class="n">qry</span><span class="p">))</span>
+
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
             <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">ROOT</span><span class="p">,</span> <span class="n">path</span><span class="p">)),</span>
             <span class="n">data</span><span class="o">=</span><span class="n">multipart</span><span class="p">,</span>  <span class="c1"># type: ignore    https://github.com/requests/toolbelt/issues/312</span>
