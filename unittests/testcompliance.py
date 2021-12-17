@@ -43,6 +43,16 @@ class TestCompliance(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def test_compliance_str(self):
+        """
+        Test compliance str
+        """
+        self.assertEqual(
+            str(self.arch.compliance),
+            "ComplianceClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_compliance(self):
         """
         Test compliance

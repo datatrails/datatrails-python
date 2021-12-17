@@ -61,6 +61,9 @@ class _LocationsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
+    def __str__(self) -> str:
+        return f"LocationsClient({self._archivist.url})"
+
     def create(self, props: Dict, *, attrs: Optional[Dict] = None) -> Location:
         """Create location
 

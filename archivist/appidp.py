@@ -56,6 +56,9 @@ class _AppIDPClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
+    def __str__(self) -> str:
+        return f"AppIDPClient({self._archivist.url})"
+
     def token(self, client_id: str, client_secret: str) -> AppIDP:
         """Create access token from client id and secret
 

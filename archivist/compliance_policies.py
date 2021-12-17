@@ -87,6 +87,9 @@ class _CompliancePoliciesClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
+    def __str__(self) -> str:
+        return f"CompliancePoliciesClient({self._archivist.url})"
+
     def create(
         self,
         policy: Union[

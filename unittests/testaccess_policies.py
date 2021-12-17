@@ -93,6 +93,16 @@ class TestAccessPolicies(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def test_access_policies_str(self):
+        """
+        Test access_policy str
+        """
+        self.assertEqual(
+            str(self.arch.access_policies),
+            "AccessPoliciesClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_access_policies_create(self):
         """
         Test access_policy creation

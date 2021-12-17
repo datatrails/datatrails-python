@@ -58,6 +58,9 @@ class _SubjectsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
+    def __str__(self) -> str:
+        return f"SubjectsClient({self._archivist.url})"
+
     def create(
         self, display_name: str, wallet_pub_keys: List, tessera_pub_keys: List
     ) -> Subject:

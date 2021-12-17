@@ -235,6 +235,16 @@ class TestEvents(TestCase):
     def tearDown(self):
         self.arch = None
 
+    def test_events_str(self):
+        """
+        Test events str
+        """
+        self.assertEqual(
+            str(self.arch.events),
+            "EventsClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_events_create(self):
         """
         Test event creation
