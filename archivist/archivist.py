@@ -151,6 +151,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self.sboms: _SBOMSClient
         self.subjects: _SubjectsClient
 
+    def __str__(self) -> str:
+        return f"Archivist({self._url})"
+
     def __getattr__(self, value: str):
         """Create endpoints on demand"""
         client = CLIENTS.get(value)

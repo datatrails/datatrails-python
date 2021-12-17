@@ -41,6 +41,16 @@ class TestAttachments(TestCase):
         self.arch = Archivist("url", "authauthauth")
         self.mockstream = BytesIO(b"somelongstring")
 
+    def test_attachments_str(self):
+        """
+        Test attachments str
+        """
+        self.assertEqual(
+            str(self.arch.attachments),
+            "AttachmentsClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_attachments_upload(self):
         """
         Test attachment upload

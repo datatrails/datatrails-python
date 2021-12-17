@@ -64,6 +64,16 @@ class TestSubjects(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def test_subjects_str(self):
+        """
+        Test subjecty str
+        """
+        self.assertEqual(
+            str(self.arch.subjects),
+            "SubjectsClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_subjects_create(self):
         """
         Test subject creation

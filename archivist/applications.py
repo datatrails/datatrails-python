@@ -59,6 +59,9 @@ class _ApplicationsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
+    def __str__(self) -> str:
+        return f"ApplicationsClient({self._archivist.url})"
+
     def create(self, display_name: str, custom_claims: Dict) -> Application:
         """Create application
 

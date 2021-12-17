@@ -61,6 +61,9 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
+    def __str__(self) -> str:
+        return f"ComplianceClient({self._archivist.url})"
+
     def compliant_at(
         self, asset_id, *, compliant_at: Optional[str] = None
     ) -> Compliance:

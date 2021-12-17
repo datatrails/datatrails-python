@@ -80,6 +80,16 @@ class TestSBOMS(TestCase):
         self.arch = Archivist("url", "authauthauth", max_time=2)
         self.mockstream = BytesIO(b"somelongstring")
 
+    def test_sboms_str(self):
+        """
+        Test sboms str
+        """
+        self.assertEqual(
+            str(self.arch.sboms),
+            "SBOMSClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_SBOMS_upload(self):
         """
         Test attachment upload

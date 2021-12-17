@@ -60,6 +60,9 @@ class _AttachmentsClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
+    def __str__(self) -> str:
+        return f"AttachmentsClient({self._archivist.url})"
+
     def upload(self, fd: BinaryIO, *, mtype: str = "image/jpg") -> Attachment:
         """Create attachment
 

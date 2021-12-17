@@ -91,6 +91,16 @@ class TestCompliancePolicies(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def test_compliance_policies_str(self):
+        """
+        Test compliance_policy str
+        """
+        self.assertEqual(
+            str(self.arch.compliance_policies),
+            "CompliancePoliciesClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_compliance_policies_create(self):
         """
         Test compliance_policy creation

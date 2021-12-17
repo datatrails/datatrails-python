@@ -63,6 +63,9 @@ class _AccessPoliciesClient:
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
 
+    def __str__(self) -> str:
+        return f"AccessPoliciesClient({self._archivist.url})"
+
     def create(
         self, props: Dict, filters: List, access_permissions: List
     ) -> AccessPolicy:
