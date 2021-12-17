@@ -1,7 +1,7 @@
-.. _get_asset:
+.. _get_assetref:
 
-Get Asset
-.........
+Get Asset Example
+..................
 
 .. literalinclude:: ../examples/get_asset.py
    :language: python

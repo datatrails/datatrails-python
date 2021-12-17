@@ -1,4 +1,4 @@
-.. _applications_registration:
+.. _applications_registrationref:
 
 Create IAM Application Registration and Tokens
 ...............................................

@@ -1,4 +1,4 @@
-.. _features:
+.. _featuresref:
 
 Features
 =============================================
@@ -11,7 +11,7 @@ The definitive guide to the REST API is defined here: https://docs.rkvst.com
 This python SDK offers a number of advantages over a simple 
 REST api (in any language):
 
-    *  versioned package for the python 3.6,3.7,3.8,3.9 ecosystem.
+    *  versioned package for the python 3.6,3.7,3.8,3.9,3.10 ecosystem.
     *  automatic confirmation of assets and events: just set **confirm=True** when
        creating the asset or event and a sophisticated retry and exponential backoff
        algorithm will take care of everything.

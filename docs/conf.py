@@ -14,10 +14,10 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
+import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 from archivist import about
-import sphinx_rtd_theme
 project = 'Jitsuin Archivist'
 copyright = '2021, support@jitsuin.com'
 author = 'support@jitsuin.com'
@@ -25,8 +25,6 @@ author = 'support@jitsuin.com'
 version = about.__version__
 release = about.__version__
 
-
-autodoc_member_order = 'bysource'
 
 # -- General configuration ---------------------------------------------------
 
@@ -37,7 +35,6 @@ extensions = [
     "sphinx_rtd_theme",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
-    "sphinx.ext.autosummary",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",

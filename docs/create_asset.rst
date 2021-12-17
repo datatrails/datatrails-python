@@ -1,7 +1,7 @@
-.. _create_asset:
+.. _create_assetref:
 
-Create Asset
-............
+Create Asset Eaxmple
+.....................
 
 .. literalinclude:: ../examples/create_asset.py
    :language: python

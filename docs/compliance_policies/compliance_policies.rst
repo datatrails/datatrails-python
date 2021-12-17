@@ -1,8 +1,8 @@
 
-.. _compliance_policies_client:
+.. _compliance_policies_clientref:
 
-Compliance Policies
---------------------
+Compliance Policies Client
+--------------------------
 
 
 .. automodule:: archivist.compliance_policies

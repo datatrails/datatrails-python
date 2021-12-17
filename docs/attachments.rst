@@ -1,8 +1,8 @@
 
-.. _attachments:
+.. _attachmentsref:
 
-Attachments
-------------
+Attachments Class
+------------------
 
 
 .. automodule:: archivist.attachments
