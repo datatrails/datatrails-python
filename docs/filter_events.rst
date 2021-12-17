@@ -1,4 +1,4 @@
-.. _filter_events:
+.. _filter_eventsref:
 
 Filter Events
 .............

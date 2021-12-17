@@ -77,7 +77,7 @@ def main():
     # client id and client secret is obtained from the appidp endpoint - see the
     # application registrations example code in examples/applications_registration.py
     #
-    # client id is an environment variable. client_scret is stored in a file in a
+    # client id is an environment variable. client_secret is stored in a file in a
     # directory that has 0700 permissions. The location of this file is set in
     # the client_secret_file environment variable.
     client_id = getenv("ARCHIVIST_CLIENT_ID")

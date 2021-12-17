@@ -1,4 +1,4 @@
-.. _sboms:
+.. _sbomsindex:
 
 Software Bill of Materials (SBOM)
 =================================

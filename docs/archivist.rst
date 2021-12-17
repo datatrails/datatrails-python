@@ -1,8 +1,8 @@
 
-.. _archivist:
+.. _archivistref:
 
-Archivist
-----------
+Archivist Class
+----------------
 
 
 .. automodule:: archivist.archivist

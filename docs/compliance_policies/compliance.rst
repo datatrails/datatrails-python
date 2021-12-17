@@ -1,5 +1,5 @@
 
-.. _compliance:
+.. _complianceref:
 
 Compliance
 --------------------

@@ -1,8 +1,8 @@
 
-.. _locations:
+.. _locationsref:
 
-Locations
-----------
+Locations Class
+----------------
 
 
 .. automodule:: archivist.locations

@@ -1,7 +1,7 @@
 
-.. _sboms:
+.. _sbomsref:
 
-SBOMS
+SBOMS Class
 ------------
 
 

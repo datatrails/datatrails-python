@@ -1,8 +1,8 @@
 
-.. _assets:
+.. _assetsref:
 
-Assets
-----------
+Assets Class
+------------
 
 
 .. automodule:: archivist.assets
