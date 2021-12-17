@@ -114,9 +114,9 @@ RESPONSE_FAILED = {
 }
 
 
-class TestAssets(TestCase):
+class TestAssetsBase(TestCase):
     """
-    Test Archivist Assets Create method
+    Test Archivist Assets Base
     """
 
     maxDiff = None
@@ -126,6 +126,28 @@ class TestAssets(TestCase):
 
     def tearDown(self):
         self.arch = None
+
+
+class TestAssetsUtil(TestAssetsBase):
+    """
+    Test Archivist Assets utility
+    """
+
+    def test_assets_str(self):
+        """
+        Test assets str
+        """
+        self.assertEqual(
+            str(self.arch.assets),
+            "AssetsClient(url)",
+            msg="Incorrect str",
+        )
+
+
+class TestAssetsCreate(TestAssetsBase):
+    """
+    Test Archivist Assets methods
+    """
 
     def test_assets_create(self):
         """
@@ -266,6 +288,12 @@ class TestAssets(TestCase):
             with self.assertRaises(ArchivistUnconfirmedError):
                 asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
 
+
+class TestAssetsRead(TestAssetsBase):
+    """
+    Test Archivist Assets methods
+    """
+
     def test_assets_read_with_out_primary_image(self):
         """
         Test asset reading
@@ -287,6 +315,12 @@ class TestAssets(TestCase):
                 asset.name,
                 msg="There should be no name property",
             )
+
+
+class TestAssetsCount(TestAssetsBase):
+    """
+    Test Archivist Assets methods
+    """
 
     def test_assets_count(self):
         """
@@ -400,6 +434,12 @@ class TestAssets(TestCase):
                 ),
                 msg="GET method called incorrectly",
             )
+
+
+class TestAssetsWait(TestAssetsBase):
+    """
+    Test Archivist Assets methods
+    """
 
     def test_assets_wait_for_confirmed(self):
         """
@@ -548,6 +588,12 @@ class TestAssets(TestCase):
 
             with self.assertRaises(ArchivistUnconfirmedError):
                 self.arch.assets.wait_for_confirmed()
+
+
+class TestAssetsList(TestAssetsBase):
+    """
+    Test Archivist Assets methods
+    """
 
     def test_assets_list(self):
         """

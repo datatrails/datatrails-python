@@ -46,6 +46,16 @@ class TestAppIDP(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def test_appidp_str(self):
+        """
+        Test appidp str
+        """
+        self.assertEqual(
+            str(self.arch.appidp),
+            "AppIDPClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_appidp_token_create(self):
         """
         Test appidp token

@@ -61,6 +61,16 @@ class TestApplications(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def test_applications_str(self):
+        """
+        Test applications str
+        """
+        self.assertEqual(
+            str(self.arch.applications),
+            "ApplicationsClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_applications_create(self):
         """
         Test application creation

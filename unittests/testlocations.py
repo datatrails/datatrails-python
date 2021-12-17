@@ -61,6 +61,16 @@ class TestLocations(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def test_locations_str(self):
+        """
+        Test locations str
+        """
+        self.assertEqual(
+            str(self.arch.locations),
+            "LocationsClient(url)",
+            msg="Incorrect str",
+        )
+
     def test_locations_create(self):
         """
         Test location creation
