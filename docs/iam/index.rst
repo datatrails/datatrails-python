@@ -1,4 +1,4 @@
-.. _iam:
+.. _iamindex:
 
 Identity and Access Management (IAM)
 ====================================

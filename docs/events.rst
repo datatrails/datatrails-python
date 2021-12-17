@@ -1,8 +1,8 @@
 
-.. _events:
+.. _eventsref:
 
-Events
-----------
+Events Class
+-------------
 
 
 .. automodule:: archivist.events

@@ -1,7 +1,7 @@
-.. _subject_create:
+.. _subject_createref:
 
-Create IAM subject
-..................
+Create IAM subject Example
+...........................
 
 .. literalinclude:: ../examples/subject_create.py
    :language: python

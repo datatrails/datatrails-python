@@ -1,4 +1,4 @@
-.. _filter_assets:
+.. _filter_assetsref:
 
 Filter Assets
 .............

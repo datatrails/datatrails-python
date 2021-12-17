@@ -1,4 +1,4 @@
-.. _compliance_policies:
+.. _compliance_policiesindex:
 
 Compliance Policies
 ===================
