@@ -174,6 +174,26 @@ class TestSBOMS(TestCase):
                 msg="CREATE method called incorrectly",
             )
 
+    def test_sbom_upload_with_confirmation_and_privacy(self):
+        """
+        Test sbom upload
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE),
+            ]
+            sbom = self.arch.sboms.upload(
+                self.mockstream, confirm=True, params={"privacy": "PUBLIC"}
+            )
+            self.assertEqual(
+                sbom.dict(),
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
     def test_sbom_upload_with_confirmation_never_uploaded(self):
         """
         Test upload confirmation
