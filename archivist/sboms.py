@@ -92,7 +92,7 @@ class _SBOMSClient:
 
         """
 
-        LOGGER.debug("Upload SBOM")
+        LOGGER.debug("Upload SBOM %s", params)
 
         sbom = SBOM(
             **self._archivist.post_file(
