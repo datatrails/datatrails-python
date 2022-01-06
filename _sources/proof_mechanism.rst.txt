@@ -1,8 +1,8 @@
 
-.. _proof_mechanism:
+.. _proof_mechanismref:
 
-Proof Mechanism
----------------
+Proof Mechanism Enumeration
+----------------------------
 
 
 .. automodule:: archivist.proof_mechanism

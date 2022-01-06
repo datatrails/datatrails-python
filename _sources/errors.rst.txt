@@ -1,8 +1,8 @@
 
-.. _errors:
+.. _errorsref:
 
-Errors
-----------
+Errors Parsing
+--------------
 
 
 .. automodule:: archivist.errors

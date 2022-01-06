@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>SBOMS &mdash; Jitsuin Archivist 0.9.3 documentation</title>
+  <title>SBOMS Class &mdash; Jitsuin Archivist 0.9.4 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.9.3
+                0.9.4
               </div>
             
           
@@ -95,22 +95,22 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../archivist.html">Archivist</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../assets.html">Assets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../events.html">Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../locations.html">Locations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Software Bill of Materials (SBOM)</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">SBOMS</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SBOMS Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sbommetadata.html">SBOM dataclass</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
             
@@ -161,7 +161,7 @@
         
           <li><a href="index.html">Software Bill of Materials (SBOM)</a> &raquo;</li>
         
-      <li>SBOMS</li>
+      <li>SBOMS Class</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -178,9 +178,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="sboms">
-<span id="id1"></span><h1>SBOMS<a class="headerlink" href="#sboms" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-archivist.sboms"></span><p>SBOMS interface</p>
+  <div class="section" id="module-archivist.sboms">
+<span id="sboms-class"></span><span id="sbomsref"></span><h1>SBOMS Class<a class="headerlink" href="#module-archivist.sboms" title="Permalink to this headline">¶</a></h1>
+<p>SBOMS interface</p>
 <p>Direct access to the sboms endpoint</p>
 <p>The user is not expected to use this class directly. It is an attribute of the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> class.</p>
@@ -209,41 +209,6 @@ accessed as an attribute of the Archivist class.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="archivist.sboms._SBOMSClient.upload">
-<code class="sig-name descname"><span class="pre">upload</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mtype</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'text/xml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.upload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create SBOM</p>
-<p>Creates SBOM from opened file or other data source.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fd</strong> (<em>file</em>) – opened file descriptor or other file-type iterable.</p></li>
-<li><p><strong>confirm</strong> (<em>bool</em>) – if True wait for sbom to be uploaded.</p></li>
-<li><p><strong>mtype</strong> (<em>str</em>) – mimetype of data.</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) – optional e.g. {“sbomType”: “cyclonedx-xml”, “privacy”: “PUBLIC” }</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instance</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="archivist.sboms._SBOMSClient.wait_for_uploading">
-<code class="sig-name descname"><span class="pre">wait_for_uploading</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.wait_for_uploading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.wait_for_uploading" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wait for sbom to be uploaded.</p>
-<p>Waits for sbom to be uploaded.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of sbom</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True if sbom is uploaded.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="archivist.sboms._SBOMSClient.download">
 <code class="sig-name descname"><span class="pre">download</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BinaryIO</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">requests.models.Response</span><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.download" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read SBOM</p>
@@ -259,21 +224,6 @@ fd iterator</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>REST response</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="archivist.sboms._SBOMSClient.read">
-<code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.read" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read SBOM metadata</p>
-<p>Reads SBOM metadata.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – sbom identity e.g. sboms/xxxxxxxxxxxxxxxxxxxxxxx</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>BOM</p>
 </dd>
 </dl>
 </dd></dl>
@@ -322,10 +272,75 @@ fd iterator</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="archivist.sboms._SBOMSClient.read">
+<code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read SBOM metadata</p>
+<p>Reads SBOM metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – sbom identity e.g. sboms/xxxxxxxxxxxxxxxxxxxxxxx</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>BOM</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.sboms._SBOMSClient.upload">
+<code class="sig-name descname"><span class="pre">upload</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mtype</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'text/xml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.upload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create SBOM</p>
+<p>Creates SBOM from opened file or other data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fd</strong> (<em>file</em>) – opened file descriptor or other file-type iterable.</p></li>
+<li><p><strong>confirm</strong> (<em>bool</em>) – if True wait for sbom to be uploaded.</p></li>
+<li><p><strong>mtype</strong> (<em>str</em>) – mimetype of data.</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) – optional e.g. {“sbomType”: “cyclonedx-xml”, “privacy”: “PUBLIC” }</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="archivist.sboms._SBOMSClient.wait_for_publication">
 <code class="sig-name descname"><span class="pre">wait_for_publication</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.wait_for_publication"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.wait_for_publication" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for sbom to be published.</p>
 <p>Waits for sbom to be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of sbom</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if sbom is confirmed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.sboms._SBOMSClient.wait_for_uploading">
+<code class="sig-name descname"><span class="pre">wait_for_uploading</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.wait_for_uploading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.wait_for_uploading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for sbom to be uploaded.</p>
+<p>Waits for sbom to be uploaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of sbom</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if sbom is uploaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.sboms._SBOMSClient.wait_for_withdrawn">
+<code class="sig-name descname"><span class="pre">wait_for_withdrawn</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.wait_for_withdrawn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.wait_for_withdrawn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for sbom to be withdrawn.</p>
+<p>Waits for sbom to be withdrawn.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of sbom</p>
@@ -350,21 +365,6 @@ fd iterator</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instance</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="archivist.sboms._SBOMSClient.wait_for_withdrawn">
-<code class="sig-name descname"><span class="pre">wait_for_withdrawn</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="sbommetadata.html#archivist.sbommetadata.SBOM" title="archivist.sbommetadata.SBOM"><span class="pre">archivist.sbommetadata.SBOM</span></a><a class="reference internal" href="../_modules/archivist/sboms.html#_SBOMSClient.wait_for_withdrawn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.wait_for_withdrawn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wait for sbom to be withdrawn.</p>
-<p>Waits for sbom to be withdrawn.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of sbom</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True if sbom is confirmed.</p>
 </dd>
 </dl>
 </dd></dl>

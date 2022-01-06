@@ -1,8 +1,8 @@
 
-.. _timestamp:
+.. _timestampref:
 
-Timestamp
-----------
+Timestamp Definition
+--------------------
 
 
 .. automodule:: archivist.timestamp

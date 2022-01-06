@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Compliance Policy Requests &mdash; Jitsuin Archivist 0.9.3 documentation</title>
+  <title>Compliance Policy Requests &mdash; Jitsuin Archivist 0.9.4 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.9.3
+                0.9.4
               </div>
             
           
@@ -95,14 +95,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../archivist.html">Archivist</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../assets.html">Assets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../events.html">Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../locations.html">Locations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../attachments.html">Attachments Class</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Compliance Policies</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="compliance_policies.html">Compliance Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies.html">Compliance Policies Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_type.html">Compliance Policy types</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Compliance Policy Requests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance.html">Compliance</a></li>
@@ -110,9 +110,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
             
@@ -197,22 +197,9 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="archivist.compliance_policy_requests.CompliancePolicySince">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.compliance_policy_requests.</span></code><code class="sig-name descname"><span class="pre">CompliancePolicySince</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_filter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_display_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_period_seconds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compliance_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'COMPLIANCE_SINCE'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance_policy_requests.html#CompliancePolicySince"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance_policy_requests.CompliancePolicySince" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compliance policy that indicates if an event has ‘expired’</p>
-</dd></dl>
-
-<dl class="py class">
 <dt id="archivist.compliance_policy_requests.CompliancePolicyCurrentOutstanding">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.compliance_policy_requests.</span></code><code class="sig-name descname"><span class="pre">CompliancePolicyCurrentOutstanding</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_filter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_display_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compliance_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'COMPLIANCE_CURRENT_OUTSTANDING'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance_policy_requests.html#CompliancePolicyCurrentOutstanding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance_policy_requests.CompliancePolicyCurrentOutstanding" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compliance policy that indicates if an event has been ‘closed’</p>
-</dd></dl>
-
-<dl class="py class">
-<dt id="archivist.compliance_policy_requests.CompliancePolicyPeriodOutstanding">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.compliance_policy_requests.</span></code><code class="sig-name descname"><span class="pre">CompliancePolicyPeriodOutstanding</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_filter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_display_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closing_event_display_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_period_seconds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compliance_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'COMPLIANCE_PERIOD_OUTSTANDING'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance_policy_requests.html#CompliancePolicyPeriodOutstanding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance_policy_requests.CompliancePolicyPeriodOutstanding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compliance policy that indicates if an event has been ‘closed’ within
-a specified time</p>
 </dd></dl>
 
 <dl class="py class">
@@ -221,6 +208,13 @@ a specified time</p>
 <dd><p>Compliance policy that indicates if the average time between opening
 and closing events in a specified period of time does not exceed a
 specified number of standard deviations from the mean.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="archivist.compliance_policy_requests.CompliancePolicyPeriodOutstanding">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.compliance_policy_requests.</span></code><code class="sig-name descname"><span class="pre">CompliancePolicyPeriodOutstanding</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_filter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_display_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closing_event_display_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_period_seconds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compliance_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'COMPLIANCE_PERIOD_OUTSTANDING'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance_policy_requests.html#CompliancePolicyPeriodOutstanding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance_policy_requests.CompliancePolicyPeriodOutstanding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compliance policy that indicates if an event has been ‘closed’ within
+a specified time</p>
 </dd></dl>
 
 <dl class="py class">
@@ -234,6 +228,12 @@ complies with a set of assertions.</p>
 <dd><p>Emit dictionary representation</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt id="archivist.compliance_policy_requests.CompliancePolicySince">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.compliance_policy_requests.</span></code><code class="sig-name descname"><span class="pre">CompliancePolicySince</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_filter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_display_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_period_seconds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compliance_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'COMPLIANCE_SINCE'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance_policy_requests.html#CompliancePolicySince"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance_policy_requests.CompliancePolicySince" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compliance policy that indicates if an event has ‘expired’</p>
 </dd></dl>
 
 </div>

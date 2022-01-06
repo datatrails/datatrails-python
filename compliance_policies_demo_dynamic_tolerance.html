@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Compliance Policies Dynamic Tolerance Demo &mdash; Jitsuin Archivist 0.9.3 documentation</title>
+  <title>Compliance Policies Dynamic Tolerance Demo &mdash; Jitsuin Archivist 0.9.4 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.9.3
+                0.9.4
               </div>
             
           
@@ -95,33 +95,33 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Eaxmple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filter_events.html">Filter Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject</a></li>
-<li class="toctree-l2"><a class="reference internal" href="subjects_filter.html">Filter IAM subjects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_filter.html">Filter IAM subjects Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="applications_registration.html">Create IAM Application Registration and Tokens</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist</a></li>
-<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
             
@@ -190,8 +190,8 @@
            <div itemprop="articleBody">
             
   <div class="section" id="compliance-policies-dynamic-tolerance-demo">
-<span id="compliance-policies-demo-dynamic-tolerance"></span><h1>Compliance Policies Dynamic Tolerance Demo<a class="headerlink" href="#compliance-policies-dynamic-tolerance-demo" title="Permalink to this headline">¶</a></h1>
-<p>Code to use this file is found here <a class="reference internal" href="compliance_policies_demo.html#compliance-policies-demo"><span class="std std-ref">Compliance Policies Demo</span></a></p>
+<span id="compliance-policies-demo-dynamic-toleranceref"></span><h1>Compliance Policies Dynamic Tolerance Demo<a class="headerlink" href="#compliance-policies-dynamic-tolerance-demo" title="Permalink to this headline">¶</a></h1>
+<p>Code to use this file is found here <a class="reference internal" href="compliance_policies_demo.html#compliance-policies-demoref"><span class="std std-ref">Compliance Policies Demo</span></a></p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">operations</span><span class="p">:</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CREATE_ASSET</span>

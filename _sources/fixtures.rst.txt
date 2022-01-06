@@ -1,6 +1,6 @@
-.. _fixtures:
+.. _fixturesref:
 
-Fixtures
+Fixtures (Common Attributes)
 =============================================
 
 One can specify common attributes when creating/counting/querying assets, events

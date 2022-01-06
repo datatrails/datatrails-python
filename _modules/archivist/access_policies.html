@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.access_policies &mdash; Jitsuin Archivist 0.9.3 documentation</title>
+  <title>archivist.access_policies &mdash; Jitsuin Archivist 0.9.4 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.9.3
+                0.9.4
               </div>
             
           
@@ -93,18 +93,18 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
             
@@ -235,6 +235,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AccessPoliciesClient(</span><span class="si">{self._archivist.url}</span><span class="s2">)&quot;</span>
 
 <div class="viewcode-block" id="_AccessPoliciesClient.create"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">access_permissions</span><span class="p">:</span> <span class="n">List</span>

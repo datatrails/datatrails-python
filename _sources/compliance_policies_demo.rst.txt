@@ -1,4 +1,4 @@
-.. _compliance_policies_demo:
+.. _compliance_policies_demoref:
 
 Compliance Policies Demo
 ...........................
@@ -8,8 +8,8 @@ a Compliance Policy workflow.
 
 Reference yaml files are available here:
 
-    - :ref:`compliance_policies_demo_dynamic_tolerance`
-    - :ref:`compliance_policies_demo_richness`
+    - :ref:`compliance_policies_demo_dynamic_toleranceref`
+    - :ref:`compliance_policies_demo_richnessref`
 
 To invoke this command:
 

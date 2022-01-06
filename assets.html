@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Assets &mdash; Jitsuin Archivist 0.9.3 documentation</title>
+  <title>Assets Class &mdash; Jitsuin Archivist 0.9.4 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Events" href="events.html" />
-    <link rel="prev" title="Archivist" href="archivist.html" /> 
+    <link rel="next" title="Events Class" href="events.html" />
+    <link rel="prev" title="Archivist Class" href="archivist.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.9.3
+                0.9.4
               </div>
             
           
@@ -95,18 +95,18 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Assets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="events.html">Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp</a></li>
-<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
             
@@ -155,7 +155,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Assets</li>
+      <li>Assets Class</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -172,9 +172,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="assets">
-<span id="id1"></span><h1>Assets<a class="headerlink" href="#assets" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-archivist.assets"></span><p>Assets interface</p>
+  <div class="section" id="module-archivist.assets">
+<span id="assets-class"></span><span id="assetsref"></span><h1>Assets Class<a class="headerlink" href="#module-archivist.assets" title="Permalink to this headline">¶</a></h1>
+<p>Assets interface</p>
 <p>Access to the assets endpoint.</p>
 <p>The user is not expected to use this class directly. It is an attribute of the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> class.</p>
@@ -195,6 +195,17 @@
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.assets.</span></code><code class="sig-name descname"><span class="pre">Asset</span></code><a class="reference internal" href="_modules/archivist/assets.html#Asset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets.Asset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asset object has dictionary attributes and properties.</p>
 <dl class="py method">
+<dt id="archivist.assets.Asset.name">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#archivist.assets.Asset.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>name of the asset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="archivist.assets.Asset.primary_image">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">primary_image</span></code><a class="headerlink" href="#archivist.assets.Asset.primary_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Primary Image</p>
@@ -202,17 +213,6 @@
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Attachment</span></code> instance</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="archivist.assets.Asset.name">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#archivist.assets.Asset.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>name of the asset</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -230,6 +230,24 @@ accessed as an attribute of the Archivist class.</p>
 <dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="archivist.assets._AssetsClient.count">
+<code class="sig-name descname"><span class="pre">count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count assets.</p>
+<p>Counts number of assets that match criteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“confirmation_status”: “CONFIRMED” }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“arc_display_type”: “door” }</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>integer count of assets.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt id="archivist.assets._AssetsClient.create">
 <code class="sig-name descname"><span class="pre">create</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><span class="pre">archivist.assets.Asset</span></a><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.create" title="Permalink to this definition">¶</a></dt>
@@ -269,16 +287,20 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="archivist.assets._AssetsClient.wait_for_confirmation">
-<code class="sig-name descname"><span class="pre">wait_for_confirmation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><span class="pre">archivist.assets.Asset</span></a><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.wait_for_confirmation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.wait_for_confirmation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wait for asset to be confirmed.</p>
-<p>Waits asset to be confirmed.</p>
+<dt id="archivist.assets._AssetsClient.list">
+<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List assets.</p>
+<p>Lists assets that match criteria.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of asset</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>props</strong> (<em>dict</em>) – optional e.g. {“tracked”: “TRACKED” }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – optional e.g. {“arc_display_type”: “door” }</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) – optional page size. (Rarely used).</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True if asset is confirmed.</p>
+<dd class="field-even"><p>iterable that returns <a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code></a> instances</p>
 </dd>
 </dl>
 </dd></dl>
@@ -294,61 +316,6 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code></a> instance</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="archivist.assets._AssetsClient.count">
-<code class="sig-name descname"><span class="pre">count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count assets.</p>
-<p>Counts number of assets that match criteria.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“confirmation_status”: “CONFIRMED” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“arc_display_type”: “door” }</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>integer count of assets.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="archivist.assets._AssetsClient.wait_for_confirmed">
-<code class="sig-name descname"><span class="pre">wait_for_confirmed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.wait_for_confirmed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.wait_for_confirmed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wait for assets to be confirmed.</p>
-<p>Waits for all assets that match criteria to be confirmed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“tracked”: “TRACKED” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“arc_display_type”: “door” }</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True if all assets are confirmed.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="archivist.assets._AssetsClient.list">
-<code class="sig-name descname"><span class="pre">list</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.list" title="Permalink to this definition">¶</a></dt>
-<dd><p>List assets.</p>
-<p>Lists assets that match criteria.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – optional e.g. {“tracked”: “TRACKED” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – optional e.g. {“arc_display_type”: “door” }</p></li>
-<li><p><strong>page_size</strong> (<em>int</em>) – optional page size. (Rarely used).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>iterable that returns <a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code></a> instances</p>
 </dd>
 </dl>
 </dd></dl>
@@ -371,6 +338,39 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="archivist.assets._AssetsClient.wait_for_confirmation">
+<code class="sig-name descname"><span class="pre">wait_for_confirmation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><span class="pre">archivist.assets.Asset</span></a><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.wait_for_confirmation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.wait_for_confirmation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for asset to be confirmed.</p>
+<p>Waits asset to be confirmed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of asset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if asset is confirmed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.assets._AssetsClient.wait_for_confirmed">
+<code class="sig-name descname"><span class="pre">wait_for_confirmed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.wait_for_confirmed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.wait_for_confirmed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for assets to be confirmed.</p>
+<p>Waits for all assets that match criteria to be confirmed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“tracked”: “TRACKED” }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“arc_display_type”: “door” }</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if all assets are confirmed.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -381,8 +381,8 @@ Suitable for reading data from a file using json.load or yaml.load</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="events.html" class="btn btn-neutral float-right" title="Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="archivist.html" class="btn btn-neutral float-left" title="Archivist" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="events.html" class="btn btn-neutral float-right" title="Events Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="archivist.html" class="btn btn-neutral float-left" title="Archivist Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
