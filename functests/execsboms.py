@@ -9,7 +9,6 @@ from time import sleep
 from unittest import TestCase
 
 from archivist.archivist import Archivist
-from archivist.errors import ArchivistBadRequestError
 from archivist.logger import set_logger
 from archivist.timestamp import now_timestamp
 
@@ -26,7 +25,6 @@ CUSTOM_CLAIMS = {
 }
 
 TEST_SBOM_PATH = "functests/test_resources/bom.xml"
-TEST_SBOM_SPDX_PATH = "functests/test_resources/bom.spdx"
 TEST_SBOM_DOWNLOAD_PATH = "functests/test_resources/downloaded_bom.xml"
 
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
@@ -59,15 +57,15 @@ class TestSBOM(TestCase):
         with suppress(FileNotFoundError):
             remove(TEST_SBOM_DOWNLOAD_PATH)
 
-    def test_sbom_upload_with_private_privacy(self):
+    def test_sbom_upload_with_public_privacy(self):
         """
         Test sbom upload with privacy
         """
         now = now_timestamp()
-        print("Public Upload Title:", self.title, now)
+        print("Title:", self.title, now)
         with open(TEST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(
-                fd, confirm=True, params={"privacy": "PRIVATE"}
+                fd, confirm=True, params={"privacy": "PUBLIC"}
             )
         print("first upload", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
@@ -79,89 +77,15 @@ class TestSBOM(TestCase):
             metadata1,
             msg="Metadata not correct",
         )
-
-    def test_sbom_upload_with_illegal_privacy(self):
-        """
-        Test sbom upload with privacy
-        """
-        now = now_timestamp()
-        print("Illegal Upload Title:", self.title, now)
-        with open(TEST_SBOM_PATH, "rb") as fd:
-            with self.assertRaises(ArchivistBadRequestError):
-                metadata = self.arch.sboms.upload(
-                    fd, confirm=True, params={"privacy": "XXXXXX"}
-                )
-
-    def test_sbom_upload_with_spdx(self):
-        """
-        Test sbom upload with spdx
-        """
-        now = now_timestamp()
-        print("SPDX Upload Title:", self.title, now)
-        with open(TEST_SBOM_SPDX_PATH, "rb") as fd:
-            metadata = self.arch.sboms.upload(
-                fd, confirm=True, params={"sbomType": "spdx-tag"}
-            )
-        print("first upload", json_dumps(metadata.dict(), indent=4))
-        identity = metadata.identity
-
-        metadata1 = self.arch.sboms.read(identity)
-        print("read", json_dumps(metadata1.dict(), indent=4))
-        self.assertEqual(
-            metadata,
-            metadata1,
-            msg="Metadata not correct",
-        )
-
-    def test_sbom_upload_with_illegal_format(self):
-        """
-        Test sbom upload with illegal format
-        """
-        now = now_timestamp()
-        print("SPDX Upload Title:", self.title, now)
-        with open(TEST_SBOM_SPDX_PATH, "rb") as fd:
-            with self.assertRaises(ArchivistBadRequestError):
-                metadata = self.arch.sboms.upload(
-                    fd, confirm=True, params={"sbomType": "xxxxxxxx"}
-                )
 
     def test_sbom_upload_with_confirmation(self):
         """
         Test sbom upload with confirmation
         """
         now = now_timestamp()
-        print("Confirmed Upload Title:", self.title, now)
+        print("Title:", self.title, now)
         with open(TEST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(fd, confirm=True)
-        print("first upload", json_dumps(metadata.dict(), indent=4))
-        identity = metadata.identity
-
-        metadata1 = self.arch.sboms.read(identity)
-        print("read", json_dumps(metadata1.dict(), indent=4))
-        self.assertEqual(
-            metadata,
-            metadata1,
-            msg="Metadata not correct",
-        )
-
-        sleep(1)  # the data may have not reached cogsearch
-        metadatas = list(self.arch.sboms.list(metadata={"uploaded_since": now}))
-        self.assertEqual(
-            len(metadatas),
-            1,
-            msg="No. of SBOMS should be 1",
-        )
-
-    def test_sbom_upload_with_cyclonedx_xml(self):
-        """
-        Test sbom upload with cyclonedx-xml
-        """
-        now = now_timestamp()
-        print("CycloneDX-XML Upload Title:", self.title, now)
-        with open(TEST_SBOM_PATH, "rb") as fd:
-            metadata = self.arch.sboms.upload(
-                fd, params={"sbomType": "cyclonedx-xml"}, confirm=True
-            )
         print("first upload", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
 

@@ -202,60 +202,6 @@ class TestErrors(TestCase):
             msg="incorrect error",
         )
 
-    def test_errors_404_response_body_is_string(self):
-        """
-        Test errors
-        """
-
-        class Object:
-            pass
-
-        request = Object()
-        request.body = "xyz"
-        response = MockResponse(
-            404,
-            request=request,
-        )
-        error = _parse_response(response)
-        self.assertIsNotNone(
-            error,
-            msg="error should not be None",
-        )
-        with self.assertRaises(ArchivistNotFoundError) as ex:
-            raise error
-        self.assertEqual(
-            str(ex.exception),
-            "unknown not found (404)",
-            msg="incorrect error",
-        )
-
-    def test_errors_404_response_body_is_None(self):
-        """
-        Test errors
-        """
-
-        class Object:
-            pass
-
-        request = Object()
-        request.body = None
-        response = MockResponse(
-            404,
-            request=request,
-        )
-        error = _parse_response(response)
-        self.assertIsNotNone(
-            error,
-            msg="error should not be None",
-        )
-        with self.assertRaises(ArchivistNotFoundError) as ex:
-            raise error
-        self.assertEqual(
-            str(ex.exception),
-            "unknown not found (404)",
-            msg="incorrect error",
-        )
-
     def test_errors_429(self):
         """
         Test errors
