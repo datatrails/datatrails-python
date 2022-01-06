@@ -9,6 +9,7 @@ from unittest import TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
+from archivist.errors import ArchivistUnauthenticatedError
 from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 
@@ -170,6 +171,22 @@ class TestApplications(TestCase):
             application["credentials"][0]["secret"],
         )
         print("appidp", json_dumps(appidp, indent=4))
+
+    def test_appidp_token_404(self):
+        """
+        Test appidp token
+        """
+        application = self.arch.applications.create(
+            self.display_name,
+            CUSTOM_CLAIMS,
+        )
+        client_id = application["client_id"]
+        client_secret = "X" + application["credentials"][0]["secret"][1:]
+        with self.assertRaises(ArchivistUnauthenticatedError):
+            appidp = self.arch.appidp.token(
+                client_id,
+                client_secret,
+            )
 
     def test_archivist_token(self):
         """
