@@ -87,7 +87,7 @@ def common_parser(description):
         dest="auth_token_file",
         action="store",
         default=".auth_token",
-        reqyuired=True,
+        required=True,
         help="FILE containing API authentication token",
     )
 
