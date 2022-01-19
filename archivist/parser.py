@@ -10,7 +10,7 @@ from enum import Enum
 import logging
 from sys import exit as sys_exit
 
-from . import archivist
+from .archivist import Archivist
 from .logger import set_logger
 from .proof_mechanism import ProofMechanism
 
@@ -78,9 +78,7 @@ def common_parser(description):
         default=ProofMechanism.SIMPLE_HASH,
         help="mechanism for proving the evidence for events on the Asset",
     )
-
-    security = parser.add_mutually_exclusive_group(required=True)
-    security.add_argument(
+    parser.add_argument(
         "-t",
         "--auth-token",
         type=str,
@@ -91,7 +89,7 @@ def common_parser(description):
         help="FILE containing API authentication token",
     )
 
-    return parser, security
+    return parser
 
 
 def endpoint(args):
@@ -113,7 +111,7 @@ def endpoint(args):
         with open(args.auth_token_file, mode="r", encoding="utf-8") as tokenfile:
             authtoken = tokenfile.read().strip()
 
-        arch = archivist.Archivist(args.url, authtoken, verify=False, fixtures=fixtures)
+        arch = Archivist(args.url, authtoken, verify=False, fixtures=fixtures)
 
     if arch is None:
         LOGGER.error("Critical error.  Aborting.")

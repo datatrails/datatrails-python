@@ -47,6 +47,7 @@ PROPS = {
     "lifecycle_status": "Active",
     "published_date": "",
     "withdrawn_date": "",
+    "rkvst_link": "",
 }
 PUBLISHED_PROPS = {**PROPS, **{"published_date": "2021-11-11T17:02:06Z"}}
 WITHDRAWN_PROPS = {**PROPS, **{"withdrawn_date": "2021-11-11T17:02:06Z"}}

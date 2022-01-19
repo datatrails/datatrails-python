@@ -34,6 +34,7 @@ class SBOM:
     lifecycle_status: str
     withdrawn_date: str
     published_date: str
+    rkvst_link: str = ""
 
     def dict(self):
         """Emit dictionary representation"""
