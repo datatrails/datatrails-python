@@ -10,7 +10,7 @@ from typing import List
 from .compliance_policy_type import CompliancePolicyType
 from .or_dict import and_list
 
-# NB: the oder of the fields is important. Fields with default values must
+# NB: the order of the fields is important. Fields with default values must
 #    appear after fields without. This is why the compliance_type is last
 #    in every case.
 
