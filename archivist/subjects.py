@@ -34,8 +34,6 @@ from .constants import (
 )
 from .dictmerge import _deepmerge
 
-FIXTURE_LABEL = "subjects"
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -192,7 +190,7 @@ class _SubjectsClient:
         if tessera_pub_keys is not None:
             query["tessera_pub_key"] = tessera_pub_keys
 
-        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(SUBJECTS_LABEL), query)
 
     def count(self, *, display_name: Optional[str] = None) -> int:
         """Count subjects.

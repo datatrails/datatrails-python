@@ -275,6 +275,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         fd: BinaryIO,
         *,
         headers: Optional[Dict] = None,
+        query: Optional[Dict] = None,
     ) -> Response:
         """GET method (REST) - chunked
 
@@ -286,11 +287,16 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             fd (file): an iterable representing a file (usually from open())
                 the file must be opened in binary mode
             headers (dict): optional REST headers
+            query (dict): optional query strings
 
         Returns:
             REST response (not the response body)
 
         """
+        qry = self.__query(query)
+        if qry:
+            identity = "?".join((identity, qry))
+
         response = self._session.get(
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),
