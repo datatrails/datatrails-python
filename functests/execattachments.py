@@ -8,7 +8,10 @@ from contextlib import suppress
 from filecmp import clear_cache, cmp
 
 from archivist.archivist import Archivist
+from archivist.logger import set_logger
 
+if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
+    set_logger(environ["TEST_DEBUG"])
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -50,6 +53,46 @@ class TestAttachmentstCreate(TestCase):
 
         with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(file_uuid, fd)
+
+        # Check the downloaded file is identical to the one that was uploaded
+        clear_cache()
+        self.assertTrue(
+            cmp(self.TEST_IMAGE_PATH, self.TEST_IMAGE_DOWNLOAD_PATH, shallow=False)
+        )
+
+    def test_attachment_upload_and_download_allow_insecure(self):
+        """
+        Test file upload through the SDK
+        Test file download through the SDK
+        """
+        with open(self.TEST_IMAGE_PATH, "rb") as fd:
+            attachment = self.arch.attachments.upload(fd)
+            file_uuid = attachment["identity"]
+
+        with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
+            attachment = self.arch.attachments.download(
+                file_uuid, fd, query={"allow_insecure": True}
+            )
+
+        # Check the downloaded file is identical to the one that was uploaded
+        clear_cache()
+        self.assertTrue(
+            cmp(self.TEST_IMAGE_PATH, self.TEST_IMAGE_DOWNLOAD_PATH, shallow=False)
+        )
+
+    def test_attachment_upload_and_download_allow_not_scanned(self):
+        """
+        Test file upload through the SDK
+        Test file download through the SDK
+        """
+        with open(self.TEST_IMAGE_PATH, "rb") as fd:
+            attachment = self.arch.attachments.upload(fd)
+            file_uuid = attachment["identity"]
+
+        with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
+            attachment = self.arch.attachments.download(
+                file_uuid, fd, query={"allow_not_scanned": True}
+            )
 
         # Check the downloaded file is identical to the one that was uploaded
         clear_cache()

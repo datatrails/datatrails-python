@@ -24,7 +24,8 @@
 
 # pylint:disable=too-few-public-methods
 
-from typing import BinaryIO
+from typing import BinaryIO, Dict, Optional
+from copy import deepcopy
 import logging
 
 from requests.models import Response
@@ -34,6 +35,7 @@ from requests.models import Response
 from . import archivist as type_helper
 
 from .constants import ATTACHMENTS_SUBPATH, ATTACHMENTS_LABEL
+from .dictmerge import _deepmerge
 
 LOGGER = logging.getLogger(__name__)
 
@@ -86,7 +88,18 @@ class _AttachmentsClient:
             )
         )
 
-    def download(self, identity: str, fd: BinaryIO) -> Response:
+    def __query(self, params: Optional[Dict]) -> Dict:
+        query = deepcopy(params) if params else {}
+        # pylint: disable=protected-access
+        return _deepmerge(self._archivist.fixtures.get(ATTACHMENTS_LABEL), query)
+
+    def download(
+        self,
+        identity: str,
+        fd: BinaryIO,
+        *,
+        query: Optional[Dict] = None,
+    ) -> Response:
         """Read attachment
 
         Reads attachment into data sink (usually a file opened for write)..
@@ -96,6 +109,7 @@ class _AttachmentsClient:
         Args:
             identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
             fd (file): opened file escriptor or other file-type sink..
+            query (dict): e.g. {"allow_insecure": True} OR {"allow_not_scanned": True }
 
         Returns:
             REST response
@@ -105,4 +119,5 @@ class _AttachmentsClient:
             ATTACHMENTS_SUBPATH,
             identity,
             fd,
+            query=self.__query(query),
         )

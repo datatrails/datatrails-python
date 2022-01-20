@@ -35,8 +35,6 @@ from .constants import (
 )
 from .dictmerge import _deepmerge
 
-FIXTURE_LABEL = "applications"
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -182,7 +180,7 @@ class _ApplicationsClient:
         if custom_claims is not None:
             query["custom_claims"] = custom_claims
 
-        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(APPLICATIONS_LABEL), query)
 
     def list(
         self,

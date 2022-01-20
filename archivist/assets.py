@@ -98,9 +98,6 @@ class Asset(dict):
         return None
 
 
-FIXTURE_LABEL = "assets"
-
-
 class _AssetsClient:
     """AssetsClient
 
@@ -205,7 +202,7 @@ class _AssetsClient:
         if attrs:
             query["attributes"] = attrs
 
-        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(ASSETS_LABEL), query)
 
     def count(
         self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None

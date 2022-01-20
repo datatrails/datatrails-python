@@ -42,8 +42,6 @@ from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 
 
-FIXTURE_LABEL = "events"
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -221,7 +219,7 @@ class _EventsClient:
         if asset_attrs:
             query["asset_attributes"] = asset_attrs
 
-        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(EVENTS_LABEL), query)
 
     def count(
         self,

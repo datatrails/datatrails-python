@@ -49,8 +49,6 @@ from .sbommetadata import SBOM
 
 LOGGER = logging.getLogger(__name__)
 
-FIXTURE_LABEL = "sboms"
-
 
 class _SBOMSClient:
     """SBOMSClient
@@ -167,7 +165,7 @@ class _SBOMSClient:
 
     def __query(self, metadata: Optional[Dict]) -> Dict:
         query = deepcopy(metadata) if metadata else {}
-        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(SBOMS_LABEL), query)
 
     def list(
         self,
