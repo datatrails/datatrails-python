@@ -39,8 +39,6 @@ from .dictmerge import _deepmerge
 
 from .assets import Asset
 
-FIXTURE_LABEL = "access_policies"
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -185,7 +183,7 @@ class _AccessPoliciesClient:
         if access_permissions is not None:
             query["access_permissions"] = access_permissions
 
-        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(ACCESS_POLICIES_LABEL), query)
 
     def count(self, *, display_name: Optional[str] = None) -> int:
         """Count access policies.

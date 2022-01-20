@@ -164,3 +164,64 @@ class TestAttachments(TestCase):
                     RESPONSE,
                     msg="DOWNLOAD method called incorrectly",
                 )
+
+    def test_attachments_download_with_query(self):
+        """
+        Test attachment download - usually both allow options are
+        not required.
+        """
+
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+
+            def iter_content():
+                i = 0
+
+                def filedata(chunk_size=4096):  # pylint: disable=unused-argument
+                    nonlocal i
+                    while i < 4:
+                        i += 1
+
+                        if i == 2:
+                            yield None
+
+                        yield b"chunkofbytes"
+
+                return filedata
+
+            mock_get.return_value = MockResponse(
+                200,
+                iter_content=iter_content(),
+                **RESPONSE,
+            )
+            with BytesIO() as fd:
+                attachment = self.arch.attachments.download(
+                    IDENTITY,
+                    fd,
+                    query={"allow_insecure": True, "allow_not_scanned": True},
+                )
+                args, kwargs = mock_get.call_args
+                self.assertEqual(
+                    args,
+                    (
+                        f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}"
+                        "?allow_insecure=True&allow_not_scanned=True",
+                    ),
+                    msg="DOWNLOAD method called incorrectly",
+                )
+                self.assertEqual(
+                    kwargs,
+                    {
+                        "headers": {
+                            "authorization": "Bearer authauthauth",
+                            "content-type": "application/json",
+                        },
+                        "stream": True,
+                        "verify": True,
+                    },
+                    msg="DOWNLOAD method called incorrectly",
+                )
+                self.assertEqual(
+                    attachment,
+                    RESPONSE,
+                    msg="DOWNLOAD method called incorrectly",
+                )

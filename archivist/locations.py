@@ -33,9 +33,6 @@ from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 from .dictmerge import _deepmerge
 
 
-FIXTURE_LABEL = "locations"
-
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -124,7 +121,7 @@ class _LocationsClient:
         if attrs:
             query["attributes"] = attrs
 
-        return _deepmerge(self._archivist.fixtures.get(FIXTURE_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(LOCATIONS_LABEL), query)
 
     def count(
         self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
