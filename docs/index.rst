@@ -15,7 +15,9 @@ Jitsuin Archivist
 
    features
    getting_started
+   runner/index
    fixtures
+   runner
    archivist
    assets
    events

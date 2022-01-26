@@ -5,13 +5,13 @@
 """
 
 import json
-import logging
+from logging import getLogger
 from typing import Optional
 
 from .constants import HEADERS_RETRY_AFTER
 from .headers import _headers_get
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class ArchivistError(Exception):
@@ -34,8 +34,8 @@ class ArchivistUnwithdrawnError(ArchivistError):
     """Sbom failed to be withdrawn after fixed timeout"""
 
 
-class ArchivistIllegalArgumentError(ArchivistError):
-    """Optional keyword arguments are inconsistent"""
+class ArchivistInvalidOperationError(ArchivistError):
+    """Runner Operation is invalid"""
 
 
 class ArchivistBadRequestError(ArchivistError):

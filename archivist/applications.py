@@ -21,7 +21,7 @@
 
 """
 
-import logging
+from logging import getLogger
 from typing import Dict, Optional
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
@@ -36,7 +36,7 @@ from .constants import (
 from .dictmerge import _deepmerge
 
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class Application(dict):

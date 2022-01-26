@@ -3,6 +3,8 @@ Test archivist
 """
 
 from copy import copy
+from json import loads as json_loads
+from os import environ
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -15,6 +17,7 @@ from archivist.errors import (
     ArchivistNotFoundError,
     ArchivistTooManyRequestsError,
 )
+from archivist.logger import set_logger
 
 from .mock_response import MockResponse
 
@@ -22,6 +25,10 @@ from .mock_response import MockResponse
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
+
+if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
+    set_logger(environ["TEST_DEBUG"])
+
 
 CLIENT_ID = "client_id-2f78-4fa0-9425-d59314845bc5"
 CLIENT_SECRET = "client_secret-388f5187e32d930d83"
@@ -54,29 +61,65 @@ class TestArchivist(TestCase):
             "Archivist(url)",
             msg="Incorrect str",
         )
-        self.assertIsNotNone(
-            arch.assets,
+        self.assertEqual(
+            str(arch.access_policies),
+            "AccessPoliciesClient(url)",
+            msg="Incorrect access_policies",
+        )
+        self.assertEqual(
+            str(arch.appidp),
+            "AppIDPClient(url)",
+            msg="Incorrect appidp",
+        )
+        self.assertEqual(
+            str(arch.applications),
+            "ApplicationsClient(url)",
+            msg="Incorrect applications",
+        )
+        self.assertEqual(
+            str(arch.assets),
+            "AssetsClient(url)",
             msg="Incorrect assets",
         )
-        self.assertIsNotNone(
-            arch.events,
+        self.assertEqual(
+            str(arch.attachments),
+            "AttachmentsClient(url)",
+            msg="Incorrect attachments",
+        )
+        self.assertEqual(
+            str(arch.compliance),
+            "ComplianceClient(url)",
+            msg="Incorrect compliance",
+        )
+        self.assertEqual(
+            str(arch.compliance_policies),
+            "CompliancePoliciesClient(url)",
+            msg="Incorrect compliance_policies",
+        )
+        self.assertEqual(
+            str(arch.events),
+            "EventsClient(url)",
             msg="Incorrect events",
         )
-        self.assertIsNotNone(
-            arch.locations,
+        self.assertEqual(
+            str(arch.locations),
+            "LocationsClient(url)",
             msg="Incorrect locations",
         )
-        self.assertIsNotNone(
-            arch.locations,
-            msg="Incorrect locations",
+        self.assertEqual(
+            str(arch.runner),
+            "Runner(url)",
+            msg="Incorrect runner",
         )
-        self.assertIsNotNone(
-            arch.attachments,
-            msg="Incorrect attachments",
+        self.assertEqual(
+            str(arch.sboms),
+            "SBOMSClient(url)",
+            msg="Incorrect sboms",
         )
-        self.assertIsNotNone(
-            arch.attachments,
-            msg="Incorrect attachments",
+        self.assertEqual(
+            str(arch.subjects),
+            "SubjectsClient(url)",
+            msg="Incorrect subjects",
         )
         self.assertEqual(
             arch.url,
@@ -175,20 +218,24 @@ class TestArchivistPatch(TestArchivistMethods):
         with mock.patch.object(self.arch._session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, request=request)
             resp = self.arch.patch("path/path", "entity/xxxx", request)
+            args, kwargs = mock_patch.call_args
             self.assertEqual(
-                tuple(mock_patch.call_args),
-                (
-                    (f"url/{ROOT}/path/path/entity/xxxx",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/path/path/entity/xxxx",),
+                msg="POST method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": request,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="POST method called incorrectly",
+                    "verify": True,
+                },
+                msg="POST method kwargs called incorrectly",
             )
 
     def test_patch_with_error(self):
@@ -216,21 +263,25 @@ class TestArchivistPatch(TestArchivistMethods):
                 request,
                 headers={"headerfield1": "headervalue1"},
             )
+            args, kwargs = mock_patch.call_args
             self.assertEqual(
-                tuple(mock_patch.call_args),
-                (
-                    (f"url/{ROOT}/path/path/entity/xxxx",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                            "headerfield1": "headervalue1",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/path/path/entity/xxxx",),
+                msg="PATCH method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": request,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                        "headerfield1": "headervalue1",
                     },
-                ),
-                msg="PATCH method called incorrectly",
+                    "verify": True,
+                },
+                msg="PATCH method kwargs called incorrectly",
             )
 
     def test_patch_with_429(self):
@@ -295,20 +346,23 @@ class TestArchivistPatch(TestArchivistMethods):
                 MockResponse(200, request=request),
             )
             resp = self.arch.patch("path/path", "entity/xxxxxxxx", request)
+            args, kwargs = mock_patch.call_args
             self.assertEqual(
-                tuple(mock_patch.call_args),
-                (
-                    (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
+                msg="PATCH method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": '{"field1": "value1"}',
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="PATCH method called incorrectly",
+                    "verify": True,
+                },
+                msg="PATCH method kwargs called incorrectly",
             )
 
 

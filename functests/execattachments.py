@@ -26,21 +26,19 @@ class TestAttachmentstCreate(TestCase):
     TEST_IMAGE_PATH = "functests/test_resources/Jitsuin_Logo_RGB.jpg"
     TEST_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
 
-    @classmethod
-    def setUp(cls):
+    def setUp(self):
         with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
             auth = fd.read().strip()
-        cls.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
-        cls.file_uuid: str = ""
+        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        self.file_uuid: str = ""
 
         with suppress(FileNotFoundError):
-            os.remove(cls.TEST_IMAGE_DOWNLOAD_PATH)
+            os.remove(self.TEST_IMAGE_DOWNLOAD_PATH)
 
-    @classmethod
-    def tearDown(cls) -> None:
+    def tearDown(self) -> None:
         """Remove the downloaded image for subsequent test runs"""
         with suppress(FileNotFoundError):
-            os.remove(cls.TEST_IMAGE_DOWNLOAD_PATH)
+            os.remove(self.TEST_IMAGE_DOWNLOAD_PATH)
 
     def test_attachment_upload_and_download(self):
         """

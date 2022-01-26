@@ -3,7 +3,7 @@
 Getting started
 ===============
 
-See the examples directory.
+See the examples and functests directories.
 
 .. toctree::
    :maxdepth: 2
@@ -19,11 +19,9 @@ See the examples directory.
    access_policy_create
    access_policies_filter
 
+   runner/index
+
    subject_create
    subjects_filter
-
-   compliance_policies_demo
-   compliance_policies_demo_richness
-   compliance_policies_demo_dynamic_tolerance
 
    applications_registration

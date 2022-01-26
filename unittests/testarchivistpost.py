@@ -3,6 +3,7 @@ Test archivist
 """
 
 from io import BytesIO
+from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -42,20 +43,24 @@ class TestArchivistPost(TestArchivistMethods):
         with mock.patch.object(self.arch._session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, request=request)
             resp = self.arch.post("path/path", request)
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    (f"url/{ROOT}/path/path",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/path/path",),
+                msg="POST method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": request,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="POST method called incorrectly",
+                    "verify": True,
+                },
+                msg="POST method kwargs called incorrectly",
             )
 
     def test_post_with_error(self):
@@ -118,20 +123,24 @@ class TestArchivistPost(TestArchivistMethods):
                 MockResponse(200),
             )
             resp = self.arch.post("path/path", request)
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    (f"url/{ROOT}/path/path",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/path/path",),
+                msg="POST method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": request,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="POST method called incorrectly",
+                    "verify": True,
+                },
+                msg="POST method kwargs called incorrectly",
             )
 
     def test_post_with_headers(self):
@@ -146,21 +155,25 @@ class TestArchivistPost(TestArchivistMethods):
                 request,
                 headers={"headerfield1": "headervalue1"},
             )
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    (f"url/{ROOT}/path/path",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                            "headerfield1": "headervalue1",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/path/path",),
+                msg="POST method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": request,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                        "headerfield1": "headervalue1",
                     },
-                ),
-                msg="POST method called incorrectly",
+                    "verify": True,
+                },
+                msg="POST method kwargs called incorrectly",
             )
 
     def test_post_file(self):
@@ -435,17 +448,21 @@ class TestArchivistPostWithoutAuth(TestCase):
         with mock.patch.object(self.arch._session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, request=request)
             resp = self.arch.post("path/path", request)
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    (f"url/{ROOT}/path/path",),
-                    {
-                        "data": '{"field1": "value1"}',
-                        "headers": {
-                            "content-type": "application/json",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/path/path",),
+                msg="POST method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": request,
+                    "headers": {
+                        "content-type": "application/json",
                     },
-                ),
-                msg="POST method called incorrectly",
+                    "verify": True,
+                },
+                msg="POST method kwargs called incorrectly",
             )

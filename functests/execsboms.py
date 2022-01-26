@@ -40,22 +40,20 @@ class TestSBOM(TestCase):
 
     maxDiff = None
 
-    @classmethod
-    def setUp(cls):
+    def setUp(self):
         with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
             auth = fd.read().strip()
 
-        cls.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
-        cls.file_uuid: str = ""
-        cls.title = "TestSBOM"
+        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        self.file_uuid: str = ""
+        self.title = "TestSBOM"
 
         with suppress(FileNotFoundError):
             remove(TEST_SBOM_DOWNLOAD_PATH)
 
-    @classmethod
-    def tearDown(cls) -> None:
+    def tearDown(self) -> None:
         """Remove the downloaded sbom for subsequent test runs"""
-        cls.arch = None
+        self.arch = None
         with suppress(FileNotFoundError):
             remove(TEST_SBOM_DOWNLOAD_PATH)
 
@@ -279,13 +277,12 @@ class TestSBOMWithApplication(TestSBOM):
 
     maxDiff = None
 
-    @classmethod
-    def setUp(cls):
-        super(TestSBOMWithApplication, cls).setUp()
-        cls.title = "TestSBOMWithApplication"
-        application = cls.arch.applications.create(
+    def setUp(self):
+        super().setUp()
+        self.title = "TestSBOMWithApplication"
+        application = self.arch.applications.create(
             DISPLAY_NAME,
             CUSTOM_CLAIMS,
         )
         auth = (application["client_id"], application["credentials"][0]["secret"])
-        cls.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)

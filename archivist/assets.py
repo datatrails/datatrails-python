@@ -21,11 +21,9 @@
 
 """
 
-import logging
+from logging import getLogger
 from typing import Dict, Optional
 from copy import deepcopy
-
-from archivist.type_aliases import NoneOnError
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -40,6 +38,7 @@ from .constants import (
 from . import confirmer
 from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
+from .type_aliases import NoneOnError
 
 # These are now hardcoded and not user-selectable. Eventually they will be removed from
 # the backend API and removed from this package.
@@ -48,7 +47,7 @@ BEHAVIOURS = [
     "RecordEvidence",
 ]
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class Asset(dict):
@@ -88,14 +87,13 @@ class Asset(dict):
     @property
     def name(self) -> NoneOnError[str]:
         """str: name of the asset"""
+        name = None
         try:
             name = self["attributes"]["arc_display_name"]
         except (KeyError, TypeError):
             pass
-        else:
-            return name
 
-        return None
+        return name
 
 
 class _AssetsClient:

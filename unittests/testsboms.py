@@ -3,7 +3,6 @@ Test SBOMS
 """
 
 from io import BytesIO
-import json
 from os import environ
 from unittest import TestCase, mock
 
@@ -67,7 +66,6 @@ WITHDRAWN_RESPONSE = {
     **WITHDRAWN_PROPS,
     "identity": IDENTITY,
 }
-REQUEST_DATA = json.dumps(PROPS)
 
 
 class TestSBOMS(TestCase):
@@ -78,7 +76,7 @@ class TestSBOMS(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", "authauthauth", max_time=2)
+        self.arch = Archivist("url", "authauthauth", max_time=1)
         self.mockstream = BytesIO(b"somelongstring")
 
     def test_sboms_str(self):

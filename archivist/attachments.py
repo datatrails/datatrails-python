@@ -26,7 +26,7 @@
 
 from typing import BinaryIO, Dict, Optional
 from copy import deepcopy
-import logging
+from logging import getLogger
 
 from requests.models import Response
 
@@ -36,8 +36,9 @@ from . import archivist as type_helper
 
 from .constants import ATTACHMENTS_SUBPATH, ATTACHMENTS_LABEL
 from .dictmerge import _deepmerge
+from .type_aliases import NoneOnError
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class Attachment(dict):

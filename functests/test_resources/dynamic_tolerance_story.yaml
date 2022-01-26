@@ -1,0 +1,153 @@
+---
+# Demonstration of applying a Dynamic Tolerance compliance policy to an asset that undergoes
+# events that may or may not make the asset compliant or non-compliant.
+#
+# The step field is a string that represents the method bound to an endpoint and
+# the args and kwargs correspond to the arguments to such a method.
+#
+# NB the assets and events endpoints require all values to be strings. Other values may
+# be of the correct type such as confirm which is a boolean.
+#
+# For example attributes.ev_pump is a string - internally archivist will see this
+# as a boolean.
+steps:
+  - step:
+      action: ASSETS_CREATE
+      description: Create new EV Pump with id 1.
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_name: ev pump 1
+      ev_pump: "true"
+    confirm: true
+
+  # create some policies
+  - step:
+      action: COMPLIANCE_POLICIES_CREATE
+      description: Create a compliance policy that checks an EV pump maintenance requests are serviced within a reasonable time frame.
+      print_response: true
+    description: ev maintenance policy
+    display_name: ev maintenance policy
+    compliance_type: COMPLIANCE_DYNAMIC_TOLERANCE
+    asset_filter:  
+      - or: [ "attributes.ev_pump=true" ]
+    event_display_type: Maintenance Requested
+    closing_event_display_type: Maintenance Performed
+    dynamic_window: 700
+    dynamic_variability: 1.5
+
+  # setup the ev pump to have maintenance requests and servicings
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event requesting EV pump 1 needs maintenance.
+      asset_name: ev pump 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_correlation_value: EV Maintenance 1
+      arc_description: request maintenance
+      arc_display_type: Maintenance Requested
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event after 1 seconds, for EV pump 1, stating maintenance occurred.
+      wait_time: 1
+      asset_name: ev pump 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_correlation_value: EV Maintenance 1
+      arc_description: perform maintenance
+      arc_display_type: Maintenance Performed
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event requesting EV pump 1 needs maintenance.
+      asset_name: ev pump 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_correlation_value: EV Maintenance 2
+      arc_description: request maintenance
+      arc_display_type: Maintenance Requested
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event after 2 seconds, for EV pump 1, stating maintenance occurred.
+      wait_time: 2
+      asset_name: ev pump 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_correlation_value: EV Maintenance 2
+      arc_description: perform maintenance
+      arc_display_type: Maintenance Performed
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event requesting EV pump 1 needs maintenance.
+      asset_name: ev pump 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_correlation_value: EV Maintenance 3
+      arc_description: request maintenance
+      arc_display_type: Maintenance Requested
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event after 3 seconds, for EV pump 1, stating maintenance occurred.
+      wait_time: 3
+      asset_name: ev pump 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_correlation_value: EV Maintenance 3
+      arc_description: perform maintenance
+      arc_display_type: Maintenance Performed
+    confirm: true
+
+  # check compliance for ev pump
+  - step:
+      action: COMPLIANCE_COMPLIANT_AT
+      description: Check Compliance of EV pump 1.
+      asset_name: ev pump 1
+
+  # now create an event that throws the Standard deviation out of whack
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event requesting EV pump 1 needs maintenance.
+      asset_name: ev pump 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_correlation_value: EV Maintenance 4
+      arc_description: request maintenance
+      arc_display_type: Maintenance Requested
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event after 20 seconds, for EV pump 1, stating maintenance occurred.
+      wait_time: 20
+      asset_name: ev pump 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_correlation_value: EV Maintenance 4
+      arc_description: perform maintenance
+      arc_display_type: Maintenance Performed
+    confirm: true
+
+  # check compliance for ev pump
+  - step:
+      action: COMPLIANCE_COMPLIANT_AT
+      description: Check Compliance of EV pump 1.
+      asset_name: ev pump 1
+

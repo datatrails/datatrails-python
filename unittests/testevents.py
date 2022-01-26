@@ -2,7 +2,7 @@
 Test archivist
 """
 
-import json
+from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -97,19 +97,11 @@ REQUEST = {
     **PROPS,
     "event_attributes": EVENT_ATTRS,
 }
-REQUEST_DATA = json.dumps(REQUEST)
 
 REQUEST_WITH_ASSET_ATTRS = {
     **REQUEST,
     "asset_attributes": ASSET_ATTRS,
 }
-REQUEST_DATA_WITH_ASSET_ATTRS = json.dumps(REQUEST_WITH_ASSET_ATTRS)
-
-REQUEST_WITH_NO_PRINCIPAL = {
-    **PROPS_WITH_NO_PRINCIPAL,
-    "event_attributes": EVENT_ATTRS,
-}
-REQUEST_WITH_NO_PRINCIPAL_DATA = json.dumps(REQUEST_WITH_NO_PRINCIPAL)
 
 RESPONSE = {
     **PROPS,
@@ -230,7 +222,7 @@ class TestEvents(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", "authauthauth", max_time=2)
+        self.arch = Archivist("url", "authauthauth", max_time=1)
 
     def tearDown(self):
         self.arch = None
@@ -253,26 +245,30 @@ class TestEvents(TestCase):
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             event = self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=False)
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
+                args,
                 (
                     (
-                        (
-                            f"url/{ROOT}/{ASSETS_SUBPATH}"
-                            f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                            f"/{EVENTS_LABEL}"
-                        ),
+                        f"url/{ROOT}/{ASSETS_SUBPATH}"
+                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                        f"/{EVENTS_LABEL}"
                     ),
-                    {
-                        "data": REQUEST_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
-                    },
                 ),
-                msg="CREATE method called incorrectly",
+                msg="CREATE method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": REQUEST,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 event,
@@ -294,26 +290,30 @@ class TestEvents(TestCase):
                 asset_attrs=ASSET_ATTRS,
                 confirm=False,
             )
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
+                args,
                 (
                     (
-                        (
-                            f"url/{ROOT}/{ASSETS_SUBPATH}"
-                            f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                            f"/{EVENTS_LABEL}"
-                        ),
+                        f"url/{ROOT}/{ASSETS_SUBPATH}"
+                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                        f"/{EVENTS_LABEL}"
                     ),
-                    {
-                        "data": REQUEST_DATA_WITH_ASSET_ATTRS,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
-                    },
                 ),
-                msg="CREATE method called incorrectly",
+                msg="CREATE method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": REQUEST_WITH_ASSET_ATTRS,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 event,

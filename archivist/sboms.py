@@ -26,8 +26,7 @@
 
 from typing import BinaryIO, Dict, Optional
 from copy import deepcopy
-
-import logging
+from logging import getLogger
 
 from requests.models import Response
 
@@ -47,7 +46,7 @@ from . import publisher, uploader, withdrawer
 from .dictmerge import _deepmerge
 from .sbommetadata import SBOM
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class _SBOMSClient:
