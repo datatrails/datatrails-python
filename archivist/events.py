@@ -22,7 +22,7 @@
 
 """
 
-import logging
+from logging import getLogger
 from typing import Dict, Optional
 from copy import deepcopy
 
@@ -42,7 +42,7 @@ from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class Event(dict):

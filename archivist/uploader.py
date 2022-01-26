@@ -1,7 +1,7 @@
 """uploader interface
 """
 
-import logging
+from logging import getLogger
 
 import backoff
 
@@ -14,7 +14,7 @@ from . import sboms
 
 MAX_TIME = 1200
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 def __lookup_max_time():
@@ -41,7 +41,7 @@ def __on_giveup_uploading(details):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=LOGGER,
+    logger=None,
     max_time=__lookup_max_time,
     on_backoff=__backoff_handler,
     on_giveup=__on_giveup_uploading,

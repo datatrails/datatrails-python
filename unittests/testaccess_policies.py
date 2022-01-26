@@ -24,8 +24,9 @@ from .testassets import RESPONSE as ASSET
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
+ACCESS_POLICY_NAME = "Policy display name"
 PROPS = {
-    "display_name": "Policy display name",
+    "display_name": ACCESS_POLICY_NAME,
     "description": "Policy description",
 }
 FILTERS = [
@@ -79,8 +80,6 @@ REQUEST = {
     "filters": FILTERS,
     "access_permissions": ACCESS_PERMISSIONS,
 }
-REQUEST_DATA = json.dumps(REQUEST)
-UPDATE_DATA = json.dumps(PROPS)
 
 
 class TestAccessPolicies(TestCase):
@@ -113,25 +112,34 @@ class TestAccessPolicies(TestCase):
             access_policy = self.arch.access_policies.create(
                 PROPS, FILTERS, ACCESS_PERMISSIONS
             )
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "data": REQUEST_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            kwargs["data"] = json.loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": REQUEST,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
+                    "verify": True,
+                },
                 msg="CREATE method called incorrectly",
             )
             self.assertEqual(
                 access_policy,
                 RESPONSE,
                 msg="CREATE method called incorrectly",
+            )
+            self.assertEqual(
+                access_policy.name,
+                ACCESS_POLICY_NAME,
+                msg="Incorrect name property",
             )
 
     def test_access_policies_read(self):
@@ -192,20 +200,24 @@ class TestAccessPolicies(TestCase):
                 IDENTITY,
                 PROPS,
             )
+            args, kwargs = mock_patch.call_args
             self.assertEqual(
-                tuple(mock_patch.call_args),
-                (
-                    ((f"url/{ROOT}/{ACCESS_POLICIES_SUBPATH}/{IDENTITY}"),),
-                    {
-                        "data": UPDATE_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/{ACCESS_POLICIES_SUBPATH}/{IDENTITY}",),
+                msg="PATCH method args called incorrectly",
+            )
+            kwargs["data"] = json.loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": PROPS,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="PATCH method called incorrectly",
+                    "verify": True,
+                },
+                msg="PATCH method kwargs called incorrectly",
             )
 
     def test_access_policies_read_with_error(self):

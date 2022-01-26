@@ -47,7 +47,6 @@ REQUEST = {
     "display_name": DISPLAY_NAME,
     "custom_claims": CUSTOM_CLAIMS,
 }
-REQUEST_DATA = json.dumps(REQUEST)
 UPDATE_DATA = json.dumps({"display_name": DISPLAY_NAME})
 
 
@@ -82,20 +81,24 @@ class TestApplications(TestCase):
                 DISPLAY_NAME,
                 CUSTOM_CLAIMS,
             )
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "data": REQUEST_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            kwargs["data"] = json.loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": REQUEST,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="CREATE method called incorrectly",
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 application,

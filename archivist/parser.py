@@ -7,14 +7,20 @@
 
 import argparse
 from enum import Enum
-import logging
+from logging import getLogger
 from sys import exit as sys_exit
+from warnings import filterwarnings
 
 from .archivist import Archivist
 from .logger import set_logger
+from .dictmerge import _deepmerge
 from .proof_mechanism import ProofMechanism
 
-LOGGER = logging.getLogger(__name__)
+
+filterwarnings("ignore", message="Unverified HTTPS request")
+
+
+LOGGER = getLogger(__name__)
 
 
 # from https://stackoverflow.com/questions/43968006/support-for-enum-arguments-in-argparse
@@ -47,7 +53,7 @@ class EnumAction(argparse.Action):
         setattr(namespace, self.dest, value)
 
 
-def common_parser(description):
+def common_parser(description: str):
     """Construct parser with security option for token/auth authentication"""
     parser = argparse.ArgumentParser(
         description=description,
@@ -88,6 +94,15 @@ def common_parser(description):
         required=True,
         help="FILE containing API authentication token",
     )
+    parser.add_argument(
+        "-n",
+        "--namespace",
+        type=str,
+        dest="namespace",
+        action="store",
+        default=None,
+        help="namespace of item population",
+    )
 
     return parser
 
@@ -106,6 +121,22 @@ def endpoint(args):
             "proof_mechanism": args.proof_mechanism.name,
         },
     }
+    if args.namespace is not None:
+        fixtures = _deepmerge(
+            fixtures,
+            {
+                "assets": {
+                    "attributes": {
+                        "arc_namespace": args.namespace,
+                    },
+                },
+                "locations": {
+                    "attributes": {
+                        "arc_namespace": args.namespace,
+                    },
+                },
+            },
+        )
 
     if args.auth_token_file:
         with open(args.auth_token_file, mode="r", encoding="utf-8") as tokenfile:

@@ -2,7 +2,7 @@
 Test compliance policies
 """
 
-import json
+from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -51,7 +51,6 @@ SINCE_RESPONSE = {
 SINCE_REQUEST = {
     **SINCE_POLICY_REQUEST,
 }
-SINCE_REQUEST_DATA = json.dumps(SINCE_REQUEST)
 
 
 class TestCompliancePolicy(TestCase):
@@ -111,20 +110,24 @@ class TestCompliancePolicies(TestCase):
             compliance_policy = self.arch.compliance_policies.create(
                 SINCE_POLICY,
             )
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "data": SINCE_REQUEST_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": SINCE_REQUEST,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="CREATE method called incorrectly",
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 compliance_policy,

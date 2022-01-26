@@ -2,7 +2,7 @@
 Test subjects
 """
 
-import json
+from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -50,8 +50,7 @@ REQUEST = {
     "wallet_pub_key": WALLET_PUB_KEYS,
     "tessera_pub_key": TESSERA_PUB_KEYS,
 }
-REQUEST_DATA = json.dumps(REQUEST)
-UPDATE_DATA = json.dumps({"display_name": DISPLAY_NAME})
+UPDATE = {"display_name": DISPLAY_NAME}
 
 
 class TestSubjects(TestCase):
@@ -84,20 +83,24 @@ class TestSubjects(TestCase):
             subject = self.arch.subjects.create(
                 DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
             )
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "data": REQUEST_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": REQUEST,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="CREATE method called incorrectly",
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 subject,
@@ -163,20 +166,24 @@ class TestSubjects(TestCase):
                 IDENTITY,
                 display_name=DISPLAY_NAME,
             )
+            args, kwargs = mock_patch.call_args
             self.assertEqual(
-                tuple(mock_patch.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
-                    {
-                        "data": UPDATE_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}",),
+                msg="PATCH method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": UPDATE,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="PATCH method called incorrectly",
+                    "verify": True,
+                },
+                msg="PATCH method kwargs called incorrectly",
             )
 
     def test_subjects_read_with_error(self):

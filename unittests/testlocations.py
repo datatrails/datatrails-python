@@ -2,7 +2,7 @@
 Test archivist
 """
 
-import json
+from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -48,7 +48,6 @@ REQUEST = {
     **PROPS,
     "attributes": ATTRS,
 }
-REQUEST_DATA = json.dumps(REQUEST)
 
 
 class TestLocations(TestCase):
@@ -79,20 +78,24 @@ class TestLocations(TestCase):
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             location = self.arch.locations.create(PROPS, attrs=ATTRS)
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "data": REQUEST_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": REQUEST,
+                    "headers": {
+                        "content-type": "application/json",
+                        "authorization": "Bearer authauthauth",
                     },
-                ),
-                msg="CREATE method called incorrectly",
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 location,

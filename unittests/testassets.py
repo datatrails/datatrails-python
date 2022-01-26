@@ -2,7 +2,10 @@
 Test archivist
 """
 
-import json
+from copy import copy
+from json import loads as json_loads
+from logging import getLogger
+from os import environ
 
 from unittest import TestCase, mock
 
@@ -16,6 +19,7 @@ from archivist.constants import (
     ROOT,
 )
 from archivist.errors import ArchivistNotFoundError, ArchivistUnconfirmedError
+from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 
 from .mock_response import MockResponse
@@ -24,6 +28,10 @@ from .mock_response import MockResponse
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
+if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
+    set_logger(environ["TEST_DEBUG"])
+
+LOGGER = getLogger(__name__)
 
 PRIMARY_IMAGE = {
     "arc_display_name": "arc_primary_image",
@@ -75,17 +83,54 @@ SUBPATH = f"{ASSETS_SUBPATH}/{ASSETS_LABEL}"
 PROPS = {
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
 }
+FIXTURES_ATTRIBUTES = {
+    "arc_namespace": "namespace",
+}
+FIXTURES = {
+    "assets": {
+        "attributes": FIXTURES_ATTRIBUTES,
+    },
+}
+ATTRS_FIXTURES = {**FIXTURES_ATTRIBUTES, **ATTRS}
+
 REQUEST = {
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": ATTRS,
 }
-REQUEST_DATA = json.dumps(REQUEST)
+REQUEST_KWARGS = {
+    "data": REQUEST,
+    "headers": {
+        "content-type": "application/json",
+        "authorization": "Bearer authauthauth",
+    },
+    "verify": True,
+}
+
+REQUEST_FIXTURES = {
+    "behaviours": BEHAVIOURS,
+    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
+    "attributes": ATTRS_FIXTURES,
+}
+REQUEST_FIXTURES_KWARGS = {
+    "data": REQUEST_FIXTURES,
+    "headers": {
+        "content-type": "application/json",
+        "authorization": "Bearer authauthauth",
+    },
+    "verify": True,
+}
 
 RESPONSE = {
     "identity": IDENTITY,
     "behaviours": BEHAVIOURS,
     "attributes": ATTRS,
+    "confirmation_status": "CONFIRMED",
+}
+RESPONSE_FIXTURES = {
+    "identity": IDENTITY,
+    "behaviours": BEHAVIOURS,
+    "attributes": ATTRS_FIXTURES,
     "confirmation_status": "CONFIRMED",
 }
 
@@ -122,7 +167,7 @@ class TestAssetsBase(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", "authauthauth", max_time=2)
+        self.arch = Archivist("url", "authauthauth", max_time=1)
 
     def tearDown(self):
         self.arch = None
@@ -153,29 +198,26 @@ class TestAssetsCreate(TestAssetsBase):
         """
         Test asset creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch._session, "post", autospec=True) as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    ((f"url/{ROOT}/{ASSETS_SUBPATH}" f"/{ASSETS_LABEL}"),),
-                    {
-                        "data": REQUEST_DATA,
-                        "headers": {
-                            "content-type": "application/json",
-                            "authorization": "Bearer authauthauth",
-                        },
-                        "verify": True,
-                    },
-                ),
-                msg="CREATE method called incorrectly",
+                args,
+                (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
+                msg="CREATE method args called incorrectly",
+            )
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                kwargs,
+                REQUEST_KWARGS,
+                msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 asset,
                 RESPONSE,
-                msg="CREATE method called incorrectly",
+                msg="CREATE incorrect response",
             )
             self.assertEqual(
                 asset.primary_image,
@@ -186,6 +228,33 @@ class TestAssetsCreate(TestAssetsBase):
                 asset.name,
                 ASSET_NAME,
                 msg="Incorrect name property",
+            )
+
+    def test_assets_create_with_fixtures(self):
+        """
+        Test asset creation
+        """
+        arch = copy(self.arch)
+        arch.fixtures = FIXTURES
+        with mock.patch.object(arch._session, "post", autospec=True) as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE_FIXTURES)
+            asset = arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
+            args, kwargs = mock_post.call_args
+            kwargs["data"] = json_loads(kwargs["data"])
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                REQUEST_FIXTURES_KWARGS,
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                asset,
+                RESPONSE_FIXTURES,
+                msg="CREATE method called incorrectly",
             )
 
     def test_assets_create_with_confirmation(self):

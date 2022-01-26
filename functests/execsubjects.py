@@ -30,12 +30,11 @@ class TestSubjects(TestCase):
 
     maxDiff = None
 
-    @classmethod
-    def setUpClass(cls):
+    def setUp(self):
         with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
             auth = fd.read().strip()
-        cls.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
-        cls.display_name = f"{DISPLAY_NAME} {uuid4()}"
+        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def test_subjects_create(self):
         """

@@ -67,17 +67,20 @@ class TestAppIDP(TestCase):
                 CLIENT_ID,
                 CLIENT_SECRET,
             )
+            args, kwargs = mock_post.call_args
             self.assertEqual(
-                tuple(mock_post.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "data": REQUEST,
-                        "headers": None,
-                        "verify": True,
-                    },
-                ),
-                msg="CREATE method called incorrectly",
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": REQUEST,
+                    "headers": None,
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 appidp,

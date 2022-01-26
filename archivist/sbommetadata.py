@@ -6,13 +6,13 @@
 # pylint:disable=too-many-instance-attributes
 
 from dataclasses import dataclass, asdict
-import logging
+from logging import getLogger
 from typing import List
 
 # NB: the order of the fields is important. Fields with default values must
 #    appear after fields without.
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 @dataclass(frozen=True)

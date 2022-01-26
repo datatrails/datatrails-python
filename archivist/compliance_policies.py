@@ -26,7 +26,7 @@
 """
 
 from copy import deepcopy
-import logging
+from logging import getLogger
 from typing import Dict, Optional, Union
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
@@ -48,7 +48,7 @@ from .constants import (
 from .dictmerge import _deepmerge
 
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class CompliancePolicy(dict):
@@ -61,14 +61,7 @@ class CompliancePolicy(dict):
     @property
     def name(self):
         """str: name of the compliance policy"""
-        try:
-            name = self["display_name"]
-        except (KeyError, TypeError):
-            pass
-        else:
-            return name
-
-        return None
+        return self.get("display_name")
 
 
 class _CompliancePoliciesClient:
