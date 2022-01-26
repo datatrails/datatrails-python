@@ -1,0 +1,157 @@
+---
+# Demonstration of applying a Richness compliance policy to an asset that undergoes
+# events that may or may not make the asset compliant or non-compliant.
+#
+# The step field is a string that represents the method bound to an endpoint and
+# the args and kwargs correspond to the arguments to such a method.
+#
+# NB the assets and events endpoints require all values to be strings. Other values may
+# be of the correct type such as confirm which is a boolean.
+#
+# For example attributes.radioactive is a string - internally archivist will see this
+# as a boolean.
+steps:
+  - step:
+      action: ASSETS_CREATE
+      description: Create an empty radiation bag with id 1.
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_name: radiation bag 1
+      radioactive: "true"
+      radiation_level: "0"
+      weight: "0"
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE
+      description: Create an empty radiation bag with id 2.
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_name: radiation bag 2
+      radioactive: "true"
+      radiation_level: "0"
+      weight: "0"
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE
+      description: Create an empty radiation bag with id 3.
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_name: radiation bag 3
+      radioactive: "true"
+      radiation_level: "0"
+      weight: "0"
+    confirm: true
+
+  # create some policies
+  - step:
+      action: COMPLIANCE_POLICIES_CREATE
+      description: Create a compliance policy that checks the radiation level of radiation bags is less than 7 rads.
+      print_response: true
+    description: radiation level safety policy
+    display_name: radiation safety policy
+    compliance_type: COMPLIANCE_RICHNESS
+    asset_filter:
+      - or: [ "attributes.radioactive=true" ]
+    richness_assertions:
+      - or: [ "radiation_level<7" ]
+
+
+  - step:
+      action: COMPLIANCE_POLICIES_CREATE
+      description: Create a compliance policy that checks the weight of a radiation bag is less than or equal to 10kg.
+      print_response: true
+    description: weight level safety policy
+    display_name: weight safety policy
+    compliance_type: COMPLIANCE_RICHNESS
+    asset_filter: 
+      - or: [ "attributes.radioactive=true" ]
+    richness_assertions:
+      - or: [ "weight<=10" ]
+
+  # setup the radiation bags to have a varing amount of radiactive waste
+  # note the values to the events.create method are string representations of boolean
+  # and numbers
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event adding 3 rads of radiation to bag 1, increasing its weight by 1kg.
+      asset_name: radiation bag 1
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: add waste to bag
+    asset_attributes:
+      radiation_level: "3"
+      weight: "1"
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event adding 2 rads of radiation to bag 2, increasing its weight by 5kg.
+      asset_name: radiation bag 2
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: add waste to bag
+    asset_attributes:
+      radiation_level: "2"
+      weight: "5"
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Create Event adding 5 rads of radiation to bag 3, increasing its weight by 7kg.
+      asset_name: radiation bag 3
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: add waste to bag
+    asset_attributes:
+      radiation_level: "5"
+      weight: "7"
+    confirm: true
+
+  # check compliance for all 3 bags
+  - step:
+      action: COMPLIANCE_COMPLIANT_AT
+      description: Check Compliance of bag 1.
+      print_response: True
+      asset_name: radiation bag 1
+
+  - step:
+      action: COMPLIANCE_COMPLIANT_AT
+      description: Check Compliance of bag 2.
+      asset_name: radiation bag 2
+
+  - step:
+      action: COMPLIANCE_COMPLIANT_AT
+      description: Check Compliance of bag 3.
+      asset_name: radiation bag 3
+
+  # now attempt to add waste to tip one over the edge
+  - step:
+      action: EVENTS_CREATE
+      description: Now Create Event adding 4 rads of radiation to bag 3 increasing its weight by 1kg.
+                   This brings the total radiation level to 9 rads and weight to 8kg.
+      asset_name: radiation bag 3
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: add waste to bag
+    asset_attributes:
+      radiation_level: "9"
+      weight: "8"
+    confirm: true
+
+  # check the compliance
+  - step:
+      action: COMPLIANCE_COMPLIANT_AT
+      description: Check Compliance of bag 3.
+      asset_name: radiation bag 3

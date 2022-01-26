@@ -30,7 +30,7 @@
 
 """
 
-import logging
+from logging import getLogger
 
 import json
 
@@ -72,11 +72,12 @@ from .compliance import _ComplianceClient
 from .compliance_policies import _CompliancePoliciesClient
 from .events import _EventsClient
 from .locations import _LocationsClient
+from .runner import _Runner
 from .sboms import _SBOMSClient
 from .subjects import _SubjectsClient
 from .type_aliases import MachineAuth
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 # also change the type hints in __init__ below
 CLIENTS = {
@@ -89,6 +90,7 @@ CLIENTS = {
     "compliance_policies": _CompliancePoliciesClient,
     "events": _EventsClient,
     "locations": _LocationsClient,
+    "runner": _Runner,
     "sboms": _SBOMSClient,
     "subjects": _SubjectsClient,
 }
@@ -148,6 +150,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self.compliance_policies: _CompliancePoliciesClient
         self.events: _EventsClient
         self.locations: _LocationsClient
+        self.runner: _Runner
         self.sboms: _SBOMSClient
         self.subjects: _SubjectsClient
 

@@ -8,23 +8,23 @@
 
    URL: https://docs.djangoproject.com/en/3.2/topics/logging/
 
-   This code is not used directly by this package...
+   This code is not used directly by this package... but is used in unittests (if enabled)
 """
 
 # pylint:  disable=missing-docstring
 
-import logging
-import logging.config
+from logging import config, getLogger
 
 # root logger for all code
-LOGGER = logging.getLogger()
+LOGGER = getLogger()
 
 
 def set_logger(level):
-    logging.config.dictConfig(
+    config.dictConfig(
         {
             "version": 1,
             "disable_existing_loggers": False,
+            "propagate": True,
             "handlers": {
                 "console": {
                     "class": "logging.StreamHandler",

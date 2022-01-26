@@ -45,8 +45,8 @@ tasks:
     deps: [about]
     cmds:
       - ./scripts/builder.sh python3 --version
-      - ./scripts/builder.sh pycodestyle --format=pylint archivist functests unittests examples
-      - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc archivist functests unittests examples
+      - ./scripts/builder.sh pycodestyle --format=pylint setup.py archivist examples functests unittests
+      - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc setup.py archivist examples functests unittests
 
   clean:
     desc: Clean git repo
@@ -64,7 +64,7 @@ tasks:
     desc: Format code using black
     deps: [about]
     cmds:
-      - ./scripts/builder.sh black archivist examples functests unittests
+      - ./scripts/builder.sh black setup.py archivist examples functests unittests
 
   functests:
     desc: Run functests - requires an archivist instance and a authtoken

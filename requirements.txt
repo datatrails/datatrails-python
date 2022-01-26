@@ -1,4 +1,4 @@
-backoff~=1.10
+backoff~=1.11
 certifi
 flatten-dict~=0.3.0
 iso8601~=0.1.13

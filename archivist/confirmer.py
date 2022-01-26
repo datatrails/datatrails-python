@@ -3,7 +3,7 @@
    Wrap base methods with constants for assets (path, etc...
 """
 
-import logging
+from logging import getLogger
 
 from copy import deepcopy
 from typing import overload
@@ -26,7 +26,7 @@ from . import events
 
 MAX_TIME = 1200
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 def __lookup_max_time():
@@ -73,7 +73,7 @@ def _wait_for_confirmation(
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=LOGGER,
+    logger=None,
     max_time=__lookup_max_time,
     on_backoff=__backoff_handler,
     on_giveup=__on_giveup_confirmation,
@@ -109,7 +109,7 @@ def __on_giveup_confirmed(details):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=LOGGER,
+    logger=None,
     max_time=__lookup_max_time,
     on_backoff=__backoff_handler,
     on_giveup=__on_giveup_confirmed,

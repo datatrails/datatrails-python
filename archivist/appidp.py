@@ -21,7 +21,7 @@
 
 """
 
-import logging
+from logging import getLogger
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
@@ -34,8 +34,9 @@ from .constants import (
     APPIDP_TOKEN,
 )
 from .dictmerge import _deepmerge
+from .type_aliases import NoneOnError
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class AppIDP(dict):

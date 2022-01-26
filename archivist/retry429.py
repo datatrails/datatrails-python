@@ -4,13 +4,13 @@
 """
 
 from functools import wraps
-import logging
+from logging import getLogger
 from time import sleep
 
 from .errors import ArchivistTooManyRequestsError
 
 NO_OF_RETRIES = 3
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 def retry_429(f):

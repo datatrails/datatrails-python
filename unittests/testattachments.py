@@ -3,7 +3,6 @@ Test archivist
 """
 
 from io import BytesIO
-import json
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -27,7 +26,6 @@ RESPONSE = {
     **PROPS,
     "identity": IDENTITY,
 }
-REQUEST_DATA = json.dumps(PROPS)
 
 
 class TestAttachments(TestCase):

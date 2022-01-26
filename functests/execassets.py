@@ -30,22 +30,20 @@ class TestAssetCreate(TestCase):
 
     maxDiff = None
 
-    @classmethod
-    def setUpClass(cls):
+    def setUp(self):
         with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
             auth = fd.read().strip()
-        cls.arch = Archivist(
+        self.arch = Archivist(
             environ["TEST_ARCHIVIST"], auth, verify=False, max_time=300
         )
-        cls.attrs = deepcopy(ATTRS)
-        cls.traffic_light = deepcopy(ATTRS)
-        cls.traffic_light["arc_display_type"] = "Traffic light with violation camera"
+        self.attrs = deepcopy(ATTRS)
+        self.traffic_light = deepcopy(ATTRS)
+        self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.arch = None
-        cls.attrs = None
-        cls.traffic_light = None
+    def tearDown(self):
+        self.arch = None
+        self.attrs = None
+        self.traffic_light = None
 
     def test_asset_create_simple_hash(self):
         """

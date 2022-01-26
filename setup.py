@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 
-'''
+"""
 Setup script for python build system
-'''
+"""
 import os
 from setuptools import setup, find_packages
 
 HERE = os.path.dirname(__file__)
-REPO_URL = 'https://github.com/jitsuin-inc/archivist-python/'
+REPO_URL = "https://github.com/jitsuin-inc/archivist-python/"
 NAME = "jitsuin-archivist"
 
-with open(os.path.join(HERE, 'README.rst'), encoding="utf-8") as FF:
+with open(os.path.join(HERE, "README.rst"), encoding="utf-8") as FF:
     DESC = FF.read()
 
-with open(os.path.join(HERE, 'requirements.txt'), encoding="utf-8") as FF:
-    requirements=[f"{line.strip()}" for line in FF]
+with open(os.path.join(HERE, "requirements.txt"), encoding="utf-8") as FF:
+    requirements = [f"{line.strip()}" for line in FF]
 
 setup(
     name=NAME,
@@ -24,16 +24,16 @@ setup(
     long_description=DESC,
     long_description_content_type="text/markdown",
     url=REPO_URL,
-    packages=find_packages(exclude=( "examples", "unittests", "functests")),
-    platforms=['any'],
+    packages=find_packages(exclude=("examples", "unittests", "functests")),
+    platforms=["any"],
     classifiers=[
-        'Development Status :: 3 - Alpha', #pre-delivery
-        'Environment :: Console', 
-        'Intended Audience :: Developers', 
-        'License :: OSI Approved :: MIT License', # MIT
-        'Operating System :: POSIX :: Linux', # https://pypi.org/classifiers/ # on anything
-        'Programming Language :: Python :: 3.6',
-        'Topic :: Utilities' # https://pypi.org/classifiers/ # check another option client-sdk
+        "Development Status :: 3 - Alpha",  # pre-delivery
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",  # MIT
+        "Operating System :: POSIX :: Linux",  # https://pypi.org/classifiers/ # on anything
+        "Programming Language :: Python :: 3.6",
+        "Topic :: Utilities",  # https://pypi.org/classifiers/ # check another option client-sdk
     ],
     install_requires=requirements,
     version_config={
@@ -44,6 +44,11 @@ setup(
         "version_file": None,
         "count_commits_from_version_file": False,
     },
-    setup_requires=['setuptools-git-versioning'],
-    python_requires='>=3.6',
+    setup_requires=["setuptools-git-versioning==1.7.4"],
+    python_requires=">=3.6",
+    entry_points={
+        "console_scripts": [
+            "archivist_runner = archivist.cmds.runner.main:main",
+        ],
+    },
 )

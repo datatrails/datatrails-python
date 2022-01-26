@@ -21,21 +21,21 @@
 
 """
 
-import logging
+from logging import getLogger
 from typing import Optional
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from . import archivist as type_helper
 
-
 from .constants import (
     COMPLIANCE_SUBPATH,
     COMPLIANCE_LABEL,
 )
+from .type_aliases import NoneOnError
 
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class Compliance(dict):

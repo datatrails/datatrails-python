@@ -22,13 +22,14 @@
 """
 
 from typing import Dict, List, Optional
-import logging
+from logging import getLogger
 from copy import deepcopy
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from . import archivist as type_helper
 
+from .assets import Asset
 from .constants import (
     SEP,
     ACCESS_POLICIES_SUBPATH,
@@ -36,15 +37,19 @@ from .constants import (
     ASSETS_LABEL,
 )
 from .dictmerge import _deepmerge
+from .type_aliases import NoneOnError
 
-from .assets import Asset
 
-
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 
 class AccessPolicy(dict):
     """AccessPolicy object"""
+
+    @property
+    def name(self) -> NoneOnError[str]:
+        """str: name of the access policy"""
+        return self.get("display_name")
 
 
 class _AccessPoliciesClient:
