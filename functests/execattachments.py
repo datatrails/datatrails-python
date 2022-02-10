@@ -8,6 +8,7 @@ from contextlib import suppress
 from filecmp import clear_cache, cmp
 
 from archivist.archivist import Archivist
+from archivist.errors import ArchivistBadRequestError
 from archivist.logger import set_logger
 
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
@@ -69,7 +70,7 @@ class TestAttachmentstCreate(TestCase):
 
         with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(
-                file_uuid, fd, query={"allow_insecure": True}
+                file_uuid, fd, query={"allow_insecure": "true"}
             )
 
         # Check the downloaded file is identical to the one that was uploaded
@@ -78,7 +79,7 @@ class TestAttachmentstCreate(TestCase):
             cmp(self.TEST_IMAGE_PATH, self.TEST_IMAGE_DOWNLOAD_PATH, shallow=False)
         )
 
-    def test_attachment_upload_and_download_allow_not_scanned(self):
+    def test_attachment_upload_and_download_strict(self):
         """
         Test file upload through the SDK
         Test file download through the SDK
@@ -88,12 +89,7 @@ class TestAttachmentstCreate(TestCase):
             file_uuid = attachment["identity"]
 
         with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
-            attachment = self.arch.attachments.download(
-                file_uuid, fd, query={"allow_not_scanned": True}
-            )
-
-        # Check the downloaded file is identical to the one that was uploaded
-        clear_cache()
-        self.assertTrue(
-            cmp(self.TEST_IMAGE_PATH, self.TEST_IMAGE_DOWNLOAD_PATH, shallow=False)
-        )
+            with self.assertRaises(ArchivistBadRequestError):
+                attachment = self.arch.attachments.download(
+                    file_uuid, fd, query={"strict": "true"}
+                )

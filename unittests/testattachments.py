@@ -165,8 +165,8 @@ class TestAttachments(TestCase):
 
     def test_attachments_download_with_query(self):
         """
-        Test attachment download - usually both allow options are
-        not required.
+        Test attachment download - usually both allow_insecure and
+        strict are not required at the same time.
         """
 
         with mock.patch.object(self.arch._session, "get") as mock_get:
@@ -195,14 +195,14 @@ class TestAttachments(TestCase):
                 attachment = self.arch.attachments.download(
                     IDENTITY,
                     fd,
-                    query={"allow_insecure": True, "allow_not_scanned": True},
+                    query={"allow_insecure": "true", "strict": "true"},
                 )
                 args, kwargs = mock_get.call_args
                 self.assertEqual(
                     args,
                     (
                         f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}"
-                        "?allow_insecure=True&allow_not_scanned=True",
+                        "?allow_insecure=true&strict=true",
                     ),
                     msg="DOWNLOAD method called incorrectly",
                 )
