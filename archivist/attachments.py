@@ -110,7 +110,7 @@ class _AttachmentsClient:
         Args:
             identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
             fd (file): opened file escriptor or other file-type sink..
-            query (dict): e.g. {"allow_insecure": True} OR {"allow_not_scanned": True }
+            query (dict): e.g. {"allow_insecure": "true"} OR {"strict": "true" }
 
         Returns:
             REST response
