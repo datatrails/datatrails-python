@@ -123,6 +123,13 @@ export TEST_AUTHTOKEN_FILENAME=credentials/authtoken
 task functests
 ```
 
+NOTE: For the access policy functional tests, two separate tenancy tokens are needed for successful test execution.
+      Therefore add a another env variable for the second tenancy's auth token:
+
+```
+export TEST_AUTHTOKEN_FILENAME_2=credentials/authtoken_tenant_2
+```
+
 #### Testing Other Python Versions
 
 ##### Python 3.6
