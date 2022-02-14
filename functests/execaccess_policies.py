@@ -6,12 +6,18 @@ from copy import deepcopy
 from os import environ
 from unittest import TestCase
 from uuid import uuid4
+from time import sleep
 
 from archivist.archivist import Archivist
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
+
+POLL_FREQUENCY = 10
+POLL_INTERVAL = 0.5
+
+SELF_SUBJECT = "subjects/00000000-0000-0000-0000-000000000000"
 
 DISPLAY_NAME = "AccessPolicy display name"
 PROPS = {
@@ -40,10 +46,7 @@ FILTERS = [
 
 ACCESS_PERMISSIONS = [
     {
-        "subjects": [
-            "subjects/6a951b62-0a26-4c22-a886-1082297b063b",
-            "subjects/a24306e5-dc06-41ba-a7d6-2b6b3e1df48d",
-        ],
+        "subjects": [],  # empty subjects for now, will be populated in test setup
         "behaviours": ["Attachments", "RecordEvidence"],
         "include_attributes": [
             "arc_display_name",
@@ -53,6 +56,52 @@ ACCESS_PERMISSIONS = [
         "user_attributes": [{"or": ["group:maintainers", "group:supervisors"]}],
     }
 ]
+
+
+def poll_subject_confirmed(arch, identity):
+    """
+    polls for the subject to be confirmed for POLL_FREQUENCY every POLL_INTERVAL.
+
+    :raises: AsssertionError if the subject is not confirmed within the polling window.
+    """
+
+    for x in range(POLL_FREQUENCY):
+        subject = arch.subjects.read(identity)
+
+        if subject["confirmation_status"] == "CONFIRMED":
+            return
+
+        sleep(POLL_INTERVAL)
+
+    raise AssertionError(f"subject: {subject['identity']} is not confirmed.")
+
+
+def reciprocal_subjects(arch_1, arch_2):
+    """
+    creates reciprocal subjects for arch 1 and arch 2.
+
+    Returns the id's of the imported subjects as a tuple
+    """
+    self_subject_1 = arch_1.subjects.read(SELF_SUBJECT)
+    self_subject_2 = arch_2.subjects.read(SELF_SUBJECT)
+
+    subject_1 = arch_1.subjects.create(
+        "org2_subject",
+        self_subject_2["wallet_pub_key"],
+        self_subject_2["tessera_pub_key"],
+    )
+
+    subject_2 = arch_2.subjects.create(
+        "org1_subject",
+        self_subject_1["wallet_pub_key"],
+        self_subject_1["tessera_pub_key"],
+    )
+
+    # check the subjects are confirmed
+    poll_subject_confirmed(arch_1, subject_1["identity"])
+    poll_subject_confirmed(arch_2, subject_2["identity"])
+
+    return subject_1, subject_2
 
 
 class TestAccessPolicies(TestCase):
@@ -66,8 +115,17 @@ class TestAccessPolicies(TestCase):
         with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
             auth = fd.read().strip()
         self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+
+        with open(environ["TEST_AUTHTOKEN_FILENAME_2"], encoding="utf-8") as fd:
+            auth_2 = fd.read().strip()
+        self.arch_2 = Archivist(environ["TEST_ARCHIVIST"], auth_2, verify=False)
+
         self.props = deepcopy(PROPS)
         self.props["display_name"] = f"{DISPLAY_NAME} {uuid4()}"
+
+        # now get reciprocal subjects
+        self.subject_id = reciprocal_subjects(self.arch, self.arch_2)[0]
+        ACCESS_PERMISSIONS[0]["subjects"] = [self.subject_id["identity"]]
 
     def test_access_policies_create(self):
         """
