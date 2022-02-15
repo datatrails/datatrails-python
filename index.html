@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Jitsuin Archivist &mdash; Jitsuin Archivist 0.9.6 documentation</title>
+  <title>Jitsuin Archivist &mdash; Jitsuin Archivist 0.10.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.9.6
+                0.10.0
               </div>
             
           
@@ -94,7 +94,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runner.html">Runner Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
@@ -190,62 +192,240 @@ documented at <a class="reference external" href="https://docs.rkvst.com">https:
 <div class="section" id="example">
 <h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
 <p>One can then use the examples code to create assets (see examples directory):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
-<span class="kn">from</span> <span class="nn">archivist.errors</span> <span class="kn">import</span> <span class="n">ArchivistError</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an asset given url to Archivist and user Token.</span>
+
+<span class="sd">The module contains two functions: main and create_asset. Main function parses in</span>
+<span class="sd">a url to the Archivist and credentials, which is a user authorization.</span>
+<span class="sd">The main function would initialize an archivist connection using the url and</span>
+<span class="sd">the credentials, called &quot;arch&quot;, then call arch.assets.create() and the asset will be created.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+
+<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
 
-<span class="c1"># Oauth2 token that grants access</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
-    <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
-<span class="c1"># Initialize connection to Archivist - the URL for production will be different to this URL</span>
-<span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
-    <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
-    <span class="n">authtoken</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="k">def</span> <span class="nf">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create an asset using Archivist Connection.</span>
 
-<span class="c1"># Create a new asset</span>
-<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s display name in the user interface</span>
-    <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;display_description&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s description in the user interface</span>
-    <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;desplay_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
-                                         <span class="c1"># allowing the creator of</span>
-                                         <span class="c1"># an asset to specify the asset</span>
-                                         <span class="c1"># type or class. Be careful when setting this:</span>
-                                         <span class="c1"># assets are grouped by type and</span>
-                                         <span class="c1"># sharing policies can be</span>
-                                         <span class="c1"># configured to share assets based on</span>
-                                         <span class="c1"># their arc_display_type.</span>
-                                         <span class="c1"># So a mistake here can result in asset data being</span>
-                                         <span class="c1"># under- or over-shared.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        arch: archivist connection.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        newasset: a new asset created.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s display name in the user interface</span>
+        <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;display_description&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s description in the user interface</span>
+        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;desplay_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
+        <span class="c1"># allowing the creator of</span>
+        <span class="c1"># an asset to specify the asset</span>
+        <span class="c1"># type or class. Be careful when setting this:</span>
+        <span class="c1"># assets are grouped by type and</span>
+        <span class="c1"># sharing policies can be</span>
+        <span class="c1"># configured to share assets based on</span>
+        <span class="c1"># their arc_display_type.</span>
+        <span class="c1"># So a mistake here can result in asset data being</span>
+        <span class="c1"># under- or over-shared.</span>
         <span class="s2">&quot;some_custom_attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span>  <span class="c1"># You can add any custom value as long as</span>
-                                      <span class="c1"># it does not start with arc_</span>
-<span class="p">}</span>
-<span class="c1">#</span>
-<span class="c1"># store asset on the DLT or not. If DLT is not enabled for the user an error will occur if</span>
-<span class="c1"># ProofMechanism.KHIPU is specified. If unspecified then SIMPLE_HASH is used</span>
-<span class="c1"># i.e. not stored on the DLT...</span>
-<span class="c1"># proof_mechanism = ProofMechanism.KHIPU</span>
-<span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">KHIPU</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-<span class="p">}</span>
+        <span class="c1"># it does not start with arc_</span>
+    <span class="p">}</span>
+    <span class="c1">#</span>
+    <span class="c1"># Select the mechanism used to prove evidence for the asset.  If the selected proof</span>
+    <span class="c1"># mechanism is not enabled for your tenant then an error will occur.</span>
+    <span class="c1"># If unspecified then SIMPLE_HASH is used.</span>
+    <span class="c1"># proof_mechanism = ProofMechanism.KHIPU.name</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">SIMPLE_HASH</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+    <span class="p">}</span>
 
-<span class="c1"># The first argument is the properties of the asset</span>
-<span class="c1"># The second argument is the attributes of the asset</span>
-<span class="c1"># The third argument is wait for confirmation:</span>
-<span class="c1">#   If @confirm@ is True then this function will not</span>
-<span class="c1">#   return until the asset is confirmed on the blockchain and ready</span>
-<span class="c1">#   to accept events (or an error occurs)</span>
-<span class="c1">#   After an asset is submitted to the blockchain (submitted),</span>
-<span class="c1">#   it will be in the &quot;Pending&quot; status.</span>
-<span class="c1">#   Once it is added to the blockchain, the status will be changed to &quot;Confirmed&quot;</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">asset</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">except</span> <span class="n">Archivisterror</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
+    <span class="c1"># The first argument are the properties of the asset</span>
+    <span class="c1"># The second argument are the attributes of the asset</span>
+    <span class="c1"># The third argument is wait for confirmation:</span>
+    <span class="c1">#   If @confirm@ is True then this function will not</span>
+    <span class="c1">#   return until the asset is confirmed on the blockchain and ready</span>
+    <span class="c1">#   to accept events (or an error occurs)</span>
+    <span class="c1">#</span>
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># alternatively if some work can be done whilst the asset is confirmed then this call can be</span>
+    <span class="c1"># replaced by a two-step alternative:</span>
+
+    <span class="c1"># asset = arch.assets.create(props=props, attrs=attrs, confirm=False)</span>
+
+    <span class="c1"># ... do something else here</span>
+    <span class="c1"># and then wait for confirmation</span>
+
+    <span class="c1"># self.arch.assets.wait_for_confirmation(asset[&#39;identity&#39;]))</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Main function of create asset.</span>
+
+<span class="sd">    Parse in user input of url and client id/secrets and use them to</span>
+<span class="sd">    create an example archivist connection and create an asset.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># client id and client secret is obtained from the appidp endpoint - see the</span>
+    <span class="c1"># application registrations example code in examples/applications_registration.py</span>
+    <span class="c1">#</span>
+    <span class="c1"># client id is an environment variable. client_secret is stored in a file in a</span>
+    <span class="c1"># directory that has 0700 permissions. The location of this file is set in</span>
+    <span class="c1"># the client_secret_file environment variable.</span>
+    <span class="n">client_id</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_ID&quot;</span><span class="p">)</span>
+    <span class="n">client_secret_file</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET_FILE&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">client_secret_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
+        <span class="n">client_secret</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
+    <span class="c1"># of an asset or event creation - the default is 1200 seconds but one can optionally</span>
+    <span class="c1"># specify a different value here particularly when creating assets on SIMPLE_HASH</span>
+    <span class="c1"># (rather than KHIPU) as confirmation times are much shorter in this case.</span>
+    <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+        <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">),</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># Create a new asset</span>
+    <span class="n">asset</span> <span class="o">=</span> <span class="n">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="story-runner">
+<h1>Story Runner<a class="headerlink" href="#story-runner" title="Permalink to this headline">¶</a></h1>
+<p>One can run scenarios - a sequence of steps - from a python dictionary or from a yaml
+file.</p>
+<div class="section" id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">exit</span> <span class="k">as</span> <span class="n">sys_exit</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span> <span class="k">as</span> <span class="n">sys_stdout</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">about</span>
+<span class="kn">from</span> <span class="nn">...parser</span> <span class="kn">import</span> <span class="n">common_parser</span><span class="p">,</span> <span class="n">endpoint</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">arch</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using version </span><span class="si">%s</span><span class="s2"> of jitsuin-archivist&quot;</span><span class="p">,</span> <span class="n">about</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Namespace </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">yamlfile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">arch</span><span class="o">.</span><span class="n">runner</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">))</span>
+
+    <span class="n">sys_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">common_parser</span><span class="p">(</span><span class="s2">&quot;Executes the archivist runner from a yaml file&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;yamlfile&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the yaml file describing the steps to conduct&quot;</span>
+    <span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">arch</span> <span class="o">=</span> <span class="n">endpoint</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="n">run</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">(</span><span class="n">sys_stdout</span><span class="p">)</span>
+    <span class="n">sys_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line">
+<h2>Command Line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h2>
+<p>This functionality is also available from the command line:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ archivist_runner -h
+</pre></div>
+</div>
+<p>to elucidate options.</p>
+<p>To invoke this command:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>obtain bearer token and put in file ‘credentials/token’</p></li>
+<li><p>choose which yaml file to use</p></li>
+<li><p>get the URL of your Archivist instance</p></li>
+</ul>
+</div></blockquote>
+<p>Execute:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ archivist_runner <span class="se">\</span>
+      -u https://app.rkvst.io <span class="se">\</span>
+      -t credentials/token <span class="se">\</span>
+      functests/test_resources/richness_story.yaml
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-yaml-snippet">
+<h2>Example Yaml Snippet<a class="headerlink" href="#example-yaml-snippet" title="Permalink to this headline">¶</a></h2>
+<p>This is an example of creating an asset and creating an event for that asset. The
+yaml file consiste of a list of steps.</p>
+<p>Each step consists of control parameters (specified in the ‘step’ dictionary) and
+the yaml representation of the request body for an asset or event.</p>
+<p>The confirm: field is a control variable for the PythonSDK that ensures that the
+asset or event is confirmed before returning.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The name of the asset is important. The value of the name is carried forward for
+every operation - in this case the name of the asset is ‘radiation bag 1’.</p>
+<p>Arguments to the archivist are ususally strings - in this example radioactive is
+‘true’ which archivist will treat as a boolesn.</p>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># Demonstration of applying a Richness compliance policy to an asset that undergoes</span>
+<span class="c1"># events that may or may not make the asset compliant or non-compliant.</span>
+<span class="c1">#</span>
+<span class="c1"># The operation field is a string that represents the method bound to an endpoint and</span>
+<span class="c1"># the args and kwargs correspond to the arguments to such a method.</span>
+<span class="c1">#</span>
+<span class="c1"># NB the assets and events endpoints require all values to be strings. Other values may</span>
+<span class="c1"># be of the correct type such as confirm which is a boolean.</span>
+<span class="c1">#</span>
+<span class="nt">steps</span><span class="p">:</span>
+
+  <span class="c1"># note the values to the assets.create method are string representations of boolean</span>
+  <span class="c1"># and numbers</span>
+  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
+      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create an empty radiation bag with id 1.</span>
+    <span class="nt">behaviours</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
+    <span class="nt">attributes</span><span class="p">:</span>
+      <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
+      <span class="nt">radioactive</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
+      <span class="nt">radiation_level</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
+      <span class="nt">weight</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
+    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+
+  <span class="c1"># setup the radiation bags to have a varing amount of radiactive waste</span>
+  <span class="c1"># note the values to the events.create method are string representations of boolean</span>
+  <span class="c1"># and numbers</span>
+  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
+      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event adding 3 rads of radiation to bag 1, increasing its weight by 1kg.</span>
+      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
+    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
+    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
+    <span class="nt">event_attributes</span><span class="p">:</span>
+      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">add waste to bag</span>
+      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">see attached conformance report</span>
+      <span class="nt">conformance_report</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273</span>
+    <span class="nt">asset_attributes</span><span class="p">:</span>
+      <span class="nt">radiation_level</span><span class="p">:</span> <span class="s">&quot;3&quot;</span>
+      <span class="nt">weight</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
+    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="logging">

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.errors &mdash; Jitsuin Archivist 0.9.6 documentation</title>
+  <title>archivist.errors &mdash; Jitsuin Archivist 0.10.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.9.6
+                0.10.0
               </div>
             
           
@@ -93,7 +93,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runner/index.html">Story Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runner.html">Runner Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
@@ -178,13 +180,13 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">HEADERS_RETRY_AFTER</span>
 <span class="kn">from</span> <span class="nn">.headers</span> <span class="kn">import</span> <span class="n">_headers_get</span>
 
-<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ArchivistError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -207,8 +209,8 @@
     <span class="sd">&quot;&quot;&quot;Sbom failed to be withdrawn after fixed timeout&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="ArchivistIllegalArgumentError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistIllegalArgumentError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistIllegalArgumentError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Optional keyword arguments are inconsistent&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="ArchivistInvalidOperationError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistInvalidOperationError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistInvalidOperationError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Runner Operation is invalid&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistBadRequestError"><a class="viewcode-back" href="../../errors.html#archivist.errors.ArchivistBadRequestError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistBadRequestError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.assets &mdash; Jitsuin Archivist 0.9.6 documentation</title>
+  <title>archivist.assets &mdash; Jitsuin Archivist 0.10.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.9.6
+                0.10.0
               </div>
             
           
@@ -93,7 +93,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runner/index.html">Story Runner</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runner.html">Runner Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
@@ -194,11 +196,9 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-
-<span class="kn">from</span> <span class="nn">archivist.type_aliases</span> <span class="kn">import</span> <span class="n">NoneOnError</span>
 
 <span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
@@ -213,6 +213,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">confirmer</span>
 <span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">ArchivistNotFoundError</span>
+<span class="kn">from</span> <span class="nn">.type_aliases</span> <span class="kn">import</span> <span class="n">NoneOnError</span>
 
 <span class="c1"># These are now hardcoded and not user-selectable. Eventually they will be removed from</span>
 <span class="c1"># the backend API and removed from this package.</span>
@@ -221,7 +222,7 @@
     <span class="s2">&quot;RecordEvidence&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Asset"><a class="viewcode-back" href="../../assets.html#archivist.assets.Asset">[docs]</a><span class="k">class</span> <span class="nc">Asset</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
@@ -261,17 +262,13 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoneOnError</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;str: name of the asset&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_display_name&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
             <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">name</span>
 
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-
-<span class="n">FIXTURE_LABEL</span> <span class="o">=</span> <span class="s2">&quot;assets&quot;</span>
+        <span class="k">return</span> <span class="n">name</span></div>
 
 
 <div class="viewcode-block" id="_AssetsClient"><a class="viewcode-back" href="../../assets.html#archivist.assets._AssetsClient">[docs]</a><span class="k">class</span> <span class="nc">_AssetsClient</span><span class="p">:</span>
@@ -378,7 +375,7 @@
         <span class="k">if</span> <span class="n">attrs</span><span class="p">:</span>
             <span class="n">query</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attrs</span>
 
-        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">FIXTURE_LABEL</span><span class="p">),</span> <span class="n">query</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ASSETS_LABEL</span><span class="p">),</span> <span class="n">query</span><span class="p">)</span>
 
 <div class="viewcode-block" id="_AssetsClient.count"><a class="viewcode-back" href="../../assets.html#archivist.assets._AssetsClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
