@@ -2,7 +2,6 @@
 Test applications
 """
 
-import json
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -47,7 +46,7 @@ REQUEST = {
     "display_name": DISPLAY_NAME,
     "custom_claims": CUSTOM_CLAIMS,
 }
-UPDATE_DATA = json.dumps({"display_name": DISPLAY_NAME})
+UPDATE_DATA = {"display_name": DISPLAY_NAME}
 
 
 class TestApplications(TestCase):
@@ -87,13 +86,11 @@ class TestApplications(TestCase):
                 (f"url/{ROOT}/{SUBPATH}",),
                 msg="CREATE method args called incorrectly",
             )
-            kwargs["data"] = json.loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": REQUEST,
+                    "json": REQUEST,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -120,7 +117,6 @@ class TestApplications(TestCase):
                     ((f"url/{ROOT}/{APPLICATIONS_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
@@ -144,7 +140,6 @@ class TestApplications(TestCase):
                     ((f"url/{ROOT}/{APPLICATIONS_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
@@ -169,9 +164,8 @@ class TestApplications(TestCase):
                 (
                     ((f"url/{ROOT}/{APPLICATIONS_SUBPATH}/{IDENTITY}"),),
                     {
-                        "data": UPDATE_DATA,
+                        "json": UPDATE_DATA,
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
@@ -221,9 +215,9 @@ class TestApplications(TestCase):
                         (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {},
                             "verify": True,
                         },
                     ),
@@ -263,16 +257,13 @@ class TestApplications(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (
-                            (
-                                f"url/{ROOT}/{SUBPATH}"
-                                "?display_name=Application display name"
-                            ),
-                        ),
+                        ((f"url/{ROOT}/{SUBPATH}"),),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
+                            },
+                            "params": {
+                                "display_name": "Application display name",
                             },
                             "verify": True,
                         },
@@ -299,10 +290,9 @@ class TestApplications(TestCase):
                     ),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
-                        "data": None,
+                        "json": None,
                         "verify": True,
                     },
                 ),

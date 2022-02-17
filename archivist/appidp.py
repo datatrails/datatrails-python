@@ -79,6 +79,6 @@ class _AppIDPClient:
                     "client_id": client_id,
                     "client_secret": client_secret,
                 },
-                noheaders=True,
+                data=True,
             )
         )

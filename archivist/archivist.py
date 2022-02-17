@@ -31,9 +31,6 @@
 """
 
 from logging import getLogger
-
-import json
-
 from collections import deque
 from copy import deepcopy
 from time import time
@@ -50,7 +47,7 @@ from .constants import (
     SEP,
     VERBSEP,
 )
-from .dictmerge import _deepmerge, _dotstring
+from .dictmerge import _deepmerge, _dotdict
 from .errors import (
     _parse_response,
     ArchivistBadFieldError,
@@ -122,7 +119,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         max_time: int = MAX_TIME,
     ):
 
-        self._headers = {"content-type": "application/json"}
         if isinstance(auth, tuple):
             self._auth = None
             self._client_id = auth[0]
@@ -169,11 +165,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return c
 
     @property
-    def headers(self) -> Dict:
-        """dict: Headers REST headers from response"""
-        return self._headers
-
-    @property
     def url(self) -> str:
         """str: URL of Archivist endpoint"""
         return self._url
@@ -195,7 +186,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             apptoken = self.appidp.token(self._client_id, self._client_secret)  # type: ignore
             self._auth = apptoken["access_token"]
             self._expires_at = time() + apptoken["expires_in"] - 10  # fudge factor
-            LOGGER.debug("Refresh token")
+            LOGGER.info("Refresh token")
 
         return self._auth  # type: ignore
 
@@ -220,9 +211,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
     def __add_headers(self, headers: Optional[Dict]) -> Dict:
         if headers is not None:
-            newheaders = {**self.headers, **headers}
+            newheaders = {**headers}
         else:
-            newheaders = self.headers
+            newheaders = {}
 
         auth = self.auth  # this may trigger a refetch so only do it once here
         # for appidp endpoint there may not be an authtoken
@@ -249,7 +240,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             tail (str): endpoint tail e.g. metadata
                         adds extra selector to tail of the endpoint
             headers (dict): optional REST headers
-            params (dict): optional query strings
+            params (dict): optional params strings
 
         Returns:
             dict representing the response body (entity).
@@ -259,7 +250,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             SEP.join([f for f in (self.url, ROOT, subpath, identity, tail) if f]),
             headers=self.__add_headers(headers),
             verify=self.verify,
-            params=params,
+            params=_dotdict(params),
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -278,7 +269,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         fd: BinaryIO,
         *,
         headers: Optional[Dict] = None,
-        query: Optional[Dict] = None,
+        params: Optional[Dict] = None,
     ) -> Response:
         """GET method (REST) - chunked
 
@@ -290,21 +281,18 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             fd (file): an iterable representing a file (usually from open())
                 the file must be opened in binary mode
             headers (dict): optional REST headers
-            query (dict): optional query strings
+            params (dict): optional params strings
 
         Returns:
             REST response (not the response body)
 
         """
-        qry = self.__query(query)
-        if qry:
-            identity = "?".join((identity, qry))
-
         response = self._session.get(
             SEP.join((self.url, ROOT, subpath, identity)),
             headers=self.__add_headers(headers),
             verify=self.verify,
             stream=True,
+            params=_dotdict(params),
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -327,7 +315,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         *,
         headers: Optional[Dict] = None,
         verb: Optional[str] = None,
-        noheaders: bool = False,
+        data: Optional[bool] = False,
     ) -> Dict:
         """POST method (REST)
 
@@ -338,26 +326,27 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             request (dict): request body defining the entity
             headers (dict): optional REST headers
             verb (str): optional REST verb
-            noheaders (bool): do not add headers and do not jsnify data
+            data (bool): send as form-encoded and not as json
 
         Returns:
             dict representing the response body (entity).
 
         """
         url = SEP.join((self.url, ROOT, VERBSEP.join([f for f in (path, verb) if f])))
-        LOGGER.debug("POST URL %s", url)
-        if noheaders:
-            data = request
-        else:
-            headers = self.__add_headers(headers)
-            data = json.dumps(request) if request else None
 
-        response = self._session.post(
-            url,
-            data=data,
-            headers=headers,
-            verify=self.verify,
-        )
+        if data:
+            response = self._session.post(
+                url,
+                data=request,
+                verify=self.verify,
+            )
+        else:
+            response = self._session.post(
+                url,
+                json=request,
+                headers=self.__add_headers(headers),
+                verify=self.verify,
+            )
 
         error = _parse_response(response)
         if error is not None:
@@ -398,15 +387,13 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         headers = {
             "content-type": multipart.content_type,
         }
-        if params:
-            qry = "&".join(sorted(f"{k}={v}" for k, v in _dotstring(params)))
-            path = "?".join((path, qry))
 
         response = self._session.post(
             SEP.join((self.url, ROOT, path)),
             data=multipart,  # type: ignore    https://github.com/requests/toolbelt/issues/312
             headers=self.__add_headers(headers),
             verify=self.verify,
+            params=_dotdict(params),
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -474,7 +461,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         response = self._session.patch(
             SEP.join((self.url, ROOT, subpath, identity)),
-            data=json.dumps(request),
+            json=request,
             headers=self.__add_headers(headers),
             verify=self.verify,
         )
@@ -488,14 +475,25 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return response.json()
 
     @retry_429
-    def __list(self, path, args, *, headers=None) -> Response:
-        if args:
-            path = "?".join((path, args))
+    def __list(
+        self,
+        path,
+        params: Optional[Dict],
+        *,
+        page_size: Optional[int] = None,
+        headers: Optional[Dict] = None,
+    ) -> Response:
+        if page_size is not None:
+            if params is not None:
+                params["page_size"] = page_size
+            else:
+                params = {"page_size": page_size}
 
         response = self._session.get(
             SEP.join((self.url, ROOT, path)),
             headers=self.__add_headers(headers),
             verify=self.verify,
+            params=_dotdict(params),
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -519,24 +517,20 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return list(self._response_ring_buffer)[:responses]
 
-    @staticmethod
-    def __query(query: Optional[Dict]):
-        return query and "&".join(sorted(f"{k}={v}" for k, v in _dotstring(query)))
-
     def get_by_signature(
-        self, path: str, field: str, query: Dict, *, headers: Optional[Dict] = None
+        self, path: str, field: str, params: Dict, *, headers: Optional[Dict] = None
     ) -> Dict:
-        """GET method (REST) with query string
+        """GET method (REST) with params string
 
         Reads an entity indirectly by searching for its signature
 
-        It is expected that the query parameters will result in only a single entity
+        It is expected that the params parameters will result in only a single entity
         being found.
 
         Args:
             path (str): e.g. v2/assets
             field (str): name of collection of entities e.g assets
-            query (dict): selector e.g. {"attributes": {"arc_display_name":"container no. 1"}}
+            params (dict): selector e.g. {"attributes": {"arc_display_name":"container no. 1"}}
             headers (dict): optional REST headers
 
         Returns:
@@ -549,12 +543,10 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         """
 
-        paging = "page_size=2"
-        qry = self.__query(query)
-
         response = self.__list(
             path,
-            "&".join((a for a in (paging, qry) if a)),  # type: ignore
+            params,
+            page_size=2,
             headers=headers,
         )
 
@@ -573,14 +565,14 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         return records[0]
 
-    def count(self, path: str, *, query: Optional[Dict] = None) -> int:
-        """GET method (REST) with query string
+    def count(self, path: str, *, params: Optional[Dict] = None) -> int:
+        """GET method (REST) with params string
 
-        Returns the count of objects that match query
+        Returns the count of objects that match params
 
         Args:
             path (str): e.g. v2/assets
-            query (dict): selector e.g. {"attributes":{"arc_display_name":"container no. 1"}}
+            params (dict): selector e.g. {"attributes":{"arc_display_name":"container no. 1"}}
 
         Returns:
             integer count of entities found.
@@ -590,14 +582,11 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         """
 
-        paging = "page_size=1"
-        qry = self.__query(query)
-        headers = {HEADERS_REQUEST_TOTAL_COUNT: "true"}
-
         response = self.__list(
             path,
-            "&".join((a for a in (paging, qry) if a)),  # type: ignore
-            headers=headers,
+            params,
+            page_size=1,
+            headers={HEADERS_REQUEST_TOTAL_COUNT: "true"},
         )
 
         count = _headers_get(response.headers, HEADERS_TOTAL_COUNT)  # type: ignore
@@ -613,12 +602,12 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         field: str,
         *,
         page_size: Optional[int] = None,
-        query: Optional[Dict] = None,
+        params: Optional[Dict] = None,
         headers: Optional[Dict] = None,
     ):
-        """GET method (REST) with query string
+        """GET method (REST) with params string
 
-        Lists entities that match the query dictionary.
+        Lists entities that match the params dictionary.
 
         If page size is specified return the list of records in batches of page_size
         until next_page_token in response is null.
@@ -630,7 +619,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             path (str): e.g. v2/assets
             field (str): name of collection of entities e.g assets
             page_size (int): optional number of items per request e.g. 500
-            query (dict): selector e.g. {"confirmation_status": "CONFIRMED", }
+            params (dict): selector e.g. {"confirmation_status": "CONFIRMED", }
             headers (dict): optional REST headers
 
         Returns:
@@ -641,13 +630,11 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
 
         """
 
-        paging = page_size and f"page_size={page_size}"
-        qry = self.__query(query)
-
         while True:
             response = self.__list(
                 path,
-                "&".join((a for a in (paging, qry) if a)),  # type: ignore
+                params,
+                page_size=page_size,
                 headers=headers,
             )
             data = response.json()
@@ -660,8 +647,8 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             for record in records:
                 yield record
 
-            token = data.get("next_page_token")
-            if not token:
+            page_token = data.get("next_page_token")
+            if not page_token:
                 break
 
-            paging = f"page_token={token}"
+            params = {"page_token": page_token}

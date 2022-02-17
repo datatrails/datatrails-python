@@ -2,7 +2,6 @@
 Test archivist
 """
 
-from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -257,13 +256,11 @@ class TestEvents(TestCase):
                 ),
                 msg="CREATE method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": REQUEST,
+                    "json": REQUEST,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -302,13 +299,11 @@ class TestEvents(TestCase):
                 ),
                 msg="CREATE method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": REQUEST_WITH_ASSET_ATTRS,
+                    "json": REQUEST_WITH_ASSET_ATTRS,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -452,7 +447,6 @@ class TestEvents(TestCase):
                     ),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
@@ -508,22 +502,21 @@ class TestEvents(TestCase):
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
                             f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                             f"/{EVENTS_LABEL}"
-                            "?page_size=1"
                         ),
                     ),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
+                        "params": {"page_size": 1},
                         "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    def test_events_count_with_props_query(self):
+    def test_events_count_with_props_params(self):
         """
         Test event counting
         """
@@ -550,23 +543,21 @@ class TestEvents(TestCase):
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
                             f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                             f"/{EVENTS_LABEL}"
-                            "?page_size=1"
-                            "&confirmation_status=CONFIRMED"
                         ),
                     ),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
+                        "params": {"page_size": 1, "confirmation_status": "CONFIRMED"},
                         "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    def test_events_count_with_attrs_query(self):
+    def test_events_count_with_attrs_params(self):
         """
         Test event counting
         """
@@ -591,15 +582,16 @@ class TestEvents(TestCase):
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
                             f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                             f"/{EVENTS_LABEL}"
-                            "?page_size=1"
-                            "&event_attributes.arc_firmware_version=1.0"
                         ),
                     ),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                        },
+                        "params": {
+                            "page_size": 1,
+                            "event_attributes.arc_firmware_version": "1.0",
                         },
                         "verify": True,
                     },
@@ -631,15 +623,16 @@ class TestEvents(TestCase):
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
                             f"/{ASSETS_WILDCARD}"
                             f"/{EVENTS_LABEL}"
-                            "?page_size=1"
-                            "&event_attributes.arc_firmware_version=1.0"
                         ),
                     ),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                        },
+                        "params": {
+                            "page_size": 1,
+                            "event_attributes.arc_firmware_version": "1.0",
                         },
                         "verify": True,
                     },
@@ -652,7 +645,11 @@ class TestEvents(TestCase):
         Test event counting
         """
         ## last call to get looks for FAILED assets
-        status = ("", "&confirmation_status=PENDING", "&confirmation_status=FAILED")
+        status = (
+            {"page_size": 1},
+            {"page_size": 1, "confirmation_status": "PENDING"},
+            {"page_size": 1, "confirmation_status": "FAILED"},
+        )
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
@@ -684,16 +681,14 @@ class TestEvents(TestCase):
                                 f"url/{ROOT}/{ASSETS_SUBPATH}"
                                 f"/{ASSETS_WILDCARD}"
                                 f"/{EVENTS_LABEL}"
-                                "?page_size=1"
-                                f"{status[i]}"
                             ),
                         ),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                                 HEADERS_REQUEST_TOTAL_COUNT: "true",
                             },
+                            "params": status[i],
                             "verify": True,
                         },
                     ),
@@ -756,16 +751,16 @@ class TestEvents(TestCase):
                         ),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {},
                             "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
                 )
 
-    def test_events_list_with_query(self):
+    def test_events_list_with_params(self):
         """
         Test event listing
         """
@@ -807,14 +802,15 @@ class TestEvents(TestCase):
                                 f"url/{ROOT}/{ASSETS_SUBPATH}"
                                 f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                                 f"/{EVENTS_LABEL}"
-                                "?confirmation_status=CONFIRMED"
-                                "&event_attributes.arc_firmware_version=1.0"
                             ),
                         ),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
+                            },
+                            "params": {
+                                "confirmation_status": "CONFIRMED",
+                                "event_attributes.arc_firmware_version": "1.0",
                             },
                             "verify": True,
                         },
@@ -863,14 +859,15 @@ class TestEvents(TestCase):
                                 f"url/{ROOT}/{ASSETS_SUBPATH}"
                                 f"/{ASSETS_WILDCARD}"
                                 f"/{EVENTS_LABEL}"
-                                "?confirmation_status=CONFIRMED"
-                                "&event_attributes.arc_firmware_version=1.0"
                             ),
                         ),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
+                            },
+                            "params": {
+                                "confirmation_status": "CONFIRMED",
+                                "event_attributes.arc_firmware_version": "1.0",
                             },
                             "verify": True,
                         },
@@ -905,14 +902,13 @@ class TestEvents(TestCase):
                             f"url/{ROOT}/{ASSETS_SUBPATH}"
                             f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
                             f"/{EVENTS_LABEL}"
-                            f"?page_size=2"
                         ),
                     ),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
+                        "params": {"page_size": 2},
                         "verify": True,
                     },
                 ),

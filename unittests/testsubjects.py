@@ -2,7 +2,6 @@
 Test subjects
 """
 
-from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -89,13 +88,11 @@ class TestSubjects(TestCase):
                 (f"url/{ROOT}/{SUBPATH}",),
                 msg="CREATE method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": REQUEST,
+                    "json": REQUEST,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -122,7 +119,6 @@ class TestSubjects(TestCase):
                     ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
@@ -146,7 +142,6 @@ class TestSubjects(TestCase):
                     ((f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
@@ -172,13 +167,11 @@ class TestSubjects(TestCase):
                 (f"url/{ROOT}/{SUBJECTS_SUBPATH}/{IDENTITY}",),
                 msg="PATCH method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": UPDATE,
+                    "json": UPDATE,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -212,13 +205,13 @@ class TestSubjects(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    ((f"url/{ROOT}/{SUBPATH}" "?page_size=1"),),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
+                        "params": {"page_size": 1},
                         "verify": True,
                     },
                 ),
@@ -249,18 +242,15 @@ class TestSubjects(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (
-                        (
-                            f"url/{ROOT}/{SUBPATH}"
-                            "?page_size=1"
-                            "&display_name=Subject display name"
-                        ),
-                    ),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                        },
+                        "params": {
+                            "page_size": 1,
+                            "display_name": "Subject display name",
                         },
                         "verify": True,
                     },
@@ -300,9 +290,9 @@ class TestSubjects(TestCase):
                         (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {},
                             "verify": True,
                         },
                     ),
@@ -342,17 +332,12 @@ class TestSubjects(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (
-                            (
-                                f"url/{ROOT}/{SUBPATH}"
-                                "?display_name=Subject display name"
-                            ),
-                        ),
+                        ((f"url/{ROOT}/{SUBPATH}"),),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {"display_name": "Subject display name"},
                             "verify": True,
                         },
                     ),

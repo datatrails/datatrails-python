@@ -145,7 +145,7 @@ class _EventsClient:
         LOGGER.debug("Create Event %s/%s", asset_id, props)
         return self.create_from_data(
             asset_id,
-            self.__query(props, attrs, asset_attrs),
+            self.__params(props, attrs, asset_attrs),
             confirm=confirm,
         )
 
@@ -210,16 +210,16 @@ class _EventsClient:
             )
         )
 
-    def __query(
+    def __params(
         self, props: Optional[Dict], attrs: Optional[Dict], asset_attrs: Optional[Dict]
     ) -> Dict:
-        query = deepcopy(props) if props else {}
+        params = deepcopy(props) if props else {}
         if attrs:
-            query["event_attributes"] = attrs
+            params["event_attributes"] = attrs
         if asset_attrs:
-            query["asset_attributes"] = asset_attrs
+            params["asset_attributes"] = asset_attrs
 
-        return _deepmerge(self._archivist.fixtures.get(EVENTS_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(EVENTS_LABEL), params)
 
     def count(
         self,
@@ -246,7 +246,7 @@ class _EventsClient:
 
         return self._archivist.count(
             SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
-            query=self.__query(props, attrs, asset_attrs),
+            params=self.__params(props, attrs, asset_attrs),
         )
 
     def wait_for_confirmed(
@@ -318,7 +318,7 @@ class _EventsClient:
                 SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
                 EVENTS_LABEL,
                 page_size=page_size,
-                query=self.__query(props, attrs, asset_attrs),
+                params=self.__params(props, attrs, asset_attrs),
             )
         )
 
@@ -348,6 +348,6 @@ class _EventsClient:
             **self._archivist.get_by_signature(
                 SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
                 EVENTS_LABEL,
-                query=self.__query(props, attrs, asset_attrs),
+                params=self.__params(props, attrs, asset_attrs),
             )
         )
