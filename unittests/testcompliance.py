@@ -96,7 +96,6 @@ class TestCompliance(TestCase):
                         (f"url/{ROOT}/{SUBPATH}/{ASSET_ID}",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,

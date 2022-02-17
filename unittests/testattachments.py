@@ -110,63 +110,9 @@ class TestAttachments(TestCase):
                 msg="UPLOAD method called incorrectly",
             )
 
-    def test_attachments_download(self):
+    def common_attachments_download(self, input_params, expected_params):
         """
         Test attachment download
-        """
-
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-
-            def iter_content():
-                i = 0
-
-                def filedata(chunk_size=4096):  # pylint: disable=unused-argument
-                    nonlocal i
-                    while i < 4:
-                        i += 1
-
-                        if i == 2:
-                            yield None
-
-                        yield b"chunkofbytes"
-
-                return filedata
-
-            mock_get.return_value = MockResponse(
-                200,
-                iter_content=iter_content(),
-                **RESPONSE,
-            )
-            with BytesIO() as fd:
-                attachment = self.arch.attachments.download(IDENTITY, fd)
-                args, kwargs = mock_get.call_args
-                self.assertEqual(
-                    args,
-                    (f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}",),
-                    msg="DOWNLOAD method called incorrectly",
-                )
-                self.assertEqual(
-                    kwargs,
-                    {
-                        "headers": {
-                            "authorization": "Bearer authauthauth",
-                            "content-type": "application/json",
-                        },
-                        "stream": True,
-                        "verify": True,
-                    },
-                    msg="DOWNLOAD method called incorrectly",
-                )
-                self.assertEqual(
-                    attachment,
-                    RESPONSE,
-                    msg="DOWNLOAD method called incorrectly",
-                )
-
-    def test_attachments_download_with_query(self):
-        """
-        Test attachment download - usually both allow_insecure and
-        strict are not required at the same time.
         """
 
         with mock.patch.object(self.arch._session, "get") as mock_get:
@@ -195,15 +141,12 @@ class TestAttachments(TestCase):
                 attachment = self.arch.attachments.download(
                     IDENTITY,
                     fd,
-                    query={"allow_insecure": "true", "strict": "true"},
+                    params=input_params,
                 )
                 args, kwargs = mock_get.call_args
                 self.assertEqual(
                     args,
-                    (
-                        f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}"
-                        "?allow_insecure=true&strict=true",
-                    ),
+                    (f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}",),
                     msg="DOWNLOAD method called incorrectly",
                 )
                 self.assertEqual(
@@ -211,8 +154,8 @@ class TestAttachments(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
-                            "content-type": "application/json",
                         },
+                        "params": expected_params,
                         "stream": True,
                         "verify": True,
                     },
@@ -223,3 +166,30 @@ class TestAttachments(TestCase):
                     RESPONSE,
                     msg="DOWNLOAD method called incorrectly",
                 )
+
+    def test_attachments_download(self):
+        """
+        Test attachment download
+        """
+
+        self.common_attachments_download(None, {})
+
+    def test_attachments_download_with_allow_insecure(self):
+        """
+        Test attachment download with allow_insecure
+        """
+
+        self.common_attachments_download(
+            {"allow_insecure": "true"},
+            {"allow_insecure": "true"},
+        )
+
+    def test_attachments_download_with_strict(self):
+        """
+        Test attachment download with strict
+        """
+
+        self.common_attachments_download(
+            {"strict": "true"},
+            {"strict": "true"},
+        )

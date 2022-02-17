@@ -137,7 +137,7 @@ class _AssetsClient:
         # default behaviours  are added first - any set in user-specified fixtures or
         # in the method args will overide...
         newprops = _deepmerge({"behaviours": BEHAVIOURS}, props)
-        data = self.__query(newprops, attrs)
+        data = self.__params(newprops, attrs)
         return self.create_from_data(data, confirm=confirm)
 
     def create_from_data(self, data: Dict, *, confirm: bool = False) -> Asset:
@@ -195,12 +195,12 @@ class _AssetsClient:
         """
         return Asset(**self._archivist.get(ASSETS_SUBPATH, identity))
 
-    def __query(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
-        query = deepcopy(props) if props else {}
+    def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
+        params = deepcopy(props) if props else {}
         if attrs:
-            query["attributes"] = attrs
+            params["attributes"] = attrs
 
-        return _deepmerge(self._archivist.fixtures.get(ASSETS_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(ASSETS_LABEL), params)
 
     def count(
         self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
@@ -218,7 +218,7 @@ class _AssetsClient:
 
         """
         return self._archivist.count(
-            f"{ASSETS_SUBPATH}/{ASSETS_LABEL}", query=self.__query(props, attrs)
+            f"{ASSETS_SUBPATH}/{ASSETS_LABEL}", params=self.__params(props, attrs)
         )
 
     def wait_for_confirmed(
@@ -275,7 +275,7 @@ class _AssetsClient:
                 f"{ASSETS_SUBPATH}/{ASSETS_LABEL}",
                 ASSETS_LABEL,
                 page_size=page_size,
-                query=self.__query(props, attrs),
+                params=self.__params(props, attrs),
             )
         )
 
@@ -298,6 +298,6 @@ class _AssetsClient:
             **self._archivist.get_by_signature(
                 f"{ASSETS_SUBPATH}/{ASSETS_LABEL}",
                 ASSETS_LABEL,
-                query=self.__query(props, attrs),
+                params=self.__params(props, attrs),
             )
         )

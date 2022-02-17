@@ -3,7 +3,6 @@ Test archivist
 """
 
 from io import BytesIO
-from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -49,13 +48,11 @@ class TestArchivistPost(TestArchivistMethods):
                 (f"url/{ROOT}/path/path",),
                 msg="POST method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": request,
+                    "json": request,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -129,13 +126,11 @@ class TestArchivistPost(TestArchivistMethods):
                 (f"url/{ROOT}/path/path",),
                 msg="POST method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": request,
+                    "json": request,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -161,13 +156,11 @@ class TestArchivistPost(TestArchivistMethods):
                 (f"url/{ROOT}/path/path",),
                 msg="POST method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": request,
+                    "json": request,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
                     },
@@ -200,7 +193,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 len(kwargs),
-                3,
+                4,
                 msg="Incorrect number of keyword arguments",
             )
             headers = kwargs.get("headers")
@@ -259,12 +252,12 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 args[0],
-                f"url/{ROOT}/path/path?field1=value1&field2=value2",
+                f"url/{ROOT}/path/path",
                 msg="Incorrect first argument",
             )
             self.assertEqual(
                 len(kwargs),
-                3,
+                4,
                 msg="Incorrect number of keyword arguments",
             )
             headers = kwargs.get("headers")
@@ -392,7 +385,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 len(kwargs),
-                3,
+                4,
                 msg="Incorrect number of keyword arguments",
             )
             headers = kwargs.get("headers")
@@ -454,14 +447,11 @@ class TestArchivistPostWithoutAuth(TestCase):
                 (f"url/{ROOT}/path/path",),
                 msg="POST method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": request,
-                    "headers": {
-                        "content-type": "application/json",
-                    },
+                    "json": request,
+                    "headers": {},
                     "verify": True,
                 },
                 msg="POST method kwargs called incorrectly",

@@ -70,7 +70,7 @@ class TestAttachmentstCreate(TestCase):
 
         with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(
-                file_uuid, fd, query={"allow_insecure": "true"}
+                file_uuid, fd, params={"allow_insecure": "true"}
             )
 
         # Check the downloaded file is identical to the one that was uploaded
@@ -91,5 +91,5 @@ class TestAttachmentstCreate(TestCase):
         with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             with self.assertRaises(ArchivistBadRequestError):
                 attachment = self.arch.attachments.download(
-                    file_uuid, fd, query={"strict": "true"}
+                    file_uuid, fd, params={"strict": "true"}
                 )

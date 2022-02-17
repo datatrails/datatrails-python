@@ -77,7 +77,6 @@ class TestAppIDP(TestCase):
                 kwargs,
                 {
                     "data": REQUEST,
-                    "headers": None,
                     "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",

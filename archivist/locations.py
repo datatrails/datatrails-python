@@ -75,7 +75,7 @@ class _LocationsClient:
 
         """
         LOGGER.debug("Create Location %s", props)
-        return self.create_from_data(self.__query(props, attrs))
+        return self.create_from_data(self.__params(props, attrs))
 
     def create_from_data(self, data: Dict) -> Location:
         """Create location
@@ -116,12 +116,12 @@ class _LocationsClient:
             )
         )
 
-    def __query(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
-        query = props or {}
+    def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
+        params = props or {}
         if attrs:
-            query["attributes"] = attrs
+            params["attributes"] = attrs
 
-        return _deepmerge(self._archivist.fixtures.get(LOCATIONS_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(LOCATIONS_LABEL), params)
 
     def count(
         self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
@@ -139,7 +139,7 @@ class _LocationsClient:
 
         """
         return self._archivist.count(
-            f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}", query=self.__query(props, attrs)
+            f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}", params=self.__params(props, attrs)
         )
 
     def list(
@@ -169,7 +169,7 @@ class _LocationsClient:
                 f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}",
                 LOCATIONS_LABEL,
                 page_size=page_size,
-                query=self.__query(props, attrs),
+                params=self.__params(props, attrs),
             )
         )
 
@@ -192,6 +192,6 @@ class _LocationsClient:
             **self._archivist.get_by_signature(
                 f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}",
                 LOCATIONS_LABEL,
-                query=self.__query(props, attrs),
+                params=self.__params(props, attrs),
             )
         )

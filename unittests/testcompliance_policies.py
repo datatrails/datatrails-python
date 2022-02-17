@@ -2,7 +2,6 @@
 Test compliance policies
 """
 
-from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -116,13 +115,11 @@ class TestCompliancePolicies(TestCase):
                 (f"url/{ROOT}/{SUBPATH}",),
                 msg="CREATE method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": SINCE_REQUEST,
+                    "json": SINCE_REQUEST,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -149,7 +146,6 @@ class TestCompliancePolicies(TestCase):
                     ((f"url/{ROOT}/{COMPLIANCE_POLICIES_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
@@ -173,7 +169,6 @@ class TestCompliancePolicies(TestCase):
                     ((f"url/{ROOT}/{COMPLIANCE_POLICIES_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
@@ -208,13 +203,13 @@ class TestCompliancePolicies(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    ((f"url/{ROOT}/{SUBPATH}" "?page_size=1"),),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
+                        "params": {"page_size": 1},
                         "verify": True,
                     },
                 ),
@@ -245,19 +240,13 @@ class TestCompliancePolicies(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (
-                        (
-                            f"url/{ROOT}/{SUBPATH}"
-                            "?page_size=1"
-                            "&compliance_type=SINCE"
-                        ),
-                    ),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
+                        "params": {"page_size": 1, "compliance_type": "SINCE"},
                         "verify": True,
                     },
                 ),
@@ -296,9 +285,9 @@ class TestCompliancePolicies(TestCase):
                         (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {},
                             "verify": True,
                         },
                     ),
@@ -338,12 +327,12 @@ class TestCompliancePolicies(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        ((f"url/{ROOT}/{SUBPATH}?compliance_type=SINCE"),),
+                        ((f"url/{ROOT}/{SUBPATH}"),),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {"compliance_type": "SINCE"},
                             "verify": True,
                         },
                     ),
@@ -372,12 +361,12 @@ class TestCompliancePolicies(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (f"url/{ROOT}/{SUBPATH}?page_size=2",),
+                    (f"url/{ROOT}/{SUBPATH}",),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
+                        "params": {"page_size": 2},
                         "verify": True,
                     },
                 ),

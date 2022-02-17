@@ -89,17 +89,17 @@ class _AttachmentsClient:
             )
         )
 
-    def __query(self, params: Optional[Dict]) -> Dict:
-        query = deepcopy(params) if params else {}
+    def __params(self, params: Optional[Dict]) -> Dict:
+        params = deepcopy(params) if params else {}
         # pylint: disable=protected-access
-        return _deepmerge(self._archivist.fixtures.get(ATTACHMENTS_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(ATTACHMENTS_LABEL), params)
 
     def download(
         self,
         identity: str,
         fd: BinaryIO,
         *,
-        query: Optional[Dict] = None,
+        params: Optional[Dict] = None,
     ) -> Response:
         """Read attachment
 
@@ -110,7 +110,7 @@ class _AttachmentsClient:
         Args:
             identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
             fd (file): opened file escriptor or other file-type sink..
-            query (dict): e.g. {"allow_insecure": "true"} OR {"strict": "true" }
+            params (dict): e.g. {"allow_insecure": "true"} OR {"strict": "true" }
 
         Returns:
             REST response
@@ -120,5 +120,5 @@ class _AttachmentsClient:
             ATTACHMENTS_SUBPATH,
             identity,
             fd,
-            query=self.__query(query),
+            params=self.__params(params),
         )

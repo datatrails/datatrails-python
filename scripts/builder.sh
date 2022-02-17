@@ -15,6 +15,7 @@ docker run \
     -e UNITTEST \
     -e TEST_ARCHIVIST \
     -e TEST_AUTHTOKEN_FILENAME \
+    -e TEST_AUTHTOKEN_FILENAME_2 \
     -e TEST_DEBUG \
     jitsuin-archivist-python-builder \
     "$@"

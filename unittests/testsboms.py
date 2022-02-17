@@ -256,10 +256,10 @@ class TestSBOMS(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
-                            "content-type": "application/json",
                         },
                         "stream": True,
                         "verify": True,
+                        "params": None,
                     },
                     msg="DOWNLOAD method called incorrectly",
                 )
@@ -283,7 +283,6 @@ class TestSBOMS(TestCase):
                     ((f"url/{ROOT}/{SBOMS_SUBPATH}/{IDENTITY}/{SBOMS_METADATA}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
@@ -307,10 +306,9 @@ class TestSBOMS(TestCase):
                     ((f"url/{ROOT}/{SBOMS_SUBPATH}/{IDENTITY}:{SBOMS_PUBLISH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
-                        "data": None,
+                        "json": None,
                         "verify": True,
                     },
                 ),
@@ -367,10 +365,9 @@ class TestSBOMS(TestCase):
                     ((f"url/{ROOT}/{SBOMS_SUBPATH}/{IDENTITY}:{SBOMS_WITHDRAW}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
-                        "data": None,
+                        "json": None,
                         "verify": True,
                     },
                 ),
@@ -445,16 +442,16 @@ class TestSBOMS(TestCase):
                         (f"url/{ROOT}/{SUBPATH}/{SBOMS_WILDCARD}",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {},
                             "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
                 )
 
-    def test_sboms_list_with_query(self):
+    def test_sboms_list_with_params(self):
         """
         Test sboms listing
         """
@@ -490,17 +487,14 @@ class TestSBOMS(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (
-                            (
-                                f"url/{ROOT}/{SUBPATH}/{SBOMS_WILDCARD}"
-                                "?lifecycle_status=ACTIVE"
-                                "&version=10.0.2"
-                            ),
-                        ),
+                        ((f"url/{ROOT}/{SUBPATH}/{SBOMS_WILDCARD}"),),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
+                            },
+                            "params": {
+                                "lifecycle_status": "ACTIVE",
+                                "version": "10.0.2",
                             },
                             "verify": True,
                         },

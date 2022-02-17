@@ -162,9 +162,9 @@ class _SBOMSClient:
             )
         )
 
-    def __query(self, metadata: Optional[Dict]) -> Dict:
-        query = deepcopy(metadata) if metadata else {}
-        return _deepmerge(self._archivist.fixtures.get(SBOMS_LABEL), query)
+    def __params(self, metadata: Optional[Dict]) -> Dict:
+        params = deepcopy(metadata) if metadata else {}
+        return _deepmerge(self._archivist.fixtures.get(SBOMS_LABEL), params)
 
     def list(
         self,
@@ -192,14 +192,14 @@ class _SBOMSClient:
             iterable that returns :class:`SBOM` instances
 
         """
-        query = self.__query(metadata)
+        params = self.__params(metadata)
         return (
             SBOM(**a)
             for a in self._archivist.list(
                 f"{SBOMS_SUBPATH}/{SBOMS_LABEL}/{SBOMS_WILDCARD}",
                 SBOMS_LABEL,
                 page_size=page_size,
-                query=query,
+                params=params,
             )
         )
 

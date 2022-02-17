@@ -9,11 +9,16 @@ from unittest import skip, TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
+from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
+
+if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
+    set_logger(environ["TEST_DEBUG"])
+
 
 ATTRS = {
     "arc_firmware_version": "1.0",
