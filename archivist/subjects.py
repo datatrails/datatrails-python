@@ -77,7 +77,7 @@ class _SubjectsClient:
         """
         LOGGER.debug("Create Subject %s", display_name)
         return self.create_from_data(
-            self.__query(
+            self.__params(
                 display_name=display_name,
                 wallet_pub_keys=wallet_pub_keys,
                 tessera_pub_keys=tessera_pub_keys,
@@ -149,7 +149,7 @@ class _SubjectsClient:
             **self._archivist.patch(
                 SUBJECTS_SUBPATH,
                 identity,
-                self.__query(
+                self.__params(
                     display_name=display_name,
                     wallet_pub_keys=wallet_pub_keys,
                     tessera_pub_keys=tessera_pub_keys,
@@ -171,7 +171,7 @@ class _SubjectsClient:
         """
         return self._archivist.delete(SUBJECTS_SUBPATH, identity)
 
-    def __query(
+    def __params(
         self,
         *,
         display_name: Optional[str] = None,
@@ -179,18 +179,18 @@ class _SubjectsClient:
         tessera_pub_keys: Optional[List[str]] = None,
     ) -> Dict:
 
-        query = {}
+        params = {}
 
         if display_name is not None:
-            query["display_name"] = display_name
+            params["display_name"] = display_name
 
         if wallet_pub_keys is not None:
-            query["wallet_pub_key"] = wallet_pub_keys
+            params["wallet_pub_key"] = wallet_pub_keys
 
         if tessera_pub_keys is not None:
-            query["tessera_pub_key"] = tessera_pub_keys
+            params["tessera_pub_key"] = tessera_pub_keys
 
-        return _deepmerge(self._archivist.fixtures.get(SUBJECTS_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(SUBJECTS_LABEL), params)
 
     def count(self, *, display_name: Optional[str] = None) -> int:
         """Count subjects.
@@ -206,7 +206,7 @@ class _SubjectsClient:
         """
         return self._archivist.count(
             f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}",
-            query=self.__query(display_name=display_name),
+            params=self.__params(display_name=display_name),
         )
 
     def list(
@@ -233,6 +233,6 @@ class _SubjectsClient:
                 f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}",
                 SUBJECTS_LABEL,
                 page_size=page_size,
-                query=self.__query(display_name=display_name),
+                params=self.__params(display_name=display_name),
             )
         )

@@ -160,11 +160,11 @@ class _CompliancePoliciesClient:
         """
         return self._archivist.delete(COMPLIANCE_POLICIES_SUBPATH, identity)
 
-    def __query(self, props: Optional[Dict]) -> Dict:
-        query = deepcopy(props) if props else {}
+    def __params(self, props: Optional[Dict]) -> Dict:
+        params = deepcopy(props) if props else {}
         # pylint: disable=protected-access
         return _deepmerge(
-            self._archivist.fixtures.get(COMPLIANCE_POLICIES_LABEL), query
+            self._archivist.fixtures.get(COMPLIANCE_POLICIES_LABEL), params
         )
 
     def count(self, *, props: Optional[Dict] = None) -> int:
@@ -181,7 +181,7 @@ class _CompliancePoliciesClient:
         """
         return self._archivist.count(
             f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}",
-            query=self.__query(props),
+            params=self.__params(props),
         )
 
     def list(self, *, page_size: Optional[int] = None, props: Dict = None):
@@ -203,7 +203,7 @@ class _CompliancePoliciesClient:
                 f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}",
                 COMPLIANCE_POLICIES_LABEL,
                 page_size=page_size,
-                query=self.__query(props),
+                params=self.__params(props),
             )
         )
 
@@ -223,6 +223,6 @@ class _CompliancePoliciesClient:
             **self._archivist.get_by_signature(
                 f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}",
                 COMPLIANCE_POLICIES_LABEL,
-                query=self.__query(props),
+                params=self.__params(props),
             )
         )

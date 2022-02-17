@@ -23,6 +23,8 @@ def _deepmerge(dct1: Optional[dict], dct2: Optional[dict]) -> dict:
     return unflatten({**flatten(dct1), **flatten(dct2)})
 
 
-def _dotstring(dct: dict):
-    """Emit nested dictionary as dot delimited string"""
-    return flatten(dct, reducer="dot").items()
+def _dotdict(dct: dict) -> dict:
+    """Emit nested dictionary as dot delimited dict with one level"""
+    if dct is None:
+        return None
+    return flatten(dct, reducer="dot")

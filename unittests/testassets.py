@@ -3,7 +3,6 @@ Test archivist
 """
 
 from copy import copy
-from json import loads as json_loads
 from logging import getLogger
 from os import environ
 
@@ -99,9 +98,8 @@ REQUEST = {
     "attributes": ATTRS,
 }
 REQUEST_KWARGS = {
-    "data": REQUEST,
+    "json": REQUEST,
     "headers": {
-        "content-type": "application/json",
         "authorization": "Bearer authauthauth",
     },
     "verify": True,
@@ -113,9 +111,8 @@ REQUEST_FIXTURES = {
     "attributes": ATTRS_FIXTURES,
 }
 REQUEST_FIXTURES_KWARGS = {
-    "data": REQUEST_FIXTURES,
+    "json": REQUEST_FIXTURES,
     "headers": {
-        "content-type": "application/json",
         "authorization": "Bearer authauthauth",
     },
     "verify": True,
@@ -208,7 +205,6 @@ class TestAssetsCreate(TestAssetsBase):
                 (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
                 msg="CREATE method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 REQUEST_KWARGS,
@@ -240,7 +236,6 @@ class TestAssetsCreate(TestAssetsBase):
             mock_post.return_value = MockResponse(200, **RESPONSE_FIXTURES)
             asset = arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
             args, kwargs = mock_post.call_args
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 args,
                 (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
@@ -413,20 +408,20 @@ class TestAssetsCount(TestAssetsBase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    ((f"url/{ROOT}/{SUBPATH}" "?page_size=1"),),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
+                        "params": {"page_size": 1},
                         "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
 
-    def test_assets_count_with_props_query(self):
+    def test_assets_count_with_props_params(self):
         """
         Test asset counting
         """
@@ -447,18 +442,15 @@ class TestAssetsCount(TestAssetsBase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (
-                        (
-                            f"url/{ROOT}/{SUBPATH}"
-                            "?page_size=1"
-                            "&confirmation_status=CONFIRMED"
-                        ),
-                    ),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                        },
+                        "params": {
+                            "page_size": 1,
+                            "confirmation_status": "CONFIRMED",
                         },
                         "verify": True,
                     },
@@ -466,7 +458,7 @@ class TestAssetsCount(TestAssetsBase):
                 msg="GET method called incorrectly",
             )
 
-    def test_assets_count_with_attrs_query(self):
+    def test_assets_count_with_attrs_params(self):
         """
         Test asset counting
         """
@@ -485,18 +477,15 @@ class TestAssetsCount(TestAssetsBase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (
-                        (
-                            f"url/{ROOT}/{SUBPATH}"
-                            "?page_size=1"
-                            "&attributes.arc_firmware_version=1.0"
-                        ),
-                    ),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                        },
+                        "params": {
+                            "page_size": 1,
+                            "attributes.arc_firmware_version": "1.0",
                         },
                         "verify": True,
                     },
@@ -515,7 +504,11 @@ class TestAssetsWait(TestAssetsBase):
         Test asset counting
         """
         ## last call to get looks for FAILED assets
-        status = ("", "&confirmation_status=PENDING", "&confirmation_status=FAILED")
+        status = (
+            {"page_size": 1},
+            {"page_size": 1, "confirmation_status": "PENDING"},
+            {"page_size": 1, "confirmation_status": "FAILED"},
+        )
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
@@ -542,13 +535,13 @@ class TestAssetsWait(TestAssetsBase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        ((f"url/{ROOT}/{SUBPATH}" "?page_size=1" f"{status[i]}"),),
+                        (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                                 HEADERS_REQUEST_TOTAL_COUNT: "true",
                             },
+                            "params": status[i],
                             "verify": True,
                         },
                     ),
@@ -696,16 +689,16 @@ class TestAssetsList(TestAssetsBase):
                         (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {},
                             "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
                 )
 
-    def test_assets_list_with_query(self):
+    def test_assets_list_with_params(self):
         """
         Test asset listing
         """
@@ -741,17 +734,14 @@ class TestAssetsList(TestAssetsBase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (
-                            (
-                                f"url/{ROOT}/{SUBPATH}"
-                                "?attributes.arc_firmware_version=1.0"
-                                "&confirmation_status=CONFIRMED"
-                            ),
-                        ),
+                        ((f"url/{ROOT}/{SUBPATH}"),),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
+                            },
+                            "params": {
+                                "confirmation_status": "CONFIRMED",
+                                "attributes.arc_firmware_version": "1.0",
                             },
                             "verify": True,
                         },
@@ -781,12 +771,12 @@ class TestAssetsList(TestAssetsBase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (f"url/{ROOT}/{SUBPATH}?page_size=2",),
+                    (f"url/{ROOT}/{SUBPATH}",),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
+                        "params": {"page_size": 2},
                         "verify": True,
                     },
                 ),

@@ -2,7 +2,6 @@
 Test archivist
 """
 
-from json import loads as json_loads
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -84,13 +83,11 @@ class TestLocations(TestCase):
                 (f"url/{ROOT}/{SUBPATH}",),
                 msg="CREATE method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": REQUEST,
+                    "json": REQUEST,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -117,7 +114,6 @@ class TestLocations(TestCase):
                     ((f"url/{ROOT}/{LOCATIONS_SUBPATH}/{IDENTITY}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
@@ -153,13 +149,13 @@ class TestLocations(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    ((f"url/{ROOT}/{SUBPATH}" "?page_size=1"),),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
+                        "params": {"page_size": 1},
                         "verify": True,
                     },
                 ),
@@ -171,7 +167,7 @@ class TestLocations(TestCase):
                 msg="Incorrect count",
             )
 
-    def test_locations_count_with_props_query(self):
+    def test_locations_count_with_props_params(self):
         """
         Test location counting
         """
@@ -190,18 +186,15 @@ class TestLocations(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (
-                        (
-                            f"url/{ROOT}/{SUBPATH}"
-                            "?page_size=1"
-                            "&display_name=Macclesfield, Cheshire"
-                        ),
-                    ),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                        },
+                        "params": {
+                            "page_size": 1,
+                            "display_name": "Macclesfield, Cheshire",
                         },
                         "verify": True,
                     },
@@ -209,7 +202,7 @@ class TestLocations(TestCase):
                 msg="GET method called incorrectly",
             )
 
-    def test_locations_count_with_attrs_query(self):
+    def test_locations_count_with_attrs_params(self):
         """
         Test location counting
         """
@@ -228,18 +221,15 @@ class TestLocations(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (
-                        (
-                            f"url/{ROOT}/{SUBPATH}"
-                            "?page_size=1"
-                            "&attributes.director=John Smith"
-                        ),
-                    ),
+                    ((f"url/{ROOT}/{SUBPATH}"),),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                        },
+                        "params": {
+                            "page_size": 1,
+                            "attributes.director": "John Smith",
                         },
                         "verify": True,
                     },
@@ -279,16 +269,16 @@ class TestLocations(TestCase):
                         (f"url/{ROOT}/{SUBPATH}",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {},
                             "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
                 )
 
-    def test_locations_list_with_query(self):
+    def test_locations_list_with_params(self):
         """
         Test location listing
         """
@@ -322,17 +312,14 @@ class TestLocations(TestCase):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (
-                            (
-                                f"url/{ROOT}/{SUBPATH}"
-                                "?attributes.director=John Smith"
-                                "&display_name=Macclesfield, Cheshire"
-                            ),
-                        ),
+                        ((f"url/{ROOT}/{SUBPATH}"),),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
+                            },
+                            "params": {
+                                "attributes.director": "John Smith",
+                                "display_name": "Macclesfield, Cheshire",
                             },
                             "verify": True,
                         },
@@ -362,12 +349,12 @@ class TestLocations(TestCase):
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
-                    (f"url/{ROOT}/{SUBPATH}?page_size=2",),
+                    (f"url/{ROOT}/{SUBPATH}",),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
+                        "params": {"page_size": 2},
                         "verify": True,
                     },
                 ),

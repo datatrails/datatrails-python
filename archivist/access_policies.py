@@ -87,7 +87,9 @@ class _AccessPoliciesClient:
         """
         LOGGER.debug("Create Access Policy %s", props)
         return self.create_from_data(
-            self.__query(props, filters=filters, access_permissions=access_permissions),
+            self.__params(
+                props, filters=filters, access_permissions=access_permissions
+            ),
         )
 
     def create_from_data(self, data: Dict) -> AccessPolicy:
@@ -154,7 +156,7 @@ class _AccessPoliciesClient:
             **self._archivist.patch(
                 ACCESS_POLICIES_SUBPATH,
                 identity,
-                self.__query(
+                self.__params(
                     props, filters=filters, access_permissions=access_permissions
                 ),
             )
@@ -174,21 +176,21 @@ class _AccessPoliciesClient:
         """
         return self._archivist.delete(ACCESS_POLICIES_SUBPATH, identity)
 
-    def __query(
+    def __params(
         self,
         props: Optional[Dict],
         *,
         filters: Optional[List] = None,
         access_permissions: Optional[List] = None,
     ) -> Dict:
-        query = deepcopy(props) if props else {}
+        params = deepcopy(props) if props else {}
         if filters is not None:
-            query["filters"] = filters
+            params["filters"] = filters
 
         if access_permissions is not None:
-            query["access_permissions"] = access_permissions
+            params["access_permissions"] = access_permissions
 
-        return _deepmerge(self._archivist.fixtures.get(ACCESS_POLICIES_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(ACCESS_POLICIES_LABEL), params)
 
     def count(self, *, display_name: Optional[str] = None) -> int:
         """Count access policies.
@@ -202,10 +204,10 @@ class _AccessPoliciesClient:
             integer count of access policies.
 
         """
-        query = {"display_name": display_name} if display_name is not None else None
+        params = {"display_name": display_name} if display_name is not None else None
         return self._archivist.count(
             f"{ACCESS_POLICIES_SUBPATH}/{ACCESS_POLICIES_LABEL}",
-            query=query,
+            params=params,
         )
 
     def list(
@@ -223,14 +225,14 @@ class _AccessPoliciesClient:
             iterable that returns :class:`AccessPolicy` instances
 
         """
-        query = {"display_name": display_name} if display_name is not None else None
+        params = {"display_name": display_name} if display_name is not None else None
         return (
             AccessPolicy(**a)
             for a in self._archivist.list(
                 f"{ACCESS_POLICIES_SUBPATH}/{ACCESS_POLICIES_LABEL}",
                 ACCESS_POLICIES_LABEL,
                 page_size=page_size,
-                query=query,
+                params=params,
             )
         )
 

@@ -46,7 +46,6 @@ class TestArchivistDelete(TestArchivistMethods):
                     (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,
@@ -81,7 +80,6 @@ class TestArchivistDelete(TestArchivistMethods):
                     (f"url/{ROOT}/path/path/id/xxxxxxxx",),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                             "headerfield1": "headervalue1",
                         },
@@ -147,7 +145,6 @@ class TestArchivistDelete(TestArchivistMethods):
                     (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
                     {
                         "headers": {
-                            "content-type": "application/json",
                             "authorization": "Bearer authauthauth",
                         },
                         "verify": True,

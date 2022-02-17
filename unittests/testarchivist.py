@@ -3,7 +3,6 @@ Test archivist
 """
 
 from copy import copy
-from json import loads as json_loads
 from os import environ
 from unittest import TestCase, mock
 
@@ -127,13 +126,6 @@ class TestArchivist(TestCase):
             msg="Incorrect url",
         )
         self.assertEqual(
-            arch.headers,
-            {
-                "content-type": "application/json",
-            },
-            msg="Incorrect headers",
-        )
-        self.assertEqual(
             arch.auth,
             "authauthauth",
             msg="Incorrect auth",
@@ -168,11 +160,6 @@ class TestArchivist(TestCase):
             arch.url,
             arch1.url,
             msg="Incorrect url",
-        )
-        self.assertEqual(
-            arch.headers,
-            arch1.headers,
-            msg="Incorrect auth headers",
         )
         self.assertEqual(
             arch.verify,
@@ -224,13 +211,11 @@ class TestArchivistPatch(TestArchivistMethods):
                 (f"url/{ROOT}/path/path/entity/xxxx",),
                 msg="POST method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": request,
+                    "json": request,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -269,13 +254,11 @@ class TestArchivistPatch(TestArchivistMethods):
                 (f"url/{ROOT}/path/path/entity/xxxx",),
                 msg="PATCH method args called incorrectly",
             )
-            kwargs["data"] = json_loads(kwargs["data"])
             self.assertEqual(
                 kwargs,
                 {
-                    "data": request,
+                    "json": request,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
                     },
@@ -355,9 +338,8 @@ class TestArchivistPatch(TestArchivistMethods):
             self.assertEqual(
                 kwargs,
                 {
-                    "data": '{"field1": "value1"}',
+                    "json": request,
                     "headers": {
-                        "content-type": "application/json",
                         "authorization": "Bearer authauthauth",
                     },
                     "verify": True,
@@ -517,9 +499,9 @@ class TestArchivistList(TestArchivistMethods):
                         (f"url/{ROOT}/path/path",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": None,
                             "verify": True,
                         },
                     ),
@@ -590,17 +572,17 @@ class TestArchivistList(TestArchivistMethods):
                         (f"url/{ROOT}/path/path",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                                 "headerfield1": "headervalue1",
                             },
+                            "params": None,
                             "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
                 )
 
-    def test_list_with_query(self):
+    def test_list_with_params(self):
         """
         Test default list method
         """
@@ -617,7 +599,7 @@ class TestArchivistList(TestArchivistMethods):
                 self.arch.list(
                     "path/path",
                     "things",
-                    query={"queryfield1": "queryvalue1"},
+                    params={"paramsfield1": "paramsvalue1"},
                 )
             )
             self.assertEqual(
@@ -629,13 +611,13 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path?queryfield1=queryvalue1",),
+                        (f"url/{ROOT}/path/path",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
                             "verify": True,
+                            "params": {"paramsfield1": "paramsvalue1"},
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -674,12 +656,12 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path?page_size=2",),
+                        (f"url/{ROOT}/path/path",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {"page_size": 2},
                             "verify": True,
                         },
                     ),
@@ -698,7 +680,7 @@ class TestArchivistList(TestArchivistMethods):
         Test default list method
         """
         values = ("value10", "value11", "value12", "value13")
-        paging = ("page_size=2", "page_token=token")
+        paging = ({"page_size": 2}, {"page_size": 2, "page_token": "token"})
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
@@ -741,12 +723,84 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path?{paging[i]}",),
+                        (f"url/{ROOT}/path/path",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": paging[i],
+                            "verify": True,
+                        },
+                    ),
+                    msg="GET method called incorrectly",
+                )
+
+            for i, r in enumerate(responses):
+                self.assertEqual(
+                    r["field1"],
+                    values[i],
+                    msg="Incorrect response body value",
+                )
+
+    def test_list_with_multiple_pages_and_params(self):
+        """
+        Test default list method
+        """
+        params = {"field2": "value2"}
+        values = ("value10", "value11", "value12", "value13")
+        paging = (
+            {**params, "page_size": 2},
+            {"page_size": 2, "page_token": "token"},
+        )
+        with mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.side_effect = [
+                MockResponse(
+                    200,
+                    things=[
+                        {
+                            "field1": values[0],
+                        },
+                        {
+                            "field1": values[1],
+                        },
+                    ],
+                    next_page_token="token",
+                ),
+                MockResponse(
+                    200,
+                    things=[
+                        {
+                            "field1": values[2],
+                        },
+                        {
+                            "field1": values[3],
+                        },
+                    ],
+                ),
+            ]
+            responses = list(
+                self.arch.list(
+                    "path/path",
+                    "things",
+                    page_size=2,
+                    params=params,
+                )
+            )
+            self.assertEqual(
+                len(responses),
+                4,
+                msg="incorrect number of responses",
+            )
+            for i, a in enumerate(mock_get.call_args_list):
+                self.assertEqual(
+                    tuple(a),
+                    (
+                        (f"url/{ROOT}/path/path",),
+                        {
+                            "headers": {
+                                "authorization": "Bearer authauthauth",
+                            },
+                            "params": paging[i],
                             "verify": True,
                         },
                     ),
@@ -826,9 +880,9 @@ class TestArchivistList(TestArchivistMethods):
                         (f"url/{ROOT}/path/path",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": None,
                             "verify": True,
                         },
                     ),
@@ -861,12 +915,12 @@ class TestArchivistSignature(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path?page_size=2&field1=value1",),
+                        (f"url/{ROOT}/path/path",),
                         {
                             "headers": {
-                                "content-type": "application/json",
                                 "authorization": "Bearer authauthauth",
                             },
+                            "params": {"field1": "value1", "page_size": 2},
                             "verify": True,
                         },
                     ),

@@ -75,7 +75,7 @@ class _ApplicationsClient:
         """
         LOGGER.debug("Create Application %s", display_name)
         return self.create_from_data(
-            self.__query(
+            self.__params(
                 display_name=display_name,
                 custom_claims=custom_claims,
             ),
@@ -144,7 +144,7 @@ class _ApplicationsClient:
             **self._archivist.patch(
                 APPLICATIONS_SUBPATH,
                 identity,
-                self.__query(
+                self.__params(
                     display_name=display_name,
                     custom_claims=custom_claims,
                 ),
@@ -165,22 +165,22 @@ class _ApplicationsClient:
         """
         return self._archivist.delete(APPLICATIONS_SUBPATH, identity)
 
-    def __query(
+    def __params(
         self,
         *,
         display_name: Optional[str] = None,
         custom_claims: Optional[Dict] = None,
     ) -> Dict:
 
-        query = {}
+        params = {}
 
         if display_name is not None:
-            query["display_name"] = display_name
+            params["display_name"] = display_name
 
         if custom_claims is not None:
-            query["custom_claims"] = custom_claims
+            params["custom_claims"] = custom_claims
 
-        return _deepmerge(self._archivist.fixtures.get(APPLICATIONS_LABEL), query)
+        return _deepmerge(self._archivist.fixtures.get(APPLICATIONS_LABEL), params)
 
     def list(
         self,
@@ -206,7 +206,7 @@ class _ApplicationsClient:
                 f"{APPLICATIONS_SUBPATH}/{APPLICATIONS_LABEL}",
                 APPLICATIONS_LABEL,
                 page_size=page_size,
-                query=self.__query(display_name=display_name),
+                params=self.__params(display_name=display_name),
             )
         )
 
