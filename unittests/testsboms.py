@@ -103,13 +103,15 @@ class TestSBOMS(TestCase):
                 (f"url/{ROOT}/{SUBPATH}",),
                 msg="UPLOAD method called incorrectly",
             )
-            self.assertTrue(
+            self.assertEqual(
                 "headers" in kwargs,
+                True,
                 msg="UPLOAD no headers found",
             )
             headers = kwargs["headers"]
-            self.assertTrue(
+            self.assertEqual(
                 "authorization" in headers,
+                True,
                 msg="UPLOAD no authorization found",
             )
             self.assertEqual(
@@ -117,21 +119,25 @@ class TestSBOMS(TestCase):
                 "Bearer authauthauth",
                 msg="UPLOAD incorrect authorization",
             )
-            self.assertTrue(
+            self.assertEqual(
                 headers["content-type"].startswith("multipart/form-data;"),
+                True,
                 msg="UPLOAD incorrect content-type",
             )
-            self.assertTrue(
+            self.assertEqual(
                 kwargs["verify"],
+                True,
                 msg="UPLOAD method called incorrectly",
             )
-            self.assertTrue(
+            self.assertEqual(
                 "data" in kwargs,
+                True,
                 msg="UPLOAD no data found",
             )
             fields = kwargs["data"].fields
-            self.assertTrue(
+            self.assertEqual(
                 "sbom" in fields,
+                True,
                 msg="UPLOAD no field 'sbom' found",
             )
             self.assertEqual(

@@ -7,6 +7,7 @@ from logging import getLogger
 
 import backoff
 
+from .utils import backoff_handler
 from .errors import ArchivistUnpublishedError
 
 
@@ -23,16 +24,6 @@ def __lookup_max_time():
     return MAX_TIME
 
 
-# pylint: disable=consider-using-f-string
-def __backoff_handler(details):
-    LOGGER.debug("MAX_TIME %s", MAX_TIME)
-    LOGGER.debug(
-        "Backing off {wait:0.1f} seconds afters {tries} tries "
-        "calling function {target} with args {args} and kwargs "
-        "{kwargs}".format(**details)
-    )
-
-
 def __on_giveup_publication(details):
     identity = details["args"][1]
     elapsed = details["elapsed"]
@@ -45,7 +36,7 @@ def __on_giveup_publication(details):
     backoff.expo,
     logger=None,
     max_time=__lookup_max_time,
-    on_backoff=__backoff_handler,
+    on_backoff=backoff_handler,
     on_giveup=__on_giveup_publication,
 )
 def _wait_for_publication(self, identity):
