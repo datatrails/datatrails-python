@@ -4,7 +4,7 @@
 #
 version=$(python3 setup.py --version)
 
-cat>archivist/about.py <<EOF
+cat > archivist/about.py <<EOF
 """Archivist SDK
 
    WARNING: Do **not** edit directly

@@ -378,7 +378,6 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             dict representing the response body (entity).
 
         """
-
         multipart = MultipartEncoder(
             fields={
                 form: ("filename", fd, mtype),

@@ -6,22 +6,48 @@ from copy import copy
 from logging import getLogger
 from os import environ
 
-from unittest import TestCase, mock
+from unittest import mock
 
-from archivist.archivist import Archivist
-from archivist.assets import BEHAVIOURS
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
-    HEADERS_REQUEST_TOTAL_COUNT,
-    HEADERS_TOTAL_COUNT,
     ROOT,
 )
 from archivist.errors import ArchivistNotFoundError, ArchivistUnconfirmedError
 from archivist.logger import set_logger
-from archivist.proof_mechanism import ProofMechanism
 
 from .mock_response import MockResponse
+from .testassetsconstants import (
+    TestAssetsBase,
+    PRIMARY_IMAGE,
+    ASSET_NAME,
+    ATTRS,
+    SUBPATH,
+    PROPS,
+    FIXTURES,
+    REQUEST_EXISTS,
+    REQUEST_EXISTS_ATTACHMENTS,
+    REQUEST_EXISTS_LOCATION,
+    REQUEST_EXISTS_NOATTRS,
+    REQUEST_EXISTS_KWARGS,
+    REQUEST_EXISTS_KWARGS_ATTACHMENTS,
+    REQUEST_EXISTS_KWARGS_LOCATION,
+    REQUEST_EXISTS_KWARGS_NOATTRS,
+    REQUEST_KWARGS,
+    REQUEST_FIXTURES_KWARGS,
+    RESPONSE,
+    RESPONSE_ATTACHMENTS,
+    RESPONSE_LOCATION,
+    RESPONSE_EXISTS,
+    RESPONSE_EXISTS_ATTACHMENTS,
+    RESPONSE_EXISTS_LOCATION,
+    RESPONSE_EXISTS_NOATTRS,
+    RESPONSE_FIXTURES,
+    RESPONSE_NO_CONFIRMATION,
+    RESPONSE_PENDING,
+    RESPONSE_FAILED,
+)
+
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -31,143 +57,6 @@ if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
     set_logger(environ["TEST_DEBUG"])
 
 LOGGER = getLogger(__name__)
-
-PRIMARY_IMAGE = {
-    "arc_display_name": "arc_primary_image",
-    "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
-    "arc_hash_alg": "SHA256",
-    "arc_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
-}
-SECONDARY_IMAGE = {
-    "arc_display_name": "arc_secondary_image",
-    "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
-    "arc_hash_alg": "SHA256",
-    "arc_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
-}
-TERTIARY_IMAGE = {
-    "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
-    "arc_hash_alg": "SHA256",
-    "arc_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
-}
-ASSET_NAME = "tcl.ppj.003"
-BASE_ATTRS = {
-    "arc_firmware_version": "1.0",
-    "arc_serial_number": "vtl-x4-07",
-    "arc_description": "Traffic flow control light at A603 North East",
-    "arc_home_location_identity": "locations/115340cf-f39e-4d43-a2ee-8017d672c6c6",
-    "arc_display_type": "Traffic light with violation camera",
-    "some_custom_attribute": "value",
-}
-ATTRS_WITH_NAME = {
-    **BASE_ATTRS,
-    "arc_display_name": ASSET_NAME,
-}
-
-ATTRS = {
-    **ATTRS_WITH_NAME,
-    "arc_attachments": [
-        TERTIARY_IMAGE,
-        SECONDARY_IMAGE,
-        PRIMARY_IMAGE,
-    ],
-}
-# also has no arc_display_name
-ATTRS_NO_ATTACHMENTS = {
-    **BASE_ATTRS,
-}
-
-IDENTITY = f"{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-SUBPATH = f"{ASSETS_SUBPATH}/{ASSETS_LABEL}"
-
-PROPS = {
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-}
-FIXTURES_ATTRIBUTES = {
-    "arc_namespace": "namespace",
-}
-FIXTURES = {
-    "assets": {
-        "attributes": FIXTURES_ATTRIBUTES,
-    },
-}
-ATTRS_FIXTURES = {**FIXTURES_ATTRIBUTES, **ATTRS}
-
-REQUEST = {
-    "behaviours": BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-    "attributes": ATTRS,
-}
-REQUEST_KWARGS = {
-    "json": REQUEST,
-    "headers": {
-        "authorization": "Bearer authauthauth",
-    },
-    "verify": True,
-}
-
-REQUEST_FIXTURES = {
-    "behaviours": BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-    "attributes": ATTRS_FIXTURES,
-}
-REQUEST_FIXTURES_KWARGS = {
-    "json": REQUEST_FIXTURES,
-    "headers": {
-        "authorization": "Bearer authauthauth",
-    },
-    "verify": True,
-}
-
-RESPONSE = {
-    "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
-    "attributes": ATTRS,
-    "confirmation_status": "CONFIRMED",
-}
-RESPONSE_FIXTURES = {
-    "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
-    "attributes": ATTRS_FIXTURES,
-    "confirmation_status": "CONFIRMED",
-}
-
-RESPONSE_NO_ATTACHMENTS = {
-    "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
-    "attributes": ATTRS_NO_ATTACHMENTS,
-    "confirmation_status": "CONFIRMED",
-}
-RESPONSE_NO_CONFIRMATION = {
-    "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
-    "attributes": ATTRS,
-}
-RESPONSE_PENDING = {
-    "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
-    "attributes": ATTRS,
-    "confirmation_status": "PENDING",
-}
-RESPONSE_FAILED = {
-    "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
-    "attributes": ATTRS,
-    "confirmation_status": "FAILED",
-}
-
-
-class TestAssetsBase(TestCase):
-    """
-    Test Archivist Assets Base
-    """
-
-    maxDiff = None
-
-    def setUp(self):
-        self.arch = Archivist("url", "authauthauth", max_time=1)
-
-    def tearDown(self):
-        self.arch = None
 
 
 class TestAssetsUtil(TestAssetsBase):
@@ -353,421 +242,41 @@ class TestAssetsCreate(TestAssetsBase):
                 asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
 
 
-class TestAssetsRead(TestAssetsBase):
+class TestAssetsCreateIfNotExists(TestAssetsBase):
     """
     Test Archivist Assets methods
     """
 
-    def test_assets_read_with_out_primary_image(self):
+    def test_assets_create_if_not_exists_existing_asset(self):
         """
-        Test asset reading
+        Test asset creation
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(200, **RESPONSE_NO_ATTACHMENTS)
+        with mock.patch.object(
+            self.arch._session, "post", autospec=True
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_get.return_value = MockResponse(
+                200,
+                assets=[
+                    RESPONSE_EXISTS,
+                ],
+            )
+            mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            asset = self.arch.assets.read(IDENTITY)
+            asset, existed = self.arch.assets.create_if_not_exists(
+                data=REQUEST_EXISTS,
+                confirm=False,
+            )
+            mock_post.assert_not_called()
+            self.assertEqual(
+                existed,
+                True,
+                msg="Incorrect existed bool",
+            )
             self.assertEqual(
                 asset,
-                RESPONSE_NO_ATTACHMENTS,
-                msg="READ method called incorrectly",
-            )
-            self.assertIsNone(
-                asset.primary_image,
-                msg="There should be no primary image",
-            )
-            self.assertIsNone(
-                asset.name,
-                msg="There should be no name property",
-            )
-
-
-class TestAssetsCount(TestAssetsBase):
-    """
-    Test Archivist Assets methods
-    """
-
-    def test_assets_count(self):
-        """
-        Test asset counting
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 1},
-                assets=[
-                    RESPONSE,
-                ],
-            )
-
-            count = self.arch.assets.count()
-            self.assertEqual(
-                count,
-                1,
-                msg="Incorrect count",
-            )
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "headers": {
-                            "authorization": "Bearer authauthauth",
-                            HEADERS_REQUEST_TOTAL_COUNT: "true",
-                        },
-                        "params": {"page_size": 1},
-                        "verify": True,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-
-    def test_assets_count_with_props_params(self):
-        """
-        Test asset counting
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 1},
-                assets=[
-                    RESPONSE,
-                ],
-            )
-
-            count = self.arch.assets.count(
-                props={
-                    "confirmation_status": "CONFIRMED",
-                },
-            )
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "headers": {
-                            "authorization": "Bearer authauthauth",
-                            HEADERS_REQUEST_TOTAL_COUNT: "true",
-                        },
-                        "params": {
-                            "page_size": 1,
-                            "confirmation_status": "CONFIRMED",
-                        },
-                        "verify": True,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-
-    def test_assets_count_with_attrs_params(self):
-        """
-        Test asset counting
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 1},
-                assets=[
-                    RESPONSE,
-                ],
-            )
-
-            count = self.arch.assets.count(
-                attrs={"arc_firmware_version": "1.0"},
-            )
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    ((f"url/{ROOT}/{SUBPATH}"),),
-                    {
-                        "headers": {
-                            "authorization": "Bearer authauthauth",
-                            HEADERS_REQUEST_TOTAL_COUNT: "true",
-                        },
-                        "params": {
-                            "page_size": 1,
-                            "attributes.arc_firmware_version": "1.0",
-                        },
-                        "verify": True,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-
-
-class TestAssetsWait(TestAssetsBase):
-    """
-    Test Archivist Assets methods
-    """
-
-    def test_assets_wait_for_confirmed(self):
-        """
-        Test asset counting
-        """
-        ## last call to get looks for FAILED assets
-        status = (
-            {"page_size": 1},
-            {"page_size": 1, "confirmation_status": "PENDING"},
-            {"page_size": 1, "confirmation_status": "FAILED"},
-        )
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.side_effect = [
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 0},
-                    assets=[],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 0},
-                    assets=[],
-                ),
-            ]
-
-            self.arch.assets.wait_for_confirmed()
-            for i, a in enumerate(mock_get.call_args_list):
-                self.assertEqual(
-                    tuple(a),
-                    (
-                        (f"url/{ROOT}/{SUBPATH}",),
-                        {
-                            "headers": {
-                                "authorization": "Bearer authauthauth",
-                                HEADERS_REQUEST_TOTAL_COUNT: "true",
-                            },
-                            "params": status[i],
-                            "verify": True,
-                        },
-                    ),
-                    msg="GET method called incorrectly",
-                )
-
-    def test_assets_wait_for_confirmed_not_found(self):
-        """
-        Test asset counting
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.side_effect = [
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 0},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-            ]
-
-            with self.assertRaises(ArchivistNotFoundError):
-                self.arch.assets.wait_for_confirmed()
-
-    def test_assets_wait_for_confirmed_timeout(self):
-        """
-        Test asset counting
-        """
-        ## last call to get looks for FAILED assets
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.side_effect = [
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-            ]
-
-            with self.assertRaises(ArchivistUnconfirmedError):
-                self.arch.assets.wait_for_confirmed()
-
-    def test_assets_wait_for_confirmed_failed(self):
-        """
-        Test asset counting
-        """
-        ## last call to get looks for FAILED assets
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.side_effect = [
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 0},
-                    assets=[],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 1},
-                    assets=[
-                        RESPONSE_FAILED,
-                    ],
-                ),
-            ]
-
-            with self.assertRaises(ArchivistUnconfirmedError):
-                self.arch.assets.wait_for_confirmed()
-
-
-class TestAssetsList(TestAssetsBase):
-    """
-    Test Archivist Assets methods
-    """
-
-    def test_assets_list(self):
-        """
-        Test asset listing
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                assets=[
-                    RESPONSE,
-                ],
-            )
-
-            assets = list(self.arch.assets.list())
-            self.assertEqual(
-                len(assets),
-                1,
-                msg="incorrect number of assets",
-            )
-            for asset in assets:
-                self.assertEqual(
-                    asset,
-                    RESPONSE,
-                    msg="Incorrect asset listed",
-                )
-
-            for a in mock_get.call_args_list:
-                self.assertEqual(
-                    tuple(a),
-                    (
-                        (f"url/{ROOT}/{SUBPATH}",),
-                        {
-                            "headers": {
-                                "authorization": "Bearer authauthauth",
-                            },
-                            "params": {},
-                            "verify": True,
-                        },
-                    ),
-                    msg="GET method called incorrectly",
-                )
-
-    def test_assets_list_with_params(self):
-        """
-        Test asset listing
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                assets=[
-                    RESPONSE,
-                ],
-            )
-
-            assets = list(
-                self.arch.assets.list(
-                    props={
-                        "confirmation_status": "CONFIRMED",
-                    },
-                    attrs={"arc_firmware_version": "1.0"},
-                )
-            )
-            self.assertEqual(
-                len(assets),
-                1,
-                msg="incorrect number of assets",
-            )
-            for asset in assets:
-                self.assertEqual(
-                    asset,
-                    RESPONSE,
-                    msg="Incorrect asset listed",
-                )
-
-            for a in mock_get.call_args_list:
-                self.assertEqual(
-                    tuple(a),
-                    (
-                        ((f"url/{ROOT}/{SUBPATH}"),),
-                        {
-                            "headers": {
-                                "authorization": "Bearer authauthauth",
-                            },
-                            "params": {
-                                "confirmation_status": "CONFIRMED",
-                                "attributes.arc_firmware_version": "1.0",
-                            },
-                            "verify": True,
-                        },
-                    ),
-                    msg="GET method called incorrectly",
-                )
-
-    def test_assets_read_by_signature(self):
-        """
-        Test asset listing
-        """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                assets=[
-                    RESPONSE,
-                ],
-            )
-
-            asset = self.arch.assets.read_by_signature()
-            self.assertEqual(
-                asset,
-                RESPONSE,
+                RESPONSE_EXISTS,
                 msg="Incorrect asset listed",
             )
-
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -776,9 +285,139 @@ class TestAssetsList(TestAssetsBase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                         },
-                        "params": {"page_size": 2},
+                        "params": {
+                            "attributes.arc_namespace": "namespace",
+                            "attributes.arc_display_name": "tcl.ppj.003",
+                            "page_size": 2,
+                        },
                         "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
             )
+
+    def common_assets_create_if_not_exists_nonexistent_asset(
+        self,
+        req,
+        req_kwargs,
+        resp,
+        loc_resp=None,
+        attachments_resp=None,
+    ):
+        """
+        Test asset creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post", autospec=True
+        ) as mock_post, mock.patch.object(
+            self.arch._session, "get"
+        ) as mock_get, mock.patch.object(
+            self.arch.locations, "create_if_not_exists"
+        ) as mock_location, mock.patch.object(
+            self.arch.attachments, "create"
+        ) as mock_attachments:
+
+            mock_get.side_effect = ArchivistNotFoundError
+            mock_post.return_value = MockResponse(200, **resp)
+            if loc_resp is not None:
+                mock_location.return_value = (MockResponse(200, **loc_resp), True)
+
+            if attachments_resp is not None:
+                mock_attachments.return_value = MockResponse(200, **attachments_resp)
+
+            asset, existed = self.arch.assets.create_if_not_exists(
+                data=req,
+                confirm=False,
+            )
+            mock_get.assert_called_once()
+            mock_post.assert_called_once()
+
+            self.assertEqual(
+                existed,
+                False,
+                msg="Incorrect existed bool",
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                req_kwargs,
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                asset,
+                resp,
+                msg="CREATE method called incorrectly",
+            )
+
+            if attachments_resp is not None:
+                mock_attachments.assert_called_once()
+                args, kwargs = mock_attachments.call_args
+                self.assertEqual(
+                    args,
+                    (req.get("attachments")[0],),
+                    msg="CREATE_ATTACHMENTS method args called incorrectly",
+                )
+                self.assertEqual(
+                    kwargs,
+                    {},
+                    msg="CREATE_ATTACHMENTS method kwargs called incorrectly",
+                )
+
+            if loc_resp is not None:
+                mock_location.assert_called_once()
+                args, kwargs = mock_location.call_args
+                self.assertEqual(
+                    args,
+                    (req.get("location"),),
+                    msg="CREATE_LOCATION method args called incorrectly",
+                )
+                self.assertEqual(
+                    kwargs,
+                    {},
+                    msg="CREATE_LOCATION method kwargs called incorrectly",
+                )
+
+    def test_assets_create_if_not_exists_nonexistent_asset(self):
+        """
+        Test asset creation
+        """
+        self.common_assets_create_if_not_exists_nonexistent_asset(
+            REQUEST_EXISTS, REQUEST_EXISTS_KWARGS, RESPONSE_EXISTS
+        )
+
+    def test_assets_create_if_not_exists_nonexistent_asset_noattributes(self):
+        """
+        Test asset creation
+        """
+        self.common_assets_create_if_not_exists_nonexistent_asset(
+            REQUEST_EXISTS_NOATTRS,
+            REQUEST_EXISTS_KWARGS_NOATTRS,
+            RESPONSE_EXISTS_NOATTRS,
+        )
+
+    def test_assets_create_if_not_exists_nonexistent_asset_location(self):
+        """
+        Test asset creation
+        """
+        self.common_assets_create_if_not_exists_nonexistent_asset(
+            REQUEST_EXISTS_LOCATION,
+            REQUEST_EXISTS_KWARGS_LOCATION,
+            RESPONSE_EXISTS_LOCATION,
+            loc_resp=RESPONSE_LOCATION,
+        )
+
+    def test_assets_create_if_not_exists_nonexistent_asset_attachments(self):
+        """
+        Test asset creation
+        """
+        self.common_assets_create_if_not_exists_nonexistent_asset(
+            REQUEST_EXISTS_ATTACHMENTS,
+            REQUEST_EXISTS_KWARGS_ATTACHMENTS,
+            RESPONSE_EXISTS_ATTACHMENTS,
+            attachments_resp=RESPONSE_ATTACHMENTS,
+        )

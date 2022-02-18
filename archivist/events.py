@@ -164,6 +164,13 @@ class _EventsClient:
             :class:`Event` instance
 
         """
+        data = deepcopy(data)
+        attachments = data.pop("attachments", None)
+        if attachments is not None:
+            data["event_attributes"]["arc_attachments"] = [
+                self._archivist.attachments.create(a) for a in attachments
+            ]
+
         event = Event(
             **self._archivist.post(
                 SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),

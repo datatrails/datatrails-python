@@ -11,5 +11,5 @@ Reference yaml files are available here:
     - :ref:`compliance_policies_demo_dynamic_toleranceref`
     - :ref:`compliance_policies_demo_richnessref`
 
-See :ref:`runnerindex` for details of executing the runner from the
+See :ref:`story_runnerindex` for details of executing the runner from the
 command line.

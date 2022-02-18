@@ -22,7 +22,7 @@
 """
 
 from logging import getLogger
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 from copy import deepcopy
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
@@ -164,6 +164,99 @@ class _AssetsClient:
             return asset
 
         return self.wait_for_confirmation(asset["identity"])
+
+    def create_if_not_exists(
+        self, data: Dict, *, confirm: bool = False
+    ) -> Tuple[Asset, bool]:
+        """
+        Creates an asset and associated locations and attachments if asset
+        does not already exist.
+
+        Args:
+            data (dict): request body of asset.
+            confirm (bool): if True wait for asset to be confirmed on DLT.
+
+        A YAML representation of the data argument would be:
+
+            .. code-block:: yaml
+
+                signature:
+                  attributes:
+                    arc_display_name: Jitsuin Front Door
+                behaviours
+                  - RecordEvidence
+                  - Attachments
+                attributes:
+                  arc_firmware_version: "1.0"
+                  arc_serial_number: das-j1-01
+                  arc_description: Electronic door entry system to Jitsuin France
+                  wavestone_asset_id: paris.france.jitsuin.das
+                location:
+                  signature:
+                    display_name: Jitsuin Paris,
+                  description: Sales and sales support for the French region
+                  latitude: 48.8339211,
+                  longitude: 2.371345,
+                  attributes:
+                    address: 5 Parvis Alan Turing, 75013 Paris, France
+                    wavestone_ext: managed
+                attachments:
+                  - filename: functests/test_resources/doors/assets/entry-terminal.jpg
+                    content_type: image/jpg
+
+            The 'signature' value is required and will usually specify the 'arc_display_name' as a
+            secondary key. The values in 'signature' will be merged into the 'attributes' dict.
+            The 'behaviours' values should rarely differ from the above settings.
+
+            If 'location' is specified then the 'signature' value is required and is used as a
+            secondary key
+
+        Returns:
+            tuple of :class:`Asset` instance, Boolean is True if asset already existed
+
+        """
+
+        asset = None
+        existed = False
+        data = deepcopy(data)
+        signature = data.pop("signature")  # must exist
+        try:
+            asset = self.read_by_signature(
+                props={k: v for k, v in signature.items() if k != "attributes"},
+                attrs=signature.get("attributes"),
+            )
+
+        except ArchivistNotFoundError:
+            LOGGER.info("asset with signature %s does not exist", signature)
+
+        else:
+            LOGGER.info("asset with signature %s already existed", signature)
+            return asset, True
+
+        # make sure that signature is in the definition of the asset
+        data = signature if data is None else _deepmerge(signature, data)
+
+        # is location present?
+        location = data.pop("location", None)
+        if location is not None:
+            loc, _ = self._archivist.locations.create_if_not_exists(
+                location,
+            )
+            data["attributes"]["arc_home_location_identity"] = loc["identity"]
+
+        # any attachments ?
+        attachments = data.pop("attachments", None)
+        if attachments is not None:
+            data["attributes"]["arc_attachments"] = [
+                self._archivist.attachments.create(a) for a in attachments
+            ]
+
+        asset = self.create_from_data(
+            data=data,
+            confirm=confirm,
+        )
+
+        return asset, existed
 
     def wait_for_confirmation(self, identity: str) -> Asset:
         """Wait for asset to be confirmed.
