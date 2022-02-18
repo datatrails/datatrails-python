@@ -22,7 +22,7 @@
       arch = Archivist(
           "https://app.rkvst.io",
           authtoken,
-          max_time=1200,
+          max_time=300.0,
       )
 
     The arch variable now has additional endpoints assets,events,locations,
@@ -103,7 +103,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         url (str): URL of archivist endpoint
         auth: string representing JWT token.
         verify: if True the certificate is verified
-        max_time (int): maximum time in seconds to wait for confirmation
+        max_time (float): maximum time in seconds to wait for confirmation
 
     """
 
@@ -116,7 +116,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         *,
         fixtures: Optional[Dict] = None,
         verify: bool = True,
-        max_time: int = MAX_TIME,
+        max_time: float = MAX_TIME,
     ):
 
         if isinstance(auth, tuple):
@@ -175,7 +175,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         return self._verify
 
     @property
-    def max_time(self) -> int:
+    def max_time(self) -> float:
         """bool: Returns maximum time in seconds to wait for confirmation"""
         return self._max_time
 

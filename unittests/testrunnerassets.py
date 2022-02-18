@@ -159,7 +159,7 @@ class TestRunnerAssetsCreate(TestCase):
                     }
                 )
 
-            self.assertTrue("Missing Action" in str(ex.exception))
+            self.assertEqual("Missing Action" in str(ex.exception), True)
 
     def test_runner_assets_create_invalid_action(self):
         """
@@ -183,7 +183,7 @@ class TestRunnerAssetsCreate(TestCase):
                     }
                 )
 
-            self.assertTrue("Action ASSETSS" in str(ex.exception))
+            self.assertEqual("Action ASSETSS" in str(ex.exception), True)
 
     @mock.patch("archivist.runner.time_sleep")
     def test_runner_assets_create_invalid_verb_caught(self, mock_sleep):

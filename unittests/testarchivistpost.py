@@ -202,8 +202,9 @@ class TestArchivistPost(TestArchivistMethods):
                 None,
                 msg="Header does not exist",
             )
-            self.assertTrue(
+            self.assertEqual(
                 headers["content-type"].startswith("multipart/form-data"),
+                True,
                 msg="Incorrect content-type",
             )
             data = kwargs.get("data")
@@ -266,8 +267,9 @@ class TestArchivistPost(TestArchivistMethods):
                 None,
                 msg="Header does not exist",
             )
-            self.assertTrue(
+            self.assertEqual(
                 headers["content-type"].startswith("multipart/form-data"),
+                True,
                 msg="Incorrect content-type",
             )
             data = kwargs.get("data")
@@ -394,8 +396,9 @@ class TestArchivistPost(TestArchivistMethods):
                 None,
                 msg="Header does not exist",
             )
-            self.assertTrue(
+            self.assertEqual(
                 headers["content-type"].startswith("multipart/form-data"),
+                True,
                 msg="Incorrect content-type",
             )
             data = kwargs.get("data")
