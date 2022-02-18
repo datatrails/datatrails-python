@@ -129,11 +129,11 @@ One can then use the examples code to create assets (see examples directory):
         main()
 
 
-Story Runner
-============
+File Story Runner
+=================
 
 One can run scenarios - a sequence of steps - from a python dictionary or from a yaml
-file.
+or json file.
 
 Python
 ------

@@ -151,7 +151,7 @@ class TestRunner(TestCase):
         """
         runner = self.arch.runner
         runner.entities = tree()
-        runner.entities["ASSETS_CREATE"][ASSET_NAME] = Asset(**ASSETS_RESPONSE)
+        runner.entities[ASSET_NAME] = Asset(**ASSETS_RESPONSE)
         self.assertEqual(
             runner.asset_id(ASSET_NAME),
             ASSET_ID,
@@ -168,15 +168,9 @@ class TestRunner(TestCase):
         """
         runner = self.arch.runner
         runner.entities = tree()
-        runner.set_entities("ASSETS_CREATE", Asset(**ASSETS_RESPONSE))
+        runner.set_entities(Asset(**ASSETS_RESPONSE))
         self.assertEqual(
             runner.asset_id(ASSET_NAME),
             ASSET_ID,
             msg="Incorrect ID",
-        )
-        runner.set_entities("BADASSETS_CREATE", Asset(**ASSETS_NO_NAME_RESPONSE))
-        self.assertEqual(
-            runner.entities["BADASSETS_CREATE"],
-            {},
-            msg="Illegal Assets should not be present in entitities",
         )

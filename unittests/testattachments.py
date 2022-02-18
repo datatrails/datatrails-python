@@ -26,9 +26,14 @@ RESPONSE = {
     **PROPS,
     "identity": IDENTITY,
 }
+CREATE_RESULT = {
+    "arc_attachment_identity": IDENTITY,
+    "arc_hash_alg": "SHA256",
+    "arc_hash_value": "xxxxxxxxxxxxxxxxxxxxxxx",
+}
 
 
-class TestAttachments(TestCase):
+class TestAttachmentsBase(TestCase):
     """
     Test Archivist Attachments Create method
     """
@@ -37,7 +42,6 @@ class TestAttachments(TestCase):
 
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
-        self.mockstream = BytesIO(b"somelongstring")
 
     def test_attachments_str(self):
         """
@@ -48,6 +52,96 @@ class TestAttachments(TestCase):
             "AttachmentsClient(url)",
             msg="Incorrect str",
         )
+
+
+# A bug in the python mock_open helper function prevents the successful
+# unittesting of the create method as it does not return an iterable for
+# binary data. This is fixed in 3.8.
+#
+# Pro tem, leave this code commented out and add a pragma: no cover to
+# the create method in the attachments client.
+#
+# def mock_open(read_data=''):
+#  """
+#  Note: the special unittest mock_open still does not return an iterable as
+#  originally reported in 2014 and still not fixed. So we have to add
+#  an iterable ourselves. (finding this out wasted 4 hours ...)
+#
+#  Fixed in 3.8 but not backported
+#
+#  https://bugs.python.org/issue32933
+#  https://bugs.python.org/issue21258
+#
+# The following does not have any affect... (as found on stack overflow)
+# Many variations on the code below were tried.
+#  """
+#  f_open = mock.mock_open(read_data=read_data)
+#  f_open.return_value.__iter__ = lambda self: self
+#  f_open.return_value.__next__ = lambda self: next(iter(self.readline, ''))
+#  return f_open
+#
+#
+# class TestAttachmentsCreate(TestAttachmentsBase):
+#    """
+#    Test Archivist Attachments Create method
+#    """
+#
+#    maxDiff = None
+#
+#    def test_attachments_create(self):
+#        """
+#        Test attachment create
+#        """
+#        with mock.patch.object(self.arch._session, "post") as mock_post, mock.patch(
+#            "archivist.attachments.open",
+#            mock_open(read_data="a long string"),
+#        ) as mocked_open:
+#            mock_post.return_value = MockResponse(200, **RESPONSE)
+#
+#            result = self.arch.attachments.create(
+#                {
+#                    "filename": "test_filename",
+#                    "content_type": "image/jpg",
+#                },
+#            )
+#            self.assertEqual(
+#                result,
+#                CREATE_RESULT,
+#                msg="CREATE method called incorrectly",
+#            )
+#            args, _ = mocked_open.call_args
+#            self.assertEqual(
+#                args,
+#                (
+#                    "test_filename",
+#                    "rb",
+#                ),
+#                msg="os_open method called incorrectly",
+#            )
+#
+#            args, kwargs = mock_post.call_args
+#            self.assertEqual(
+#                args,
+#                (f"url/{ROOT}/{SUBPATH}",),
+#                msg="UPLOAD method called incorrectly",
+#            )
+#            self.assertEqual(
+#                "headers" in kwargs,
+#                True,
+#                msg="UPLOAD no headers found",
+#            )
+
+
+class TestAttachmentsUpload(TestAttachmentsBase):
+    """
+    Test Archivist Attachments Upload method
+    """
+
+    maxDiff = None
+
+    def setUp(self):
+        super().setUp()
+        self.mockstream = BytesIO(b"somelongstring")
 
     def test_attachments_upload(self):
         """
@@ -115,6 +209,14 @@ class TestAttachments(TestCase):
                 RESPONSE,
                 msg="UPLOAD method called incorrectly",
             )
+
+
+class TestAttachmentsDownload(TestAttachmentsBase):
+    """
+    Test Archivist Attachments Downloads method
+    """
+
+    maxDiff = None
 
     def common_attachments_download(self, input_params, expected_params):
         """

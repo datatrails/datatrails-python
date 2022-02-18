@@ -22,8 +22,9 @@
 
 """
 
+from copy import deepcopy
 from logging import getLogger
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -31,6 +32,7 @@ from . import archivist as type_helper
 
 from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 from .dictmerge import _deepmerge
+from .errors import ArchivistNotFoundError
 
 
 LOGGER = getLogger(__name__)
@@ -96,6 +98,52 @@ class _LocationsClient:
                 data,
             )
         )
+
+    def create_if_not_exists(self, data: Dict) -> Tuple[Optional[Location], bool]:
+        """
+        Create a location if not already exists
+
+        Args:
+            data (dict): request body of location.
+
+        A YAML representation of the data argument would be:
+
+            .. code-block:: yaml
+
+                signature:
+                  display_name: Apartements du Gare du Nord
+                description: Residential apartment building in new complex above GdN station
+                latitude: 48.8809
+                longitude: 2.3553
+                attributes:
+                  address: 18 Rue de Dunkerque, 75010 Paris, France
+                  wavestone_ext: managed
+
+            The 'signature' setting is required.
+
+        Returns:
+            tuple of :class:`Location` instance, Boolean True if already exists
+
+        """
+        location = None
+        data = deepcopy(data)
+        signature = data.pop("signature")  # must exist
+        try:
+
+            location = self.read_by_signature(
+                props={k: v for k, v in signature.items() if k != "attributes"},
+                attrs=signature.get("attributes"),
+            )
+        except ArchivistNotFoundError:
+            pass
+
+        else:
+            return location, True
+
+        # make sure that signature is in the definition of the location
+        data = signature if data is None else _deepmerge(signature, data)
+
+        return self.create_from_data(data), False
 
     def read(self, identity: str) -> Location:
         """Read location

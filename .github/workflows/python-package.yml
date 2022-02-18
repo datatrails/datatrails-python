@@ -24,11 +24,12 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements-dev.txt
+        python3 -m pip install wheel
     - name: Run integrity checks
       run: |
         ./scripts/version.sh
-        pycodestyle --format=pylint archivist unittests examples functests
-        python3 -m pylint --rcfile=pylintrc archivist unittests examples functests
+        pycodestyle --format=pylint setup.py archivist examples functests unittests
+        python3 -m pylint --rcfile=pylintrc setup.py archivist examples functests unittests
         black archivist examples unittests functests
         modified=$(git status -s | wc -l)
         if [ $modified -gt 0 ]
@@ -37,3 +38,4 @@ jobs:
             exit 1
         fi
         ./scripts/unittests.sh
+
