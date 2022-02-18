@@ -130,8 +130,9 @@ class TestArchivist(TestCase):
             "authauthauth",
             msg="Incorrect auth",
         )
-        self.assertTrue(
+        self.assertEqual(
             arch.verify,
+            True,
             msg="verify must be True",
         )
         with self.assertRaises(AttributeError):

@@ -12,7 +12,7 @@ from archivist.constants import (
     SUBJECTS_SUBPATH,
     SUBJECTS_LABEL,
 )
-from archivist.errors import ArchivistBadRequestError
+from archivist.errors import ArchivistBadRequestError, ArchivistUnconfirmedError
 
 from .mock_response import MockResponse
 
@@ -44,6 +44,14 @@ RESPONSE = {
     "wallet_address": WALLET_ADDRESSES,
     "tessera_pub_key": TESSERA_PUB_KEYS,
 }
+RESPONSE_WITH_PENDING = {
+    **RESPONSE,
+    "confirmation_status": "PENDING",
+}
+RESPONSE_WITH_CONFIRMATION = {
+    **RESPONSE,
+    "confirmation_status": "CONFIRMED",
+}
 REQUEST = {
     "display_name": DISPLAY_NAME,
     "wallet_pub_key": WALLET_PUB_KEYS,
@@ -60,7 +68,7 @@ class TestSubjects(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", "authauthauth")
+        self.arch = Archivist("url", "authauthauth", max_time=1)
 
     def test_subjects_str(self):
         """
@@ -104,6 +112,58 @@ class TestSubjects(TestCase):
                 RESPONSE,
                 msg="CREATE method called incorrectly",
             )
+
+    def test_subjects_create_with_confirmation(self):
+        """
+        Test subjects creation
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            subject = self.arch.subjects.create(
+                DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+            )
+            self.assertEqual(
+                subject,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+            with mock.patch.object(self.arch._session, "get") as mock_get:
+                mock_get.side_effect = [
+                    MockResponse(200, **RESPONSE),
+                    MockResponse(200, **RESPONSE_WITH_PENDING),
+                    MockResponse(200, **RESPONSE_WITH_CONFIRMATION),
+                ]
+                self.assertEqual(
+                    self.arch.subjects.wait_for_confirmation(subject["identity"]),
+                    RESPONSE_WITH_CONFIRMATION,
+                    msg="wait_for_confirmation called incorrectly",
+                )
+
+    def test_subjects_create_with_confirmation_unconfirmed(self):
+        """
+        Test subjects creation
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            subject = self.arch.subjects.create(
+                DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+            )
+            self.assertEqual(
+                subject,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+            with mock.patch.object(self.arch._session, "get") as mock_get:
+                mock_get.side_effect = [
+                    MockResponse(200, **RESPONSE),
+                    MockResponse(200, **RESPONSE_WITH_PENDING),
+                    MockResponse(200, **RESPONSE_WITH_PENDING),
+                    MockResponse(200, **RESPONSE_WITH_PENDING),
+                    MockResponse(200, **RESPONSE_WITH_PENDING),
+                    MockResponse(200, **RESPONSE_WITH_PENDING),
+                ]
+                with self.assertRaises(ArchivistUnconfirmedError):
+                    self.arch.subjects.wait_for_confirmation(subject["identity"])
 
     def test_subjects_read(self):
         """

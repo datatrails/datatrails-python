@@ -32,6 +32,7 @@ from .constants import (
     SUBJECTS_SUBPATH,
     SUBJECTS_LABEL,
 )
+from . import subjects_confirmer
 from .dictmerge import _deepmerge
 
 
@@ -103,6 +104,22 @@ class _SubjectsClient:
                 data,
             )
         )
+
+    def wait_for_confirmation(self, identity: str) -> Subject:
+        """Wait for subject to be confirmed.
+
+        Waits for subject to be confirmed.
+
+        Args:
+            identity (str): identity of asset
+
+        Returns:
+            True if subject is confirmed.
+
+        """
+        subjects_confirmer.MAX_TIME = self._archivist.max_time
+        # pylint: disable=protected-access
+        return subjects_confirmer._wait_for_confirmation(self, identity)
 
     def read(self, identity: str) -> Subject:
         """Read Subject
