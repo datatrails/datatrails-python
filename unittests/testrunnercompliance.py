@@ -34,8 +34,9 @@ COMPLIANCE_POLICIES_CREATE = {
     "dynamic_window": 700,
     "dynamic_variability": 1.5,
 }
+IDENTITY = "compliance_policies/c25fb9e7-0a88-4236-8720-1008eb4ddd1d"
 COMPLIANCE_POLICIES_RESPONSE = {
-    "identity": "compliance_policies/c25fb9e7-0a88-4236-8720-1008eb4ddd1d",
+    "identity": IDENTITY,
     "compliance_type": "COMPLIANCE_DYNAMIC_TOLERANCE",
     "description": "ev maintenance policy",
     "display_name": COMPLIANCE_POLICY_NAME,
@@ -126,6 +127,7 @@ class TestRunnerCompliance(TestCase):
                                 "action": "COMPLIANCE_POLICIES_CREATE",
                                 "description": "Testing compliance_policies_create",
                                 "print_response": True,
+                                "delete": True,
                             },
                             **COMPLIANCE_POLICIES_CREATE,
                         }
@@ -141,11 +143,14 @@ class TestRunnerCompliance(TestCase):
                 COMPLIANCE_POLICIES_CREATE
             )
             self.assertEqual(
-                self.arch.runner.entities["COMPLIANCE_POLICIES_CREATE"][
-                    COMPLIANCE_POLICY_NAME
-                ],
+                self.arch.runner.entities[COMPLIANCE_POLICY_NAME],
                 COMPLIANCE_POLICIES_RESPONSE,
                 msg="Incorrect compliance_policy created",
+            )
+            self.assertEqual(
+                self.arch.runner.deletions[IDENTITY],
+                self.arch.compliance_policies.delete,
+                msg="Incorrect compliance_policy delete_method",
             )
             mock_compliance_policies_delete.assert_called_once()
 
@@ -186,7 +191,7 @@ class TestRunnerCompliance(TestCase):
                 COMPLIANCE_COMPLIANT_AT_ID
             )
             self.assertEqual(
-                len(self.arch.runner.entities["COMPLIANCE_COMPLIANT_AT"]),
+                len(self.arch.runner.entities),
                 0,
                 msg="Incorrect compliance created",
             )
@@ -200,9 +205,7 @@ class TestRunnerCompliance(TestCase):
             self.arch.compliance, "compliant_at"
         ) as mock_compliance_compliant_at, mock.patch.object(
             self.arch.runner, "asset_id"
-        ) as mock_asset_id, mock.patch.object(
-            self.arch.compliance_policies, "read"
-        ) as mock_compliance_policies_read:
+        ) as mock_asset_id:
             mock_asset_id.return_value = COMPLIANCE_COMPLIANT_AT_ID
             mock_compliance_compliant_at.return_value = Compliance(
                 **COMPLIANCE_FALSE_RESPONSE
@@ -217,6 +220,7 @@ class TestRunnerCompliance(TestCase):
                                 "print_response": True,
                                 "asset_name": COMPLIANCE_COMPLIANT_AT_NAME,
                             },
+                            "report": True,
                         }
                     ],
                 }
@@ -227,13 +231,11 @@ class TestRunnerCompliance(TestCase):
                 msg="time_sleep incorrectly called",
             )
             mock_compliance_compliant_at.assert_called_once_with(
-                COMPLIANCE_COMPLIANT_AT_ID
+                COMPLIANCE_COMPLIANT_AT_ID,
+                report=True,
             )
             self.assertEqual(
-                len(self.arch.runner.entities["COMPLIANCE_COMPLIANT_AT"]),
+                len(self.arch.runner.entities),
                 0,
                 msg="Incorrect compliance created",
-            )
-            mock_compliance_policies_read.assert_called_once_with(
-                COMPLIANCE_POLICY_NON_COMPLIANT
             )

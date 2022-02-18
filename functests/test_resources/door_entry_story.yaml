@@ -1,0 +1,343 @@
+---
+# The step field is a string that represents the method bound to an endpoint and
+# the args and kwargs correspond to the arguments to such a method.
+#
+# NB the assets and events endpoints require all values to be strings. Other values may
+# be of the correct type such as confirm which is a boolean.
+#
+# This story creates a number of doors and access cards. An 'open door' event is then 
+# created with attached photo. Finally all doors and cards are listed and all events on 
+# the the Courts of Justice Front Door and all events on the Access Card 2 are listed.
+steps:
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a door in Paris at Jitsuin offices.
+    signature:
+      attributes:
+        arc_display_name: Jitsuin Paris Front Door
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: door
+      arc_firmware_version: "1.0"
+      arc_serial_number: das-j1-01
+      arc_description: Electronic door entry system to Jitsuin France
+      wavestone_asset_id: paris.france.jitsuin.das
+    location:
+      signature:
+        display_name: Jitsuin Paris
+      description: Sales and sales support for the French region
+      latitude: 48.8339211
+      longitude: 2.371345
+      attributes:
+        address: 5 Parvis Alan Turing, 75013 Paris, France
+        wavestone_ext: managed
+    attachments:
+      - filename: functests/test_resources/doors/assets/entry_terminal.jpg
+        content_type: image/jpg
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a door in Paris at City Hall
+    signature:
+      attributes:
+        arc_display_name: City Hall Paris Front Door
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: door
+      arc_firmware_version: "1.0"
+      arc_serial_number: das-x4-01
+      arc_description: Electronic door entry system controlling the main staff entrance to Paris City Hall
+      wavestone_asset_id: cityhall.paris.wavestonedas
+    location:
+      signature:
+        display_name: Paris City Hall
+      description: Seat of Paris local city adminstration
+      latitude: 48.856389
+      longitude: 2.352222
+      attributes:
+        address: Place de l'Hôtel de Ville, 75004 Paris, France
+        wavestone_ext: managed
+      attachments:
+      - filename: functests/test_resources/doors/assets/cityhall.jpg
+        content_type: image/jpg
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a door in Paris at Courts of Justice
+      print_response: true
+    signature:
+      attributes:
+        arc_display_name: Courts of Justice Paris Front Door
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: door
+      arc_firmware_version: "1.0"
+      arc_serial_number: das-x4-02
+      arc_description: Electronic door entry system controlling the main staff entrance to Paris Courts of Justice
+      wavestone_asset_id: courts.paris.wavestonedas
+    location:
+      signature:
+        display_name: Paris Courts of Justice
+      description: Public museum in the former Palais de Justice
+      latitude: 48.855722
+      longitude: 2.345051
+      attributes:
+        address: 10 Boulevard du Palais, 75001 Paris, France
+        wavestone_ext: managed
+    attachments:
+      - filename: functests/test_resources/doors/assets/courts.jpg
+        content_type: image/jpg
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a door in Paris at Bastille
+    signature:
+      attributes:
+        arc_display_name: Bastille Paris Front Door
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: door
+      arc_firmware_version: "1.0"
+      arc_serial_number: das-x4-03
+      arc_description: Electronic door entry system controlling the main staff entrance to Bastille
+      wavestone_asset_id: bastille.paris.wavestonedas
+    location:
+      signature:
+        display_name: Bastille
+      description: Medieval fortress, made famous by the French Revolution
+      latitude: 48.85333
+      longitude: 2.36917
+      attributes:
+        address: Place de la Bastille, 75011 Paris, France
+        wavestone_ext: managed
+    attachments:
+      - filename: functests/test_resources/doors/assets/bastille.jpg
+        content_type: image/jpg
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a front door in Paris at Gare du Nord Apartments
+    signature:
+      attributes:
+        arc_display_name: Gare du Nord Apartments Paris Front Door
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: door
+      arc_firmware_version: "1.0"
+      arc_serial_number: das-x4-04
+      arc_description: Electronic door entry system controlling the front residential entrance to Apartements du Gare du Nord
+      wavestone_asset_id: front.gdn.paris.wavestonedas
+    location:
+      signature:
+        display_name: Apartements du Gare du Nord
+      description: Residential apartment building in new complex above GdN station
+      latitude: 48.8809
+      longitude: 2.3553
+      attributes:
+        address: 18 Rue de Dunkerque, 75010 Paris, France
+        wavestone_ext: managed
+    attachments:
+      - filename: functests/test_resources/doors/assets/gdn_front.jpg
+        content_type: image/jpg
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a side door in Paris at Gare du Nord Apartments
+    signature:
+      attributes:
+        arc_display_name: Gare du Nord Apartments Paris Side Door
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: door
+      arc_firmware_version: "1.0"
+      arc_serial_number: das-x4-05
+      arc_description: Electronic door entry system controlling the side residential entrance to Apartements du Gare du Nord
+      wavestone_asset_id: side.gdn.paris.wavestonedas
+    location:
+      signature:
+        display_name: Apartements du Gare du Nord
+      description: Residential apartment building in new complex above GdN station
+      latitude: 48.8809
+      longitude: 2.3553
+      attributes:
+        address: 18 Rue de Dunkerque, 75010 Paris, France
+        wavestone_ext: managed
+    attachments:
+      - filename: functests/test_resources/doors/assets/gdn_side.jpg
+        content_type: image/jpg
+    confirm: true
+
+# We don't create locations for cards - they float free.
+# If there's a natural affinity between cards and home
+# locations/owners in the real world then of course we
+# can add this.
+# Similarly there's no real benefit to creating a
+# Primary_image for them so leave that empty too
+#
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create Access Card 1
+    signature:
+      attributes:
+        arc_display_name: Access Card 1
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: card
+      arc_serial_number: sc-x5-1
+      arc_description: Electronic door Access Card 1
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create Access Card 2
+      print_response: true
+    signature:
+      attributes:
+        arc_display_name: Access Card 2
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: card
+      arc_serial_number: sc-x5-2
+      arc_description: Electronic door Access Card 2
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create Access Card 3
+    signature:
+      attributes:
+        arc_display_name: Access Card 3
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_serial_number: sc-x5-3
+      arc_description: Electronic door Access Card 3
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create Access Card 4
+    signature:
+      attributes:
+        arc_display_name: Access Card 4
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: card
+      arc_serial_number: sc-x5-4
+      arc_description: Electronic door Access Card 4
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create Access Card 5
+    signature:
+      attributes:
+        arc_display_name: Access Card 5
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: card
+      arc_serial_number: sc-x5-5
+      arc_description: Electronic door Access Card 5
+    confirm: true
+
+  # opening a door requires 2 events to be created with the same
+  # correlation value "be5c8061-236d-4400-a625-b74a34e5801b" and the
+  # same principal declared..
+  - step:
+      action: EVENTS_CREATE
+      description: Courts of justice front door opened with card 2
+      asset_name: Courts of Justice Paris Front Door
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    principal_declared:
+      subject: courts.paris.wavestonedas
+      email: courts.paris.wavestonedas@iot.wavestone.com
+      display_name: Courts of Justice Paris Front Door machine credential
+    event_attributes:
+      arc_description: Door opened by authorised key card Access Card 2
+      arc_display_type: Door Open
+      arc_evidence: ARQC 0x12345678
+      arc_correlation_value: be5c8061-236d-4400-a625-b74a34e5801b
+      wavestone_card_name: Access Card 2
+      wavestone_evt_type: door_open
+    attachments:
+      - filename: functests/test_resources/doors/events/door_open.png
+        content_type: image/png
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Access Card 2 opens Courts of justice front door
+      asset_name: Access Card 2
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    principal_declared:
+      subject: courts.paris.wavestonedas
+      email: courts.paris.wavestonedas@iot.wavestone.com
+      display_name: Courts of Justice Paris Front Door machine credential
+    event_attributes:
+      arc_description: Opened Courts of Justice Paris Front Door
+      arc_display_type: Door Open
+      arc_evidence: ARQC 0x12345678
+      arc_correlation_value: be5c8061-236d-4400-a625-b74a34e5801b
+      wavestone_door_name: Courts of Justice Paris Front Door
+      wavestone_evt_type: door_open
+    attachments:
+      - filename: functests/test_resources/doors/events/door_open.png
+        content_type: image/png
+    confirm: true
+
+  - step:
+      action: ASSETS_LIST
+      description: List all doors
+      print_response: true
+    attrs:
+      arc_display_type: door
+
+  - step:
+      action: ASSETS_LIST
+      description: List all cards
+      print_response: true
+    attrs:
+      arc_display_type: card
+
+  - step:
+      action: EVENTS_LIST
+      description: List all events for Courts of Justice Paris Front Door
+      print_response: true
+      asset_name: Courts of Justice Paris Front Door
+
+  - step:
+      action: EVENTS_LIST
+      description: List all events for Access Card 2
+      print_response: true
+      asset_name: Access Card 2
+

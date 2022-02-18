@@ -1,7 +1,7 @@
-.. _runnerindex:
+.. _story_runnerindex:
 
 Story Runner
-.........................
+.....................
 
 A runner attribute of the archivist instance allows running scenarios from
 a dictionary. Usually the dictionary is read from a yaml or json file.
@@ -34,18 +34,20 @@ Execute:
          -t credentials/token \
          functests/test_resources/richness_story.yaml
 
-See :ref:`compliance_policies_demoref` for example yaml files.
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    generic
    assets_create
+   assets_create_if_not_exists
+   assets_list
    compliance_compliant_at
    compliance_policies_create
-   events.create
+   events_create
+   events_list
    
    compliance_policies_demo
    compliance_policies_demo_dynamic_tolerance
    compliance_policies_demo_richness
+   door_entry_demo

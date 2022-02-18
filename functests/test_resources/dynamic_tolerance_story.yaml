@@ -150,4 +150,5 @@ steps:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of EV pump 1.
       asset_name: ev pump 1
+    report: true
 

@@ -24,9 +24,9 @@
 
 # pylint:disable=too-few-public-methods
 
-from typing import BinaryIO, Dict, Optional
 from copy import deepcopy
 from logging import getLogger
+from typing import BinaryIO, Dict, Optional
 
 from requests.models import Response
 
@@ -65,6 +65,47 @@ class _AttachmentsClient:
 
     def __str__(self) -> str:
         return f"AttachmentsClient({self._archivist.url})"
+
+    def create(self, data: Dict) -> Dict:  # pragma: no cover
+        """
+        Create an attachment and return struct suitable for use in an asset
+        or event creation.
+
+        Args:
+            data (dict): dictionary
+
+        A YAML representation of the data argument would be:
+
+            .. code-block:: yaml
+
+                filename: functests/test_resources/doors/assets/gdn_front.jpg
+                content_type: image/jpg
+
+             Both 'filename' and 'content_type' are required.
+
+        Returns:
+
+            A dict suitable for adding to an asset or event creation
+
+        A YAML representation of the result would be:
+
+            .. code-block:: yaml
+
+                arc_attachment_identity: blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                arc_hash_alg: SHA256
+                arc_hash_value: xxxxxxxxxxxxxxxxxxxxxxx
+
+        """
+        result = None
+        with open(data["filename"], "rb") as fd:
+            attachment = self.upload(fd, mtype=data.get("content_type"))
+            result = {
+                "arc_attachment_identity": attachment["identity"],
+                "arc_hash_alg": attachment["hash"]["alg"],
+                "arc_hash_value": attachment["hash"]["value"],
+            }
+
+        return result
 
     def upload(self, fd: BinaryIO, *, mtype: str = "image/jpg") -> Attachment:
         """Create attachment

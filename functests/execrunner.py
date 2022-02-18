@@ -16,6 +16,8 @@ from archivist import logger
 
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
     logger.set_logger(environ["TEST_DEBUG"])
+else:
+    logger.set_logger("INFO")
 
 LOGGER = logger.LOGGER
 
@@ -51,7 +53,7 @@ class TestRunner(TestCase):
         ) as y:
             self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
             self.assertEqual(
-                len(self.arch.runner.entities["COMPLIANCE_POLICIES_CREATE"]),
+                len(self.arch.runner.entities),
                 1,
                 msg="Incorrect number of compliance_policies",
             )
@@ -76,12 +78,32 @@ class TestRunner(TestCase):
         ) as y:
             self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
             self.assertEqual(
-                len(self.arch.runner.entities["COMPLIANCE_POLICIES_CREATE"]),
+                len(self.arch.runner.entities),
                 2,
                 msg="Incorrect number of compliance_policies",
             )
             self.assertEqual(
-                len(self.arch.runner.entities["ASSETS_CREATE"]),
+                len(self.arch.runner.entities),
                 3,
+                msg="Incorrect number of assets",
+            )
+
+    def test_runner_door_entry(self):
+        """
+        Test runner with door_entry story
+
+        run_steps is used so that exceptions are shown
+        """
+
+        LOGGER.info("...")
+        with open(
+            "functests/test_resources/door_entry_story.yaml",
+            "r",
+            encoding="utf-8",
+        ) as y:
+            self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
+            self.assertEqual(
+                len(self.arch.runner.entities),
+                11,
                 msg="Incorrect number of assets",
             )

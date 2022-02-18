@@ -65,7 +65,11 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
         return f"ComplianceClient({self._archivist.url})"
 
     def compliant_at(
-        self, asset_id, *, compliant_at: Optional[str] = None
+        self,
+        asset_id,
+        *,
+        compliant_at: Optional[str] = None,
+        report: Optional[str] = None,
     ) -> Compliance:
         """
         Reads compliance of a particular asset.
@@ -75,6 +79,7 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
             compliant_at (str): datetime to check compliance at a particular time (optional).
                                 format: rfc3339 - UTC only
                                 https://datatracker.ietf.org/doc/html/rfc3339#section-4.1
+            report (bool): if true output report
             page_size (int): optional page size. (Rarely used).
 
         Returns:
@@ -82,8 +87,37 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
 
         """
         params = {"compliant_at": compliant_at} if compliant_at is not None else None
-        return self._archivist.get(
+        response = self._archivist.get(
             f"{COMPLIANCE_SUBPATH}/{COMPLIANCE_LABEL}",
             asset_id,
             params=params,
         )  # type: ignore
+        if report is True:
+            self.compliant_at_report(response)
+        return Compliance(**response)
+
+    def compliant_at_report(self, compliance: Compliance):
+        """
+        Prints report of compliance_at request
+
+        Args:
+            response (dict): compliance object encapsulating response from compliant_at
+        """
+
+        LOGGER.info("Compliant %s", compliance["compliant"])
+        for outcome in compliance["compliance"]:
+
+            if outcome["compliant"]:
+                continue
+
+            # get the compliance policy
+            policy = self._archivist.compliance_policies.read(
+                outcome["compliance_policy_identity"]
+            )
+
+            # print the policy name and the reason
+            LOGGER.info(
+                "NON-COMPLIANCE -> Policy: %s: Reason %s",
+                policy["display_name"],
+                outcome["reason"],
+            )

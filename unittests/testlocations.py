@@ -12,15 +12,35 @@ from archivist.constants import (
     LOCATIONS_SUBPATH,
     LOCATIONS_LABEL,
 )
-from archivist.errors import ArchivistBadRequestError
+from archivist.errors import ArchivistBadRequestError, ArchivistNotFoundError
 
 from .mock_response import MockResponse
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
+SIGNATURE_PROPS = {
+    "display_name": "Macclesfield, Cheshire",
+}
+SIGNATURE_ATTRS = {
+    "director": "John Smith",
+}
+SIGNATURE = {
+    **SIGNATURE_PROPS,
+    "attributes": SIGNATURE_ATTRS,
+}
+
+IDENTITY = f"{LOCATIONS_LABEL}/xxxxxxxx"
+SUBPATH = f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}"
+
+BARE_ATTRS = {
+    "director": "John Smith",
+    "address": "Bridgewater, Somerset",
+    "facility_type": "Manufacture",
+    "support_email": "support@macclesfield.com",
+    "support_phone": "123 456 789",
+}
 PROPS = {
     "display_name": "Macclesfield, Cheshire",
     "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
@@ -35,17 +55,49 @@ ATTRS = {
     "support_phone": "123 456 789",
 }
 
-IDENTITY = f"{LOCATIONS_LABEL}/xxxxxxxx"
-SUBPATH = f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}"
-
-RESPONSE = {
-    **PROPS,
-    "identity": IDENTITY,
-    "attributes": ATTRS,
-}
 REQUEST = {
-    **PROPS,
-    "attributes": ATTRS,
+    "display_name": "Macclesfield, Cheshire",
+    "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
+    "latitude": "53.2546799",
+    "longitude": "-2.1213956,14.54",
+    "attributes": {
+        "director": "John Smith",
+        "address": "Bridgewater, Somerset",
+        "facility_type": "Manufacture",
+        "support_email": "support@macclesfield.com",
+        "support_phone": "123 456 789",
+    },
+}
+RESPONSE = {
+    "identity": IDENTITY,
+    "display_name": "Macclesfield, Cheshire",
+    "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
+    "latitude": "53.2546799",
+    "longitude": "-2.1213956,14.54",
+    "attributes": {
+        "director": "John Smith",
+        "address": "Bridgewater, Somerset",
+        "facility_type": "Manufacture",
+        "support_email": "support@macclesfield.com",
+        "support_phone": "123 456 789",
+    },
+}
+REQUEST_EXISTS = {
+    "signature": {
+        "display_name": "Macclesfield, Cheshire",
+        "attributes": {
+            "director": "John Smith",
+        },
+    },
+    "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
+    "latitude": "53.2546799",
+    "longitude": "-2.1213956,14.54",
+    "attributes": {
+        "address": "Bridgewater, Somerset",
+        "facility_type": "Manufacture",
+        "support_email": "support@macclesfield.com",
+        "support_phone": "123 456 789",
+    },
 }
 
 
@@ -98,6 +150,96 @@ class TestLocations(TestCase):
                 location,
                 RESPONSE,
                 msg="CREATE method called incorrectly",
+            )
+
+    def test_locations_create_if_not_exists_existing_location(self):
+        """
+        Test location creation
+        """
+        with mock.patch.object(
+            self.arch._session, "get"
+        ) as mock_get, mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_get.return_value = MockResponse(
+                200,
+                locations=[
+                    RESPONSE,
+                ],
+            )
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            location, existed = self.arch.locations.create_if_not_exists(
+                REQUEST_EXISTS,
+            )
+            mock_post.assert_not_called()
+            self.assertEqual(
+                existed,
+                True,
+                msg="Incorrect existed bool",
+            )
+            self.assertEqual(
+                location,
+                RESPONSE,
+                msg="Incorrect location listed",
+            )
+
+            self.assertEqual(
+                tuple(mock_get.call_args),
+                (
+                    (f"url/{ROOT}/{SUBPATH}",),
+                    {
+                        "headers": {
+                            "authorization": "Bearer authauthauth",
+                        },
+                        "params": {
+                            "page_size": 2,
+                            "display_name": "Macclesfield, Cheshire",
+                            "attributes.director": "John Smith",
+                        },
+                        "verify": True,
+                    },
+                ),
+                msg="GET method called incorrectly",
+            )
+
+    def test_locations_create_if_not_exists_nonexistent_location(self):
+        """
+        Test location creation
+        """
+        with mock.patch.object(
+            self.arch._session, "get"
+        ) as mock_get, mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_get.side_effect = ArchivistNotFoundError
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            location, existed = self.arch.locations.create_if_not_exists(
+                REQUEST_EXISTS,
+            )
+            mock_get.assert_called_once()
+            mock_post.assert_called_once()
+            self.assertEqual(
+                location,
+                RESPONSE,
+                msg="Incorrect location listed",
+            )
+            self.assertEqual(
+                existed,
+                False,
+                msg="Incorrect existed bool",
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
             )
 
     def test_locations_read(self):

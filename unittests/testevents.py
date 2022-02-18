@@ -23,6 +23,7 @@ from .mock_response import MockResponse
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
+# pylint: disable=too-many-lines
 # pylint: disable=too-many-public-methods
 
 ASSET_ID = f"{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
@@ -80,6 +81,12 @@ PROPS_WITH_NO_PRINCIPAL = {
     "timestamp_declared": "2019-11-27T14:44:19Z",
 }
 
+ATTACHMENTS = [
+    {
+        "filename": "functests/test_resources/doors/events/door_open.png",
+        "content_type": "image/png",
+    }
+]
 EVENT_ATTRS = {
     "arc_append_attachments": [
         SECONDARY_IMAGE,
@@ -92,6 +99,52 @@ ASSET_ATTRS = {
 
 IDENTITY = f"{ASSET_ID}/{EVENTS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
 
+ATTACHMENTS = {
+    "arc_attachment_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "arc_hash_value": "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkojijl",
+    "arc_hash_alg": "sha256",
+}
+
+EVENT_ATTRS_ATTACHMENTS = {
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+    },
+    "attachments": [
+        {
+            "filename": "door_open.png",
+            "content_type": "image/jpg",
+        },
+    ],
+}
+REQUEST_WITH_ATTACHMENTS = {
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+        "arc_attachments": [
+            ATTACHMENTS,
+        ],
+    },
+}
+RESPONSE_WITH_ATTACHMENTS = {
+    "identity": IDENTITY,
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+        "arc_attachments": [
+            ATTACHMENTS,
+        ],
+    },
+}
 REQUEST = {
     **PROPS,
     "event_attributes": EVENT_ATTRS,
@@ -270,6 +323,50 @@ class TestEvents(TestCase):
             self.assertEqual(
                 event,
                 RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_upload_attachments(self):
+        """
+        Test event creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(
+            self.arch.attachments, "create"
+        ) as mock_attachments_create:
+            mock_post.return_value = MockResponse(200, **RESPONSE_WITH_ATTACHMENTS)
+            mock_attachments_create.return_value = ATTACHMENTS
+
+            event = self.arch.events.create_from_data(
+                ASSET_ID, EVENT_ATTRS_ATTACHMENTS, confirm=False
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (
+                    (
+                        f"url/{ROOT}/{ASSETS_SUBPATH}"
+                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                        f"/{EVENTS_LABEL}"
+                    ),
+                ),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST_WITH_ATTACHMENTS,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                event,
+                RESPONSE_WITH_ATTACHMENTS,
                 msg="CREATE method called incorrectly",
             )
 
