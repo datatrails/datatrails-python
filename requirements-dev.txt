@@ -1,18 +1,22 @@
 -r requirements.txt
 
 # code quality
-autopep8~=1.5
-black~=21.4b2
-coverage~=6.2
-pip-audit~=1.0.0
-pycodestyle~=2.6
-pylint~=2.6
+autopep8~=1.6
+black~=22.1
+coverage~=6.3
+pip-audit~=2.0
+pycodestyle~=2.8
+pylint~=2.12
 
 # uploading to pypi
-twine~=3.4
+build~=0.7.0
+twine~=3.8
 
 # documentation
 # the file docs/requirements.txt
 # must be kept in sync with this file.
-sphinx~=4.3
-sphinx-rtd-theme~=1.0.0
+sphinx~=4.4
+sphinx-rtd-theme~=1.0
+
+# analyze dependencies
+pipdeptree~=2.2
