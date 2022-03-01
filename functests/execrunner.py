@@ -54,13 +54,8 @@ class TestRunner(TestCase):
             self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
             self.assertEqual(
                 len(self.arch.runner.entities),
-                1,
-                msg="Incorrect number of compliance_policies",
-            )
-            self.assertEqual(
-                len(self.arch.runner.entities["ASSETS_CREATE"]),
-                1,
-                msg="Incorrect number of assets",
+                2,
+                msg="Incorrect number of entities",
             )
 
     def test_runner_richness(self):
@@ -79,13 +74,8 @@ class TestRunner(TestCase):
             self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
             self.assertEqual(
                 len(self.arch.runner.entities),
-                2,
-                msg="Incorrect number of compliance_policies",
-            )
-            self.assertEqual(
-                len(self.arch.runner.entities),
-                3,
-                msg="Incorrect number of assets",
+                5,
+                msg="Incorrect number of entities",
             )
 
     def test_runner_door_entry(self):
@@ -105,5 +95,5 @@ class TestRunner(TestCase):
             self.assertEqual(
                 len(self.arch.runner.entities),
                 11,
-                msg="Incorrect number of assets",
+                msg="Incorrect number of entities",
             )

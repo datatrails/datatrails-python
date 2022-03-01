@@ -27,6 +27,7 @@ steps:
       action: COMPLIANCE_POLICIES_CREATE
       description: Create a compliance policy that checks an EV pump maintenance requests are serviced within a reasonable time frame.
       print_response: true
+      delete: true
     description: ev maintenance policy
     display_name: ev maintenance policy
     compliance_type: COMPLIANCE_DYNAMIC_TOLERANCE

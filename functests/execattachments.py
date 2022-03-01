@@ -1,15 +1,17 @@
 """
 Tests the upload and download functionality of the SDK
 """
-import os
-from os import environ
-from unittest import TestCase
 from contextlib import suppress
 from filecmp import clear_cache, cmp
+from json import dumps as json_dumps
+from io import BytesIO
+from os import environ, remove
+from unittest import TestCase
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
 from archivist.logger import set_logger
+from archivist.utils import get_url
 
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
     set_logger(environ["TEST_DEBUG"])
@@ -34,12 +36,12 @@ class TestAttachmentstCreate(TestCase):
         self.file_uuid: str = ""
 
         with suppress(FileNotFoundError):
-            os.remove(self.TEST_IMAGE_DOWNLOAD_PATH)
+            remove(self.TEST_IMAGE_DOWNLOAD_PATH)
 
     def tearDown(self) -> None:
         """Remove the downloaded image for subsequent test runs"""
         with suppress(FileNotFoundError):
-            os.remove(self.TEST_IMAGE_DOWNLOAD_PATH)
+            remove(self.TEST_IMAGE_DOWNLOAD_PATH)
 
     def test_attachment_upload_and_download(self):
         """
@@ -93,3 +95,71 @@ class TestAttachmentstCreate(TestCase):
                 attachment = self.arch.attachments.download(
                     file_uuid, fd, params={"strict": "true"}
                 )
+
+
+class TestAttachmentstMalware(TestCase):
+    """
+    Test Archivist Attachment Create method
+    """
+
+    # we dont want to actually store these files in our repo so download
+    # every time.
+    TEST_MALWARE1 = "https://secure.eicar.org/eicar.com"
+    TEST_MALWARE2 = "https://secure.eicar.org/eicar.com.txt"
+    TEST_MALWARE3 = "https://secure.eicar.org/eicar.com.zip"
+    TEST_MALWARE4 = "https://secure.eicar.org/eicarcom2.zip"
+
+    @classmethod
+    def setUpClass(cls):
+        cls.malware1 = BytesIO()
+        get_url(cls.TEST_MALWARE1, cls.malware1)
+
+        cls.malware2 = BytesIO()
+        get_url(cls.TEST_MALWARE2, cls.malware2)
+
+        cls.malware3 = BytesIO()
+        get_url(cls.TEST_MALWARE3, cls.malware3)
+
+        cls.malware4 = BytesIO()
+        get_url(cls.TEST_MALWARE4, cls.malware4)
+
+    def setUp(self):
+        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
+            auth = fd.read().strip()
+        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+
+    def test_attachment_malware_scan1(self):
+        """
+        Test file upload through the SDK
+        """
+        attachment = self.arch.attachments.upload(self.malware1)
+        print("attachment", json_dumps(attachment, indent=4))
+        response = self.arch.attachments.info(attachment["identity"])
+        print("response", json_dumps(response, indent=4))
+
+    def test_attachment_malware_scan2(self):
+        """
+        Test file upload through the SDK
+        """
+        attachment = self.arch.attachments.upload(self.malware2)
+        print("attachment", json_dumps(attachment, indent=4))
+        response = self.arch.attachments.info(attachment["identity"])
+        print("response", json_dumps(response, indent=4))
+
+    def test_attachment_malware_scan3(self):
+        """
+        Test file upload through the SDK
+        """
+        attachment = self.arch.attachments.upload(self.malware3)
+        print("attachment", json_dumps(attachment, indent=4))
+        response = self.arch.attachments.info(attachment["identity"])
+        print("response", json_dumps(response, indent=4))
+
+    def test_attachment_malware_scan4(self):
+        """
+        Test file upload through the SDK
+        """
+        attachment = self.arch.attachments.upload(self.malware4)
+        print("attachment", json_dumps(attachment, indent=4))
+        response = self.arch.attachments.info(attachment["identity"])
+        print("response", json_dumps(response, indent=4))

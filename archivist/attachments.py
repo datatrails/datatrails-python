@@ -25,6 +25,7 @@
 # pylint:disable=too-few-public-methods
 
 from copy import deepcopy
+from io import BytesIO
 from logging import getLogger
 from typing import BinaryIO, Dict, Optional
 
@@ -34,8 +35,15 @@ from requests.models import Response
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from . import archivist as type_helper
 
-from .constants import ATTACHMENTS_SUBPATH, ATTACHMENTS_LABEL
+from .constants import (
+    ASSETS_SUBPATH,
+    ATTACHMENTS_SUBPATH,
+    ATTACHMENTS_LABEL,
+    ATTACHMENTS_ASSETS_EVENTS_LABEL,
+    SEP,
+)
 from .dictmerge import _deepmerge
+from .utils import get_url
 from .type_aliases import NoneOnError
 
 LOGGER = getLogger(__name__)
@@ -81,7 +89,15 @@ class _AttachmentsClient:
                 filename: functests/test_resources/doors/assets/gdn_front.jpg
                 content_type: image/jpg
 
-             Both 'filename' and 'content_type' are required.
+            OR
+
+            .. code-block:: yaml
+
+                url: https://secure.eicar.org/eicar.com"
+                content_type: image/jpg
+
+             Either 'filename' or 'url' is required.
+             'content_type' is required.
 
         Returns:
 
@@ -97,13 +113,22 @@ class _AttachmentsClient:
 
         """
         result = None
-        with open(data["filename"], "rb") as fd:
+        filename = data.get("filename", None)
+        if filename is not None:
+            with open(filename, "rb") as fd:
+                attachment = self.upload(fd, mtype=data.get("content_type"))
+
+        else:
+            url = data["url"]
+            fd = BytesIO()
+            get_url(url, fd)
             attachment = self.upload(fd, mtype=data.get("content_type"))
-            result = {
-                "arc_attachment_identity": attachment["identity"],
-                "arc_hash_alg": attachment["hash"]["alg"],
-                "arc_hash_value": attachment["hash"]["value"],
-            }
+
+        result = {
+            "arc_attachment_identity": attachment["identity"],
+            "arc_hash_alg": attachment["hash"]["alg"],
+            "arc_hash_value": attachment["hash"]["value"],
+        }
 
         return result
 
@@ -141,6 +166,7 @@ class _AttachmentsClient:
         fd: BinaryIO,
         *,
         params: Optional[Dict] = None,
+        asset_or_event_id: Optional[str] = None,
     ) -> Response:
         """Read attachment
 
@@ -150,16 +176,64 @@ class _AttachmentsClient:
 
         Args:
             identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
-            fd (file): opened file escriptor or other file-type sink..
+            fd (file): opened file descriptor or other file-type sink..
             params (dict): e.g. {"allow_insecure": "true"} OR {"strict": "true" }
+            asset_or_event_id (str): optional asset identity
+                                     e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+                                          assets/xxxxx/events/xxxx
 
         Returns:
             REST response
 
         """
+        if asset_or_event_id is not None:
+            uuid = identity.split(SEP)[1]
+            identity = SEP.join((asset_or_event_id, uuid))
+            return self._archivist.get_file(
+                SEP.join((ASSETS_SUBPATH, ATTACHMENTS_ASSETS_EVENTS_LABEL)),
+                identity,
+                fd,
+                params=self.__params(params),
+            )
+
         return self._archivist.get_file(
             ATTACHMENTS_SUBPATH,
             identity,
             fd,
             params=self.__params(params),
+        )
+
+    def info(
+        self,
+        identity: str,
+        *,
+        asset_or_event_id: Optional[str] = None,
+    ) -> Response:
+        """Read attachment info
+
+        Reads attachment info
+
+        Args:
+            identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
+            asset_or_event_id (str): optional asset identity
+                                     e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+                                          assets/xxxxx/events/xxxx
+
+        Returns:
+            REST response
+
+        """
+        if asset_or_event_id is not None:
+            uuid = identity.split(SEP)[1]
+            identity = SEP.join((asset_or_event_id, uuid))
+            return self._archivist.get(
+                SEP.join((ASSETS_SUBPATH, ATTACHMENTS_ASSETS_EVENTS_LABEL)),
+                identity,
+                tail="info",
+            )
+
+        return self._archivist.get(
+            ATTACHMENTS_SUBPATH,
+            identity,
+            tail="info",
         )

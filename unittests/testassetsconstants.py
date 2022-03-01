@@ -311,6 +311,7 @@ RESPONSE_EXISTS_ATTACHMENTS = {
         "arc_display_name": ASSET_NAME,
         "arc_attachments": [
             {
+                "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
                 "arc_display_name": "arc_primary_image",
                 "arc_hash_alg": "SHA256",
                 "arc_hash_value": (
