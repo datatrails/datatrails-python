@@ -3,12 +3,13 @@ Test assets creation
 """
 
 from copy import copy, deepcopy
-import json
+from json import dumps as json_dumps
 from os import environ
 from unittest import skip, TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
+from archivist.assets import BEHAVIOURS
 from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 
@@ -25,6 +26,35 @@ ATTRS = {
     "arc_serial_number": "vtl-x4-07",
     "arc_description": "Traffic flow control light at A603 North East",
     "some_custom_attribute": "value",
+}
+
+ASSET_NAME = "Telephone with 2 attachments - one bad or not scanned 2022-03-01"
+REQUEST_EXISTS_ATTACHMENTS = {
+    "signature": {
+        "attributes": {
+            "arc_display_name": ASSET_NAME,
+            "arc_namespace": "namespace",
+        },
+    },
+    "behaviours": BEHAVIOURS,
+    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
+    "attributes": {
+        "arc_firmware_version": "1.0",
+        "arc_serial_number": "vtl-x4-07",
+        "arc_description": "Traffic flow control light at A603 North East",
+        "arc_display_type": "Traffic light with violation camera",
+        "some_custom_attribute": "value",
+    },
+    "attachments": [
+        {
+            "filename": "functests/test_resources/telephone.jpg",
+            "content_type": "image/jpg",
+        },
+        {
+            "url": "https://secure.eicar.org/eicarcom2.zip",
+            "content_type": "application/zip",
+        },
+    ],
 }
 
 
@@ -140,7 +170,7 @@ class TestAssetCreate(TestCase):
         # get identity of first asset
         identity = None
         for asset in self.arch.assets.list():
-            print("asset", json.dumps(asset, sort_keys=True, indent=4))
+            print("asset", json_dumps(asset, sort_keys=True, indent=4))
             identity = asset["identity"]
             break
 
@@ -176,4 +206,80 @@ class TestAssetCreate(TestCase):
         event = self.arch.events.create(
             identity, props=props, attrs=attrs, confirm=True
         )
-        print("event", json.dumps(event, sort_keys=True, indent=4))
+        print("event", json_dumps(event, sort_keys=True, indent=4))
+
+
+class TestAssetCreateIfNotExists(TestCase):
+    """
+    Test Archivist Asset CreateIfNotExists method
+    """
+
+    maxDiff = None
+
+    def setUp(self):
+        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
+            auth = fd.read().strip()
+        self.arch = Archivist(
+            environ["TEST_ARCHIVIST"], auth, verify=False, max_time=300
+        )
+
+    def tearDown(self):
+        self.arch = None
+
+    def test_asset_create_if_not_exists_with_bad_attachment(self):
+        """
+        Test asset creation if not exists - check attachment for scanned status.
+
+        Because we use create_if_not_exists the asset and attachments will persist.
+
+        The test checks the scanned timestamp and checks scanned status.
+        The first attachment should return OK after 24 hours and the second attachment
+        should return bad after 24 hours.
+
+        """
+        asset, existed = self.arch.assets.create_if_not_exists(
+            REQUEST_EXISTS_ATTACHMENTS,
+            confirm=True,
+        )
+        print("asset", json_dumps(asset, indent=4))
+        print("existed", existed)
+
+        # first attachment is ok....
+        attachment_id = asset["attributes"]["arc_attachments"][0][
+            "arc_attachment_identity"
+        ]
+        info = self.arch.attachments.info(
+            attachment_id,
+            asset_or_event_id=asset["identity"],
+        )
+        print("info attachment1", json_dumps(info, indent=4))
+        timestamp = info["scanned_timestamp"]
+        if timestamp:
+            print(attachment_id, "scanned last at", timestamp)
+            print(attachment_id, "scanned status", info["scanned_status"])
+            print(attachment_id, "scanned reason", info["scanned_reason"])
+            self.assertEqual(
+                info["scanned_status"],
+                "SCANNED_OK",
+                msg="First attachment is not clean",
+            )
+
+        # second attachment is bad when scanned....
+        attachment_id = asset["attributes"]["arc_attachments"][1][
+            "arc_attachment_identity"
+        ]
+        info = self.arch.attachments.info(
+            attachment_id,
+            asset_or_event_id=asset["identity"],
+        )
+        print("info attachment1", json_dumps(info, indent=4))
+        timestamp = info["scanned_timestamp"]
+        if timestamp:
+            print(attachment_id, "scanned last at", timestamp)
+            print(attachment_id, "scanned status", info["scanned_status"])
+            print(attachment_id, "scanned reason", info["scanned_reason"])
+            self.assertEqual(
+                info["scanned_status"],
+                "SCANNED_BAD",
+                msg="First attachment should not be clean",
+            )

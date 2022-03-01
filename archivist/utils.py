@@ -1,7 +1,9 @@
-"""Some covenience for confirmers
+"""Some convenience for confirmers
 """
 
+from io import BytesIO
 from logging import getLogger
+from requests import get as requests_get
 
 LOGGER = getLogger(__name__)
 
@@ -29,3 +31,18 @@ def backoff_handler(details):
         client,
         identity,
     )
+
+
+def get_url(url: str, fd: BytesIO):  # pragma no cover
+    """GET method (REST) - chunked
+
+    Downloads a binary object from upstream storage.
+    """
+    response = requests_get(
+        url,
+        stream=True,
+    )
+
+    for chunk in response.iter_content(chunk_size=4096):
+        if chunk:
+            fd.write(chunk)
