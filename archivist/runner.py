@@ -32,6 +32,10 @@ class _ActionMap(dict):
 
     def __init__(self, archivist: "type_helper.Archivist"):
         super().__init__()
+        self["ASSETS_ATTACHMENT_INFO"] = {
+            "action": archivist.attachments.info,
+            "keywords": ("asset_or_event_id",),
+        }
         self["ASSETS_CREATE_IF_NOT_EXISTS"] = {
             "action": archivist.assets.create_if_not_exists,
             "keywords": ("confirm",),
@@ -357,7 +361,7 @@ class _Runner:
     def delete(self):
         """Deletes all entities"""
         for identity, delete_method in self.deletions.items():
-            LOGGER.info("Delete %s -> %s", identity, delete_method)
+            LOGGER.info("Delete %s", identity)
             delete_method(identity)
 
     def asset_id(self, name: str) -> Optional[str]:

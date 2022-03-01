@@ -53,9 +53,9 @@ steps:
   # create some policies
   - step:
       action: COMPLIANCE_POLICIES_CREATE
-      delete: true
       description: Create a compliance policy that checks the radiation level of radiation bags is less than 7 rads.
       print_response: true
+      delete: true
     description: radiation level safety policy
     display_name: radiation safety policy
     compliance_type: COMPLIANCE_RICHNESS
@@ -67,9 +67,9 @@ steps:
 
   - step:
       action: COMPLIANCE_POLICIES_CREATE
-      delete: true
       description: Create a compliance policy that checks the weight of a radiation bag is less than or equal to 10kg.
       print_response: true
+      delete: true
     description: weight level safety policy
     display_name: weight safety policy
     compliance_type: COMPLIANCE_RICHNESS
