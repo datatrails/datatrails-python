@@ -10,6 +10,7 @@ from os import getenv
 
 from archivist.archivist import Archivist
 from archivist.proof_mechanism import ProofMechanism
+from archivist.utils import get_auth
 
 
 def create_asset(arch):
@@ -80,10 +81,11 @@ def main():
     # client id is an environment variable. client_secret is stored in a file in a
     # directory that has 0700 permissions. The location of this file is set in
     # the client_secret_file environment variable.
-    client_id = getenv("ARCHIVIST_CLIENT_ID")
-    client_secret_file = getenv("ARCHIVIST_CLIENT_SECRET_FILE")
-    with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
-        client_secret = tokenfile.read().strip()
+    auth = get_auth(
+        auth_token_filename=getenv("ARCHIVIST_AUTHTOKEN_FILENAME"),
+        client_id=getenv("ARCHIVIST_CLIENT_ID"),
+        client_secret_filename=getenv("ARCHIVIST_CLIENT_SECRET_FILENAME"),
+    )
 
     # Initialize connection to Archivist. max_time is the time to wait for confirmation
     # of an asset or event creation - the default is 1200 seconds but one can optionally
@@ -91,7 +93,7 @@ def main():
     # (rather than KHIPU) as confirmation times are much shorter in this case.
     arch = Archivist(
         "https://app.rkvst.io",
-        (client_id, client_secret),
+        auth,
         max_time=300,
     )
     # Create a new asset

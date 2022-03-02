@@ -3,7 +3,7 @@ Test applications
 """
 from copy import deepcopy
 from json import dumps as json_dumps
-from os import environ
+from os import getenv
 from time import sleep
 from unittest import TestCase
 from uuid import uuid4
@@ -12,6 +12,7 @@ from archivist.archivist import Archivist
 from archivist.errors import ArchivistUnauthenticatedError
 from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
+from archivist.utils import get_auth
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -30,8 +31,8 @@ ATTRS = {
     "some_custom_attribute": "value",
 }
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    set_logger(environ["TEST_DEBUG"])
+if getenv("TEST_DEBUG") is not None:
+    set_logger(getenv("TEST_DEBUG"))
 
 
 class TestApplications(TestCase):
@@ -42,9 +43,12 @@ class TestApplications(TestCase):
     maxDiff = None
 
     def setUp(self):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-            auth = fd.read().strip()
-        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        auth = get_auth(
+            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("TEST_CLIENT_ID"),
+            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        )
+        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def test_applications_create(self):
@@ -207,7 +211,7 @@ class TestApplications(TestCase):
         # archivist using app registration
         print("New Arch")
         new_arch = Archivist(
-            environ["TEST_ARCHIVIST"],
+            getenv("TEST_ARCHIVIST"),
             (application["client_id"], application["credentials"][0]["secret"]),
             verify=False,
         )

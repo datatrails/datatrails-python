@@ -1,0 +1,9 @@
+---
+# The step field is a string that represents the method bound to an endpoint and
+# the args and kwargs correspond to the arguments to such a method.
+#
+# This story Evaluates how many assets and events exist.
+steps:
+  - step:
+      action: COMPOSITE_ESTATE_INFO
+      description: Check assets, events and locations

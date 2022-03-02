@@ -185,9 +185,12 @@ class _AttachmentsClient:
             identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
             fd (file): opened file descriptor or other file-type sink..
             params (dict): e.g. {"allow_insecure": "true"} OR {"strict": "true" }
-            asset_or_event_id (str): optional asset identity
-                                     e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-                                          assets/xxxxx/events/xxxx
+            asset_or_event_id (str): optional asset or event identity
+
+        asset_or_event_id has one of the following forms:
+
+            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
         Returns:
             REST response
@@ -222,9 +225,12 @@ class _AttachmentsClient:
 
         Args:
             identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
-            asset_or_event_id (str): optional asset identity
-                                     e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-                                          assets/xxxxx/events/xxxx
+            asset_or_event_id (str): optional asset or event identity
+
+        asset_or_event_id has one of the following forms:
+
+            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
         Returns:
             REST response

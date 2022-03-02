@@ -240,7 +240,7 @@ class _EventsClient:
     def count(
         self,
         *,
-        asset_id: str = ASSETS_WILDCARD,
+        asset_id: Optional[str] = None,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
         asset_attrs: Optional[Dict] = None,
@@ -260,6 +260,7 @@ class _EventsClient:
 
         """
 
+        asset_id = asset_id or ASSETS_WILDCARD
         return self._archivist.count(
             SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
             params=self.__params(props, attrs, asset_attrs),
@@ -268,7 +269,7 @@ class _EventsClient:
     def wait_for_confirmed(
         self,
         *,
-        asset_id: str = ASSETS_WILDCARD,
+        asset_id: Optional[str] = None,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
         asset_attrs: Optional[Dict] = None,
@@ -287,6 +288,7 @@ class _EventsClient:
             True if all events are confirmed.
 
         """
+        asset_id = asset_id or ASSETS_WILDCARD
         # check that entities exist
         newprops = deepcopy(props) if props else {}
         newprops.pop(CONFIRMATION_STATUS, None)
@@ -307,7 +309,7 @@ class _EventsClient:
     def list(
         self,
         *,
-        asset_id: str = ASSETS_WILDCARD,
+        asset_id: Optional[str] = None,
         page_size: Optional[int] = None,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
@@ -328,6 +330,7 @@ class _EventsClient:
             iterable that returns :class:`Event` instances
 
         """
+        asset_id = asset_id or ASSETS_WILDCARD
         return (
             Event(**a)
             for a in self._archivist.list(
@@ -341,7 +344,7 @@ class _EventsClient:
     def read_by_signature(
         self,
         *,
-        asset_id: str = ASSETS_WILDCARD,
+        asset_id: Optional[str] = None,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
         asset_attrs: Optional[Dict] = None,
@@ -360,6 +363,7 @@ class _EventsClient:
             :class:`Event` instance
 
         """
+        asset_id = asset_id or ASSETS_WILDCARD
         return Event(
             **self._archivist.get_by_signature(
                 SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),

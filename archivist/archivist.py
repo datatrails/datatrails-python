@@ -67,6 +67,7 @@ from .assets import _AssetsClient
 from .attachments import _AttachmentsClient
 from .compliance import _ComplianceClient
 from .compliance_policies import _CompliancePoliciesClient
+from .composite import _CompositeClient
 from .events import _EventsClient
 from .locations import _LocationsClient
 from .runner import _Runner
@@ -85,6 +86,7 @@ CLIENTS = {
     "attachments": _AttachmentsClient,
     "compliance": _ComplianceClient,
     "compliance_policies": _CompliancePoliciesClient,
+    "composite": _CompositeClient,
     "events": _EventsClient,
     "locations": _LocationsClient,
     "runner": _Runner,
@@ -144,6 +146,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self.attachments: _AttachmentsClient
         self.compliance: _ComplianceClient
         self.compliance_policies: _CompliancePoliciesClient
+        self.composite: _CompositeClient
         self.events: _EventsClient
         self.locations: _LocationsClient
         self.runner: _Runner

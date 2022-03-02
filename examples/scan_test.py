@@ -4,13 +4,14 @@ Test assets attachments scanning
 
 from datetime import date, datetime, timedelta
 from json import dumps as json_dumps
-from os import environ
+from os import getenv
 from sys import exit as sys_exit
 from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.assets import BEHAVIOURS
 from archivist.proof_mechanism import ProofMechanism
+from archivist.utils import get_auth
 
 filterwarnings("ignore", message="Unverified HTTPS request")
 
@@ -94,18 +95,16 @@ def scan_test(arch, datestring, scanned_expected=False):
     elif scanned_expected:
         fails.append("Yesterday's first attachment has not been scanned.")
 
-    # second attachment sould be bad when scanned....
+    # second attachment should be bad when scanned....
     attachment_id = asset["attributes"]["arc_attachments"][1]["arc_attachment_identity"]
     info = arch.attachments.info(
         attachment_id,
         asset_or_event_id=asset["identity"],
     )
     print("info attachment2", json_dumps(info, indent=4))
-
     timestamp = info["scanned_timestamp"]
     if timestamp:
         print(attachment_id, "scanned last at", timestamp)
-        print(attachment_id, "scanned status", info["scanned_status"])
         print(attachment_id, "scanned reason", info["scanned_bad_reason"])
         if info["scanned_status"] != "SCANNED_BAD":
             fails.append("Second attachment should not be clean")
@@ -124,16 +123,18 @@ def main():
     """
     main entry point
     """
-    # XXXX: if there is a client_id and client_secret in the environment,
-    # use those, otherwise use token file
-    with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-        auth = fd.read().strip()
+    auth = get_auth(
+        auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+        client_id=getenv("TEST_CLIENT_ID"),
+        client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+    )
 
-    arch = Archivist(environ["ARCHIVIST_URL"], auth, verify=False, max_time=300)
+    arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300)
 
     print("##[group]Today")
     today = date.today()
     scan_test(arch, today.strftime("%Y-%m-%d"))
+
     # currently scans run mon-fri
     # so if today is mon, previous day is fri, otherwise previous day is yesterday
     print("##[group]Previous day")

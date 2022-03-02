@@ -1,4 +1,4 @@
-"""Some convenience for confirmers
+"""Some convenience stuff
 """
 
 from io import BytesIO
@@ -18,6 +18,7 @@ def __tuple_member(tup, idx, default):
     return ret
 
 
+# for confirmers
 def backoff_handler(details):
     wait = details["wait"]
     tries = details["tries"]
@@ -33,6 +34,7 @@ def backoff_handler(details):
     )
 
 
+# download arbitrary files from a url.
 def get_url(url: str, fd: BytesIO):  # pragma no cover
     """GET method (REST) - chunked
 
@@ -46,3 +48,24 @@ def get_url(url: str, fd: BytesIO):  # pragma no cover
     for chunk in response.iter_content(chunk_size=4096):
         if chunk:
             fd.write(chunk)
+
+
+def get_auth(
+    *, auth_token_filename=None, client_id=None, client_secret_filename=None
+):  # pragma no cover
+    """
+    Return auth as either stuntidp token or client_id,client_secret tuple
+    """
+    if auth_token_filename:
+        with open(auth_token_filename, mode="r", encoding="utf-8") as tokenfile:
+            authtoken = tokenfile.read().strip()
+
+        return authtoken
+
+    if client_id is not None and client_secret_filename is not None:
+        with open(client_secret_filename, mode="r", encoding="utf-8") as tokenfile:
+            authtoken = tokenfile.read().strip()
+
+        return (client_id, authtoken)
+
+    return None

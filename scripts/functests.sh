@@ -7,15 +7,29 @@ then
     echo "TEST_ARCHIVIST is undefined"
     exit 1
 fi
-if [ -z "${TEST_AUTHTOKEN_FILENAME}" ]
+if [ -n "${TEST_CLIENT_ID}" ]
 then
-    echo "TEST_AUTHTOKEN_FILENAME is undefined"
-    exit 1
-fi
-if [ ! -s "${TEST_AUTHTOKEN_FILENAME}" ]
-then
-    echo "${TEST_AUTHTOKEN_FILENAME} does not exist"
-    exit 1
+    if [ -z "${TEST_CLIENT_SECRET_FILENAME}" ]
+    then
+        echo "TEST_CLIENT_SECRET_FILENAME is undefined"
+        exit 1
+    fi
+    if [ ! -s "${TEST_CLIENT_SECRET_FILENAME}" ]
+    then
+        echo "${TEST_CLIENT_SECRET_FILENAME} does not exist"
+        exit 1
+    fi
+else
+    if [ -z "${TEST_AUTHTOKEN_FILENAME}" ]
+    then
+        echo "TEST_AUTHTOKEN_FILENAME is undefined"
+        exit 1
+    fi
+    if [ ! -s "${TEST_AUTHTOKEN_FILENAME}" ]
+    then
+        echo "${TEST_AUTHTOKEN_FILENAME} does not exist"
+        exit 1
+    fi
 fi
 
 python3 --version

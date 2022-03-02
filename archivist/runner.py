@@ -51,9 +51,36 @@ class _ActionMap(dict):
                 "attrs",
             ),
         }
+        self["ASSETS_COUNT"] = {
+            "action": archivist.assets.count,
+            "keywords": (
+                "props",
+                "attrs",
+            ),
+        }
+        self["COMPOSITE_ESTATE_INFO"] = {
+            "action": archivist.composite.estate_info,
+        }
+        self["COMPLIANCE_POLICIES_CREATE"] = {
+            "action": archivist.compliance_policies.create_from_data,
+            "delete": archivist.compliance_policies.delete,
+        }
+        self["COMPLIANCE_COMPLIANT_AT"] = {
+            "action": archivist.compliance.compliant_at,
+            "keywords": ("report",),
+        }
         self["EVENTS_CREATE"] = {
             "action": archivist.events.create_from_data,
             "keywords": ("confirm",),
+        }
+        self["EVENTS_COUNT"] = {
+            "action": archivist.events.count,
+            "keywords": (
+                "asset_id",
+                "props",
+                "attrs",
+                "asset_attrs",
+            ),
         }
         self["EVENTS_LIST"] = {
             "action": archivist.events.list,
@@ -64,13 +91,12 @@ class _ActionMap(dict):
                 "asset_attrs",
             ),
         }
-        self["COMPLIANCE_POLICIES_CREATE"] = {
-            "action": archivist.compliance_policies.create_from_data,
-            "delete": archivist.compliance_policies.delete,
-        }
-        self["COMPLIANCE_COMPLIANT_AT"] = {
-            "action": archivist.compliance.compliant_at,
-            "keywords": ("report",),
+        self["LOCATIONS_COUNT"] = {
+            "action": archivist.locations.count,
+            "keywords": (
+                "props",
+                "attrs",
+            ),
         }
 
     def ops(self, action_name: str) -> Dict:
@@ -152,7 +178,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             keywords = self.keywords
             if keywords is not None and len(keywords) > 0:
                 keys.extend(keywords)
-                if "asset_id" in keywords:
+                if self.asset_name is not None and "asset_id" in keywords:
                     kwargs["asset_id"] = asset_id_method(self.asset_name)
 
                 for k in keywords:
