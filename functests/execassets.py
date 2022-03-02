@@ -4,7 +4,7 @@ Test assets creation
 
 from copy import copy, deepcopy
 from json import dumps as json_dumps
-from os import environ
+from os import getenv
 from unittest import skip, TestCase
 from uuid import uuid4
 
@@ -12,14 +12,15 @@ from archivist.archivist import Archivist
 from archivist.assets import BEHAVIOURS
 from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
+from archivist.utils import get_auth
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    set_logger(environ["TEST_DEBUG"])
 
+if getenv("TEST_DEBUG") is not None:
+    set_logger(getenv("TEST_DEBUG"))
 
 ATTRS = {
     "arc_firmware_version": "1.0",
@@ -66,10 +67,13 @@ class TestAssetCreate(TestCase):
     maxDiff = None
 
     def setUp(self):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-            auth = fd.read().strip()
+        auth = get_auth(
+            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("TEST_CLIENT_ID"),
+            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        )
         self.arch = Archivist(
-            environ["TEST_ARCHIVIST"], auth, verify=False, max_time=300
+            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300
         )
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
@@ -217,10 +221,13 @@ class TestAssetCreateIfNotExists(TestCase):
     maxDiff = None
 
     def setUp(self):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-            auth = fd.read().strip()
+        auth = get_auth(
+            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("TEST_CLIENT_ID"),
+            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        )
         self.arch = Archivist(
-            environ["TEST_ARCHIVIST"], auth, verify=False, max_time=300
+            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300
         )
 
     def tearDown(self):

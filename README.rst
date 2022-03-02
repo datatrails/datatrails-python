@@ -105,9 +105,9 @@ One can then use the examples code to create assets (see examples directory):
         #
         # client id is an environment variable. client_secret is stored in a file in a
         # directory that has 0700 permissions. The location of this file is set in
-        # the client_secret_file environment variable.
+        # the client_secret_filename environment variable.
         client_id = getenv("ARCHIVIST_CLIENT_ID")
-        client_secret_file = getenv("ARCHIVIST_CLIENT_SECRET_FILE")
+        client_secret_file = getenv("ARCHIVIST_CLIENT_SECRET_FILENAME")
         with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
             client_secret = tokenfile.read().strip()
 
@@ -141,9 +141,9 @@ Python
 .. code-block:: python
 
     from logging import getLogger
+    from pyaml_env import parse_config
     from sys import exit as sys_exit
     from sys import stdout as sys_stdout
-    import yaml
 
     from ... import archivist as type_helper
     from ... import about
@@ -157,7 +157,7 @@ Python
         LOGGER.info("Namespace %s", args.namespace)
 
         with open(args.yamlfile, "r", encoding="utf-8") as y:
-            arch.runner(yaml.load(y, Loader=yaml.SafeLoader))
+            arch.runner(parse_config(data=y)
 
         sys_exit(0)
 

@@ -2,6 +2,7 @@ backoff~=1.11
 certifi
 flatten-dict~=0.3
 iso8601~=0.1
+pyaml-env~=1.1
 requests~=2.22
 requests-toolbelt~=0.9
 rfc3339~=6.2

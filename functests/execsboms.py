@@ -4,7 +4,7 @@ Tests the upload and download functionality of the SDK
 from contextlib import suppress
 from filecmp import clear_cache, cmp
 from json import dumps as json_dumps
-from os import environ, remove
+from os import getenv, remove
 from time import sleep
 from unittest import TestCase
 
@@ -12,7 +12,7 @@ from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
 from archivist.logger import set_logger
 from archivist.timestamp import now_timestamp
-
+from archivist.utils import get_auth
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -29,8 +29,8 @@ TEST_SBOM_PATH = "functests/test_resources/bom.xml"
 TEST_SBOM_SPDX_PATH = "functests/test_resources/bom.spdx"
 TEST_SBOM_DOWNLOAD_PATH = "functests/test_resources/downloaded_bom.xml"
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    set_logger(environ["TEST_DEBUG"])
+if getenv("TEST_DEBUG") is not None:
+    set_logger(getenv("TEST_DEBUG"))
 
 
 class TestSBOM(TestCase):
@@ -41,10 +41,12 @@ class TestSBOM(TestCase):
     maxDiff = None
 
     def setUp(self):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-            auth = fd.read().strip()
-
-        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        auth = get_auth(
+            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("TEST_CLIENT_ID"),
+            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        )
+        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
         self.file_uuid: str = ""
         self.title = "TestSBOM"
 
@@ -285,4 +287,4 @@ class TestSBOMWithApplication(TestSBOM):
             CUSTOM_CLAIMS,
         )
         auth = (application["client_id"], application["credentials"][0]["secret"])
-        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)

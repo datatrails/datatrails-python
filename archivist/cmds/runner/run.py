@@ -2,7 +2,8 @@
 
 from logging import getLogger
 from sys import exit as sys_exit
-import yaml
+
+from pyaml_env import parse_config
 
 from ... import about
 
@@ -20,6 +21,6 @@ def run(arch: "type_helper.Archivist", args):
     LOGGER.info("Namespace %s", args.namespace)
 
     with open(args.yamlfile, "r", encoding="utf-8") as y:
-        arch.runner(yaml.load(y, Loader=yaml.SafeLoader))
+        arch.runner(parse_config(data=y))
 
     sys_exit(0)

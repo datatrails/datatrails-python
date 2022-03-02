@@ -2,11 +2,13 @@
 Test runner
 """
 
-from os import environ
+from os import getenv
 from unittest import TestCase
-import yaml
+
+from pyaml_env import parse_config
 
 from archivist.archivist import Archivist
+from archivist.utils import get_auth
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -14,8 +16,8 @@ from archivist.archivist import Archivist
 
 from archivist import logger
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    logger.set_logger(environ["TEST_DEBUG"])
+if getenv("TEST_DEBUG") is not None:
+    logger.set_logger(getenv("TEST_DEBUG"))
 else:
     logger.set_logger("INFO")
 
@@ -30,10 +32,13 @@ class TestRunner(TestCase):
     maxDiff = None
 
     def setUp(self):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-            auth = fd.read().strip()
+        auth = get_auth(
+            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("TEST_CLIENT_ID"),
+            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        )
         self.arch = Archivist(
-            environ["TEST_ARCHIVIST"], auth, verify=False, max_time=300
+            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300
         )
 
     def tearDown(self):
@@ -51,7 +56,7 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
+            self.arch.runner.run_steps(parse_config(data=y))
             self.assertEqual(
                 len(self.arch.runner.entities),
                 2,
@@ -71,7 +76,7 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
+            self.arch.runner.run_steps(parse_config(data=y))
             self.assertEqual(
                 len(self.arch.runner.entities),
                 5,
@@ -91,12 +96,26 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
+            self.arch.runner.run_steps(parse_config(data=y))
             self.assertEqual(
                 len(self.arch.runner.entities),
                 11,
                 msg="Incorrect number of entities",
             )
+
+    def test_runner_estate_info(self):
+        """
+        Test runner with estate_info story
+        run_steps is used so that exceptions are shown
+        """
+
+        LOGGER.info("...")
+        with open(
+            "functests/test_resources/estate_info_story.yaml",
+            "r",
+            encoding="utf-8",
+        ) as y:
+            self.arch.runner.run_steps(parse_config(data=y))
 
     def test_runner_wipp(self):
         """
@@ -111,7 +130,7 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
+            self.arch.runner.run_steps(parse_config(data=y))
             self.assertEqual(
                 len(self.arch.runner.entities),
                 2,

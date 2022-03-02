@@ -39,15 +39,20 @@ Execute:
    :caption: Contents:
 
    generic
+   assets_count
    assets_create
    assets_create_if_not_exists
    assets_list
    compliance_compliant_at
    compliance_policies_create
+   composite_estate_info
+   events_count
    events_create
    events_list
+   locations_count
    
    compliance_policies_demo
    compliance_policies_demo_dynamic_tolerance
    compliance_policies_demo_richness
    door_entry_demo
+   estate_info_demo

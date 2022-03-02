@@ -15,6 +15,7 @@ from .archivist import Archivist
 from .logger import set_logger
 from .dictmerge import _deepmerge
 from .proof_mechanism import ProofMechanism
+from .utils import get_auth
 
 
 filterwarnings("ignore", message="Unverified HTTPS request")
@@ -90,9 +91,24 @@ def common_parser(description: str):
         type=str,
         dest="auth_token_file",
         action="store",
-        default=".auth_token",
-        required=True,
+        default=None,
         help="FILE containing API authentication token",
+    )
+    parser.add_argument(
+        "--client-id",
+        type=str,
+        dest="client_id",
+        action="store",
+        default=None,
+        help="Client ID from appregistrations",
+    )
+    parser.add_argument(
+        "--client-secret",
+        type=str,
+        dest="client_secret_file",
+        action="store",
+        default=None,
+        help="FILE containing client secret from appregistrations",
     )
     parser.add_argument(
         "-n",
@@ -138,12 +154,17 @@ def endpoint(args):
             },
         )
 
-    if args.auth_token_file:
-        with open(args.auth_token_file, mode="r", encoding="utf-8") as tokenfile:
-            authtoken = tokenfile.read().strip()
+    auth = get_auth(
+        auth_token_filename=args.auth_token_file,
+        client_id=args.client_id,
+        client_secret_filename=args.client_secret_file,
+    )
 
-        arch = Archivist(args.url, authtoken, verify=False, fixtures=fixtures)
+    if auth is None:
+        LOGGER.error("Critical error.  Aborting.")
+        sys_exit(1)
 
+    arch = Archivist(args.url, auth, verify=False, fixtures=fixtures)
     if arch is None:
         LOGGER.error("Critical error.  Aborting.")
         sys_exit(1)

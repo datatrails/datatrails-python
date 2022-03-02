@@ -18,7 +18,7 @@ steps:
       - RecordEvidence
       - Attachments
     attributes:
-      arc_display_name: radiation bag 1
+      arc_display_name: !ENV radiation bag 1 ${ARCHIVIST_NAMESPACE:namespace}
       radioactive: "true"
       radiation_level: "0"
       weight: "0"
@@ -31,7 +31,7 @@ steps:
       - RecordEvidence
       - Attachments
     attributes:
-      arc_display_name: radiation bag 2
+      arc_display_name: !ENV radiation bag 2 ${ARCHIVIST_NAMESPACE:namespace}
       radioactive: "true"
       radiation_level: "0"
       weight: "0"
@@ -44,7 +44,7 @@ steps:
       - RecordEvidence
       - Attachments
     attributes:
-      arc_display_name: radiation bag 3
+      arc_display_name: !ENV radiation bag 3 ${ARCHIVIST_NAMESPACE:namespace}
       radioactive: "true"
       radiation_level: "0"
       weight: "0"
@@ -57,7 +57,7 @@ steps:
       print_response: true
       delete: true
     description: radiation level safety policy
-    display_name: radiation safety policy
+    display_name: !ENV radiation safety policy ${ARCHIVIST_NAMESPACE:namespace}
     compliance_type: COMPLIANCE_RICHNESS
     asset_filter:
       - or: [ "attributes.radioactive=true" ]
@@ -71,7 +71,7 @@ steps:
       print_response: true
       delete: true
     description: weight level safety policy
-    display_name: weight safety policy
+    display_name: !ENV weight safety policy ${ARCHIVIST_NAMESPACE:namespace}
     compliance_type: COMPLIANCE_RICHNESS
     asset_filter: 
       - or: [ "attributes.radioactive=true" ]
@@ -84,7 +84,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event adding 3 rads of radiation to bag 1, increasing its weight by 1kg.
-      asset_name: radiation bag 1
+      asset_name: !ENV radiation bag 1 ${ARCHIVIST_NAMESPACE:namespace}
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -97,7 +97,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event adding 2 rads of radiation to bag 2, increasing its weight by 5kg.
-      asset_name: radiation bag 2
+      asset_name: !ENV radiation bag 2 ${ARCHIVIST_NAMESPACE:namespace}
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -110,7 +110,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event adding 5 rads of radiation to bag 3, increasing its weight by 7kg.
-      asset_name: radiation bag 3
+      asset_name: !ENV radiation bag 3 ${ARCHIVIST_NAMESPACE:namespace}
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -125,24 +125,24 @@ steps:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of bag 1.
       print_response: True
-      asset_name: radiation bag 1
+      asset_name: !ENV radiation bag 1 ${ARCHIVIST_NAMESPACE:namespace}
 
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of bag 2.
-      asset_name: radiation bag 2
+      asset_name: !ENV radiation bag 2 ${ARCHIVIST_NAMESPACE:namespace}
 
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of bag 3.
-      asset_name: radiation bag 3
+      asset_name: !ENV radiation bag 3 ${ARCHIVIST_NAMESPACE:namespace}
 
   # now attempt to add waste to tip one over the edge
   - step:
       action: EVENTS_CREATE
       description: Now Create Event adding 4 rads of radiation to bag 3 increasing its weight by 1kg.
                    This brings the total radiation level to 9 rads and weight to 8kg.
-      asset_name: radiation bag 3
+      asset_name: !ENV radiation bag 3 ${ARCHIVIST_NAMESPACE:namespace}
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -156,5 +156,5 @@ steps:
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of bag 3.
-      asset_name: radiation bag 3
+      asset_name: !ENV radiation bag 3 ${ARCHIVIST_NAMESPACE:namespace}
     report: true
