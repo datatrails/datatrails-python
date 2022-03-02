@@ -14,7 +14,7 @@ steps:
       description: Create a door in Paris at Jitsuin offices.
     signature:
       attributes:
-        arc_display_name: Jitsuin Paris Front Door
+        arc_display_name: !ENV Jitsuin Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -26,7 +26,7 @@ steps:
       wavestone_asset_id: paris.france.jitsuin.das
     location:
       signature:
-        display_name: Jitsuin Paris
+        display_name: !ENV Jitsuin Paris ${ARCHIVIST_NAMESPACE:namespace}
       description: Sales and sales support for the French region
       latitude: 48.8339211
       longitude: 2.371345
@@ -43,7 +43,7 @@ steps:
       description: Create a door in Paris at City Hall
     signature:
       attributes:
-        arc_display_name: City Hall Paris Front Door
+        arc_display_name: !ENV City Hall Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -55,7 +55,7 @@ steps:
       wavestone_asset_id: cityhall.paris.wavestonedas
     location:
       signature:
-        display_name: Paris City Hall
+        display_name: !ENV Paris City Hall ${ARCHIVIST_NAMESPACE:namespace}
       description: Seat of Paris local city adminstration
       latitude: 48.856389
       longitude: 2.352222
@@ -73,7 +73,7 @@ steps:
       print_response: true
     signature:
       attributes:
-        arc_display_name: Courts of Justice Paris Front Door
+        arc_display_name: !ENV Courts of Justice Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -85,7 +85,7 @@ steps:
       wavestone_asset_id: courts.paris.wavestonedas
     location:
       signature:
-        display_name: Paris Courts of Justice
+        display_name: !ENV Paris Courts of Justice ${ARCHIVIST_NAMESPACE:namespace}
       description: Public museum in the former Palais de Justice
       latitude: 48.855722
       longitude: 2.345051
@@ -102,7 +102,7 @@ steps:
       description: Create a door in Paris at Bastille
     signature:
       attributes:
-        arc_display_name: Bastille Paris Front Door
+        arc_display_name: !ENV Bastille Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -114,7 +114,7 @@ steps:
       wavestone_asset_id: bastille.paris.wavestonedas
     location:
       signature:
-        display_name: Bastille
+        display_name: !ENV Bastille ${ARCHIVIST_NAMESPACE:namespace}
       description: Medieval fortress, made famous by the French Revolution
       latitude: 48.85333
       longitude: 2.36917
@@ -131,7 +131,7 @@ steps:
       description: Create a front door in Paris at Gare du Nord Apartments
     signature:
       attributes:
-        arc_display_name: Gare du Nord Apartments Paris Front Door
+        arc_display_name: !ENV Gare du Nord Apartments Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -143,7 +143,7 @@ steps:
       wavestone_asset_id: front.gdn.paris.wavestonedas
     location:
       signature:
-        display_name: Apartements du Gare du Nord
+        display_name: !ENV Apartements du Gare du Nord ${ARCHIVIST_NAMESPACE:namespace}
       description: Residential apartment building in new complex above GdN station
       latitude: 48.8809
       longitude: 2.3553
@@ -160,7 +160,7 @@ steps:
       description: Create a side door in Paris at Gare du Nord Apartments
     signature:
       attributes:
-        arc_display_name: Gare du Nord Apartments Paris Side Door
+        arc_display_name: !ENV Gare du Nord Apartments Paris Side Door ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -172,7 +172,7 @@ steps:
       wavestone_asset_id: side.gdn.paris.wavestonedas
     location:
       signature:
-        display_name: Apartements du Gare du Nord
+        display_name: !ENV Apartements du Gare du Nord ${ARCHIVIST_NAMESPACE:namespace}
       description: Residential apartment building in new complex above GdN station
       latitude: 48.8809
       longitude: 2.3553
@@ -196,7 +196,7 @@ steps:
       description: Create Access Card 1
     signature:
       attributes:
-        arc_display_name: Access Card 1
+        arc_display_name: !ENV Access Card 1 ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -212,7 +212,7 @@ steps:
       print_response: true
     signature:
       attributes:
-        arc_display_name: Access Card 2
+        arc_display_name: !ENV Access Card 2 ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -227,7 +227,7 @@ steps:
       description: Create Access Card 3
     signature:
       attributes:
-        arc_display_name: Access Card 3
+        arc_display_name: !ENV Access Card 3 ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -241,7 +241,7 @@ steps:
       description: Create Access Card 4
     signature:
       attributes:
-        arc_display_name: Access Card 4
+        arc_display_name: !ENV Access Card 4 ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -256,7 +256,7 @@ steps:
       description: Create Access Card 5
     signature:
       attributes:
-        arc_display_name: Access Card 5
+        arc_display_name: !ENV Access Card 5 ${ARCHIVIST_NAMESPACE:namespace}
     behaviours:
       - RecordEvidence
       - Attachments
@@ -272,14 +272,14 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Courts of justice front door opened with card 2
-      asset_name: Courts of Justice Paris Front Door
+      asset_name: !ENV Courts of Justice Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
       print_response: true
     operation: Record
     behaviour: RecordEvidence
     principal_declared:
       subject: courts.paris.wavestonedas
       email: courts.paris.wavestonedas@iot.wavestone.com
-      display_name: Courts of Justice Paris Front Door machine credential
+      display_name: !ENV Courts of Justice Paris Front Door machine credential ${ARCHIVIST_NAMESPACE:namespace}
     event_attributes:
       arc_description: Door opened by authorised key card Access Card 2
       arc_display_type: Door Open
@@ -295,14 +295,14 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Access Card 2 opens Courts of justice front door
-      asset_name: Access Card 2
+      asset_name: !ENV Access Card 2 ${ARCHIVIST_NAMESPACE:namespace}
       print_response: true
     operation: Record
     behaviour: RecordEvidence
     principal_declared:
       subject: courts.paris.wavestonedas
       email: courts.paris.wavestonedas@iot.wavestone.com
-      display_name: Courts of Justice Paris Front Door machine credential
+      display_name: !ENV Courts of Justice Paris Front Door machine credential ${ARCHIVIST_NAMESPACE:namespace}
     event_attributes:
       arc_description: Opened Courts of Justice Paris Front Door
       arc_display_type: Door Open
@@ -333,11 +333,11 @@ steps:
       action: EVENTS_LIST
       description: List all events for Courts of Justice Paris Front Door
       print_response: true
-      asset_name: Courts of Justice Paris Front Door
+      asset_name: !ENV Courts of Justice Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
 
   - step:
       action: EVENTS_LIST
       description: List all events for Access Card 2
       print_response: true
-      asset_name: Access Card 2
+      asset_name: !ENV Access Card 2 ${ARCHIVIST_NAMESPACE:namespace}
 

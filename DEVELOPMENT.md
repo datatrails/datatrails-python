@@ -68,6 +68,9 @@ git status
 git checkout -b dev/githubUserHandle/some-proposed-fix
 git status
 ```
+
+### Development flow
+
 To see what options are available simply execute:
 
 ```bash
@@ -128,6 +131,21 @@ NOTE: For the access policy functional tests, two separate tenancy tokens are ne
 
 ```
 export TEST_AUTHTOKEN_FILENAME_2=credentials/authtoken_tenant_2
+```
+
+Alternatively one can use a client id and secret obtained from the appregistrations endpoint:
+```bash
+export TEST_AUTHTOKEN_FILENAME=
+export TEST_CLIENT_ID=c5db8230-6e1c-4b80-9481-d70e647c0429
+export TEST_CLIENT_SECRET_FILENAME=credentials/client_secret
+task functests
+```
+
+Lastly when running the runner tests one can specify a namespace to isolate instances of assets in differnt 
+runs:
+```bash
+export ARCHIVIST_NAMESPACE=${RANDOM}
+FUNCTEST=execrunner task functests
 ```
 
 #### Testing Other Python Versions

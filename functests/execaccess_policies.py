@@ -3,11 +3,12 @@ Test access_policies
 """
 
 from copy import deepcopy
-from os import environ
+from os import getenv
 from unittest import TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
+from archivist.utils import get_auth
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -62,9 +63,12 @@ class TestAccessPoliciesBase(TestCase):
     maxDiff = None
 
     def setUp(self):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-            auth = fd.read().strip()
-        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        auth = get_auth(
+            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("TEST_CLIENT_ID"),
+            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        )
+        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
 
         self.props = deepcopy(PROPS)
         self.props["display_name"] = f"{DISPLAY_NAME} {uuid4()}"
@@ -118,9 +122,9 @@ class TestAccessPolicies(TestAccessPoliciesBase):
 
     def setUp(self):
         super().setUp()
-        with open(environ["TEST_AUTHTOKEN_FILENAME_2"], encoding="utf-8") as fd:
+        with open(getenv("TEST_AUTHTOKEN_FILENAME_2"), encoding="utf-8") as fd:
             auth_2 = fd.read().strip()
-        self.arch_2 = Archivist(environ["TEST_ARCHIVIST"], auth_2, verify=False)
+        self.arch_2 = Archivist(getenv("TEST_ARCHIVIST"), auth_2, verify=False)
 
         # creates reciprocal subjects for arch 1 and arch 2.
         self_subject_1 = self.arch.subjects.read(SELF_SUBJECT)

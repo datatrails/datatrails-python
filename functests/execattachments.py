@@ -5,16 +5,17 @@ from contextlib import suppress
 from filecmp import clear_cache, cmp
 from json import dumps as json_dumps
 from io import BytesIO
-from os import environ, remove
+from os import getenv, remove
 from unittest import TestCase
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
 from archivist.logger import set_logger
-from archivist.utils import get_url
+from archivist.utils import get_auth, get_url
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    set_logger(environ["TEST_DEBUG"])
+
+if getenv("TEST_DEBUG") is not None:
+    set_logger(getenv("TEST_DEBUG"))
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -30,9 +31,12 @@ class TestAttachmentstCreate(TestCase):
     TEST_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
 
     def setUp(self):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-            auth = fd.read().strip()
-        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        auth = get_auth(
+            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("TEST_CLIENT_ID"),
+            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        )
+        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
         self.file_uuid: str = ""
 
         with suppress(FileNotFoundError):
@@ -124,9 +128,12 @@ class TestAttachmentstMalware(TestCase):
         get_url(cls.TEST_MALWARE4, cls.malware4)
 
     def setUp(self):
-        with open(environ["TEST_AUTHTOKEN_FILENAME"], encoding="utf-8") as fd:
-            auth = fd.read().strip()
-        self.arch = Archivist(environ["TEST_ARCHIVIST"], auth, verify=False)
+        auth = get_auth(
+            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("TEST_CLIENT_ID"),
+            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        )
+        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
 
     def test_attachment_malware_scan1(self):
         """
