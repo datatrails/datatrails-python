@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.runner &mdash; Jitsuin Archivist 0.10.0 documentation</title>
+  <title>archivist.runner &mdash; Jitsuin Archivist 0.10.1 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -181,11 +181,14 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">GeneratorType</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span> <span class="k">as</span> <span class="n">time_sleep</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
+<span class="c1"># pylint:disable=missing-function-docstring</span>
+<span class="c1"># pylint:disable=protected-access</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">ArchivistError</span><span class="p">,</span> <span class="n">ArchivistInvalidOperationError</span>
 
@@ -193,8 +196,237 @@
 
 
 <div class="viewcode-block" id="tree"><a class="viewcode-back" href="../../runner.html#archivist.runner.tree">[docs]</a><span class="k">def</span> <span class="nf">tree</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Recursive dicts of dicts&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Recursive dict of dicts&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_ActionMap"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap">[docs]</a><span class="k">class</span> <span class="nc">_ActionMap</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Map of actions and keywords for an action</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_ATTACHMENT_INFO&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;asset_or_event_id&quot;</span><span class="p">,),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_CREATE_IF_NOT_EXISTS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_CREATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_LIST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">list</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;props&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;EVENTS_CREATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;EVENTS_LIST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">list</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;asset_id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;props&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;asset_attrs&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;COMPLIANCE_POLICIES_CREATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
+            <span class="s2">&quot;delete&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">delete</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;COMPLIANCE_COMPLIANT_AT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">compliant_at</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;report&quot;</span><span class="p">,),</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="_ActionMap.ops"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.ops">[docs]</a>    <span class="k">def</span> <span class="nf">ops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get valid entry in map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ops</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Illegal Action &#39;</span><span class="si">{action_name}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ops</span></div>
+
+<div class="viewcode-block" id="_ActionMap.action"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.action">[docs]</a>    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get valid action in map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if an exception occurs here then the dict initialised above is faulty.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;action&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="_ActionMap.keywords"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.keywords">[docs]</a>    <span class="k">def</span> <span class="nf">keywords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get keywords in map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keywords&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="_ActionMap.delete"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get delete_method in map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;delete&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="_Step"><a class="viewcode-back" href="../../runner.html#archivist.runner._Step">[docs]</a><span class="k">class</span> <span class="nc">_Step</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>  <span class="c1"># pylint:disable=too-many-instance-attributes</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_keywords</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete_method</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="_Step.args"><a class="viewcode-back" href="../../runner.html#archivist.runner._Step.args">[docs]</a>    <span class="k">def</span> <span class="nf">args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id_method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Positional arguments to action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># get asset identity and prepend to the list of positional</span>
+            <span class="c1"># arguments.  This will be simplified when dataclasses are</span>
+            <span class="c1"># introduced.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">asset_id</span> <span class="o">=</span> <span class="n">asset_id_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">asset_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Unknown Asset &#39;</span><span class="si">{self.asset_name}</span><span class="s2">&#39;&quot;</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># prepend if not specified in the keywords for the action.</span>
+                <span class="n">keywords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span>
+                <span class="k">if</span> <span class="n">keywords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;asset_id&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">:</span>
+                    <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_id</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span></div>
+
+    <span class="k">def</span> <span class="nf">kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id_method</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="c1"># keys are values that must be removed from the body of the request.</span>
+            <span class="c1"># These are typically &#39;confirm&#39; or &#39;report&#39;. Some of the actions</span>
+            <span class="c1"># have longer lists of keywords - these actions will be simplified</span>
+            <span class="c1"># when dataclasses are introduced and this code will be much simpler.</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">keywords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span>
+            <span class="k">if</span> <span class="n">keywords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">keys</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s2">&quot;asset_id&quot;</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">:</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;asset_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">asset_id_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_name</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">step</span><span class="p">:</span>
+                        <span class="n">kwargs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">step</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;keys </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+
+            <span class="c1"># add the request body to the positional arguments...</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">step</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span>
+
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;action </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;args </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;kwargs </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">action</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">action</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">)</span>
+
+        <span class="c1"># Some actions return a tuple</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">asset_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;asset_name&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;delete&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">print_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">print_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;print_response&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">print_response</span><span class="p">:</span>
+            <span class="c1"># some responses are generators...</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">GeneratorType</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Response </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Response </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">wait_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">wait_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wait_time&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">wait_time</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for </span><span class="si">%d</span><span class="s2"> seconds&quot;</span><span class="p">,</span> <span class="n">wait_time</span><span class="p">)</span>
+            <span class="n">time_sleep</span><span class="p">(</span><span class="n">wait_time</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span> <span class="o">=</span> <span class="n">_ActionMap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delete_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete_method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_delete_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete_method</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">keywords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keywords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_keywords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">keywords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keywords</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">action_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">action_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;action&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">action_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span><span class="s2">&quot;Missing Action&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action_name</span> <span class="o">=</span> <span class="n">action_name</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_name</span></div>
 
 
 <div class="viewcode-block" id="_Runner"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner">[docs]</a><span class="k">class</span> <span class="nc">_Runner</span><span class="p">:</span>
@@ -205,12 +437,8 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">entities</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;ASSETS_CREATE&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
-            <span class="s2">&quot;EVENTS_CREATE&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
-            <span class="s2">&quot;COMPLIANCE_POLICIES_CREATE&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
-            <span class="s2">&quot;COMPLIANCE_COMPLIANT_AT&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">compliant_at</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deletions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Runner(</span><span class="si">{self._archivist.url}</span><span class="s2">)&quot;</span>
@@ -266,58 +494,29 @@
 <span class="sd">            step (dict): the steps map.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">s</span> <span class="o">=</span> <span class="n">step</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span>
-        <span class="n">action_name</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;action&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">action_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span><span class="s2">&quot;Missing Action&quot;</span><span class="p">)</span>
+        <span class="c1"># get step settings</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">_Step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="p">,</span> <span class="o">**</span><span class="n">step</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;step&quot;</span><span class="p">))</span>
 
-        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">action</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Illegal Action </span><span class="si">{action_name}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># output description</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
 
-        <span class="n">description</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
+        <span class="c1"># this is a bit clunky...</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_id</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">kwargs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_id</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
 
-        <span class="c1"># wait for a number of seconds</span>
-        <span class="n">wait_time</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wait_time&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">wait_time</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for </span><span class="si">%d</span><span class="s2"> seconds&quot;</span><span class="p">,</span> <span class="n">wait_time</span><span class="p">)</span>
-            <span class="n">time_sleep</span><span class="p">(</span><span class="n">wait_time</span><span class="p">)</span>
+        <span class="c1"># wait for a number of seconds and then execute</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">wait_time</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
 
-        <span class="c1"># sort out argumenst to action method.</span>
-        <span class="c1"># XXXX: add inspect.signature calls to validate ...</span>
-        <span class="c1"># (at the moment we will get an upstream error if the step is incorrect)</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">asset_name</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;asset_name&quot;</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">print_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
-        <span class="n">asset_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset_id</span><span class="p">(</span><span class="n">asset_name</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">asset_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_id</span><span class="p">)</span>
+        <span class="n">delete</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">delete</span>
+        <span class="k">if</span> <span class="n">delete</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_deletions</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">delete_method</span><span class="p">)</span>
 
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">step</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="s2">&quot;confirm&quot;</span><span class="p">)}</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;args </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_entities</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div>
 
-        <span class="k">if</span> <span class="s2">&quot;confirm&quot;</span> <span class="ow">in</span> <span class="n">step</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;confirm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">step</span><span class="p">[</span><span class="s2">&quot;confirm&quot;</span><span class="p">]</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;kwargs </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">action</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">action</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-
-        <span class="n">print_response</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;print_response&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">print_response</span><span class="p">:</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Response </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_entities</span><span class="p">(</span><span class="n">action_name</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">action_name</span> <span class="o">==</span> <span class="s2">&quot;COMPLIANCE_COMPLIANT_AT&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;compliant&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">process_compliant_at</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="_Runner.set_entities"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.set_entities">[docs]</a>    <span class="k">def</span> <span class="nf">set_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
+<div class="viewcode-block" id="_Runner.set_entities"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.set_entities">[docs]</a>    <span class="k">def</span> <span class="nf">set_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;sets entties entry&quot;&quot;&quot;</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -325,48 +524,29 @@
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">action_name</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span></div>
 
-<div class="viewcode-block" id="_Runner.process_compliant_at"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.process_compliant_at">[docs]</a>    <span class="k">def</span> <span class="nf">process_compliant_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Evaluates Gets asset id&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="_Runner.set_deletions"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.set_deletions">[docs]</a>    <span class="k">def</span> <span class="nf">set_deletions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">delete_method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sets entry to be deleted&quot;&quot;&quot;</span>
 
-        <span class="c1"># if there is a reason print it</span>
-        <span class="k">for</span> <span class="n">outcome</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;compliance&quot;</span><span class="p">]:</span>
-
-            <span class="k">if</span> <span class="n">outcome</span><span class="p">[</span><span class="s2">&quot;compliant&quot;</span><span class="p">]:</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># get the compliance policy</span>
-            <span class="n">policy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">read</span><span class="p">(</span>
-                <span class="n">outcome</span><span class="p">[</span><span class="s2">&quot;compliance_policy_identity&quot;</span><span class="p">]</span>
-            <span class="p">)</span>
-
-            <span class="c1"># print the policy name and the reason</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s2">&quot;NON-COMPLIANCE -&gt; Policy: </span><span class="si">%s</span><span class="s2">: Reason </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">policy</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">],</span>
-                <span class="n">outcome</span><span class="p">[</span><span class="s2">&quot;reason&quot;</span><span class="p">],</span>
-            <span class="p">)</span></div>
-
-<div class="viewcode-block" id="_Runner.asset_id"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.asset_id">[docs]</a>    <span class="k">def</span> <span class="nf">asset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Gets asset id&quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="n">asset_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">asset_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="s2">&quot;ASSETS_CREATE&quot;</span><span class="p">][</span><span class="n">asset_name</span><span class="p">][</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">asset_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">asset_id</span>
-
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">if</span> <span class="n">delete_method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">identity</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deletions</span><span class="p">[</span><span class="n">identity</span><span class="p">]</span> <span class="o">=</span> <span class="n">delete_method</span></div>
 
 <div class="viewcode-block" id="_Runner.delete"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Deletes all policies</span>
+        <span class="sd">&quot;&quot;&quot;Deletes all entities&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">identity</span><span class="p">,</span> <span class="n">delete_method</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">deletions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Delete </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span>
+            <span class="n">delete_method</span><span class="p">(</span><span class="n">identity</span><span class="p">)</span></div>
 
-<span class="sd">        Just compliance policies for now</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="s2">&quot;COMPLIANCE_POLICIES_CREATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Delete </span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span></div></div>
+<div class="viewcode-block" id="_Runner.asset_id"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.asset_id">[docs]</a>    <span class="k">def</span> <span class="nf">asset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Gets entity id&quot;&quot;&quot;</span>
+
+        <span class="n">asset_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">asset_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">asset_id</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>
 
            </div>

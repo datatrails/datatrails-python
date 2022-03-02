@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.assets &mdash; Jitsuin Archivist 0.10.0 documentation</title>
+  <title>archivist.assets &mdash; Jitsuin Archivist 0.10.1 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -197,7 +197,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 
 <span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
@@ -312,7 +312,7 @@
         <span class="c1"># default behaviours  are added first - any set in user-specified fixtures or</span>
         <span class="c1"># in the method args will overide...</span>
         <span class="n">newprops</span> <span class="o">=</span> <span class="n">_deepmerge</span><span class="p">({</span><span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">BEHAVIOURS</span><span class="p">},</span> <span class="n">props</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span><span class="n">newprops</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">newprops</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="n">confirm</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_AssetsClient.create_from_data"><a class="viewcode-back" href="../../assets.html#archivist.assets._AssetsClient.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Asset</span><span class="p">:</span>
@@ -339,6 +339,99 @@
             <span class="k">return</span> <span class="n">asset</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_confirmation</span><span class="p">(</span><span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="_AssetsClient.create_if_not_exists"><a class="viewcode-back" href="../../assets.html#archivist.assets._AssetsClient.create_if_not_exists">[docs]</a>    <span class="k">def</span> <span class="nf">create_if_not_exists</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Asset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an asset and associated locations and attachments if asset</span>
+<span class="sd">        does not already exist.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict): request body of asset.</span>
+<span class="sd">            confirm (bool): if True wait for asset to be confirmed on DLT.</span>
+
+<span class="sd">        A YAML representation of the data argument would be:</span>
+
+<span class="sd">            .. code-block:: yaml</span>
+
+<span class="sd">                signature:</span>
+<span class="sd">                  attributes:</span>
+<span class="sd">                    arc_display_name: Jitsuin Front Door</span>
+<span class="sd">                behaviours</span>
+<span class="sd">                  - RecordEvidence</span>
+<span class="sd">                  - Attachments</span>
+<span class="sd">                attributes:</span>
+<span class="sd">                  arc_firmware_version: &quot;1.0&quot;</span>
+<span class="sd">                  arc_serial_number: das-j1-01</span>
+<span class="sd">                  arc_description: Electronic door entry system to Jitsuin France</span>
+<span class="sd">                  wavestone_asset_id: paris.france.jitsuin.das</span>
+<span class="sd">                location:</span>
+<span class="sd">                  signature:</span>
+<span class="sd">                    display_name: Jitsuin Paris,</span>
+<span class="sd">                  description: Sales and sales support for the French region</span>
+<span class="sd">                  latitude: 48.8339211,</span>
+<span class="sd">                  longitude: 2.371345,</span>
+<span class="sd">                  attributes:</span>
+<span class="sd">                    address: 5 Parvis Alan Turing, 75013 Paris, France</span>
+<span class="sd">                    wavestone_ext: managed</span>
+<span class="sd">                attachments:</span>
+<span class="sd">                  - filename: functests/test_resources/doors/assets/entry-terminal.jpg</span>
+<span class="sd">                    content_type: image/jpg</span>
+
+<span class="sd">            The &#39;signature&#39; value is required and will usually specify the &#39;arc_display_name&#39; as a</span>
+<span class="sd">            secondary key. The values in &#39;signature&#39; will be merged into the &#39;attributes&#39; dict.</span>
+<span class="sd">            The &#39;behaviours&#39; values should rarely differ from the above settings.</span>
+
+<span class="sd">            If &#39;location&#39; is specified then the &#39;signature&#39; value is required and is used as a</span>
+<span class="sd">            secondary key</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple of :class:`Asset` instance, Boolean is True if asset already existed</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">asset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">existed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">signature</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;signature&quot;</span><span class="p">)</span>  <span class="c1"># must exist</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">asset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_by_signature</span><span class="p">(</span>
+                <span class="n">props</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">signature</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;attributes&quot;</span><span class="p">},</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="n">signature</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">ArchivistNotFoundError</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;asset with signature </span><span class="si">%s</span><span class="s2"> does not exist&quot;</span><span class="p">,</span> <span class="n">signature</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;asset with signature </span><span class="si">%s</span><span class="s2"> already existed&quot;</span><span class="p">,</span> <span class="n">signature</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">asset</span><span class="p">,</span> <span class="kc">True</span>
+
+        <span class="c1"># make sure that signature is in the definition of the asset</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">signature</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># is location present?</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">(</span>
+                <span class="n">location</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_home_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loc</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
+
+        <span class="c1"># any attachments ?</span>
+        <span class="n">attachments</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;attachments&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attachments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_attachments&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attachments</span>
+            <span class="p">]</span>
+
+        <span class="n">asset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">confirm</span><span class="o">=</span><span class="n">confirm</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">asset</span><span class="p">,</span> <span class="n">existed</span></div>
 
 <div class="viewcode-block" id="_AssetsClient.wait_for_confirmation"><a class="viewcode-back" href="../../assets.html#archivist.assets._AssetsClient.wait_for_confirmation">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Asset</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Wait for asset to be confirmed.</span>
@@ -370,12 +463,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Asset</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ASSETS_SUBPATH</span><span class="p">,</span> <span class="n">identity</span><span class="p">))</span></div>
 
-    <span class="k">def</span> <span class="nf">__query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="n">query</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">props</span><span class="p">)</span> <span class="k">if</span> <span class="n">props</span> <span class="k">else</span> <span class="p">{}</span>
+    <span class="k">def</span> <span class="nf">__params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">props</span><span class="p">)</span> <span class="k">if</span> <span class="n">props</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">attrs</span><span class="p">:</span>
-            <span class="n">query</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attrs</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attrs</span>
 
-        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ASSETS_LABEL</span><span class="p">),</span> <span class="n">query</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ASSETS_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 
 <div class="viewcode-block" id="_AssetsClient.count"><a class="viewcode-back" href="../../assets.html#archivist.assets._AssetsClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -393,7 +486,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ASSETS_SUBPATH}</span><span class="s2">/</span><span class="si">{ASSETS_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ASSETS_SUBPATH}</span><span class="s2">/</span><span class="si">{ASSETS_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="_AssetsClient.wait_for_confirmed"><a class="viewcode-back" href="../../assets.html#archivist.assets._AssetsClient.wait_for_confirmed">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_confirmed</span><span class="p">(</span>
@@ -450,7 +543,7 @@
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ASSETS_SUBPATH}</span><span class="s2">/</span><span class="si">{ASSETS_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">ASSETS_LABEL</span><span class="p">,</span>
                 <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
-                <span class="n">query</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">),</span>
+                <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
 
@@ -473,7 +566,7 @@
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get_by_signature</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ASSETS_SUBPATH}</span><span class="s2">/</span><span class="si">{ASSETS_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">ASSETS_LABEL</span><span class="p">,</span>
-                <span class="n">query</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">),</span>
+                <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span></div></div>
 </pre></div>

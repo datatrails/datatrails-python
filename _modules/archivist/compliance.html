@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.compliance &mdash; Jitsuin Archivist 0.10.0 documentation</title>
+  <title>archivist.compliance &mdash; Jitsuin Archivist 0.10.1 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -240,7 +240,11 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ComplianceClient(</span><span class="si">{self._archivist.url}</span><span class="s2">)&quot;</span>
 
 <div class="viewcode-block" id="_ComplianceClient.compliant_at"><a class="viewcode-back" href="../../compliance_policies/compliance.html#archivist.compliance._ComplianceClient.compliant_at">[docs]</a>    <span class="k">def</span> <span class="nf">compliant_at</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">compliant_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">asset_id</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">compliant_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">report</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Compliance</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reads compliance of a particular asset.</span>
@@ -250,6 +254,7 @@
 <span class="sd">            compliant_at (str): datetime to check compliance at a particular time (optional).</span>
 <span class="sd">                                format: rfc3339 - UTC only</span>
 <span class="sd">                                https://datatracker.ietf.org/doc/html/rfc3339#section-4.1</span>
+<span class="sd">            report (bool): if true output report</span>
 <span class="sd">            page_size (int): optional page size. (Rarely used).</span>
 
 <span class="sd">        Returns:</span>
@@ -257,11 +262,40 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;compliant_at&quot;</span><span class="p">:</span> <span class="n">compliant_at</span><span class="p">}</span> <span class="k">if</span> <span class="n">compliant_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{COMPLIANCE_SUBPATH}</span><span class="s2">/</span><span class="si">{COMPLIANCE_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">asset_id</span><span class="p">,</span>
             <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-        <span class="p">)</span>  <span class="c1"># type: ignore</span></div></div>
+        <span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">if</span> <span class="n">report</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compliant_at_report</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Compliance</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="_ComplianceClient.compliant_at_report"><a class="viewcode-back" href="../../compliance_policies/compliance.html#archivist.compliance._ComplianceClient.compliant_at_report">[docs]</a>    <span class="k">def</span> <span class="nf">compliant_at_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compliance</span><span class="p">:</span> <span class="n">Compliance</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints report of compliance_at request</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            response (dict): compliance object encapsulating response from compliant_at</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Compliant </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">compliance</span><span class="p">[</span><span class="s2">&quot;compliant&quot;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">outcome</span> <span class="ow">in</span> <span class="n">compliance</span><span class="p">[</span><span class="s2">&quot;compliance&quot;</span><span class="p">]:</span>
+
+            <span class="k">if</span> <span class="n">outcome</span><span class="p">[</span><span class="s2">&quot;compliant&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># get the compliance policy</span>
+            <span class="n">policy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">read</span><span class="p">(</span>
+                <span class="n">outcome</span><span class="p">[</span><span class="s2">&quot;compliance_policy_identity&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+
+            <span class="c1"># print the policy name and the reason</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;NON-COMPLIANCE -&gt; Policy: </span><span class="si">%s</span><span class="s2">: Reason </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">policy</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">],</span>
+                <span class="n">outcome</span><span class="p">[</span><span class="s2">&quot;reason&quot;</span><span class="p">],</span>
+            <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

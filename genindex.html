@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; Jitsuin Archivist 0.10.0 documentation</title>
+  <title>Index &mdash; Jitsuin Archivist 0.10.1 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -183,11 +183,12 @@
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
- | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
  | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -201,6 +202,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient">_AccessPoliciesClient (class in archivist.access_policies)</a>
+</li>
+      <li><a href="runner.html#archivist.runner._ActionMap">_ActionMap (class in archivist.runner)</a>
 </li>
       <li><a href="iam/appidp.html#archivist.appidp._AppIDPClient">_AppIDPClient (class in archivist.appidp)</a>
 </li>
@@ -224,6 +227,8 @@
 </li>
       <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient">_SBOMSClient (class in archivist.sboms)</a>
 </li>
+      <li><a href="runner.html#archivist.runner._Step">_Step (class in archivist.runner)</a>
+</li>
       <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient">_SubjectsClient (class in archivist.subjects)</a>
 </li>
   </ul></td>
@@ -233,6 +238,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="iam/access_policies.html#archivist.access_policies.AccessPolicy">AccessPolicy (class in archivist.access_policies)</a>
+</li>
+      <li><a href="runner.html#archivist.runner._ActionMap.action">action() (archivist.runner._ActionMap method)</a>
 </li>
       <li><a href="iam/appidp.html#archivist.appidp.AppIDP">AppIDP (class in archivist.appidp)</a>
 </li>
@@ -411,6 +418,8 @@
 </li>
       <li><a href="errors.html#archivist.errors.ArchivistUnwithdrawnError">ArchivistUnwithdrawnError</a>
 </li>
+      <li><a href="runner.html#archivist.runner._Step.args">args() (archivist.runner._Step method)</a>
+</li>
       <li><a href="assets.html#archivist.assets.Asset">Asset (class in archivist.assets)</a>
 </li>
       <li><a href="runner.html#archivist.runner._Runner.asset_id">asset_id() (archivist.runner._Runner method)</a>
@@ -455,6 +464,8 @@
 </li>
       <li><a href="compliance_policies/compliance.html#archivist.compliance._ComplianceClient.compliant_at">compliant_at() (archivist.compliance._ComplianceClient method)</a>
 </li>
+      <li><a href="compliance_policies/compliance.html#archivist.compliance._ComplianceClient.compliant_at_report">compliant_at_report() (archivist.compliance._ComplianceClient method)</a>
+</li>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count">count() (archivist.access_policies._AccessPoliciesClient method)</a>
 
       <ul>
@@ -484,6 +495,8 @@
 </li>
         <li><a href="assets.html#archivist.assets._AssetsClient.create">(archivist.assets._AssetsClient method)</a>
 </li>
+        <li><a href="attachments.html#archivist.attachments._AttachmentsClient.create">(archivist.attachments._AttachmentsClient method)</a>
+</li>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.create">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
         <li><a href="events.html#archivist.events._EventsClient.create">(archivist.events._EventsClient method)</a>
@@ -509,6 +522,12 @@
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.create_from_data">(archivist.subjects._SubjectsClient method)</a>
 </li>
       </ul></li>
+      <li><a href="assets.html#archivist.assets._AssetsClient.create_if_not_exists">create_if_not_exists() (archivist.assets._AssetsClient method)</a>
+
+      <ul>
+        <li><a href="locations.html#archivist.locations._LocationsClient.create_if_not_exists">(archivist.locations._LocationsClient method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -523,6 +542,8 @@
         <li><a href="archivist.html#archivist.archivist.Archivist.delete">(archivist.archivist.Archivist method)</a>
 </li>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.delete">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
+</li>
+        <li><a href="runner.html#archivist.runner._ActionMap.delete">(archivist.runner._ActionMap method)</a>
 </li>
         <li><a href="runner.html#archivist.runner._Runner.delete">(archivist.runner._Runner method)</a>
 </li>
@@ -578,16 +599,20 @@
   </ul></td>
 </tr></table>
 
-<h2 id="H">H</h2>
+<h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="archivist.html#archivist.archivist.Archivist.headers">headers() (archivist.archivist.Archivist property)</a>
+      <li><a href="attachments.html#archivist.attachments._AttachmentsClient.info">info() (archivist.attachments._AttachmentsClient method)</a>
 </li>
   </ul></td>
 </tr></table>
 
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="runner.html#archivist.runner._ActionMap.keywords">keywords() (archivist.runner._ActionMap method)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism.KHIPU">KHIPU (archivist.proof_mechanism.ProofMechanism attribute)</a>
 </li>
@@ -701,6 +726,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="runner.html#archivist.runner._ActionMap.ops">ops() (archivist.runner._ActionMap method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -710,13 +743,11 @@
 </li>
       <li><a href="archivist.html#archivist.archivist.Archivist.post">post() (archivist.archivist.Archivist method)</a>
 </li>
-      <li><a href="archivist.html#archivist.archivist.Archivist.post_file">post_file() (archivist.archivist.Archivist method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="assets.html#archivist.assets.Asset.primary_image">primary_image() (archivist.assets.Asset property)</a>
+      <li><a href="archivist.html#archivist.archivist.Archivist.post_file">post_file() (archivist.archivist.Archivist method)</a>
 </li>
-      <li><a href="runner.html#archivist.runner._Runner.process_compliant_at">process_compliant_at() (archivist.runner._Runner method)</a>
+      <li><a href="assets.html#archivist.assets.Asset.primary_image">primary_image() (archivist.assets.Asset property)</a>
 </li>
       <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism">ProofMechanism (class in archivist.proof_mechanism)</a>
 </li>
@@ -772,10 +803,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sboms/sbommetadata.html#archivist.sbommetadata.SBOM">SBOM (class in archivist.sbommetadata)</a>
 </li>
-      <li><a href="runner.html#archivist.runner._Runner.set_entities">set_entities() (archivist.runner._Runner method)</a>
+      <li><a href="runner.html#archivist.runner._Runner.set_deletions">set_deletions() (archivist.runner._Runner method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="runner.html#archivist.runner._Runner.set_entities">set_entities() (archivist.runner._Runner method)</a>
+</li>
       <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism.SIMPLE_HASH">SIMPLE_HASH (archivist.proof_mechanism.ProofMechanism attribute)</a>
 </li>
       <li><a href="iam/subjects.html#archivist.subjects.Subject">Subject (class in archivist.subjects)</a>
@@ -835,6 +868,8 @@
       <ul>
         <li><a href="events.html#archivist.events._EventsClient.wait_for_confirmation">(archivist.events._EventsClient method)</a>
 </li>
+        <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.wait_for_confirmation">(archivist.subjects._SubjectsClient method)</a>
+</li>
       </ul></li>
       <li><a href="assets.html#archivist.assets._AssetsClient.wait_for_confirmed">wait_for_confirmed() (archivist.assets._AssetsClient method)</a>
 
@@ -842,10 +877,10 @@
         <li><a href="events.html#archivist.events._EventsClient.wait_for_confirmed">(archivist.events._EventsClient method)</a>
 </li>
       </ul></li>
-      <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.wait_for_publication">wait_for_publication() (archivist.sboms._SBOMSClient method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.wait_for_publication">wait_for_publication() (archivist.sboms._SBOMSClient method)</a>
+</li>
       <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.wait_for_uploading">wait_for_uploading() (archivist.sboms._SBOMSClient method)</a>
 </li>
       <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.wait_for_withdrawn">wait_for_withdrawn() (archivist.sboms._SBOMSClient method)</a>

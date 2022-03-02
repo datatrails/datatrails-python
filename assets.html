@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Assets Class &mdash; Jitsuin Archivist 0.10.0 documentation</title>
+  <title>Assets Class &mdash; Jitsuin Archivist 0.10.1 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -284,6 +284,59 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.assets._AssetsClient.create_if_not_exists">
+<code class="sig-name descname"><span class="pre">create_if_not_exists</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><span class="pre">archivist.assets.Asset</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient.create_if_not_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient.create_if_not_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an asset and associated locations and attachments if asset
+does not already exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – request body of asset.</p></li>
+<li><p><strong>confirm</strong> (<em>bool</em>) – if True wait for asset to be confirmed on DLT.</p></li>
+</ul>
+</dd>
+</dl>
+<p>A YAML representation of the data argument would be:</p>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">signature</span><span class="p">:</span>
+  <span class="nt">attributes</span><span class="p">:</span>
+    <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Front Door</span>
+<span class="l l-Scalar l-Scalar-Plain">behaviours</span>
+  <span class="l l-Scalar l-Scalar-Plain">- RecordEvidence</span>
+  <span class="l l-Scalar l-Scalar-Plain">- Attachments</span>
+<span class="nt">attributes</span><span class="p">:</span>
+  <span class="nt">arc_firmware_version</span><span class="p">:</span> <span class="s">&quot;1.0&quot;</span>
+  <span class="nt">arc_serial_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">das-j1-01</span>
+  <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to Jitsuin France</span>
+  <span class="nt">wavestone_asset_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">paris.france.jitsuin.das</span>
+<span class="nt">location</span><span class="p">:</span>
+  <span class="nt">signature</span><span class="p">:</span>
+    <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris,</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Sales and sales support for the French region</span>
+  <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">48.8339211,</span>
+  <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.371345,</span>
+  <span class="nt">attributes</span><span class="p">:</span>
+    <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5 Parvis Alan Turing, 75013 Paris, France</span>
+    <span class="nt">wavestone_ext</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">managed</span>
+<span class="nt">attachments</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/doors/assets/entry-terminal.jpg</span>
+    <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
+</pre></div>
+</div>
+<p>The ‘signature’ value is required and will usually specify the ‘arc_display_name’ as a
+secondary key. The values in ‘signature’ will be merged into the ‘attributes’ dict.
+The ‘behaviours’ values should rarely differ from the above settings.</p>
+<p>If ‘location’ is specified then the ‘signature’ value is required and is used as a
+secondary key</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>tuple of <a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code></a> instance, Boolean is True if asset already existed</p>
 </dd>
 </dl>
 </dd></dl>

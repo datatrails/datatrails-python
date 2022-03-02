@@ -6,6 +6,8 @@ Compliance Compliant_at Story Runner YAML
 'asset_name' is required from a previously created asset. The asset_id is derived and
 inserted as the first argument to compliance.compliant_at().
 
+'report' = true will cause a report to be printed on the compliance status.
+
 .. code-block:: yaml
     
     ---
@@ -13,4 +15,5 @@ inserted as the first argument to compliance.compliant_at().
       - step:
           action: COMPLIANCE_COMPLIANT_AT
           description: Check Compliance of EV pump 1.
+          report: true
           asset_name: ev pump 1

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.access_policies &mdash; Jitsuin Archivist 0.10.0 documentation</title>
+  <title>archivist.access_policies &mdash; Jitsuin Archivist 0.10.1 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -262,7 +262,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create Access Policy </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span> <span class="n">access_permissions</span><span class="o">=</span><span class="n">access_permissions</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span>
+                <span class="n">props</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span> <span class="n">access_permissions</span><span class="o">=</span><span class="n">access_permissions</span>
+            <span class="p">),</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="_AccessPoliciesClient.create_from_data"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
@@ -329,7 +331,7 @@
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span>
                 <span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span>
                 <span class="n">identity</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span>
                     <span class="n">props</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span> <span class="n">access_permissions</span><span class="o">=</span><span class="n">access_permissions</span>
                 <span class="p">),</span>
             <span class="p">)</span>
@@ -349,21 +351,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ACCESS_POLICIES_SUBPATH</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__query</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">__params</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">access_permissions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="n">query</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">props</span><span class="p">)</span> <span class="k">if</span> <span class="n">props</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">props</span><span class="p">)</span> <span class="k">if</span> <span class="n">props</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">filters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">query</span><span class="p">[</span><span class="s2">&quot;filters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filters</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;filters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filters</span>
 
         <span class="k">if</span> <span class="n">access_permissions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">query</span><span class="p">[</span><span class="s2">&quot;access_permissions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">access_permissions</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;access_permissions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">access_permissions</span>
 
-        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ACCESS_POLICIES_LABEL</span><span class="p">),</span> <span class="n">query</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ACCESS_POLICIES_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 
 <div class="viewcode-block" id="_AccessPoliciesClient.count"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Count access policies.</span>
@@ -377,10 +379,10 @@
 <span class="sd">            integer count of access policies.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">}</span> <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">}</span> <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ACCESS_POLICIES_SUBPATH}</span><span class="s2">/</span><span class="si">{ACCESS_POLICIES_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="_AccessPoliciesClient.list"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
@@ -398,14 +400,14 @@
 <span class="sd">            iterable that returns :class:`AccessPolicy` instances</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">}</span> <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">}</span> <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="n">AccessPolicy</span><span class="p">(</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{ACCESS_POLICIES_SUBPATH}</span><span class="s2">/</span><span class="si">{ACCESS_POLICIES_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">ACCESS_POLICIES_LABEL</span><span class="p">,</span>
                 <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
-                <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
 

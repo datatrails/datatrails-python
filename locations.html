@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Locations Class &mdash; Jitsuin Archivist 0.10.0 documentation</title>
+  <title>Locations Class &mdash; Jitsuin Archivist 0.10.1 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -257,6 +257,36 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="archivist.locations._LocationsClient.create_if_not_exists">
+<code class="sig-name descname"><span class="pre">create_if_not_exists</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><span class="pre">archivist.locations.Location</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/archivist/locations.html#_LocationsClient.create_if_not_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.locations._LocationsClient.create_if_not_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a location if not already exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – request body of location.</p>
+</dd>
+</dl>
+<p>A YAML representation of the data argument would be:</p>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">signature</span><span class="p">:</span>
+  <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Apartements du Gare du Nord</span>
+<span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Residential apartment building in new complex above GdN station</span>
+<span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">48.8809</span>
+<span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.3553</span>
+<span class="nt">attributes</span><span class="p">:</span>
+  <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">18 Rue de Dunkerque, 75010 Paris, France</span>
+  <span class="nt">wavestone_ext</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">managed</span>
+</pre></div>
+</div>
+<p>The ‘signature’ setting is required.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>tuple of <a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a> instance, Boolean True if already exists</p>
 </dd>
 </dl>
 </dd></dl>

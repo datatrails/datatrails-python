@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.applications &mdash; Jitsuin Archivist 0.10.0 documentation</title>
+  <title>archivist.applications &mdash; Jitsuin Archivist 0.10.1 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -250,7 +250,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create Application </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">display_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span>
                 <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span>
                 <span class="n">custom_claims</span><span class="o">=</span><span class="n">custom_claims</span><span class="p">,</span>
             <span class="p">),</span>
@@ -319,7 +319,7 @@
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span>
                 <span class="n">APPLICATIONS_SUBPATH</span><span class="p">,</span>
                 <span class="n">identity</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span>
                     <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span>
                     <span class="n">custom_claims</span><span class="o">=</span><span class="n">custom_claims</span><span class="p">,</span>
                 <span class="p">),</span>
@@ -340,22 +340,22 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">APPLICATIONS_SUBPATH</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__query</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">__params</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">custom_claims</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 
-        <span class="n">query</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">query</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">display_name</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">display_name</span>
 
         <span class="k">if</span> <span class="n">custom_claims</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">query</span><span class="p">[</span><span class="s2">&quot;custom_claims&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">custom_claims</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;custom_claims&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">custom_claims</span>
 
-        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">APPLICATIONS_LABEL</span><span class="p">),</span> <span class="n">query</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">APPLICATIONS_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 
 <div class="viewcode-block" id="_ApplicationsClient.list"><a class="viewcode-back" href="../../iam/appregistrations.html#archivist.applications._ApplicationsClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -381,7 +381,7 @@
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{APPLICATIONS_SUBPATH}</span><span class="s2">/</span><span class="si">{APPLICATIONS_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">APPLICATIONS_LABEL</span><span class="p">,</span>
                 <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
-                <span class="n">query</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__query</span><span class="p">(</span><span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">),</span>
+                <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
 
