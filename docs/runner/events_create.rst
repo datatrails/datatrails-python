@@ -6,8 +6,11 @@ Events Create Story Runner YAML
 'asset_name' must match the arc_display_name attribute of an existing asset for which
 the authorised Application Registration has Event write access
 
-The 'attachments' setting uploads the attachment to archivist and the response
+The optional 'attachments' setting uploads the attachments to archivist and the response
 added to the event before posting.
+
+The optional 'location' setting creates the location if it does not exist and adds it to
+the event.
 
 .. code-block:: yaml
     
@@ -31,6 +34,15 @@ added to the event before posting.
           arc_correlation_value: be5c8061-236d-4400-a625-b74a34e5801b
           wavestone_door_name: Courts of Justice Paris Front Door
           wavestone_evt_type: door_open
+        location:
+          signature:
+            display_name: Paris Courts of Justice
+          description: Public museum in the former Palais de Justice
+          latitude: 48.855722
+          longitude: 2.345051
+          attributes:
+            address: 10 Boulevard du Palais, 75001 Paris, France
+            wavestone_ext: managed
         attachments:
           - filename: functests/test_resources/doors/events/door_open.png
             content_type: image/png
