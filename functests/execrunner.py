@@ -97,3 +97,23 @@ class TestRunner(TestCase):
                 11,
                 msg="Incorrect number of entities",
             )
+
+    def test_runner_wipp(self):
+        """
+        Test runner with wipp story
+
+        run_steps is used so that exceptions are shown
+        """
+
+        LOGGER.info("...")
+        with open(
+            "functests/test_resources/wipp_story.yaml",
+            "r",
+            encoding="utf-8",
+        ) as y:
+            self.arch.runner.run_steps(yaml.load(y, Loader=yaml.SafeLoader))
+            self.assertEqual(
+                len(self.arch.runner.entities),
+                2,
+                msg="Incorrect number of entities",
+            )

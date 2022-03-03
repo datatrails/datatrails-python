@@ -88,13 +88,15 @@ class _AttachmentsClient:
 
                 filename: functests/test_resources/doors/assets/gdn_front.jpg
                 content_type: image/jpg
+                display_name: arc_primary_image
 
             OR
 
             .. code-block:: yaml
 
-                url: https://secure.eicar.org/eicar.com"
-                content_type: image/jpg
+                url: https://secure.eicar.org/eicar.com.zip"
+                content_type: application/zip
+                display_name: Test malware
 
              Either 'filename' or 'url' is required.
              'content_type' is required.
@@ -107,13 +109,14 @@ class _AttachmentsClient:
 
             .. code-block:: yaml
 
+                arc_display_name: Telephone
                 arc_attachment_identity: blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
                 arc_hash_alg: SHA256
                 arc_hash_value: xxxxxxxxxxxxxxxxxxxxxxx
 
         """
         result = None
-        filename = data.get("filename", None)
+        filename = data.get("filename")
         if filename is not None:
             with open(filename, "rb") as fd:
                 attachment = self.upload(fd, mtype=data.get("content_type"))
@@ -129,6 +132,10 @@ class _AttachmentsClient:
             "arc_hash_alg": attachment["hash"]["alg"],
             "arc_hash_value": attachment["hash"]["value"],
         }
+
+        display_name = data.get("display_name")
+        if display_name is not None:
+            result["arc_display_name"] = display_name
 
         return result
 

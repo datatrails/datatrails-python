@@ -157,7 +157,7 @@ class _EventsClient:
 
         Args:
             asset_id (str): asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-            attrs (dict): request body of event.
+            data (dict): request body of event.
             confirm (bool): if True wait for event to be confirmed on DLT.
 
         Returns:
@@ -165,6 +165,15 @@ class _EventsClient:
 
         """
         data = deepcopy(data)
+
+        # is location present?
+        location = data.pop("location", None)
+        if location is not None:
+            loc, _ = self._archivist.locations.create_if_not_exists(
+                location,
+            )
+            data["event_attributes"]["arc_location_identity"] = loc["identity"]
+
         attachments = data.pop("attachments", None)
         if attachments is not None:
             data["event_attributes"]["arc_attachments"] = [
