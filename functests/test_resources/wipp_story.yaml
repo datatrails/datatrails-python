@@ -1,0 +1,350 @@
+---
+# The step field is a string that represents the method bound to an endpoint and
+# the args and kwargs correspond to the arguments to such a method.
+#
+# NB the assets and events endpoints require all values to be strings. Other values may
+# be of the correct type such as confirm which is a boolean.
+#
+steps:
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a drum container number 1
+    signature:
+      attributes:
+        arc_display_name: Drum 1
+        arc_namespace: wipp
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: drum
+      arc_description: Standard non-POC 55 gallon drum No. 1
+      wipp_capacity: "55"
+    attachments:
+      - filename: functests/test_resources/wipp/55gallon.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a cask container number 1
+    signature:
+      attributes:
+        arc_display_name: Cask 1
+        arc_namespace: wipp
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_type: cask
+      arc_description: NRC certified type-B road shipping container, capacity 3 x 55-gallon drum
+      wipp_capacity: "3"
+    attachments:
+      - filename: functests/test_resources/wipp/rh72b.png
+        content_type: image/png
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Characterize Drum 1
+      asset_name: Drum 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: "Waste coding characterization: A2 Fraction 2.10E+05"
+      arc_display_type: WO Characterize
+      arc_evidence: N/A
+    asset_attributes:
+      wipp_weight: "790300"
+      wipp_a2fraction_characterized: "2.10E+05"
+      wipp_activity_characterized: "1.69E+02"
+      wipp_total_characterized: "2.12E+02"
+    attachments:
+      - filename: functests/test_resources/wipp/DOE-WIPP-02-3122_Rev_9_FINAL.pdf
+        content_type: application/pdf
+        display_name: Reference WAC
+      - filename: functests/test_resources/wipp/characterization.pdf
+        content_type: application/pdf
+        display_name: Characterization report
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Tomograph Drum 1
+      asset_name: Drum 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Confirming waste coding characterization
+      arc_display_type: WO Confirmation
+      arc_evidence: Radiograph attached
+    asset_attributes:
+      wipp_weight: "790300"
+      wipp_a2fraction_confirmed: "2.10E+05"
+      wipp_activity_confirmed: "1.69E+02"
+      wipp_total_confirmed: "2.12E+02"
+    attachments:
+      - filename: functests/test_resources/wipp/wipp_radiography.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+      - filename: functests/test_resources/wipp/DOE-WIPP-02-3122_Rev_9_FINAL.pdf
+        content_type: application/pdf
+        display_name: Reference WAC
+    confirm: true
+
+  # pair of simultaneous events for Drum 1 and Cask 1
+  - step:
+      action: EVENTS_CREATE
+      description: Loading Drum 1 into Cask 1
+      asset_name: Drum 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Loading drum into Cask 1
+      arc_display_type: WO Loading
+      arc_evidence: Loading placement image attached
+    asset_attributes:
+      wipp_container: Cask 1
+    attachments:
+      - filename: functests/test_resources/wipp/trupact_loading.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Filled Cask 1 with Drum 1
+      asset_name: Cask 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Filled with Drum 1
+      arc_display_type: WO Loading
+      arc_evidence: Loading placement image attached
+    asset_attributes:
+      wipp_container: Drum 1
+    attachments:
+      - filename: functests/test_resources/wipp/trupact_loading.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Preship inspection of Drum 1
+      asset_name: Drum 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Inspection inventory
+      arc_display_type: WO Preship Inspection
+      arc_evidence: Image Attached
+    attachments:
+      - filename: functests/test_resources/wipp/preshipment_inspection.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Preship inspection of Cask 1
+      asset_name: Cask 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Inspection inventory
+      arc_display_type: WO Preship Inspection
+      arc_evidence: Image Attached
+    attachments:
+      - filename: functests/test_resources/wipp/preshipment_inspection.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Departure of Drum 1
+      asset_name: Drum 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Departed SRS Inventory
+      arc_display_type: WO Transit
+      arc_evidence: Routing instructions in attachments
+    attachments:
+      - filename: functests/test_resources/wipp/truck_departure.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+      - filename: functests/test_resources/wipp/SRS_to_WPP_route_instructions.pdf
+        content_type: application/pdf
+        display_name: Approved Route
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Departure of Cask 1
+      asset_name: Cask 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Departed SRS Inventory
+      arc_display_type: WO Transit
+      arc_evidence: Routing instructions in attachments
+    attachments:
+      - filename: functests/test_resources/wipp/truck_departure.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+      - filename: functests/test_resources/wipp/SRS_to_WPP_route_instructions.pdf
+        content_type: application/pdf
+        display_name: Approved Route
+    confirm: true
+
+  # a journey via Atlanta...
+  - step:
+      action: EVENTS_CREATE
+      description: Atlanta Waypoint of Cask 1
+      asset_name: Cask 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: "TRAGIS smart sensors ping: Checking in near Atlanta - All Sensors Green"
+      arc_display_type: WO Transit
+      arc_evidence: "Signature: 0x1234abcd"
+      wipp_sensors_shock: "0"
+      wipp_sensors_rad: "45"
+    location:
+      signature:
+        display_name: Atlanta waypoint
+      description: Atlanta waypoint
+      latitude: 33.592177
+      longitude: -84.406064
+    attachments:
+      - filename: functests/test_resources/wipp/truck_departure.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Talladega Waypoint of Cask 1
+      asset_name: Cask 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: "TRAGIS smart sensors ping: Checking in near Atlanta - All Sensors Green"
+      arc_display_type: WO Transit
+      arc_evidence: "Signature: 0x1234abcd"
+      wipp_sensors_shock: "0"
+      wipp_sensors_rad: "45"
+    location:
+      signature:
+        display_name: Talladega waypoint
+      description: Talladega waypoint
+      latitude: 33.592177
+      longitude: -86.248379
+    attachments:
+      - filename: functests/test_resources/wipp/truck_departure.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  # arrival events for drum and cask
+  - step:
+      action: EVENTS_CREATE
+      description: Arrival of Drum 1
+      asset_name: Drum 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: At WIPP Inventory
+      arc_display_type: WO Transit
+      arc_evidence: Routing instructions in attachments
+    attachments:
+      - filename: functests/test_resources/wipp/truck_arrival.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Arrival of Cask 1
+      asset_name: Cask 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: At WIPP Inventory
+      arc_display_type: WO Transit
+      arc_evidence: Routing instructions in attachments
+    attachments:
+      - filename: functests/test_resources/wipp/truck_arrival.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  # pair of events when cask and drum are unloaded
+  - step:
+      action: EVENTS_CREATE
+      description: Unloading Drum 1 from Cask 1
+      asset_name: Drum 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Unloaded from cask 1
+      arc_display_type: WO Unloading
+      arc_evidence: Packing image attached
+    attachments:
+      - filename: functests/test_resources/wipp/trupact_unloading.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  - step:
+      action: EVENTS_CREATE
+      description: Unloading Drum 1 from Cask 1
+      asset_name: Cask 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Unloaded drum 1
+      arc_display_type: WO Unloading
+      arc_evidence: Packing image attached
+    attachments:
+      - filename: functests/test_resources/wipp/trupact_unloading.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
+
+  # final resting place for drum
+  - step:
+      action: EVENTS_CREATE
+      description: Drum 1 Emplacemant
+      asset_name: Drum 1
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    event_attributes:
+      arc_description: Emplacement in location D-32
+      arc_display_type: WO Emplacement
+      arc_evidence: Packing image attached
+      wipp_emplacement_location: D-32
+    attachments:
+      - filename: functests/test_resources/wipp/waste_placement.jpg
+        content_type: image/jpg
+        display_name: arc_primary_image
+    confirm: true
