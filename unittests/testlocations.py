@@ -83,16 +83,36 @@ RESPONSE = {
     },
 }
 REQUEST_EXISTS = {
-    "signature": {
-        "display_name": "Macclesfield, Cheshire",
-        "attributes": {
-            "director": "John Smith",
+    "selector": [
+        "display_name",
+        {
+            "attributes": [
+                "director",
+            ],
         },
-    },
+    ],
+    "display_name": "Macclesfield, Cheshire",
     "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
     "latitude": "53.2546799",
     "longitude": "-2.1213956,14.54",
     "attributes": {
+        "director": "John Smith",
+        "address": "Bridgewater, Somerset",
+        "facility_type": "Manufacture",
+        "support_email": "support@macclesfield.com",
+        "support_phone": "123 456 789",
+    },
+}
+REQUEST_EXISTS_SELECTOR_NOATTRS = {
+    "selector": [
+        "display_name",
+    ],
+    "display_name": "Macclesfield, Cheshire",
+    "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
+    "latitude": "53.2546799",
+    "longitude": "-2.1213956,14.54",
+    "attributes": {
+        "director": "John Smith",
         "address": "Bridgewater, Somerset",
         "facility_type": "Manufacture",
         "support_email": "support@macclesfield.com",
@@ -211,6 +231,50 @@ class TestLocations(TestCase):
             mock_post.return_value = MockResponse(200, **RESPONSE)
             location, existed = self.arch.locations.create_if_not_exists(
                 REQUEST_EXISTS,
+            )
+            mock_get.assert_called_once()
+            mock_post.assert_called_once()
+            self.assertEqual(
+                location,
+                RESPONSE,
+                msg="Incorrect location listed",
+            )
+            self.assertEqual(
+                existed,
+                False,
+                msg="Incorrect existed bool",
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+
+    def test_locations_create_if_not_exists_nonexistent_location_selector_noattributes(
+        self,
+    ):
+        """
+        Test location creation
+        """
+        with mock.patch.object(
+            self.arch._session, "get"
+        ) as mock_get, mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_get.side_effect = ArchivistNotFoundError
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            location, existed = self.arch.locations.create_if_not_exists(
+                REQUEST_EXISTS_SELECTOR_NOATTRS,
             )
             mock_get.assert_called_once()
             mock_post.assert_called_once()

@@ -148,7 +148,7 @@ def endpoint(args):
                 },
                 "locations": {
                     "attributes": {
-                        "arc_namespace": args.namespace,
+                        "namespace": args.namespace,
                     },
                 },
             },

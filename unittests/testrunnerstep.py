@@ -32,7 +32,7 @@ class TestRunnerStep(TestCase):
     maxDiff = None
 
     @staticmethod
-    def asset_id_method(unused_asset_name):
+    def asset_id_method(unused_label):
         return ASSET_ID
 
     def setUp(self):
@@ -49,7 +49,7 @@ class TestRunnerStep(TestCase):
                 "wait_time": 10,
                 "print_response": True,
                 "description": "Testing runner events list",
-                "asset_name": "Existing Asset",
+                "asset_label": "Existing Asset",
                 "delete": True,
             }
         )
@@ -88,7 +88,7 @@ class TestRunnerStep(TestCase):
                 "wait_time": 10,
                 "print_response": True,
                 "description": "Testing runner events list",
-                "asset_name": "Existing Asset",
+                "asset_label": "Existing Asset",
                 "delete": True,
             }
         )
@@ -138,4 +138,28 @@ class TestRunnerStep(TestCase):
             step.kwargs(self.asset_id_method, {}),
             {"asset_id": ASSET_ID},
             msg="Incorrect kwargs",
+        )
+
+        self.assertEqual(
+            step.set_asset_id,
+            False,
+            msg="Incorrect set_asset_id",
+        )
+        # a second time to prove memoization is working.
+        self.assertEqual(
+            step.set_asset_id,
+            False,
+            msg="Incorrect set_asset_id",
+        )
+
+        self.assertEqual(
+            step.use_asset_id,
+            True,
+            msg="Incorrect use_asset_id",
+        )
+        # a second time to prove memoization is working.
+        self.assertEqual(
+            step.use_asset_id,
+            True,
+            msg="Incorrect use_asset_id",
         )

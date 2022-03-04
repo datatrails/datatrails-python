@@ -39,13 +39,12 @@ ASSETS_CREATE = {
     **ASSETS_CREATE_ARGS,
 }
 ASSETS_CREATE_IF_NOT_EXISTS = {
-    "signature": {
-        "attributes": {
-            "arc_display_name": ASSET_NAME,
-        },
+    "selector": {
+        "attributes.arc_display_name",
     },
     "behaviours": ["RecordEvidence", "Attachments"],
     "attributes": {
+        "arc_display_name": ASSET_NAME,
         "radioactive": True,
         "radiation_level": 0,
         "weight": 0,
@@ -172,6 +171,7 @@ class TestRunnerAssetsCreate(TestCase):
                                 "action": "ASSETS_CREATE",
                                 "wait_time": 10,
                                 "description": "Testing runner assets create",
+                                "asset_label": "Existing Asset",
                                 "delete": True,
                             },
                             **ASSETS_CREATE,
@@ -179,13 +179,13 @@ class TestRunnerAssetsCreate(TestCase):
                     ],
                 }
             )
-            mock_sleep.assert_called_once_with(10)
             mock_assets_create.assert_called_once_with(ASSETS_CREATE_ARGS)
             self.assertEqual(
-                self.arch.runner.entities[ASSET_NAME],
+                self.arch.runner.entities["Existing Asset"],
                 ASSETS_RESPONSE,
                 msg="Incorrect asset created",
             )
+            mock_sleep.assert_called_once_with(10)
 
     @mock.patch("archivist.runner.time_sleep")
     def test_runner_assets_create_if_not_exists(self, mock_sleep):
@@ -204,6 +204,7 @@ class TestRunnerAssetsCreate(TestCase):
                                 "action": "ASSETS_CREATE_IF_NOT_EXISTS",
                                 "wait_time": 10,
                                 "description": "Testing runner assets create if not exists",
+                                "asset_label": "Existing Asset",
                             },
                             **ASSETS_CREATE_IF_NOT_EXISTS,
                             "confirm": True,
@@ -211,15 +212,15 @@ class TestRunnerAssetsCreate(TestCase):
                     ],
                 }
             )
-            mock_sleep.assert_called_once_with(10)
             mock_assets_create.assert_called_once_with(
                 ASSETS_CREATE_IF_NOT_EXISTS, **ASSETS_CONFIRM
             )
             self.assertEqual(
-                self.arch.runner.entities[ASSET_NAME],
+                self.arch.runner.entities["Existing Asset"],
                 ASSETS_RESPONSE,
                 msg="Incorrect asset created",
             )
+            mock_sleep.assert_called_once_with(10)
 
     @mock.patch("archivist.runner.time_sleep")
     def test_runner_events_list(self, mock_sleep):
@@ -242,7 +243,7 @@ class TestRunnerAssetsCreate(TestCase):
                                 "wait_time": 10,
                                 "print_response": True,
                                 "description": "Testing runner events list",
-                                "asset_name": "Existing Asset",
+                                "asset_label": "Existing Asset",
                             },
                             **EVENTS_LIST,
                         },
@@ -309,7 +310,7 @@ class TestRunnerAssetsCreate(TestCase):
 
             self.assertEqual("Missing Action" in str(ex.exception), True)
 
-    def test_runner_assets_create_illegal_asset_name(self):
+    def test_runner_assets_create_illegal_asset_label(self):
         """
         Test runner operation
         """
@@ -325,7 +326,7 @@ class TestRunnerAssetsCreate(TestCase):
                                 "step": {
                                     "action": "EVENTS_CREATE",
                                     "wait_time": 10,
-                                    "asset_name": "Nonexistent asset",
+                                    "asset_label": "Nonexistent asset",
                                 },
                                 **ASSETS_CREATE,
                             }
@@ -333,7 +334,7 @@ class TestRunnerAssetsCreate(TestCase):
                     }
                 )
 
-            self.assertEqual("Unknown Asset" in str(ex.exception), True)
+            self.assertEqual("Unknown Entity" in str(ex.exception), True)
 
     def test_runner_assets_create_invalid_action(self):
         """

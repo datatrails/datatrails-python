@@ -17,12 +17,13 @@ Each step follows the same pattern:
           description: Create new EV Pump with id 1.
           wait_time: 10
           print_response: true
-          asset_name: Radiation bag 1
-        ................definition of request body
+          asset_label: Radiation bag 1
+        ................definition of request body and other
+                        parameters
   
 
 :action:
-    Required for every operation. This is a prefined constant that maps to
+    Required for every operation. This is a predefined constant that maps to
     a method e.g. "ASSETS_CREATE" will call the assets.create_from_data() method
 
 :description:
@@ -30,7 +31,7 @@ Each step follows the same pattern:
     Emits this string to stdout.
 
 :wait_time:
-    The scenario will pause for this number of seconds before execution.
+    The story runner will pause for this number of seconds before execution.
     Primarily used to demonstrate compliance policy evaluation. One pauses
     before creating events and before evaluating compliance to allow
     (for example) the asset to become non-compliant. (demonstration)
@@ -38,8 +39,12 @@ Each step follows the same pattern:
 :print_response:
    Emit JSON representation of response. Useful for debugging purposes.
 
-:asset_name:
-   Required for 'EVENTS_CREATE' and 'COMPLIANCE_COMPLIANT_AT' operaions. Without
-   this value these operations will fail.
-   The asset_name is the 'attributes.arc_display_name' value of an asset.
+:asset_label:
+   For create type actions (ASSETS_CREATE, ASSETS_CREATE_IF_NOT_EXISTS) the label is used
+   by the runner to keep track of assets.
+
+   For other actions which require access to an asset, this value is used as a key to
+   obtain the identity of such a previously-created asset.
+
+   In this way one can create assets and then refer to them in later steps of the story.
 

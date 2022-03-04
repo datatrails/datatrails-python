@@ -244,6 +244,7 @@ asset or event is confirmed before returning.
       - step:
           action: ASSETS_CREATE
           description: Create an empty radiation bag with id 1.
+          asset_label: radiation bag 1
         behaviours:
           - Attachments
           - RecordEvidence
@@ -260,7 +261,7 @@ asset or event is confirmed before returning.
       - step:
           action: EVENTS_CREATE
           description: Create Event adding 3 rads of radiation to bag 1, increasing its weight by 1kg.
-          asset_name: radiation bag 1
+          asset_label: radiation bag 1
         operation: Record
         behaviour: RecordEvidence
         event_attributes:
