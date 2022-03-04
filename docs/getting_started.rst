@@ -21,6 +21,8 @@ See the examples and functests directories.
 
    runner/index
 
+   scan_test
+
    subject_create
    subjects_filter
 
