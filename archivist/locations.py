@@ -33,6 +33,7 @@ from . import archivist as type_helper
 from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
+from .utils import selector_signature
 
 
 LOGGER = getLogger(__name__)
@@ -110,8 +111,11 @@ class _LocationsClient:
 
             .. code-block:: yaml
 
-                signature:
-                  display_name: Apartements du Gare du Nord
+                selector:
+                  - display_name
+                  - attributes:
+                    - wavestone_ext
+                display_name: Apartements du Gare du Nord
                 description: Residential apartment building in new complex above GdN station
                 latitude: 48.8809
                 longitude: 2.3553
@@ -119,7 +123,7 @@ class _LocationsClient:
                   address: 18 Rue de Dunkerque, 75010 Paris, France
                   wavestone_ext: managed
 
-            The 'signature' setting is required.
+            The 'selector' setting is required.
 
         Returns:
             tuple of :class:`Location` instance, Boolean True if already exists
@@ -127,21 +131,19 @@ class _LocationsClient:
         """
         location = None
         data = deepcopy(data)
-        signature = data.pop("signature")  # must exist
+        selector = data.pop("selector")  # must exist
+        props, attrs = selector_signature(selector, data)
         try:
+            location = self.read_by_signature(props=props, attrs=attrs)
 
-            location = self.read_by_signature(
-                props={k: v for k, v in signature.items() if k != "attributes"},
-                attrs=signature.get("attributes"),
-            )
         except ArchivistNotFoundError:
-            pass
+            LOGGER.info(
+                "location with selector %s,%s does not exist - creating", props, attrs
+            )
 
         else:
+            LOGGER.info("location with selector %s,%s already exists", props, attrs)
             return location, True
-
-        # make sure that signature is in the definition of the location
-        data = signature if data is None else _deepmerge(signature, data)
 
         return self.create_from_data(data), False
 
@@ -165,7 +167,7 @@ class _LocationsClient:
         )
 
     def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
-        params = props or {}
+        params = deepcopy(props) if props else {}
         if attrs:
             params["attributes"] = attrs
 

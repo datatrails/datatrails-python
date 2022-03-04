@@ -151,15 +151,19 @@ RESPONSE = {
 
 # case 2 create if not exists
 REQUEST_EXISTS = {
-    "signature": {
-        "attributes": {
-            "arc_display_name": ASSET_NAME,
-            "arc_namespace": "namespace",
+    "selector": [
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
         },
-    },
+    ],
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
+        "arc_display_name": ASSET_NAME,
+        "arc_namespace": "namespace",
         "arc_firmware_version": "1.0",
         "arc_serial_number": "vtl-x4-07",
         "arc_description": "Traffic flow control light at A603 North East",
@@ -202,53 +206,21 @@ RESPONSE_EXISTS = {
     "tracked": "TRACKED",
 }
 
-# case 3 create if not exists with no attributes
-REQUEST_EXISTS_NOATTRS = {
-    "signature": {
-        "attributes": {
-            "arc_display_name": ASSET_NAME,
-            "arc_namespace": "namespace",
+# case 3 create if not exists with attachments
+REQUEST_EXISTS_ATTACHMENTS = {
+    "selector": [
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
         },
-    },
+    ],
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-}
-REQUEST_EXISTS_KWARGS_NOATTRS = {
-    "json": {
-        "behaviours": BEHAVIOURS,
-        "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-        "attributes": {
-            "arc_display_name": ASSET_NAME,
-            "arc_namespace": "namespace",
-        },
-    },
-    "headers": {
-        "authorization": "Bearer authauthauth",
-    },
-    "verify": True,
-}
-RESPONSE_EXISTS_NOATTRS = {
-    "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": "namespace",
-    },
-    "confirmation_status": "CONFIRMED",
-    "tracked": "TRACKED",
-}
-
-# case 4 create if not exists with attachments
-REQUEST_EXISTS_ATTACHMENTS = {
-    "signature": {
-        "attributes": {
-            "arc_display_name": ASSET_NAME,
-            "arc_namespace": "namespace",
-        },
-    },
-    "behaviours": BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-    "attributes": {
         "arc_firmware_version": "1.0",
         "arc_serial_number": "vtl-x4-07",
         "arc_description": "Traffic flow control light at A603 North East",
@@ -325,17 +297,21 @@ RESPONSE_EXISTS_ATTACHMENTS = {
     "tracked": "TRACKED",
 }
 
-# case 5 create if not exists with location
+# case 4 create if not exists with location
 REQUEST_EXISTS_LOCATION = {
-    "signature": {
-        "attributes": {
-            "arc_display_name": ASSET_NAME,
-            "arc_namespace": "namespace",
+    "selector": [
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
         },
-    },
+    ],
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
+        "arc_display_name": ASSET_NAME,
+        "arc_namespace": "namespace",
         "arc_firmware_version": "1.0",
         "arc_serial_number": "vtl-x4-07",
         "arc_description": "Traffic flow control light at A603 North East",
@@ -343,16 +319,20 @@ REQUEST_EXISTS_LOCATION = {
         "some_custom_attribute": "value",
     },
     "location": {
-        "signature": {
-            "display_name": "Macclesfield, Cheshire",
-            "attributes": {
-                "director": "John Smith",
+        "selector": [
+            "display_name",
+            {
+                "attributes": [
+                    "director",
+                ]
             },
-        },
+        ],
+        "display_name": "Macclesfield, Cheshire",
         "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
         "latitude": "53.2546799",
         "longitude": "-2.1213956,14.54",
         "attributes": {
+            "director": "John Smith",
             "address": "Bridgewater, Somerset",
             "facility_type": "Manufacture",
             "support_email": "support@macclesfield.com",

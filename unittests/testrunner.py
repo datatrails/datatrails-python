@@ -168,7 +168,7 @@ class TestRunner(TestCase):
         """
         runner = self.arch.runner
         runner.entities = tree()
-        runner.set_entities(Asset(**ASSETS_RESPONSE))
+        runner.set_entities(ASSET_NAME, Asset(**ASSETS_RESPONSE))
         self.assertEqual(
             runner.asset_id(ASSET_NAME),
             ASSET_ID,

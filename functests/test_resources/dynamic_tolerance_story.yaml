@@ -14,11 +14,13 @@ steps:
   - step:
       action: ASSETS_CREATE
       description: Create new EV Pump with id 1.
+      asset_label: ev pump 1
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
-      arc_display_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      arc_display_name: ev pump 1
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       ev_pump: "true"
     confirm: true
 
@@ -29,7 +31,7 @@ steps:
       print_response: true
       delete: true
     description: ev maintenance policy
-    display_name: !ENV ev maintenance policy ${ARCHIVIST_NAMESPACE:namespace}
+    display_name: ev maintenance policy
     compliance_type: COMPLIANCE_DYNAMIC_TOLERANCE
     asset_filter:  
       - or: [ "attributes.ev_pump=true" ]
@@ -42,7 +44,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event requesting EV pump 1 needs maintenance.
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -55,7 +57,7 @@ steps:
       action: EVENTS_CREATE
       description: Create Event after 1 seconds, for EV pump 1, stating maintenance occurred.
       wait_time: 1
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -67,7 +69,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event requesting EV pump 1 needs maintenance.
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -80,7 +82,7 @@ steps:
       action: EVENTS_CREATE
       description: Create Event after 2 seconds, for EV pump 1, stating maintenance occurred.
       wait_time: 2
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -92,7 +94,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event requesting EV pump 1 needs maintenance.
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -105,7 +107,7 @@ steps:
       action: EVENTS_CREATE
       description: Create Event after 3 seconds, for EV pump 1, stating maintenance occurred.
       wait_time: 3
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -118,13 +120,13 @@ steps:
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of EV pump 1.
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
 
   # now create an event that throws the Standard deviation out of whack
   - step:
       action: EVENTS_CREATE
       description: Create Event requesting EV pump 1 needs maintenance.
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -137,7 +139,7 @@ steps:
       action: EVENTS_CREATE
       description: Create Event after 20 seconds, for EV pump 1, stating maintenance occurred.
       wait_time: 20
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -150,6 +152,6 @@ steps:
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of EV pump 1.
-      asset_name: !ENV ev pump 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: ev pump 1
     report: true
 

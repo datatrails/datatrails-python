@@ -35,14 +35,17 @@ class _ActionMap(dict):
         self["ASSETS_ATTACHMENT_INFO"] = {
             "action": archivist.attachments.info,
             "keywords": ("asset_or_event_id",),
+            "use_asset_id": True,
         }
         self["ASSETS_CREATE_IF_NOT_EXISTS"] = {
             "action": archivist.assets.create_if_not_exists,
             "keywords": ("confirm",),
+            "set_asset_id": True,
         }
         self["ASSETS_CREATE"] = {
             "action": archivist.assets.create_from_data,
             "keywords": ("confirm",),
+            "set_asset_id": True,
         }
         self["ASSETS_LIST"] = {
             "action": archivist.assets.list,
@@ -72,6 +75,7 @@ class _ActionMap(dict):
         self["EVENTS_CREATE"] = {
             "action": archivist.events.create_from_data,
             "keywords": ("confirm",),
+            "use_asset_id": True,
         }
         self["EVENTS_COUNT"] = {
             "action": archivist.events.count,
@@ -81,6 +85,7 @@ class _ActionMap(dict):
                 "attrs",
                 "asset_attrs",
             ),
+            "use_asset_id": True,
         }
         self["EVENTS_LIST"] = {
             "action": archivist.events.list,
@@ -90,6 +95,7 @@ class _ActionMap(dict):
                 "attrs",
                 "asset_attrs",
             ),
+            "use_asset_id": True,
         }
         self["LOCATIONS_COUNT"] = {
             "action": archivist.locations.count,
@@ -127,6 +133,18 @@ class _ActionMap(dict):
         """
         return self.ops(action_name).get("delete")
 
+    def use_asset_id(self, action_name: str) -> bool:
+        """
+        Return whether this action uses asset_id
+        """
+        return self.ops(action_name).get("use_asset_id", False)
+
+    def set_asset_id(self, action_name: str) -> bool:
+        """
+        Return whether this action sets asset_id
+        """
+        return self.ops(action_name).get("set_asset_id", False)
+
 
 class _Step(dict):  # pylint:disable=too-many-instance-attributes
     def __init__(self, archivist: "type_helper.Archivist", **kwargs):
@@ -139,6 +157,8 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         self._action_name = None
         self._keywords = None
         self._delete_method = None
+        self._use_asset_id = None
+        self._set_asset_id = None
 
     def args(self, asset_id_method):
         """
@@ -150,11 +170,13 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             # get asset identity and prepend to the list of positional
             # arguments.  This will be simplified when dataclasses are
             # introduced.
-            if self.asset_name is not None:
-                asset_id = asset_id_method(self.asset_name)
+            LOGGER.debug("self.asset_label %s", self.asset_label)
+            LOGGER.debug("self.use_asset_id %s", self.use_asset_id)
+            if not self.set_asset_id and self.asset_label is not None:
+                asset_id = asset_id_method(self.asset_label)
                 if asset_id is None:
                     raise ArchivistInvalidOperationError(
-                        f"Unknown Asset '{self.asset_name}'"
+                        f"Unknown Entity '{self.asset_label}'"
                     )
 
                 # prepend if not specified in the keywords for the action.
@@ -178,8 +200,8 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             keywords = self.keywords
             if keywords is not None and len(keywords) > 0:
                 keys.extend(keywords)
-                if self.asset_name is not None and "asset_id" in keywords:
-                    kwargs["asset_id"] = asset_id_method(self.asset_name)
+                if "asset_id" in keywords and self.asset_label is not None:
+                    kwargs["asset_id"] = asset_id_method(self.asset_label)
 
                 for k in keywords:
                     if k in step:
@@ -212,8 +234,8 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         return response
 
     @property
-    def asset_name(self):
-        return self.get("asset_name")
+    def asset_label(self):
+        return self.get("asset_label")
 
     def description(self):
         description = self.get("description")
@@ -260,6 +282,20 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             self._delete_method = self.actions.delete(self.action_name)
 
         return self._delete_method
+
+    @property
+    def use_asset_id(self):
+        if self._use_asset_id is None:
+            self._use_asset_id = self.actions.use_asset_id(self.action_name)
+
+        return self._use_asset_id
+
+    @property
+    def set_asset_id(self):
+        if self._set_asset_id is None:
+            self._set_asset_id = self.actions.set_asset_id(self.action_name)
+
+        return self._set_asset_id
 
     @property
     def keywords(self):
@@ -361,21 +397,17 @@ class _Runner:
 
         s.print_response(response)
 
-        delete = s.delete
-        if delete:
+        if s.delete:
             self.set_deletions(response, s.delete_method)
 
-        self.set_entities(response)
+        if s.set_asset_id:
+            self.set_entities(s.asset_label, response)
 
-    def set_entities(self, response: Dict):
+    def set_entities(self, asset_label: str, response: Dict):
         """sets entties entry"""
 
-        try:
-            name = response.name
-        except AttributeError:
-            pass
-        else:
-            self.entities[name] = response
+        if asset_label:
+            self.entities[asset_label] = response
 
     def set_deletions(self, response: Dict, delete_method):
         """sets entry to be deleted"""

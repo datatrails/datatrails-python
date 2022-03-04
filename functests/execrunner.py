@@ -59,7 +59,7 @@ class TestRunner(TestCase):
             self.arch.runner.run_steps(parse_config(data=y))
             self.assertEqual(
                 len(self.arch.runner.entities),
-                2,
+                1,
                 msg="Incorrect number of entities",
             )
 
@@ -79,7 +79,7 @@ class TestRunner(TestCase):
             self.arch.runner.run_steps(parse_config(data=y))
             self.assertEqual(
                 len(self.arch.runner.entities),
-                5,
+                3,
                 msg="Incorrect number of entities",
             )
 

@@ -3,6 +3,8 @@
 
 from io import BytesIO
 from logging import getLogger
+from typing import Tuple
+
 from requests import get as requests_get
 
 LOGGER = getLogger(__name__)
@@ -69,3 +71,28 @@ def get_auth(
         return (client_id, authtoken)
 
     return None
+
+
+def selector_signature(selector: list, data: dict) -> Tuple[dict, dict]:
+    """
+    Convert a selector to a signature for list and count methods
+
+    Used in locations.create_if_not_exists and assets.create_if_not_exists
+    """
+    attrselector = []
+    propselector = []
+
+    for k in selector:
+        try:
+            attrselector = k["attributes"]
+        except (KeyError, TypeError):
+            propselector.append(k)
+
+    props = {k: data[k] for k in propselector}
+    if attrselector:
+        data_attrs = data["attributes"]  # keyerror if not exist (it must exist)
+        attrs = {k: data_attrs[k] for k in attrselector}
+    else:
+        attrs = None
+
+    return (props, attrs)

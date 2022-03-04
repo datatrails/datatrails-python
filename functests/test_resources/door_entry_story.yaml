@@ -8,29 +8,38 @@
 # This story creates a number of doors and access cards. An 'open door' event is then 
 # created with attached photo. Finally all doors and cards are listed and all events on 
 # the the Courts of Justice Front Door and all events on the Access Card 2 are listed.
+#
 steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at Jitsuin offices.
-    signature:
-      attributes:
-        arc_display_name: !ENV Jitsuin Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Jitsuin Paris Front Door
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Jitsuin Paris Front Door
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-j1-01
       arc_description: Electronic door entry system to Jitsuin France
       wavestone_asset_id: paris.france.jitsuin.das
     location:
-      signature:
-        display_name: !ENV Jitsuin Paris ${ARCHIVIST_NAMESPACE:namespace}
+      selector:
+        - display_name
+        - attributes:
+          - namespace
+      display_name: Jitsuin Paris
       description: Sales and sales support for the French region
       latitude: 48.8339211
       longitude: 2.371345
       attributes:
+        namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
         address: 5 Parvis Alan Turing, 75013 Paris, France
         wavestone_ext: managed
     attachments:
@@ -41,25 +50,33 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at City Hall
-    signature:
-      attributes:
-        arc_display_name: !ENV City Hall Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: City Hall Paris Front Door
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: City Hall Paris Front Door
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-01
       arc_description: Electronic door entry system controlling the main staff entrance to Paris City Hall
       wavestone_asset_id: cityhall.paris.wavestonedas
     location:
-      signature:
-        display_name: !ENV Paris City Hall ${ARCHIVIST_NAMESPACE:namespace}
+      selector:
+        - display_name
+        - attributes:
+          - namespace
+      display_name: Paris City Hall
       description: Seat of Paris local city adminstration
       latitude: 48.856389
       longitude: 2.352222
       attributes:
+        namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
         address: Place de l'Hôtel de Ville, 75004 Paris, France
         wavestone_ext: managed
       attachments:
@@ -71,25 +88,33 @@ steps:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at Courts of Justice
       print_response: true
-    signature:
-      attributes:
-        arc_display_name: !ENV Courts of Justice Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Courts of Justice Paris Front Door
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Courts of Justice Paris Front Door
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-02
       arc_description: Electronic door entry system controlling the main staff entrance to Paris Courts of Justice
       wavestone_asset_id: courts.paris.wavestonedas
     location:
-      signature:
-        display_name: !ENV Paris Courts of Justice ${ARCHIVIST_NAMESPACE:namespace}
+      selector:
+        - display_name
+        - attributes:
+          - namespace
+      display_name: Paris Courts of Justice
       description: Public museum in the former Palais de Justice
       latitude: 48.855722
       longitude: 2.345051
       attributes:
+        namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
         address: 10 Boulevard du Palais, 75001 Paris, France
         wavestone_ext: managed
     attachments:
@@ -100,25 +125,33 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at Bastille
-    signature:
-      attributes:
-        arc_display_name: !ENV Bastille Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Bastille Paris Front Door
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Bastille Paris Front Door
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-03
       arc_description: Electronic door entry system controlling the main staff entrance to Bastille
       wavestone_asset_id: bastille.paris.wavestonedas
     location:
-      signature:
-        display_name: !ENV Bastille ${ARCHIVIST_NAMESPACE:namespace}
+      selector:
+        - display_name
+        - attributes:
+          - namespace
+      display_name: Bastille
       description: Medieval fortress, made famous by the French Revolution
       latitude: 48.85333
       longitude: 2.36917
       attributes:
+        namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
         address: Place de la Bastille, 75011 Paris, France
         wavestone_ext: managed
     attachments:
@@ -129,25 +162,33 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a front door in Paris at Gare du Nord Apartments
-    signature:
-      attributes:
-        arc_display_name: !ENV Gare du Nord Apartments Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Gare du Nord Apartments Paris Front Door
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Gare du Nord Apartments Paris Front Door
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-04
       arc_description: Electronic door entry system controlling the front residential entrance to Apartements du Gare du Nord
       wavestone_asset_id: front.gdn.paris.wavestonedas
     location:
-      signature:
-        display_name: !ENV Apartements du Gare du Nord ${ARCHIVIST_NAMESPACE:namespace}
+      selector:
+        - display_name
+        - attributes:
+          - namespace
+      display_name: Apartements du Gare du Nord
       description: Residential apartment building in new complex above GdN station
       latitude: 48.8809
       longitude: 2.3553
       attributes:
+        namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
         address: 18 Rue de Dunkerque, 75010 Paris, France
         wavestone_ext: managed
     attachments:
@@ -158,25 +199,33 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a side door in Paris at Gare du Nord Apartments
-    signature:
-      attributes:
-        arc_display_name: !ENV Gare du Nord Apartments Paris Side Door ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Gare du Nord Apartments Paris Side Door
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Gare du Nord Apartments Paris Side Door
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-05
       arc_description: Electronic door entry system controlling the side residential entrance to Apartements du Gare du Nord
       wavestone_asset_id: side.gdn.paris.wavestonedas
     location:
-      signature:
-        display_name: !ENV Apartements du Gare du Nord ${ARCHIVIST_NAMESPACE:namespace}
+      selector:
+        - display_name
+        - attributes:
+          - namespace
+      display_name: Apartements du Gare du Nord
       description: Residential apartment building in new complex above GdN station
       latitude: 48.8809
       longitude: 2.3553
       attributes:
+        namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
         address: 18 Rue de Dunkerque, 75010 Paris, France
         wavestone_ext: managed
     attachments:
@@ -194,13 +243,17 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 1
-    signature:
-      attributes:
-        arc_display_name: !ENV Access Card 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Access Card 1
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Access Card 1
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: card
       arc_serial_number: sc-x5-1
       arc_description: Electronic door Access Card 1
@@ -209,14 +262,18 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 2
+      asset_label: Access Card 2
       print_response: true
-    signature:
-      attributes:
-        arc_display_name: !ENV Access Card 2 ${ARCHIVIST_NAMESPACE:namespace}
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Access Card 2
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: card
       arc_serial_number: sc-x5-2
       arc_description: Electronic door Access Card 2
@@ -225,13 +282,17 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 3
-    signature:
-      attributes:
-        arc_display_name: !ENV Access Card 3 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Access Card 3
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Access Card 3
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_serial_number: sc-x5-3
       arc_description: Electronic door Access Card 3
     confirm: true
@@ -239,13 +300,17 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 4
-    signature:
-      attributes:
-        arc_display_name: !ENV Access Card 4 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Access Card 4
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Access Card 4
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: card
       arc_serial_number: sc-x5-4
       arc_description: Electronic door Access Card 4
@@ -254,13 +319,17 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 5
-    signature:
-      attributes:
-        arc_display_name: !ENV Access Card 5 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Access Card 5
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Access Card 5
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: card
       arc_serial_number: sc-x5-5
       arc_description: Electronic door Access Card 5
@@ -272,14 +341,14 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Courts of justice front door opened with card 2
-      asset_name: !ENV Courts of Justice Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Courts of Justice Paris Front Door
       print_response: true
     operation: Record
     behaviour: RecordEvidence
     principal_declared:
       subject: courts.paris.wavestonedas
       email: courts.paris.wavestonedas@iot.wavestone.com
-      display_name: !ENV Courts of Justice Paris Front Door machine credential ${ARCHIVIST_NAMESPACE:namespace}
+      display_name: Courts of Justice Paris Front Door machine credential
     event_attributes:
       arc_description: Door opened by authorised key card Access Card 2
       arc_display_type: Door Open
@@ -295,14 +364,14 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Access Card 2 opens Courts of justice front door
-      asset_name: !ENV Access Card 2 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Access Card 2
       print_response: true
     operation: Record
     behaviour: RecordEvidence
     principal_declared:
       subject: courts.paris.wavestonedas
       email: courts.paris.wavestonedas@iot.wavestone.com
-      display_name: !ENV Courts of Justice Paris Front Door machine credential ${ARCHIVIST_NAMESPACE:namespace}
+      display_name: Courts of Justice Paris Front Door machine credential
     event_attributes:
       arc_description: Opened Courts of Justice Paris Front Door
       arc_display_type: Door Open
@@ -321,6 +390,7 @@ steps:
       print_response: true
     attrs:
       arc_display_type: door
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
 
   - step:
       action: ASSETS_LIST
@@ -328,16 +398,16 @@ steps:
       print_response: true
     attrs:
       arc_display_type: card
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
 
   - step:
       action: EVENTS_LIST
       description: List all events for Courts of Justice Paris Front Door
       print_response: true
-      asset_name: !ENV Courts of Justice Paris Front Door ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Courts of Justice Paris Front Door
 
   - step:
       action: EVENTS_LIST
       description: List all events for Access Card 2
       print_response: true
-      asset_name: !ENV Access Card 2 ${ARCHIVIST_NAMESPACE:namespace}
-
+      asset_label: Access Card 2

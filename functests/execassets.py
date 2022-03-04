@@ -31,15 +31,15 @@ ATTRS = {
 
 ASSET_NAME = "Telephone with 2 attachments - one bad or not scanned 2022-03-01"
 REQUEST_EXISTS_ATTACHMENTS = {
-    "signature": {
-        "attributes": {
-            "arc_display_name": ASSET_NAME,
-            "arc_namespace": "namespace",
-        },
+    "selector": {
+        "attributes.arc_display_name",
+        "attributes.arc_namespace",
     },
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
+        "arc_display_name": ASSET_NAME,
+        "arc_namespace": "namespace",
         "arc_firmware_version": "1.0",
         "arc_serial_number": "vtl-x4-07",
         "arc_description": "Traffic flow control light at A603 North East",
