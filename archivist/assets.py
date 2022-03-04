@@ -39,6 +39,7 @@ from . import confirmer
 from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 from .type_aliases import NoneOnError
+from .utils import selector_signature
 
 # These are now hardcoded and not user-selectable. Eventually they will be removed from
 # the backend API and removed from this package.
@@ -180,20 +181,21 @@ class _AssetsClient:
 
             .. code-block:: yaml
 
-                signature:
-                  attributes:
-                    arc_display_name: Jitsuin Front Door
+                selector:
+                  - attributes.arc_display_name
                 behaviours
                   - RecordEvidence
                   - Attachments
                 attributes:
+                  arc_display_name: Jitsuin Front Door
                   arc_firmware_version: "1.0"
                   arc_serial_number: das-j1-01
                   arc_description: Electronic door entry system to Jitsuin France
                   wavestone_asset_id: paris.france.jitsuin.das
                 location:
-                  signature:
-                    display_name: Jitsuin Paris,
+                  selector:
+                    - display_name
+                  display_name: Jitsuin Paris,
                   description: Sales and sales support for the French region
                   latitude: 48.8339211,
                   longitude: 2.371345,
@@ -204,12 +206,11 @@ class _AssetsClient:
                   - filename: functests/test_resources/doors/assets/entry-terminal.jpg
                     content_type: image/jpg
 
-            The 'signature' value is required and will usually specify the 'arc_display_name' as a
-            secondary key. The values in 'signature' will be merged into the 'attributes' dict.
-            The 'behaviours' values should rarely differ from the above settings.
+            The 'selector' value is required and will usually specify the 'arc_display_name' as a
+            secondary key. The keys in 'selector' must exist in the attributes of the asset.
 
-            If 'location' is specified then the 'signature' value is required and is used as a
-            secondary key
+            If 'location' is specified then the 'selector' value is required and is used as a
+            secondary key. Likewise the secondary key must exist in the attributes of the location.
 
         Returns:
             tuple of :class:`Asset` instance, Boolean is True if asset already existed
@@ -219,25 +220,21 @@ class _AssetsClient:
         asset = None
         existed = False
         data = deepcopy(data)
-        signature = data.pop("signature")  # must exist
+        attachments = data.pop("attachments", None)
+        location = data.pop("location", None)
+        selector = data.pop("selector")  # must exist
         try:
-            asset = self.read_by_signature(
-                props={k: v for k, v in signature.items() if k != "attributes"},
-                attrs=signature.get("attributes"),
-            )
+            props, attrs = selector_signature(selector, data)
+            asset = self.read_by_signature(props=props, attrs=attrs)
 
         except ArchivistNotFoundError:
-            LOGGER.info("asset with signature %s does not exist", signature)
+            LOGGER.info("asset with selector %s does not exist", selector)
 
         else:
-            LOGGER.info("asset with signature %s already existed", signature)
+            LOGGER.info("asset with selector %s already existed", selector)
             return asset, True
 
-        # make sure that signature is in the definition of the asset
-        data = signature if data is None else _deepmerge(signature, data)
-
         # is location present?
-        location = data.pop("location", None)
         if location is not None:
             loc, _ = self._archivist.locations.create_if_not_exists(
                 location,
@@ -245,7 +242,6 @@ class _AssetsClient:
             data["attributes"]["arc_home_location_identity"] = loc["identity"]
 
         # any attachments ?
-        attachments = data.pop("attachments", None)
         if attachments is not None:
             data["attributes"]["arc_attachments"] = [
                 self._archivist.attachments.create(a) for a in attachments

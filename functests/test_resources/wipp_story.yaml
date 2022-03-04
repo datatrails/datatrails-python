@@ -9,14 +9,16 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a drum container number 1
-    signature:
-      attributes:
-        arc_display_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
-        arc_namespace: wipp
+      asset_label: Drum 1
+    selector:
+      - attributes.arc_display_name
+      - attributes.arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Drum 1
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: drum
       arc_description: Standard non-POC 55 gallon drum No. 1
       wipp_capacity: "55"
@@ -29,14 +31,16 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a cask container number 1
-    signature:
-      attributes:
-        arc_display_name: !ENV Cask 1 ${ARCHIVIST_NAMESPACE:namespace}
-        arc_namespace: wipp
+      asset_label: Cask 1
+    selector:
+      - attributes.arc_display_name
+      - attributes.arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
     attributes:
+      arc_display_name: Cask 1
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
       arc_display_type: cask
       arc_description: NRC certified type-B road shipping container, capacity 3 x 55-gallon drum
       wipp_capacity: "3"
@@ -49,7 +53,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Characterize Drum 1
-      asset_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Drum 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -74,7 +78,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Tomograph Drum 1
-      asset_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Drum 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -100,7 +104,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Loading Drum 1 into Cask 1
-      asset_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Drum 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -119,7 +123,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Filled Cask 1 with Drum 1
-      asset_name: !ENV Cask 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Cask 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -138,7 +142,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Preship inspection of Drum 1
-      asset_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Drum 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -155,7 +159,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Preship inspection of Cask 1
-      asset_name: !ENV Cask 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Cask 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -172,7 +176,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Departure of Drum 1
-      asset_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Drum 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -192,7 +196,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Departure of Cask 1
-      asset_name: !ENV Cask 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Cask 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -213,7 +217,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Atlanta Waypoint of Cask 1
-      asset_name: !ENV Cask 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Cask 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -224,11 +228,15 @@ steps:
       wipp_sensors_shock: "0"
       wipp_sensors_rad: "45"
     location:
-      signature:
-        display_name: !ENV Atlanta waypoint ${ARCHIVIST_NAMESPACE:namespace}
+      selector:
+        - display_name
+        - attributes.namespace
+      display_name: Atlanta waypoint
       description: Atlanta waypoint
       latitude: 33.592177
       longitude: -84.406064
+      attributes:
+        namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
     attachments:
       - filename: functests/test_resources/wipp/truck_departure.jpg
         content_type: image/jpg
@@ -238,7 +246,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Talladega Waypoint of Cask 1
-      asset_name: !ENV Cask 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Cask 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -249,11 +257,15 @@ steps:
       wipp_sensors_shock: "0"
       wipp_sensors_rad: "45"
     location:
-      signature:
-        display_name: !ENV Talladega waypoint ${ARCHIVIST_NAMESPACE:namespace}
+      selector:
+        - display_name
+        - attributes.namespace
+      display_name: Talladega waypoint
       description: Talladega waypoint
       latitude: 33.592177
       longitude: -86.248379
+      attributes:
+        namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
     attachments:
       - filename: functests/test_resources/wipp/truck_departure.jpg
         content_type: image/jpg
@@ -264,7 +276,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Arrival of Drum 1
-      asset_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Drum 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -281,7 +293,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Arrival of Cask 1
-      asset_name: !ENV Cask 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Cask 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -299,7 +311,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Unloading Drum 1 from Cask 1
-      asset_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Drum 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -316,7 +328,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Unloading Drum 1 from Cask 1
-      asset_name: !ENV Cask 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Cask 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence
@@ -334,7 +346,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Drum 1 Emplacemant
-      asset_name: !ENV Drum 1 ${ARCHIVIST_NAMESPACE:namespace}
+      asset_label: Drum 1
       print_response: true
     operation: Record
     behaviour: RecordEvidence

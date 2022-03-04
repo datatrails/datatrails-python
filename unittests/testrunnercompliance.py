@@ -143,11 +143,6 @@ class TestRunnerCompliance(TestCase):
                 COMPLIANCE_POLICIES_CREATE
             )
             self.assertEqual(
-                self.arch.runner.entities[COMPLIANCE_POLICY_NAME],
-                COMPLIANCE_POLICIES_RESPONSE,
-                msg="Incorrect compliance_policy created",
-            )
-            self.assertEqual(
                 self.arch.runner.deletions[IDENTITY],
                 self.arch.compliance_policies.delete,
                 msg="Incorrect compliance_policy delete_method",
@@ -176,7 +171,7 @@ class TestRunnerCompliance(TestCase):
                                 "action": "COMPLIANCE_COMPLIANT_AT",
                                 "description": "Testing compliance_compliant_at",
                                 "print_response": True,
-                                "asset_name": COMPLIANCE_COMPLIANT_AT_NAME,
+                                "asset_label": COMPLIANCE_COMPLIANT_AT_NAME,
                             },
                         }
                     ],
@@ -218,7 +213,7 @@ class TestRunnerCompliance(TestCase):
                                 "action": "COMPLIANCE_COMPLIANT_AT",
                                 "description": "Testing compliance_compliant_at",
                                 "print_response": True,
-                                "asset_name": COMPLIANCE_COMPLIANT_AT_NAME,
+                                "asset_label": COMPLIANCE_COMPLIANT_AT_NAME,
                             },
                             "report": True,
                         }

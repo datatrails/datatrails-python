@@ -3,9 +3,8 @@
 Assets Create Story Runner YAML
 .........................................
 
-No required parameters except that the arc_diaplay_name value must be
-specified and used as the 'asset_name' value on both 'EVENTS_CREATE' and
-'COMPLIANCE_COMPLIANT_AT' operations.
+'asset_label' is not required but if unspecified the created asset will
+not be accessible to later actions in the story.
 
 .. code-block:: yaml
     
@@ -14,10 +13,13 @@ specified and used as the 'asset_name' value on both 'EVENTS_CREATE' and
       - step:
           action: ASSETS_CREATE
           description: Create new EV Pump with id 1.
+          asset_label: ev pump 1
         behaviours:
           - Attachments
           - RecordEvidence
         attributes:
           arc_display_name: ev pump 1
+          arc_display_type: pump
+          arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
           ev_pump: "true"
         confirm: true
