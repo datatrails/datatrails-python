@@ -37,7 +37,8 @@ the event.
         location:
           selector:
             - display_name
-            - attributes.namespace
+            - attributes:
+              - namespace
           display_name: Paris Courts of Justice
           description: Public museum in the former Palais de Justice
           latitude: 48.855722

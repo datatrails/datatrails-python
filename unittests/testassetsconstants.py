@@ -152,8 +152,12 @@ RESPONSE = {
 # case 2 create if not exists
 REQUEST_EXISTS = {
     "selector": [
-        "attributes.arc_display_name",
-        "attributes.arc_namespace",
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
+        },
     ],
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
@@ -205,8 +209,12 @@ RESPONSE_EXISTS = {
 # case 3 create if not exists with attachments
 REQUEST_EXISTS_ATTACHMENTS = {
     "selector": [
-        "attributes.arc_display_name",
-        "attributes.arc_namespace",
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
+        },
     ],
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
@@ -292,8 +300,12 @@ RESPONSE_EXISTS_ATTACHMENTS = {
 # case 4 create if not exists with location
 REQUEST_EXISTS_LOCATION = {
     "selector": [
-        "attributes.arc_display_name",
-        "attributes.arc_namespace",
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
+        },
     ],
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
@@ -307,10 +319,14 @@ REQUEST_EXISTS_LOCATION = {
         "some_custom_attribute": "value",
     },
     "location": {
-        "selector": {
+        "selector": [
             "display_name",
-            "attributes.director",
-        },
+            {
+                "attributes": [
+                    "director",
+                ]
+            },
+        ],
         "display_name": "Macclesfield, Cheshire",
         "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
         "latitude": "53.2546799",

@@ -182,7 +182,8 @@ class _AssetsClient:
             .. code-block:: yaml
 
                 selector:
-                  - attributes.arc_display_name
+                  - attributes:
+                    - arc_display_name
                 behaviours
                   - RecordEvidence
                   - Attachments
@@ -223,15 +224,17 @@ class _AssetsClient:
         attachments = data.pop("attachments", None)
         location = data.pop("location", None)
         selector = data.pop("selector")  # must exist
+        props, attrs = selector_signature(selector, data)
         try:
-            props, attrs = selector_signature(selector, data)
             asset = self.read_by_signature(props=props, attrs=attrs)
 
         except ArchivistNotFoundError:
-            LOGGER.info("asset with selector %s does not exist", selector)
+            LOGGER.info(
+                "asset with selector %s,%s does not exist - creating", props, attrs
+            )
 
         else:
-            LOGGER.info("asset with selector %s already existed", selector)
+            LOGGER.info("asset with selector %s,%s already exists", props, attrs)
             return asset, True
 
         # is location present?

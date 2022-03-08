@@ -11,8 +11,9 @@ steps:
       description: Create a drum container number 1
       asset_label: Drum 1
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -33,8 +34,9 @@ steps:
       description: Create a cask container number 1
       asset_label: Cask 1
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -230,7 +232,8 @@ steps:
     location:
       selector:
         - display_name
-        - attributes.namespace
+        - attributes:
+          - namespace
       display_name: Atlanta waypoint
       description: Atlanta waypoint
       latitude: 33.592177
@@ -259,7 +262,8 @@ steps:
     location:
       selector:
         - display_name
-        - attributes.namespace
+        - attributes:
+          - namespace
       display_name: Talladega waypoint
       description: Talladega waypoint
       latitude: 33.592177

@@ -85,7 +85,11 @@ RESPONSE = {
 REQUEST_EXISTS = {
     "selector": [
         "display_name",
-        "attributes.director",
+        {
+            "attributes": [
+                "director",
+            ],
+        },
     ],
     "display_name": "Macclesfield, Cheshire",
     "description": "Manufacturing site, North West England, Macclesfield, Cheshire",

@@ -75,13 +75,20 @@ def get_auth(
 
 def selector_signature(selector: list, data: dict) -> Tuple[dict, dict]:
     """
-    Convert a selctor to a signature fro list and count methods
+    Convert a selector to a signature for list and count methods
 
     Used in locations.create_if_not_exists and assets.create_if_not_exists
     """
-    # keyerror if selector field does not exist in data
-    props = {k: data[k] for k in selector if not k.startswith("attributes.")}
-    attrselector = [k.split(".", 1)[1] for k in selector if k.startswith("attributes.")]
+    attrselector = []
+    propselector = []
+
+    for k in selector:
+        try:
+            attrselector = k["attributes"]
+        except (KeyError, TypeError):
+            propselector.append(k)
+
+    props = {k: data[k] for k in propselector}
     if attrselector:
         data_attrs = data["attributes"]  # keyerror if not exist (it must exist)
         attrs = {k: data_attrs[k] for k in attrselector}

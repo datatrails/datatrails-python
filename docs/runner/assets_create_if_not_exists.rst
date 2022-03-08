@@ -27,8 +27,9 @@ Usually these field values are derived from an environment variable
           description: Create a door in Paris at Jitsuin offices.
           asset_label: Jitsuin Paris Front Door
         selector:
-          - attributes.arc_display_name
-          - attributes.arc_namespace
+          - attributes:
+            - arc_display_name
+            - arc_namespace
         behaviours:
           - RecordEvidence
           - Attachments
@@ -43,7 +44,8 @@ Usually these field values are derived from an environment variable
         location:
           selector:
             - display_name
-            - attributes.namespace
+            - attributes:
+              - namespace
           display_name: Jitsuin Paris
           description: Sales and sales support for the French region
           latitude: 48.8339211

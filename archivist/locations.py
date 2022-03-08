@@ -113,7 +113,8 @@ class _LocationsClient:
 
                 selector:
                   - display_name
-                  - attributes.wavestone_ext
+                  - attributes:
+                    - wavestone_ext
                 display_name: Apartements du Gare du Nord
                 description: Residential apartment building in new complex above GdN station
                 latitude: 48.8809
@@ -131,15 +132,17 @@ class _LocationsClient:
         location = None
         data = deepcopy(data)
         selector = data.pop("selector")  # must exist
+        props, attrs = selector_signature(selector, data)
         try:
-            props, attrs = selector_signature(selector, data)
-
             location = self.read_by_signature(props=props, attrs=attrs)
 
         except ArchivistNotFoundError:
-            pass
+            LOGGER.info(
+                "location with selector %s,%s does not exist - creating", props, attrs
+            )
 
         else:
+            LOGGER.info("location with selector %s,%s already exists", props, attrs)
             return location, True
 
         return self.create_from_data(data), False
@@ -164,7 +167,7 @@ class _LocationsClient:
         )
 
     def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
-        params = props or {}
+        params = deepcopy(props) if props else {}
         if attrs:
             params["attributes"] = attrs
 

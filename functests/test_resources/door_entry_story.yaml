@@ -15,8 +15,9 @@ steps:
       description: Create a door in Paris at Jitsuin offices.
       asset_label: Jitsuin Paris Front Door
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -31,7 +32,8 @@ steps:
     location:
       selector:
         - display_name
-        - attributes.namespace
+        - attributes:
+          - namespace
       display_name: Jitsuin Paris
       description: Sales and sales support for the French region
       latitude: 48.8339211
@@ -50,8 +52,9 @@ steps:
       description: Create a door in Paris at City Hall
       asset_label: City Hall Paris Front Door
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -66,7 +69,8 @@ steps:
     location:
       selector:
         - display_name
-        - attributes.namespace
+        - attributes:
+          - namespace
       display_name: Paris City Hall
       description: Seat of Paris local city adminstration
       latitude: 48.856389
@@ -86,8 +90,9 @@ steps:
       print_response: true
       asset_label: Courts of Justice Paris Front Door
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -102,7 +107,8 @@ steps:
     location:
       selector:
         - display_name
-        - attributes.namespace
+        - attributes:
+          - namespace
       display_name: Paris Courts of Justice
       description: Public museum in the former Palais de Justice
       latitude: 48.855722
@@ -121,8 +127,9 @@ steps:
       description: Create a door in Paris at Bastille
       asset_label: Bastille Paris Front Door
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -137,7 +144,8 @@ steps:
     location:
       selector:
         - display_name
-        - attributes.namespace
+        - attributes:
+          - namespace
       display_name: Bastille
       description: Medieval fortress, made famous by the French Revolution
       latitude: 48.85333
@@ -156,8 +164,9 @@ steps:
       description: Create a front door in Paris at Gare du Nord Apartments
       asset_label: Gare du Nord Apartments Paris Front Door
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -172,7 +181,8 @@ steps:
     location:
       selector:
         - display_name
-        - attributes.namespace
+        - attributes:
+          - namespace
       display_name: Apartements du Gare du Nord
       description: Residential apartment building in new complex above GdN station
       latitude: 48.8809
@@ -191,8 +201,9 @@ steps:
       description: Create a side door in Paris at Gare du Nord Apartments
       asset_label: Gare du Nord Apartments Paris Side Door
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -207,7 +218,8 @@ steps:
     location:
       selector:
         - display_name
-        - attributes.namespace
+        - attributes:
+          - namespace
       display_name: Apartements du Gare du Nord
       description: Residential apartment building in new complex above GdN station
       latitude: 48.8809
@@ -233,8 +245,9 @@ steps:
       description: Create Access Card 1
       asset_label: Access Card 1
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -252,8 +265,9 @@ steps:
       asset_label: Access Card 2
       print_response: true
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -270,8 +284,9 @@ steps:
       description: Create Access Card 3
       asset_label: Access Card 3
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -287,8 +302,9 @@ steps:
       description: Create Access Card 4
       asset_label: Access Card 4
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
@@ -305,8 +321,9 @@ steps:
       description: Create Access Card 5
       asset_label: Access Card 5
     selector:
-      - attributes.arc_display_name
-      - attributes.arc_namespace
+      - attributes:
+        - arc_display_name
+        - arc_namespace
     behaviours:
       - RecordEvidence
       - Attachments
