@@ -157,9 +157,9 @@ class TestRunnerCompliance(TestCase):
         with mock.patch.object(
             self.arch.compliance, "compliant_at"
         ) as mock_compliance_compliant_at, mock.patch.object(
-            self.arch.runner, "asset_id"
-        ) as mock_asset_id:
-            mock_asset_id.return_value = COMPLIANCE_COMPLIANT_AT_ID
+            self.arch.runner, "identity"
+        ) as mock_identity:
+            mock_identity.return_value = COMPLIANCE_COMPLIANT_AT_ID
             mock_compliance_compliant_at.return_value = Compliance(
                 **COMPLIANCE_RESPONSE
             )
@@ -199,9 +199,9 @@ class TestRunnerCompliance(TestCase):
         with mock.patch.object(
             self.arch.compliance, "compliant_at"
         ) as mock_compliance_compliant_at, mock.patch.object(
-            self.arch.runner, "asset_id"
-        ) as mock_asset_id:
-            mock_asset_id.return_value = COMPLIANCE_COMPLIANT_AT_ID
+            self.arch.runner, "identity"
+        ) as mock_identity:
+            mock_identity.return_value = COMPLIANCE_COMPLIANT_AT_ID
             mock_compliance_compliant_at.return_value = Compliance(
                 **COMPLIANCE_FALSE_RESPONSE
             )

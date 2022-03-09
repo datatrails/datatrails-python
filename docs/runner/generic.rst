@@ -18,6 +18,7 @@ Each step follows the same pattern:
           wait_time: 10
           print_response: true
           asset_label: Radiation bag 1
+          location_label: Cape Town
         ................definition of request body and other
                         parameters
   
@@ -47,4 +48,13 @@ Each step follows the same pattern:
    obtain the identity of such a previously-created asset.
 
    In this way one can create assets and then refer to them in later steps of the story.
+
+:location_label:
+   For location create type actions (LOCATIONS_CREATE_IF_NOT_EXISTS) the label is used
+   by the runner to keep track of locations.
+
+   For other actions which require access to an location, this value is used as a key to
+   obtain the identity of such a previously-created location.
+
+   In this way one can create locations and then refer to them in later steps of the story.
 

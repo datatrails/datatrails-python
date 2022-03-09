@@ -390,6 +390,31 @@ RESPONSE_LOCATION = {
         "support_phone": "123 456 789",
     },
 }
+# case 5 create if not exists with location identity
+REQUEST_EXISTS_LOCATION_IDENTITY = {
+    "selector": [
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
+        },
+    ],
+    "behaviours": BEHAVIOURS,
+    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
+    "attributes": {
+        "arc_display_name": ASSET_NAME,
+        "arc_namespace": "namespace",
+        "arc_firmware_version": "1.0",
+        "arc_serial_number": "vtl-x4-07",
+        "arc_description": "Traffic flow control light at A603 North East",
+        "arc_display_type": "Traffic light with violation camera",
+        "some_custom_attribute": "value",
+    },
+    "location": {
+        "identity": f"{LOCATIONS_LABEL}/xxxxxxxx",
+    },
+}
 
 # ---------------
 

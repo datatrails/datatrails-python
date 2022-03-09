@@ -49,7 +49,7 @@ An example when opening a door in Paris:
           latitude: 48.855722
           longitude: 2.345051
           attributes:
-            namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+            namespace: door entry
             address: 10 Boulevard du Palais, 75001 Paris, France
             wavestone_ext: managed
         attachments:

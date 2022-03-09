@@ -32,20 +32,30 @@ class _ActionMap(dict):
 
     def __init__(self, archivist: "type_helper.Archivist"):
         super().__init__()
+
+        # please keep in alphabetical order
         self["ASSETS_ATTACHMENT_INFO"] = {
             "action": archivist.attachments.info,
             "keywords": ("asset_or_event_id",),
-            "use_asset_id": True,
+            "use_asset_label": True,
+        }
+        self["ASSETS_COUNT"] = {
+            "action": archivist.assets.count,
+            "keywords": (
+                "props",
+                "attrs",
+            ),
         }
         self["ASSETS_CREATE_IF_NOT_EXISTS"] = {
             "action": archivist.assets.create_if_not_exists,
             "keywords": ("confirm",),
-            "set_asset_id": True,
+            "set_asset_label": True,
+            "use_location_label": True,
         }
         self["ASSETS_CREATE"] = {
             "action": archivist.assets.create_from_data,
             "keywords": ("confirm",),
-            "set_asset_id": True,
+            "set_asset_label": True,
         }
         self["ASSETS_LIST"] = {
             "action": archivist.assets.list,
@@ -54,8 +64,8 @@ class _ActionMap(dict):
                 "attrs",
             ),
         }
-        self["ASSETS_COUNT"] = {
-            "action": archivist.assets.count,
+        self["ASSETS_WAIT_FOR_CONFIRMED"] = {
+            "action": archivist.assets.wait_for_confirmed,
             "keywords": (
                 "props",
                 "attrs",
@@ -71,11 +81,13 @@ class _ActionMap(dict):
         self["COMPLIANCE_COMPLIANT_AT"] = {
             "action": archivist.compliance.compliant_at,
             "keywords": ("report",),
+            "use_asset_label": True,
         }
         self["EVENTS_CREATE"] = {
             "action": archivist.events.create_from_data,
             "keywords": ("confirm",),
-            "use_asset_id": True,
+            "use_asset_label": True,
+            "use_location_label": True,
         }
         self["EVENTS_COUNT"] = {
             "action": archivist.events.count,
@@ -85,7 +97,7 @@ class _ActionMap(dict):
                 "attrs",
                 "asset_attrs",
             ),
-            "use_asset_id": True,
+            "use_asset_label": True,
         }
         self["EVENTS_LIST"] = {
             "action": archivist.events.list,
@@ -95,7 +107,7 @@ class _ActionMap(dict):
                 "attrs",
                 "asset_attrs",
             ),
-            "use_asset_id": True,
+            "use_asset_label": True,
         }
         self["LOCATIONS_COUNT"] = {
             "action": archivist.locations.count,
@@ -103,6 +115,11 @@ class _ActionMap(dict):
                 "props",
                 "attrs",
             ),
+        }
+        self["LOCATIONS_CREATE_IF_NOT_EXISTS"] = {
+            "action": archivist.locations.create_if_not_exists,
+            "keywords": ("confirm",),
+            "set_location_label": True,
         }
 
     def ops(self, action_name: str) -> Dict:
@@ -133,17 +150,29 @@ class _ActionMap(dict):
         """
         return self.ops(action_name).get("delete")
 
-    def use_asset_id(self, action_name: str) -> bool:
+    def use_asset_label(self, action_name: str) -> bool:
         """
-        Return whether this action uses asset_id
+        Return whether this action uses asset_label
         """
-        return self.ops(action_name).get("use_asset_id", False)
+        return self.ops(action_name).get("use_asset_label", False)
 
-    def set_asset_id(self, action_name: str) -> bool:
+    def set_asset_label(self, action_name: str) -> bool:
         """
-        Return whether this action sets asset_id
+        Return whether this action sets asset_label
         """
-        return self.ops(action_name).get("set_asset_id", False)
+        return self.ops(action_name).get("set_asset_label", False)
+
+    def use_location_label(self, action_name: str):
+        """
+        Get use_location_label in map
+        """
+        return self.ops(action_name).get("use_location_label", False)
+
+    def set_location_label(self, action_name: str):
+        """
+        Get set_location_label in map
+        """
+        return self.ops(action_name).get("set_location_label", False)
 
 
 class _Step(dict):  # pylint:disable=too-many-instance-attributes
@@ -157,10 +186,12 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         self._action_name = None
         self._keywords = None
         self._delete_method = None
-        self._use_asset_id = None
-        self._set_asset_id = None
+        self._use_asset_label = None
+        self._set_asset_label = None
+        self._use_location_label = None
+        self._set_location_label = None
 
-    def args(self, asset_id_method):
+    def args(self, identity_method):
         """
         Positional arguments to action.
         """
@@ -171,24 +202,24 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             # arguments.  This will be simplified when dataclasses are
             # introduced.
             LOGGER.debug("self.asset_label %s", self.asset_label)
-            LOGGER.debug("self.use_asset_id %s", self.use_asset_id)
-            if not self.set_asset_id and self.asset_label is not None:
-                asset_id = asset_id_method(self.asset_label)
-                if asset_id is None:
+            LOGGER.debug("self.use_asset_label %s", self.use_asset_label)
+            if self.use_asset_label and self.asset_label is not None:
+                identity = identity_method(self.asset_label)
+                if identity is None:
                     raise ArchivistInvalidOperationError(
-                        f"Unknown Entity '{self.asset_label}'"
+                        f"Unknown Asset '{self.asset_label}'"
                     )
 
                 # prepend if not specified in the keywords for the action.
                 keywords = self.keywords
                 if keywords is not None and "asset_id" not in keywords:
-                    args.append(asset_id)
+                    args.append(identity)
 
             self._args = args
 
         return self._args
 
-    def kwargs(self, asset_id_method, step):
+    def kwargs(self, identity_method, step):
         if self._kwargs is None:
             kwargs = {}
 
@@ -201,7 +232,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             if keywords is not None and len(keywords) > 0:
                 keys.extend(keywords)
                 if "asset_id" in keywords and self.asset_label is not None:
-                    kwargs["asset_id"] = asset_id_method(self.asset_label)
+                    kwargs["asset_id"] = identity_method(self.asset_label)
 
                 for k in keywords:
                     if k in step:
@@ -212,6 +243,18 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
 
             # add the request body to the positional arguments...
             data = {k: v for k, v in step.items() if k not in keys}
+
+            # If location_label is specified add to the data - should only
+            # happen for ASSETS_CREATE_IF_NOT_EXISTS and EVENTS_CREATE...
+            if self.use_location_label and self.location_label is not None:
+                identity = identity_method(self.location_label)
+                if identity is None:
+                    raise ArchivistInvalidOperationError(
+                        f"Unknown Location '{self.location_label}'"
+                    )
+                data["location"] = {}
+                data["location"]["identity"] = identity
+
             if data:
                 self._args.append(data)
 
@@ -236,6 +279,10 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
     @property
     def asset_label(self):
         return self.get("asset_label")
+
+    @property
+    def location_label(self):
+        return self.get("location_label")
 
     def description(self):
         description = self.get("description")
@@ -284,18 +331,18 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         return self._delete_method
 
     @property
-    def use_asset_id(self):
-        if self._use_asset_id is None:
-            self._use_asset_id = self.actions.use_asset_id(self.action_name)
+    def use_asset_label(self):
+        if self._use_asset_label is None:
+            self._use_asset_label = self.actions.use_asset_label(self.action_name)
 
-        return self._use_asset_id
+        return self._use_asset_label
 
     @property
-    def set_asset_id(self):
-        if self._set_asset_id is None:
-            self._set_asset_id = self.actions.set_asset_id(self.action_name)
+    def set_asset_label(self):
+        if self._set_asset_label is None:
+            self._set_asset_label = self.actions.set_asset_label(self.action_name)
 
-        return self._set_asset_id
+        return self._set_asset_label
 
     @property
     def keywords(self):
@@ -303,6 +350,20 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             self._keywords = self.actions.keywords(self.action_name)
 
         return self._keywords
+
+    @property
+    def use_location_label(self):
+        if self._use_location_label is None:
+            self._use_location_label = self.actions.use_location_label(self.action_name)
+
+        return self._use_location_label
+
+    @property
+    def set_location_label(self):
+        if self._set_location_label is None:
+            self._set_location_label = self.actions.set_location_label(self.action_name)
+
+        return self._set_location_label
 
     @property
     def action_name(self):
@@ -388,8 +449,8 @@ class _Runner:
         s.description()
 
         # this is a bit clunky...
-        s.args(self.asset_id)
-        s.kwargs(self.asset_id, step)
+        s.args(self.identity)
+        s.kwargs(self.identity, step)
 
         # wait for a number of seconds and then execute
         s.wait_time()
@@ -400,8 +461,11 @@ class _Runner:
         if s.delete:
             self.set_deletions(response, s.delete_method)
 
-        if s.set_asset_id:
+        if s.set_asset_label:
             self.set_entities(s.asset_label, response)
+
+        if s.set_location_label:
+            self.set_entities(s.location_label, response)
 
     def set_entities(self, asset_label: str, response: Dict):
         """sets entties entry"""
@@ -422,11 +486,11 @@ class _Runner:
             LOGGER.info("Delete %s", identity)
             delete_method(identity)
 
-    def asset_id(self, name: str) -> Optional[str]:
+    def identity(self, name: str) -> Optional[str]:
         """Gets entity id"""
 
-        asset_id = self.entities[name]["identity"]
-        if isinstance(asset_id, str):
-            return asset_id
+        identity = self.entities[name]["identity"]
+        if isinstance(identity, str):
+            return identity
 
         return None

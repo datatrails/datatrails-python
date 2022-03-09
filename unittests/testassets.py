@@ -28,6 +28,7 @@ from .testassetsconstants import (
     REQUEST_EXISTS,
     REQUEST_EXISTS_ATTACHMENTS,
     REQUEST_EXISTS_LOCATION,
+    REQUEST_EXISTS_LOCATION_IDENTITY,
     REQUEST_EXISTS_KWARGS,
     REQUEST_EXISTS_KWARGS_ATTACHMENTS,
     REQUEST_EXISTS_KWARGS_LOCATION,
@@ -396,6 +397,16 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
             REQUEST_EXISTS_KWARGS_LOCATION,
             RESPONSE_EXISTS_LOCATION,
             loc_resp=RESPONSE_LOCATION,
+        )
+
+    def test_assets_create_if_not_exists_nonexistent_asset_location_identity(self):
+        """
+        Test asset creation
+        """
+        self.common_assets_create_if_not_exists_nonexistent_asset(
+            REQUEST_EXISTS_LOCATION_IDENTITY,
+            REQUEST_EXISTS_KWARGS_LOCATION,
+            RESPONSE_EXISTS_LOCATION,
         )
 
     def test_assets_create_if_not_exists_nonexistent_asset_attachments(self):

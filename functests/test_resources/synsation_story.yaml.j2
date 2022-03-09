@@ -1,0 +1,91 @@
+---
+# The step field is a string that represents the method bound to an endpoint and
+# the args and kwargs correspond to the arguments to such a method.
+#
+# Create a number of offices equipped with printers, coffee machines and security
+# cameras
+#
+steps:
+
+  # create locations for all offices - these are created separately as more than one asset
+  # can be located at an office and we dont want to duplicate code...
+  # refer to the locations using the location_label...
+  {% for location in locations %} 
+  - step:
+      action: LOCATIONS_CREATE_IF_NOT_EXISTS
+      description: Create {{ location.display_name }} Location
+      location_label: {{ location.display_name }}
+    selector:
+      - display_name
+      - attributes:
+        - namespace
+    display_name: {{ location.display_name }}
+    description: {{ location.description }}
+    latitude: {{ location.latitude }}
+    longitude: {{ location.longitude }}
+    attributes:
+      namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
+      address: {{ location.attributes.address }}
+      facility_type: {{ location.attributes.facility_type }}
+      reception_email: {{ location.attributes.reception_email }}
+      reception_phone: {{ location.attributes.reception_phone }}
+  {% endfor %} 
+
+  {% for asset in assets %} 
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create a {{ asset.type }} in {{ asset.location_label }}
+      asset_label: {{ asset.asset_label }}
+      location_label: {{ asset.location_label }}
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_name: {{ asset.type }} in {{ asset.location_label }}
+      arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
+      arc_display_type: {{ asset.type }}
+      arc_firmware_version: {{ asset.firmware_version }}
+      arc_serial_number: {{ asset.serial_number }}
+      arc_description: {{ asset.type }} in {{ asset.location_label }}
+    attachments:
+      - filename: functests/test_resources/synsation/assets/{{ asset.filename }}
+        content_type: image/jpg
+        display_name: {{ asset.type }} in {{ asset.location_label }}
+  {% endfor %} 
+
+  # ensure all are confirmed
+  - step:
+      action: ASSETS_WAIT_FOR_CONFIRMED
+      description: Wait for all assets to be confirmed
+      print_response: true
+    attrs:
+      arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
+
+  - step:
+      action: ASSETS_LIST
+      description: List all printers
+      print_response: true
+    attrs:
+      arc_display_type: printer
+      arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
+
+  - step:
+      action: ASSETS_LIST
+      description: List all coffee machines
+      print_response: true
+    attrs:
+      arc_display_type: coffee machine
+      arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
+
+  - step:
+      action: ASSETS_LIST
+      description: List all security cameras
+      print_response: true
+    attrs:
+      arc_display_type: security camera
+      arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
+
