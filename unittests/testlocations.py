@@ -13,6 +13,7 @@ from archivist.constants import (
     LOCATIONS_LABEL,
 )
 from archivist.errors import ArchivistBadRequestError, ArchivistNotFoundError
+from archivist.locations import Location
 
 from .mock_response import MockResponse
 
@@ -119,6 +120,29 @@ REQUEST_EXISTS_SELECTOR_NOATTRS = {
         "support_phone": "123 456 789",
     },
 }
+
+
+class TestLocation(TestCase):
+    """
+    Test Archivist Location
+    """
+
+    maxDiff = None
+
+    def test_location_name(self):
+        """
+        Test location name
+        """
+        self.assertEqual(
+            Location(x="something").name,
+            None,
+            msg="Incorrect name",
+        )
+        self.assertEqual(
+            Location(display_name="something").name,
+            "something",
+            msg="Incorrect name",
+        )
 
 
 class TestLocations(TestCase):

@@ -309,6 +309,18 @@ EVENT_ATTRS_LOCATION = {
         "longitude": 0.0,
     },
 }
+EVENT_ATTRS_LOCATION_IDENTITY = {
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+    },
+    "location": {
+        "identity": LOCATION_IDENTITY,
+    },
+}
 REQUEST_WITH_LOCATION = {
     "operation": "Record",
     "behaviour": "RecordEvidence",
@@ -660,6 +672,49 @@ class TestEvents(TestCase):
 
             event = self.arch.events.create_from_data(
                 ASSET_ID, EVENT_ATTRS_LOCATION, confirm=False
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (
+                    (
+                        f"url/{ROOT}/{ASSETS_SUBPATH}"
+                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                        f"/{EVENTS_LABEL}"
+                    ),
+                ),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST_WITH_LOCATION,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                event,
+                RESPONSE_WITH_LOCATION,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_location_identity(self):
+        """
+        Test event creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(
+            self.arch.locations, "create_if_not_exists"
+        ) as mock_location_create:
+            mock_post.return_value = MockResponse(200, **RESPONSE_WITH_LOCATION)
+
+            event = self.arch.events.create_from_data(
+                ASSET_ID, EVENT_ATTRS_LOCATION_IDENTITY, confirm=False
             )
             args, kwargs = mock_post.call_args
             self.assertEqual(

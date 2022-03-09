@@ -194,9 +194,11 @@ class _AssetsClient:
                   arc_description: Electronic door entry system to Jitsuin France
                   wavestone_asset_id: paris.france.jitsuin.das
                 location:
+                  identity: locations/xxxxxxxxxxxxxxxxxxxxxxxxxx
+                location:
                   selector:
                     - display_name
-                  display_name: Jitsuin Paris,
+                  display_name: Jitsuin Paris
                   description: Sales and sales support for the French region
                   latitude: 48.8339211,
                   longitude: 2.371345,
@@ -212,6 +214,9 @@ class _AssetsClient:
 
             If 'location' is specified then the 'selector' value is required and is used as a
             secondary key. Likewise the secondary key must exist in the attributes of the location.
+
+            Alternatively the identity of the location is specified - both
+            are shown - choose one.
 
         Returns:
             tuple of :class:`Asset` instance, Boolean is True if asset already existed
@@ -239,10 +244,13 @@ class _AssetsClient:
 
         # is location present?
         if location is not None:
-            loc, _ = self._archivist.locations.create_if_not_exists(
-                location,
-            )
-            data["attributes"]["arc_home_location_identity"] = loc["identity"]
+            if "identity" in location:
+                data["attributes"]["arc_home_location_identity"] = location["identity"]
+            else:
+                loc, _ = self._archivist.locations.create_if_not_exists(
+                    location,
+                )
+                data["attributes"]["arc_home_location_identity"] = loc["identity"]
 
         # any attachments ?
         if attachments is not None:

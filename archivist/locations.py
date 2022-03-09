@@ -34,6 +34,7 @@ from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 from .utils import selector_signature
+from .type_aliases import NoneOnError
 
 
 LOGGER = getLogger(__name__)
@@ -45,6 +46,17 @@ class Location(dict):
     Location object has dictionary attributes.
 
     """
+
+    @property
+    def name(self) -> NoneOnError[str]:
+        """str: name of the location"""
+        name = None
+        try:
+            name = self["display_name"]
+        except KeyError:
+            pass
+
+        return name
 
 
 class _LocationsClient:

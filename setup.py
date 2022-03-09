@@ -49,6 +49,7 @@ setup(
     entry_points={
         "console_scripts": [
             "archivist_runner = archivist.cmds.runner.main:main",
+            "archivist_template = archivist.cmds.template.main:main",
         ],
     },
 )

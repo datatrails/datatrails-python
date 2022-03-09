@@ -20,6 +20,6 @@ not be accessible to later actions in the story.
         attributes:
           arc_display_name: ev pump 1
           arc_display_type: pump
-          arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+          arc_namespace: wipp
           ev_pump: "true"
         confirm: true

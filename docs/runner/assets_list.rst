@@ -18,4 +18,4 @@ The 'print_response' setting should be specified as True in order to see the res
           print_response: true
         attrs:
           arc_display_type: door
-          arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+          arc_namespace: door entry

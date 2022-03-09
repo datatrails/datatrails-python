@@ -35,9 +35,9 @@ Usually these field values are derived from an environment variable
           - Attachments
         attributes:
           arc_display_name: Jitsuin Paris Front Door
-          arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+          arc_namespace: door entry
           arc_display_type: door
-          arc_firmware_version: "1.0"
+          arc_firmware_version: v1.0
           arc_serial_number: das-j1-01
           arc_description: Electronic door entry system to Jitsuin France
           wavestone_asset_id: paris.france.jitsuin.das
@@ -51,7 +51,7 @@ Usually these field values are derived from an environment variable
           latitude: 48.8339211
           longitude: 2.371345
           attributes:
-            namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+            namespace: door entry
             address: 5 Parvis Alan Turing, 75013 Paris, France
             wavestone_ext: managed
         attachments:
