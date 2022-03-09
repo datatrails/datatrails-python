@@ -32,8 +32,8 @@ from .mock_response import MockResponse
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
     set_logger(environ["TEST_DEBUG"])
 
+IDENTITY = f"{SBOMS_LABEL}/c3da0d3a-32bf-4f5f-a8c6-b342a8356480"
 PROPS = {
-    "identity": "sboms/c3da0d3a-32bf-4f5f-a8c6-b342a8356480",
     "authors": [],
     "supplier": "",
     "component": "keycloak-parent",
@@ -51,7 +51,6 @@ PROPS = {
 PUBLISHED_PROPS = {**PROPS, **{"published_date": "2021-11-11T17:02:06Z"}}
 WITHDRAWN_PROPS = {**PROPS, **{"withdrawn_date": "2021-11-11T17:02:06Z"}}
 
-IDENTITY = f"{SBOMS_LABEL}/xxxxxxxx"
 SUBPATH = f"{SBOMS_SUBPATH}/{SBOMS_LABEL}"
 
 RESPONSE = {

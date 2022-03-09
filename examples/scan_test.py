@@ -41,15 +41,19 @@ def scan_test(arch, datestring, scanned_expected=False):
 
     asset, existed = arch.assets.create_if_not_exists(
         {
-            "signature": {
-                "attributes": {
-                    "arc_display_name": ASSET_NAME,
-                    "arc_namespace": "namespace",
+            "selector": [
+                {
+                    "attributes": [
+                        "arc_display_name",
+                        "arc_namespace",
+                    ],
                 },
-            },
+            ],
             "behaviours": BEHAVIOURS,
             "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             "attributes": {
+                "arc_display_name": ASSET_NAME,
+                "arc_namespace": "namespace",
                 "arc_firmware_version": "1.0",
                 "arc_serial_number": "vtl-x4-07",
                 "arc_description": "Traffic flow control light at A603 North East",

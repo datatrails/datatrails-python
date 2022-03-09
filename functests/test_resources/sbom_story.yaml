@@ -1,0 +1,109 @@
+---
+# The step field is a string that represents the method bound to an endpoint and
+# the args and kwargs correspond to the arguments to such a method.
+#
+# NB the assets and events endpoints require all values to be strings. Other values may
+# be of the correct type such as confirm which is a boolean.
+#
+# This story creates a sbom and executes release events on that SBOM.
+# 
+# sbom assets are signified by arc_display_type=SBOM
+# sbom releases are signified by arc_display_type=SBOM_RELEASE
+#
+steps:
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create the ACME Corporation Detector SAAS SBOM
+      asset_label: ACME Corporation Detector SAAS
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_name: ACME Corporation Detector SAAS
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+      arc_display_type: SBOM
+      arc_description: Software Bill of Materials for Detector SAAS
+      acme_sbom_license: www.gnu.org/licenses/gpl.txt
+      acme_proprietary_secret: For your eyes only
+    attachments:
+      - filename: functests/test_resources/sbom/Comp_2.jpeg
+        content_type: image/jpg
+        display_name: ACME Company Detector SAAS Logo
+    confirm: true
+
+  # Releasing an SBOM
+  - step:
+      action: EVENTS_CREATE
+      description: Release YYYYMMDD.1 of Test SBOM for YAML story
+      asset_label: ACME Corporation Detector SAAS
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    confirm: true
+    event_attributes:
+      arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.1
+      arc_display_type: SBOM_RELEASE
+    attachments:
+      - filename: functests/test_resources/sbom/gen1.xml
+        content_type: text/xml
+        display_name: ACME Generation1 SBOM
+        type: SBOM_RELEASE
+
+  # Releasing an SBOM
+  - step:
+      action: EVENTS_CREATE
+      description: Release YYYYMMDD.2 of Test SBOM for YAML story
+      asset_label: ACME Corporation Detector SAAS
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    confirm: true
+    event_attributes:
+      arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.2
+      arc_display_type: SBOM_RELEASE
+    attachments:
+      - filename: functests/test_resources/sbom/gen2.xml
+        content_type: text/xml
+        display_name: ACME Generation2 SBOM
+        type: SBOM_RELEASE
+
+  # Releasing an SBOM
+  - step:
+      action: EVENTS_CREATE
+      description: Release YYYYMMDD.3 of Test SBOM for YAML story
+      asset_label: ACME Corporation Detector SAAS
+      print_response: true
+    operation: Record
+    behaviour: RecordEvidence
+    confirm: true
+    event_attributes:
+      arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.3
+      arc_display_type: SBOM_RELEASE
+    attachments:
+      - filename: functests/test_resources/sbom/gen3.xml
+        content_type: text/xml
+        display_name: ACME Generation2 SBOM
+        type: SBOM_RELEASE
+
+  - step:
+      action: ASSETS_LIST
+      description: List all sboms
+      print_response: true
+    attrs:
+      arc_display_type: SBOM
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+
+  - step:
+      action: EVENTS_LIST
+      description: List all releases for this sbom
+      print_response: true
+      asset_label: ACME Corporation Detector SAAS
+    props:
+      confirmation_status: CONFIRMED
+    attrs:
+      arc_display_type: SBOM_RELEASE
+      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}

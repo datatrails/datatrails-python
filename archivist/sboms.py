@@ -26,9 +26,11 @@
 
 from typing import BinaryIO, Dict, Optional
 from copy import deepcopy
+from io import BytesIO
 from logging import getLogger
 
 from requests.models import Response
+from xmltodict import parse as xmltodict_parse
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -45,6 +47,7 @@ from .constants import (
 from . import publisher, uploader, withdrawer
 from .dictmerge import _deepmerge
 from .sbommetadata import SBOM
+from .utils import get_url
 
 LOGGER = getLogger(__name__)
 
@@ -66,12 +69,149 @@ class _SBOMSClient:
     def __str__(self) -> str:
         return f"SBOMSClient({self._archivist.url})"
 
+    @staticmethod
+    def parse(data: Dict) -> Dict:  # pragma: no cover
+        """
+        parse the sbom and extract pertinent informtion
+
+        Args:
+            data (dict): dictionary
+
+        A YAML representation of the data argument would be:
+
+            .. code-block:: yaml
+
+                filename: functests/test_resources/sboms/gen1.xml
+
+            OR
+
+            .. code-block:: yaml
+
+                url: https://some.hostname/cdx.xml
+
+             Either 'filename' or 'url' is required.
+
+        Returns:
+
+            A dict suitable for adding to an asset or event creation
+
+        """
+        result = None
+        filename = data.get("filename")
+        if filename is not None:
+            with open(filename, "rb") as fd:
+                sbom = xmltodict_parse(fd, xml_attribs=True, disable_entities=False)
+
+        else:
+            url = data["url"]
+            fd = BytesIO()
+            get_url(url, fd)
+            sbom = xmltodict_parse(fd, xml_attribs=True, disable_entities=False)
+
+        b = sbom["bom"]
+        m = b["metadata"]
+        c = m["component"]
+        hash_value = c["hashes"]["hash"]["#text"]
+        result = {
+            "author": c["author"],
+            "component": c["name"],
+            "hash": hash_value,
+            "repo": "",  # unsure about this
+            "supplier": c["supplier"]["name"],
+            "uuid": b["@serialNumber"],
+            "version": c["version"],
+        }
+
+        return result
+
+    def create(self, data: Dict) -> Dict:  # pragma: no cover
+        """
+        Create an sbom and return struct suitable for use in an asset
+        or event creation.
+
+        Args:
+            data (dict): dictionary
+
+        A YAML representation of the data argument would be:
+
+            .. code-block:: yaml
+
+                filename: functests/test_resources/sboms/gen1.xml
+                content_type: text/xml
+                confirm: True
+                params:
+                  privacy: PRIVATE
+
+            OR
+
+            .. code-block:: yaml
+
+                url: https://some.hostname/cdx.xml
+                content_type: text/xml
+                confirm: True
+                params:
+                  privacy: PRIVATE
+
+             Either 'filename' or 'url' is required.
+             'content_type' is required.
+
+        Returns:
+
+            A dict suitable for adding to an asset or event creation
+
+        A YAML representation of the result would be:
+
+            .. code-block:: yaml
+
+                arc_display_name: Acme Generation1 SBOM
+                arc_attachment_identity: sboms/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                .....
+
+        """
+        result = None
+        filename = data.get("filename")
+        if filename is not None:
+            with open(filename, "rb") as fd:
+                sbom = self.upload(
+                    fd,
+                    confirm=data.get("confirm", False),
+                    mtype=data.get("content_type"),
+                    params=data.get("params"),
+                )
+
+        else:
+            url = data["url"]
+            fd = BytesIO()
+            get_url(url, fd)
+            sbom = self.upload(
+                fd,
+                confirm=data.get("confirm", False),
+                mtype=data.get("content_type"),
+                params=data.get("params"),
+            )
+
+        # response to sbom upload contains all the info we need.
+        s = sbom.dict()
+        _, hash_value = s["hashes"][0].split(":")
+        result = {
+            "author": ",".join(s["authors"]),
+            "component": s["component"],
+            "identity": s["identity"],
+            "hash": hash_value,
+            "repo": "",  # unsure about this
+            "supplier": s["supplier"],
+            "uuid": s["unique_id"],
+            "version": s["version"],
+        }
+
+        return result
+
     def upload(
         self,
         fd: BinaryIO,
         *,
         confirm: bool = False,
-        mtype: str = "text/xml",
+        mtype: Optional[str] = None,
         params: Optional[Dict] = None,
     ) -> SBOM:
         """Create SBOM
@@ -88,6 +228,8 @@ class _SBOMSClient:
             :class:`SBOM` instance
 
         """
+
+        mtype = mtype or "text/xml"
 
         LOGGER.debug("Upload SBOM %s", params)
 
