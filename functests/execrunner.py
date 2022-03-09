@@ -136,3 +136,23 @@ class TestRunner(TestCase):
                 2,
                 msg="Incorrect number of entities",
             )
+
+    def test_runner_sbom(self):
+        """
+        Test runner with sbom story
+
+        run_steps is used so that exceptions are shown
+        """
+
+        LOGGER.info("...")
+        with open(
+            "functests/test_resources/sbom_story.yaml",
+            "r",
+            encoding="utf-8",
+        ) as y:
+            self.arch.runner.run_steps(parse_config(data=y))
+            self.assertEqual(
+                len(self.arch.runner.entities),
+                1,
+                msg="Incorrect number of entities",
+            )

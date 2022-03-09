@@ -22,9 +22,9 @@
 
 """
 
+from copy import deepcopy
 from logging import getLogger
 from typing import Dict, Optional
-from copy import deepcopy
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -36,6 +36,7 @@ from .constants import (
     ASSETS_WILDCARD,
     CONFIRMATION_STATUS,
     EVENTS_LABEL,
+    SBOM_RELEASE,
 )
 from . import confirmer
 from .dictmerge import _deepmerge
@@ -166,19 +167,38 @@ class _EventsClient:
         """
         data = deepcopy(data)
 
+        event_attributes = data["event_attributes"]
         # is location present?
         location = data.pop("location", None)
         if location is not None:
             loc, _ = self._archivist.locations.create_if_not_exists(
                 location,
             )
-            data["event_attributes"]["arc_location_identity"] = loc["identity"]
+            event_attributes["arc_location_identity"] = loc["identity"]
+
+        sbom = data.pop("sbom", None)
+        if sbom is not None:
+            sbom_result = self._archivist.sboms.create(sbom)
+            for k, v in sbom_result.items():
+                event_attributes[f"sbom_{k}"] = v
 
         attachments = data.pop("attachments", None)
         if attachments is not None:
-            data["event_attributes"]["arc_attachments"] = [
-                self._archivist.attachments.create(a) for a in attachments
-            ]
+            result = [self._archivist.attachments.create(a) for a in attachments]
+            for i, a in enumerate(attachments):
+                if a.get("type") == SBOM_RELEASE:
+                    sbom_result = self._archivist.sboms.parse(a)
+                    for k, v in sbom_result.items():
+                        event_attributes[f"sbom_{k}"] = v
+
+                    event_attributes["sbom_identity"] = result[i][
+                        "arc_attachment_identity"
+                    ]
+                    break
+
+            event_attributes["arc_attachments"] = result
+
+        data["event_attributes"] = event_attributes
 
         event = Event(
             **self._archivist.post(
