@@ -52,6 +52,7 @@ SBOMS_WILDCARD = "-/metadata"
 SBOMS_METADATA = "metadata"
 SBOMS_PUBLISH = "publish"
 SBOMS_WITHDRAW = "withdraw"
+SBOM_RELEASE = "SBOM_RELEASE"
 
 SUBJECTS_SUBPATH = "iam/v1"
 SUBJECTS_LABEL = "subjects"

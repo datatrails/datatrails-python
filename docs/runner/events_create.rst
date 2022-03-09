@@ -12,6 +12,11 @@ added to the event before posting.
 The optional 'location' setting creates the location if it does not exist and adds it to
 the event.
 
+The optional 'sbom' setting uploads the sbom to archivist and the response added to the
+event before posting. (see second example below)
+
+An example when opening a door in Paris:
+
 .. code-block:: yaml
     
     ---
@@ -51,3 +56,54 @@ the event.
           - filename: functests/test_resources/doors/events/door_open.png
             content_type: image/png
         confirm: true
+
+
+An example when releasing a software package as an sbom:
+
+.. code-block:: yaml
+    
+    ---
+    steps:
+      - step:
+          action: EVENTS_CREATE
+          description: Release YYYYMMDD.1 of Test SBOM for YAML story
+          asset_name: ACME Corporation Detector SAAS
+          print_response: true
+        operation: Record
+        behaviour: RecordEvidence
+        confirm: true
+        event_attributes:
+          arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.1
+          arc_display_type: sbom release
+        sbom:
+          filename: functests/test_resources/sbom/gen1.xml
+          content_type: text/xml
+          display_name: ACME Generation1 SBOM
+          confirm: True
+          params:
+            privacy: PRIVATE
+
+
+An example when releasing a software package as an sbom attachment:
+
+.. code-block:: yaml
+    
+    ---
+    steps:
+      - step:
+          action: EVENTS_CREATE
+          description: Release YYYYMMDD.1 of Test SBOM for YAML story
+          asset_name: ACME Corporation Detector SAAS
+          print_response: true
+        operation: Record
+        behaviour: RecordEvidence
+        confirm: true
+        event_attributes:
+          arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.1
+          arc_display_type: sbom release
+        attachments:
+          - filename: functests/test_resources/sbom/gen1.xml
+            content_type: text/xml
+            display_name: ACME Generation1 SBOM
+            type: SBOM_RELEASE
+

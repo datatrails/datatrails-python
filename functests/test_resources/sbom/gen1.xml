@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bom xmlns="http://cyclonedx.org/schema/bom/1.3" serialNumber="urn:uuid:591eb851-2646-4d52-aa40-ac8b35a2b2d7" version="1">
+  <metadata>
+    <tools>
+      <tool>
+        <vendor>Acme Inc</vendor>
+        <name>Test SBOM for yaml story</name>
+        <version>release-YYYYMMDD.1</version>
+        <hashes />
+      </tool>
+      <tool>
+        <vendor>CycloneDX</vendor>
+        <name>cyclonedx-cli</name>
+        <version>v0.22.0</version>
+      </tool>
+    </tools>
+    <authors>
+      <author>
+        <name>Acme Inc</name>
+        <email>support@acme.com</email>
+      </author>
+    </authors>
+    <component type="application">
+      <supplier>
+        <name>Acme Inc</name>
+        <url>https://www.acme.com</url>
+      </supplier>
+      <author>Acme Inc</author>
+      <name>Detector SaaS</name>
+      <version>release-YYYYMMDD.1</version>
+      <hashes>
+        <hash alg="SHA-512">d92e84eb2829a2a70409a6a00db068a6848e3c3bf4a4066f4db9c181463eea1ab4fd70c50ce2c430d94717f48a265cdc699f5c9222a3283bae79623714dfd65f</hash>
+      </hashes>
+    </component>
+    <supplier>
+      <name>Acme Inc</name>
+      <url>https://www.acme.com</url>
+    </supplier>
+  </metadata>
+  <components>
+    <component type="application">
+      <name>base</name>
+      <version>YYYYMMDD.1</version>
+    </component>
+    <component type="application">
+      <name>component1</name>
+      <version>YYYYMMDD.1</version>
+    </component>
+    <component type="application">
+      <name>component2</name>
+      <version>YYYYMMDD.1</version>
+    </component>
+  </components>
+</bom>

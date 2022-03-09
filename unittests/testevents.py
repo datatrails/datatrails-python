@@ -14,6 +14,7 @@ from archivist.constants import (
     EVENTS_LABEL,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
+    SBOM_RELEASE,
 )
 from archivist.errors import ArchivistNotFoundError, ArchivistUnconfirmedError
 from archivist.events import Event
@@ -148,6 +149,148 @@ RESPONSE_WITH_ATTACHMENTS = {
         ],
     },
 }
+
+SBOM = {
+    "identity": "sboms/68e626f7-1093-4166-a0d5-5d1dd53abdf9",
+    "authors": ["TestAuthorName", "TestAuthorAnotherName"],
+    "supplier": "CycloneDx 1.3 XML Default Supplier",
+    "component": "CycloneDx 1.3 XML Default Name",
+    "version": "CycloneDx 1.3 XML Default Version",
+    "hashes": [
+        "SHA-1:ef969aae8d3ab29c565d579e3beeb6f4dd791ecd8996fee29fa17146332ed1ec"
+    ],
+    "unique_id": "urn:uuid:a24426e6-f122-4339-8b03-758a96a42e3b",
+    "upload_date": "2022-03-09T09:01:20Z",
+    "uploaded_by": "",
+    "trusted": False,
+    "lifecycle_status": "ACTIVE",
+    "withdrawn_date": "",
+    "published_date": "",
+    "rkvst_link": "",
+}
+
+SBOM_RESULT = {
+    "author": "TestAuthorName,TestAuthorAnotherName",
+    "component": "CycloneDx 1.3 XML Default Name",
+    "hash": "ef969aae8d3ab29c565d579e3beeb6f4dd791ecd8996fee29fa17146332ed1ec",
+    "identity": "sboms/68e626f7-1093-4166-a0d5-5d1dd53abdf9",
+    "repo": "",
+    "supplier": "CycloneDx 1.3 XML Default Supplier",
+    "uuid": "urn:uuid:a24426e6-f122-4339-8b03-758a96a42e3b",
+    "version": "CycloneDx 1.3 XML Default Version",
+}
+
+EVENT_ATTRS_SBOM = {
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+    },
+    "sbom": {
+        "filename": "gen1.xml",
+        "content_type": "text/xml",
+        "confirm": True,
+        "params": {
+            "privacy": "PRIVATE",
+        },
+    },
+}
+REQUEST_WITH_SBOM = {
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+        "sbom_author": "TestAuthorName,TestAuthorAnotherName",
+        "sbom_component": "CycloneDx 1.3 XML Default Name",
+        "sbom_hash": "ef969aae8d3ab29c565d579e3beeb6f4dd791ecd8996fee29fa17146332ed1ec",
+        "sbom_identity": "sboms/68e626f7-1093-4166-a0d5-5d1dd53abdf9",
+        "sbom_repo": "",
+        "sbom_supplier": "CycloneDx 1.3 XML Default Supplier",
+        "sbom_uuid": "urn:uuid:a24426e6-f122-4339-8b03-758a96a42e3b",
+        "sbom_version": "CycloneDx 1.3 XML Default Version",
+    },
+}
+RESPONSE_WITH_SBOM = {
+    "identity": IDENTITY,
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+        "sbom_author": "TestAuthorName,TestAuthorAnotherName",
+        "sbom_component": "CycloneDx 1.3 XML Default Name",
+        "sbom_hash": "ef969aae8d3ab29c565d579e3beeb6f4dd791ecd8996fee29fa17146332ed1ec",
+        "sbom_identity": "sboms/68e626f7-1093-4166-a0d5-5d1dd53abdf9",
+        "sbom_repo": "",
+        "sbom_supplier": "CycloneDx 1.3 XML Default Supplier",
+        "sbom_uuid": "urn:uuid:a24426e6-f122-4339-8b03-758a96a42e3b",
+        "sbom_version": "CycloneDx 1.3 XML Default Version",
+    },
+}
+
+EVENT_ATTRS_SBOMATTACHMENT = {
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+    },
+    "attachments": [
+        {
+            "filename": "gen1.xml",
+            "content_type": "text/xml",
+            "type": SBOM_RELEASE,
+        },
+    ],
+}
+REQUEST_WITH_SBOMATTACHMENT = {
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+        "sbom_author": "TestAuthorName,TestAuthorAnotherName",
+        "sbom_component": "CycloneDx 1.3 XML Default Name",
+        "sbom_hash": "ef969aae8d3ab29c565d579e3beeb6f4dd791ecd8996fee29fa17146332ed1ec",
+        "sbom_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "sbom_repo": "",
+        "sbom_supplier": "CycloneDx 1.3 XML Default Supplier",
+        "sbom_uuid": "urn:uuid:a24426e6-f122-4339-8b03-758a96a42e3b",
+        "sbom_version": "CycloneDx 1.3 XML Default Version",
+        "arc_attachments": [
+            ATTACHMENTS,
+        ],
+    },
+}
+RESPONSE_WITH_SBOMATTACHMENT = {
+    "identity": IDENTITY,
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
+    "timestamp_declared": "2019-11-27T14:44:19Z",
+    "principal_declared": PRINCIPAL_DECLARED,
+    "event_attributes": {
+        "arc_description": "event description",
+        "sbom_author": "TestAuthorName,TestAuthorAnotherName",
+        "sbom_component": "CycloneDx 1.3 XML Default Name",
+        "sbom_hash": "ef969aae8d3ab29c565d579e3beeb6f4dd791ecd8996fee29fa17146332ed1ec",
+        "sbom_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "sbom_repo": "",
+        "sbom_supplier": "CycloneDx 1.3 XML Default Supplier",
+        "sbom_uuid": "urn:uuid:a24426e6-f122-4339-8b03-758a96a42e3b",
+        "sbom_version": "CycloneDx 1.3 XML Default Version",
+        "arc_attachments": [
+            ATTACHMENTS,
+        ],
+    },
+}
+
 EVENT_ATTRS_LOCATION = {
     "operation": "Record",
     "behaviour": "RecordEvidence",
@@ -157,9 +300,10 @@ EVENT_ATTRS_LOCATION = {
         "arc_description": "event description",
     },
     "location": {
-        "signature": {
-            "display_name": "Somewhere",
-        },
+        "selector": [
+            "display_name",
+        ],
+        "display_name": "Somewhere",
         "description": "somewhere",
         "latitude": 0.0,
         "longitude": 0.0,
@@ -408,6 +552,97 @@ class TestEvents(TestCase):
             self.assertEqual(
                 event,
                 RESPONSE_WITH_ATTACHMENTS,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_upload_sbom(self):
+        """
+        Test event creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(
+            self.arch.sboms, "create"
+        ) as mock_sboms_create:
+            mock_post.return_value = MockResponse(200, **RESPONSE_WITH_SBOM)
+            mock_sboms_create.return_value = SBOM_RESULT
+
+            event = self.arch.events.create_from_data(
+                ASSET_ID, EVENT_ATTRS_SBOM, confirm=False
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (
+                    (
+                        f"url/{ROOT}/{ASSETS_SUBPATH}"
+                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                        f"/{EVENTS_LABEL}"
+                    ),
+                ),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST_WITH_SBOM,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                event,
+                RESPONSE_WITH_SBOM,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_events_create_with_upload_sbom_as_attachment(self):
+        """
+        Test event creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(
+            self.arch.attachments, "create"
+        ) as mock_attachments_create, mock.patch.object(
+            self.arch.sboms, "parse"
+        ) as mock_sboms_parse:
+            mock_post.return_value = MockResponse(200, **RESPONSE_WITH_SBOMATTACHMENT)
+            mock_sboms_parse.return_value = SBOM_RESULT
+            mock_attachments_create.return_value = ATTACHMENTS
+
+            event = self.arch.events.create_from_data(
+                ASSET_ID, EVENT_ATTRS_SBOMATTACHMENT, confirm=False
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (
+                    (
+                        f"url/{ROOT}/{ASSETS_SUBPATH}"
+                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
+                        f"/{EVENTS_LABEL}"
+                    ),
+                ),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST_WITH_SBOMATTACHMENT,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                event,
+                RESPONSE_WITH_SBOMATTACHMENT,
                 msg="CREATE method called incorrectly",
             )
 
