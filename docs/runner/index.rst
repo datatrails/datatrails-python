@@ -34,15 +34,21 @@ Execute:
          -t credentials/token \
          functests/test_resources/richness_story.yaml
 
+For more flexibility the functionality can be extended.
+See :ref:`executing_demo_ref` and :ref:`executing_template_demo_ref`
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   execute
+   execute_template
    generic
    assets_count
    assets_create
    assets_create_if_not_exists
    assets_list
+   assets_wait_for_confirmed
    compliance_compliant_at
    compliance_policies_create
    composite_estate_info
@@ -50,9 +56,13 @@ Execute:
    events_create
    events_list
    locations_count
+   locations_create
    
    compliance_policies_demo
    compliance_policies_demo_dynamic_tolerance
    compliance_policies_demo_richness
    door_entry_demo
    estate_info_demo
+   sbom_demo
+   synsation_demo
+   wipp_demo

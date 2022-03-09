@@ -12,8 +12,8 @@ from sys import exit as sys_exit
 from warnings import filterwarnings
 
 from .archivist import Archivist
-from .logger import set_logger
 from .dictmerge import _deepmerge
+from .logger import set_logger
 from .proof_mechanism import ProofMechanism
 from .utils import get_auth
 
@@ -74,7 +74,7 @@ def common_parser(description: str):
         dest="url",
         action="store",
         default="https://rkvst.poc.jitsuin.io",
-        help="location of Archivist service",
+        help="url of Archivist service",
     )
     parser.add_argument(
         "-p",
@@ -82,7 +82,7 @@ def common_parser(description: str):
         type=ProofMechanism,
         action=EnumAction,
         dest="proof_mechanism",
-        default=ProofMechanism.SIMPLE_HASH,
+        default=None,
         help="mechanism for proving the evidence for events on the Asset",
     )
     parser.add_argument(
@@ -132,11 +132,14 @@ def endpoint(args):
 
     arch = None
     LOGGER.info("Initialising connection to Jitsuin Archivist...")
-    fixtures = {
-        "assets": {
-            "proof_mechanism": args.proof_mechanism.name,
-        },
-    }
+    fixtures = {}
+    if args.proof_mechanism is not None:
+        fixtures = {
+            "assets": {
+                "proof_mechanism": args.proof_mechanism.name,
+            },
+        }
+
     if args.namespace is not None:
         fixtures = _deepmerge(
             fixtures,

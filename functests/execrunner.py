@@ -2,10 +2,12 @@
 Test runner
 """
 
-from os import getenv
+from os import getenv, environ
 from unittest import TestCase
 
+from jinja2 import Environment, FileSystemLoader
 from pyaml_env import parse_config
+import yaml
 
 from archivist.archivist import Archivist
 from archivist.utils import get_auth
@@ -48,6 +50,8 @@ class TestRunner(TestCase):
         """
         Test runner with dynamic tolerance story
 
+        uses ARCHIVIST_NAMESPACE to set namespace value
+
         run_steps is used so that exceptions are shown
         """
         LOGGER.info("...")
@@ -63,9 +67,52 @@ class TestRunner(TestCase):
                 msg="Incorrect number of entities",
             )
 
+    def test_runner_synsation(self):
+        """
+        Test runner with synsation story
+
+        uses ARCHIVIST_NAMESPACE to set namespace value
+
+        run_steps is used so that exceptions are shown
+        """
+
+        LOGGER.info("...")
+        jinja = Environment(
+            loader=FileSystemLoader("functests/test_resources"),
+            trim_blocks=True,
+            lstrip_blocks=True,
+        )
+        template = jinja.get_template("synsation_story.yaml.j2")
+        with open(
+            "functests/test_resources/synsation_story.values.yaml",
+            "r",
+            encoding="utf-8",
+        ) as fd:
+            # render template into yaml which is then converted
+            # to a dict....
+            self.arch.runner.run_steps(
+                yaml.load(
+                    template.render(
+                        yaml.load(
+                            fd,
+                            Loader=yaml.SafeLoader,
+                        ),
+                        env=environ,
+                    ),
+                    Loader=yaml.SafeLoader,
+                ),
+            )
+            self.assertEqual(
+                len(self.arch.runner.entities),
+                9,
+                msg="Incorrect number of entities",
+            )
+
     def test_runner_richness(self):
         """
         Test runner with richness story
+
+        uses ARCHIVIST_NAMESPACE to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -86,6 +133,8 @@ class TestRunner(TestCase):
     def test_runner_door_entry(self):
         """
         Test runner with door_entry story
+
+        uses ARCHIVIST_NAMESPACE to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -120,6 +169,8 @@ class TestRunner(TestCase):
     def test_runner_wipp(self):
         """
         Test runner with wipp story
+
+        uses ARCHIVIST_NAMESPACE to set namespace value
 
         run_steps is used so that exceptions are shown
         """
