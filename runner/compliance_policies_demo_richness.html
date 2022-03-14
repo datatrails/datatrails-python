@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Compliance Policies Richness Demo &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>Compliance Policies Richness Demo &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -97,17 +97,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Story Runner</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="generic.html">Generic Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Compliance Policies Richness Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="door_entry_demo.html">Door Entry Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estate_info_demo.html">Estate Info Demo</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
@@ -204,18 +209,17 @@
 <span class="c1">#</span>
 <span class="c1"># NB the assets and events endpoints require all values to be strings. Other values may</span>
 <span class="c1"># be of the correct type such as confirm which is a boolean.</span>
-<span class="c1">#</span>
-<span class="c1"># For example attributes.radioactive is a string - internally archivist will see this</span>
-<span class="c1"># as a boolean.</span>
 <span class="nt">steps</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create an empty radiation bag with id 1.</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
     <span class="nt">behaviours</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
     <span class="nt">attributes</span><span class="p">:</span>
       <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
+      <span class="nt">arc_namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
       <span class="nt">radioactive</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
       <span class="nt">radiation_level</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
       <span class="nt">weight</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
@@ -224,11 +228,13 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create an empty radiation bag with id 2.</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 2</span>
     <span class="nt">behaviours</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
     <span class="nt">attributes</span><span class="p">:</span>
       <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 2</span>
+      <span class="nt">arc_namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
       <span class="nt">radioactive</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
       <span class="nt">radiation_level</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
       <span class="nt">weight</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
@@ -237,11 +243,13 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create an empty radiation bag with id 3.</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
     <span class="nt">behaviours</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
     <span class="nt">attributes</span><span class="p">:</span>
       <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
+      <span class="nt">arc_namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
       <span class="nt">radioactive</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
       <span class="nt">radiation_level</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
       <span class="nt">weight</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
@@ -281,7 +289,7 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event adding 3 rads of radiation to bag 1, increasing its weight by 1kg.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -294,7 +302,7 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event adding 2 rads of radiation to bag 2, increasing its weight by 5kg.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 2</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 2</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -307,7 +315,7 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event adding 5 rads of radiation to bag 3, increasing its weight by 7kg.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -322,24 +330,24 @@
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">COMPLIANCE_COMPLIANT_AT</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Check Compliance of bag 1.</span>
       <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">COMPLIANCE_COMPLIANT_AT</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Check Compliance of bag 2.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 2</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 2</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">COMPLIANCE_COMPLIANT_AT</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Check Compliance of bag 3.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
 
   <span class="c1"># now attempt to add waste to tip one over the edge</span>
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Now Create Event adding 4 rads of radiation to bag 3 increasing its weight by 1kg.</span>
                    <span class="l l-Scalar l-Scalar-Plain">This brings the total radiation level to 9 rads and weight to 8kg.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -353,7 +361,7 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">COMPLIANCE_COMPLIANT_AT</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Check Compliance of bag 3.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 3</span>
     <span class="nt">report</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </div>

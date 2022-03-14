@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Assets Class &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>Assets Class &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -223,13 +223,13 @@
 
 <dl class="py class">
 <dt id="archivist.assets._AssetsClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.assets.</span></code><code class="sig-name descname"><span class="pre">_AssetsClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.assets.</span></code><code class="sig-name descname"><span class="pre">_AssetsClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">type_helper.Archivist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/assets.html#_AssetsClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>AssetsClient</p>
 <p>Access to assets entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
+<dd class="field-odd"><p><strong>archivist</strong> (<em>Archivist</em>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -303,20 +303,22 @@ does not already exist.</p>
 </dl>
 <p>A YAML representation of the data argument would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">signature</span><span class="p">:</span>
-  <span class="nt">attributes</span><span class="p">:</span>
-    <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Front Door</span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">selector</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arc_display_name</span>
 <span class="l l-Scalar l-Scalar-Plain">behaviours</span>
   <span class="l l-Scalar l-Scalar-Plain">- RecordEvidence</span>
   <span class="l l-Scalar l-Scalar-Plain">- Attachments</span>
 <span class="nt">attributes</span><span class="p">:</span>
+  <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Front Door</span>
   <span class="nt">arc_firmware_version</span><span class="p">:</span> <span class="s">&quot;1.0&quot;</span>
   <span class="nt">arc_serial_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">das-j1-01</span>
   <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to Jitsuin France</span>
   <span class="nt">wavestone_asset_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">paris.france.jitsuin.das</span>
 <span class="nt">location</span><span class="p">:</span>
-  <span class="nt">signature</span><span class="p">:</span>
-    <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris,</span>
+  <span class="nt">selector</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">display_name</span>
+  <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris,</span>
   <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Sales and sales support for the French region</span>
   <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">48.8339211,</span>
   <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.371345,</span>
@@ -328,11 +330,10 @@ does not already exist.</p>
     <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
 </pre></div>
 </div>
-<p>The ‘signature’ value is required and will usually specify the ‘arc_display_name’ as a
-secondary key. The values in ‘signature’ will be merged into the ‘attributes’ dict.
-The ‘behaviours’ values should rarely differ from the above settings.</p>
-<p>If ‘location’ is specified then the ‘signature’ value is required and is used as a
-secondary key</p>
+<p>The ‘selector’ value is required and will usually specify the ‘arc_display_name’ as a
+secondary key. The keys in ‘selector’ must exist in the attributes of the asset.</p>
+<p>If ‘location’ is specified then the ‘selector’ value is required and is used as a
+secondary key. Likewise the secondary key must exist in the attributes of the location.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>

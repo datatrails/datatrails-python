@@ -3,14 +3,20 @@
 Assets Create If not exists Story Runner YAML
 ..............................................
 
-Searches for an asset matching the given signature. Returns that asset if found,
-else create a new one with the given signature and attributes
+Searches for an asset matching the given selector. Returns that asset if found,
+else create a new one with the given attributes
 
-The 'signature' setting for both the asset and its associated location are required.
+'asset_label' is not required but if unspecified the created asset will
+not be accessible to later actions in the story.
+
+The 'selector' setting for both the asset and its associated location are required.
+
 The 'location', 'attachments' and 'confirm' entries are optional.
 
-The 'signature' for both asset and location will be merged into the attributes of
-the created asset or location.
+The 'arc_namespace' (for the asset) and the 'namespace' (for the location) are used
+to distinguish between assets and locations created between runs of the story.
+Usually these field values are derived from an environment variable 
+'ARCHIVIST_NAMESPACE' (default value is 'namespace').
 
 .. code-block:: yaml
     
@@ -19,25 +25,33 @@ the created asset or location.
       - step:
           action: ASSETS_CREATE_IF_NOT_EXISTS
           description: Create a door in Paris at Jitsuin offices.
-        signature:
-          attributes:
-            arc_display_name: Jitsuin Paris Front Door
+          asset_label: Jitsuin Paris Front Door
+        selector:
+          - attributes:
+            - arc_display_name
+            - arc_namespace
         behaviours:
           - RecordEvidence
           - Attachments
         attributes:
+          arc_display_name: Jitsuin Paris Front Door
+          arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
           arc_display_type: door
           arc_firmware_version: "1.0"
           arc_serial_number: das-j1-01
           arc_description: Electronic door entry system to Jitsuin France
           wavestone_asset_id: paris.france.jitsuin.das
         location:
-          signature:
-            display_name: Jitsuin Paris
+          selector:
+            - display_name
+            - attributes:
+              - namespace
+          display_name: Jitsuin Paris
           description: Sales and sales support for the French region
           latitude: 48.8339211
           longitude: 2.371345
           attributes:
+            namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
             address: 5 Parvis Alan Turing, 75013 Paris, France
             wavestone_ext: managed
         attachments:

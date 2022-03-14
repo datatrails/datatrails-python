@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Identity and Access Management (IAM) &mdash; Jitsuin Archivist 0.11.0 documentation</title>
+  <title>Locations Count Story Runner YAML &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="IAM Access Policies" href="access_policies.html" />
-    <link rel="prev" title="SBOM dataclass" href="../sboms/sbommetadata.html" /> 
+    <link rel="next" title="Compliance Policies Demo" href="compliance_policies_demo.html" />
+    <link rel="prev" title="Events List Story Runner YAML" href="events_list.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,7 +95,26 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runner/index.html">Story Runner</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Story Runner</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="generic.html">Generic Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Locations Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="door_entry_demo.html">Door Entry Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estate_info_demo.html">Estate Info Demo</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../runner.html">Runner Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../archivist.html">Archivist Class</a></li>
@@ -105,13 +124,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Identity and Access Management (IAM)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="access_policies.html">IAM Access Policies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="subjects.html">IAM Subjects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appregistrations.html">IAM Application Registrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appidp.html">IAM Application Get Token</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
@@ -163,7 +176,11 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Identity and Access Management (IAM)</li>
+          <li><a href="../getting_started.html">Getting started</a> &raquo;</li>
+        
+          <li><a href="index.html">Story Runner</a> &raquo;</li>
+        
+      <li>Locations Count Story Runner YAML</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -180,16 +197,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="iamindex">
-<span id="identity-and-access-management-iam"></span><h1>Identity and Access Management (IAM)<a class="headerlink" href="#iamindex" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="access_policies.html">IAM Access Policies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="subjects.html">IAM Subjects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appregistrations.html">IAM Application Registrations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appidp.html">IAM Application Get Token</a></li>
-</ul>
+  <div class="section" id="locations-count-story-runner-yaml">
+<span id="locations-count-yamlref"></span><h1>Locations Count Story Runner YAML<a class="headerlink" href="#locations-count-story-runner-yaml" title="Permalink to this headline">¶</a></h1>
+<p>Count all locations that match criteria..</p>
+<p>The ‘print_response’ setting should be specified as True in order to see the results.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="nt">steps</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
+      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">LOCATIONS_COUNT</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Count location for which John Smith is director</span>
+      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">attrs</span><span class="p">:</span>
+      <span class="nt">director</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">John Smith</span>
+</pre></div>
 </div>
 </div>
 
@@ -199,8 +219,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="access_policies.html" class="btn btn-neutral float-right" title="IAM Access Policies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../sboms/sbommetadata.html" class="btn btn-neutral float-left" title="SBOM dataclass" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="compliance_policies_demo.html" class="btn btn-neutral float-right" title="Compliance Policies Demo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="events_list.html" class="btn btn-neutral float-left" title="Events List Story Runner YAML" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

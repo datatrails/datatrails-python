@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Compliance Policies Dynamic Tolerance Demo &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>Compliance Policies Dynamic Tolerance Demo &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -97,17 +97,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Story Runner</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="generic.html">Generic Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="door_entry_demo.html">Door Entry Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estate_info_demo.html">Estate Info Demo</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
@@ -211,11 +216,13 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create new EV Pump with id 1.</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">behaviours</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
     <span class="nt">attributes</span><span class="p">:</span>
       <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">arc_namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
       <span class="nt">ev_pump</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
     <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
@@ -239,7 +246,7 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event requesting EV pump 1 needs maintenance.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -252,7 +259,7 @@
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event after 1 seconds, for EV pump 1, stating maintenance occurred.</span>
       <span class="nt">wait_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -264,7 +271,7 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event requesting EV pump 1 needs maintenance.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -277,7 +284,7 @@
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event after 2 seconds, for EV pump 1, stating maintenance occurred.</span>
       <span class="nt">wait_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -289,7 +296,7 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event requesting EV pump 1 needs maintenance.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -302,7 +309,7 @@
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event after 3 seconds, for EV pump 1, stating maintenance occurred.</span>
       <span class="nt">wait_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -315,13 +322,13 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">COMPLIANCE_COMPLIANT_AT</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Check Compliance of EV pump 1.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
 
   <span class="c1"># now create an event that throws the Standard deviation out of whack</span>
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event requesting EV pump 1 needs maintenance.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -334,7 +341,7 @@
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event after 20 seconds, for EV pump 1, stating maintenance occurred.</span>
       <span class="nt">wait_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
@@ -347,7 +354,7 @@
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">COMPLIANCE_COMPLIANT_AT</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Check Compliance of EV pump 1.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
     <span class="nt">report</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.attachments &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>archivist.attachments &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -263,13 +263,15 @@
 
 <span class="sd">                filename: functests/test_resources/doors/assets/gdn_front.jpg</span>
 <span class="sd">                content_type: image/jpg</span>
+<span class="sd">                display_name: arc_primary_image</span>
 
 <span class="sd">            OR</span>
 
 <span class="sd">            .. code-block:: yaml</span>
 
-<span class="sd">                url: https://secure.eicar.org/eicar.com&quot;</span>
-<span class="sd">                content_type: image/jpg</span>
+<span class="sd">                url: https://secure.eicar.org/eicar.com.zip&quot;</span>
+<span class="sd">                content_type: application/zip</span>
+<span class="sd">                display_name: Test malware</span>
 
 <span class="sd">             Either &#39;filename&#39; or &#39;url&#39; is required.</span>
 <span class="sd">             &#39;content_type&#39; is required.</span>
@@ -282,13 +284,14 @@
 
 <span class="sd">            .. code-block:: yaml</span>
 
+<span class="sd">                arc_display_name: Telephone</span>
 <span class="sd">                arc_attachment_identity: blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
 <span class="sd">                arc_hash_alg: SHA256</span>
 <span class="sd">                arc_hash_value: xxxxxxxxxxxxxxxxxxxxxxx</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
                 <span class="n">attachment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content_type&quot;</span><span class="p">))</span>
@@ -304,6 +307,10 @@
             <span class="s2">&quot;arc_hash_alg&quot;</span><span class="p">:</span> <span class="n">attachment</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">][</span><span class="s2">&quot;alg&quot;</span><span class="p">],</span>
             <span class="s2">&quot;arc_hash_value&quot;</span><span class="p">:</span> <span class="n">attachment</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">],</span>
         <span class="p">}</span>
+
+        <span class="n">display_name</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;display_name&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;arc_display_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">display_name</span>
 
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -353,9 +360,12 @@
 <span class="sd">            identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</span>
 <span class="sd">            fd (file): opened file descriptor or other file-type sink..</span>
 <span class="sd">            params (dict): e.g. {&quot;allow_insecure&quot;: &quot;true&quot;} OR {&quot;strict&quot;: &quot;true&quot; }</span>
-<span class="sd">            asset_or_event_id (str): optional asset identity</span>
-<span class="sd">                                     e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="sd">                                          assets/xxxxx/events/xxxx</span>
+<span class="sd">            asset_or_event_id (str): optional asset or event identity</span>
+
+<span class="sd">        asset_or_event_id has one of the following forms:</span>
+
+<span class="sd">            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            REST response</span>
@@ -390,9 +400,12 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="sd">            asset_or_event_id (str): optional asset identity</span>
-<span class="sd">                                     e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="sd">                                          assets/xxxxx/events/xxxx</span>
+<span class="sd">            asset_or_event_id (str): optional asset or event identity</span>
+
+<span class="sd">        asset_or_event_id has one of the following forms:</span>
+
+<span class="sd">            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            REST response</span>

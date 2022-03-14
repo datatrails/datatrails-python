@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Attachments Class &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>Attachments Class &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -201,13 +201,13 @@
 
 <dl class="py class">
 <dt id="archivist.attachments._AttachmentsClient">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.attachments.</span></code><code class="sig-name descname"><span class="pre">_AttachmentsClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">archivist.attachments.</span></code><code class="sig-name descname"><span class="pre">_AttachmentsClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">type_helper.Archivist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>AttachmentsClient</p>
 <p>Access to attachments entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
+<dd class="field-odd"><p><strong>archivist</strong> (<em>Archivist</em>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -224,11 +224,13 @@ or event creation.</p>
 <blockquote>
 <div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/doors/assets/gdn_front.jpg</span>
 <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
+<span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
 </pre></div>
 </div>
 <p>OR</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>   <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://secure.eicar.org/eicar.com&quot;</span>
-   <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>   <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://secure.eicar.org/eicar.com.zip&quot;</span>
+   <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application/zip</span>
+   <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Test malware</span>
 
 <span class="l l-Scalar l-Scalar-Plain">Either &#39;filename&#39; or &#39;url&#39; is required.</span>
 <span class="l l-Scalar l-Scalar-Plain">&#39;content_type&#39; is required.</span>
@@ -242,7 +244,8 @@ or event creation.</p>
 </dl>
 <p>A YAML representation of the result would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">arc_attachment_identity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Telephone</span>
+<span class="nt">arc_attachment_identity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
 <span class="nt">arc_hash_alg</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SHA256</span>
 <span class="nt">arc_hash_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxxxxxxxxxxxxxxxxxxxx</span>
 </pre></div>
@@ -263,16 +266,18 @@ fd iterator</p>
 <li><p><strong>identity</strong> (<em>str</em>) – attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>fd</strong> (<em>file</em>) – opened file descriptor or other file-type sink..</p></li>
 <li><p><strong>params</strong> (<em>dict</em>) – e.g. {“allow_insecure”: “true”} OR {“strict”: “true” }</p></li>
-<li><p><strong>asset_or_event_id</strong> (<em>str</em>) – <p>optional asset identity
-e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-<blockquote>
-<div><p>assets/xxxxx/events/xxxx</p>
-</div></blockquote>
-</p></li>
+<li><p><strong>asset_or_event_id</strong> (<em>str</em>) – optional asset or event identity</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>REST response</p>
+</dl>
+<p>asset_or_event_id has one of the following forms:</p>
+<blockquote>
+<div><p>assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>REST response</p>
 </dd>
 </dl>
 </dd></dl>
@@ -286,16 +291,18 @@ e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>identity</strong> (<em>str</em>) – attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
-<li><p><strong>asset_or_event_id</strong> (<em>str</em>) – <p>optional asset identity
-e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-<blockquote>
-<div><p>assets/xxxxx/events/xxxx</p>
-</div></blockquote>
-</p></li>
+<li><p><strong>asset_or_event_id</strong> (<em>str</em>) – optional asset or event identity</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>REST response</p>
+</dl>
+<p>asset_or_event_id has one of the following forms:</p>
+<blockquote>
+<div><p>assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>REST response</p>
 </dd>
 </dl>
 </dd></dl>

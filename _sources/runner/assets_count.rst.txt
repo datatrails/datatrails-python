@@ -1,9 +1,9 @@
-.. _assets_list_yamlref:
+.. _assets_count_yamlref:
 
-Assets List Story Runner YAML
+Assets Count Story Runner YAML
 .........................................
 
-List all assets that have the required signature - in this example a listing of
+Count all assets that have the required signature - in this example a count of
 all doors is output.
 
 The 'print_response' setting should be specified as True in order to see the results.
@@ -13,9 +13,8 @@ The 'print_response' setting should be specified as True in order to see the res
     ---
     steps:
       - step:
-          action: ASSETS_LIST
-          description: List all doors
+          action: ASSETS_COUNT
+          description: Count all doors
           print_response: true
         attrs:
           arc_display_type: door
-          arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}

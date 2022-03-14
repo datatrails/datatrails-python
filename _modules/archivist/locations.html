@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.locations &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>archivist.locations &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -208,6 +208,7 @@
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">LOCATIONS_SUBPATH</span><span class="p">,</span> <span class="n">LOCATIONS_LABEL</span>
 <span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">ArchivistNotFoundError</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">selector_signature</span>
 
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -285,8 +286,11 @@
 
 <span class="sd">            .. code-block:: yaml</span>
 
-<span class="sd">                signature:</span>
-<span class="sd">                  display_name: Apartements du Gare du Nord</span>
+<span class="sd">                selector:</span>
+<span class="sd">                  - display_name</span>
+<span class="sd">                  - attributes:</span>
+<span class="sd">                    - wavestone_ext</span>
+<span class="sd">                display_name: Apartements du Gare du Nord</span>
 <span class="sd">                description: Residential apartment building in new complex above GdN station</span>
 <span class="sd">                latitude: 48.8809</span>
 <span class="sd">                longitude: 2.3553</span>
@@ -294,7 +298,7 @@
 <span class="sd">                  address: 18 Rue de Dunkerque, 75010 Paris, France</span>
 <span class="sd">                  wavestone_ext: managed</span>
 
-<span class="sd">            The &#39;signature&#39; setting is required.</span>
+<span class="sd">            The &#39;selector&#39; setting is required.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple of :class:`Location` instance, Boolean True if already exists</span>
@@ -302,21 +306,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">signature</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;signature&quot;</span><span class="p">)</span>  <span class="c1"># must exist</span>
+        <span class="n">selector</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;selector&quot;</span><span class="p">)</span>  <span class="c1"># must exist</span>
+        <span class="n">props</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">selector_signature</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_by_signature</span><span class="p">(</span><span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">)</span>
 
-            <span class="n">location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_by_signature</span><span class="p">(</span>
-                <span class="n">props</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">signature</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">&quot;attributes&quot;</span><span class="p">},</span>
-                <span class="n">attrs</span><span class="o">=</span><span class="n">signature</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attributes&quot;</span><span class="p">),</span>
-            <span class="p">)</span>
         <span class="k">except</span> <span class="n">ArchivistNotFoundError</span><span class="p">:</span>
-            <span class="k">pass</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;location with selector </span><span class="si">%s</span><span class="s2">,</span><span class="si">%s</span><span class="s2"> does not exist - creating&quot;</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="n">attrs</span>
+            <span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;location with selector </span><span class="si">%s</span><span class="s2">,</span><span class="si">%s</span><span class="s2"> already exists&quot;</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">location</span><span class="p">,</span> <span class="kc">True</span>
-
-        <span class="c1"># make sure that signature is in the definition of the location</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">signature</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="kc">False</span></div>
 
@@ -340,7 +342,7 @@
         <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="n">props</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">props</span><span class="p">)</span> <span class="k">if</span> <span class="n">props</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">attrs</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attrs</span>
 

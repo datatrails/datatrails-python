@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Create Asset Eaxmple &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>Create Asset Eaxmple &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -103,6 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan_test.html">Scan Test Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_filter.html">Filter IAM subjects Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="applications_registration.html">Create IAM Application Registration and Tokens</a></li>
@@ -203,6 +204,7 @@
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
+<span class="kn">from</span> <span class="nn">archivist.utils</span> <span class="kn">import</span> <span class="n">get_auth</span>
 
 
 <span class="k">def</span> <span class="nf">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
@@ -273,10 +275,11 @@
     <span class="c1"># client id is an environment variable. client_secret is stored in a file in a</span>
     <span class="c1"># directory that has 0700 permissions. The location of this file is set in</span>
     <span class="c1"># the client_secret_file environment variable.</span>
-    <span class="n">client_id</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_ID&quot;</span><span class="p">)</span>
-    <span class="n">client_secret_file</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET_FILE&quot;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">client_secret_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
-        <span class="n">client_secret</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">auth</span> <span class="o">=</span> <span class="n">get_auth</span><span class="p">(</span>
+        <span class="n">auth_token_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_AUTHTOKEN_FILENAME&quot;</span><span class="p">),</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_ID&quot;</span><span class="p">),</span>
+        <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET_FILENAME&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
 
     <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
     <span class="c1"># of an asset or event creation - the default is 1200 seconds but one can optionally</span>
@@ -284,7 +287,7 @@
     <span class="c1"># (rather than KHIPU) as confirmation times are much shorter in this case.</span>
     <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">),</span>
+        <span class="n">auth</span><span class="p">,</span>
         <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="c1"># Create a new asset</span>

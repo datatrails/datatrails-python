@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Assets Create If not exists Story Runner YAML &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>Assets Create If not exists Story Runner YAML &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -97,17 +97,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Story Runner</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="generic.html">Generic Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Assets Create If not exists Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="door_entry_demo.html">Door Entry Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estate_info_demo.html">Estate Info Demo</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
@@ -194,36 +199,48 @@
             
   <div class="section" id="assets-create-if-not-exists-story-runner-yaml">
 <span id="assets-create-if-not-exists-yamlref"></span><h1>Assets Create If not exists Story Runner YAML<a class="headerlink" href="#assets-create-if-not-exists-story-runner-yaml" title="Permalink to this headline">¶</a></h1>
-<p>Searches for an asset matching the given signature. Returns that asset if found,
-else create a new one with the given signature and attributes</p>
-<p>The ‘signature’ setting for both the asset and its associated location are required.
-The ‘location’, ‘attachments’ and ‘confirm’ entries are optional.</p>
-<p>The ‘signature’ for both asset and location will be merged into the attributes of
-the created asset or location.</p>
+<p>Searches for an asset matching the given selector. Returns that asset if found,
+else create a new one with the given attributes</p>
+<p>‘asset_label’ is not required but if unspecified the created asset will
+not be accessible to later actions in the story.</p>
+<p>The ‘selector’ setting for both the asset and its associated location are required.</p>
+<p>The ‘location’, ‘attachments’ and ‘confirm’ entries are optional.</p>
+<p>The ‘arc_namespace’ (for the asset) and the ‘namespace’ (for the location) are used
+to distinguish between assets and locations created between runs of the story.
+Usually these field values are derived from an environment variable
+‘ARCHIVIST_NAMESPACE’ (default value is ‘namespace’).</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="nt">steps</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE_IF_NOT_EXISTS</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create a door in Paris at Jitsuin offices.</span>
-    <span class="nt">signature</span><span class="p">:</span>
-      <span class="nt">attributes</span><span class="p">:</span>
-        <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris Front Door</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris Front Door</span>
+    <span class="nt">selector</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arc_display_name</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arc_namespace</span>
     <span class="nt">behaviours</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
     <span class="nt">attributes</span><span class="p">:</span>
+      <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris Front Door</span>
+      <span class="nt">arc_namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
       <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">door</span>
       <span class="nt">arc_firmware_version</span><span class="p">:</span> <span class="s">&quot;1.0&quot;</span>
       <span class="nt">arc_serial_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">das-j1-01</span>
       <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to Jitsuin France</span>
       <span class="nt">wavestone_asset_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">paris.france.jitsuin.das</span>
     <span class="nt">location</span><span class="p">:</span>
-      <span class="nt">signature</span><span class="p">:</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris</span>
+      <span class="nt">selector</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">display_name</span>
+        <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">namespace</span>
+      <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Sales and sales support for the French region</span>
       <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">48.8339211</span>
       <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.371345</span>
       <span class="nt">attributes</span><span class="p">:</span>
+        <span class="nt">namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
         <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5 Parvis Alan Turing, 75013 Paris, France</span>
         <span class="nt">wavestone_ext</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">managed</span>
     <span class="nt">attachments</span><span class="p">:</span>

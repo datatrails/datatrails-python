@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Compliance Compliant_at Story Runner YAML &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>Compliance Compliant_at Story Runner YAML &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -97,17 +97,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Story Runner</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="generic.html">Generic Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Compliance Compliant_at Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="door_entry_demo.html">Door Entry Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estate_info_demo.html">Estate Info Demo</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
@@ -194,7 +199,7 @@
             
   <div class="section" id="compliance-compliant-at-story-runner-yaml">
 <span id="compliance-compliant-at-yamlref"></span><h1>Compliance Compliant_at Story Runner YAML<a class="headerlink" href="#compliance-compliant-at-story-runner-yaml" title="Permalink to this headline">¶</a></h1>
-<p>‘asset_name’ is required from a previously created asset. The asset_id is derived and
+<p>‘asset_label’ is required from a previously created asset. The asset_id is retrieved and
 inserted as the first argument to compliance.compliant_at().</p>
 <p>‘report’ = true will cause a report to be printed on the compliance status.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
@@ -203,7 +208,7 @@ inserted as the first argument to compliance.compliant_at().</p>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">COMPLIANCE_COMPLIANT_AT</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Check Compliance of EV pump 1.</span>
       <span class="nt">report</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ev pump 1</span>
 </pre></div>
 </div>
 </div>

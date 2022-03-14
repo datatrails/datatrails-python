@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Jitsuin Archivist Client &mdash; Jitsuin Archivist 0.10.1 documentation</title>
+  <title>Jitsuin Archivist Client &mdash; Jitsuin Archivist 0.11.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -270,9 +270,9 @@ documented at <a class="reference external" href="https://docs.rkvst.com">https:
     <span class="c1">#</span>
     <span class="c1"># client id is an environment variable. client_secret is stored in a file in a</span>
     <span class="c1"># directory that has 0700 permissions. The location of this file is set in</span>
-    <span class="c1"># the client_secret_file environment variable.</span>
+    <span class="c1"># the client_secret_filename environment variable.</span>
     <span class="n">client_id</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_ID&quot;</span><span class="p">)</span>
-    <span class="n">client_secret_file</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET_FILE&quot;</span><span class="p">)</span>
+    <span class="n">client_secret_file</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET_FILENAME&quot;</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">client_secret_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
         <span class="n">client_secret</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
@@ -302,9 +302,9 @@ or json file.</p>
 <div class="section" id="python">
 <h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+<span class="kn">from</span> <span class="nn">pyaml_env</span> <span class="kn">import</span> <span class="n">parse_config</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">exit</span> <span class="k">as</span> <span class="n">sys_exit</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span> <span class="k">as</span> <span class="n">sys_stdout</span>
-<span class="kn">import</span> <span class="nn">yaml</span>
 
 <span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
 <span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">about</span>
@@ -318,7 +318,7 @@ or json file.</p>
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Namespace </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">yamlfile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">y</span><span class="p">:</span>
-        <span class="n">arch</span><span class="o">.</span><span class="n">runner</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">))</span>
+        <span class="n">arch</span><span class="o">.</span><span class="n">runner</span><span class="p">(</span><span class="n">parse_config</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
 
     <span class="n">sys_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
@@ -394,6 +394,7 @@ every operation - in this case the name of the asset is ‘radiation bag 1’.</
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create an empty radiation bag with id 1.</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
     <span class="nt">behaviours</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
@@ -410,7 +411,7 @@ every operation - in this case the name of the asset is ‘radiation bag 1’.</
   <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
       <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
       <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Event adding 3 rads of radiation to bag 1, increasing its weight by 1kg.</span>
-      <span class="nt">asset_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
+      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">radiation bag 1</span>
     <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
     <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
     <span class="nt">event_attributes</span><span class="p">:</span>
