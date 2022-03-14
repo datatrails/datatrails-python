@@ -116,7 +116,6 @@ class _SBOMSClient:
             "author": c["author"],
             "component": c["name"],
             "hash": hash_value,
-            "repo": "",  # unsure about this
             "supplier": c["supplier"]["name"],
             "uuid": b["@serialNumber"],
             "version": c["version"],
@@ -198,7 +197,6 @@ class _SBOMSClient:
             "component": s["component"],
             "identity": s["identity"],
             "hash": hash_value,
-            "repo": "",  # unsure about this
             "supplier": s["supplier"],
             "uuid": s["unique_id"],
             "version": s["version"],

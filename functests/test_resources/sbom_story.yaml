@@ -7,8 +7,8 @@
 #
 # This story creates a sbom and executes release events on that SBOM.
 # 
-# sbom assets are signified by arc_display_type=SBOM
-# sbom releases are signified by arc_display_type=SBOM_RELEASE
+# sbom assets are signified by arc_display_type="Software Package"
+# sbom releases are signified by arc_display_type="Software Package Release"
 #
 steps:
   - step:
@@ -25,7 +25,7 @@ steps:
     attributes:
       arc_display_name: ACME Corporation Detector SAAS
       arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
-      arc_display_type: SBOM
+      arc_display_type: Software Package
       arc_description: Software Bill of Materials for Detector SAAS
       acme_sbom_license: www.gnu.org/licenses/gpl.txt
       acme_proprietary_secret: For your eyes only
@@ -46,7 +46,7 @@ steps:
     confirm: true
     event_attributes:
       arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.1
-      arc_display_type: SBOM_RELEASE
+      arc_display_type: Software Package Release
     attachments:
       - filename: functests/test_resources/sbom/gen1.xml
         content_type: text/xml
@@ -64,7 +64,7 @@ steps:
     confirm: true
     event_attributes:
       arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.2
-      arc_display_type: SBOM_RELEASE
+      arc_display_type: Software Package Release
     attachments:
       - filename: functests/test_resources/sbom/gen2.xml
         content_type: text/xml
@@ -82,7 +82,7 @@ steps:
     confirm: true
     event_attributes:
       arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.3
-      arc_display_type: SBOM_RELEASE
+      arc_display_type: Software Package Release
     attachments:
       - filename: functests/test_resources/sbom/gen3.xml
         content_type: text/xml
@@ -94,7 +94,7 @@ steps:
       description: List all sboms
       print_response: true
     attrs:
-      arc_display_type: SBOM
+      arc_display_type: Software Package
       arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
 
   - step:
@@ -105,5 +105,5 @@ steps:
     props:
       confirmation_status: CONFIRMED
     attrs:
-      arc_display_type: SBOM_RELEASE
+      arc_display_type: Software Package Release
       arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
