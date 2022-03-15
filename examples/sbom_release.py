@@ -10,7 +10,7 @@ from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.assets import BEHAVIOURS
-from archivist.constants import SBOM_RELEASE
+from archivist.constants import SBOM_PACKAGE, SBOM_RELEASE
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
@@ -44,7 +44,7 @@ def sbom_release(arch, release, sbom_filename):  # XXX instead of filename may b
             "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             "attributes": {
                 "arc_display_name": ASSET_NAME,
-                "arc_display_type": "sbom",
+                "arc_display_type": SBOM_PACKAGE,
                 "arc_description": "Software Package for RKVST SAAS",
                 "acme_sbom_license": "www.gnu.org/licenses/gpl.txt",  # XXX
                 "acme_proprietary_secret": "For your eyes only",  # XXX
@@ -73,7 +73,7 @@ def sbom_release(arch, release, sbom_filename):  # XXX instead of filename may b
             "behaviour": "RecordEvidence",
             "event_attributes": {
                 "arc_description": f"Jitsuin Inc RKVST SAAS Released {release}",
-                "arc_display_type": "sbom release",
+                "arc_display_type": SBOM_RELEASE,
             },
             "attachments": [
                 {
