@@ -111,15 +111,20 @@ class _SBOMSClient:
         b = sbom["bom"]
         m = b["metadata"]
         c = m["component"]
-        hash_value = c["hashes"]["hash"]["#text"]
+
         result = {
             "author": c["author"],
             "component": c["name"],
-            "hash": hash_value,
             "supplier": c["supplier"]["name"],
             "uuid": b["@serialNumber"],
             "version": c["version"],
         }
+        try:
+            hash_value = c["hashes"]["hash"]["#text"]
+        except (TypeError, KeyError):
+            pass
+        else:
+            result["hash"] = hash_value
 
         return result
 
