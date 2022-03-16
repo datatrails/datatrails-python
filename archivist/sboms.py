@@ -116,9 +116,13 @@ class _SBOMSClient:
             "author": c["author"],
             "component": c["name"],
             "supplier": c["supplier"]["name"],
-            "uuid": b["@serialNumber"],
             "version": c["version"],
         }
+
+        uuid = b.get("@serialNumber")
+        if uuid is not None:
+            result["uuid"] = uuid
+
         try:
             hash_value = c["hashes"]["hash"]["#text"]
         except (TypeError, KeyError):
