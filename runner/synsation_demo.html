@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Synsation Demo &mdash; Jitsuin Archivist 0.12.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WIPP Demo" href="wipp_demo.html" />
+    <link rel="prev" title="SBOM Demo" href="sbom_demo.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Jitsuin Archivist
+          
+
+          
+            
+            <img src="../_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.12.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Story Runner</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="execute.html">Example of runner code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execute_template.html">Example of templated runner code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic.html">Generic Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_wait_for_confirmed.html">Assets Wait For Confirmed Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="door_entry_demo.html">Door Entry Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estate_info_demo.html">Estate Info Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sbom_demo.html">SBOM Demo</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Synsation Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipp_demo.html">WIPP Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runner.html">Runner Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Jitsuin Archivist</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../getting_started.html">Getting started</a> &raquo;</li>
+        
+          <li><a href="index.html">Story Runner</a> &raquo;</li>
+        
+      <li>Synsation Demo</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="synsation-demo">
+<span id="synsation-demo-ref"></span><h1>Synsation Demo<a class="headerlink" href="#synsation-demo" title="Permalink to this headline">¶</a></h1>
+<p>This story consists of 2 files one containing the definition of assets and locations and one
+containing a template file from which the eventual story is generated using the Jinja2
+templating engine.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="nt">locations</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cape Town</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">South Africa Office</span>
+    <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-33.92527778</span>
+    <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">18.42388889</span>
+    <span class="nt">attributes</span><span class="p">:</span>
+      <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cape Town Downtown</span>
+      <span class="nt">facility_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Satellite Office</span>
+      <span class="nt">reception_email</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">reception_CT@synsation_io</span>
+      <span class="nt">reception_phone</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">+27 (21) 123-456</span>
+      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">LOCATIONS_CREATE_IF_NOT_EXISTS</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Asia Location</span>
+      <span class="nt">location_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Asia Regional Sales Office</span>
+  <span class="p p-Indicator">-</span> <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Asia Regional Sales Office</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Asia Regional Sales Headquarters</span>
+    <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">18.52027778</span>
+    <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">73.85666667</span>
+    <span class="nt">attributes</span><span class="p">:</span>
+      <span class="nt">address</span><span class="p">:</span> <span class="s">&quot;212,</span><span class="nv"> </span><span class="s">Late</span><span class="nv"> </span><span class="s">Govind</span><span class="nv"> </span><span class="s">Rambhau</span><span class="nv"> </span><span class="s">Taru</span><span class="nv"> </span><span class="s">Chowk</span><span class="nv"> </span><span class="s">Road,</span><span class="nv"> </span><span class="s">Shobhapur,</span><span class="nv"> </span><span class="s">Pune</span><span class="nv"> </span><span class="s">411011&quot;</span>
+      <span class="nt">facility_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Sales</span>
+      <span class="nt">reception_email</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">reception_PN@synsation_io</span>
+      <span class="nt">reception_phone</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">+91 (20) 123-4567</span>
+  <span class="p p-Indicator">-</span> <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Baltimore Regional Sales Office</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">East Coast Regional Sales Headquarters</span>
+    <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">39.28333333</span>
+    <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-76.61666667</span>
+    <span class="nt">attributes</span><span class="p">:</span>
+      <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Baltimore 21201, Maryland</span>
+      <span class="nt">facility_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Sales</span>
+      <span class="nt">reception_email</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">reception_BLT@synsation_io</span>
+      <span class="nt">reception_phone</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">+1 (410) 123-4567</span>
+  <span class="p p-Indicator">-</span> <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">European Regional Sales Office</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">European Regional Sales Headquarters</span>
+    <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">52.20527778</span>
+    <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.11916667</span>
+    <span class="nt">attributes</span><span class="p">:</span>
+      <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cambridge CB1 1BH, England</span>
+      <span class="nt">facility_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Sales</span>
+      <span class="nt">reception_email</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">reception_CAM@synsation_io</span>
+      <span class="nt">reception_phone</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">+44 (1223) 123-456</span>
+  <span class="p p-Indicator">-</span> <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Grayslake HQ</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Global Headquarters</span>
+    <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42.34833333</span>
+    <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-88.03250000</span>
+    <span class="nt">attributes</span><span class="p">:</span>
+      <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Grayslake 60030, Illinois</span>
+      <span class="nt">facility_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Headquarters</span>
+      <span class="nt">reception_email</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">reception_GL@synsation_io</span>
+      <span class="nt">reception_phone</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">+1 (847) 765-4321</span>
+
+<span class="nt">assets</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Multifunction Printer Cape Town</span>
+    <span class="nt">location_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cape Town</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">printer</span>
+    <span class="nt">firmware_version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1.0</span>
+    <span class="nt">serial_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">f867662g.1</span>
+    <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">multifunction_printer.jpg</span>
+
+  <span class="p p-Indicator">-</span> <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Coffee Machine Asia</span>
+    <span class="nt">location_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Asia Regional Sales Office</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">coffee machine</span>
+    <span class="nt">firmware_version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1.0</span>
+    <span class="nt">serial_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">f867662g.1</span>
+    <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">coffee_machine.jpg</span>
+
+  <span class="p p-Indicator">-</span> <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Security Camera Baltimore</span>
+    <span class="nt">location_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Baltimore Regional Sales Office</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">security camera</span>
+    <span class="nt">firmware_version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1.0</span>
+    <span class="nt">serial_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">f867662g.1</span>
+    <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">black_cctv.jpg</span>
+
+  <span class="p p-Indicator">-</span> <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Multifunction Printer England</span>
+    <span class="nt">location_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">European Regional Sales Office</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">printer</span>
+    <span class="nt">firmware_version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1.0</span>
+    <span class="nt">serial_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">f867662g.1</span>
+    <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">multifunction_printer.jpg</span>
+</pre></div>
+</div>
+<div class="highlight-jinja notranslate"><div class="highlight"><pre><span></span><span class="x">---</span>
+<span class="x"># The step field is a string that represents the method bound to an endpoint and</span>
+<span class="x"># the args and kwargs correspond to the arguments to such a method.</span>
+<span class="x">#</span>
+<span class="x"># Create a number of offices equipped with printers, coffee machines and security</span>
+<span class="x"># cameras</span>
+<span class="x">#</span>
+<span class="x">steps:</span>
+
+<span class="x">  # create locations for all offices - these are created separately as more than one asset</span>
+<span class="x">  # can be located at an office and we dont want to duplicate code...</span>
+<span class="x">  # refer to the locations using the location_label...</span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">location</span> <span class="k">in</span> <span class="nv">locations</span> <span class="cp">%}</span><span class="x"> </span>
+<span class="x">  - step:</span>
+<span class="x">      action: LOCATIONS_CREATE_IF_NOT_EXISTS</span>
+<span class="x">      description: Create </span><span class="cp">{{</span> <span class="nv">location.display_name</span> <span class="cp">}}</span><span class="x"> Location</span>
+<span class="x">      location_label: </span><span class="cp">{{</span> <span class="nv">location.display_name</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    selector:</span>
+<span class="x">      - display_name</span>
+<span class="x">      - attributes:</span>
+<span class="x">        - namespace</span>
+<span class="x">    display_name: </span><span class="cp">{{</span> <span class="nv">location.display_name</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    description: </span><span class="cp">{{</span> <span class="nv">location.description</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    latitude: </span><span class="cp">{{</span> <span class="nv">location.latitude</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    longitude: </span><span class="cp">{{</span> <span class="nv">location.longitude</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    attributes:</span>
+<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;ARCHIVIST_NAMESPACE&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      address: </span><span class="cp">{{</span> <span class="nv">location.attributes.address</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      facility_type: </span><span class="cp">{{</span> <span class="nv">location.attributes.facility_type</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      reception_email: </span><span class="cp">{{</span> <span class="nv">location.attributes.reception_email</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      reception_phone: </span><span class="cp">{{</span> <span class="nv">location.attributes.reception_phone</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"> </span>
+
+<span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">asset</span> <span class="k">in</span> <span class="nv">assets</span> <span class="cp">%}</span><span class="x"> </span>
+<span class="x">  - step:</span>
+<span class="x">      action: ASSETS_CREATE_IF_NOT_EXISTS</span>
+<span class="x">      description: Create a </span><span class="cp">{{</span> <span class="nv">asset.type</span> <span class="cp">}}</span><span class="x"> in </span><span class="cp">{{</span> <span class="nv">asset.location_label</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      asset_label: </span><span class="cp">{{</span> <span class="nv">asset.asset_label</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      location_label: </span><span class="cp">{{</span> <span class="nv">asset.location_label</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    selector:</span>
+<span class="x">      - attributes:</span>
+<span class="x">        - arc_display_name</span>
+<span class="x">        - arc_namespace</span>
+<span class="x">    behaviours:</span>
+<span class="x">      - RecordEvidence</span>
+<span class="x">      - Attachments</span>
+<span class="x">    attributes:</span>
+<span class="x">      arc_display_name: </span><span class="cp">{{</span> <span class="nv">asset.type</span> <span class="cp">}}</span><span class="x"> in </span><span class="cp">{{</span> <span class="nv">asset.location_label</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;ARCHIVIST_NAMESPACE&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      arc_display_type: </span><span class="cp">{{</span> <span class="nv">asset.type</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      arc_firmware_version: </span><span class="cp">{{</span> <span class="nv">asset.firmware_version</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      arc_serial_number: </span><span class="cp">{{</span> <span class="nv">asset.serial_number</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      arc_description: </span><span class="cp">{{</span> <span class="nv">asset.type</span> <span class="cp">}}</span><span class="x"> in </span><span class="cp">{{</span> <span class="nv">asset.location_label</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">    attachments:</span>
+<span class="x">      - filename: functests/test_resources/synsation/assets/</span><span class="cp">{{</span> <span class="nv">asset.filename</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">        content_type: image/jpg</span>
+<span class="x">        display_name: </span><span class="cp">{{</span> <span class="nv">asset.type</span> <span class="cp">}}</span><span class="x"> in </span><span class="cp">{{</span> <span class="nv">asset.location_label</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"> </span>
+
+<span class="x">  # ensure all are confirmed</span>
+<span class="x">  - step:</span>
+<span class="x">      action: ASSETS_WAIT_FOR_CONFIRMED</span>
+<span class="x">      description: Wait for all assets to be confirmed</span>
+<span class="x">      print_response: true</span>
+<span class="x">    attrs:</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;ARCHIVIST_NAMESPACE&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+
+<span class="x">  - step:</span>
+<span class="x">      action: ASSETS_LIST</span>
+<span class="x">      description: List all printers</span>
+<span class="x">      print_response: true</span>
+<span class="x">    attrs:</span>
+<span class="x">      arc_display_type: printer</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;ARCHIVIST_NAMESPACE&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+
+<span class="x">  - step:</span>
+<span class="x">      action: ASSETS_LIST</span>
+<span class="x">      description: List all coffee machines</span>
+<span class="x">      print_response: true</span>
+<span class="x">    attrs:</span>
+<span class="x">      arc_display_type: coffee machine</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;ARCHIVIST_NAMESPACE&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+
+<span class="x">  - step:</span>
+<span class="x">      action: ASSETS_LIST</span>
+<span class="x">      description: List all security cameras</span>
+<span class="x">      print_response: true</span>
+<span class="x">    attrs:</span>
+<span class="x">      arc_display_type: security camera</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;ARCHIVIST_NAMESPACE&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="wipp_demo.html" class="btn btn-neutral float-right" title="WIPP Demo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sbom_demo.html" class="btn btn-neutral float-left" title="SBOM Demo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, support@jitsuin.com.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

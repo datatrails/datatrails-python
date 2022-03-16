@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.assets &mdash; Jitsuin Archivist 0.11.2 documentation</title>
+  <title>archivist.assets &mdash; Jitsuin Archivist 0.12.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.11.2
+                0.12.0
               </div>
             
           
@@ -369,9 +369,11 @@
 <span class="sd">                  arc_description: Electronic door entry system to Jitsuin France</span>
 <span class="sd">                  wavestone_asset_id: paris.france.jitsuin.das</span>
 <span class="sd">                location:</span>
+<span class="sd">                  identity: locations/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">                location:</span>
 <span class="sd">                  selector:</span>
 <span class="sd">                    - display_name</span>
-<span class="sd">                  display_name: Jitsuin Paris,</span>
+<span class="sd">                  display_name: Jitsuin Paris</span>
 <span class="sd">                  description: Sales and sales support for the French region</span>
 <span class="sd">                  latitude: 48.8339211,</span>
 <span class="sd">                  longitude: 2.371345,</span>
@@ -387,6 +389,9 @@
 
 <span class="sd">            If &#39;location&#39; is specified then the &#39;selector&#39; value is required and is used as a</span>
 <span class="sd">            secondary key. Likewise the secondary key must exist in the attributes of the location.</span>
+
+<span class="sd">            Alternatively the identity of the location is specified - both</span>
+<span class="sd">            are shown - choose one.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple of :class:`Asset` instance, Boolean is True if asset already existed</span>
@@ -414,10 +419,13 @@
 
         <span class="c1"># is location present?</span>
         <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">loc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">(</span>
-                <span class="n">location</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_home_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loc</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;identity&quot;</span> <span class="ow">in</span> <span class="n">location</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_home_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">(</span>
+                    <span class="n">location</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_home_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loc</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
 
         <span class="c1"># any attachments ?</span>
         <span class="k">if</span> <span class="n">attachments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

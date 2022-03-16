@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Generic Story Runner YAML &mdash; Jitsuin Archivist 0.11.2 documentation</title>
+  <title>Generic Story Runner YAML &mdash; Jitsuin Archivist 0.12.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Assets Count Story Runner YAML" href="assets_count.html" />
-    <link rel="prev" title="Story Runner" href="index.html" /> 
+    <link rel="prev" title="Example of templated runner code" href="execute_template.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.11.2
+                0.12.0
               </div>
             
           
@@ -96,11 +96,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Story Runner</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="execute.html">Example of runner code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="execute_template.html">Example of templated runner code</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Generic Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets_wait_for_confirmed.html">Assets Wait For Confirmed Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
@@ -108,11 +111,15 @@
 <li class="toctree-l2"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="door_entry_demo.html">Door Entry Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="estate_info_demo.html">Estate Info Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sbom_demo.html">SBOM Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synsation_demo.html">Synsation Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipp_demo.html">WIPP Demo</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
@@ -210,6 +217,7 @@ required, optional or required for a particular operation.</p>
       <span class="nt">wait_time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
       <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
       <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Radiation bag 1</span>
+      <span class="nt">location_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cape Town</span>
     <span class="l l-Scalar l-Scalar-Plain">................definition of request body and other</span>
                     <span class="l l-Scalar l-Scalar-Plain">parameters</span>
 </pre></div>
@@ -239,6 +247,13 @@ by the runner to keep track of assets.</p>
 obtain the identity of such a previously-created asset.</p>
 <p>In this way one can create assets and then refer to them in later steps of the story.</p>
 </dd>
+<dt class="field-even">location_label</dt>
+<dd class="field-even"><p>For location create type actions (LOCATIONS_CREATE_IF_NOT_EXISTS) the label is used
+by the runner to keep track of locations.</p>
+<p>For other actions which require access to an location, this value is used as a key to
+obtain the identity of such a previously-created location.</p>
+<p>In this way one can create locations and then refer to them in later steps of the story.</p>
+</dd>
 </dl>
 </div>
 
@@ -249,7 +264,7 @@ obtain the identity of such a previously-created asset.</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="assets_count.html" class="btn btn-neutral float-right" title="Assets Count Story Runner YAML" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="index.html" class="btn btn-neutral float-left" title="Story Runner" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="execute_template.html" class="btn btn-neutral float-left" title="Example of templated runner code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

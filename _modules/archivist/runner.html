@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.runner &mdash; Jitsuin Archivist 0.11.2 documentation</title>
+  <title>archivist.runner &mdash; Jitsuin Archivist 0.12.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.11.2
+                0.12.0
               </div>
             
           
@@ -207,20 +207,30 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># please keep in alphabetical order</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_ATTACHMENT_INFO&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;asset_or_event_id&quot;</span><span class="p">,),</span>
-            <span class="s2">&quot;use_asset_id&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;props&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_CREATE_IF_NOT_EXISTS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">,</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
-            <span class="s2">&quot;set_asset_id&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;set_asset_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;use_location_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_CREATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
-            <span class="s2">&quot;set_asset_id&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;set_asset_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_LIST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">list</span><span class="p">,</span>
@@ -229,8 +239,8 @@
                 <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">}</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_WAIT_FOR_CONFIRMED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">wait_for_confirmed</span><span class="p">,</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
                 <span class="s2">&quot;props&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
@@ -246,11 +256,13 @@
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;COMPLIANCE_COMPLIANT_AT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">compliant_at</span><span class="p">,</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;report&quot;</span><span class="p">,),</span>
+            <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;EVENTS_CREATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
-            <span class="s2">&quot;use_asset_id&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;use_location_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;EVENTS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
@@ -260,7 +272,7 @@
                 <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;asset_attrs&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="s2">&quot;use_asset_id&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;EVENTS_LIST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">list</span><span class="p">,</span>
@@ -270,7 +282,7 @@
                 <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;asset_attrs&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="s2">&quot;use_asset_id&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
@@ -278,6 +290,11 @@
                 <span class="s2">&quot;props&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
             <span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_CREATE_IF_NOT_EXISTS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
+            <span class="s2">&quot;set_location_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
 
 <div class="viewcode-block" id="_ActionMap.ops"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.ops">[docs]</a>    <span class="k">def</span> <span class="nf">ops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
@@ -308,17 +325,29 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;delete&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ActionMap.use_asset_id"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.use_asset_id">[docs]</a>    <span class="k">def</span> <span class="nf">use_asset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="_ActionMap.use_asset_label"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.use_asset_label">[docs]</a>    <span class="k">def</span> <span class="nf">use_asset_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return whether this action uses asset_id</span>
+<span class="sd">        Return whether this action uses asset_label</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_asset_id&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_asset_label&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="_ActionMap.set_asset_id"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.set_asset_id">[docs]</a>    <span class="k">def</span> <span class="nf">set_asset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="_ActionMap.set_asset_label"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.set_asset_label">[docs]</a>    <span class="k">def</span> <span class="nf">set_asset_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return whether this action sets asset_id</span>
+<span class="sd">        Return whether this action sets asset_label</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;set_asset_id&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;set_asset_label&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="_ActionMap.use_location_label"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.use_location_label">[docs]</a>    <span class="k">def</span> <span class="nf">use_location_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get use_location_label in map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_location_label&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="_ActionMap.set_location_label"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.set_location_label">[docs]</a>    <span class="k">def</span> <span class="nf">set_location_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get set_location_label in map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;set_location_label&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="_Step"><a class="viewcode-back" href="../../runner.html#archivist.runner._Step">[docs]</a><span class="k">class</span> <span class="nc">_Step</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>  <span class="c1"># pylint:disable=too-many-instance-attributes</span>
@@ -332,10 +361,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_name</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_keywords</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_delete_method</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_use_asset_id</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_set_asset_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_use_asset_label</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_asset_label</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_use_location_label</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_location_label</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="_Step.args"><a class="viewcode-back" href="../../runner.html#archivist.runner._Step.args">[docs]</a>    <span class="k">def</span> <span class="nf">args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id_method</span><span class="p">):</span>
+<div class="viewcode-block" id="_Step.args"><a class="viewcode-back" href="../../runner.html#archivist.runner._Step.args">[docs]</a>    <span class="k">def</span> <span class="nf">args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_method</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Positional arguments to action.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -346,24 +377,24 @@
             <span class="c1"># arguments.  This will be simplified when dataclasses are</span>
             <span class="c1"># introduced.</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;self.asset_label </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset_label</span><span class="p">)</span>
-            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;self.use_asset_id </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_asset_id</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_asset_id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">asset_id</span> <span class="o">=</span> <span class="n">asset_id_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_label</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">asset_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;self.use_asset_label </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_asset_label</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_asset_label</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">identity</span> <span class="o">=</span> <span class="n">identity_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_label</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">identity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Unknown Entity &#39;</span><span class="si">{self.asset_label}</span><span class="s2">&#39;&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Unknown Asset &#39;</span><span class="si">{self.asset_label}</span><span class="s2">&#39;&quot;</span>
                     <span class="p">)</span>
 
                 <span class="c1"># prepend if not specified in the keywords for the action.</span>
                 <span class="n">keywords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span>
                 <span class="k">if</span> <span class="n">keywords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;asset_id&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">:</span>
-                    <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asset_id</span><span class="p">)</span>
+                    <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">identity</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span></div>
 
-    <span class="k">def</span> <span class="nf">kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id_method</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_method</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -376,7 +407,7 @@
             <span class="k">if</span> <span class="n">keywords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">keys</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span>
                 <span class="k">if</span> <span class="s2">&quot;asset_id&quot;</span> <span class="ow">in</span> <span class="n">keywords</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;asset_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">asset_id_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_label</span><span class="p">)</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;asset_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">identity_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_label</span><span class="p">)</span>
 
                 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keywords</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">step</span><span class="p">:</span>
@@ -387,6 +418,18 @@
 
             <span class="c1"># add the request body to the positional arguments...</span>
             <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">step</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+
+            <span class="c1"># If location_label is specified add to the data - should only</span>
+            <span class="c1"># happen for ASSETS_CREATE_IF_NOT_EXISTS and EVENTS_CREATE...</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_location_label</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">location_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">identity</span> <span class="o">=</span> <span class="n">identity_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location_label</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">identity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Unknown Location &#39;</span><span class="si">{self.location_label}</span><span class="s2">&#39;&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">][</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">identity</span>
+
             <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
@@ -411,6 +454,10 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">asset_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;asset_label&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">location_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;location_label&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">)</span>
@@ -459,18 +506,18 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete_method</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">use_asset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_asset_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_use_asset_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">use_asset_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">use_asset_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_asset_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_asset_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">use_asset_label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_asset_id</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_asset_label</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">set_asset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_asset_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_set_asset_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">set_asset_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_asset_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_asset_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_asset_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">set_asset_label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_asset_id</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_asset_label</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">keywords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -478,6 +525,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_keywords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">keywords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keywords</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">use_location_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_location_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_location_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">use_location_label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_location_label</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set_location_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_location_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_location_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">set_location_label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_location_label</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">action_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -563,8 +624,8 @@
         <span class="n">s</span><span class="o">.</span><span class="n">description</span><span class="p">()</span>
 
         <span class="c1"># this is a bit clunky...</span>
-        <span class="n">s</span><span class="o">.</span><span class="n">args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_id</span><span class="p">)</span>
-        <span class="n">s</span><span class="o">.</span><span class="n">kwargs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asset_id</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identity</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">kwargs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identity</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
 
         <span class="c1"># wait for a number of seconds and then execute</span>
         <span class="n">s</span><span class="o">.</span><span class="n">wait_time</span><span class="p">()</span>
@@ -575,8 +636,11 @@
         <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">delete</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_deletions</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">delete_method</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">set_asset_id</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">set_entities</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">asset_label</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">set_asset_label</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_entities</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">asset_label</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">set_location_label</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_entities</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">location_label</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_Runner.set_entities"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.set_entities">[docs]</a>    <span class="k">def</span> <span class="nf">set_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;sets entties entry&quot;&quot;&quot;</span>
@@ -597,12 +661,12 @@
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Delete </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span>
             <span class="n">delete_method</span><span class="p">(</span><span class="n">identity</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="_Runner.asset_id"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.asset_id">[docs]</a>    <span class="k">def</span> <span class="nf">asset_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="_Runner.identity"><a class="viewcode-back" href="../../runner.html#archivist.runner._Runner.identity">[docs]</a>    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Gets entity id&quot;&quot;&quot;</span>
 
-        <span class="n">asset_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">asset_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">asset_id</span>
+        <span class="n">identity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">identity</span>
 
         <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>

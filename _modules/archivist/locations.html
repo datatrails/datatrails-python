@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.locations &mdash; Jitsuin Archivist 0.11.2 documentation</title>
+  <title>archivist.locations &mdash; Jitsuin Archivist 0.12.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.11.2
+                0.12.0
               </div>
             
           
@@ -209,6 +209,7 @@
 <span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">ArchivistNotFoundError</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">selector_signature</span>
+<span class="kn">from</span> <span class="nn">.type_aliases</span> <span class="kn">import</span> <span class="n">NoneOnError</span>
 
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -219,7 +220,18 @@
 
 <span class="sd">    Location object has dictionary attributes.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoneOnError</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;str: name of the location&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">name</span></div>
 
 
 <div class="viewcode-block" id="_LocationsClient"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient">[docs]</a><span class="k">class</span> <span class="nc">_LocationsClient</span><span class="p">:</span>

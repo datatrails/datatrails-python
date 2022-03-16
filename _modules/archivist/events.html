@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>archivist.events &mdash; Jitsuin Archivist 0.11.2 documentation</title>
+  <title>archivist.events &mdash; Jitsuin Archivist 0.12.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.11.2
+                0.12.0
               </div>
             
           
@@ -334,7 +334,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            asset_id (str): asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
 <span class="sd">            data (dict): request body of event.</span>
-<span class="sd">            confirm (bool): if True wait for event to be confirmed on DLT.</span>
+<span class="sd">            confirm (bool): if True wait for event to be confirmed.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            :class:`Event` instance</span>
@@ -346,10 +346,13 @@
         <span class="c1"># is location present?</span>
         <span class="n">location</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">loc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">(</span>
-                <span class="n">location</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">event_attributes</span><span class="p">[</span><span class="s2">&quot;arc_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loc</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;identity&quot;</span> <span class="ow">in</span> <span class="n">location</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;event_attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">(</span>
+                    <span class="n">location</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">event_attributes</span><span class="p">[</span><span class="s2">&quot;arc_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loc</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
 
         <span class="n">sbom</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;sbom&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">sbom</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
