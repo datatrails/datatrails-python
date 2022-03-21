@@ -1,18 +1,20 @@
 #
 # this is used for pushing to github pages
 #
-# for development, the correct packages are installed in the builder image.
-#
-# Duplicate of stanza in builder/Dockerfile-builder
+# Duplicate of stanza in ~/requirements-dev.txt.
 # Make changes in both places
-#
-sphinx==3.5.4
-sphinx-rtd-theme==0.5.2
+sphinx~=4.3
+sphinx-rtd-theme~=1.0.0
 
-backoff==1.10.0
-certifi==2020.12.5
-flatten-dict==0.3.0
-iso8601==0.1.13
-requests==2.22.0
-requests-toolbelt==0.9.1
-rfc3339==6.2
+# Duplicate of stanza in ~/requirements.txt.
+# Make changes in both places
+backoff~=1.11
+certifi
+flatten-dict~=0.3
+iso8601~=0.1
+Jinja2~=3.0
+pyaml-env~=1.1
+requests~=2.22
+requests-toolbelt~=0.9
+rfc3339~=6.2
+xmltodict~=0.12.0
