@@ -1,3 +1,4 @@
+
 .. _readme:
 
 Jitsuin Archivist Client
@@ -13,16 +14,23 @@ Installation
 
 Use standard python pip utility:
 
-.. code-block:: bash
+.. code:: bash
 
     python3 -m pip install jitsuin-archivist
+
+If your version of python3 is too old an error of this type or similar will be emitted:
+
+.. note:: 
+
+    ERROR: Could not find a version that satisfies the requirement jitsuin-archivist (from versions: none)
+    ERROR: No matching distribution found for jitsuiin-archivist
 
 Example
 =============
 
 One can then use the examples code to create assets (see examples directory):
 
-.. code-block:: python
+.. code:: python
 
     """Create an asset given url to Archivist and user Token.
 
@@ -138,7 +146,7 @@ or json file.
 Python
 ------
 
-.. code-block:: python
+.. code:: python
 
     from logging import getLogger
     from pyaml_env import parse_config
@@ -182,7 +190,7 @@ Command Line
 
 This functionality is also available from the command line:
 
-.. code-block:: shell
+.. code:: shell
 
    $ archivist_runner -h
 
@@ -196,7 +204,7 @@ To invoke this command:
 
 Execute:
 
-.. code-block:: shell
+.. code:: shell
 
    $ archivist_runner \
          -u https://app.rkvst.io \
@@ -225,7 +233,7 @@ asset or event is confirmed before returning.
    'true' which archivist will treat as a boolesn.
 
 
-.. code-block:: yaml
+.. code:: yaml
 
     ---
     # Demonstration of applying a Richness compliance policy to an asset that undergoes
@@ -294,7 +302,7 @@ by using dictionary configuration as described here: https://docs.python.org/3/l
 
 A recommended minimum configuration would be:
 
-.. code-block:: python
+.. code:: python
 
     import logging
 
