@@ -1,3 +1,7 @@
+#
+# for the published wheel - the file docs/requirements.txt
+# must be kept in sync with this file.
+#
 backoff~=1.11
 certifi
 flatten-dict~=0.3

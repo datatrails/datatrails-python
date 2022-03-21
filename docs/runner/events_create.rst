@@ -74,7 +74,7 @@ An example when releasing a software package as an sbom:
         confirm: true
         event_attributes:
           arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.1
-          arc_display_type: sbom release
+          arc_display_type: Software Package Release
         sbom:
           filename: functests/test_resources/sbom/gen1.xml
           content_type: text/xml
@@ -100,10 +100,9 @@ An example when releasing a software package as an sbom attachment:
         confirm: true
         event_attributes:
           arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.1
-          arc_display_type: sbom release
+          arc_display_type: Software Package Release
         attachments:
           - filename: functests/test_resources/sbom/gen1.xml
             content_type: text/xml
             display_name: ACME Generation1 SBOM
-            type: SBOM_RELEASE
-
+            type: Software Package Release
