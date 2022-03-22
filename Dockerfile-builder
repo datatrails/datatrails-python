@@ -1,10 +1,10 @@
-ARG VERSION=3.6
-FROM python:${VERSION}-buster
+ARG VERSION=3.7
+FROM python:${VERSION}-bullseye
 
 COPY requirements.txt requirements-dev.txt /tmp/
 
-RUN python3 -m pip -qq install --upgrade pip \
-  && python3 -m pip -qq install -U -r /tmp/requirements-dev.txt \
+RUN python3 -m pip install --upgrade pip \
+  && python3 -m pip install -U -r /tmp/requirements-dev.txt \
   && rm -f /tmp/requirements-dev.txt \
   && rm -f /tmp/requirements.txt
 

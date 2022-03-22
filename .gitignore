@@ -13,6 +13,7 @@ coverage.xml
 .cache/
 .eggs/
 .task/
+.pip-audit-cache/
 *.pyi
 .vscode
 stuntidp*

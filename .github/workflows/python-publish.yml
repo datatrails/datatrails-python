@@ -28,7 +28,9 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         ./scripts/version.sh
-        python setup.py sdist bdist_wheel
+        python3 -m build --sdist
+        python3 -m build --wheel
+        twine check dist/*
         twine upload dist/*
     - name: Build docs
       uses: ammaraskar/sphinx-action@master
