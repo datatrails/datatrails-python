@@ -31,10 +31,14 @@ ATTRS = {
 
 ASSET_NAME = "Telephone with 2 attachments - one bad or not scanned 2022-03-01"
 REQUEST_EXISTS_ATTACHMENTS = {
-    "selector": {
-        "attributes.arc_display_name",
-        "attributes.arc_namespace",
-    },
+    "selector": [
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
+        },
+    ],
     "behaviours": BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
