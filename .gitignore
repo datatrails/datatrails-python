@@ -15,3 +15,4 @@ coverage.xml
 .task/
 *.pyi
 .vscode
+stuntidp*
