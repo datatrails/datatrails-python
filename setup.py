@@ -22,7 +22,7 @@ setup(
     author_email="support@jitsuin.com",
     description="Jitsuin Archivist Client",
     long_description=DESC,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
     url=REPO_URL,
     packages=find_packages(exclude=("examples", "unittests", "functests")),
     platforms=["any"],
