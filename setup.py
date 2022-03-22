@@ -32,7 +32,7 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",  # MIT
         "Operating System :: POSIX :: Linux",  # https://pypi.org/classifiers/ # on anything
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Topic :: Utilities",  # https://pypi.org/classifiers/ # check another option client-sdk
     ],
     install_requires=requirements,
@@ -45,7 +45,7 @@ setup(
         "count_commits_from_version_file": False,
     },
     setup_requires=["setuptools-git-versioning==1.7.4"],
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     entry_points={
         "console_scripts": [
             "archivist_runner = archivist.cmds.runner.main:main",

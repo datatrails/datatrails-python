@@ -168,9 +168,9 @@ FUNCTEST=execrunner task functests
 
 #### Testing Other Python Versions
 
-##### Python 3.6
+##### Python 3.7 (default)
 
-To build the docker builder image with default Python version 3.6:
+To build the docker builder image with default Python 3.7:
 ```bash
 task builder
 ```
@@ -185,26 +185,9 @@ To run the unittests:
 task unittests
 ```
 
-##### Python 3.7
-
-To build the docker builder image with Python 3.7:
-```bash
-task builder-3.7
-```
-
-To check the style
-```bash
-task check
-```
-
-To run the unittests:
-```bash
-task unittests
-```
-
 ##### Python 3.8
 
-To build the docker builder image with Python 3.7:
+To build the docker builder image with Python 3.8:
 ```bash
 task builder-3.8
 ```
@@ -224,6 +207,23 @@ task unittests
 To build the docker builder image with Python 3.9:
 ```bash
 task builder-3.9
+```
+
+To check the style
+```bash
+task check
+```
+
+To run the unittests:
+```bash
+task unittests
+```
+
+##### Python 3.10
+
+To build the docker builder image with Python 3.10:
+```bash
+task builder-3.10
 ```
 
 To check the style
