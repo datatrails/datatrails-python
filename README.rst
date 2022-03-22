@@ -59,7 +59,7 @@ One can then use the examples code to create assets (see examples directory):
         attrs = {
             "arc_display_name": "display_name",  # Asset's display name in the user interface
             "arc_description": "display_description",  # Asset's description in the user interface
-            "arc_display_type": "desplay_type",  # Arc_display_type is a free text field
+            "arc_display_type": "display_type",  # Arc_display_type is a free text field
             # allowing the creator of
             # an asset to specify the asset
             # type or class. Be careful when setting this:
@@ -230,7 +230,7 @@ asset or event is confirmed before returning.
    every operation - in this case the name of the asset is 'radiation bag 1'.
 
    Arguments to the archivist are ususally strings - in this example radioactive is 
-   'true' which archivist will treat as a boolesn.
+   'true' which archivist will treat as a boolean.
 
 
 .. code:: yaml
