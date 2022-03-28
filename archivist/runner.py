@@ -9,6 +9,7 @@ from logging import getLogger
 from types import GeneratorType
 from time import sleep as time_sleep
 from typing import Dict, Optional, Tuple
+from uuid import UUID
 
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -204,7 +205,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             LOGGER.debug("self.asset_label %s", self.asset_label)
             LOGGER.debug("self.use_asset_label %s", self.use_asset_label)
             if self.use_asset_label and self.asset_label is not None:
-                identity = identity_method(self.asset_label)
+                identity = self.asset_identity(identity_method)
                 if identity is None:
                     raise ArchivistInvalidOperationError(
                         f"Unknown Asset '{self.asset_label}'"
@@ -232,7 +233,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             if keywords is not None and len(keywords) > 0:
                 keys.extend(keywords)
                 if "asset_id" in keywords and self.asset_label is not None:
-                    kwargs["asset_id"] = identity_method(self.asset_label)
+                    kwargs["asset_id"] = self.asset_identity(identity_method)
 
                 for k in keywords:
                     if k in step:
@@ -247,7 +248,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             # If location_label is specified add to the data - should only
             # happen for ASSETS_CREATE_IF_NOT_EXISTS and EVENTS_CREATE...
             if self.use_location_label and self.location_label is not None:
-                identity = identity_method(self.location_label)
+                identity = self.location_identity(identity_method)
                 if identity is None:
                     raise ArchivistInvalidOperationError(
                         f"Unknown Location '{self.location_label}'"
@@ -280,9 +281,30 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
     def asset_label(self):
         return self.get("asset_label")
 
+    @staticmethod
+    def __identity_from_label(prefix, label, identity_method):
+        if not label.startswith(prefix):
+            return identity_method(label)
+
+        uid = label.split("/")[1]
+        try:
+            _ = UUID(uid, version=4)
+        except ValueError:
+            return identity_method(label)
+
+        return label
+
+    def asset_identity(self, identity_method):
+        return self.__identity_from_label("assets/", self.asset_label, identity_method)
+
     @property
     def location_label(self):
         return self.get("location_label")
+
+    def location_identity(self, identity_method):
+        return self.__identity_from_label(
+            "locations/", self.location_label, identity_method
+        )
 
     def description(self):
         description = self.get("description")
