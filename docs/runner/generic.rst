@@ -49,6 +49,10 @@ Each step follows the same pattern:
 
    In this way one can create assets and then refer to them in later steps of the story.
 
+   Additionally this label can be an explicit asset identity of the form:
+
+         assets/add30235-1424-4fda-840a-d5ef82c4c96fa
+
 :location_label:
    For location create type actions (LOCATIONS_CREATE_IF_NOT_EXISTS) the label is used
    by the runner to keep track of locations.
@@ -57,4 +61,9 @@ Each step follows the same pattern:
    obtain the identity of such a previously-created location.
 
    In this way one can create locations and then refer to them in later steps of the story.
+
+   Additionally this label can be an explicit location identity of the form:
+
+         locations/add30235-1424-4fda-840a-d5ef82c4c96fa
+
 
