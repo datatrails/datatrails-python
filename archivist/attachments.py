@@ -139,7 +139,7 @@ class _AttachmentsClient:
 
         return result
 
-    def upload(self, fd: BinaryIO, *, mtype: str = "image/jpg") -> Attachment:
+    def upload(self, fd: BinaryIO, *, mtype: str = None) -> Attachment:
         """Create attachment
 
         Creates attachment from opened file or other data source.
