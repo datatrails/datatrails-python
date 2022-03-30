@@ -27,6 +27,8 @@ class TestAttachmentstCreate(TestCase):
     Test Archivist Attachment Create method
     """
 
+    TEST_DOCX_PATH = "functests/test_resources/loremipsum.docx"
+    TEST_DOCX_DOWNLOAD_PATH = "functests/test_resources/downloaded_loremipsum.docx"
     TEST_IMAGE_PATH = "functests/test_resources/Jitsuin_Logo_RGB.jpg"
     TEST_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
 
@@ -42,10 +44,16 @@ class TestAttachmentstCreate(TestCase):
         with suppress(FileNotFoundError):
             remove(self.TEST_IMAGE_DOWNLOAD_PATH)
 
+        with suppress(FileNotFoundError):
+            remove(self.TEST_DOCX_DOWNLOAD_PATH)
+
     def tearDown(self) -> None:
         """Remove the downloaded image for subsequent test runs"""
         with suppress(FileNotFoundError):
             remove(self.TEST_IMAGE_DOWNLOAD_PATH)
+
+        with suppress(FileNotFoundError):
+            remove(self.TEST_DOCX_DOWNLOAD_PATH)
 
     def test_attachment_upload_and_download(self):
         """
@@ -63,6 +71,40 @@ class TestAttachmentstCreate(TestCase):
         clear_cache()
         self.assertTrue(
             cmp(self.TEST_IMAGE_PATH, self.TEST_IMAGE_DOWNLOAD_PATH, shallow=False)
+        )
+
+    def test_attachment_upload_and_download_docx(self):
+        """
+        Test file upload through the SDK
+        Test file download through the SDK
+        """
+        with open(self.TEST_DOCX_PATH, "rb") as fd:
+            attachment = self.arch.attachments.upload(fd)
+            file_uuid = attachment["identity"]
+
+        print("attachment", json_dumps(attachment, indent=4))
+
+        self.assertEqual(
+            attachment["mime_type"],
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            msg="UPLOAD incorrect mimetype",
+        )
+
+        with open(self.TEST_DOCX_DOWNLOAD_PATH, "wb") as fd:
+            attachment = self.arch.attachments.download(file_uuid, fd)
+
+        print("attachment", attachment.headers)
+        self.assertEqual(
+            attachment.headers["content-type"],
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            msg="UPLOAD incorrect mimetype",
+        )
+
+        info = self.arch.attachments.info(file_uuid)
+        self.assertEqual(
+            info["mime_type"],
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            msg="UPLOAD incorrect mimetype",
         )
 
     def test_attachment_upload_and_download_allow_insecure(self):

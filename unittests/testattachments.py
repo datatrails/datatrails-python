@@ -227,9 +227,8 @@ class TestAttachmentsUpload(TestAttachmentsBase):
                 "filename",
                 msg="UPLOAD incorrect filename",
             )
-            self.assertEqual(
+            self.assertIsNone(
                 fields["file"][2],
-                "image/jpg",
                 msg="UPLOAD incorrect filetype",
             )
             self.assertEqual(

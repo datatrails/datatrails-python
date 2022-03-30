@@ -5,7 +5,7 @@ Test assets creation
 from copy import copy, deepcopy
 from json import dumps as json_dumps
 from os import getenv
-from unittest import skip, TestCase
+from unittest import TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -102,7 +102,6 @@ class TestAssetCreate(TestCase):
             msg="Incorrect asset proof mechanism",
         )
 
-    @skip("takes too long")
     def test_asset_create_khipu(self):
         """
         Test asset creation using khipu proof mechanism
@@ -112,13 +111,19 @@ class TestAssetCreate(TestCase):
                 "proof_mechanism": ProofMechanism.KHIPU.name,
             },
             attrs=self.traffic_light,
-            confirm=True,
         )
+        print("asset", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
             asset["proof_mechanism"],
             ProofMechanism.KHIPU.name,
             msg="Incorrect asset proof mechanism",
         )
+        events = self.arch.events.list(asset_id=asset["identity"])
+        print("events", json_dumps(list(events), sort_keys=True, indent=4))
+        asset = self.arch.assets.wait_for_confirmation(asset["identity"])
+        print("asset", json_dumps(asset, sort_keys=True, indent=4))
+        events = self.arch.events.list(asset_id=asset["identity"])
+        print("events", json_dumps(list(events), sort_keys=True, indent=4))
 
     def test_asset_create_with_fixtures(self):
         """

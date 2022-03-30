@@ -71,6 +71,7 @@ def _wait_for_confirmation(self, identity):
     """Return None until entity is confirmed"""
     entity = self.read(identity)
 
+    LOGGER.debug("entity %s", entity)
     if CONFIRMATION_STATUS not in entity:
         raise ArchivistUnconfirmedError(
             f"cannot confirm {identity} as confirmation_status is not present"
