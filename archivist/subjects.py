@@ -21,6 +21,8 @@
 
 """
 
+from base64 import b64decode
+from json import loads as json_loads
 from logging import getLogger
 from typing import Dict, List, Optional
 
@@ -53,6 +55,8 @@ class _SubjectsClient:
         archivist (Archivist): :class:`Archivist` instance
 
     """
+
+    maxDiff = None
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
@@ -98,10 +102,47 @@ class _SubjectsClient:
             :class:`Subject` instance
 
         """
+        LOGGER.debug("Create Subject from data %s", data)
         return Subject(
             **self._archivist.post(
                 f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}",
                 data,
+            )
+        )
+
+    def create_from_b64(self, data: Dict) -> Subject:
+        """Create subject
+
+        Creates subject with request body from b64 encoded string
+
+        Args:
+            data (dict): Dictionary with 2 fields:
+
+        A YAML representation of the data argument would be:
+
+            .. code-block:: yaml
+
+                display_name: An imported subject
+                subject_string: ey66...
+
+        Returns:
+            :class:`Subject` instance
+
+        """
+        decoded = b64decode(data["subject_string"])
+        LOGGER.debug("decoded %s", decoded)
+        outdata = {
+            k: v
+            for k, v in json_loads(decoded).items()
+            if k in ("wallet_pub_key", "tessera_pub_key")
+        }
+        outdata["display_name"] = data["display_name"]
+        LOGGER.debug("data %s", outdata)
+
+        return Subject(
+            **self._archivist.post(
+                f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}",
+                outdata,
             )
         )
 

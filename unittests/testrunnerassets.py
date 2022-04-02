@@ -360,7 +360,7 @@ class TestRunnerAssetsCreate(TestCase):
                     }
                 )
 
-            self.assertEqual("Unknown Asset" in str(ex.exception), True)
+            self.assertEqual("unknown asset" in str(ex.exception), True)
 
     def test_runner_events_create_illegal_location_label(self):
         """
@@ -386,7 +386,7 @@ class TestRunnerAssetsCreate(TestCase):
                     }
                 )
 
-            self.assertEqual("Unknown Location" in str(ex.exception), True)
+            self.assertEqual("unknown location" in str(ex.exception), True)
 
     def test_runner_events_create_location_identity(self):
         """
@@ -434,7 +434,7 @@ class TestRunnerAssetsCreate(TestCase):
                     }
                 )
 
-            self.assertEqual("Unknown Location" in str(ex.exception), True)
+            self.assertEqual("unknown location" in str(ex.exception), True)
 
     def test_runner_assets_create_invalid_action(self):
         """

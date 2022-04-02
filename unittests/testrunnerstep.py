@@ -15,6 +15,7 @@ from archivist.runner import _Step
 from archivist.logger import set_logger
 
 ASSET_ID = "assets/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+LOCATION_ID = "locations/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
 
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
     set_logger(environ["TEST_DEBUG"])
@@ -32,6 +33,10 @@ class TestRunnerStep(TestCase):
     @staticmethod
     def asset_id_method(unused_label):
         return ASSET_ID
+
+    @staticmethod
+    def location_id_method(unused_label):
+        return LOCATION_ID
 
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
@@ -115,73 +120,49 @@ class TestRunnerStep(TestCase):
         )
 
         self.assertEqual(
-            step.args(self.asset_id_method),
-            [],
-            msg="Incorrect args",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.args(self.asset_id_method),
-            [],
-            msg="Incorrect args",
-        )
-
-        self.assertEqual(
-            step.kwargs(self.asset_id_method, {}),
-            {"asset_id": ASSET_ID},
-            msg="Incorrect kwargs",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.kwargs(self.asset_id_method, {}),
-            {"asset_id": ASSET_ID},
-            msg="Incorrect kwargs",
-        )
-
-        self.assertEqual(
-            step.set_asset_label,
+            step.label("set", "asset"),
             False,
             msg="Incorrect set_asset_label",
         )
         # a second time to prove memoization is working.
         self.assertEqual(
-            step.set_asset_label,
+            step.label("set", "asset"),
             False,
             msg="Incorrect set_asset_label",
         )
 
         self.assertEqual(
-            step.use_asset_label,
-            True,
+            step.label("use", "asset"),
+            "add_kwarg_asset_identity",
             msg="Incorrect use_asset_label",
         )
         # a second time to prove memoization is working.
         self.assertEqual(
-            step.use_asset_label,
-            True,
+            step.label("use", "asset"),
+            "add_kwarg_asset_identity",
             msg="Incorrect use_asset_label",
         )
 
         self.assertEqual(
-            step.use_location_label,
+            step.label("use", "location"),
             False,
             msg="Incorrect use_location_label",
         )
         # a second time to prove memoization is working.
         self.assertEqual(
-            step.use_location_label,
+            step.label("use", "location"),
             False,
             msg="Incorrect use_location_label",
         )
 
         self.assertEqual(
-            step.set_location_label,
+            step.label("set", "location"),
             False,
             msg="Incorrect set_location_label",
         )
         # a second time to prove memoization is working.
         self.assertEqual(
-            step.set_location_label,
+            step.label("set", "location"),
             False,
             msg="Incorrect set_location_label",
         )
@@ -197,7 +178,6 @@ class TestRunnerStep(TestCase):
                 "wait_time": 10,
                 "print_response": True,
                 "description": "Testing runner events list",
-                "asset_label": "Existing Asset",
                 "location_label": "Existing Location",
             }
         )
@@ -214,6 +194,18 @@ class TestRunnerStep(TestCase):
         )
 
         self.assertEqual(
+            step.keywords,
+            ("confirm",),
+            msg="Incorrect keywords",
+        )
+        # a second time to prove memoization is working.
+        self.assertEqual(
+            step.keywords,
+            ("confirm",),
+            msg="Incorrect keywords",
+        )
+
+        self.assertEqual(
             step.delete_method,
             None,
             msg="Incorrect delete_method",
@@ -226,61 +218,37 @@ class TestRunnerStep(TestCase):
         )
 
         self.assertEqual(
-            step.args(self.asset_id_method),
-            [ASSET_ID],
-            msg="Incorrect args",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.args(self.asset_id_method),
-            [ASSET_ID],
-            msg="Incorrect args",
-        )
-
-        self.assertEqual(
-            step.kwargs(self.asset_id_method, {}),
-            {},
-            msg="Incorrect kwargs",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.kwargs(self.asset_id_method, {}),
-            {},
-            msg="Incorrect kwargs",
-        )
-
-        self.assertEqual(
-            step.set_asset_label,
+            step.label("set", "asset"),
             False,
             msg="Incorrect set_asset_label",
         )
         # a second time to prove memoization is working.
         self.assertEqual(
-            step.set_asset_label,
+            step.label("set", "asset"),
             False,
             msg="Incorrect set_asset_label",
         )
 
         self.assertEqual(
-            step.use_asset_label,
-            True,
+            step.label("use", "asset"),
+            "add_arg_identity",
             msg="Incorrect use_asset_label",
         )
         # a second time to prove memoization is working.
         self.assertEqual(
-            step.use_asset_label,
-            True,
+            step.label("use", "asset"),
+            "add_arg_identity",
             msg="Incorrect use_asset_label",
         )
 
         self.assertEqual(
-            step.use_location_label,
-            True,
+            step.label("use", "location"),
+            "add_data_location_identity",
             msg="Incorrect use_location_label",
         )
         # a second time to prove memoization is working.
         self.assertEqual(
-            step.use_location_label,
-            True,
+            step.label("use", "location"),
+            "add_data_location_identity",
             msg="Incorrect use_location_label",
         )

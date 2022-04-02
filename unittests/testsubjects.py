@@ -23,17 +23,29 @@ from .mock_response import MockResponse
 
 DISPLAY_NAME = "Subject display name"
 WALLET_PUB_KEYS = [
-    "wallet1",
-    "wallet2",
+    (
+        "04c1173bf7844bf1c607b79c18db091b9558ffe581bf132b8cf3b37657230fa321a088"
+        "0b54a79a88b28bc710ede6dcf3d8272c5210bfd41ea83188e385d12c189c"
+    )
 ]
-WALLET_ADDRESSES = [
-    "address1",
-    "address2",
-]
-TESSERA_PUB_KEYS = [
-    "tessera1",
-    "tessera2",
-]
+WALLET_ADDRESSES = ["0xAab979509B595084F5C113c5622Ca9A7844C58B5"]
+
+TESSERA_PUB_KEYS = ["efdg9J0QhSB2g4IxKcaXgJmNKbzpxs03FFYIiYYuekk="]
+
+SUBJECT_STRING = (
+    "eyJpZGVudGl0eSI6ICJzdWJqZWN0cy8wMDAwMDAwMC0wMDAwLTAwMDAtMDA"
+    "wMC0wMDAwMDAwMDAwMDAiLCAiZGlzcGxheV9uYW1lIjogIlNlbGYiLCAid2"
+    "FsbGV0X3B1Yl9rZXkiOiBbIjA0YzExNzNiZjc4NDRiZjFjNjA3Yjc5YzE4Z"
+    "GIwOTFiOTU1OGZmZTU4MWJmMTMyYjhjZjNiMzc2NTcyMzBmYTMyMWEwODgw"
+    "YjU0YTc5YTg4YjI4YmM3MTBlZGU2ZGNmM2Q4MjcyYzUyMTBiZmQ0MWVhODM"
+    "xODhlMzg1ZDEyYzE4OWMiXSwgIndhbGxldF9hZGRyZXNzIjogWyIweDk5Rm"
+    "E0QUFCMEFGMkI1M2YxNTgwODNEOGYyNDRiYjQ1MjMzODgxOTciXSwgInRlc"
+    "3NlcmFfcHViX2tleSI6IFsiZWZkZzlKMFFoU0IyZzRJeEtjYVhnSm1OS2J6"
+    "cHhzMDNGRllJaVlZdWVraz0iXSwgInRlbmFudCI6ICIiLCAiY29uZmlybWF"
+    "0aW9uX3N0YXR1cyI6ICJDT05GSVJNQVRJT05fU1RBVFVTX1VOU1BFQ0lGSU"
+    "VEIn0="
+)
+
 IDENTITY = f"{SUBJECTS_LABEL}/xxxxxxxx"
 SUBPATH = f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}"
 
@@ -89,6 +101,42 @@ class TestSubjects(TestCase):
 
             subject = self.arch.subjects.create(
                 DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                subject,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_subjects_create_from_b64(self):
+        """
+        Test subject creation
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+
+            subject = self.arch.subjects.create_from_b64(
+                {
+                    "display_name": DISPLAY_NAME,
+                    "subject_string": SUBJECT_STRING,
+                }
             )
             args, kwargs = mock_post.call_args
             self.assertEqual(

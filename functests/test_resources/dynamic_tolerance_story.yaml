@@ -2,8 +2,7 @@
 # Demonstration of applying a Dynamic Tolerance compliance policy to an asset that undergoes
 # events that may or may not make the asset compliant or non-compliant.
 #
-# The step field is a string that represents the method bound to an endpoint and
-# the args and kwargs correspond to the arguments to such a method.
+# The step field is a string that represents the method bound to an endpoint.
 #
 # NB the assets and events endpoints require all values to be strings. Other values may
 # be of the correct type such as confirm which is a boolean.
