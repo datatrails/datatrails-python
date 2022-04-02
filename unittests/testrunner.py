@@ -83,16 +83,3 @@ class TestRunner(TestCase):
             runner.identity(ASSET_NAME + "garbage"),
             msg="Incorrect ID",
         )
-
-    def test_runner_set_entities(self):
-        """
-        Test runner set_entities
-        """
-        runner = self.arch.runner
-        runner.entities = tree()
-        runner.set_entities(ASSET_NAME, Asset(**ASSETS_RESPONSE))
-        self.assertEqual(
-            runner.identity(ASSET_NAME),
-            ASSET_ID,
-            msg="Incorrect ID",
-        )

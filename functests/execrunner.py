@@ -207,3 +207,23 @@ class TestRunner(TestCase):
                 1,
                 msg="Incorrect number of entities",
             )
+
+    def test_runner_subjects(self):
+        """
+        Test runner with subjects story
+
+        run_steps is used so that exceptions are shown
+        """
+
+        LOGGER.info("...")
+        with open(
+            "functests/test_resources/subjects_story.yaml",
+            "r",
+            encoding="utf-8",
+        ) as y:
+            self.arch.runner.run_steps(parse_config(data=y))
+            self.assertGreater(
+                len(self.arch.runner.entities),
+                0,
+                msg="Incorrect number of entities",
+            )

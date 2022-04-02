@@ -57,6 +57,13 @@ See :ref:`executing_demo_ref` and :ref:`executing_template_demo_ref`
    events_list
    locations_count
    locations_create
+   subjects_count.rst
+   subjects_create.rst
+   subjects_create_b64.rst
+   subjects_list.rst
+   subjects_read.rst
+   subjects_update.rst
+   subjects_wait_for_confirmation.rst
    
    compliance_policies_demo
    compliance_policies_demo_dynamic_tolerance

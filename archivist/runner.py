@@ -4,10 +4,11 @@ Base runner class for interpreting yaml story files.
 """
 
 from collections import defaultdict
+from functools import partialmethod
 from json import dumps as json_dumps
 from logging import getLogger
-from types import GeneratorType
 from time import sleep as time_sleep
+from types import GeneratorType
 from typing import Dict, Optional, Tuple
 from uuid import UUID
 
@@ -21,6 +22,9 @@ from .errors import ArchivistError, ArchivistInvalidOperationError
 LOGGER = getLogger(__name__)
 
 
+NOUNS = ("asset", "location", "subject")
+
+
 def tree():
     """Recursive dict of dicts"""
     return defaultdict(tree)
@@ -31,6 +35,18 @@ class _ActionMap(dict):
     Map of actions and keywords for an action
     """
 
+    # 'use_asset_label' gets the asset_idenity and can insert it in 3 places:
+    #
+    # 1. first positional argument
+    # 2. keyword arguments with key
+    # 3. keyword argument in first argument which is a dictionary.
+    #
+    #  use_asset_label = 1   = first positional argument
+    #  use_asset_label = "asset_id"   = keyword argument
+    #  use_asset_label = "-asset_id"   = keyword argument in first argumemt that is
+    #                                    a dictionary
+    # similarly for location and subjects labels
+    #
     def __init__(self, archivist: "type_helper.Archivist"):
         super().__init__()
 
@@ -38,7 +54,7 @@ class _ActionMap(dict):
         self["ASSETS_ATTACHMENT_INFO"] = {
             "action": archivist.attachments.info,
             "keywords": ("asset_or_event_id",),
-            "use_asset_label": True,
+            "use_asset_label": "add_kwarg_asset_event_identity",
         }
         self["ASSETS_COUNT"] = {
             "action": archivist.assets.count,
@@ -51,7 +67,7 @@ class _ActionMap(dict):
             "action": archivist.assets.create_if_not_exists,
             "keywords": ("confirm",),
             "set_asset_label": True,
-            "use_location_label": True,
+            "use_location_label": "add_data_location_identity",
         }
         self["ASSETS_CREATE"] = {
             "action": archivist.assets.create_from_data,
@@ -82,13 +98,13 @@ class _ActionMap(dict):
         self["COMPLIANCE_COMPLIANT_AT"] = {
             "action": archivist.compliance.compliant_at,
             "keywords": ("report",),
-            "use_asset_label": True,
+            "use_asset_label": "add_arg_identity",
         }
         self["EVENTS_CREATE"] = {
             "action": archivist.events.create_from_data,
             "keywords": ("confirm",),
-            "use_asset_label": True,
-            "use_location_label": True,
+            "use_asset_label": "add_arg_identity",
+            "use_location_label": "add_data_location_identity",
         }
         self["EVENTS_COUNT"] = {
             "action": archivist.events.count,
@@ -98,7 +114,7 @@ class _ActionMap(dict):
                 "attrs",
                 "asset_attrs",
             ),
-            "use_asset_label": True,
+            "use_asset_label": "add_kwarg_asset_identity",
         }
         self["EVENTS_LIST"] = {
             "action": archivist.events.list,
@@ -108,7 +124,7 @@ class _ActionMap(dict):
                 "attrs",
                 "asset_attrs",
             ),
-            "use_asset_label": True,
+            "use_asset_label": "add_kwarg_asset_identity",
         }
         self["LOCATIONS_COUNT"] = {
             "action": archivist.locations.count,
@@ -121,6 +137,46 @@ class _ActionMap(dict):
             "action": archivist.locations.create_if_not_exists,
             "keywords": ("confirm",),
             "set_location_label": True,
+        }
+        self["LOCATIONS_READ"] = {
+            "action": archivist.locations.read,
+            "use_location_label": "add_arg_identity",
+        }
+        self["SUBJECTS_COUNT"] = {
+            "action": archivist.subjects.count,
+            "keywords": ("display_name",),
+        }
+        self["SUBJECTS_CREATE"] = {
+            "action": archivist.subjects.create,
+            "delete": archivist.subjects.delete,
+            "keywords": ("display_name", "wallet_pub_keys", "tessera_pub_keys"),
+            "set_subject_label": True,
+        }
+        self["SUBJECTS_CREATE_FROM_B64"] = {
+            "action": archivist.subjects.create_from_b64,
+            "delete": archivist.subjects.delete,
+            "set_subject_label": True,
+        }
+        self["SUBJECTS_LIST"] = {
+            "action": archivist.subjects.list,
+            "keywords": ("display_name",),
+        }
+        self["SUBJECTS_READ"] = {
+            "action": archivist.subjects.read,
+            "use_subject_label": "add_arg_identity",
+        }
+        self["SUBJECTS_UPDATE"] = {
+            "action": archivist.subjects.update,
+            "keywords": (
+                "display_name",
+                "wallet_pub_keys",
+                "tessera_pub_keys",
+            ),
+            "use_subject_label": "add_arg_identity",
+        }
+        self["SUBJECTS_WAIT_FOR_CONFIRMATION"] = {
+            "action": archivist.subjects.wait_for_confirmation,
+            "use_subject_label": "add_arg_identity",
         }
 
     def ops(self, action_name: str) -> Dict:
@@ -151,29 +207,11 @@ class _ActionMap(dict):
         """
         return self.ops(action_name).get("delete")
 
-    def use_asset_label(self, action_name: str) -> bool:
+    def label(self, noun: str, endpoint: str, action_name: str) -> bool:
         """
-        Return whether this action uses asset_label
+        Return whether this action uses or sets label
         """
-        return self.ops(action_name).get("use_asset_label", False)
-
-    def set_asset_label(self, action_name: str) -> bool:
-        """
-        Return whether this action sets asset_label
-        """
-        return self.ops(action_name).get("set_asset_label", False)
-
-    def use_location_label(self, action_name: str):
-        """
-        Get use_location_label in map
-        """
-        return self.ops(action_name).get("use_location_label", False)
-
-    def set_location_label(self, action_name: str):
-        """
-        Get set_location_label in map
-        """
-        return self.ops(action_name).get("set_location_label", False)
+        return self.ops(action_name).get(f"{noun}_{endpoint}_label", False)
 
 
 class _Step(dict):  # pylint:disable=too-many-instance-attributes
@@ -185,81 +223,65 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         self._actions = None
         self._action = None
         self._action_name = None
+        self._data = None
         self._keywords = None
         self._delete_method = None
-        self._use_asset_label = None
-        self._set_asset_label = None
-        self._use_location_label = None
-        self._set_location_label = None
+        self._labels = {}
+        self._labels["use"] = {}
+        self._labels["set"] = {}
 
-    def args(self, identity_method):
+    def add_arg_identity(self, identity):
+        self._args.append(identity)
+
+    def add_kwarg_identity(self, key, identity):
+        self._kwargs[key] = identity
+
+    add_kwarg_asset_identity = partialmethod(add_kwarg_identity, "asset_id")
+    add_kwarg_asset_event_identity = partialmethod(
+        add_kwarg_identity, "asset_or_event_id"
+    )
+
+    def add_data_identity(self, key, identity):
+        self._data[key] = {}
+        self._data[key]["identity"] = identity
+
+    add_data_location_identity = partialmethod(add_data_identity, "location")
+
+    def args(self, identity_method, step):
         """
-        Positional arguments to action.
+        Add args and kwargs to action.
         """
-        if self._args is None:
-            args = []
+        self._args = []
+        self._kwargs = {}
 
-            # get asset identity and prepend to the list of positional
-            # arguments.  This will be simplified when dataclasses are
-            # introduced.
-            LOGGER.debug("self.asset_label %s", self.asset_label)
-            LOGGER.debug("self.use_asset_label %s", self.use_asset_label)
-            if self.use_asset_label and self.asset_label is not None:
-                identity = self.asset_identity(identity_method)
+        # keys are values that must be removed from the body of the request.
+        # These are typically 'confirm' or 'report'. Some of the actions
+        # have longer lists of keywords - these actions will be simplified
+        # when dataclasses are introduced and this code will be much simpler.
+        keys = []
+        keywords = self.keywords
+        if keywords is not None and len(keywords) > 0:
+            keys.extend(keywords)
+            for k in keywords:
+                if k in step:
+                    self._kwargs[k] = step[k]
+
+        # add the request body to the positional arguments...
+        self._data = {k: v for k, v in step.items() if k not in keys}
+
+        for noun in NOUNS:
+            label = self.get(f"{noun}_label")
+            func = self.label("use", noun)
+            if label is not None and func:
+
+                identity = self.identity_from_label(noun, identity_method)
                 if identity is None:
-                    raise ArchivistInvalidOperationError(
-                        f"Unknown Asset '{self.asset_label}'"
-                    )
+                    raise ArchivistInvalidOperationError(f"unknown {noun} '{label}'")
 
-                # prepend if not specified in the keywords for the action.
-                keywords = self.keywords
-                if keywords is not None and "asset_id" not in keywords:
-                    args.append(identity)
+                getattr(self, func)(identity)
 
-            self._args = args
-
-        return self._args
-
-    def kwargs(self, identity_method, step):
-        if self._kwargs is None:
-            kwargs = {}
-
-            # keys are values that must be removed from the body of the request.
-            # These are typically 'confirm' or 'report'. Some of the actions
-            # have longer lists of keywords - these actions will be simplified
-            # when dataclasses are introduced and this code will be much simpler.
-            keys = []
-            keywords = self.keywords
-            if keywords is not None and len(keywords) > 0:
-                keys.extend(keywords)
-                if "asset_id" in keywords and self.asset_label is not None:
-                    kwargs["asset_id"] = self.asset_identity(identity_method)
-
-                for k in keywords:
-                    if k in step:
-                        kwargs[k] = step[k]
-
-            self._kwargs = kwargs
-            LOGGER.debug("keys %s", keys)
-
-            # add the request body to the positional arguments...
-            data = {k: v for k, v in step.items() if k not in keys}
-
-            # If location_label is specified add to the data - should only
-            # happen for ASSETS_CREATE_IF_NOT_EXISTS and EVENTS_CREATE...
-            if self.use_location_label and self.location_label is not None:
-                identity = self.location_identity(identity_method)
-                if identity is None:
-                    raise ArchivistInvalidOperationError(
-                        f"Unknown Location '{self.location_label}'"
-                    )
-                data["location"] = {}
-                data["location"]["identity"] = identity
-
-            if data:
-                self._args.append(data)
-
-        return self._kwargs
+        if self._data:
+            self._args.append(self._data)
 
     def execute(self):
         action = self.action
@@ -277,34 +299,24 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
 
         return response
 
-    @property
-    def asset_label(self):
-        return self.get("asset_label")
+    def label(self, verb: str, noun: str):
+        if self._labels[verb].get(noun) is None:
+            self._labels[verb][noun] = self.actions.label(verb, noun, self.action_name)
 
-    @staticmethod
-    def __identity_from_label(prefix, label, identity_method):
-        if not label.startswith(prefix):
+        return self._labels[verb][noun]
+
+    def identity_from_label(self, noun, identity_method):
+        label = self.get(f"{noun}_label")
+        if not label.startswith(f"{noun}s/"):
             return identity_method(label)
 
         uid = label.split("/")[1]
         try:
             _ = UUID(uid, version=4)
         except ValueError:
-            return identity_method(label)
+            return None
 
         return label
-
-    def asset_identity(self, identity_method):
-        return self.__identity_from_label("assets/", self.asset_label, identity_method)
-
-    @property
-    def location_label(self):
-        return self.get("location_label")
-
-    def location_identity(self, identity_method):
-        return self.__identity_from_label(
-            "locations/", self.location_label, identity_method
-        )
 
     def description(self):
         description = self.get("description")
@@ -353,39 +365,11 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         return self._delete_method
 
     @property
-    def use_asset_label(self):
-        if self._use_asset_label is None:
-            self._use_asset_label = self.actions.use_asset_label(self.action_name)
-
-        return self._use_asset_label
-
-    @property
-    def set_asset_label(self):
-        if self._set_asset_label is None:
-            self._set_asset_label = self.actions.set_asset_label(self.action_name)
-
-        return self._set_asset_label
-
-    @property
     def keywords(self):
         if self._keywords is None:
             self._keywords = self.actions.keywords(self.action_name)
 
         return self._keywords
-
-    @property
-    def use_location_label(self):
-        if self._use_location_label is None:
-            self._use_location_label = self.actions.use_location_label(self.action_name)
-
-        return self._use_location_label
-
-    @property
-    def set_location_label(self):
-        if self._set_location_label is None:
-            self._set_location_label = self.actions.set_location_label(self.action_name)
-
-        return self._set_location_label
 
     @property
     def action_name(self):
@@ -408,7 +392,6 @@ class _Runner:
         self._archivist = archivist
         self.entities = None
         self.deletions = {}
-        self._step = None
 
     def __str__(self) -> str:
         return f"Runner({self._archivist.url})"
@@ -471,8 +454,7 @@ class _Runner:
         s.description()
 
         # this is a bit clunky...
-        s.args(self.identity)
-        s.kwargs(self.identity, step)
+        s.args(self.identity, step)
 
         # wait for a number of seconds and then execute
         s.wait_time()
@@ -483,17 +465,10 @@ class _Runner:
         if s.delete:
             self.set_deletions(response, s.delete_method)
 
-        if s.set_asset_label:
-            self.set_entities(s.asset_label, response)
-
-        if s.set_location_label:
-            self.set_entities(s.location_label, response)
-
-    def set_entities(self, asset_label: str, response: Dict):
-        """sets entties entry"""
-
-        if asset_label:
-            self.entities[asset_label] = response
+        for noun in NOUNS:
+            label = s.get(f"{noun}_label")
+            if s.label("set", noun) and label is not None:
+                self.entities[label] = response
 
     def set_deletions(self, response: Dict, delete_method):
         """sets entry to be deleted"""
