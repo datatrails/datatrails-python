@@ -31,7 +31,7 @@ Execute:
 
    $ archivist_runner \
          -u https://app.rkvst.io \
-         -t credentials/token \
+         --auth-token-filename credentials/token \
          functests/test_resources/richness_story.yaml
 
 For more flexibility the functionality can be extended.

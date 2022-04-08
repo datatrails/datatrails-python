@@ -72,8 +72,10 @@ class TestAssetCreate(TestCase):
 
     def setUp(self):
         auth = get_auth(
+            auth_token=getenv("TEST_AUTHTOKEN"),
             auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
             client_id=getenv("TEST_CLIENT_ID"),
+            client_secret=getenv("TEST_CLIENT_SECRET"),
             client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
         )
         self.arch = Archivist(
@@ -231,8 +233,10 @@ class TestAssetCreateIfNotExists(TestCase):
 
     def setUp(self):
         auth = get_auth(
+            auth_token=getenv("TEST_AUTHTOKEN"),
             auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
             client_id=getenv("TEST_CLIENT_ID"),
+            client_secret=getenv("TEST_CLIENT_SECRET"),
             client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
         )
         self.arch = Archivist(

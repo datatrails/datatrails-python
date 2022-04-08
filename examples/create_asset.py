@@ -82,8 +82,10 @@ def main():
     # directory that has 0700 permissions. The location of this file is set in
     # the client_secret_file environment variable.
     auth = get_auth(
+        auth_token=getenv("ARCHIVIST_AUTHTOKEN"),
         auth_token_filename=getenv("ARCHIVIST_AUTHTOKEN_FILENAME"),
         client_id=getenv("ARCHIVIST_CLIENT_ID"),
+        client_secret=getenv("ARCHIVIST_CLIENT_SECRET"),
         client_secret_filename=getenv("ARCHIVIST_CLIENT_SECRET_FILENAME"),
     )
 

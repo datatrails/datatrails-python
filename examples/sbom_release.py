@@ -92,8 +92,10 @@ def main():
     rkvst_url = getenv("RKVST_URL")
 
     auth = get_auth(
+        auth_token=getenv("AUTHTOKEN"),
         auth_token_filename=getenv("AUTHTOKEN_FILENAME"),
         client_id=getenv("CLIENT_ID"),
+        client_secret=getenv("CLIENT_SECRET"),
         client_secret_filename=getenv("CLIENT_SECRET_FILENAME"),
     )
 
