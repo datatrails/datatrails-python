@@ -15,9 +15,11 @@ docker run \
     -e UNITTEST \
     -e ARCHIVIST_NAMESPACE \
     -e TEST_ARCHIVIST \
+    -e TEST_AUTHTOKEN \
     -e TEST_AUTHTOKEN_FILENAME \
     -e TEST_AUTHTOKEN_FILENAME_2 \
     -e TEST_CLIENT_ID \
+    -e TEST_CLIENT_SECRET \
     -e TEST_CLIENT_SECRET_FILENAME \
     -e TEST_DEBUG \
     jitsuin-archivist-python-builder \

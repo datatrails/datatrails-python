@@ -86,10 +86,17 @@ def common_parser(description: str):
         help="mechanism for proving the evidence for events on the Asset",
     )
     parser.add_argument(
-        "-t",
         "--auth-token",
         type=str,
-        dest="auth_token_file",
+        dest="auth_token",
+        action="store",
+        default=None,
+        help="API token value",
+    )
+    parser.add_argument(
+        "--auth-token-filename",
+        type=str,
+        dest="auth_token_filename",
         action="store",
         default=None,
         help="FILE containing API authentication token",
@@ -105,7 +112,15 @@ def common_parser(description: str):
     parser.add_argument(
         "--client-secret",
         type=str,
-        dest="client_secret_file",
+        dest="client_secret",
+        action="store",
+        default=None,
+        help="Client secret from appregistrations",
+    )
+    parser.add_argument(
+        "--client-secret-filename",
+        type=str,
+        dest="client_secret_filename",
         action="store",
         default=None,
         help="FILE containing client secret from appregistrations",
@@ -158,9 +173,11 @@ def endpoint(args):
         )
 
     auth = get_auth(
-        auth_token_filename=args.auth_token_file,
+        auth_token=args.auth_token,
+        auth_token_filename=args.auth_token_filename,
         client_id=args.client_id,
-        client_secret_filename=args.client_secret_file,
+        client_secret=args.client_secret,
+        client_secret_filename=args.client_secret_filename,
     )
 
     if auth is None:

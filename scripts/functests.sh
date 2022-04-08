@@ -9,25 +9,31 @@ then
 fi
 if [ -n "${TEST_CLIENT_ID}" ]
 then
-    if [ -z "${TEST_CLIENT_SECRET_FILENAME}" ]
+    if [ -n "${TEST_CLIENT_SECRET_FILENAME}" ]
     then
-        echo "TEST_CLIENT_SECRET_FILENAME is undefined"
-        exit 1
-    fi
-    if [ ! -s "${TEST_CLIENT_SECRET_FILENAME}" ]
+        if [ ! -s "${TEST_CLIENT_SECRET_FILENAME}" ]
+        then
+            echo "${TEST_CLIENT_SECRET_FILENAME} does not exist"
+            exit 1
+        fi
+    elif [ -z "${TEST_CLIENT_SECRET}" ]
     then
-        echo "${TEST_CLIENT_SECRET_FILENAME} does not exist"
+        echo "Both TEST_CLIENT_SECRET_FILENAME"
+        echo "and TEST_CLIENT_SECRET are undefined"
         exit 1
     fi
 else
-    if [ -z "${TEST_AUTHTOKEN_FILENAME}" ]
+    if [ -n "${TEST_AUTHTOKEN_FILENAME}" ]
     then
-        echo "TEST_AUTHTOKEN_FILENAME is undefined"
-        exit 1
-    fi
-    if [ ! -s "${TEST_AUTHTOKEN_FILENAME}" ]
+        if [ ! -s "${TEST_AUTHTOKEN_FILENAME}" ]
+        then
+            echo "${TEST_AUTHTOKEN_FILENAME} does not exist"
+            exit 1
+        fi
+    elif [ -z "${TEST_AUTHTOKEN}" ]
     then
-        echo "${TEST_AUTHTOKEN_FILENAME} does not exist"
+        echo "Both TEST_AUTHTOKEN_FILENAME"
+        echo "and TEST_AUTHTOKEN are undefined"
         exit 1
     fi
 fi

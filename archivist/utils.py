@@ -53,22 +53,34 @@ def get_url(url: str, fd: BytesIO):  # pragma no cover
 
 
 def get_auth(
-    *, auth_token_filename=None, client_id=None, client_secret_filename=None
+    *,
+    auth_token_filename=None,
+    auth_token=None,
+    client_id=None,
+    client_secret_filename=None,
+    client_secret=None,
 ):  # pragma no cover
     """
     Return auth as either stuntidp token or client_id,client_secret tuple
     """
+
+    if auth_token:
+        return auth_token
+
     if auth_token_filename:
         with open(auth_token_filename, mode="r", encoding="utf-8") as tokenfile:
-            authtoken = tokenfile.read().strip()
+            auth_token = tokenfile.read().strip()
 
-        return authtoken
+        return auth_token
 
-    if client_id is not None and client_secret_filename is not None:
-        with open(client_secret_filename, mode="r", encoding="utf-8") as tokenfile:
-            authtoken = tokenfile.read().strip()
+    if client_id is not None:
+        if client_secret_filename is not None:
+            with open(client_secret_filename, mode="r", encoding="utf-8") as tokenfile:
+                client_secret = tokenfile.read().strip()
+            return (client_id, client_secret)
 
-        return (client_id, authtoken)
+        if client_secret is not None:
+            return (client_id, client_secret)
 
     return None
 
