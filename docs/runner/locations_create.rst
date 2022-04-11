@@ -3,7 +3,7 @@
 Locations Create Story Runner YAML
 ...........................................
 
-Creates a location and stores a reference in runner variable 'location_label'.
+Creates a location and stores a reference in runner variable :code:`location_label`.
 
 .. code-block:: yaml
     

@@ -1,12 +1,12 @@
 
 .. _readme:
 
-Jitsuin Archivist Client
+RKVST Python Client
 =========================
 
-The standard Jitsuin Archivist python client.
+The standard RKVST Python Client.
 
-Please note that the canonical API for Jitsuin Archivist is always the REST API
+Please note that the canonical API for RKVST is always the REST API
 documented at https://docs.rkvst.com
 
 Installation
@@ -28,11 +28,11 @@ If your version of python3 is too old an error of this type or similar will be e
 Example
 =============
 
-One can then use the examples code to create assets (see examples directory):
+You can then use the examples code to create assets (see examples directory):
 
 .. code:: python
 
-    """Create an asset given url to Archivist and user Token.
+    """Create an asset in RKVST with User Token.
 
     The module contains two functions: main and create_asset. Main function parses in
     a url to the Archivist and credentials, which is a user authorization.
@@ -140,7 +140,7 @@ One can then use the examples code to create assets (see examples directory):
 File Story Runner
 =================
 
-One can run scenarios - a sequence of steps - from a python dictionary or from a yaml
+You can run scenarios - a sequence of steps - from a python dictionary or from a yaml
 or json file.
 
 Python
@@ -153,9 +153,9 @@ Python
     from sys import exit as sys_exit
     from sys import stdout as sys_stdout
 
-    from ... import archivist as type_helper
-    from ... import about
-    from ...parser import common_parser, endpoint
+    from archivist import archivist as type_helper
+    from archivist import about
+    from archivist.parser import common_parser, endpoint
 
     LOGGER = getLogger(__name__)
 
@@ -188,27 +188,32 @@ Python
 Command Line
 ------------
 
-This functionality is also available from the command line:
+This functionality is also available with the CLI tool :code:`archivist_runner`, which is bundled with version v0.10 onwards of the :code:`jitsuin-archivist` PIP installation.
 
-.. code:: shell
+You can verify the installation by running the following:
 
-   $ archivist_runner -h
+.. code-block:: shell
 
-to elucidate options.
+   archivist_runner -h
 
-To invoke this command:
+Which will show you the available options when using :code:`archivist_runner`.
 
-    - obtain bearer token and put in file 'credentials/token'
-    - choose which yaml file to use
-    - get the URL of your Archivist instance
+To use the :code:`archivist_runner` command you will need the following:
 
-Execute:
+    - A Client ID and Client Secret by creating an `App Registration`_
+    - The YAML file with the operations you wish to run
+    - The URL of your RKVST instance, this is typically `https://app.rkvst.io`
 
-.. code:: shell
+.. _App Registration: https://docs.rkvst.com/docs/setup-and-administration/getting-access-tokens-using-app-registrations/
 
-   $ archivist_runner \
+Example usage:
+
+.. code-block:: shell
+
+   archivist_runner \
          -u https://app.rkvst.io \
-         -t credentials/token \
+         --client-id <your-client-id> \
+         --client-secret <your-client-secret> \
          functests/test_resources/richness_story.yaml
 
 
@@ -320,3 +325,7 @@ A recommended minimum configuration would be:
         },
     })
 
+Development
+===========
+
+For instructions on contributing to the RKVST SDK see DEVELOPMENT.md.
