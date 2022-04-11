@@ -5,7 +5,7 @@ Locations Count Story Runner YAML
 
 Count all locations that match criteria..
 
-The 'print_response' setting should be specified as True in order to see the results.
+Setting :code:`print_response: true` is necessary to print the full result.
 
 .. code-block:: yaml
     

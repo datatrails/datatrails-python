@@ -6,36 +6,46 @@ Story Runner
 A runner attribute of the archivist instance allows running scenarios from
 a dictionary. Usually the dictionary is read from a yaml or json file.
 
-.. literalinclude:: ../../archivist/cmds/runner/run.py
+.. literalinclude:: ../../examples/runner.py
    :language: python
 
 
-This functionality is also available as a CLI 'archivist_runner'. After 
-installation of the python wheel execute
+This functionality is also available with the CLI tool :code:`archivist_runner`, which is bundled with version v0.10 onwards of the :code:`jitsuin-archivist` PIP installation.
+
+See the `installation instructions`_ for more information.
+
+.. _installation instructions: https://python.rkvst.com/index.html#installation
+
+You can verify the installation by running the following:
 
 .. code-block:: shell
 
-   $ archivist_runner -h
+   archivist_runner -h
 
-to elucidate options.
+Which will show you the available options when using :code:`archivist_runner`.
 
-To invoke this command:
+To use the :code:`archivist_runner` command you will need the following:
 
-    - obtain bearer token and put in file 'credentials/token'
-    - choose which yaml file to use
-    - get the URL of your Archivist instance
+    - A Client ID and Client Secret by creating an `App Registration`_
+    - The YAML file with the operations you wish to run
+    - The URL of your RKVST instance, this is typically `https://app.rkvst.io`
 
-Execute:
+.. _App Registration: https://docs.rkvst.com/docs/setup-and-administration/getting-access-tokens-using-app-registrations/
+
+Example usage:
 
 .. code-block:: shell
 
-   $ archivist_runner \
+   archivist_runner \
          -u https://app.rkvst.io \
-         -t credentials/token \
+         --client-id <your-client-id> \
+         --client-secret <your-client-secret> \
          functests/test_resources/richness_story.yaml
 
-For more flexibility the functionality can be extended.
-See :ref:`executing_demo_ref` and :ref:`executing_template_demo_ref`
+For further reading:
+
+   - :ref:`executing_demo_ref` for an example of how to build your YAML file
+   - :ref:`executing_template_demo_ref` for extending functionality with templating.
 
 .. toctree::
    :maxdepth: 2

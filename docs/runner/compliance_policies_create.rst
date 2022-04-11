@@ -4,9 +4,9 @@ Compliance Policy Create Story Runner YAML
 ...........................................
 
 The specific fields required vary according to 
-'compliance_type' and is documented elsewhere.
+:code:`compliance_type` and is documented elsewhere.
 
-This example is for a DYNAMIC_TOLERANCE type policy.
+This example is for a :code:`DYNAMIC_TOLERANCE` type policy.
 
 .. code-block:: yaml
     
@@ -27,7 +27,7 @@ This example is for a DYNAMIC_TOLERANCE type policy.
         dynamic_variability: 1.5
 
 
-This example is for a RICHNESS type policy.
+This example is for a :code:`RICHNESS` type policy.
 
 .. code-block:: yaml
     

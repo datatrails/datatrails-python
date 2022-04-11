@@ -18,9 +18,9 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 from archivist import about
-project = 'Jitsuin Archivist'
-copyright = '2021, support@jitsuin.com'
-author = 'support@jitsuin.com'
+project = 'RKVST'
+copyright = '2022, support@rkvst.com'
+author = 'support@rkvst.com'
 
 version = about.__version__
 release = about.__version__
@@ -55,8 +55,14 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'scripts', 'unittests', 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
+
 html_theme = 'sphinx_rtd_theme'
-html_logo = '_static/RKVST_Logo_RGB.jpg'
+html_theme_options = {
+    'analytics_id': 'G-7K46H3KK7N',  #  Provided by Google in your dashboard
+    'logo_only': True,
+}
+html_logo = '_static/RKVST_WhtLogo_RGB.png'
+html_favicon = "_static/favicon.ico"
 html_show_sourcelink = False
 html_show_sphinx = False
 
@@ -65,3 +71,10 @@ html_show_sphinx = False
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+
+html_css_files = [ 
+    'css/rkvst_theme.css', 
+]

@@ -3,11 +3,11 @@
 Events Count Story Runner YAML
 ...........................................
 
-'asset_label' must match the 'asset_label' field of a previous creation step
-(ASSETS_CREATE or ASSETS_CREATE_IF_NOT_EXISTS) 
-for which the authorised Application Registration has Event write access
+:code:`asset_label` must match the :code:`asset_label` field of a previous creation step
+(:code:`ASSETS_CREATE` or :code:`ASSETS_CREATE_IF_NOT_EXISTS`) 
+for which the authorised credentials have Event write access.
 
-'props', 'attrs' and 'asset_attrs' are optional.
+:code:`props`, :code:`attrs` and :code:`asset_attrs` are optional.
 
 This example counts all 'open door' events for the Courts of Justice Front Door.
 

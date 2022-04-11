@@ -3,16 +3,16 @@
 Events Create Story Runner YAML
 ...........................................
 
-'asset_label' must match the asset_label setting when the asset was created in a previous
-creation step (action is either 'ASSETS_CREATE' or 'ASSETS_CREATE_IF_NOT_EXISTS').
+:code:`asset_label` must match the :code:`asset_label` setting when the asset was created in a previous
+creation step (action is either :code:`ASSETS_CREATE` or :code:`ASSETS_CREATE_IF_NOT_EXISTS`).
 
-The optional 'attachments' setting uploads the attachments to archivist and the response
+The optional :code:`attachments` setting uploads the attachments to archivist and the response
 added to the event before posting.
 
-The optional 'location' setting creates the location if it does not exist and adds it to
+The optional :code:`location` setting creates the location if it does not exist and adds it to
 the event.
 
-The optional 'sbom' setting uploads the sbom to archivist and the response added to the
+The optional :code:`sbom` setting uploads the sbom to archivist and the response added to the
 event before posting. (see second example below)
 
 An example when opening a door in Paris:

@@ -7,7 +7,7 @@ A more sophisticated usage using templated yaml files:
 
 .. code-block:: shell
 
-   $ archivist_template \
+    archivist_template \
          -u https://app.rkvst.io \
          -t credentials/token \
          --namespace 1234567 \
