@@ -1,0 +1,31 @@
+@import url("http://fonts.googleapis.com/css?family=Montserrat");
+@import url("http://fonts.googleapis.com/css?family=Open+Sans");
+@import url("http://fonts.googleapis.com/css?family=Roboto+Mono");
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend {
+    font-family: 'Montserrat';
+    font-weight: 700;
+} 
+
+body {
+    font-family: 'Open Sans';
+}
+
+pre {
+    font-family: 'Roboto Mono';
+}
+
+.wy-side-nav-search {
+    background-color: #404040;
+    font-family: 'Montserrat';
+}
+
+.wy-menu {
+    font-family: 'Open Sans';
+}

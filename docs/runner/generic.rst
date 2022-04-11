@@ -3,7 +3,7 @@
 Generic Story Runner YAML
 ...........................................
 
-Each step has some control values in the 'step' dictionary. Some of these values are
+Each step has some control values in the :code:`step` dictionary. Some of these values are
 required, optional or required for a particular operation.
 
 Each step follows the same pattern:

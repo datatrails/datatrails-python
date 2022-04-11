@@ -3,20 +3,23 @@
 Assets Create If not exists Story Runner YAML
 ..............................................
 
-Searches for an asset matching the given selector. Returns that asset if found,
-else create a new one with the given attributes
+Searches for an asset matching the given selector and returns that asset if found,
+otherwise it will create a new one with the given attributes.
 
-'asset_label' is not required but if unspecified the created asset will
+:code:`asset_label` is not required but if unspecified the created asset will
 not be accessible to later actions in the story.
 
-The 'selector' setting for both the asset and its associated location are required.
+The :code:`selector` setting for both the asset and its associated location are required.
 
-The 'location', 'attachments' and 'confirm' entries are optional.
+The :code:`location`, :code:`attachments` and :code:`confirm` entries are optional.
 
-The 'arc_namespace' (for the asset) and the 'namespace' (for the location) are used
+The :code:`arc_namespace` (for the asset) and the :code:`namespace` (for the location) are used
 to distinguish between assets and locations created between runs of the story.
+
 Usually these field values are derived from an environment variable 
-'ARCHIVIST_NAMESPACE' (default value is 'namespace').
+:code:`ARCHIVIST_NAMESPACE` (default value is :code:`namespace`).
+
+:code:`confirm: true` means that the step will wait for the asset to be completely created before moving on to the next step.
 
 .. code-block:: yaml
     
