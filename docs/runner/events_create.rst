@@ -15,6 +15,8 @@ the event.
 The optional :code:`sbom` setting uploads the sbom to archivist and the response added to the
 event before posting. (see second example below)
 
+:code:`confirm: true` means that the step will wait for the event to be completely created before moving on to the next step.
+
 An example when opening a door in Paris:
 
 .. code-block:: yaml
