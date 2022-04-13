@@ -3,8 +3,18 @@
 Assets Create Story Runner YAML
 .........................................
 
-'asset_label' is not required but if unspecified the created asset will
+A simple Asset Creation Example.
+
+:code:`asset_label` is not required but if unspecified the created asset will
 not be accessible to later actions in the story.
+
+The :code:`arc_namespace` (for the asset) and the :code:`namespace` (for the location) are used
+to distinguish between assets and locations created between runs of the story.
+
+Usually these field values are derived from an environment variable 
+:code:`ARCHIVIST_NAMESPACE` (default value is :code:`namespace`).
+
+The optional :code:`confirm: true` entry means that the step will wait for the asset to be completely created before moving on to the next step.
 
 .. code-block:: yaml
     

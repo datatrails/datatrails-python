@@ -3,10 +3,12 @@
 Compliance Compliant_at Story Runner YAML
 ...........................................
 
-'asset_label' is required from a previously created asset. The asset_id is retrieved and
-inserted as the first argument to compliance.compliant_at().
+Verify an Asset against its compliance policies.
 
-'report' = true will cause a report to be printed on the compliance status.
+:code:`asset_label` is required from a previously created asset. The :code:`asset_id` is retrieved and
+inserted as the first argument to :code:`compliance.compliant_at()`.
+
+Setting :code:`report: true` will trigger a report to be printed on the compliance status.
 
 .. code-block:: yaml
     

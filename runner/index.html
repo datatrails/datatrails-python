@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Story Runner &mdash; Jitsuin Archivist 0.12.1 documentation</title>
+  <title>Story Runner &mdash; RKVST 0.13.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -26,11 +28,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Jitsuin Archivist
-            <img src="../_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.12.1
+                0.13.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -61,6 +63,13 @@
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_list.html">Subjects List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_read.html">Subjects Read Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_update.html">Subjects Update Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_wait_for_confirmation.html">Subjects Wait For Confirmation Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
@@ -92,7 +101,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Jitsuin Archivist</a>
+          <a href="../index.html">RKVST</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -122,11 +131,11 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
 
 <span class="kn">from</span> <span class="nn">pyaml_env</span> <span class="kn">import</span> <span class="n">parse_config</span>
 
-<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">about</span>
+<span class="kn">from</span> <span class="nn">archivist</span> <span class="kn">import</span> <span class="n">about</span>
 
 <span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
-<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+<span class="kn">from</span> <span class="nn">archivist</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
 
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -148,29 +157,36 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
     <span class="n">sys_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This functionality is also available as a CLI ‘archivist_runner’. After
-installation of the python wheel execute</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ archivist_runner -h
+<p>This functionality is also available with the CLI tool <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code>, which is bundled with version v0.10 onwards of the <code class="code docutils literal notranslate"><span class="pre">jitsuin-archivist</span></code> PIP installation.</p>
+<p>See the <a class="reference external" href="https://python.rkvst.com/index.html#installation">installation instructions</a> for more information.</p>
+<p>You can verify the installation by running the following:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner -h
 </pre></div>
 </div>
-<p>to elucidate options.</p>
-<p>To invoke this command:</p>
+<p>Which will show you the available options when using <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code>.</p>
+<p>To use the <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code> command you will need the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>obtain bearer token and put in file ‘credentials/token’</p></li>
-<li><p>choose which yaml file to use</p></li>
-<li><p>get the URL of your Archivist instance</p></li>
+<li><p>A Client ID and Client Secret by creating an <a class="reference external" href="https://docs.rkvst.com/docs/setup-and-administration/getting-access-tokens-using-app-registrations/">App Registration</a></p></li>
+<li><p>The YAML file with the operations you wish to run</p></li>
+<li><p>The URL of your RKVST instance, this is typically <cite>https://app.rkvst.io</cite></p></li>
 </ul>
 </div></blockquote>
-<p>Execute:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ archivist_runner <span class="se">\</span>
+<p>Example usage:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner <span class="se">\</span>
       -u https://app.rkvst.io <span class="se">\</span>
-      -t credentials/token <span class="se">\</span>
+      --client-id &lt;your-client-id&gt; <span class="se">\</span>
+      --client-secret &lt;your-client-secret&gt; <span class="se">\</span>
       functests/test_resources/richness_story.yaml
 </pre></div>
 </div>
-<p>For more flexibility the functionality can be extended.
-See <a class="reference internal" href="execute.html#executing-demo-ref"><span class="std std-ref">Example of runner code</span></a> and <a class="reference internal" href="execute_template.html#executing-template-demo-ref"><span class="std std-ref">Example of templated runner code</span></a></p>
+<p>For further reading:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="execute.html#executing-demo-ref"><span class="std std-ref">Example of runner code</span></a> for an example of how to build your YAML file</p></li>
+<li><p><a class="reference internal" href="execute_template.html#executing-template-demo-ref"><span class="std std-ref">Example of templated runner code</span></a> for extending functionality with templating.</p></li>
+</ul>
+</div></blockquote>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -190,6 +206,13 @@ See <a class="reference internal" href="execute.html#executing-demo-ref"><span c
 <li class="toctree-l1"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subjects_list.html">Subjects List Story Runner YAML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subjects_read.html">Subjects Read Story Runner YAML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subjects_update.html">Subjects Update Story Runner YAML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subjects_wait_for_confirmation.html">Subjects Wait For Confirmation Story Runner YAML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
@@ -213,7 +236,7 @@ See <a class="reference internal" href="execute.html#executing-demo-ref"><span c
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, support@jitsuin.com.</p>
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
   </div>
 
    
@@ -227,7 +250,18 @@ See <a class="reference internal" href="execute.html#executing-demo-ref"><span c
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>

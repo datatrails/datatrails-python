@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.subjects &mdash; Jitsuin Archivist 0.12.1 documentation</title>
+  <title>archivist.subjects &mdash; RKVST 0.13.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -24,11 +26,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Jitsuin Archivist
-            <img src="../../_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+            <a href="../../index.html">
+            <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.12.1
+                0.13.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -64,7 +66,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Jitsuin Archivist</a>
+          <a href="../../index.html">RKVST</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -106,6 +108,8 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">loads</span> <span class="k">as</span> <span class="n">json_loads</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
@@ -138,6 +142,8 @@
 <span class="sd">        archivist (Archivist): :class:`Archivist` instance</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">maxDiff</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
@@ -183,10 +189,47 @@
 <span class="sd">            :class:`Subject` instance</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create Subject from data </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Subject</span><span class="p">(</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{SUBJECTS_SUBPATH}</span><span class="s2">/</span><span class="si">{SUBJECTS_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">data</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_SubjectsClient.create_from_b64"><a class="viewcode-back" href="../../iam/subjects.html#archivist.subjects._SubjectsClient.create_from_b64">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_b64</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subject</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create subject</span>
+
+<span class="sd">        Creates subject with request body from b64 encoded string</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict): Dictionary with 2 fields:</span>
+
+<span class="sd">        A YAML representation of the data argument would be:</span>
+
+<span class="sd">            .. code-block:: yaml</span>
+
+<span class="sd">                display_name: An imported subject</span>
+<span class="sd">                subject_string: ey66...</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`Subject` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">decoded</span> <span class="o">=</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;subject_string&quot;</span><span class="p">])</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;decoded </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">decoded</span><span class="p">)</span>
+        <span class="n">outdata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">k</span><span class="p">:</span> <span class="n">v</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">json_loads</span><span class="p">(</span><span class="n">decoded</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;wallet_pub_key&quot;</span><span class="p">,</span> <span class="s2">&quot;tessera_pub_key&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">outdata</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">]</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;data </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">outdata</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Subject</span><span class="p">(</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{SUBJECTS_SUBPATH}</span><span class="s2">/</span><span class="si">{SUBJECTS_LABEL}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">outdata</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
 
@@ -347,7 +390,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, support@jitsuin.com.</p>
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
   </div>
 
    
@@ -361,7 +404,18 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>

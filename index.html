@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jitsuin Archivist Client &mdash; Jitsuin Archivist 0.12.1 documentation</title>
+  <title>RKVST Python Client &mdash; RKVST 0.13.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -25,11 +27,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> Jitsuin Archivist
-            <img src="_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+            <a href="#">
+            <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.12.1
+                0.13.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -65,7 +67,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Jitsuin Archivist</a>
+          <a href="#">RKVST</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -73,7 +75,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Jitsuin Archivist Client</li>
+      <li>RKVST Python Client</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -82,11 +84,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="jitsuin-archivist-client">
-<span id="readme"></span><h1>Jitsuin Archivist Client<a class="headerlink" href="#jitsuin-archivist-client" title="Permalink to this headline"></a></h1>
-<p>The standard Jitsuin Archivist python client.</p>
-<p>Please note that the canonical API for Jitsuin Archivist is always the REST API
+  <div class="section" id="rkvst-python-client">
+<span id="readme"></span><h1>RKVST Python Client<a class="headerlink" href="#rkvst-python-client" title="Permalink to this headline"></a></h1>
+<p>The standard RKVST Python Client.</p>
+<p>Please note that the canonical API for RKVST is always the REST API
 documented at <a class="reference external" href="https://docs.rkvst.com">https://docs.rkvst.com</a></p>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline"></a></h1>
+<p>This package currently is tested against Python versions 3.7,3.8,3.9 and 3.10.</p>
+<p>The current default version is 3.7 - this means that this package will not
+use any features specific to versions 3.8 and later.</p>
+<p>After End of Life of a particular Python version, support is offered on a best effort
+basis. We may ask you to update your Python version to help solve the problem,
+if it cannot be reasonably resolved in your current version.</p>
 </div>
 <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h1>
@@ -103,8 +114,8 @@ ERROR: No matching distribution found for jitsuiin-archivist</p>
 </div>
 <div class="section" id="example">
 <h1>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h1>
-<p>One can then use the examples code to create assets (see examples directory):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an asset given url to Archivist and user Token.</span>
+<p>You can then use the examples code to create assets (see examples directory):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an asset in RKVST with User Token.</span>
 
 <span class="sd">The module contains two functions: main and create_asset. Main function parses in</span>
 <span class="sd">a url to the Archivist and credentials, which is a user authorization.</span>
@@ -131,7 +142,7 @@ ERROR: No matching distribution found for jitsuiin-archivist</p>
     <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s display name in the user interface</span>
         <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;display_description&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s description in the user interface</span>
-        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;desplay_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
+        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;display_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
         <span class="c1"># allowing the creator of</span>
         <span class="c1"># an asset to specify the asset</span>
         <span class="c1"># type or class. Be careful when setting this:</span>
@@ -212,7 +223,7 @@ ERROR: No matching distribution found for jitsuiin-archivist</p>
 </div>
 <div class="section" id="file-story-runner">
 <h1>File Story Runner<a class="headerlink" href="#file-story-runner" title="Permalink to this headline"></a></h1>
-<p>One can run scenarios - a sequence of steps - from a python dictionary or from a yaml
+<p>You can run scenarios - a sequence of steps - from a python dictionary or from a yaml
 or json file.</p>
 <div class="section" id="python">
 <h2>Python<a class="headerlink" href="#python" title="Permalink to this headline"></a></h2>
@@ -221,9 +232,9 @@ or json file.</p>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">exit</span> <span class="k">as</span> <span class="n">sys_exit</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span> <span class="k">as</span> <span class="n">sys_stdout</span>
 
-<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
-<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">about</span>
-<span class="kn">from</span> <span class="nn">...parser</span> <span class="kn">import</span> <span class="n">common_parser</span><span class="p">,</span> <span class="n">endpoint</span>
+<span class="kn">from</span> <span class="nn">archivist</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+<span class="kn">from</span> <span class="nn">archivist</span> <span class="kn">import</span> <span class="n">about</span>
+<span class="kn">from</span> <span class="nn">archivist.parser</span> <span class="kn">import</span> <span class="n">common_parser</span><span class="p">,</span> <span class="n">endpoint</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -256,23 +267,25 @@ or json file.</p>
 </div>
 <div class="section" id="command-line">
 <h2>Command Line<a class="headerlink" href="#command-line" title="Permalink to this headline"></a></h2>
-<p>This functionality is also available from the command line:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ archivist_runner -h
+<p>This functionality is also available with the CLI tool <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code>, which is bundled with version v0.10 onwards of the <code class="code docutils literal notranslate"><span class="pre">jitsuin-archivist</span></code> PIP installation.</p>
+<p>You can verify the installation by running the following:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner -h
 </pre></div>
 </div>
-<p>to elucidate options.</p>
-<p>To invoke this command:</p>
+<p>Which will show you the available options when using <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code>.</p>
+<p>To use the <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code> command you will need the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>obtain bearer token and put in file ‘credentials/token’</p></li>
-<li><p>choose which yaml file to use</p></li>
-<li><p>get the URL of your Archivist instance</p></li>
+<li><p>A Client ID and Client Secret by creating an <a class="reference external" href="https://docs.rkvst.com/docs/setup-and-administration/getting-access-tokens-using-app-registrations/">App Registration</a></p></li>
+<li><p>The YAML file with the operations you wish to run</p></li>
+<li><p>The URL of your RKVST instance, this is typically <cite>https://app.rkvst.io</cite></p></li>
 </ul>
 </div></blockquote>
-<p>Execute:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ archivist_runner <span class="se">\</span>
+<p>Example usage:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner <span class="se">\</span>
       -u https://app.rkvst.io <span class="se">\</span>
-      -t credentials/token <span class="se">\</span>
+      --client-id &lt;your-client-id&gt; <span class="se">\</span>
+      --client-secret &lt;your-client-secret&gt; <span class="se">\</span>
       functests/test_resources/richness_story.yaml
 </pre></div>
 </div>
@@ -290,7 +303,7 @@ asset or event is confirmed before returning.</p>
 <p>The name of the asset is important. The value of the name is carried forward for
 every operation - in this case the name of the asset is ‘radiation bag 1’.</p>
 <p>Arguments to the archivist are ususally strings - in this example radioactive is
-‘true’ which archivist will treat as a boolesn.</p>
+‘true’ which archivist will treat as a boolean.</p>
 </div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="c1"># Demonstration of applying a Richness compliance policy to an asset that undergoes</span>
@@ -375,6 +388,10 @@ by using dictionary configuration as described here: <a class="reference externa
 <span class="p">})</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="development">
+<h1>Development<a class="headerlink" href="#development" title="Permalink to this headline"></a></h1>
+<p>For instructions on contributing to the RKVST SDK see DEVELOPMENT.md.</p>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -397,7 +414,7 @@ by using dictionary configuration as described here: <a class="reference externa
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, support@jitsuin.com.</p>
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
   </div>
 
    
@@ -411,7 +428,18 @@ by using dictionary configuration as described here: <a class="reference externa
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>

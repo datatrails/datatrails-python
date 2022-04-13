@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IAM Subjects &mdash; Jitsuin Archivist 0.12.1 documentation</title>
+  <title>IAM Subjects &mdash; RKVST 0.13.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -26,11 +28,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Jitsuin Archivist
-            <img src="../_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.12.1
+                0.13.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -72,7 +74,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Jitsuin Archivist</a>
+          <a href="../index.html">RKVST</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -155,6 +157,30 @@ accessed as an attribute of the Archivist class.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subject</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.subjects._SubjectsClient.create_from_b64">
+<span class="sig-name descname"><span class="pre">create_from_b64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><span class="pre">archivist.subjects.Subject</span></a></span></span><a class="reference internal" href="../_modules/archivist/subjects.html#_SubjectsClient.create_from_b64"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.subjects._SubjectsClient.create_from_b64" title="Permalink to this definition"></a></dt>
+<dd><p>Create subject</p>
+<p>Creates subject with request body from b64 encoded string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – Dictionary with 2 fields:</p>
+</dd>
+</dl>
+<p>A YAML representation of the data argument would be:</p>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">An imported subject</span>
+<span class="nt">subject_string</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ey66...</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#archivist.subjects.Subject" title="archivist.subjects.Subject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subject</span></code></a> instance</p>
 </dd>
 </dl>
 </dd></dl>
@@ -273,7 +299,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, support@jitsuin.com.</p>
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
   </div>
 
    
@@ -287,7 +313,18 @@ Suitable for reading data from a file using json.load or yaml.load</p>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>

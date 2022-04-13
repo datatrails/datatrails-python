@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Features &mdash; Jitsuin Archivist 0.12.1 documentation</title>
+  <title>Features &mdash; RKVST 0.13.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Getting started" href="getting_started.html" />
-    <link rel="prev" title="Jitsuin Archivist Client" href="index.html" /> 
+    <link rel="prev" title="RKVST Python Client" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -26,11 +28,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Jitsuin Archivist
-            <img src="_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+            <a href="index.html">
+            <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.12.1
+                0.13.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -66,7 +68,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Jitsuin Archivist</a>
+          <a href="index.html">RKVST</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -92,7 +94,7 @@ Archivist.</p>
 REST api (in any language):</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>versioned package for the python 3.6,3.7,3.8,3.9,3.10 ecosystem.</p></li>
+<li><p>versioned package for the python 3.7,3.8,3.9,3.10 ecosystem.</p></li>
 <li><p>automatic confirmation of assets and events: just set <strong>confirm=True</strong> when
 creating the asset or event and a sophisticated retry and exponential backoff
 algorithm will take care of everything.</p></li>
@@ -123,14 +125,14 @@ can be implemented by <strong>extending</strong> the package as opposed to modif
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Jitsuin Archivist Client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="RKVST Python Client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, support@jitsuin.com.</p>
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
   </div>
 
    
@@ -144,7 +146,18 @@ can be implemented by <strong>extending</strong> the package as opposed to modif
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>

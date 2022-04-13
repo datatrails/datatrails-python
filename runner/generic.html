@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generic Story Runner YAML &mdash; Jitsuin Archivist 0.12.1 documentation</title>
+  <title>Generic Story Runner YAML &mdash; RKVST 0.13.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -26,11 +28,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Jitsuin Archivist
-            <img src="../_static/RKVST_Logo_RGB.jpg" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.12.1
+                0.13.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -61,6 +63,13 @@
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_list.html">Subjects List Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_read.html">Subjects Read Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_update.html">Subjects Update Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_wait_for_confirmation.html">Subjects Wait For Confirmation Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo.html">Compliance Policies Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_dynamic_tolerance.html">Compliance Policies Dynamic Tolerance Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_demo_richness.html">Compliance Policies Richness Demo</a></li>
@@ -92,7 +101,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Jitsuin Archivist</a>
+          <a href="../index.html">RKVST</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -113,7 +122,7 @@
              
   <div class="section" id="generic-story-runner-yaml">
 <span id="generic-yamlref"></span><h1>Generic Story Runner YAML<a class="headerlink" href="#generic-story-runner-yaml" title="Permalink to this headline"></a></h1>
-<p>Each step has some control values in the ‘step’ dictionary. Some of these values are
+<p>Each step has some control values in the <code class="code docutils literal notranslate"><span class="pre">step</span></code> dictionary. Some of these values are
 required, optional or required for a particular operation.</p>
 <p>Each step follows the same pattern:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
@@ -153,6 +162,11 @@ by the runner to keep track of assets.</p>
 <p>For other actions which require access to an asset, this value is used as a key to
 obtain the identity of such a previously-created asset.</p>
 <p>In this way one can create assets and then refer to them in later steps of the story.</p>
+<p>Additionally this label can be an explicit asset identity of the form:</p>
+<blockquote>
+<div><p>assets/add30235-1424-4fda-840a-d5ef82c4c96fa</p>
+</div></blockquote>
+<p>when accessing a previously created asset. (i.e. not when creating an asset)</p>
 </dd>
 <dt class="field-even">location_label</dt>
 <dd class="field-even"><p>For location create type actions (LOCATIONS_CREATE_IF_NOT_EXISTS) the label is used
@@ -160,6 +174,23 @@ by the runner to keep track of locations.</p>
 <p>For other actions which require access to an location, this value is used as a key to
 obtain the identity of such a previously-created location.</p>
 <p>In this way one can create locations and then refer to them in later steps of the story.</p>
+<p>Additionally this label can be an explicit location identity of the form:</p>
+<blockquote>
+<div><p>locations/add30235-1424-4fda-840a-d5ef82c4c96fa</p>
+</div></blockquote>
+<p>when accessing a previously created location. (i.e. not when creating a location)</p>
+</dd>
+<dt class="field-odd">subject_label</dt>
+<dd class="field-odd"><p>For subject create type actions (SUBJECTS_CREATE) the label is used
+by the runner to keep track of subjects.</p>
+<p>For other actions which require access to a subject, this value is used as a key to
+obtain the identity of such a previously-created subject.</p>
+<p>In this way one can create subjects and then refer to them in later steps of the story.</p>
+<p>Additionally this label can be an explicit subject identity of the form:</p>
+<blockquote>
+<div><p>subjects/add30235-1424-4fda-840a-d5ef82c4c96fa</p>
+</div></blockquote>
+<p>when accessing a previously created subject. (i.e. not when creating a subject)</p>
 </dd>
 </dl>
 </div>
@@ -175,7 +206,7 @@ obtain the identity of such a previously-created location.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, support@jitsuin.com.</p>
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
   </div>
 
    
@@ -189,7 +220,18 @@ obtain the identity of such a previously-created location.</p>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>
