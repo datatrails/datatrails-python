@@ -69,7 +69,7 @@ An example when releasing a software package as an sbom:
       - step:
           action: EVENTS_CREATE
           description: Release YYYYMMDD.1 of Test SBOM for YAML story
-          asset_name: ACME Corporation Detector SAAS
+          asset_label: ACME Corporation Detector SAAS
           print_response: true
         operation: Record
         behaviour: RecordEvidence
@@ -95,7 +95,7 @@ An example when releasing a software package as an sbom attachment:
       - step:
           action: EVENTS_CREATE
           description: Release YYYYMMDD.1 of Test SBOM for YAML story
-          asset_name: ACME Corporation Detector SAAS
+          asset_label: ACME Corporation Detector SAAS
           print_response: true
         operation: Record
         behaviour: RecordEvidence

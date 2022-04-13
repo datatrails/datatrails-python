@@ -53,6 +53,8 @@ Each step follows the same pattern:
 
          assets/add30235-1424-4fda-840a-d5ef82c4c96fa
 
+   when accessing a previously created asset. (i.e. not when creating an asset)
+
 :location_label:
    For location create type actions (LOCATIONS_CREATE_IF_NOT_EXISTS) the label is used
    by the runner to keep track of locations.
@@ -66,4 +68,20 @@ Each step follows the same pattern:
 
          locations/add30235-1424-4fda-840a-d5ef82c4c96fa
 
+   when accessing a previously created location. (i.e. not when creating a location)
+
+:subject_label:
+   For subject create type actions (SUBJECTS_CREATE) the label is used
+   by the runner to keep track of subjects.
+
+   For other actions which require access to a subject, this value is used as a key to
+   obtain the identity of such a previously-created subject.
+
+   In this way one can create subjects and then refer to them in later steps of the story.
+
+   Additionally this label can be an explicit subject identity of the form:
+
+         subjects/add30235-1424-4fda-840a-d5ef82c4c96fa
+
+   when accessing a previously created subject. (i.e. not when creating a subject)
 
