@@ -3,7 +3,7 @@
 Compliance Compliant_at Story Runner YAML
 ...........................................
 
-Verify an Asset against it's compliance policies.
+Verify an Asset against its compliance policies.
 
 :code:`asset_label` is required from a previously created asset. The :code:`asset_id` is retrieved and
 inserted as the first argument to :code:`compliance.compliant_at()`.

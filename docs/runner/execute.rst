@@ -9,6 +9,6 @@ A straightforward incantation of the yaml runner:
 
    archivist_runner \
          -u https://app.rkvst.io \
-         --auth-token-filename credentials/token \
+         --auth-token credentials/token \
          functests/test_resources/richness_story.yaml
 
