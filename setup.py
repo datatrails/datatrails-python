@@ -18,9 +18,9 @@ with open(os.path.join(HERE, "requirements.txt"), encoding="utf-8") as FF:
 
 setup(
     name=NAME,
-    author="Jitsuin Inc.",
-    author_email="support@jitsuin.com",
-    description="Jitsuin Archivist Client",
+    author="RKVST Inc.",
+    author_email="support@rkvst.com",
+    description="RKVST Client",
     long_description=DESC,
     long_description_content_type="text/x-rst",
     url=REPO_URL,
