@@ -65,7 +65,7 @@ def sbom_release(arch, release, sbom_filename):
             "operation": "Record",
             "behaviour": "RecordEvidence",
             "event_attributes": {
-                "arc_description": f"Jitsuin Inc RKVST SAAS Release {release}",
+                "arc_description": f"RKVST Inc RKVST SAAS Release {release}",
                 "arc_display_type": SBOM_RELEASE,
             },
             "attachments": [

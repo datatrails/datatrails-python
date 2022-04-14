@@ -3,8 +3,7 @@
 Features
 =============================================
 
-This package provides a python interface to the Jitsuin
-Archivist.
+This package provides a python interface to RKVST.
 
 The definitive guide to the REST API is defined here: https://docs.rkvst.com
 
