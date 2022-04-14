@@ -5,9 +5,9 @@ Subjects Read Story Runner YAML
 
 Read the specified subject.
 
-'subject_label' is required.
+:code:`subject_label` is required.
 
-The 'print_response' setting should be specified as True in order to see the results.
+The :code:`print_response` setting should be specified as :code:`True` in order to see the results.
 
 .. code-block:: yaml
     

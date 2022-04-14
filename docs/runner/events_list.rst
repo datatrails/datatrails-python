@@ -9,7 +9,7 @@ for which the authorised Application Registration has Event write access
 
 If :code:`asset_label` is not set, data for all assets is output.
 
-:code:`props`, :code:`attrs` and :code:`asset_attrs`` are optional.
+:code:`props`, :code:`attrs` and :code:`asset_attrs` are optional.
 
 This example lists all 'open door' events for the Courts of Justice Front Door.
 
