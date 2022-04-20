@@ -5,7 +5,7 @@ from contextlib import suppress
 from filecmp import clear_cache, cmp
 from json import dumps as json_dumps
 from io import BytesIO
-from os import getenv, remove
+from os import getenv, remove, urandom
 from unittest import TestCase
 
 from archivist.archivist import Archivist
@@ -31,6 +31,7 @@ class TestAttachmentstCreate(TestCase):
     TEST_DOCX_DOWNLOAD_PATH = "functests/test_resources/downloaded_loremipsum.docx"
     TEST_IMAGE_PATH = "functests/test_resources/Jitsuin_Logo_RGB.jpg"
     TEST_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
+    TEST_LARGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_large_file"
 
     def setUp(self):
         auth = get_auth(
@@ -43,11 +44,7 @@ class TestAttachmentstCreate(TestCase):
         self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
         self.file_uuid: str = ""
 
-        with suppress(FileNotFoundError):
-            remove(self.TEST_IMAGE_DOWNLOAD_PATH)
-
-        with suppress(FileNotFoundError):
-            remove(self.TEST_DOCX_DOWNLOAD_PATH)
+        self.tearDown()
 
     def tearDown(self) -> None:
         """Remove the downloaded image for subsequent test runs"""
@@ -56,6 +53,9 @@ class TestAttachmentstCreate(TestCase):
 
         with suppress(FileNotFoundError):
             remove(self.TEST_DOCX_DOWNLOAD_PATH)
+
+        with suppress(FileNotFoundError):
+            remove(self.TEST_LARGE_DOWNLOAD_PATH)
 
     def test_attachment_upload_and_download(self):
         """
@@ -107,6 +107,51 @@ class TestAttachmentstCreate(TestCase):
             info["mime_type"],
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             msg="UPLOAD incorrect mimetype",
+        )
+
+    def test_attachment_upload_and_download_large_file(self):
+        """
+        Test file upload through the SDK
+        Test file download through the SDK
+        """
+        size = 50000000
+        with BytesIO(urandom(size)) as fd:
+            attachment = self.arch.attachments.upload(fd)
+            file_uuid = attachment["identity"]
+
+        print("attachment", json_dumps(attachment, indent=4))
+
+        self.assertEqual(
+            attachment["mime_type"],
+            "application/octet-stream",
+            msg="UPLOAD incorrect mimetype",
+        )
+        self.assertEqual(
+            attachment["size"],
+            size,
+            msg="UPLOAD incorrect size",
+        )
+
+        with open(self.TEST_LARGE_DOWNLOAD_PATH, "wb") as fd:
+            attachment = self.arch.attachments.download(file_uuid, fd)
+
+        print("attachment", attachment.headers)
+        self.assertEqual(
+            attachment.headers["content-type"],
+            "application/octet-stream",
+            msg="DOWNLOAD incorrect mimetype",
+        )
+
+        info = self.arch.attachments.info(file_uuid)
+        self.assertEqual(
+            info["mime_type"],
+            "application/octet-stream",
+            msg="DOWNLOAD incorrect mimetype",
+        )
+        self.assertEqual(
+            info["size"],
+            size,
+            msg="DOWNLOAD incorrect size",
         )
 
     def test_attachment_upload_and_download_allow_insecure(self):
