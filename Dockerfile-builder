@@ -1,6 +1,19 @@
 ARG VERSION=3.7
 FROM python:${VERSION}-bullseye
 
+# Note that any deps installed here must also be installed in the
+# github actions workflow .github/workflows/python-package.yml
+#
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update \
+  && apt-get upgrade -y --no-install-recommends \
+  && apt-get install -y libenchant-2-2 \
+  && apt-get autoremove \
+  && apt-get autoclean \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt requirements-dev.txt /tmp/
 
 RUN python3 -m pip install --upgrade pip \

@@ -17,6 +17,7 @@ twine~=3.8
 # must be kept in sync with this file.
 sphinx~=4.4
 sphinx-rtd-theme~=1.0
+sphinxcontrib-spelling~=7.3
 
 # analyze dependencies
 pipdeptree~=2.2

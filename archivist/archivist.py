@@ -375,7 +375,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             path (str): e.g. v2/assets
             fd : iterable representing the contents of a file.
             mtype (str): mime type e.g. image/jpg
-            params (dict): dictiuonary of optional path params
+            params (dict): dictionary of optional path params
 
         Returns:
             dict representing the response body (entity).

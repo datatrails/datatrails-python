@@ -72,7 +72,7 @@ class _SBOMSClient:
     @staticmethod
     def parse(data: Dict) -> Dict:  # pragma: no cover
         """
-        parse the sbom and extract pertinent informtion
+        parse the sbom and extract pertinent information
 
         Args:
             data (dict): dictionary

@@ -5,6 +5,7 @@
 # Make changes in both places
 sphinx~=4.4
 sphinx-rtd-theme~=1.0
+sphinxcontrib-spelling~=7.3
 
 # Duplicate of stanza in ~/requirements.txt.
 # Make changes in both places

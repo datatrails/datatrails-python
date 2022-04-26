@@ -3,7 +3,7 @@
 
 name: Python Quality Control
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.7", "3.8", "3.9", "3.10" ]
 
     steps:
     - uses: actions/checkout@v2
@@ -22,6 +22,14 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        export DEBIAN_FRONTEND=noninteractive
+        sudo apt-get update
+        sudo apt-get upgrade -y --no-install-recommends 
+        sudo apt-get install -y libenchant-2-2
+        sudo apt-get autoremove
+        sudo apt-get autoclean
+        sudo apt-get clean
+        sudo rm -rf /var/lib/apt/lists/*
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements-dev.txt
         python3 -m pip install wheel
@@ -31,6 +39,7 @@ jobs:
         pycodestyle --format=pylint setup.py archivist examples functests unittests
         python3 -m pylint --rcfile=pylintrc setup.py archivist examples functests unittests
         black archivist examples unittests functests
+        (cd docs && make clean && make html)
         modified=$(git status -s | wc -l)
         if [ $modified -gt 0 ]
         then

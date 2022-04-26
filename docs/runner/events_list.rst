@@ -5,7 +5,7 @@ Events List Story Runner YAML
 
 :code:`asset_label` must match the :code:`asset_label` field of a previous creation step
 (:code:`ASSETS_CREATE` or :code:`ASSETS_CREATE_IF_NOT_EXISTS`)
-for which the authorised Application Registration has Event write access
+for which the authorized Application Registration has Event write access
 
 If :code:`asset_label` is not set, data for all assets is output.
 
