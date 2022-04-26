@@ -161,32 +161,6 @@ class TestSubjects(TestCase):
                 msg="CREATE method called incorrectly",
             )
 
-    def test_subjects_create_with_confirmation(self):
-        """
-        Test subjects creation
-        """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
-            subject = self.arch.subjects.create(
-                DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
-            )
-            self.assertEqual(
-                subject,
-                RESPONSE,
-                msg="CREATE method called incorrectly",
-            )
-            with mock.patch.object(self.arch._session, "get") as mock_get:
-                mock_get.side_effect = [
-                    MockResponse(200, **RESPONSE),
-                    MockResponse(200, **RESPONSE_WITH_PENDING),
-                    MockResponse(200, **RESPONSE_WITH_CONFIRMATION),
-                ]
-                self.assertEqual(
-                    self.arch.subjects.wait_for_confirmation(subject["identity"]),
-                    RESPONSE_WITH_CONFIRMATION,
-                    msg="wait_for_confirmation called incorrectly",
-                )
-
     def test_subjects_create_with_confirmation_unconfirmed(self):
         """
         Test subjects creation
@@ -450,4 +424,41 @@ class TestSubjects(TestCase):
                         },
                     ),
                     msg="GET method called incorrectly",
+                )
+
+
+class TestSubjectsConfirm(TestCase):
+    """
+    Test Archivist Subjects Create method when confirmation is expected
+    """
+
+    maxDiff = None
+
+    def setUp(self):
+        self.arch = Archivist("url", "authauthauth", max_time=100)
+
+    def test_subjects_create_with_confirmation(self):
+        """
+        Test subjects creation
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            subject = self.arch.subjects.create(
+                DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+            )
+            self.assertEqual(
+                subject,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+            with mock.patch.object(self.arch._session, "get") as mock_get:
+                mock_get.side_effect = [
+                    MockResponse(200, **RESPONSE),
+                    MockResponse(200, **RESPONSE_WITH_PENDING),
+                    MockResponse(200, **RESPONSE_WITH_CONFIRMATION),
+                ]
+                self.assertEqual(
+                    self.arch.subjects.wait_for_confirmation(subject["identity"]),
+                    RESPONSE_WITH_CONFIRMATION,
+                    msg="wait_for_confirmation called incorrectly",
                 )

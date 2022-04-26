@@ -160,44 +160,6 @@ class TestSBOMS(TestCase):
                 msg="UPLOAD method called incorrectly",
             )
 
-    def test_sbom_upload_with_confirmation(self):
-        """
-        Test sbom upload
-        """
-        with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
-            mock_get.side_effect = [
-                MockResponse(200, **RESPONSE),
-            ]
-            sbom = self.arch.sboms.upload(self.mockstream, confirm=True)
-            self.assertEqual(
-                sbom.dict(),
-                RESPONSE,
-                msg="CREATE method called incorrectly",
-            )
-
-    def test_sbom_upload_with_confirmation_and_privacy(self):
-        """
-        Test sbom upload
-        """
-        with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
-            mock_get.side_effect = [
-                MockResponse(200, **RESPONSE),
-            ]
-            sbom = self.arch.sboms.upload(
-                self.mockstream, confirm=True, params={"privacy": "PUBLIC"}
-            )
-            self.assertEqual(
-                sbom.dict(),
-                RESPONSE,
-                msg="CREATE method called incorrectly",
-            )
-
     def test_sbom_upload_with_confirmation_never_uploaded(self):
         """
         Test upload confirmation
@@ -320,22 +282,6 @@ class TestSBOMS(TestCase):
                 msg="POST method called incorrectly",
             )
 
-    def test_sbom_publish_with_confirmation(self):
-        """
-        Test sbom publication
-        """
-        with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
-            mock_get.return_value = MockResponse(200, **PUBLISHED_RESPONSE)
-            sbom = self.arch.sboms.publish(IDENTITY, confirm=True)
-            self.assertEqual(
-                sbom.dict(),
-                PUBLISHED_RESPONSE,
-                msg="CREATE method called incorrectly",
-            )
-
     def test_sbom_publish_with_confirmation_never_published(self):
         """
         Test publish confirmation
@@ -377,22 +323,6 @@ class TestSBOMS(TestCase):
                     },
                 ),
                 msg="POST method called incorrectly",
-            )
-
-    def test_sbom_withdraw_with_confirmation(self):
-        """
-        Test sbom withdrawal
-        """
-        with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
-            mock_get.return_value = MockResponse(200, **WITHDRAWN_RESPONSE)
-            sbom = self.arch.sboms.withdraw(IDENTITY, confirm=True)
-            self.assertEqual(
-                sbom.dict(),
-                WITHDRAWN_RESPONSE,
-                msg="CREATE method called incorrectly",
             )
 
     def test_sbom_withdraw_with_confirmation_never_withdrawn(self):
@@ -506,3 +436,85 @@ class TestSBOMS(TestCase):
                     ),
                     msg="GET method called incorrectly",
                 )
+
+
+class TestSBOMSConfirm(TestCase):
+    """
+    Test Archivist SBOMS Create method with expected confirmation
+    """
+
+    maxDiff = None
+
+    def setUp(self):
+        self.arch = Archivist("url", "authauthauth", max_time=100)
+        self.mockstream = BytesIO(b"somelongstring")
+
+    def test_sbom_upload_with_confirmation(self):
+        """
+        Test sbom upload
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE),
+            ]
+            sbom = self.arch.sboms.upload(self.mockstream, confirm=True)
+            self.assertEqual(
+                sbom.dict(),
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_sbom_upload_with_confirmation_and_privacy(self):
+        """
+        Test sbom upload
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE),
+            ]
+            sbom = self.arch.sboms.upload(
+                self.mockstream, confirm=True, params={"privacy": "PUBLIC"}
+            )
+            self.assertEqual(
+                sbom.dict(),
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_sbom_publish_with_confirmation(self):
+        """
+        Test sbom publication
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **PUBLISHED_RESPONSE)
+            sbom = self.arch.sboms.publish(IDENTITY, confirm=True)
+            self.assertEqual(
+                sbom.dict(),
+                PUBLISHED_RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_sbom_withdraw_with_confirmation(self):
+        """
+        Test sbom withdrawal
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **WITHDRAWN_RESPONSE)
+            sbom = self.arch.sboms.withdraw(IDENTITY, confirm=True)
+            self.assertEqual(
+                sbom.dict(),
+                WITHDRAWN_RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
