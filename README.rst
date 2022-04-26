@@ -35,7 +35,7 @@ If your version of python3 is too old an error of this type or similar will be e
 .. note:: 
 
     ERROR: Could not find a version that satisfies the requirement jitsuin-archivist (from versions: none)
-    ERROR: No matching distribution found for jitsuiin-archivist
+    ERROR: No matching distribution found for jitsuin-archivist
 
 Example
 =============
@@ -233,7 +233,7 @@ Example Yaml Snippet
 --------------------
 
 This is an example of creating an asset and creating an event for that asset. The
-yaml file consiste of a list of steps.
+yaml file consists of a list of steps.
 
 Each step consists of control parameters (specified in the 'step' dictionary) and 
 the yaml representation of the request body for an asset or event.
@@ -246,7 +246,7 @@ asset or event is confirmed before returning.
    The name of the asset is important. The value of the name is carried forward for
    every operation - in this case the name of the asset is 'radiation bag 1'.
 
-   Arguments to the archivist are ususally strings - in this example radioactive is 
+   Arguments to the archivist are usually strings - in this example radioactive is 
    'true' which archivist will treat as a boolean.
 
 

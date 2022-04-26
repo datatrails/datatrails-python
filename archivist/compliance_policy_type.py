@@ -16,7 +16,7 @@ class CompliancePolicyType(Enum):
     COMPLIANCE_TYPE_UNDEFINED = 0
     #: Time since specific event for specified period
     COMPLIANCE_SINCE = 1
-    #: Unresolved event currently on asset (eg. vulnerability)
+    #: Unresolved event currently on asset (e.g. vulnerability)
     COMPLIANCE_CURRENT_OUTSTANDING = 2
     #: No unresolved events for longer than specified period
     COMPLIANCE_PERIOD_OUTSTANDING = 3

@@ -1,6 +1,6 @@
 .. _create_assetref:
 
-Create Asset Eaxmple
+Create Asset Example
 .....................
 
 .. literalinclude:: ../examples/create_asset.py

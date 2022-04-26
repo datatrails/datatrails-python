@@ -33,6 +33,7 @@ release = about.__version__
 # ones.
 extensions = [
     "sphinx_rtd_theme",
+    "sphinxcontrib.spelling",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.githubpages",
@@ -66,6 +67,11 @@ html_favicon = "_static/favicon.ico"
 html_show_sourcelink = False
 html_show_sphinx = False
 
+
+spelling_lang='en_US'
+spelling_word_list_filename='spelling_wordlist.txt'
+spelling_show_suggestions=True
+spelling_verbose=True
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
