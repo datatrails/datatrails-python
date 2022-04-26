@@ -474,3 +474,17 @@ class TestAssetsBase(TestCase):
 
     def tearDown(self):
         self.arch = None
+
+
+class TestAssetsBaseConfirm(TestCase):
+    """
+    Test Archivist Assets Base with expected confirmation
+    """
+
+    maxDiff = None
+
+    def setUp(self):
+        self.arch = Archivist("url", "authauthauth", max_time=100)
+
+    def tearDown(self):
+        self.arch = None

@@ -19,6 +19,7 @@ from archivist.logger import set_logger
 from .mock_response import MockResponse
 from .testassetsconstants import (
     TestAssetsBase,
+    TestAssetsBaseConfirm,
     PRIMARY_IMAGE,
     ASSET_NAME,
     ATTRS,
@@ -139,39 +140,6 @@ class TestAssetsCreate(TestAssetsBase):
                 msg="CREATE method called incorrectly",
             )
 
-    def test_assets_create_with_confirmation(self):
-        """
-        Test asset creation
-        """
-        with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
-            mock_get.return_value = MockResponse(200, **RESPONSE)
-            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
-            self.assertEqual(
-                asset,
-                RESPONSE,
-                msg="CREATE method called incorrectly",
-            )
-
-    def test_assets_create_with_explicit_confirmation(self):
-        """
-        Test asset creation
-        """
-        with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
-            mock_get.return_value = MockResponse(200, **RESPONSE)
-            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
-            self.arch.assets.wait_for_confirmation(asset["identity"])
-            self.assertEqual(
-                asset,
-                RESPONSE,
-                msg="CREATE method called incorrectly",
-            )
-
     def test_assets_create_with_confirmation_no_confirmed_status(self):
         """
         Test asset confirmation
@@ -184,25 +152,6 @@ class TestAssetsCreate(TestAssetsBase):
 
             with self.assertRaises(ArchivistUnconfirmedError):
                 asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
-
-    def test_assets_create_with_confirmation_pending_status(self):
-        """
-        Test asset confirmation
-        """
-        with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE)
-            mock_get.side_effect = [
-                MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE),
-            ]
-            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
-            self.assertEqual(
-                asset,
-                RESPONSE,
-                msg="CREATE method called incorrectly",
-            )
 
     def test_assets_create_with_confirmation_failed_status(self):
         """
@@ -238,6 +187,64 @@ class TestAssetsCreate(TestAssetsBase):
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
                 asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
+
+
+class TestAssetsCreateConfirm(TestAssetsBaseConfirm):
+    """
+    Test Archivist Assets methods with expected confirmation
+    """
+
+    def test_assets_create_with_confirmation(self):
+        """
+        Test asset creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
+            self.assertEqual(
+                asset,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_assets_create_with_explicit_confirmation(self):
+        """
+        Test asset creation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
+            self.arch.assets.wait_for_confirmation(asset["identity"])
+            self.assertEqual(
+                asset,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_assets_create_with_confirmation_pending_status(self):
+        """
+        Test asset confirmation
+        """
+        with mock.patch.object(
+            self.arch._session, "post"
+        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.side_effect = [
+                MockResponse(200, **RESPONSE_PENDING),
+                MockResponse(200, **RESPONSE),
+            ]
+            asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
+            self.assertEqual(
+                asset,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
 
 
 class TestAssetsCreateIfNotExists(TestAssetsBase):
