@@ -138,6 +138,13 @@ class _ActionMap(dict):
             "keywords": ("confirm",),
             "set_location_label": True,
         }
+        self["LOCATIONS_LIST"] = {
+            "action": archivist.locations.list,
+            "keywords": (
+                "props",
+                "attrs",
+            ),
+        }
         self["LOCATIONS_READ"] = {
             "action": archivist.locations.read,
             "use_location_label": "add_arg_identity",

@@ -67,6 +67,7 @@ For further reading:
    events_list
    locations_count
    locations_create
+   locations_list
    subjects_count.rst
    subjects_create.rst
    subjects_create_b64.rst
