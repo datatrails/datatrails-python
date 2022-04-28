@@ -9,9 +9,6 @@ locations:
       facility_type: Satellite Office
       reception_email: reception_CT@synsation_io
       reception_phone: +27 (21) 123-456
-      action: LOCATIONS_CREATE_IF_NOT_EXISTS
-      description: Create Asia Location
-      location_label: Asia Regional Sales Office
   - display_name: Asia Regional Sales Office
     description: Asia Regional Sales Headquarters
     latitude: 18.52027778
