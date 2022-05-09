@@ -28,6 +28,7 @@ An example when opening a door in Paris:
           description: Access Card 2 opens Courts of justice front door
           asset_label: Access Card 2
           print_response: true
+          archivist_label: Acme Corporation
         operation: Record
         behaviour: RecordEvidence
         principal_declared:
@@ -71,6 +72,7 @@ An example when releasing a software package as an sbom:
           description: Release YYYYMMDD.1 of Test SBOM for YAML story
           asset_label: ACME Corporation Detector SAAS
           print_response: true
+          archivist_label: Acme Corporation
         operation: Record
         behaviour: RecordEvidence
         confirm: true
@@ -97,6 +99,7 @@ An example when releasing a software package as an sbom attachment:
           description: Release YYYYMMDD.1 of Test SBOM for YAML story
           asset_label: ACME Corporation Detector SAAS
           print_response: true
+          archivist_label: Acme Corporation
         operation: Record
         behaviour: RecordEvidence
         confirm: true

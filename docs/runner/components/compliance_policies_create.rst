@@ -16,6 +16,7 @@ This example is for a :code:`DYNAMIC_TOLERANCE` type policy.
           action: COMPLIANCE_POLICIES_CREATE
           description: Create a compliance policy that checks an EV pump maintenance requests are serviced within a reasonable time frame.
           print_response: true
+          archivist_label: Acme Corporation
         description: ev maintenance policy
         display_name: ev maintenance policy
         compliance_type: COMPLIANCE_DYNAMIC_TOLERANCE
@@ -37,6 +38,7 @@ This example is for a :code:`RICHNESS` type policy.
           action: COMPLIANCE_POLICIES_CREATE
           description: Create a compliance policy that checks the radiation level of radiation bags is less than 7 rads.
           print_response: true
+          archivist_label: Acme Corporation
         description: radiation level safety policy
         display_name: radiation safety policy
         compliance_type: COMPLIANCE_RICHNESS

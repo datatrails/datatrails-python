@@ -14,6 +14,7 @@ not be accessible to later actions in the story.
           action: SUBJECTS_CREATE_FROM_B64
           description: Import a subjects entity.
           print_response: true
+          archivist_label: Acme Corporation
           subject_label: An imported subject
         display_name: An imported subject
         subject_string: >-

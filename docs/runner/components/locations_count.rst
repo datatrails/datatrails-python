@@ -15,5 +15,6 @@ Setting :code:`print_response: true` is necessary to print the full result.
           action: LOCATIONS_COUNT
           description: Count location for which John Smith is director
           print_response: true
+          archivist_label: Acme Corporation
         attrs:
           director: John Smith

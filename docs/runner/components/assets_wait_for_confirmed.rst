@@ -12,5 +12,6 @@ Wait for all assets that have the required signature to be confirmed.
       - step:
           action: ASSETS_WAIT_FOR_CONFIRMED
           description: Wait for all assets to be confirmed
+          archivist_label: Acme Corporation
         attrs:
           arc_namespace: synsation

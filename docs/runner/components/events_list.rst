@@ -21,6 +21,7 @@ This example lists all 'open door' events for the Courts of Justice Front Door.
           action: EVENTS_LIST
           description: List all events for Courts of Justice Paris Front Door
           print_response: true
+          archivist_label: Acme Corporation
           asset_label: Courts of Justice Paris Front Door
         props:
           confirmation_status: CONFIRMED

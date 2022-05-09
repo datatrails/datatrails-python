@@ -8,8 +8,20 @@
 # be of the correct type such as confirm which is a boolean.
 steps:
   - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection
+      archivist_label: ACME Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN}
+    client_id: !ENV ${TEST_CLIENT_ID}
+    client_secret: !ENV ${TEST_CLIENT_SECRET}
+    max_time: 300
+    verify: false
+
+  - step:
       action: ASSETS_CREATE
       description: Create an empty radiation bag with id 1.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 1
     behaviours:
       - RecordEvidence
@@ -25,6 +37,7 @@ steps:
   - step:
       action: ASSETS_CREATE
       description: Create an empty radiation bag with id 2.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 2
     behaviours:
       - RecordEvidence
@@ -40,6 +53,7 @@ steps:
   - step:
       action: ASSETS_CREATE
       description: Create an empty radiation bag with id 3.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 3
     behaviours:
       - RecordEvidence
@@ -58,6 +72,7 @@ steps:
       description: Create a compliance policy that checks the radiation level of radiation bags is less than 7 rads.
       print_response: true
       delete: true
+      archivist_label: ACME Corporation
     description: radiation level safety policy
     display_name: radiation safety policy
     compliance_type: COMPLIANCE_RICHNESS
@@ -72,6 +87,7 @@ steps:
       description: Create a compliance policy that checks the weight of a radiation bag is less than or equal to 10kg.
       print_response: true
       delete: true
+      archivist_label: ACME Corporation
     description: weight level safety policy
     display_name: weight safety policy
     compliance_type: COMPLIANCE_RICHNESS
@@ -86,6 +102,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event adding 3 rads of radiation to bag 1, increasing its weight by 1kg.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 1
     operation: Record
     behaviour: RecordEvidence
@@ -99,6 +116,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event adding 2 rads of radiation to bag 2, increasing its weight by 5kg.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 2
     operation: Record
     behaviour: RecordEvidence
@@ -112,6 +130,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event adding 5 rads of radiation to bag 3, increasing its weight by 7kg.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 3
     operation: Record
     behaviour: RecordEvidence
@@ -127,16 +146,19 @@ steps:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of bag 1.
       print_response: True
+      archivist_label: ACME Corporation
       asset_label: radiation bag 1
 
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of bag 2.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 2
 
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of bag 3.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 3
 
   # now attempt to add waste to tip one over the edge
@@ -144,6 +166,7 @@ steps:
       action: EVENTS_CREATE
       description: Now Create Event adding 4 rads of radiation to bag 3 increasing its weight by 1kg.
                    This brings the total radiation level to 9 rads and weight to 8kg.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 3
     operation: Record
     behaviour: RecordEvidence
@@ -158,5 +181,6 @@ steps:
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of bag 3.
+      archivist_label: ACME Corporation
       asset_label: radiation bag 3
     report: true

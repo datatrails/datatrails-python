@@ -11,8 +11,20 @@
 # as a boolean.
 steps:
   - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection
+      archivist_label: ACME Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN}
+    client_id: !ENV ${TEST_CLIENT_ID}
+    client_secret: !ENV ${TEST_CLIENT_SECRET}
+    max_time: 300
+    verify: false
+
+  - step:
       action: ASSETS_CREATE
       description: Create new EV Pump with id 1.
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     behaviours:
       - RecordEvidence
@@ -29,6 +41,7 @@ steps:
       description: Create a compliance policy that checks an EV pump maintenance requests are serviced within a reasonable time frame.
       print_response: true
       delete: true
+      archivist_label: ACME Corporation
     description: ev maintenance policy
     display_name: ev maintenance policy
     compliance_type: COMPLIANCE_DYNAMIC_TOLERANCE
@@ -43,6 +56,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event requesting EV pump 1 needs maintenance.
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
@@ -56,6 +70,7 @@ steps:
       action: EVENTS_CREATE
       description: Create Event after 1 seconds, for EV pump 1, stating maintenance occurred.
       wait_time: 1
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
@@ -68,6 +83,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event requesting EV pump 1 needs maintenance.
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
@@ -81,6 +97,7 @@ steps:
       action: EVENTS_CREATE
       description: Create Event after 2 seconds, for EV pump 1, stating maintenance occurred.
       wait_time: 2
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
@@ -93,6 +110,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Create Event requesting EV pump 1 needs maintenance.
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
@@ -106,6 +124,7 @@ steps:
       action: EVENTS_CREATE
       description: Create Event after 3 seconds, for EV pump 1, stating maintenance occurred.
       wait_time: 3
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
@@ -119,12 +138,14 @@ steps:
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of EV pump 1.
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
 
   # now create an event that throws the Standard deviation out of whack
   - step:
       action: EVENTS_CREATE
       description: Create Event requesting EV pump 1 needs maintenance.
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
@@ -138,6 +159,7 @@ steps:
       action: EVENTS_CREATE
       description: Create Event after 20 seconds, for EV pump 1, stating maintenance occurred.
       wait_time: 20
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     operation: Record
     behaviour: RecordEvidence
@@ -151,6 +173,7 @@ steps:
   - step:
       action: COMPLIANCE_COMPLIANT_AT
       description: Check Compliance of EV pump 1.
+      archivist_label: ACME Corporation
       asset_label: ev pump 1
     report: true
 

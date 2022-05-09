@@ -15,6 +15,7 @@ from archivist.archivist import Archivist
 from archivist.compliance import Compliance
 from archivist.compliance_policies import CompliancePolicy
 from archivist.logger import set_logger
+from archivist.runner import Runner
 
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
     set_logger(environ["TEST_DEBUG"])
@@ -105,6 +106,12 @@ class TestRunnerCompliance(TestCase):
 
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
+        self.runner = Runner()
+        self.runner.entities["TestArchivist"] = self.arch
+        self.runner.entities[COMPLIANCE_COMPLIANT_AT_NAME] = {}
+        self.runner.entities[COMPLIANCE_COMPLIANT_AT_NAME][
+            "identity"
+        ] = "assets/dc0dfc17-1d93-4b7a-8636-f740f40f7f52"
 
     def tearDown(self):
         self.arch.close()
@@ -122,7 +129,7 @@ class TestRunnerCompliance(TestCase):
             mock_compliance_policies_create.return_value = CompliancePolicy(
                 **COMPLIANCE_POLICIES_RESPONSE
             )
-            self.arch.runner(
+            self.runner(
                 {
                     "steps": [
                         {
@@ -131,6 +138,7 @@ class TestRunnerCompliance(TestCase):
                                 "description": "Testing compliance_policies_create",
                                 "print_response": True,
                                 "delete": True,
+                                "archivist_label": "TestArchivist",
                             },
                             **COMPLIANCE_POLICIES_CREATE,
                         }
@@ -146,7 +154,7 @@ class TestRunnerCompliance(TestCase):
                 COMPLIANCE_POLICIES_CREATE
             )
             self.assertEqual(
-                self.arch.runner.deletions[IDENTITY],
+                self.runner.deletions[IDENTITY],
                 self.arch.compliance_policies.delete,
                 msg="Incorrect compliance_policy delete_method",
             )
@@ -159,14 +167,11 @@ class TestRunnerCompliance(TestCase):
         """
         with mock.patch.object(
             self.arch.compliance, "compliant_at"
-        ) as mock_compliance_compliant_at, mock.patch.object(
-            self.arch.runner, "identity"
-        ) as mock_identity:
-            mock_identity.return_value = COMPLIANCE_COMPLIANT_AT_ID
+        ) as mock_compliance_compliant_at:
             mock_compliance_compliant_at.return_value = Compliance(
                 **COMPLIANCE_RESPONSE
             )
-            self.arch.runner(
+            self.runner(
                 {
                     "steps": [
                         {
@@ -175,6 +180,7 @@ class TestRunnerCompliance(TestCase):
                                 "description": "Testing compliance_compliant_at",
                                 "print_response": True,
                                 "asset_label": COMPLIANCE_COMPLIANT_AT_NAME,
+                                "archivist_label": "TestArchivist",
                             },
                         }
                     ],
@@ -189,8 +195,8 @@ class TestRunnerCompliance(TestCase):
                 COMPLIANCE_COMPLIANT_AT_ID
             )
             self.assertEqual(
-                len(self.arch.runner.entities),
-                0,
+                len(self.runner.entities),
+                2,
                 msg="Incorrect compliance created",
             )
 
@@ -201,14 +207,11 @@ class TestRunnerCompliance(TestCase):
         """
         with mock.patch.object(
             self.arch.compliance, "compliant_at"
-        ) as mock_compliance_compliant_at, mock.patch.object(
-            self.arch.runner, "identity"
-        ) as mock_identity:
-            mock_identity.return_value = COMPLIANCE_COMPLIANT_AT_ID
+        ) as mock_compliance_compliant_at:
             mock_compliance_compliant_at.return_value = Compliance(
                 **COMPLIANCE_FALSE_RESPONSE
             )
-            self.arch.runner(
+            self.runner(
                 {
                     "steps": [
                         {
@@ -217,6 +220,7 @@ class TestRunnerCompliance(TestCase):
                                 "description": "Testing compliance_compliant_at",
                                 "print_response": True,
                                 "asset_label": COMPLIANCE_COMPLIANT_AT_NAME,
+                                "archivist_label": "TestArchivist",
                             },
                             "report": True,
                         }
@@ -233,7 +237,7 @@ class TestRunnerCompliance(TestCase):
                 report=True,
             )
             self.assertEqual(
-                len(self.arch.runner.entities),
-                0,
+                len(self.runner.entities),
+                2,
                 msg="Incorrect compliance created",
             )

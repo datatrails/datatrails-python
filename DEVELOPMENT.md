@@ -121,7 +121,7 @@ they be run in a production environment.
 Set 2 environment variables and execute:
 
 ```bash
-export TEST_ARCHIVIST="https://app.rkvst.io"
+export TEST_ARCHIVIST="https://app.rkvst-dev.io"
 export TEST_AUTHTOKEN_FILENAME=credentials/authtoken
 task functests
 ```

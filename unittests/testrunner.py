@@ -12,10 +12,9 @@ from unittest import TestCase
 # pylint: disable=unused-variable
 
 from archivist.archivist import Archivist
-from archivist.assets import Asset
 from archivist.constants import ASSET_BEHAVIOURS
 from archivist.logger import set_logger
-from archivist.runner import tree
+from archivist.runner import Runner
 
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
     set_logger(environ["TEST_DEBUG"])
@@ -57,6 +56,7 @@ class TestRunner(TestCase):
 
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
+        self.runner = Runner()
 
     def tearDown(self):
         self.arch.close()
@@ -66,24 +66,7 @@ class TestRunner(TestCase):
         Test runner str
         """
         self.assertEqual(
-            str(self.arch.runner),
-            "Runner(url)",
+            str(self.runner),
+            "Runner()",
             msg="Incorrect str",
-        )
-
-    def test_runner_asset_id(self):
-        """
-        Test runner asset_id
-        """
-        runner = self.arch.runner
-        runner.entities = tree()
-        runner.entities[ASSET_NAME] = Asset(**ASSETS_RESPONSE)
-        self.assertEqual(
-            runner.identity(ASSET_NAME),
-            ASSET_ID,
-            msg="Incorrect ID",
-        )
-        self.assertIsNone(
-            runner.identity(ASSET_NAME + "garbage"),
-            msg="Incorrect ID",
         )

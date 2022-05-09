@@ -8,10 +8,21 @@ Story Runner Components
    :caption: Contents:
 
    generic
+
+   archivist_create
+
+   access_policies_count
+   access_policies_create
+   access_policies_list
+   access_policies_list_matching_access_policies
+   access_policies_list_matching_assets
+   access_policies_read
+   access_policies_update
    assets_count
    assets_create
    assets_create_if_not_exists
    assets_list
+   assets_read
    assets_wait_for_confirmed
    compliance_compliant_at
    compliance_policies_create
@@ -22,6 +33,7 @@ Story Runner Components
    locations_count
    locations_create
    locations_list
+   locations_read
    subjects_count
    subjects_create
    subjects_create_b64

@@ -12,6 +12,7 @@ Creates a location and stores a reference in runner variable :code:`location_lab
       - step:
           action: LOCATIONS_CREATE_IF_NOT_EXISTS
           description: Create Cape Town Location
+          archivist_label: Acme Corporation
         selector:
           - display_name
           - attributes:

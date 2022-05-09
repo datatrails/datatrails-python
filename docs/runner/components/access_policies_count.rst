@@ -1,9 +1,11 @@
-.. _subjects_count_yamlref:
+.. _access_policies_count_yamlref:
 
-Subjects Count Story Runner YAML
+Access Policies Count Story Runner YAML
 .........................................
 
-Count all subjects that have the required signature.
+Count all access_policies that have the required signature.
+
+The :code:`archivist_label` is required.
 
 The :code:`display_name` is optional.
 
@@ -14,8 +16,8 @@ The :code:`print_response` setting should be specified as :code:`True` in order 
     ---
     steps:
       - step:
-          action: SUBJECTS_COUNT
-          description: Count all subjects
+          action: ACCESS_POLICIES_COUNT
+          description: Count all access_policies
           print_response: true
           archivist_label: Acme Corporation
-        display_name: some subject
+        display_name: some access_policy

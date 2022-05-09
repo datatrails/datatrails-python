@@ -12,3 +12,4 @@ Output report on current number of assets, events and locations.
       - step:
           action: COMPOSITE_ESTATE_INFO
           description: Estate Info Report
+          archivist_label: Acme Corporation

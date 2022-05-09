@@ -1,9 +1,11 @@
-.. _subjects_list_yamlref:
+.. _assets_read_yamlref:
 
-Subjects List Story Runner YAML
+Assets Read Story Runner YAML
 .........................................
 
-List all subjects that have the required signature.
+Read the specified subject.
+
+:code:`asset_label` is required.
 
 The :code:`print_response` setting should be specified as :code:`True` in order to see the results.
 
@@ -12,8 +14,8 @@ The :code:`print_response` setting should be specified as :code:`True` in order 
     ---
     steps:
       - step:
-          action: SUBJECTS_LIST
-          description: List all subjects
+          action: LOCATIONS_READ
+          description: Read asset
           print_response: true
           archivist_label: Acme Corporation
-        display_name: some subject
+          asset_label: An asset

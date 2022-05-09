@@ -5,6 +5,16 @@
 # cameras
 #
 steps:
+  - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection
+      archivist_label: ACME Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN}
+    client_id: !ENV ${TEST_CLIENT_ID}
+    client_secret: !ENV ${TEST_CLIENT_SECRET}
+    max_time: 300
+    verify: false
 
   # create locations for all offices - these are created separately as more than one asset
   # can be located at an office and we dont want to duplicate code...
@@ -13,6 +23,7 @@ steps:
   - step:
       action: LOCATIONS_CREATE_IF_NOT_EXISTS
       description: Create {{ location.display_name }} Location
+      archivist_label: ACME Corporation
       location_label: {{ location.display_name }}
     selector:
       - display_name
@@ -33,6 +44,7 @@ steps:
       action: LOCATIONS_COUNT
       description: Count locations in namespace
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
 
@@ -40,6 +52,7 @@ steps:
       action: LOCATIONS_LIST
       description: List locations in namespace
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
 
@@ -47,6 +60,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a {{ asset.type }} in {{ asset.location_label }}
+      archivist_label: ACME Corporation
       asset_label: {{ asset.asset_label }}
       location_label: {{ asset.location_label }}
     selector:
@@ -74,6 +88,7 @@ steps:
       action: ASSETS_WAIT_FOR_CONFIRMED
       description: Wait for all assets to be confirmed
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
 
@@ -81,6 +96,7 @@ steps:
       action: ASSETS_LIST
       description: List all printers
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       arc_display_type: printer
       arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
@@ -89,6 +105,7 @@ steps:
       action: ASSETS_LIST
       description: List all coffee machines
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       arc_display_type: coffee machine
       arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"
@@ -97,6 +114,7 @@ steps:
       action: ASSETS_LIST
       description: List all security cameras
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       arc_display_type: security camera
       arc_namespace: "{{ env['ARCHIVIST_NAMESPACE'] or 'namespace' }}"

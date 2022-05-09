@@ -23,6 +23,7 @@ The optional :code:`confirm: true` entry means that the step will wait for the a
       - step:
           action: ASSETS_CREATE
           description: Create new EV Pump with id 1.
+          archivist_label: Acme Corporation
           asset_label: ev pump 1
         behaviours:
           - Attachments

@@ -16,6 +16,7 @@ Setting :code:`print_response: true` is necessary to print the full result.
           action: ASSETS_LIST
           description: List all doors
           print_response: true
+          archivist_label: Acme Corporation
         attrs:
           arc_display_type: door
           arc_namespace: door entry

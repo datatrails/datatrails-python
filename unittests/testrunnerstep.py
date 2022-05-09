@@ -49,16 +49,17 @@ class TestRunnerStep(TestCase):
         Test runner step
         """
         step = _Step(
-            self.arch,
             **{
                 "action": "COMPLIANCE_POLICIES_CREATE",
                 "wait_time": 10,
                 "print_response": True,
                 "description": "Testing runner events list",
-                "asset_label": "Existing Asset",
                 "delete": True,
+                "archivist_label": "TestArchivist",
+                "asset_label": "Existing Asset",
             }
         )
+        step._archivist = self.arch
         self.assertEqual(
             step.action,
             self.arch.compliance_policies.create_from_data,
@@ -88,16 +89,17 @@ class TestRunnerStep(TestCase):
         Test runner step
         """
         step = _Step(
-            self.arch,
             **{
                 "action": "EVENTS_LIST",
                 "wait_time": 10,
                 "print_response": True,
                 "description": "Testing runner events list",
-                "asset_label": "Existing Asset",
                 "delete": True,
+                "archivist_label": "TestArchivist",
+                "asset_label": "Existing Asset",
             }
         )
+        step._archivist = self.arch
         self.assertEqual(
             step.action,
             self.arch.events.list,
@@ -175,15 +177,16 @@ class TestRunnerStep(TestCase):
         Test runner step
         """
         step = _Step(
-            self.arch,
             **{
                 "action": "EVENTS_CREATE",
                 "wait_time": 10,
                 "print_response": True,
                 "description": "Testing runner events list",
+                "archivist_label": "TestArchivist",
                 "location_label": "Existing Location",
             }
         )
+        step._archivist = self.arch
         self.assertEqual(
             step.action,
             self.arch.events.create_from_data,

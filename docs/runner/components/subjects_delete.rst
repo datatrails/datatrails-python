@@ -17,4 +17,5 @@ The :code:`print_response` setting should be specified as :code:`True` in order 
           action: SUBJECTS_DELETE
           description: Dele subject
           print_response: true
+          archivist_label: Acme Corporation
           subject_label: A subject

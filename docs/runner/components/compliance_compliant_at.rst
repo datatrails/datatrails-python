@@ -18,4 +18,5 @@ Setting :code:`report: true` will trigger a report to be printed on the complian
           action: COMPLIANCE_COMPLIANT_AT
           description: Check Compliance of EV pump 1.
           report: true
+          archivist_label: Acme Corporation
           asset_label: ev pump 1

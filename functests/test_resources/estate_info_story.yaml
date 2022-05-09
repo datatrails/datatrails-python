@@ -5,5 +5,17 @@
 # This story Evaluates how many assets and events exist.
 steps:
   - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection
+      archivist_label: ACME Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN}
+    client_id: !ENV ${TEST_CLIENT_ID}
+    client_secret: !ENV ${TEST_CLIENT_SECRET}
+    max_time: 300
+    verify: false
+
+  - step:
       action: COMPOSITE_ESTATE_INFO
       description: Check assets, events and locations
+      archivist_label: ACME Corporation

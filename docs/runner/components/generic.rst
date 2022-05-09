@@ -17,6 +17,7 @@ Each step follows the same pattern:
           description: Create new EV Pump with id 1.
           wait_time: 10
           print_response: true
+          archivist_label: ACME Corporation
           asset_label: Radiation bag 1
           location_label: Cape Town
         ................definition of request body and other
@@ -39,6 +40,11 @@ Each step follows the same pattern:
 
 :print_response:
    Emit JSON representation of response. Useful for debugging purposes.
+
+:archivist_label:
+   This references a previously created archivist endpoint. This field is required.
+
+   See the ARCHIVIST_CREATE action.
 
 :asset_label:
    For create type actions (ASSETS_CREATE, ASSETS_CREATE_IF_NOT_EXISTS) the label is used

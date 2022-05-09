@@ -17,13 +17,14 @@ from archivist.constants import ASSET_BEHAVIOURS
 from archivist.errors import ArchivistInvalidOperationError
 from archivist.events import Event
 from archivist.logger import set_logger
+from archivist.runner import Runner
 
 if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
     set_logger(environ["TEST_DEBUG"])
 
 LOGGER = getLogger(__name__)
 
-ASSET_ID = "assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ASSET_ID = "assets/add30235-1424-4fda-840a-d5ef82c4c96f"
 ASSET_NAME = "radiation bag 1"
 ASSETS_CREATE_ARGS = {
     "behaviours": ASSET_BEHAVIOURS,
@@ -180,6 +181,9 @@ class TestRunnerAssetsCreate(TestCase):
 
     def setUp(self):
         self.arch = Archivist("https://app.rkvst.io", "authauthauth")
+        self.runner = Runner()
+        self.runner.entities["TestArchivist"] = self.arch
+        self.runner.entities[ASSET_NAME] = ASSETS_RESPONSE
 
     def tearDown(self):
         self.arch.close()
@@ -193,7 +197,7 @@ class TestRunnerAssetsCreate(TestCase):
             self.arch.assets, "create_from_data"
         ) as mock_assets_create:
             mock_assets_create.return_value = Asset(**ASSETS_RESPONSE)
-            self.arch.runner(
+            self.runner(
                 {
                     "steps": [
                         {
@@ -201,8 +205,9 @@ class TestRunnerAssetsCreate(TestCase):
                                 "action": "ASSETS_CREATE",
                                 "wait_time": 10,
                                 "description": "Testing runner assets create",
-                                "asset_label": "Existing Asset",
                                 "delete": True,
+                                "archivist_label": "TestArchivist",
+                                "asset_label": ASSET_NAME,
                             },
                             **ASSETS_CREATE,
                         },
@@ -210,11 +215,6 @@ class TestRunnerAssetsCreate(TestCase):
                 }
             )
             mock_assets_create.assert_called_once_with(ASSETS_CREATE_ARGS)
-            self.assertEqual(
-                self.arch.runner.entities["Existing Asset"],
-                ASSETS_RESPONSE,
-                msg="Incorrect asset created",
-            )
             mock_sleep.assert_called_once_with(10)
 
     @mock.patch("archivist.runner.time_sleep")
@@ -226,7 +226,7 @@ class TestRunnerAssetsCreate(TestCase):
             self.arch.assets, "create_if_not_exists"
         ) as mock_assets_create:
             mock_assets_create.return_value = (Asset(**ASSETS_RESPONSE), True)
-            self.arch.runner(
+            self.runner(
                 {
                     "steps": [
                         {
@@ -234,7 +234,8 @@ class TestRunnerAssetsCreate(TestCase):
                                 "action": "ASSETS_CREATE_IF_NOT_EXISTS",
                                 "wait_time": 10,
                                 "description": "Testing runner assets create if not exists",
-                                "asset_label": "Existing Asset",
+                                "asset_label": ASSET_NAME,
+                                "archivist_label": "TestArchivist",
                             },
                             **ASSETS_CREATE_IF_NOT_EXISTS,
                             "confirm": True,
@@ -245,11 +246,6 @@ class TestRunnerAssetsCreate(TestCase):
             mock_assets_create.assert_called_once_with(
                 ASSETS_CREATE_IF_NOT_EXISTS, **ASSETS_CONFIRM
             )
-            self.assertEqual(
-                self.arch.runner.entities["Existing Asset"],
-                ASSETS_RESPONSE,
-                msg="Incorrect asset created",
-            )
             mock_sleep.assert_called_once_with(10)
 
     @mock.patch("archivist.runner.time_sleep")
@@ -257,14 +253,9 @@ class TestRunnerAssetsCreate(TestCase):
         """
         Test runner operation
         """
-        with mock.patch.object(
-            self.arch.events, "list"
-        ) as mock_events_list, mock.patch.object(
-            self.arch.runner, "identity"
-        ) as mock_identity:
-            mock_identity.return_value = EVENTS_LIST_ASSET_ID
+        with mock.patch.object(self.arch.events, "list") as mock_events_list:
             mock_events_list.return_value = event_generator(2)
-            self.arch.runner(
+            self.runner(
                 {
                     "steps": [
                         {
@@ -273,7 +264,8 @@ class TestRunnerAssetsCreate(TestCase):
                                 "wait_time": 10,
                                 "print_response": True,
                                 "description": "Testing runner events list",
-                                "asset_label": "Existing Asset",
+                                "asset_label": ASSET_NAME,
+                                "archivist_label": "TestArchivist",
                             },
                             **EVENTS_LIST,
                         },
@@ -293,14 +285,9 @@ class TestRunnerAssetsCreate(TestCase):
         """
         Test runner operation
         """
-        with mock.patch.object(
-            self.arch.events, "count"
-        ) as mock_events_count, mock.patch.object(
-            self.arch.runner, "identity"
-        ) as mock_identity:
-            mock_identity.return_value = EVENTS_LIST_ASSET_ID
+        with mock.patch.object(self.arch.events, "count") as mock_events_count:
             mock_events_count.return_value = 2
-            self.arch.runner(
+            self.runner(
                 {
                     "steps": [
                         {
@@ -309,7 +296,8 @@ class TestRunnerAssetsCreate(TestCase):
                                 "wait_time": 10,
                                 "print_response": True,
                                 "description": "Testing runner events count",
-                                "asset_label": "Existing Asset",
+                                "asset_label": ASSET_NAME,
+                                "archivist_label": "TestArchivist",
                             },
                             **EVENTS_LIST,
                         },
@@ -333,12 +321,13 @@ class TestRunnerAssetsCreate(TestCase):
             self.arch.assets, "create_from_data"
         ) as mock_assets_create:
             mock_assets_create.return_value = Asset(**ASSETS_RESPONSE)
-            self.arch.runner.run_steps(
+            self.runner.run_steps(
                 {
                     "steps": [
                         {
                             "step": {
                                 "action": "ASSETS_CREATE",
+                                "archivist_label": "TestArchivist",
                             },
                             **ASSETS_CREATE,
                         },
@@ -361,7 +350,7 @@ class TestRunnerAssetsCreate(TestCase):
         ) as mock_assets_create:
             mock_assets_create.return_value = Asset(**ASSETS_RESPONSE)
             with self.assertRaises(ArchivistInvalidOperationError) as ex:
-                self.arch.runner.run_steps(
+                self.runner.run_steps(
                     {
                         "steps": [
                             {
@@ -385,7 +374,7 @@ class TestRunnerAssetsCreate(TestCase):
         ) as mock_events_create:
             mock_events_create.return_value = Event(**EVENT_RESPONSE)
             with self.assertRaises(ArchivistInvalidOperationError) as ex:
-                self.arch.runner.run_steps(
+                self.runner.run_steps(
                     {
                         "steps": [
                             {
@@ -393,6 +382,7 @@ class TestRunnerAssetsCreate(TestCase):
                                     "action": "EVENTS_CREATE",
                                     "wait_time": 10,
                                     "asset_label": "Nonexistent asset",
+                                    "archivist_label": "TestArchivist",
                                 },
                                 **EVENTS_CREATE,
                             }
@@ -411,7 +401,7 @@ class TestRunnerAssetsCreate(TestCase):
         ) as mock_events_create:
             mock_events_create.return_value = Event(**EVENT_RESPONSE)
             with self.assertRaises(ArchivistInvalidOperationError) as ex:
-                self.arch.runner.run_steps(
+                self.runner.run_steps(
                     {
                         "steps": [
                             {
@@ -419,6 +409,7 @@ class TestRunnerAssetsCreate(TestCase):
                                     "action": "EVENTS_CREATE",
                                     "wait_time": 10,
                                     "location_label": "Nonexistent location",
+                                    "archivist_label": "TestArchivist",
                                 },
                                 **EVENTS_CREATE,
                             }
@@ -436,13 +427,14 @@ class TestRunnerAssetsCreate(TestCase):
             self.arch.events, "create_from_data"
         ) as mock_events_create:
             mock_events_create.return_value = Event(**EVENT_RESPONSE)
-            self.arch.runner.run_steps(
+            self.runner.run_steps(
                 {
                     "steps": [
                         {
                             "step": {
                                 "action": "EVENTS_CREATE",
                                 "location_label": LOCATION_IDENTITY,
+                                "archivist_label": "TestArchivist",
                             },
                             **EVENTS_CREATE,
                         }
@@ -460,13 +452,14 @@ class TestRunnerAssetsCreate(TestCase):
         ) as mock_events_create:
             mock_events_create.return_value = Event(**EVENT_RESPONSE)
             with self.assertRaises(ArchivistInvalidOperationError) as ex:
-                self.arch.runner.run_steps(
+                self.runner.run_steps(
                     {
                         "steps": [
                             {
                                 "step": {
                                     "action": "EVENTS_CREATE",
                                     "location_label": LOCATION_IDENTITY_BAD_UUID,
+                                    "archivist_label": "TestArchivist",
                                 },
                                 **EVENTS_CREATE,
                             }
@@ -474,7 +467,11 @@ class TestRunnerAssetsCreate(TestCase):
                     }
                 )
 
-            self.assertEqual("unknown location" in str(ex.exception), True)
+            self.assertEqual(
+                "invalid locations/add30235-xxxx-xxxx-xxxx-d5ef82c4c96f"
+                in str(ex.exception),
+                True,
+            )
 
     def test_runner_assets_create_invalid_action(self):
         """
@@ -485,7 +482,7 @@ class TestRunnerAssetsCreate(TestCase):
         ) as mock_assets_create:
             mock_assets_create.return_value = Asset(**ASSETS_RESPONSE)
             with self.assertRaises(ArchivistInvalidOperationError) as ex:
-                self.arch.runner.run_steps(
+                self.runner.run_steps(
                     {
                         "steps": [
                             {
@@ -509,7 +506,7 @@ class TestRunnerAssetsCreate(TestCase):
             self.arch.assets, "create_from_data"
         ) as mock_assets_create:
             mock_assets_create.return_value = Asset(**ASSETS_RESPONSE)
-            self.arch.runner(
+            self.runner(
                 {
                     "steps": [
                         {

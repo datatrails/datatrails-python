@@ -10,13 +10,13 @@ from pyaml_env import parse_config
 from ... import about
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from ... import archivist
+from ...runner import Runner
 
 
 LOGGER = getLogger(__name__)
 
 
-def run(arch: archivist.Archivist, args):
+def run(args):
 
     LOGGER.info("Using version %s of rkvst-archivist", about.__version__)
     LOGGER.info("Namespace %s", args.namespace)
@@ -27,6 +27,6 @@ def run(arch: archivist.Archivist, args):
         environ["ARCHIVIST_NAMESPACE"] = args.namespace
 
     with open(args.yamlfile, "r", encoding="utf-8") as yml:
-        arch.runner(parse_config(data=yml))
+        Runner()(parse_config(data=yml))
 
     sys_exit(0)

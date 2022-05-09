@@ -15,4 +15,5 @@ Wait for a subject to be confirmed.
           action: SUBJECTS_WAIT_FOR_CONFIRMATION
           description: Wait for all subjects to be confirmed
           print_response: true
+          archivist_label: Acme Corporation
           subject_label: A subject

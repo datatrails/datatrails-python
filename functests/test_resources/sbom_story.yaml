@@ -11,8 +11,20 @@
 #
 steps:
   - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection
+      archivist_label: ACME Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN}
+    client_id: !ENV ${TEST_CLIENT_ID}
+    client_secret: !ENV ${TEST_CLIENT_SECRET}
+    max_time: 300
+    verify: false
+
+  - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create the ACME Corporation Detector SAAS SBOM
+      archivist_label: ACME Corporation
       asset_label: ACME Corporation Detector SAAS
     selector:
       - attributes:
@@ -38,8 +50,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Release YYYYMMDD.1 of Test SBOM for YAML story
-      asset_label: ACME Corporation Detector SAAS
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: ACME Corporation Detector SAAS
     operation: Record
     behaviour: RecordEvidence
     confirm: true
@@ -56,8 +69,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Release YYYYMMDD.2 of Test SBOM for YAML story
-      asset_label: ACME Corporation Detector SAAS
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: ACME Corporation Detector SAAS
     operation: Record
     behaviour: RecordEvidence
     confirm: true
@@ -74,8 +88,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Release YYYYMMDD.3 of Test SBOM for YAML story
-      asset_label: ACME Corporation Detector SAAS
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: ACME Corporation Detector SAAS
     operation: Record
     behaviour: RecordEvidence
     confirm: true
@@ -92,6 +107,7 @@ steps:
       action: ASSETS_LIST
       description: List all sboms
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       arc_display_type: Software Package
       arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
@@ -100,6 +116,7 @@ steps:
       action: EVENTS_LIST
       description: List all releases for this sbom
       print_response: true
+      archivist_label: ACME Corporation
       asset_label: ACME Corporation Detector SAAS
     props:
       confirmation_status: CONFIRMED

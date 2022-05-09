@@ -14,6 +14,7 @@ not be accessible to later actions in the story.
           action: SUBJECTS_CREATE
           description: Create a subjects entity.
           print_response: true
+          archivist_label: Acme Corporation
           subject_label: A subject
         display_name: A subject
         wallet_pub_key:

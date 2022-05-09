@@ -6,8 +6,20 @@
 #
 steps:
   - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection
+      archivist_label: ACME Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN}
+    client_id: !ENV ${TEST_CLIENT_ID}
+    client_secret: !ENV ${TEST_CLIENT_SECRET}
+    max_time: 300
+    verify: false
+
+  - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a drum container number 1
+      archivist_label: ACME Corporation
       asset_label: Drum 1
     selector:
       - attributes:
@@ -31,6 +43,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a cask container number 1
+      archivist_label: ACME Corporation
       asset_label: Cask 1
     selector:
       - attributes:
@@ -54,8 +67,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Characterize Drum 1
-      asset_label: Drum 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Drum 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -79,8 +93,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Tomograph Drum 1
-      asset_label: Drum 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Drum 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -105,8 +120,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Loading Drum 1 into Cask 1
-      asset_label: Drum 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Drum 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -124,8 +140,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Filled Cask 1 with Drum 1
-      asset_label: Cask 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Cask 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -143,8 +160,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Preship inspection of Drum 1
-      asset_label: Drum 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Drum 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -160,8 +178,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Preship inspection of Cask 1
-      asset_label: Cask 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Cask 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -177,8 +196,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Departure of Drum 1
-      asset_label: Drum 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Drum 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -197,8 +217,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Departure of Cask 1
-      asset_label: Cask 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Cask 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -218,8 +239,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Atlanta Waypoint of Cask 1
-      asset_label: Cask 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Cask 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -248,8 +270,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Talladega Waypoint of Cask 1
-      asset_label: Cask 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Cask 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -279,8 +302,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Arrival of Drum 1
-      asset_label: Drum 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Drum 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -296,8 +320,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Arrival of Cask 1
-      asset_label: Cask 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Cask 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -314,8 +339,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Unloading Drum 1 from Cask 1
-      asset_label: Drum 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Drum 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -331,8 +357,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Unloading Drum 1 from Cask 1
-      asset_label: Cask 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Cask 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -349,8 +376,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Drum 1 Emplacemant
-      asset_label: Drum 1
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Drum 1
     operation: Record
     behaviour: RecordEvidence
     event_attributes:

@@ -9,14 +9,12 @@ from jinja2 import Environment, FileSystemLoader
 from pyaml_env import parse_config
 import yaml
 
-from archivist.archivist import Archivist
-from archivist.utils import get_auth
-
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
 from archivist import logger
+from archivist.runner import Runner
 
 if getenv("TEST_DEBUG") is not None:
     logger.set_logger(getenv("TEST_DEBUG"))
@@ -34,18 +32,10 @@ class TestRunner(TestCase):
     maxDiff = None
 
     def setUp(self):
-        auth = get_auth(
-            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("TEST_CLIENT_ID"),
-            client_secret=getenv("TEST_CLIENT_SECRET"),
-            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
-        )
-        self.arch = Archivist(
-            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300
-        )
+        self.runner = Runner()
 
     def tearDown(self):
-        self.arch.close()
+        self.runner = None
 
     def test_runner_dynamic_tolerance(self):
         """
@@ -61,10 +51,10 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
+            self.runner.run_steps(parse_config(data=y))
             self.assertEqual(
-                len(self.arch.runner.entities),
-                1,
+                len(self.runner.entities),
+                2,
                 msg="Incorrect number of entities",
             )
 
@@ -91,7 +81,7 @@ class TestRunner(TestCase):
         ) as fd:
             # render template into yaml which is then converted
             # to a dict....
-            self.arch.runner.run_steps(
+            self.runner.run_steps(
                 yaml.load(
                     template.render(
                         yaml.load(
@@ -104,8 +94,8 @@ class TestRunner(TestCase):
                 ),
             )
             self.assertEqual(
-                len(self.arch.runner.entities),
-                9,
+                len(self.runner.entities),
+                10,
                 msg="Incorrect number of entities",
             )
 
@@ -124,10 +114,10 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
+            self.runner.run_steps(parse_config(data=y))
             self.assertEqual(
-                len(self.arch.runner.entities),
-                3,
+                len(self.runner.entities),
+                4,
                 msg="Incorrect number of entities",
             )
 
@@ -146,10 +136,10 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
+            self.runner.run_steps(parse_config(data=y))
             self.assertEqual(
-                len(self.arch.runner.entities),
-                11,
+                len(self.runner.entities),
+                12,
                 msg="Incorrect number of entities",
             )
 
@@ -165,7 +155,12 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
+            self.runner.run_steps(parse_config(data=y))
+            self.assertEqual(
+                len(self.runner.entities),
+                1,
+                msg="Incorrect number of entities",
+            )
 
     def test_runner_wipp(self):
         """
@@ -182,10 +177,10 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
+            self.runner.run_steps(parse_config(data=y))
             self.assertEqual(
-                len(self.arch.runner.entities),
-                2,
+                len(self.runner.entities),
+                3,
                 msg="Incorrect number of entities",
             )
 
@@ -202,10 +197,30 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
+            self.runner.run_steps(parse_config(data=y))
             self.assertEqual(
-                len(self.arch.runner.entities),
-                1,
+                len(self.runner.entities),
+                2,
+                msg="Incorrect number of entities",
+            )
+
+    def test_runner_access_policies(self):
+        """
+        Test runner with access_policies story
+
+        run_steps is used so that exceptions are shown
+        """
+
+        LOGGER.info("...")
+        with open(
+            "functests/test_resources/access_policies_story.yaml",
+            "r",
+            encoding="utf-8",
+        ) as y:
+            self.runner.run_steps(parse_config(data=y))
+            self.assertGreater(
+                len(self.runner.entities),
+                0,
                 msg="Incorrect number of entities",
             )
 
@@ -222,9 +237,9 @@ class TestRunner(TestCase):
             "r",
             encoding="utf-8",
         ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
+            self.runner.run_steps(parse_config(data=y))
             self.assertGreater(
-                len(self.arch.runner.entities),
+                len(self.runner.entities),
                 0,
                 msg="Incorrect number of entities",
             )

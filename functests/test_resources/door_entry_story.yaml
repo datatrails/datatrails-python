@@ -10,6 +10,17 @@
 #
 steps:
   - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection
+      archivist_label: ACME Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN}
+    client_id: !ENV ${TEST_CLIENT_ID}
+    client_secret: !ENV ${TEST_CLIENT_SECRET}
+    max_time: 300
+    verify: false
+
+  - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at RKVST offices.
       asset_label: RKVST Paris Front Door
@@ -49,6 +60,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at City Hall
+      archivist_label: ACME Corporation
       asset_label: City Hall Paris Front Door
     selector:
       - attributes:
@@ -87,6 +99,7 @@ steps:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at Courts of Justice
       print_response: true
+      archivist_label: ACME Corporation
       asset_label: Courts of Justice Paris Front Door
     selector:
       - attributes:
@@ -124,6 +137,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at Bastille
+      archivist_label: ACME Corporation
       asset_label: Bastille Paris Front Door
     selector:
       - attributes:
@@ -161,6 +175,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a front door in Paris at Gare du Nord Apartments
+      archivist_label: ACME Corporation
       asset_label: Gare du Nord Apartments Paris Front Door
     selector:
       - attributes:
@@ -198,6 +213,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a side door in Paris at Gare du Nord Apartments
+      archivist_label: ACME Corporation
       asset_label: Gare du Nord Apartments Paris Side Door
     selector:
       - attributes:
@@ -242,6 +258,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 1
+      archivist_label: ACME Corporation
       asset_label: Access Card 1
     selector:
       - attributes:
@@ -261,6 +278,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 2
+      archivist_label: ACME Corporation
       asset_label: Access Card 2
       print_response: true
     selector:
@@ -281,6 +299,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 3
+      archivist_label: ACME Corporation
       asset_label: Access Card 3
     selector:
       - attributes:
@@ -299,6 +318,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 4
+      archivist_label: ACME Corporation
       asset_label: Access Card 4
     selector:
       - attributes:
@@ -318,6 +338,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 5
+      archivist_label: ACME Corporation
       asset_label: Access Card 5
     selector:
       - attributes:
@@ -340,6 +361,7 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Courts of justice front door opened with card 2
+      archivist_label: ACME Corporation
       asset_label: Courts of Justice Paris Front Door
       print_response: true
     operation: Record
@@ -363,8 +385,9 @@ steps:
   - step:
       action: EVENTS_CREATE
       description: Access Card 2 opens Courts of justice front door
-      asset_label: Access Card 2
       print_response: true
+      archivist_label: ACME Corporation
+      asset_label: Access Card 2
     operation: Record
     behaviour: RecordEvidence
     principal_declared:
@@ -387,6 +410,7 @@ steps:
       action: ASSETS_LIST
       description: List all doors
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       arc_display_type: door
       arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
@@ -395,6 +419,7 @@ steps:
       action: ASSETS_LIST
       description: List all cards
       print_response: true
+      archivist_label: ACME Corporation
     attrs:
       arc_display_type: card
       arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
@@ -403,10 +428,12 @@ steps:
       action: EVENTS_LIST
       description: List all events for Courts of Justice Paris Front Door
       print_response: true
+      archivist_label: ACME Corporation
       asset_label: Courts of Justice Paris Front Door
 
   - step:
       action: EVENTS_LIST
       description: List all events for Access Card 2
       print_response: true
+      archivist_label: ACME Corporation
       asset_label: Access Card 2

@@ -19,6 +19,13 @@ HEADERS_REQUEST_TOTAL_COUNT = "X-Request-Total-Count"
 HEADERS_TOTAL_COUNT = "X-Total-Count"
 HEADERS_RETRY_AFTER = "Archivist-Rate-Limit-Reset"
 
+# These are now hardcoded and not user-selectable. Eventually they will be removed from
+# the backend API and removed from this package.
+ASSET_BEHAVIOURS = [
+    "Attachments",
+    "RecordEvidence",
+]
+
 CONFIRMATION_STATUS = "confirmation_status"
 CONFIRMATION_PENDING = "PENDING"
 CONFIRMATION_FAILED = "FAILED"

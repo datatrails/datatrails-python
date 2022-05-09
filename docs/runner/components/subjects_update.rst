@@ -16,6 +16,7 @@ optional but at least one must be specified.
           action: SUBJECTS_UPDATE
           description: Update a subjects entity.
           print_response: true
+          archivist_label: Acme Corporation
           subject_label: A subject
         display_name: A subject
         wallet_pub_key:

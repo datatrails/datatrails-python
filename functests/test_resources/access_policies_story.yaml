@@ -1,0 +1,118 @@
+---
+steps:
+  # ACME corporation - create one asset
+  - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection for ACME corporation
+      archivist_label: ACME Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN}
+    client_id: !ENV ${TEST_CLIENT_ID}
+    client_secret: !ENV ${TEST_CLIENT_SECRET}
+    max_time: 300
+    verify: false
+
+  - step:
+      action: ASSETS_CREATE_IF_NOT_EXISTS
+      description: Create Acme Asset
+      archivist_label: ACME Corporation
+      asset_label: ACME Asset
+      print_response: true
+    selector:
+      - attributes:
+        - arc_display_name
+        - arc_namespace
+    behaviours:
+      - RecordEvidence
+      - Attachments
+    attributes:
+      arc_display_name: acme_display_name
+      arc_description: acme_display_description
+      arc_namespace: !ENV ${TEST_NAMESPACE:namespace}
+      arc_display_type: acme_display_type
+      ext_vendor_name: acme
+    confirm: true
+
+  # Weyland corporation
+  - step:
+      action: ARCHIVIST_CREATE
+      description: Create an archivist connection for Weyland
+      archivist_label: Weyland Corporation
+    url: !ENV ${TEST_ARCHIVIST:https://app.rkvst.io}
+    auth_token: !ENV ${TEST_AUTHTOKEN_2}
+    client_id: !ENV ${TEST_CLIENT_ID_2}
+    client_secret: !ENV ${TEST_CLIENT_SECRET_2}
+    max_time: 300
+    verify: false
+
+  - step:
+      action: SUBJECTS_SHARE
+      description: Share between ACME and Weyland
+      print_response: true
+      archivist_label: ACME Corporation
+    name: Weyland Self on ACME
+    other_name: ACME Self on Weyland
+    other_archivist: Weyland Corporation
+    
+
+# - step:
+#     action: ACCESS_POLICIES_CREATE
+#     description: Create an access_policies entity that allows sharing acme assets
+#     print_response: true
+#     archivist_label: ACME Corporation
+#     access_policy_label: ACME access policy for weyland
+#   display_name: acme access policy for weyland
+#   description: acme Policy description
+#   filters:
+#     - or:
+#       - "attributes.arc_display_type=acme_display_type" 
+#     - or:
+#       - "attributes.ext_vendor_name=acme"
+#   access_permissions:
+#       subjects:
+#         - Weyland Self on acme
+#       behaviours:
+#         - Attachments
+#         - RecordEvidence
+#       include_attributes:
+#         - arc_display_name
+
+# - step:
+#     action: ACCESS_POLICIES_COUNT
+#     description: Count all access_policies
+#     print_response: true
+#     archivist_label: ACME Corporation
+
+# - step:
+#     action: ACCESS_POLICIES_LIST
+#     description: List all access_policies
+#     print_response: true
+#     archivist_label: ACME Corporation
+
+# - step:
+#     action: ACCESS_POLICIES_LIST_MATCHING_ASSETS
+#     description: List assets that match an access_policy
+#     print_response: true
+#     archivist_label: ACME Corporation
+#     access_policy_label: An access policy
+
+# - step:
+#     action: ACCESS_POLICIES_LIST_MATCHING_ACCESS_POLICIES
+#     description: List access policies that match an asset in acme
+#     print_response: true
+#     archivist_label: ACME Corporation
+#     asset_label: An asset
+
+# - step:
+#     action: ACCESS_POLICIES_READ
+#     description: Read access policy
+#     print_response: true
+#     archivist_label: ACME Corporation
+#     access_policy_label: An access policy
+
+##- step:
+##    action: ACCESS_POLICIES_UPDATE
+##    description: Update an access_policies entity.
+##    print_response: true
+##    archivist_label: ACME Corporation
+##    access_policy_label: An access policy

@@ -82,6 +82,11 @@ def common_parser(description: str):
         default="https://app.rkvst.io",
         help="url of Archivist service",
     )
+    return parser
+
+
+def common_parser(description: str):
+    parser = basic_parser(description)
     parser.add_argument(
         "-p",
         "--proof-mechanism",
@@ -144,12 +149,17 @@ def common_parser(description: str):
     return parser
 
 
-def endpoint(args):
+def debug_level(args):
 
     if args.verbose:
         set_logger("DEBUG")
     else:
         set_logger("INFO")
+
+
+def endpoint(args):
+
+    debug_level(args)
 
     arch = None
     LOGGER.info("Initialising connection to RKVST...")
