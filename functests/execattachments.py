@@ -22,7 +22,7 @@ if getenv("TEST_DEBUG") is not None:
 # pylint: disable=unused-variable
 
 
-class TestAttachmentstCreate(TestCase):
+class TestAttachmentsCreate(TestCase):
     """
     Test Archivist Attachment Create method
     """

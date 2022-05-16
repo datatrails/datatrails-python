@@ -77,7 +77,7 @@ class TestErrors(TestCase):
 
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (400)',
+            'url: {"error": "some error"} (400)',
             msg="incorrect error",
         )
 
@@ -97,7 +97,7 @@ class TestErrors(TestCase):
 
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (401)',
+            'url: {"error": "some error"} (401)',
             msg="incorrect error",
         )
 
@@ -119,7 +119,7 @@ class TestErrors(TestCase):
 
         self.assertEqual(
             str(ex.exception),
-            '{"error": "Entity QuotaReached", "description": "Current quota is 10"} (402)',
+            'url: {"error": "Entity QuotaReached", "description": "Current quota is 10"} (402)',
             msg="incorrect error",
         )
 
@@ -139,7 +139,7 @@ class TestErrors(TestCase):
 
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (403)',
+            'url: {"error": "some error"} (403)',
         )
 
     def test_errors_403_multipartencoder(self):
@@ -171,7 +171,7 @@ class TestErrors(TestCase):
 
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (403)',
+            'url: {"error": "some error"} (403)',
         )
 
     def test_errors_404(self):
@@ -281,7 +281,7 @@ class TestErrors(TestCase):
 
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (429)',
+            'url: {"error": "some error"} (429)',
             msg="incorrect error",
         )
 
@@ -299,7 +299,7 @@ class TestErrors(TestCase):
             raise error
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (405)',
+            'url: {"error": "some error"} (405)',
             msg="incorrect error",
         )
 
@@ -317,7 +317,7 @@ class TestErrors(TestCase):
             raise error
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (500)',
+            'url: {"error": "some error"} (500)',
             msg="incorrect error",
         )
 
@@ -335,7 +335,7 @@ class TestErrors(TestCase):
             raise error
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (501)',
+            'url: {"error": "some error"} (501)',
             msg="incorrect error",
         )
 
@@ -353,7 +353,7 @@ class TestErrors(TestCase):
             raise error
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (503)',
+            'url: {"error": "some error"} (503)',
             msg="incorrect error",
         )
 
@@ -371,6 +371,6 @@ class TestErrors(TestCase):
             raise error
         self.assertEqual(
             str(ex.exception),
-            '{"error": "some error"} (600)',
+            'url: {"error": "some error"} (600)',
             msg="incorrect error",
         )

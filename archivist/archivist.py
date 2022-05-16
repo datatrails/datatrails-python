@@ -52,6 +52,7 @@ from .errors import (
     _parse_response,
     ArchivistBadFieldError,
     ArchivistDuplicateError,
+    ArchivistError,
     ArchivistHeaderError,
     ArchivistNotFoundError,
 )
@@ -131,6 +132,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
             self._client_secret = None
 
         self._expires_at = 0
+        if url.endswith("/"):
+            raise ArchivistError(f"URL {url} has trailing /")
+
         self._url = url
         self._verify = verify
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
@@ -187,7 +191,9 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         """str: authorization token."""
         if self._client_id is not None and self._expires_at < time():
             apptoken = self.appidp.token(self._client_id, self._client_secret)  # type: ignore
-            self._auth = apptoken["access_token"]
+            self._auth = apptoken.get("access_token")
+            if self._auth is None:
+                raise ArchivistError("Auth token from client id,secret is invalid")
             self._expires_at = time() + apptoken["expires_in"] - 10  # fudge factor
             LOGGER.info("Refresh token")
 
