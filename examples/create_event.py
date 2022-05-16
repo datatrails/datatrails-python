@@ -11,6 +11,7 @@ calls create_event and pass in "arch" and the created asset to create a new even
 from os import getenv
 
 from archivist.archivist import Archivist
+from archivist.logger import set_logger
 
 
 def create_event(arch, asset):
@@ -108,6 +109,11 @@ def main():
     the asset and fetch the event.
 
     """
+    # optional call to set the logger level for all subsystems. The argumant can
+    # be either "INFO" or "DEBUG". For more sophisticated logging control see the
+    # documentation.
+    set_logger("DEBUG")
+
     # client id and client secret is obtained from the appidp endpoint - see the
     # application registrations example code in examples/applications_registration.py
     #

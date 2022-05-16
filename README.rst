@@ -337,6 +337,26 @@ A recommended minimum configuration would be:
         },
     })
 
+For convenience this has been encapsulated in a convenience function :code:`set_logger`
+which should be called before anything else:
+
+.. code:: python
+
+    from archivist.logger import set_logger
+    from archivist.archivist import Archivist
+
+    set_logger("DEBUG")
+    client_id = getenv("ARCHIVIST_CLIENT_ID")
+    client_secret_file = getenv("ARCHIVIST_CLIENT_SECRET_FILENAME")
+    with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
+        client_secret = tokenfile.read().strip()
+
+    arch = Archivist(
+        "https://app.rkvst.io",
+        (client_id, client_secret),
+        max_time=300,
+    )
+
 Development
 ===========
 

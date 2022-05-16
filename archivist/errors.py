@@ -115,7 +115,8 @@ def __description(response):
         return f"{__identity(response)} not found ({status_code})"
 
     text = response.text or ""
-    return f"{text} ({status_code})"
+    url = getattr(response, "url", "")
+    return f"{url}: {text} ({status_code})"
 
 
 def _parse_response(response):

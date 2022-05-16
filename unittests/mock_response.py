@@ -18,6 +18,10 @@ class MockResponse(dict):
         self._iter_content = iter_content
 
     @property
+    def url(self):
+        return "url"
+
+    @property
     def request(self):
         return self._request
 

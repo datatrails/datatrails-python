@@ -7,8 +7,6 @@
    urllib3 package.
 
    URL: https://docs.djangoproject.com/en/3.2/topics/logging/
-
-   This code is not used directly by this package... but is used in unittests (if enabled)
 """
 
 # pylint:  disable=missing-docstring
@@ -20,6 +18,13 @@ LOGGER = getLogger()
 
 
 def set_logger(level):
+    """
+    Set logging level
+
+    Args:
+        level (str): Either INFO or DEBUG
+
+    """
     config.dictConfig(
         {
             "version": 1,
