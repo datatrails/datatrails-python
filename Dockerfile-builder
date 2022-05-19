@@ -2,7 +2,10 @@ ARG VERSION=3.7
 FROM python:${VERSION}-bullseye
 
 # Note that any deps installed here must also be installed in the
-# github actions workflow .github/workflows/python-package.yml
+# github actions workflows:
+#
+#      .github/workflows/python-package.yml
+#      .github/workflows/python-publish.yml
 #
 ENV DEBIAN_FRONTEND noninteractive
 

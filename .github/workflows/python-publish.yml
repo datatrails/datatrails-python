@@ -20,6 +20,14 @@ jobs:
         python-version: '3.x'
     - name: Install dependencies
       run: |
+        export DEBIAN_FRONTEND=noninteractive
+        sudo apt-get update
+        sudo apt-get upgrade -y --no-install-recommends
+        sudo apt-get install -y libenchant-2-2
+        sudo apt-get autoremove
+        sudo apt-get autoclean
+        sudo apt-get clean
+        sudo rm -rf /var/lib/apt/lists/*
         python3 -m pip install --upgrade pip
         python3 -m pip install build setuptools wheel twine
     - name: Build and publish
