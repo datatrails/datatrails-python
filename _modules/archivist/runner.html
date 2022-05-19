@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.runner &mdash; RKVST 0.13.1 documentation</title>
+  <title>archivist.runner &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -57,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -225,6 +226,13 @@
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
             <span class="s2">&quot;set_location_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_LIST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;props&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_READ&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">read</span><span class="p">,</span>
             <span class="s2">&quot;use_location_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_arg_identity&quot;</span><span class="p">,</span>
@@ -272,7 +280,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ops</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Illegal Action &#39;</span><span class="si">{action_name}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Illegal Action &#39;</span><span class="si">{</span><span class="n">action_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ops</span></div>
 
 <div class="viewcode-block" id="_ActionMap.action"><a class="viewcode-back" href="../../runner.html#archivist.runner._ActionMap.action">[docs]</a>    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
@@ -298,7 +306,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether this action uses or sets label</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{noun}</span><span class="s2">_</span><span class="si">{endpoint}</span><span class="s2">_label&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">_label&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="_Step"><a class="viewcode-back" href="../../runner.html#archivist.runner._Step">[docs]</a><span class="k">class</span> <span class="nc">_Step</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>  <span class="c1"># pylint:disable=too-many-instance-attributes</span>
@@ -357,13 +365,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">step</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
 
         <span class="k">for</span> <span class="n">noun</span> <span class="ow">in</span> <span class="n">NOUNS</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{noun}</span><span class="s2">_label&quot;</span><span class="p">)</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2">_label&quot;</span><span class="p">)</span>
             <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s2">&quot;use&quot;</span><span class="p">,</span> <span class="n">noun</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">func</span><span class="p">:</span>
 
                 <span class="n">identity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">identity_from_label</span><span class="p">(</span><span class="n">noun</span><span class="p">,</span> <span class="n">identity_method</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">identity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown </span><span class="si">{noun}</span><span class="s2"> &#39;</span><span class="si">{label}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">ArchivistInvalidOperationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown </span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2"> &#39;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 
                 <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">)(</span><span class="n">identity</span><span class="p">)</span>
 
@@ -393,8 +401,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">verb</span><span class="p">][</span><span class="n">noun</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">identity_from_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">noun</span><span class="p">,</span> <span class="n">identity_method</span><span class="p">):</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{noun}</span><span class="s2">_label&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">label</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{noun}</span><span class="s2">s/&quot;</span><span class="p">):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2">_label&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">label</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2">s/&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">identity_method</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
 
         <span class="n">uid</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
@@ -481,7 +489,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">deletions</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Runner(</span><span class="si">{self._archivist.url}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Runner(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -553,7 +561,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">set_deletions</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">delete_method</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">noun</span> <span class="ow">in</span> <span class="n">NOUNS</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{noun}</span><span class="s2">_label&quot;</span><span class="p">)</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2">_label&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s2">&quot;set&quot;</span><span class="p">,</span> <span class="n">noun</span><span class="p">)</span> <span class="ow">and</span> <span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span></div>
 

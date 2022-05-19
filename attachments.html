@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Attachments Class &mdash; RKVST 0.13.1 documentation</title>
+  <title>Attachments Class &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -59,6 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -85,7 +87,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-archivist.attachments">
+  <section id="module-archivist.attachments">
 <span id="attachments-class"></span><span id="attachmentsref"></span><h1>Attachments Class<a class="headerlink" href="#module-archivist.attachments" title="Permalink to this headline"></a></h1>
 <p>Attachments interface</p>
 <p>Direct access to the attachments endpoint</p>
@@ -118,7 +120,7 @@
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
+<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -128,23 +130,23 @@ accessed as an attribute of the Archivist class.</p>
 or event creation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – dictionary</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) -- dictionary</p>
 </dd>
 </dl>
 <p>A YAML representation of the data argument would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/doors/assets/gdn_front.jpg</span>
-<span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-<span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/doors/assets/gdn_front.jpg</span><span class="w"></span>
+<span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
 </pre></div>
 </div>
 <p>OR</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>   <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://secure.eicar.org/eicar.com.zip&quot;</span>
-   <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application/zip</span>
-   <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Test malware</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://secure.eicar.org/eicar.com.zip&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application/zip</span><span class="w"></span>
+<span class="w">   </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Test malware</span><span class="w"></span>
 
-<span class="l l-Scalar l-Scalar-Plain">Either &#39;filename&#39; or &#39;url&#39; is required.</span>
-<span class="l l-Scalar l-Scalar-Plain">&#39;content_type&#39; is required.</span>
+<span class="l l-Scalar l-Scalar-Plain">Either &#39;filename&#39; or &#39;url&#39; is required.</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;content_type&#39; is required.</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -155,10 +157,10 @@ or event creation.</p>
 </dl>
 <p>A YAML representation of the result would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Telephone</span>
-<span class="nt">arc_attachment_identity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
-<span class="nt">arc_hash_alg</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SHA256</span>
-<span class="nt">arc_hash_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxxxxxxxxxxxxxxxxxxxx</span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">arc_display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Telephone</span><span class="w"></span>
+<span class="nt">arc_attachment_identity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span><span class="w"></span>
+<span class="nt">arc_hash_alg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SHA256</span><span class="w"></span>
+<span class="nt">arc_hash_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxxxxxxxxxxxxxxxxxxxx</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -174,10 +176,10 @@ fd iterator</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>identity</strong> (<em>str</em>) – attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
-<li><p><strong>fd</strong> (<em>file</em>) – opened file descriptor or other file-type sink..</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) – e.g. {“allow_insecure”: “true”} OR {“strict”: “true” }</p></li>
-<li><p><strong>asset_or_event_id</strong> (<em>str</em>) – optional asset or event identity</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) -- attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
+<li><p><strong>fd</strong> (<em>file</em>) -- opened file descriptor or other file-type sink..</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) -- e.g. {&quot;allow_insecure&quot;: &quot;true&quot;} OR {&quot;strict&quot;: &quot;true&quot; }</p></li>
+<li><p><strong>asset_or_event_id</strong> (<em>str</em>) -- optional asset or event identity</p></li>
 </ul>
 </dd>
 </dl>
@@ -201,8 +203,8 @@ assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>identity</strong> (<em>str</em>) – attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
-<li><p><strong>asset_or_event_id</strong> (<em>str</em>) – optional asset or event identity</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) -- attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
+<li><p><strong>asset_or_event_id</strong> (<em>str</em>) -- optional asset or event identity</p></li>
 </ul>
 </dd>
 </dl>
@@ -226,8 +228,8 @@ assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fd</strong> (<em>file</em>) – opened file descriptor or other file-type iterable.</p></li>
-<li><p><strong>mtype</strong> (<em>str</em>) – mimetype of data.</p></li>
+<li><p><strong>fd</strong> (<em>file</em>) -- opened file descriptor or other file-type iterable.</p></li>
+<li><p><strong>mtype</strong> (<em>str</em>) -- mimetype of data.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -238,7 +240,7 @@ assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subjects Count Story Runner YAML &mdash; RKVST 0.13.1 documentation</title>
+  <title>Subjects Count Story Runner YAML &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
@@ -20,7 +21,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Subjects Create Story Runner YAML" href="subjects_create.html" />
-    <link rel="prev" title="Locations Create Story Runner YAML" href="locations_create.html" /> 
+    <link rel="prev" title="Locations List Story Runner YAML" href="locations_list.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +33,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -63,6 +64,7 @@
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_list.html">Locations List Story Runner YAML</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Subjects Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
@@ -92,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -120,27 +123,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="subjects-count-story-runner-yaml">
+  <section id="subjects-count-story-runner-yaml">
 <span id="subjects-count-yamlref"></span><h1>Subjects Count Story Runner YAML<a class="headerlink" href="#subjects-count-story-runner-yaml" title="Permalink to this headline"></a></h1>
 <p>Count all subjects that have the required signature.</p>
-<p>The display_name is optional.</p>
-<p>The ‘print_response’ setting should be specified as True in order to see the results.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="nt">steps</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SUBJECTS_COUNT</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Count all subjects</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">some subject</span>
+<p>The <code class="code docutils literal notranslate"><span class="pre">display_name</span></code> is optional.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">print_response</span></code> setting should be specified as <code class="code docutils literal notranslate"><span class="pre">True</span></code> in order to see the results.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span><span class="w"></span>
+<span class="nt">steps</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SUBJECTS_COUNT</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Count all subjects</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">some subject</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="locations_create.html" class="btn btn-neutral float-left" title="Locations Create Story Runner YAML" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="locations_list.html" class="btn btn-neutral float-left" title="Locations List Story Runner YAML" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="subjects_create.html" class="btn btn-neutral float-right" title="Subjects Create Story Runner YAML" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

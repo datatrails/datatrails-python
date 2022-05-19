@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Features &mdash; RKVST 0.13.1 documentation</title>
+  <title>Features &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -59,6 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -85,10 +87,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="features">
+  <section id="features">
 <span id="featuresref"></span><h1>Features<a class="headerlink" href="#features" title="Permalink to this headline"></a></h1>
-<p>This package provides a python interface to the Jitsuin
-Archivist.</p>
+<p>This package provides a python interface to RKVST.</p>
 <p>The definitive guide to the REST API is defined here: <a class="reference external" href="https://docs.rkvst.com">https://docs.rkvst.com</a></p>
 <p>This python SDK offers a number of advantages over a simple
 REST api (in any language):</p>
@@ -99,8 +100,8 @@ REST api (in any language):</p>
 creating the asset or event and a sophisticated retry and exponential backoff
 algorithm will take care of everything.</p></li>
 <li><p><strong>list()</strong> method: one can easily get an iterable of assets or events that
-correspond to a particular signature. The list method is optimised for use in
-loop (for a in srch.assets.list():…) but can easily be converted to a list
+correspond to a particular signature. The list method is optimized for use in
+loop (for a in arch.assets.list():...) but can easily be converted to a list
 using the python list() function.</p></li>
 <li><p>simple <strong>count()</strong> method: one can easily get a count of assets or events that
 correspond to a particular signature.</p></li>
@@ -119,7 +120,7 @@ can be implemented by <strong>extending</strong> the package as opposed to modif
 </ul>
 </div></blockquote>
 <p>See the <strong>examples/</strong> directory for example code.</p>
-</div>
+</section>
 
 
            </div>

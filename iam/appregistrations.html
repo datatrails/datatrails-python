@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IAM Application Registrations &mdash; RKVST 0.13.1 documentation</title>
+  <title>IAM Application Registrations &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -65,6 +66,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -92,7 +94,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-archivist.applications">
+  <section id="module-archivist.applications">
 <span id="iam-application-registrations"></span><span id="appregistrations"></span><h1>IAM Application Registrations<a class="headerlink" href="#module-archivist.applications" title="Permalink to this headline"></a></h1>
 <p>Applications interface</p>
 <p>Access to the applications endpoint.</p>
@@ -124,7 +126,7 @@
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
+<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -135,8 +137,8 @@ accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>display_name</strong> (<em>str</em>) – display name of application.</p></li>
-<li><p><strong>custom_claims</strong> (<em>dict</em>) – custom claims</p></li>
+<li><p><strong>display_name</strong> (<em>str</em>) -- display name of application.</p></li>
+<li><p><strong>custom_claims</strong> (<em>dict</em>) -- custom claims</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -153,7 +155,7 @@ accessed as an attribute of the Archivist class.</p>
 Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – request body of application.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) -- request body of application.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.applications.Application" title="archivist.applications.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> instance</p>
@@ -168,7 +170,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <p>Deletes application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – applications identity e.g. applications/xxxxxxxxxxxxxxxxxxxxxxx</p>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- applications identity e.g. applications/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.applications.Application" title="archivist.applications.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> instance - empty?</p>
@@ -184,8 +186,8 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>display_name</strong> (<em>str</em>) – display name (optional)</p></li>
-<li><p><strong>page_size</strong> (<em>int</em>) – optional page size. (Rarely used).</p></li>
+<li><p><strong>display_name</strong> (<em>str</em>) -- display name (optional)</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) -- optional page size. (Rarely used).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -201,7 +203,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <p>Reads application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – applications identity e.g. applications/xxxxxxxxxxxxxxxxxxxxxxx</p>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- applications identity e.g. applications/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.applications.Application" title="archivist.applications.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> instance</p>
@@ -216,7 +218,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <p>Makes an SBOM public.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of application</p>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- identity of application</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.applications.Application" title="archivist.applications.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> instance</p>
@@ -232,9 +234,9 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>identity</strong> (<em>str</em>) – applications identity e.g. applications/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
-<li><p><strong>display_name</strong> (<em>str</em>) – display name of application.</p></li>
-<li><p><strong>custom_claims</strong> (<em>dict</em>) – custom claims</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) -- applications identity e.g. applications/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
+<li><p><strong>display_name</strong> (<em>str</em>) -- display name of application.</p></li>
+<li><p><strong>custom_claims</strong> (<em>dict</em>) -- custom claims</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -245,7 +247,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

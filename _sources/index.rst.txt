@@ -26,6 +26,7 @@
 
    timestamp
    errors
+   logger
    proof_mechanism
 
 Indices and tables

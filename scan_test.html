@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scan Test Example &mdash; RKVST 0.13.1 documentation</title>
+  <title>Scan Test Example &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -46,7 +47,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Eaxmple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event Example</a></li>
@@ -73,6 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -100,7 +102,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="scan-test-example">
+  <section id="scan-test-example">
 <span id="scan-testref"></span><h1>Scan Test Example<a class="headerlink" href="#scan-test-example" title="Permalink to this headline"></a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test assets attachments scanning</span>
@@ -138,10 +140,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">ASSET_NAME</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Scan test asset with 2 attachments - one bad or not scanned </span><span class="si">{datestring}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Scan test asset with 2 attachments - one bad or not scanned </span><span class="si">{</span><span class="n">datestring</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;##[debug]Checking asset </span><span class="si">{ASSET_NAME}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;##[debug]Checking asset </span><span class="si">{</span><span class="n">ASSET_NAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">asset</span><span class="p">,</span> <span class="n">existed</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">(</span>
         <span class="p">{</span>
@@ -221,9 +223,9 @@
 
     <span class="n">num_fails</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fails</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">num_fails</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;##[error]There are </span><span class="si">{num_fails}</span><span class="s2"> test failures&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;##[error]There are </span><span class="si">{</span><span class="n">num_fails</span><span class="si">}</span><span class="s2"> test failures&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">fail</span> <span class="ow">in</span> <span class="n">fails</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;##[debug]</span><span class="si">{fail}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;##[debug]</span><span class="si">{</span><span class="n">fail</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">sys_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 
@@ -257,7 +259,7 @@
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
            </div>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assets Class &mdash; RKVST 0.13.1 documentation</title>
+  <title>Assets Class &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -59,6 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -85,7 +87,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-archivist.assets">
+  <section id="module-archivist.assets">
 <span id="assets-class"></span><span id="assetsref"></span><h1>Assets Class<a class="headerlink" href="#module-archivist.assets" title="Permalink to this headline"></a></h1>
 <p>Assets interface</p>
 <p>Access to the assets endpoint.</p>
@@ -140,7 +142,7 @@
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
+<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -151,8 +153,8 @@ accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“confirmation_status”: “CONFIRMED” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“arc_display_type”: “door” }</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;confirmation_status&quot;: &quot;CONFIRMED&quot; }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -169,9 +171,9 @@ accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – Properties - usually only the proof_mechanism setting</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – attributes of created asset.</p></li>
-<li><p><strong>confirm</strong> (<em>bool</em>) – if True wait for asset to be confirmed.</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- Properties - usually only the proof_mechanism setting</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- attributes of created asset.</p></li>
+<li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for asset to be confirmed.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -189,8 +191,8 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>dict</em>) – request body of asset.</p></li>
-<li><p><strong>confirm</strong> (<em>bool</em>) – if True wait for asset to be confirmed on DLT.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- request body of asset.</p></li>
+<li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for asset to be confirmed on DLT.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -207,45 +209,45 @@ does not already exist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>dict</em>) – request body of asset.</p></li>
-<li><p><strong>confirm</strong> (<em>bool</em>) – if True wait for asset to be confirmed on DLT.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- request body of asset.</p></li>
+<li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for asset to be confirmed on DLT.</p></li>
 </ul>
 </dd>
 </dl>
 <p>A YAML representation of the data argument would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">selector</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arc_display_name</span>
-<span class="l l-Scalar l-Scalar-Plain">behaviours</span>
-  <span class="l l-Scalar l-Scalar-Plain">- RecordEvidence</span>
-  <span class="l l-Scalar l-Scalar-Plain">- Attachments</span>
-<span class="nt">attributes</span><span class="p">:</span>
-  <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Front Door</span>
-  <span class="nt">arc_firmware_version</span><span class="p">:</span> <span class="s">&quot;1.0&quot;</span>
-  <span class="nt">arc_serial_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">das-j1-01</span>
-  <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to Jitsuin France</span>
-  <span class="nt">wavestone_asset_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">paris.france.jitsuin.das</span>
-<span class="nt">location</span><span class="p">:</span>
-  <span class="nt">identity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">locations/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="nt">location</span><span class="p">:</span>
-  <span class="nt">selector</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">display_name</span>
-  <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris</span>
-  <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Sales and sales support for the French region</span>
-  <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">48.8339211,</span>
-  <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.371345,</span>
-  <span class="nt">attributes</span><span class="p">:</span>
-    <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5 Parvis Alan Turing, 75013 Paris, France</span>
-    <span class="nt">wavestone_ext</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">managed</span>
-<span class="nt">attachments</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/doors/assets/entry-terminal.jpg</span>
-    <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_display_name</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">behaviours</span><span class="w"></span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">- RecordEvidence</span><span class="w"></span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">- Attachments</span><span class="w"></span>
+<span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">arc_display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Jitsuin Front Door</span><span class="w"></span>
+<span class="w">  </span><span class="nt">arc_firmware_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.0&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">arc_serial_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">das-j1-01</span><span class="w"></span>
+<span class="w">  </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to Jitsuin France</span><span class="w"></span>
+<span class="w">  </span><span class="nt">wavestone_asset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">paris.france.jitsuin.das</span><span class="w"></span>
+<span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">identity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">locations/xxxxxxxxxxxxxxxxxxxxxxxxxx</span><span class="w"></span>
+<span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_name</span><span class="w"></span>
+<span class="w">  </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Jitsuin Paris</span><span class="w"></span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sales and sales support for the French region</span><span class="w"></span>
+<span class="w">  </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48.8339211,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.371345,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5 Parvis Alan Turing, 75013 Paris, France</span><span class="w"></span>
+<span class="w">    </span><span class="nt">wavestone_ext</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">managed</span><span class="w"></span>
+<span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/doors/assets/entry-terminal.jpg</span><span class="w"></span>
+<span class="w">    </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
 </pre></div>
 </div>
-<p>The ‘selector’ value is required and will usually specify the ‘arc_display_name’ as a
-secondary key. The keys in ‘selector’ must exist in the attributes of the asset.</p>
-<p>If ‘location’ is specified then the ‘selector’ value is required and is used as a
+<p>The 'selector' value is required and will usually specify the 'arc_display_name' as a
+secondary key. The keys in 'selector' must exist in the attributes of the asset.</p>
+<p>If 'location' is specified then the 'selector' value is required and is used as a
 secondary key. Likewise the secondary key must exist in the attributes of the location.</p>
 <p>Alternatively the identity of the location is specified - both
 are shown - choose one.</p>
@@ -265,9 +267,9 @@ are shown - choose one.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – optional e.g. {“tracked”: “TRACKED” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – optional e.g. {“arc_display_type”: “door” }</p></li>
-<li><p><strong>page_size</strong> (<em>int</em>) – optional page size. (Rarely used).</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- optional e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- optional e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) -- optional page size. (Rarely used).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -283,7 +285,7 @@ are shown - choose one.</p>
 <p>Reads asset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – assets identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx</p>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- assets identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.assets.Asset" title="archivist.assets.Asset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code></a> instance</p>
@@ -299,8 +301,8 @@ are shown - choose one.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“tracked”: “TRACKED” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“arc_display_type”: “door” }</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -316,7 +318,7 @@ are shown - choose one.</p>
 <p>Waits asset to be confirmed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – identity of asset</p>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- identity of asset</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>True if asset is confirmed.</p>
@@ -332,8 +334,8 @@ are shown - choose one.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“tracked”: “TRACKED” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“arc_display_type”: “door” }</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -344,7 +346,7 @@ are shown - choose one.</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

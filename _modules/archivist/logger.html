@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.compliance_policy_type &mdash; RKVST 0.14.5 documentation</title>
+  <title>archivist.logger &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -76,7 +76,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>archivist.compliance_policy_type</li>
+      <li>archivist.logger</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -85,33 +85,50 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for archivist.compliance_policy_type</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Archivist Compliance Policy Type</span>
+  <h1>Source code for archivist.logger</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Creates the root logger as a simple console streamer. Follows the Django-style</span>
+<span class="sd">   logging configuration where the logging system forms a hierarchy of loggers</span>
+<span class="sd">   all potentially independently configurable.</span>
 
-<span class="sd">   Enumerated type that allows user to select the compliance policy type when</span>
-<span class="sd">   creating a compliance policy.</span>
+<span class="sd">   This model allows controlling loggers that are part of the dependency list. For</span>
+<span class="sd">   example setting a debug logging level will show debug output from the underlying</span>
+<span class="sd">   urllib3 package.</span>
 
+<span class="sd">   URL: https://docs.djangoproject.com/en/3.2/topics/logging/</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="c1"># pylint:  disable=missing-docstring</span>
+
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">getLogger</span>
+
+<span class="c1"># root logger for all code</span>
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="CompliancePolicyType"><a class="viewcode-back" href="../../compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType">[docs]</a><span class="k">class</span> <span class="nc">CompliancePolicyType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="set_logger"><a class="viewcode-back" href="../../logger.html#archivist.logger.set_logger">[docs]</a><span class="k">def</span> <span class="nf">set_logger</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Enumerate types of compliance policy</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    Set logging level</span>
 
-    <span class="n">COMPLIANCE_TYPE_UNDEFINED</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="c1">#: Time since specific event for specified period</span>
-    <span class="n">COMPLIANCE_SINCE</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="c1">#: Unresolved event currently on asset (e.g. vulnerability)</span>
-    <span class="n">COMPLIANCE_CURRENT_OUTSTANDING</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="c1">#: No unresolved events for longer than specified period</span>
-    <span class="n">COMPLIANCE_PERIOD_OUTSTANDING</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="c1">#: dynamic tolerance with dynamic window etc..</span>
-    <span class="n">COMPLIANCE_DYNAMIC_TOLERANCE</span> <span class="o">=</span> <span class="mi">4</span>
-    <span class="c1">#: Compliance on comparison of asset attribute value to predefined comparator</span>
-    <span class="n">COMPLIANCE_RICHNESS</span> <span class="o">=</span> <span class="mi">5</span></div>
+<span class="sd">    Args:</span>
+<span class="sd">        level (str): Either INFO or DEBUG</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;disable_existing_loggers&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;propagate&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;handlers&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;console&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;root&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;handlers&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;console&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">)</span></div>
 </pre></div>
 
            </div>

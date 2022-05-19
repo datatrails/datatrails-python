@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.archivist &mdash; RKVST 0.13.1 documentation</title>
+  <title>archivist.archivist &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -57,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -89,7 +90,7 @@
 <span class="sd">&quot;&quot;&quot;Archivist connection interface</span>
 
 <span class="sd">   This module contains the base Archivist class which manages</span>
-<span class="sd">   the connection parameters to a Jitsuin Archivist instance and</span>
+<span class="sd">   the connection parameters to a RKVST instance and</span>
 <span class="sd">   the basic REST verbs to GET, POST, PATCH and DELETE entities..</span>
 
 <span class="sd">   The REST methods in this class should only be used directly when</span>
@@ -139,6 +140,7 @@
     <span class="n">_parse_response</span><span class="p">,</span>
     <span class="n">ArchivistBadFieldError</span><span class="p">,</span>
     <span class="n">ArchivistDuplicateError</span><span class="p">,</span>
+    <span class="n">ArchivistError</span><span class="p">,</span>
     <span class="n">ArchivistHeaderError</span><span class="p">,</span>
     <span class="n">ArchivistNotFoundError</span><span class="p">,</span>
 <span class="p">)</span>
@@ -218,6 +220,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ArchivistError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;URL </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> has trailing /&quot;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify</span> <span class="o">=</span> <span class="n">verify</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_response_ring_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">RING_BUFFER_MAX_LEN</span><span class="p">)</span>
@@ -241,7 +246,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">subjects</span><span class="p">:</span> <span class="n">_SubjectsClient</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Archivist(</span><span class="si">{self._url}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Archivist(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
     <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create endpoints on demand&quot;&quot;&quot;</span>
@@ -274,7 +279,9 @@
         <span class="sd">&quot;&quot;&quot;str: authorization token.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span> <span class="o">&lt;</span> <span class="n">time</span><span class="p">():</span>
             <span class="n">apptoken</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="n">apptoken</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="n">apptoken</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;access_token&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ArchivistError</span><span class="p">(</span><span class="s2">&quot;Auth token from client id,secret is invalid&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_expires_at</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">apptoken</span><span class="p">[</span><span class="s2">&quot;expires_in&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">10</span>  <span class="c1"># fudge factor</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Refresh token&quot;</span><span class="p">)</span>
 
@@ -462,7 +469,7 @@
 <span class="sd">            path (str): e.g. v2/assets</span>
 <span class="sd">            fd : iterable representing the contents of a file.</span>
 <span class="sd">            mtype (str): mime type e.g. image/jpg</span>
-<span class="sd">            params (dict): dictiuonary of optional path params</span>
+<span class="sd">            params (dict): dictionary of optional path params</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict representing the response body (entity).</span>
@@ -644,13 +651,13 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">records</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArchivistBadFieldError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{field}</span><span class="s2"> found&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ex</span>
+            <span class="k">raise</span> <span class="n">ArchivistBadFieldError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2"> found&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ex</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ArchivistNotFoundError</span><span class="p">(</span><span class="s2">&quot;No entity found&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ArchivistDuplicateError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;{len(records)} found&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ArchivistDuplicateError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span><span class="si">}</span><span class="s2"> found&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
@@ -731,7 +738,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">records</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ArchivistBadFieldError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{field}</span><span class="s2"> found&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ex</span>
+                <span class="k">raise</span> <span class="n">ArchivistBadFieldError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2"> found&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ex</span>
 
             <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">record</span>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locations Class &mdash; RKVST 0.13.1 documentation</title>
+  <title>Locations Class &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -59,6 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -85,7 +87,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-archivist.locations">
+  <section id="module-archivist.locations">
 <span id="locations-class"></span><span id="locationsref"></span><h1>Locations Class<a class="headerlink" href="#module-archivist.locations" title="Permalink to this headline"></a></h1>
 <p>Locations interface</p>
 <p>Direct access to the locations endpoint.</p>
@@ -128,7 +130,7 @@
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
+<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -139,8 +141,8 @@ accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“display_name”: “Macclesfield” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“director”: “john smith” }</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;display_name&quot;: &quot;Macclesfield&quot; }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- e.g. {&quot;director&quot;: &quot;john smith&quot; }</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -157,8 +159,8 @@ accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – properties for this location.</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – attributes of created location.</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- properties for this location.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- attributes of created location.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -175,7 +177,7 @@ accessed as an attribute of the Archivist class.</p>
 Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – request body of location.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) -- request body of location.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a> instance</p>
@@ -189,25 +191,25 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dd><p>Create a location if not already exists</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – request body of location.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) -- request body of location.</p>
 </dd>
 </dl>
 <p>A YAML representation of the data argument would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">selector</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">display_name</span>
-  <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">wavestone_ext</span>
-<span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Apartements du Gare du Nord</span>
-<span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Residential apartment building in new complex above GdN station</span>
-<span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">48.8809</span>
-<span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.3553</span>
-<span class="nt">attributes</span><span class="p">:</span>
-  <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">18 Rue de Dunkerque, 75010 Paris, France</span>
-  <span class="nt">wavestone_ext</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">managed</span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_name</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wavestone_ext</span><span class="w"></span>
+<span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Apartements du Gare du Nord</span><span class="w"></span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Residential apartment building in new complex above GdN station</span><span class="w"></span>
+<span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48.8809</span><span class="w"></span>
+<span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.3553</span><span class="w"></span>
+<span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">18 Rue de Dunkerque, 75010 Paris, France</span><span class="w"></span>
+<span class="w">  </span><span class="nt">wavestone_ext</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">managed</span><span class="w"></span>
 </pre></div>
 </div>
-<p>The ‘selector’ setting is required.</p>
+<p>The 'selector' setting is required.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -224,9 +226,9 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – optional e.g. {“display_name”: “Macclesfield” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – optional e.g. {“director”: “john smith” }</p></li>
-<li><p><strong>page_size</strong> (<em>int</em>) – optional page size. (Rarely used)</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- optional e.g. {&quot;display_name&quot;: &quot;Macclesfield&quot; }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- optional e.g. {&quot;director&quot;: &quot;john smith&quot; }</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) -- optional page size. (Rarely used)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -242,7 +244,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <p>Reads location.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – location identity e.g. locations/xxxxxxxxxxxxxxxxxxxxxxx</p>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- location identity e.g. locations/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.locations.Location" title="archivist.locations.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a> instance</p>
@@ -258,8 +260,8 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – e.g. {“display_name”: “Macclesfield” }</p></li>
-<li><p><strong>attrs</strong> (<em>dict</em>) – e.g. {“director”: “john smith” }</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;display_name&quot;: &quot;Macclesfield&quot; }</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) -- e.g. {&quot;director&quot;: &quot;john smith&quot; }</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -270,7 +272,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

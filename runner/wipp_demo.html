@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WIPP Demo &mdash; RKVST 0.13.1 documentation</title>
+  <title>WIPP Demo &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -63,6 +64,7 @@
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations_list.html">Locations List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
@@ -92,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -120,376 +123,376 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="wipp-demo">
+  <section id="wipp-demo">
 <span id="wipp-demo-ref"></span><h1>WIPP Demo<a class="headerlink" href="#wipp-demo" title="Permalink to this headline"></a></h1>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="c1"># The step field is a string that represents the method bound to an endpoint.</span>
-<span class="c1">#</span>
-<span class="c1"># NB the assets and events endpoints require all values to be strings. Other values may</span>
-<span class="c1"># be of the correct type such as confirm which is a boolean.</span>
-<span class="c1">#</span>
-<span class="nt">steps</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE_IF_NOT_EXISTS</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create a drum container number 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-    <span class="nt">selector</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arc_display_name</span>
-        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arc_namespace</span>
-    <span class="nt">behaviours</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
-    <span class="nt">attributes</span><span class="p">:</span>
-      <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">arc_namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">drum</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Standard non-POC 55 gallon drum No. 1</span>
-      <span class="nt">wipp_capacity</span><span class="p">:</span> <span class="s">&quot;55&quot;</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/55gallon.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span><span class="w"></span>
+<span class="c1"># The step field is a string that represents the method bound to an endpoint.</span><span class="w"></span>
+<span class="c1">#</span><span class="w"></span>
+<span class="c1"># NB the assets and events endpoints require all values to be strings. Other values may</span><span class="w"></span>
+<span class="c1"># be of the correct type such as confirm which is a boolean.</span><span class="w"></span>
+<span class="c1">#</span><span class="w"></span>
+<span class="nt">steps</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE_IF_NOT_EXISTS</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create a drum container number 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">    </span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_display_name</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_namespace</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviours</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Attachments</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_namespace</span><span class="p">:</span><span class="w"> </span><span class="kt">!ENV</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">drum</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Standard non-POC 55 gallon drum No. 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_capacity</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;55&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/55gallon.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE_IF_NOT_EXISTS</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Create a cask container number 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-    <span class="nt">selector</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arc_display_name</span>
-        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">arc_namespace</span>
-    <span class="nt">behaviours</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">Attachments</span>
-    <span class="nt">attributes</span><span class="p">:</span>
-      <span class="nt">arc_display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-      <span class="nt">arc_namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cask</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">NRC certified type-B road shipping container, capacity 3 x 55-gallon drum</span>
-      <span class="nt">wipp_capacity</span><span class="p">:</span> <span class="s">&quot;3&quot;</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/rh72b.png</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/png</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE_IF_NOT_EXISTS</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create a cask container number 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">    </span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_display_name</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_namespace</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviours</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Attachments</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_namespace</span><span class="p">:</span><span class="w"> </span><span class="kt">!ENV</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cask</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NRC certified type-B road shipping container, capacity 3 x 55-gallon drum</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_capacity</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/rh72b.png</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/png</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Characterize Drum 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="s">&quot;Waste</span><span class="nv"> </span><span class="s">coding</span><span class="nv"> </span><span class="s">characterization:</span><span class="nv"> </span><span class="s">A2</span><span class="nv"> </span><span class="s">Fraction</span><span class="nv"> </span><span class="s">2.10E+05&quot;</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Characterize</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">N/A</span>
-    <span class="nt">asset_attributes</span><span class="p">:</span>
-      <span class="nt">wipp_weight</span><span class="p">:</span> <span class="s">&quot;790300&quot;</span>
-      <span class="nt">wipp_a2fraction_characterized</span><span class="p">:</span> <span class="s">&quot;2.10E+05&quot;</span>
-      <span class="nt">wipp_activity_characterized</span><span class="p">:</span> <span class="s">&quot;1.69E+02&quot;</span>
-      <span class="nt">wipp_total_characterized</span><span class="p">:</span> <span class="s">&quot;2.12E+02&quot;</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/DOE-WIPP-02-3122_Rev_9_FINAL.pdf</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application/pdf</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Reference WAC</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/characterization.pdf</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application/pdf</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Characterization report</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Characterize Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Waste</span><span class="nv"> </span><span class="s">coding</span><span class="nv"> </span><span class="s">characterization:</span><span class="nv"> </span><span class="s">A2</span><span class="nv"> </span><span class="s">Fraction</span><span class="nv"> </span><span class="s">2.10E+05&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Characterize</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">N/A</span><span class="w"></span>
+<span class="w">    </span><span class="nt">asset_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_weight</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;790300&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_a2fraction_characterized</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.10E+05&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_activity_characterized</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.69E+02&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_total_characterized</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.12E+02&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/DOE-WIPP-02-3122_Rev_9_FINAL.pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application/pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Reference WAC</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/characterization.pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application/pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Characterization report</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Tomograph Drum 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Confirming waste coding characterization</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Confirmation</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Radiograph attached</span>
-    <span class="nt">asset_attributes</span><span class="p">:</span>
-      <span class="nt">wipp_weight</span><span class="p">:</span> <span class="s">&quot;790300&quot;</span>
-      <span class="nt">wipp_a2fraction_confirmed</span><span class="p">:</span> <span class="s">&quot;2.10E+05&quot;</span>
-      <span class="nt">wipp_activity_confirmed</span><span class="p">:</span> <span class="s">&quot;1.69E+02&quot;</span>
-      <span class="nt">wipp_total_confirmed</span><span class="p">:</span> <span class="s">&quot;2.12E+02&quot;</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/wipp_radiography.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/DOE-WIPP-02-3122_Rev_9_FINAL.pdf</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application/pdf</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Reference WAC</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tomograph Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Confirming waste coding characterization</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Confirmation</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Radiograph attached</span><span class="w"></span>
+<span class="w">    </span><span class="nt">asset_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_weight</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;790300&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_a2fraction_confirmed</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.10E+05&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_activity_confirmed</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.69E+02&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_total_confirmed</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.12E+02&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/wipp_radiography.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/DOE-WIPP-02-3122_Rev_9_FINAL.pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application/pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Reference WAC</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="c1"># pair of simultaneous events for Drum 1 and Cask 1</span>
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Loading Drum 1 into Cask 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Loading drum into Cask 1</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Loading</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Loading placement image attached</span>
-    <span class="nt">asset_attributes</span><span class="p">:</span>
-      <span class="nt">wipp_container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/trupact_loading.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="c1"># pair of simultaneous events for Drum 1 and Cask 1</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Loading Drum 1 into Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Loading drum into Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Loading</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Loading placement image attached</span><span class="w"></span>
+<span class="w">    </span><span class="nt">asset_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/trupact_loading.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Filled Cask 1 with Drum 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Filled with Drum 1</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Loading</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Loading placement image attached</span>
-    <span class="nt">asset_attributes</span><span class="p">:</span>
-      <span class="nt">wipp_container</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/trupact_loading.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filled Cask 1 with Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filled with Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Loading</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Loading placement image attached</span><span class="w"></span>
+<span class="w">    </span><span class="nt">asset_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/trupact_loading.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Preship inspection of Drum 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Inspection inventory</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Preship Inspection</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Image Attached</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/preshipment_inspection.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Preship inspection of Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Inspection inventory</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Preship Inspection</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Image Attached</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/preshipment_inspection.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Preship inspection of Cask 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Inspection inventory</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Preship Inspection</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Image Attached</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/preshipment_inspection.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Preship inspection of Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Inspection inventory</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Preship Inspection</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Image Attached</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/preshipment_inspection.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Departure of Drum 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Departed SRS Inventory</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Transit</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Routing instructions in attachments</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_departure.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/SRS_to_WPP_route_instructions.pdf</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application/pdf</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Approved Route</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Departure of Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Departed SRS Inventory</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Transit</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Routing instructions in attachments</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_departure.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/SRS_to_WPP_route_instructions.pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application/pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Approved Route</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Departure of Cask 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Departed SRS Inventory</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Transit</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Routing instructions in attachments</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_departure.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/SRS_to_WPP_route_instructions.pdf</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">application/pdf</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Approved Route</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Departure of Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Departed SRS Inventory</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Transit</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Routing instructions in attachments</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_departure.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/SRS_to_WPP_route_instructions.pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application/pdf</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Approved Route</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="c1"># a journey via Atlanta...</span>
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Atlanta Waypoint of Cask 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="s">&quot;TRAGIS</span><span class="nv"> </span><span class="s">smart</span><span class="nv"> </span><span class="s">sensors</span><span class="nv"> </span><span class="s">ping:</span><span class="nv"> </span><span class="s">Checking</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">near</span><span class="nv"> </span><span class="s">Atlanta</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">All</span><span class="nv"> </span><span class="s">Sensors</span><span class="nv"> </span><span class="s">Green&quot;</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Transit</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="s">&quot;Signature:</span><span class="nv"> </span><span class="s">0x1234abcd&quot;</span>
-      <span class="nt">wipp_sensors_shock</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
-      <span class="nt">wipp_sensors_rad</span><span class="p">:</span> <span class="s">&quot;45&quot;</span>
-    <span class="nt">location</span><span class="p">:</span>
-      <span class="nt">selector</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">display_name</span>
-        <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">namespace</span>
-      <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Atlanta waypoint</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Atlanta waypoint</span>
-      <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">33.592177</span>
-      <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-84.406064</span>
-      <span class="nt">attributes</span><span class="p">:</span>
-        <span class="nt">namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_departure.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="c1"># a journey via Atlanta...</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Atlanta Waypoint of Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;TRAGIS</span><span class="nv"> </span><span class="s">smart</span><span class="nv"> </span><span class="s">sensors</span><span class="nv"> </span><span class="s">ping:</span><span class="nv"> </span><span class="s">Checking</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">near</span><span class="nv"> </span><span class="s">Atlanta</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">All</span><span class="nv"> </span><span class="s">Sensors</span><span class="nv"> </span><span class="s">Green&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Transit</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Signature:</span><span class="nv"> </span><span class="s">0x1234abcd&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_sensors_shock</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_sensors_rad</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;45&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_name</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">namespace</span><span class="w"></span>
+<span class="w">      </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Atlanta waypoint</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Atlanta waypoint</span><span class="w"></span>
+<span class="w">      </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">33.592177</span><span class="w"></span>
+<span class="w">      </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-84.406064</span><span class="w"></span>
+<span class="w">      </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="kt">!ENV</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_departure.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Talladega Waypoint of Cask 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="s">&quot;TRAGIS</span><span class="nv"> </span><span class="s">smart</span><span class="nv"> </span><span class="s">sensors</span><span class="nv"> </span><span class="s">ping:</span><span class="nv"> </span><span class="s">Checking</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">near</span><span class="nv"> </span><span class="s">Atlanta</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">All</span><span class="nv"> </span><span class="s">Sensors</span><span class="nv"> </span><span class="s">Green&quot;</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Transit</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="s">&quot;Signature:</span><span class="nv"> </span><span class="s">0x1234abcd&quot;</span>
-      <span class="nt">wipp_sensors_shock</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
-      <span class="nt">wipp_sensors_rad</span><span class="p">:</span> <span class="s">&quot;45&quot;</span>
-    <span class="nt">location</span><span class="p">:</span>
-      <span class="nt">selector</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">display_name</span>
-        <span class="p p-Indicator">-</span> <span class="nt">attributes</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">namespace</span>
-      <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Talladega waypoint</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Talladega waypoint</span>
-      <span class="nt">latitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">33.592177</span>
-      <span class="nt">longitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-86.248379</span>
-      <span class="nt">attributes</span><span class="p">:</span>
-        <span class="nt">namespace</span><span class="p">:</span> <span class="kt">!ENV</span> <span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_departure.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Talladega Waypoint of Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;TRAGIS</span><span class="nv"> </span><span class="s">smart</span><span class="nv"> </span><span class="s">sensors</span><span class="nv"> </span><span class="s">ping:</span><span class="nv"> </span><span class="s">Checking</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">near</span><span class="nv"> </span><span class="s">Atlanta</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">All</span><span class="nv"> </span><span class="s">Sensors</span><span class="nv"> </span><span class="s">Green&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Transit</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Signature:</span><span class="nv"> </span><span class="s">0x1234abcd&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_sensors_shock</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_sensors_rad</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;45&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_name</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">namespace</span><span class="w"></span>
+<span class="w">      </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Talladega waypoint</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Talladega waypoint</span><span class="w"></span>
+<span class="w">      </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">33.592177</span><span class="w"></span>
+<span class="w">      </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-86.248379</span><span class="w"></span>
+<span class="w">      </span><span class="nt">attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="kt">!ENV</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${ARCHIVIST_NAMESPACE:namespace}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_departure.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="c1"># arrival events for drum and cask</span>
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Arrival of Drum 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">At WIPP Inventory</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Transit</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Routing instructions in attachments</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_arrival.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="c1"># arrival events for drum and cask</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Arrival of Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">At WIPP Inventory</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Transit</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Routing instructions in attachments</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_arrival.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Arrival of Cask 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">At WIPP Inventory</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Transit</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Routing instructions in attachments</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_arrival.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Arrival of Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">At WIPP Inventory</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Transit</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Routing instructions in attachments</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/truck_arrival.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="c1"># pair of events when cask and drum are unloaded</span>
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Unloading Drum 1 from Cask 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Unloaded from cask 1</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Unloading</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Packing image attached</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/trupact_unloading.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="c1"># pair of events when cask and drum are unloaded</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unloading Drum 1 from Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unloaded from cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Unloading</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Packing image attached</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/trupact_unloading.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Unloading Drum 1 from Cask 1</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Cask 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Unloaded drum 1</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Unloading</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Packing image attached</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/trupact_unloading.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unloading Drum 1 from Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cask 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unloaded drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Unloading</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Packing image attached</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/trupact_unloading.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 
-  <span class="c1"># final resting place for drum</span>
-  <span class="p p-Indicator">-</span> <span class="nt">step</span><span class="p">:</span>
-      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1 Emplacemant</span>
-      <span class="nt">asset_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Drum 1</span>
-      <span class="nt">print_response</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-    <span class="nt">operation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Record</span>
-    <span class="nt">behaviour</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span>
-    <span class="nt">event_attributes</span><span class="p">:</span>
-      <span class="nt">arc_description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Emplacement in location D-32</span>
-      <span class="nt">arc_display_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WO Emplacement</span>
-      <span class="nt">arc_evidence</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Packing image attached</span>
-      <span class="nt">wipp_emplacement_location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">D-32</span>
-    <span class="nt">attachments</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">filename</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/waste_placement.jpg</span>
-        <span class="nt">content_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
-        <span class="nt">display_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span>
-    <span class="nt">confirm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="c1"># final resting place for drum</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1 Emplacemant</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Drum 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">operation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Record</span><span class="w"></span>
+<span class="w">    </span><span class="nt">behaviour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RecordEvidence</span><span class="w"></span>
+<span class="w">    </span><span class="nt">event_attributes</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Emplacement in location D-32</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WO Emplacement</span><span class="w"></span>
+<span class="w">      </span><span class="nt">arc_evidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Packing image attached</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wipp_emplacement_location</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">D-32</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attachments</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/wipp/waste_placement.jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arc_primary_image</span><span class="w"></span>
+<span class="w">    </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
            </div>

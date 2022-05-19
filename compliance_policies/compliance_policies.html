@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compliance Policies Client &mdash; RKVST 0.13.1 documentation</title>
+  <title>Compliance Policies Client &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -65,6 +66,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -92,7 +94,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-archivist.compliance_policies">
+  <section id="module-archivist.compliance_policies">
 <span id="compliance-policies-client"></span><span id="compliance-policies-clientref"></span><h1>Compliance Policies Client<a class="headerlink" href="#module-archivist.compliance_policies" title="Permalink to this headline"></a></h1>
 <p>Compliance Policies interface</p>
 <p>Access to the compliance_policies endpoint.</p>
@@ -104,7 +106,7 @@
 
 <span class="c1"># Initialize connection to Archivist</span>
 <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
-    <span class="s2">&quot;https://rkvst.poc.jitsuin.io&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
     <span class="n">authtoken</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -139,7 +141,7 @@
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
+<dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -149,7 +151,7 @@ accessed as an attribute of the Archivist class.</p>
 <p>Counts number of compliance policies that match criteria.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>props</strong> (<em>dict</em>) – e.g. {“display_name”: “foo” }</p>
+<dd class="field-odd"><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;display_name&quot;: &quot;foo&quot; }</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>integer count of compliance policies.</p>
@@ -164,8 +166,8 @@ accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>policy</strong> (<a class="reference internal" href="#archivist.compliance_policies.CompliancePolicy" title="archivist.compliance_policies.CompliancePolicy"><em>CompliancePolicy</em></a>) – the policy object.</p></li>
-<li><p><strong>of</strong> (<em>One</em>) – CompliancePolicySince
+<li><p><strong>policy</strong> (<a class="reference internal" href="#archivist.compliance_policies.CompliancePolicy" title="archivist.compliance_policies.CompliancePolicy"><em>CompliancePolicy</em></a>) -- the policy object.</p></li>
+<li><p><strong>of</strong> (<em>One</em>) -- CompliancePolicySince
 CompliancePolicyCurrentOutstanding
 CompliancePolicyPeriodOutstanding
 CompliancePolicyDynamicTolerance
@@ -186,7 +188,7 @@ CompliancePolicyRichness</p></li>
 Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – request body of compliance_policy.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) -- request body of compliance_policy.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.compliance_policies.CompliancePolicy" title="archivist.compliance_policies.CompliancePolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompliancePolicy</span></code></a> instance</p>
@@ -202,8 +204,8 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>identity</strong> (<em>str</em>) – compliance policy identity</p></li>
-<li><p><strong>compliance_policies/xxxxxxxxxxxxxxxxxxxxxxx</strong> (<em>e.g.</em>) – </p></li>
+<li><p><strong>identity</strong> (<em>str</em>) -- compliance policy identity</p></li>
+<li><p><strong>compliance_policies/xxxxxxxxxxxxxxxxxxxxxxx</strong> (<em>e.g.</em>) -- </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -220,8 +222,8 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>props</strong> (<em>dict</em>) – optional e.g. {“compliance_type”: “COMPLIANCE_DYNAMIC_TOLERANCE” }</p></li>
-<li><p><strong>page_size</strong> (<em>int</em>) – optional page size. (Rarely used).</p></li>
+<li><p><strong>props</strong> (<em>dict</em>) -- optional e.g. {&quot;compliance_type&quot;: &quot;COMPLIANCE_DYNAMIC_TOLERANCE&quot; }</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) -- optional page size. (Rarely used).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -237,7 +239,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <p>Reads compliance policy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) – compliance policy identity
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- compliance policy identity
 e.g. compliance_policies/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -253,7 +255,7 @@ e.g. compliance_policies/xxxxxxxxxxxxxxxxxxxxxxx</p>
 <p>Reads compliance policy that meets criteria. Only one compliance policy is expected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>props</strong> (<em>dict</em>) – e.g. {“display_name”: “foo” }</p>
+<dd class="field-odd"><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;display_name&quot;: &quot;foo&quot; }</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.compliance_policies.CompliancePolicy" title="archivist.compliance_policies.CompliancePolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompliancePolicy</span></code></a> instance</p>
@@ -263,7 +265,7 @@ e.g. compliance_policies/xxxxxxxxxxxxxxxxxxxxxxx</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

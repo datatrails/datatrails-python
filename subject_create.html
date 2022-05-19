@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create IAM subject Example &mdash; RKVST 0.13.1 documentation</title>
+  <title>Create IAM subject Example &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -46,7 +47,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Eaxmple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event Example</a></li>
@@ -73,6 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -100,14 +102,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="create-iam-subject-example">
+  <section id="create-iam-subject-example">
 <span id="subject-createref"></span><h1>Create IAM subject Example<a class="headerlink" href="#create-iam-subject-example" title="Permalink to this headline"></a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create a IAM subject given url to Archivist and user Token.</span>
 
-<span class="sd">Main function parses in</span>
-<span class="sd">a url to the Archivist and credentials, which is a user authorization.</span>
-<span class="sd">The main function would initialize an archivist connection using the url and</span>
-<span class="sd">the credentials, called &quot;arch&quot;, then call arch.subjects.create() and the subject will be created.</span>
+<span class="sd">Main function parses in a url to the Archivist and credentials, which is a user</span>
+<span class="sd">authorization. The main function would initialize an archivist connection using</span>
+<span class="sd">the url and the credentials, called &quot;arch&quot;.</span>
+
+<span class="sd">&#39;arch&#39; is then called with arch.subjects.create_from_b64() and the subject will</span>
+<span class="sd">be created.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
 
@@ -118,7 +122,7 @@
     <span class="sd">&quot;&quot;&quot;Main function of create subject.</span>
 
 <span class="sd">    Parse in user input of url and credentials and use them to</span>
-<span class="sd">    create an example archivist connection and create an asset.</span>
+<span class="sd">    create an example archivist connection and create a subject.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># client id and client secret is obtained from the appidp endpoint - see the</span>
@@ -138,10 +142,26 @@
         <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="s2">&quot;Some display name&quot;</span><span class="p">,</span>
-        <span class="p">[</span><span class="s2">&quot;walletkey1&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;tesserakey1&quot;</span><span class="p">],</span>
+    <span class="c1"># subject_string is the base64 encoding of the self subject of the other organization</span>
+    <span class="n">subject_string</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;eyJpZGVudGl0eSI6ICJzdWJqZWN0cy8wMDAwMDAwMC0wMDAwLTAwMDAtMDA&quot;</span>
+        <span class="s2">&quot;wMC0wMDAwMDAwMDAwMDAiLCAiZGlzcGxheV9uYW1lIjogIlNlbGYiLCAid2&quot;</span>
+        <span class="s2">&quot;FsbGV0X3B1Yl9rZXkiOiBbIjA0YzExNzNiZjc4NDRiZjFjNjA3Yjc5YzE4Z&quot;</span>
+        <span class="s2">&quot;GIwOTFiOTU1OGZmZTU4MWJmMTMyYjhjZjNiMzc2NTcyMzBmYTMyMWEwODgw&quot;</span>
+        <span class="s2">&quot;YjU0YTc5YTg4YjI4YmM3MTBlZGU2ZGNmM2Q4MjcyYzUyMTBiZmQ0MWVhODM&quot;</span>
+        <span class="s2">&quot;xODhlMzg1ZDEyYzE4OWMiXSwgIndhbGxldF9hZGRyZXNzIjogWyIweDk5Rm&quot;</span>
+        <span class="s2">&quot;E0QUFCMEFGMkI1M2YxNTgwODNEOGYyNDRiYjQ1MjMzODgxOTciXSwgInRlc&quot;</span>
+        <span class="s2">&quot;3NlcmFfcHViX2tleSI6IFsiZWZkZzlKMFFoU0IyZzRJeEtjYVhnSm1OS2J6&quot;</span>
+        <span class="s2">&quot;cHhzMDNGRllJaVlZdWVraz0iXSwgInRlbmFudCI6ICIiLCAiY29uZmlybWF&quot;</span>
+        <span class="s2">&quot;0aW9uX3N0YXR1cyI6ICJDT05GSVJNQVRJT05fU1RBVFVTX1VOU1BFQ0lGSU&quot;</span>
+        <span class="s2">&quot;VEIn0=&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">create_from_b64</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Some display name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subject_string&quot;</span><span class="p">:</span> <span class="n">subject_string</span><span class="p">,</span>
+        <span class="p">}</span>
     <span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Subject&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="p">)</span>
 
@@ -150,7 +170,7 @@
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
            </div>

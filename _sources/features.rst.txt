@@ -3,8 +3,7 @@
 Features
 =============================================
 
-This package provides a python interface to the Jitsuin
-Archivist.
+This package provides a python interface to RKVST.
 
 The definitive guide to the REST API is defined here: https://docs.rkvst.com
 
@@ -16,8 +15,8 @@ REST api (in any language):
        creating the asset or event and a sophisticated retry and exponential backoff
        algorithm will take care of everything.
     *  **list()** method: one can easily get an iterable of assets or events that
-       correspond to a particular signature. The list method is optimised for use in
-       loop (for a in srch.assets.list():...) but can easily be converted to a list
+       correspond to a particular signature. The list method is optimized for use in
+       loop (for a in arch.assets.list():...) but can easily be converted to a list
        using the python list() function.
     *  simple **count()** method: one can easily get a count of assets or events that
        correspond to a particular signature.

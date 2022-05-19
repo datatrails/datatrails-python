@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archivist Class &mdash; RKVST 0.13.1 documentation</title>
+  <title>Archivist Class &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -59,6 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -85,11 +87,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-archivist.archivist">
+  <section id="module-archivist.archivist">
 <span id="archivist-class"></span><span id="archivistref"></span><h1>Archivist Class<a class="headerlink" href="#module-archivist.archivist" title="Permalink to this headline"></a></h1>
 <p>Archivist connection interface</p>
 <p>This module contains the base Archivist class which manages
-the connection parameters to a Jitsuin Archivist instance and
+the connection parameters to a RKVST instance and
 the basic REST verbs to GET, POST, PATCH and DELETE entities..</p>
 <p>The REST methods in this class should only be used directly when
 a CRUD endpoint for the specific type of entity is unavailable.
@@ -120,10 +122,10 @@ basic methods that represent the underlying REST interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>url</strong> (<em>str</em>) – URL of archivist endpoint</p></li>
-<li><p><strong>auth</strong> – string representing JWT token.</p></li>
-<li><p><strong>verify</strong> – if True the certificate is verified</p></li>
-<li><p><strong>max_time</strong> (<em>float</em>) – maximum time in seconds to wait for confirmation</p></li>
+<li><p><strong>url</strong> (<em>str</em>) -- URL of archivist endpoint</p></li>
+<li><p><strong>auth</strong> -- string representing JWT token.</p></li>
+<li><p><strong>verify</strong> -- if True the certificate is verified</p></li>
+<li><p><strong>max_time</strong> (<em>float</em>) -- maximum time in seconds to wait for confirmation</p></li>
 </ul>
 </dd>
 </dl>
@@ -146,15 +148,15 @@ basic methods that represent the underlying REST interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) – selector e.g. {“attributes”:{“arc_display_name”:”container no. 1”}}</p></li>
+<li><p><strong>path</strong> (<em>str</em>) -- e.g. v2/assets</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) -- selector e.g. {&quot;attributes&quot;:{&quot;arc_display_name&quot;:&quot;container no. 1&quot;}}</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>integer count of entities found.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistHeaderError" title="archivist.errors.ArchivistHeaderError"><strong>ArchivistHeaderError</strong></a> – If the expected count header is not present</p>
+<dd class="field-odd"><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistHeaderError" title="archivist.errors.ArchivistHeaderError"><strong>ArchivistHeaderError</strong></a> -- If the expected count header is not present</p>
 </dd>
 </dl>
 </dd></dl>
@@ -167,9 +169,9 @@ basic methods that represent the underlying REST interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subpath</strong> (<em>str</em>) – e.g. v2 or iam/v1</p></li>
-<li><p><strong>identity</strong> (<em>str</em>) – e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
-<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+<li><p><strong>subpath</strong> (<em>str</em>) -- e.g. v2 or iam/v1</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) -- e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -196,12 +198,12 @@ basic methods that represent the underlying REST interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subpath</strong> (<em>str</em>) – e.g. v2 or iam/v1…</p></li>
-<li><p><strong>identity</strong> (<em>str</em>) – e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
-<li><p><strong>tail</strong> (<em>str</em>) – endpoint tail e.g. metadata
+<li><p><strong>subpath</strong> (<em>str</em>) -- e.g. v2 or iam/v1...</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) -- e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
+<li><p><strong>tail</strong> (<em>str</em>) -- endpoint tail e.g. metadata
 adds extra selector to tail of the endpoint</p></li>
-<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) – optional params strings</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) -- optional params strings</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -220,10 +222,10 @@ being found.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
-<li><p><strong>field</strong> (<em>str</em>) – name of collection of entities e.g assets</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) – selector e.g. {“attributes”: {“arc_display_name”:”container no. 1”}}</p></li>
-<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+<li><p><strong>path</strong> (<em>str</em>) -- e.g. v2/assets</p></li>
+<li><p><strong>field</strong> (<em>str</em>) -- name of collection of entities e.g assets</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) -- selector e.g. {&quot;attributes&quot;: {&quot;arc_display_name&quot;:&quot;container no. 1&quot;}}</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -231,9 +233,9 @@ being found.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistBadFieldError" title="archivist.errors.ArchivistBadFieldError"><strong>ArchivistBadFieldError</strong></a> – field has incorrect value.</p></li>
-<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistNotFoundError" title="archivist.errors.ArchivistNotFoundError"><strong>ArchivistNotFoundError</strong></a> – No entity found</p></li>
-<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistDuplicateError" title="archivist.errors.ArchivistDuplicateError"><strong>ArchivistDuplicateError</strong></a> – More than one entity matching signature found</p></li>
+<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistBadFieldError" title="archivist.errors.ArchivistBadFieldError"><strong>ArchivistBadFieldError</strong></a> -- field has incorrect value.</p></li>
+<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistNotFoundError" title="archivist.errors.ArchivistNotFoundError"><strong>ArchivistNotFoundError</strong></a> -- No entity found</p></li>
+<li><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistDuplicateError" title="archivist.errors.ArchivistDuplicateError"><strong>ArchivistDuplicateError</strong></a> -- More than one entity matching signature found</p></li>
 </ul>
 </dd>
 </dl>
@@ -247,12 +249,12 @@ being found.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subpath</strong> (<em>str</em>) – e.g. v2 or iam/v1</p></li>
-<li><p><strong>identity</strong> (<em>str</em>) – e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
-<li><p><strong>fd</strong> (<em>file</em>) – an iterable representing a file (usually from open())
+<li><p><strong>subpath</strong> (<em>str</em>) -- e.g. v2 or iam/v1</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) -- e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
+<li><p><strong>fd</strong> (<em>file</em>) -- an iterable representing a file (usually from open())
 the file must be opened in binary mode</p></li>
-<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) – optional params strings</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) -- optional params strings</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -267,7 +269,7 @@ the file must be opened in binary mode</p></li>
 <dd><p>Returns the requested number of response objects from the response ring buffer</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>responses</strong> (<em>int</em>) – Number of responses to be returned in a list</p>
+<dd class="field-odd"><p><strong>responses</strong> (<em>int</em>) -- Number of responses to be returned in a list</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>list of responses.</p>
@@ -287,18 +289,18 @@ until next_page_token in response is null.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
-<li><p><strong>field</strong> (<em>str</em>) – name of collection of entities e.g assets</p></li>
-<li><p><strong>page_size</strong> (<em>int</em>) – optional number of items per request e.g. 500</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) – selector e.g. {“confirmation_status”: “CONFIRMED”, }</p></li>
-<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+<li><p><strong>path</strong> (<em>str</em>) -- e.g. v2/assets</p></li>
+<li><p><strong>field</strong> (<em>str</em>) -- name of collection of entities e.g assets</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) -- optional number of items per request e.g. 500</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) -- selector e.g. {&quot;confirmation_status&quot;: &quot;CONFIRMED&quot;, }</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>iterable that lists entities</p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistBadFieldError" title="archivist.errors.ArchivistBadFieldError"><strong>ArchivistBadFieldError</strong></a> – field has incorrect value.</p>
+<dd class="field-odd"><p><a class="reference internal" href="errors.html#archivist.errors.ArchivistBadFieldError" title="archivist.errors.ArchivistBadFieldError"><strong>ArchivistBadFieldError</strong></a> -- field has incorrect value.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -322,10 +324,10 @@ until next_page_token in response is null.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>subpath</strong> (<em>str</em>) – e.g. v2 or iam/v1</p></li>
-<li><p><strong>identity</strong> (<em>str</em>) – e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
-<li><p><strong>request</strong> (<em>dict</em>) – request body defining the entity changes.</p></li>
-<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
+<li><p><strong>subpath</strong> (<em>str</em>) -- e.g. v2 or iam/v1</p></li>
+<li><p><strong>identity</strong> (<em>str</em>) -- e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
+<li><p><strong>request</strong> (<em>dict</em>) -- request body defining the entity changes.</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -342,11 +344,11 @@ until next_page_token in response is null.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
-<li><p><strong>request</strong> (<em>dict</em>) – request body defining the entity</p></li>
-<li><p><strong>headers</strong> (<em>dict</em>) – optional REST headers</p></li>
-<li><p><strong>verb</strong> (<em>str</em>) – optional REST verb</p></li>
-<li><p><strong>data</strong> (<em>bool</em>) – send as form-encoded and not as json</p></li>
+<li><p><strong>path</strong> (<em>str</em>) -- e.g. v2/assets</p></li>
+<li><p><strong>request</strong> (<em>dict</em>) -- request body defining the entity</p></li>
+<li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
+<li><p><strong>verb</strong> (<em>str</em>) -- optional REST verb</p></li>
+<li><p><strong>data</strong> (<em>bool</em>) -- send as form-encoded and not as json</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -363,10 +365,10 @@ until next_page_token in response is null.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em>) – e.g. v2/assets</p></li>
-<li><p><strong>fd</strong> – iterable representing the contents of a file.</p></li>
-<li><p><strong>mtype</strong> (<em>str</em>) – mime type e.g. image/jpg</p></li>
-<li><p><strong>params</strong> (<em>dict</em>) – dictiuonary of optional path params</p></li>
+<li><p><strong>path</strong> (<em>str</em>) -- e.g. v2/assets</p></li>
+<li><p><strong>fd</strong> -- iterable representing the contents of a file.</p></li>
+<li><p><strong>mtype</strong> (<em>str</em>) -- mime type e.g. image/jpg</p></li>
+<li><p><strong>params</strong> (<em>dict</em>) -- dictionary of optional path params</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -399,7 +401,7 @@ until next_page_token in response is null.</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

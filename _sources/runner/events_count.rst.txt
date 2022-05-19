@@ -5,7 +5,7 @@ Events Count Story Runner YAML
 
 :code:`asset_label` must match the :code:`asset_label` field of a previous creation step
 (:code:`ASSETS_CREATE` or :code:`ASSETS_CREATE_IF_NOT_EXISTS`) 
-for which the authorised credentials have Event write access.
+for which the authorized credentials have Event write access.
 
 :code:`props`, :code:`attrs` and :code:`asset_attrs` are optional.
 

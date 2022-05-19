@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Timestamp Definition &mdash; RKVST 0.13.1 documentation</title>
+  <title>Timestamp Definition &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -32,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.13.1
+                0.14.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -59,6 +60,7 @@
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Timestamp Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 </ul>
 
@@ -85,7 +87,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-archivist.timestamp">
+  <section id="module-archivist.timestamp">
 <span id="timestamp-definition"></span><span id="timestampref"></span><h1>Timestamp Definition<a class="headerlink" href="#module-archivist.timestamp" title="Permalink to this headline"></a></h1>
 <p>Timestamp manipulation</p>
 <p>Defines timestamp policy for Archivist.</p>
@@ -96,7 +98,7 @@
 <p>See <a class="reference external" href="https://pypi.org/project/rfc3339/">https://pypi.org/project/rfc3339/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>datetime</strong> (<em>datetime</em>) – datetime object</p>
+<dd class="field-odd"><p><strong>datetime</strong> (<em>datetime</em>) -- datetime object</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>string representation of time</p>
@@ -123,7 +125,7 @@
 <p>See <a class="reference external" href="https://pypi.org/project/iso8601/">https://pypi.org/project/iso8601/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>date_string</strong> (<em>str</em>) – a string representing date and time in ISO8601 format.</p>
+<dd class="field-odd"><p><strong>date_string</strong> (<em>str</em>) -- a string representing date and time in ISO8601 format.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>datetime object</p>
@@ -131,7 +133,7 @@
 </dl>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

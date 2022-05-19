@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estate Info Story Runner YAML &mdash; RKVST 0.14.5 documentation</title>
+  <title>Locations List Story Runner YAML &mdash; RKVST 0.14.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Events Count Story Runner YAML" href="events_count.html" />
-    <link rel="prev" title="Compliance Policy Create Story Runner YAML" href="compliance_policies_create.html" /> 
+    <link rel="next" title="Subjects Count Story Runner YAML" href="subjects_count.html" />
+    <link rel="prev" title="Locations Create Story Runner YAML" href="locations_create.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,13 +58,13 @@
 <li class="toctree-l2"><a class="reference internal" href="assets_wait_for_confirmed.html">Assets Wait For Confirmed Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
-<li class="toctree-l2"><a class="reference internal" href="locations_list.html">Locations List Story Runner YAML</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Locations List Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
@@ -114,7 +114,7 @@
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../getting_started.html">Getting started</a> &raquo;</li>
           <li><a href="index.html">Story Runner</a> &raquo;</li>
-      <li>Estate Info Story Runner YAML</li>
+      <li>Locations List Story Runner YAML</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -123,14 +123,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="estate-info-story-runner-yaml">
-<span id="composite-estate-info-yamlref"></span><h1>Estate Info Story Runner YAML<a class="headerlink" href="#estate-info-story-runner-yaml" title="Permalink to this headline"></a></h1>
-<p>Output report on current number of assets, events and locations.</p>
+  <section id="locations-list-story-runner-yaml">
+<span id="locations-list-yamlref"></span><h1>Locations List Story Runner YAML<a class="headerlink" href="#locations-list-story-runner-yaml" title="Permalink to this headline"></a></h1>
+<p>List all locations that match criteria..</p>
+<p>Setting <code class="code docutils literal notranslate"><span class="pre">print_response:</span> <span class="pre">true</span></code> is necessary to print the full result.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span><span class="w"></span>
 <span class="nt">steps</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COMPOSITE_ESTATE_INFO</span><span class="w"></span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Estate Info Report</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LOCATIONS_LIST</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">List locations for which John Smith is director</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">attrs</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">director</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">John Smith</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -139,8 +143,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="compliance_policies_create.html" class="btn btn-neutral float-left" title="Compliance Policy Create Story Runner YAML" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="events_count.html" class="btn btn-neutral float-right" title="Events Count Story Runner YAML" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="locations_create.html" class="btn btn-neutral float-left" title="Locations Create Story Runner YAML" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="subjects_count.html" class="btn btn-neutral float-right" title="Subjects Count Story Runner YAML" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
