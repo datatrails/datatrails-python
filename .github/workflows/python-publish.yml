@@ -36,7 +36,7 @@ jobs:
       uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "docs/"
-        pre-build-command: "apt-get update && apt-get install -y libenchant-2-2"
+        pre-build-command: "apt-get install -y libenchant-2-2"
     - name: Publish docs
       uses: peaceiris/actions-gh-pages@v3
       with:
