@@ -326,7 +326,11 @@ class _EventsClient:
         confirmer.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
         return confirmer._wait_for_confirmed(
-            self, asset_id=asset_id, props=props, attrs=attrs, asset_attrs=asset_attrs
+            self,
+            asset_id=asset_id,
+            props=props,
+            attrs=attrs,
+            asset_attrs=asset_attrs,
         )
 
     def list(

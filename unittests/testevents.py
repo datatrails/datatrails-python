@@ -864,7 +864,7 @@ class TestEvents(TestCase):
 
     def test_events_read(self):
         """
-        Test event counting
+        Test event reading
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
@@ -898,7 +898,7 @@ class TestEvents(TestCase):
 
     def test_events_read_with_no_principal(self):
         """
-        Test event counting
+        Test event reading
         """
         with mock.patch.object(self.arch._session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)

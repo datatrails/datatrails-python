@@ -53,7 +53,7 @@ class TestArchivist(TestCase):
     Test Archivist class
     """
 
-    def test_archivist_illegal_urlk(self):
+    def test_archivist_illegal_url(self):
         """
         Test illegal url
         """
@@ -163,7 +163,17 @@ class TestArchivist(TestCase):
 
     def test_archivist_none_token(self):
         """
-        Test archivist creation with none token
+        Test archivist creation with no token
+        """
+        arch = Archivist("url", None)
+        self.assertIsNone(
+            arch.auth,
+            msg="Incorrect auth",
+        )
+
+    def test_archivist_appidp_token(self):
+        """
+        Test archivist creation with appidp token
         """
         arch = Archivist("url", (CLIENT_ID, CLIENT_SECRET))
         with mock.patch.object(arch.appidp, "token") as mock_token:

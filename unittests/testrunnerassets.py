@@ -285,6 +285,114 @@ class TestRunnerAssetsCreate(TestCase):
             mock_sleep.assert_called_once_with(10)
 
     @mock.patch("archivist.runner.time_sleep")
+    def test_runner_events_count(self, mock_sleep):
+        """
+        Test runner operation
+        """
+        with mock.patch.object(
+            self.arch.events, "count"
+        ) as mock_events_count, mock.patch.object(
+            self.arch.runner, "identity"
+        ) as mock_identity:
+            mock_identity.return_value = EVENTS_LIST_ASSET_ID
+            mock_events_count.return_value = 2
+            self.arch.runner(
+                {
+                    "steps": [
+                        {
+                            "step": {
+                                "action": "EVENTS_COUNT",
+                                "wait_time": 10,
+                                "print_response": True,
+                                "description": "Testing runner events count",
+                                "asset_label": "Existing Asset",
+                            },
+                            **EVENTS_LIST,
+                        },
+                    ],
+                }
+            )
+            mock_events_count.assert_called_once_with(
+                asset_id=EVENTS_LIST_ASSET_ID,
+                props=EVENTS_LIST_PROPS,
+                attrs=EVENTS_LIST_ATTRS,
+                asset_attrs=EVENTS_LIST_ASSET_ATTRS,
+            )
+            mock_sleep.assert_called_once_with(10)
+
+    @mock.patch("archivist.runner.time_sleep")
+    def test_runner_publicevents_count(self, mock_sleep):
+        """
+        Test runner operation
+        """
+        with mock.patch.object(
+            self.arch.publicevents, "count"
+        ) as mock_events_count, mock.patch.object(
+            self.arch.runner, "identity"
+        ) as mock_identity:
+            mock_identity.return_value = EVENTS_LIST_ASSET_ID
+            mock_events_count.return_value = 2
+            self.arch.runner(
+                {
+                    "steps": [
+                        {
+                            "step": {
+                                "action": "PUBLICEVENTS_COUNT",
+                                "wait_time": 10,
+                                "print_response": True,
+                                "description": "Testing runner events count",
+                                "asset_label": "Existing Asset",
+                            },
+                            **EVENTS_LIST,
+                        },
+                    ],
+                }
+            )
+            mock_events_count.assert_called_once_with(
+                asset_id=EVENTS_LIST_ASSET_ID,
+                props=EVENTS_LIST_PROPS,
+                attrs=EVENTS_LIST_ATTRS,
+                asset_attrs=EVENTS_LIST_ASSET_ATTRS,
+            )
+            mock_sleep.assert_called_once_with(10)
+
+    @mock.patch("archivist.runner.time_sleep")
+    def test_runner_publicevents_list(self, mock_sleep):
+        """
+        Test runner operation
+        """
+        with mock.patch.object(
+            self.arch.publicevents, "list"
+        ) as mock_events_list, mock.patch.object(
+            self.arch.runner, "identity"
+        ) as mock_identity:
+            mock_identity.return_value = EVENTS_LIST_ASSET_ID
+            mock_events_list.return_value = event_generator(2)
+            self.arch.runner(
+                {
+                    "steps": [
+                        {
+                            "step": {
+                                "action": "PUBLICEVENTS_LIST",
+                                "wait_time": 10,
+                                "print_response": True,
+                                "description": "Testing runner events list",
+                                "asset_label": "Existing Asset",
+                            },
+                            **EVENTS_LIST,
+                        },
+                    ],
+                }
+            )
+            mock_events_list.assert_called_once_with(
+                asset_id=EVENTS_LIST_ASSET_ID,
+                props=EVENTS_LIST_PROPS,
+                attrs=EVENTS_LIST_ATTRS,
+                asset_attrs=EVENTS_LIST_ASSET_ATTRS,
+            )
+            mock_sleep.assert_called_once_with(10)
+
+    @mock.patch("archivist.runner.time_sleep")
     def test_runner_assets_create_no_wait(self, mock_sleep):
         """
         Test runner operation
