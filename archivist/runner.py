@@ -149,6 +149,26 @@ class _ActionMap(dict):
             "action": archivist.locations.read,
             "use_location_label": "add_arg_identity",
         }
+        self["PUBLICEVENTS_COUNT"] = {
+            "action": archivist.publicevents.count,
+            "keywords": (
+                "asset_id",
+                "props",
+                "attrs",
+                "asset_attrs",
+            ),
+            "use_asset_label": "add_kwarg_asset_identity",
+        }
+        self["PUBLICEVENTS_LIST"] = {
+            "action": archivist.publicevents.list,
+            "keywords": (
+                "asset_id",
+                "props",
+                "attrs",
+                "asset_attrs",
+            ),
+            "use_asset_label": "add_kwarg_asset_identity",
+        }
         self["SUBJECTS_COUNT"] = {
             "action": archivist.subjects.count,
             "keywords": ("display_name",),

@@ -122,7 +122,7 @@ class TestAssetCreate(TestCase):
         )
         events = self.arch.events.list(asset_id=asset["identity"])
         print("events", json_dumps(list(events), sort_keys=True, indent=4))
-        asset = self.arch.assets.wait_for_confirmation(asset["identity"])
+        asset = self.arch.events.wait_for_confirmation(asset["identity"])
         print("asset", json_dumps(asset, sort_keys=True, indent=4))
         events = self.arch.events.list(asset_id=asset["identity"])
         print("events", json_dumps(list(events), sort_keys=True, indent=4))

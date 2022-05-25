@@ -45,8 +45,12 @@ def create_asset(arch):
     # mechanism is not enabled for your tenant then an error will occur.
     # If unspecified then SIMPLE_HASH is used.
     # proof_mechanism = ProofMechanism.KHIPU.name
+    #
+    # Optionally one can create a publicasset by specifying public as True
+    # If unspecified a private asset wll be created.
     props = {
         "proof_mechanism": ProofMechanism.KHIPU.name,
+        "public": True,
     }
 
     # The first argument are the properties of the asset

@@ -71,6 +71,8 @@ from .compliance_policies import _CompliancePoliciesClient
 from .composite import _CompositeClient
 from .events import _EventsClient
 from .locations import _LocationsClient
+from .publicassets import _PublicAssetsClient
+from .publicevents import _PublicEventsClient
 from .runner import _Runner
 from .sboms import _SBOMSClient
 from .subjects import _SubjectsClient
@@ -90,6 +92,8 @@ CLIENTS = {
     "composite": _CompositeClient,
     "events": _EventsClient,
     "locations": _LocationsClient,
+    "publicassets": _PublicAssetsClient,
+    "publicevents": _PublicEventsClient,
     "runner": _Runner,
     "sboms": _SBOMSClient,
     "subjects": _SubjectsClient,
@@ -153,6 +157,7 @@ class Archivist:  # pylint: disable=too-many-instance-attributes
         self.composite: _CompositeClient
         self.events: _EventsClient
         self.locations: _LocationsClient
+        self.publicassets: _PublicAssetsClient
         self.runner: _Runner
         self.sboms: _SBOMSClient
         self.subjects: _SubjectsClient
