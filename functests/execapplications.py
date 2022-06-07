@@ -5,7 +5,7 @@ from copy import deepcopy
 from json import dumps as json_dumps
 from os import getenv
 from time import sleep
-from unittest import TestCase
+from unittest import TestCase, skipIf
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -136,6 +136,10 @@ class TestApplications(TestCase):
         """
         Test application list
         """
+        application = self.arch.applications.create(
+            self.display_name,
+            CUSTOM_CLAIMS,
+        )
         applications = list(self.arch.applications.list(display_name=self.display_name))
         self.assertGreater(
             len(applications),
@@ -193,6 +197,10 @@ class TestApplications(TestCase):
                 client_secret,
             )
 
+    @skipIf(
+        getenv("TEST_REFRESH_TOKEN") is None,
+        "cannot run test as TEST_REFRESH_TOKEN is not set",
+    )
     def test_archivist_token(self):
         """
         Test archivist with client id/secret

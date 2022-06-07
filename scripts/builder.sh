@@ -22,5 +22,6 @@ docker run \
     -e TEST_CLIENT_SECRET \
     -e TEST_CLIENT_SECRET_FILENAME \
     -e TEST_DEBUG \
+    -e TEST_REFRESH_TOKEN \
     jitsuin-archivist-python-builder \
     "$@"

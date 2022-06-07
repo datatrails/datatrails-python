@@ -159,11 +159,26 @@ export TEST_CLIENT_SECRET_FILENAME=
 export TEST_CLIENT_SECRET="ey.....................ab=="
 task functests
 ```
-Lastly when running the runner tests one can specify a namespace to isolate instances of assets in differnt 
+When running the runner tests one can specify a namespace to isolate instances of assets in differnt 
 runs:
 ```bash
 export ARCHIVIST_NAMESPACE=${RANDOM}
 FUNCTEST=execrunner task functests
+```
+
+Additional environment variables:
+
+For testing sharing via an access policy requires a second auth token:
+
+```bash
+TEST_AUTHTOKEN_FILENAME_2=
+```
+
+Testing of the client token refresh logic can take 10 to 20 minutes to complete.
+To enable this test set:
+
+```bash
+TEST_REFRESH_TOKEN=anything
 ```
 
 #### Testing Other Python Versions

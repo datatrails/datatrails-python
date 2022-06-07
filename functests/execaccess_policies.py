@@ -4,7 +4,7 @@ Test access_policies
 
 from copy import deepcopy
 from os import getenv
-from unittest import TestCase
+from unittest import TestCase, skipIf
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -115,6 +115,10 @@ class TestAccessPoliciesSimple(TestAccessPoliciesBase):
         )
 
 
+@skipIf(
+    getenv("TEST_AUTHTOKEN_FILENAME_2") is None,
+    "cannot run test as TEST_AUTHTOKEN_FILENAME_2 is not set",
+)
 class TestAccessPolicies(TestAccessPoliciesBase):
     """
     Test Archivist AccessPolicies Create method
