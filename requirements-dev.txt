@@ -6,7 +6,7 @@ black~=22.3
 coverage~=6.3
 pip-audit~=2.0
 pycodestyle~=2.8
-pylint~=2.12
+pylint~=2.14
 
 # uploading to pypi
 build~=0.7.0

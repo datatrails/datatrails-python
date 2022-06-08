@@ -26,7 +26,7 @@ def run(arch: "type_helper.Archivist", args):
     if args.namespace:
         environ["ARCHIVIST_NAMESPACE"] = args.namespace
 
-    with open(args.yamlfile, "r", encoding="utf-8") as y:
-        arch.runner(parse_config(data=y))
+    with open(args.yamlfile, "r", encoding="utf-8") as yml:
+        arch.runner(parse_config(data=yml))
 
     sys_exit(0)
