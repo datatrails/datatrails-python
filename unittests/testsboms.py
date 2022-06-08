@@ -88,6 +88,95 @@ class TestSBOMS(TestCase):
             msg="Incorrect str",
         )
 
+    def test_sboms_upload_spdx(self):
+        """
+        Test attachment upload
+        """
+        with mock.patch.object(self.arch._session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+
+            sbom = self.arch.sboms.upload(
+                self.mockstream,
+                params={
+                    "sbomType": "spdx-tag",
+                    "component": "spdx-test-component",
+                    "version": "v0.0.1",
+                },
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="UPLOAD method called incorrectly",
+            )
+            self.assertEqual(
+                "headers" in kwargs,
+                True,
+                msg="UPLOAD no headers found",
+            )
+            headers = kwargs["headers"]
+            self.assertEqual(
+                "authorization" in headers,
+                True,
+                msg="UPLOAD no authorization found",
+            )
+            params = kwargs["params"]
+            self.assertEqual(
+                params,
+                {
+                    "sbomType": "spdx-tag",
+                    "component": "spdx-test-component",
+                    "version": "v0.0.1",
+                },
+                msg="Params did not contain expected values",
+            )
+            self.assertEqual(
+                headers["authorization"],
+                "Bearer authauthauth",
+                msg="UPLOAD incorrect authorization",
+            )
+            self.assertEqual(
+                headers["content-type"].startswith("multipart/form-data;"),
+                True,
+                msg="UPLOAD incorrect content-type",
+            )
+            self.assertEqual(
+                kwargs["verify"],
+                True,
+                msg="UPLOAD method called incorrectly",
+            )
+            self.assertEqual(
+                "data" in kwargs,
+                True,
+                msg="UPLOAD no data found",
+            )
+            fields = kwargs["data"].fields
+            self.assertEqual(
+                "sbom" in fields,
+                True,
+                msg="UPLOAD no field 'sbom' found",
+            )
+            self.assertEqual(
+                fields["sbom"][0],
+                "filename",
+                msg="UPLOAD incorrect filename",
+            )
+            self.assertEqual(
+                fields["sbom"][2],
+                "text/xml",
+                msg="UPLOAD incorrect filetype",
+            )
+            self.assertEqual(
+                sbom,
+                SBOM(**RESPONSE),
+                msg="UPLOAD method called incorrectly",
+            )
+            self.assertEqual(
+                sbom.dict(),
+                RESPONSE,
+                msg="UPLOAD method called incorrectly",
+            )
+
     def test_sboms_upload(self):
         """
         Test attachment upload

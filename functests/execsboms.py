@@ -102,7 +102,13 @@ class TestSBOM(TestCase):
         print("SPDX Upload Title:", self.title, now)
         with open(TEST_SBOM_SPDX_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(
-                fd, confirm=True, params={"sbomType": "spdx-tag"}
+                fd,
+                confirm=True,
+                params={
+                    "sbomType": "spdx-tag",
+                    "component": "spdx-test-component",
+                    "version": "v0.0.1",
+                },
             )
         print("first upload", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
