@@ -33,11 +33,11 @@ def scan_test(arch, datestring, scanned_expected=False):
             - true for yesterday
     """
 
-    ASSET_NAME = (
+    asset_name = (
         f"Scan test asset with 2 attachments - one bad or not scanned {datestring}"
     )
 
-    print(f"##[debug]Checking asset {ASSET_NAME}")
+    print(f"##[debug]Checking asset {asset_name}")
 
     asset, existed = arch.assets.create_if_not_exists(
         {
@@ -52,7 +52,7 @@ def scan_test(arch, datestring, scanned_expected=False):
             "behaviours": BEHAVIOURS,
             "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             "attributes": {
-                "arc_display_name": ASSET_NAME,
+                "arc_display_name": asset_name,
                 "arc_namespace": "namespace",
                 "arc_firmware_version": "1.0",
                 "arc_serial_number": "vtl-x4-07",

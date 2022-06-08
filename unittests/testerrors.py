@@ -229,7 +229,7 @@ class TestErrors(TestCase):
             msg="incorrect error",
         )
 
-    def test_errors_404_response_body_is_None(self):
+    def test_errors_404_response_body_is_none(self):
         """
         Test errors
         """

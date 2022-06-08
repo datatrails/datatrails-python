@@ -88,7 +88,7 @@ class TestSBOMS(TestCase):
             msg="Incorrect str",
         )
 
-    def test_SBOMS_upload(self):
+    def test_sboms_upload(self):
         """
         Test attachment upload
         """
@@ -183,7 +183,7 @@ class TestSBOMS(TestCase):
             with self.assertRaises(ArchivistNotFoundError):
                 sbom = self.arch.sboms.upload(self.mockstream, confirm=True)
 
-    def test_SBOMS_download(self):
+    def test_sboms_download(self):
         """
         Test SBOM download
         """
