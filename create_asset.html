@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Asset Example &mdash; RKVST 0.14.5 documentation</title>
+  <title>Create Asset Example &mdash; RKVST 0.15.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -33,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.14.5
+                0.15.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -49,9 +49,11 @@
 <li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Create Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_publicasset.html">Get Public Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filter_events.html">Filter Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_publicevents.html">Filter Public Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
@@ -67,6 +69,7 @@
 <li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publicevents.html">Public Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
@@ -151,8 +154,12 @@
     <span class="c1"># mechanism is not enabled for your tenant then an error will occur.</span>
     <span class="c1"># If unspecified then SIMPLE_HASH is used.</span>
     <span class="c1"># proof_mechanism = ProofMechanism.KHIPU.name</span>
+    <span class="c1">#</span>
+    <span class="c1"># Optionally one can create a publicasset by specifying public as True</span>
+    <span class="c1"># If unspecified a private asset wll be created.</span>
     <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">KHIPU</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="s2">&quot;public&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="c1"># The first argument are the properties of the asset</span>

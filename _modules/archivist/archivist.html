@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.archivist &mdash; RKVST 0.14.5 documentation</title>
+  <title>archivist.archivist &mdash; RKVST 0.15.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.14.5
+                0.15.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../publicevents.html">Public Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
@@ -159,6 +160,8 @@
 <span class="kn">from</span> <span class="nn">.composite</span> <span class="kn">import</span> <span class="n">_CompositeClient</span>
 <span class="kn">from</span> <span class="nn">.events</span> <span class="kn">import</span> <span class="n">_EventsClient</span>
 <span class="kn">from</span> <span class="nn">.locations</span> <span class="kn">import</span> <span class="n">_LocationsClient</span>
+<span class="kn">from</span> <span class="nn">.publicassets</span> <span class="kn">import</span> <span class="n">_PublicAssetsClient</span>
+<span class="kn">from</span> <span class="nn">.publicevents</span> <span class="kn">import</span> <span class="n">_PublicEventsClient</span>
 <span class="kn">from</span> <span class="nn">.runner</span> <span class="kn">import</span> <span class="n">_Runner</span>
 <span class="kn">from</span> <span class="nn">.sboms</span> <span class="kn">import</span> <span class="n">_SBOMSClient</span>
 <span class="kn">from</span> <span class="nn">.subjects</span> <span class="kn">import</span> <span class="n">_SubjectsClient</span>
@@ -178,6 +181,8 @@
     <span class="s2">&quot;composite&quot;</span><span class="p">:</span> <span class="n">_CompositeClient</span><span class="p">,</span>
     <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="n">_EventsClient</span><span class="p">,</span>
     <span class="s2">&quot;locations&quot;</span><span class="p">:</span> <span class="n">_LocationsClient</span><span class="p">,</span>
+    <span class="s2">&quot;publicassets&quot;</span><span class="p">:</span> <span class="n">_PublicAssetsClient</span><span class="p">,</span>
+    <span class="s2">&quot;publicevents&quot;</span><span class="p">:</span> <span class="n">_PublicEventsClient</span><span class="p">,</span>
     <span class="s2">&quot;runner&quot;</span><span class="p">:</span> <span class="n">_Runner</span><span class="p">,</span>
     <span class="s2">&quot;sboms&quot;</span><span class="p">:</span> <span class="n">_SBOMSClient</span><span class="p">,</span>
     <span class="s2">&quot;subjects&quot;</span><span class="p">:</span> <span class="n">_SubjectsClient</span><span class="p">,</span>
@@ -241,6 +246,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">composite</span><span class="p">:</span> <span class="n">_CompositeClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">:</span> <span class="n">_EventsClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="p">:</span> <span class="n">_LocationsClient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publicassets</span><span class="p">:</span> <span class="n">_PublicAssetsClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">runner</span><span class="p">:</span> <span class="n">_Runner</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sboms</span><span class="p">:</span> <span class="n">_SBOMSClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subjects</span><span class="p">:</span> <span class="n">_SubjectsClient</span>

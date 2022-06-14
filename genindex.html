@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; RKVST 0.14.5 documentation</title>
+  <title>Index &mdash; RKVST 0.15.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.14.5
+                0.15.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publicevents.html">Public Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
@@ -127,13 +128,17 @@
 </li>
       <li><a href="compliance_policies/compliance.html#archivist.compliance._ComplianceClient">_ComplianceClient (class in archivist.compliance)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient">_CompliancePoliciesClient (class in archivist.compliance_policies)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="events.html#archivist.events._EventsClient">_EventsClient (class in archivist.events)</a>
 </li>
       <li><a href="locations.html#archivist.locations._LocationsClient">_LocationsClient (class in archivist.locations)</a>
+</li>
+      <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient">_PublicEventsClient (class in archivist.publicevents)</a>
+</li>
+      <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient._PublicEventsClient__prefix">_PublicEventsClient__prefix() (archivist.publicevents._PublicEventsClient method)</a>
 </li>
       <li><a href="runner.html#archivist.runner._Runner">_Runner (class in archivist.runner)</a>
 </li>
@@ -257,13 +262,20 @@
         <li><a href="logger.html#module-archivist.logger">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     archivist.proof_mechanism
 
       <ul>
         <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    archivist.publicevents
+
+      <ul>
+        <li><a href="publicevents.html#module-archivist.publicevents">module</a>
 </li>
       </ul></li>
       <li>
@@ -395,6 +407,8 @@
         <li><a href="events.html#archivist.events._EventsClient.count">(archivist.events._EventsClient method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.count">(archivist.locations._LocationsClient method)</a>
+</li>
+        <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient.count">(archivist.publicevents._PublicEventsClient method)</a>
 </li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.count">(archivist.subjects._SubjectsClient method)</a>
 </li>
@@ -566,6 +580,8 @@
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.list">(archivist.locations._LocationsClient method)</a>
 </li>
+        <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient.list">(archivist.publicevents._PublicEventsClient method)</a>
+</li>
         <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.list">(archivist.sboms._SBOMSClient method)</a>
 </li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.list">(archivist.subjects._SubjectsClient method)</a>
@@ -622,6 +638,8 @@
         <li><a href="logger.html#module-archivist.logger">archivist.logger</a>
 </li>
         <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">archivist.proof_mechanism</a>
+</li>
+        <li><a href="publicevents.html#module-archivist.publicevents">archivist.publicevents</a>
 </li>
         <li><a href="runner.html#module-archivist.runner">archivist.runner</a>
 </li>
@@ -705,6 +723,8 @@
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.read">(archivist.locations._LocationsClient method)</a>
 </li>
+        <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient.read">(archivist.publicevents._PublicEventsClient method)</a>
+</li>
         <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.read">(archivist.sboms._SBOMSClient method)</a>
 </li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.read">(archivist.subjects._SubjectsClient method)</a>
@@ -720,6 +740,8 @@
         <li><a href="events.html#archivist.events._EventsClient.read_by_signature">(archivist.events._EventsClient method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.read_by_signature">(archivist.locations._LocationsClient method)</a>
+</li>
+        <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient.read_by_signature">(archivist.publicevents._PublicEventsClient method)</a>
 </li>
       </ul></li>
       <li><a href="iam/appregistrations.html#archivist.applications._ApplicationsClient.regenerate">regenerate() (archivist.applications._ApplicationsClient method)</a>

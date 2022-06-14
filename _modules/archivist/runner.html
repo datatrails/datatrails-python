@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.runner &mdash; RKVST 0.14.5 documentation</title>
+  <title>archivist.runner &mdash; RKVST 0.15.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.14.5
+                0.15.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../publicevents.html">Public Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
@@ -236,6 +237,26 @@
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_READ&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">read</span><span class="p">,</span>
             <span class="s2">&quot;use_location_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_arg_identity&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;PUBLICEVENTS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">publicevents</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;asset_id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;props&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;asset_attrs&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_kwarg_asset_identity&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;PUBLICEVENTS_LIST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">publicevents</span><span class="o">.</span><span class="n">list</span><span class="p">,</span>
+            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="s2">&quot;asset_id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;props&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;asset_attrs&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_kwarg_asset_identity&quot;</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;SUBJECTS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>

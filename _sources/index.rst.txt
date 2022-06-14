@@ -18,6 +18,7 @@
    archivist
    assets
    events
+   publicevents
    locations
    attachments
    compliance_policies/index

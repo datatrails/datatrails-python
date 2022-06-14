@@ -68,6 +68,8 @@ For further reading:
    locations_count
    locations_create
    locations_list
+   publicevents_count
+   publicevents_list
    subjects_count.rst
    subjects_create.rst
    subjects_create_b64.rst
@@ -80,6 +82,7 @@ For further reading:
    compliance_policies_demo_dynamic_tolerance
    compliance_policies_demo_richness
    door_entry_demo
+   publicassets_demo
    estate_info_demo
    sbom_demo
    synsation_demo

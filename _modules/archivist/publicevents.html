@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>archivist.publicevents &mdash; RKVST 0.15.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.15.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runner.html">Runner Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../publicevents.html">Public Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>archivist.publicevents</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for archivist.publicevents</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;PublicEvents interface</span>
+
+<span class="sd">   Direct access to the events endpoint.</span>
+
+<span class="sd">   The user is not expected to use this class directly. It is an attribute of the</span>
+<span class="sd">   :class:`Archivist` class.</span>
+
+<span class="sd">   For example instantiate an Archivist instance and execute the methods of the class:</span>
+
+<span class="sd">   .. code-block:: python</span>
+
+<span class="sd">      with open(&quot;.auth_token&quot;, mode=&quot;r&quot;, encoding=&quot;utf-8&quot;) as tokenfile:</span>
+<span class="sd">          authtoken = tokenfile.read().strip()</span>
+
+<span class="sd">      # Initialize connection to Archivist</span>
+<span class="sd">      arch = Archivist(</span>
+<span class="sd">          &quot;https://app.rkvst.io&quot;,</span>
+<span class="sd">          authtoken,</span>
+<span class="sd">      )</span>
+<span class="sd">      asset = arch.assets.create(...public=True)</span>
+<span class="sd">      event = arch.publicevents.list(asset[&#39;identity&#39;], ...)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
+<span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">EVENTS_LABEL</span><span class="p">,</span>
+    <span class="n">SEP</span><span class="p">,</span>
+    <span class="n">PUBLICASSETS_SUBPATH</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
+<span class="kn">from</span> <span class="nn">.events</span> <span class="kn">import</span> <span class="n">Event</span>
+
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="_PublicEventsClient"><a class="viewcode-back" href="../../publicevents.html#archivist.publicevents._PublicEventsClient">[docs]</a><span class="k">class</span> <span class="nc">_PublicEventsClient</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;PublicEventsClient</span>
+
+<span class="sd">    Access to events entities using the CRUD interface. This class is usually</span>
+<span class="sd">    accessed as an attribute of the Archivist class.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        archivist (Archivist): :class:`Archivist` instance</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PREFIX</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PublicEventsClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Prefixes identity&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">asset_id</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PREFIX</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">asset_id</span>
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">PREFIX</span><span class="si">}{</span><span class="n">asset_id</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<div class="viewcode-block" id="_PublicEventsClient.read"><a class="viewcode-back" href="../../publicevents.html#archivist.publicevents._PublicEventsClient.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Event</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Read event</span>
+
+<span class="sd">        Reads event.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            identity (str): events identity e.g. assets/xxxxxxx.../events/yyyyyyy...</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`Event` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Event</span><span class="p">(</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">PUBLICASSETS_SUBPATH</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__prefix</span><span class="p">(</span><span class="n">identity</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__params</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">asset_attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">props</span><span class="p">)</span> <span class="k">if</span> <span class="n">props</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;event_attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attrs</span>
+        <span class="k">if</span> <span class="n">asset_attrs</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;asset_attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">asset_attrs</span>
+
+        <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">EVENTS_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
+
+<div class="viewcode-block" id="_PublicEventsClient.count"><a class="viewcode-back" href="../../publicevents.html#archivist.publicevents._PublicEventsClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">asset_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">asset_attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Count events.</span>
+
+<span class="sd">        Counts number of events that match criteria.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">            props (dict): optional properties e.g. {&quot;confirmation_status&quot;: &quot;CONFIRMED&quot; }</span>
+<span class="sd">            attrs (dict): optional attributes e.g. {&quot;arc_display_type&quot;: &quot;open&quot; }</span>
+<span class="sd">            asset_attrs (dict): optional asset_attributes e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            integer count of assets.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
+            <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">PUBLICASSETS_SUBPATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__prefix</span><span class="p">(</span><span class="n">asset_id</span><span class="p">),</span> <span class="n">EVENTS_LABEL</span><span class="p">)),</span>
+            <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">asset_attrs</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_PublicEventsClient.list"><a class="viewcode-back" href="../../publicevents.html#archivist.publicevents._PublicEventsClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">asset_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">page_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">asset_attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List events.</span>
+
+<span class="sd">        Lists events that match criteria.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">            props (dict): e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</span>
+<span class="sd">            attrs (dict): e.g. {&quot;arc_display_type&quot;: &quot;open&quot; }</span>
+<span class="sd">            asset_attrs (dict): optional asset_attributes e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</span>
+<span class="sd">            page_size (int): optional page size. (Rarely used).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            iterable that returns :class:`Event` instances</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">Event</span><span class="p">(</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
+                <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">PUBLICASSETS_SUBPATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__prefix</span><span class="p">(</span><span class="n">asset_id</span><span class="p">),</span> <span class="n">EVENTS_LABEL</span><span class="p">)),</span>
+                <span class="n">EVENTS_LABEL</span><span class="p">,</span>
+                <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">asset_attrs</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_PublicEventsClient.read_by_signature"><a class="viewcode-back" href="../../publicevents.html#archivist.publicevents._PublicEventsClient.read_by_signature">[docs]</a>    <span class="k">def</span> <span class="nf">read_by_signature</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">asset_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">asset_attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Event</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Read event by signature.</span>
+
+<span class="sd">        Reads event that meets criteria. Only one event is expected.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">            props (dict): e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</span>
+<span class="sd">            attrs (dict): e.g. {&quot;arc_display_type&quot;: &quot;open&quot; }</span>
+<span class="sd">            asset_attrs (dict): optional asset_attributes e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`Event` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Event</span><span class="p">(</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get_by_signature</span><span class="p">(</span>
+                <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">PUBLICASSETS_SUBPATH</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__prefix</span><span class="p">(</span><span class="n">asset_id</span><span class="p">),</span> <span class="n">EVENTS_LABEL</span><span class="p">)),</span>
+                <span class="n">EVENTS_LABEL</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">asset_attrs</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

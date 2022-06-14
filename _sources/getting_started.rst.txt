@@ -11,10 +11,12 @@ See the examples and functests directories.
 
    create_asset
    get_asset
+   get_publicasset
    filter_assets
 
    create_event
    filter_events
+   filter_publicevents
 
    access_policy_create
    access_policies_filter
