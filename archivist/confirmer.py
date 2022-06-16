@@ -4,7 +4,7 @@
 from logging import getLogger
 
 from copy import deepcopy
-from typing import overload
+from typing import overload, Optional
 
 import backoff
 
@@ -67,7 +67,7 @@ def _wait_for_confirmation(
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_confirmation,
 )
-def _wait_for_confirmation(self, identity):
+def _wait_for_confirmation(self, identity, *, public: Optional[bool] = None):
     """Return None until entity is confirmed"""
     entity = self.read(identity)
 
@@ -83,7 +83,11 @@ def _wait_for_confirmation(self, identity):
         )
 
     if entity[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
-        return entity
+        if not public:
+            return entity
+
+        if entity.get("public", False):
+            return entity
 
     return None
 

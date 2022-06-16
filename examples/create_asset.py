@@ -47,7 +47,7 @@ def create_asset(arch):
     # proof_mechanism = ProofMechanism.KHIPU.name
     #
     # Optionally one can create a publicasset by specifying public as True
-    # If unspecified a private asset wll be created.
+    # If unspecified a restricted asset wll be created.
     props = {
         "proof_mechanism": ProofMechanism.KHIPU.name,
         "public": True,
@@ -58,7 +58,9 @@ def create_asset(arch):
     # The third argument is wait for confirmation:
     #   If @confirm@ is True then this function will not
     #   return until the asset is confirmed on the blockchain and ready
-    #   to accept events (or an error occurs)
+    #   to accept events (or an error occurs).
+    #   Confirmation for public assets is done when the public=True
+    #   attribute is returned.
     #
     return arch.assets.create(props=props, attrs=attrs, confirm=True)
     # alternatively if some work can be done whilst the asset is confirmed then this call can be
@@ -69,7 +71,7 @@ def create_asset(arch):
     # ... do something else here
     # and then wait for confirmation
 
-    # self.arch.assets.wait_for_confirmation(asset['identity']))
+    # self.arch.assets.wait_for_confirmation(asset['identity'], public=True)
 
 
 def main():

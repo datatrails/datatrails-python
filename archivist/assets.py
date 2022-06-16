@@ -119,7 +119,7 @@ class _AssetsClient:
         *,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
-        confirm: bool = False,
+        confirm: bool = True,
     ) -> Asset:
         """Create asset
 
@@ -141,7 +141,7 @@ class _AssetsClient:
         data = self.__params(newprops, attrs)
         return self.create_from_data(data, confirm=confirm)
 
-    def create_from_data(self, data: Dict, *, confirm: bool = False) -> Asset:
+    def create_from_data(self, data: Dict, *, confirm: bool = True) -> Asset:
         """Create asset
 
         Creates asset with request body from data stream.
@@ -164,10 +164,13 @@ class _AssetsClient:
         if not confirm:
             return asset
 
+        if data.get("public", False):
+            return self.wait_for_confirmation(asset["identity"], public=True)
+
         return self.wait_for_confirmation(asset["identity"])
 
     def create_if_not_exists(
-        self, data: Dict, *, confirm: bool = False
+        self, data: Dict, *, confirm: bool = True
     ) -> Tuple[Asset, bool]:
         """
         Creates an asset and associated locations and attachments if asset
@@ -265,13 +268,16 @@ class _AssetsClient:
 
         return asset, existed
 
-    def wait_for_confirmation(self, identity: str) -> Asset:
+    def wait_for_confirmation(
+        self, identity: str, *, public: Optional[bool] = None
+    ) -> Asset:
         """Wait for asset to be confirmed.
 
         Waits asset to be confirmed.
 
         Args:
             identity (str): identity of asset
+            public (bool): if True wait for public asset to be published.
 
         Returns:
             True if asset is confirmed.
@@ -279,7 +285,7 @@ class _AssetsClient:
         """
         confirmer.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
-        return confirmer._wait_for_confirmation(self, identity)
+        return confirmer._wait_for_confirmation(self, identity, public=public)
 
     def read(self, identity: str) -> Asset:
         """Read asset
