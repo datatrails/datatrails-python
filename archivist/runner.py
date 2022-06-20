@@ -12,11 +12,10 @@ from types import GeneratorType
 from typing import Dict, Optional, Tuple
 from uuid import UUID
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 # pylint:disable=missing-function-docstring
 # pylint:disable=protected-access
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 from .errors import ArchivistError, ArchivistInvalidOperationError
 
 LOGGER = getLogger(__name__)
@@ -49,12 +48,12 @@ class _ActionMap(dict):
     #
     def __init__(self, archivist: "type_helper.Archivist"):
         super().__init__()
+        self.archivist = archivist
 
         # please keep in alphabetical order
         self["ASSETS_ATTACHMENT_INFO"] = {
             "action": archivist.attachments.info,
-            "keywords": ("asset_or_event_id",),
-            "use_asset_label": "add_kwarg_asset_event_identity",
+            "use_asset_label": "add_arg_identity",
         }
         self["ASSETS_COUNT"] = {
             "action": archivist.assets.count,
@@ -148,26 +147,6 @@ class _ActionMap(dict):
         self["LOCATIONS_READ"] = {
             "action": archivist.locations.read,
             "use_location_label": "add_arg_identity",
-        }
-        self["PUBLICEVENTS_COUNT"] = {
-            "action": archivist.publicevents.count,
-            "keywords": (
-                "asset_id",
-                "props",
-                "attrs",
-                "asset_attrs",
-            ),
-            "use_asset_label": "add_kwarg_asset_identity",
-        }
-        self["PUBLICEVENTS_LIST"] = {
-            "action": archivist.publicevents.list,
-            "keywords": (
-                "asset_id",
-                "props",
-                "attrs",
-                "asset_attrs",
-            ),
-            "use_asset_label": "add_kwarg_asset_identity",
         }
         self["SUBJECTS_COUNT"] = {
             "action": archivist.subjects.count,
@@ -264,9 +243,6 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         self._kwargs[key] = identity
 
     add_kwarg_asset_identity = partialmethod(add_kwarg_identity, "asset_id")
-    add_kwarg_asset_event_identity = partialmethod(
-        add_kwarg_identity, "asset_or_event_id"
-    )
 
     def add_data_identity(self, key, identity):
         self._data[key] = {}
@@ -466,6 +442,7 @@ class _Runner:
             self.run_step(step)
 
         self.delete()
+        self._archivist.close()
 
     def run_step(self, step: Dict):
         """Runs a step given parameters and the type of step.

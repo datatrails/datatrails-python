@@ -3,7 +3,7 @@
 WIPP Demo
 ..................................
 
-.. literalinclude:: ../../functests/test_resources/wipp_story.yaml
+.. literalinclude:: ../../../functests/test_resources/wipp_story.yaml
    :language: yaml
 
 

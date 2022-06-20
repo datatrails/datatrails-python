@@ -25,13 +25,11 @@ from typing import Dict, List, Optional
 from logging import getLogger
 from copy import deepcopy
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .assets import Asset
 from .constants import (
-    SEP,
     ACCESS_POLICIES_SUBPATH,
     ACCESS_POLICIES_LABEL,
     ASSETS_LABEL,
@@ -65,6 +63,8 @@ class _AccessPoliciesClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{ACCESS_POLICIES_SUBPATH}"
+        self._label = f"{self._subpath}/{ACCESS_POLICIES_LABEL}"
 
     def __str__(self) -> str:
         return f"AccessPoliciesClient({self._archivist.url})"
@@ -107,7 +107,7 @@ class _AccessPoliciesClient:
         """
         return AccessPolicy(
             **self._archivist.post(
-                f"{ACCESS_POLICIES_SUBPATH}/{ACCESS_POLICIES_LABEL}",
+                f"{self._subpath}/{ACCESS_POLICIES_LABEL}",
                 data,
             )
         )
@@ -124,12 +124,7 @@ class _AccessPoliciesClient:
             :class:`AccessPolicy` instance
 
         """
-        return AccessPolicy(
-            **self._archivist.get(
-                ACCESS_POLICIES_SUBPATH,
-                identity,
-            )
-        )
+        return AccessPolicy(**self._archivist.get(f"{self._subpath}/{identity}"))
 
     def update(
         self,
@@ -154,8 +149,7 @@ class _AccessPoliciesClient:
         """
         return AccessPolicy(
             **self._archivist.patch(
-                ACCESS_POLICIES_SUBPATH,
-                identity,
+                f"{self._subpath}/{identity}",
                 self.__params(
                     props, filters=filters, access_permissions=access_permissions
                 ),
@@ -174,7 +168,7 @@ class _AccessPoliciesClient:
             :class:`AccessPolicy` instance - empty?
 
         """
-        return self._archivist.delete(ACCESS_POLICIES_SUBPATH, identity)
+        return self._archivist.delete(f"{self._subpath}/{identity}")
 
     def __params(
         self,
@@ -205,10 +199,7 @@ class _AccessPoliciesClient:
 
         """
         params = {"display_name": display_name} if display_name is not None else None
-        return self._archivist.count(
-            f"{ACCESS_POLICIES_SUBPATH}/{ACCESS_POLICIES_LABEL}",
-            params=params,
-        )
+        return self._archivist.count(self._label, params=params)
 
     def list(
         self, *, page_size: Optional[int] = None, display_name: Optional[str] = None
@@ -229,7 +220,7 @@ class _AccessPoliciesClient:
         return (
             AccessPolicy(**a)
             for a in self._archivist.list(
-                f"{ACCESS_POLICIES_SUBPATH}/{ACCESS_POLICIES_LABEL}",
+                self._label,
                 ACCESS_POLICIES_LABEL,
                 page_size=page_size,
                 params=params,
@@ -250,7 +241,7 @@ class _AccessPoliciesClient:
 
         """
         return self._archivist.count(
-            SEP.join((ACCESS_POLICIES_SUBPATH, access_policy_id, ASSETS_LABEL)),
+            f"{self._subpath}/{access_policy_id}/{ASSETS_LABEL}"
         )
 
     def list_matching_assets(
@@ -271,7 +262,7 @@ class _AccessPoliciesClient:
         return (
             Asset(**a)
             for a in self._archivist.list(
-                SEP.join((ACCESS_POLICIES_SUBPATH, access_policy_id, ASSETS_LABEL)),
+                f"{self._subpath}/{access_policy_id}/{ASSETS_LABEL}",
                 ASSETS_LABEL,
                 page_size=page_size,
             )
@@ -290,7 +281,7 @@ class _AccessPoliciesClient:
 
         """
         return self._archivist.count(
-            SEP.join((ACCESS_POLICIES_SUBPATH, asset_id, ACCESS_POLICIES_LABEL)),
+            f"{self._subpath}/{asset_id}/{ACCESS_POLICIES_LABEL}"
         )
 
     def list_matching_access_policies(
@@ -311,7 +302,7 @@ class _AccessPoliciesClient:
         return (
             AccessPolicy(**a)
             for a in self._archivist.list(
-                SEP.join((ACCESS_POLICIES_SUBPATH, asset_id, ACCESS_POLICIES_LABEL)),
+                f"{self._subpath}/{asset_id}/{ACCESS_POLICIES_LABEL}",
                 ACCESS_POLICIES_LABEL,
                 page_size=page_size,
             )

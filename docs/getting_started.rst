@@ -12,9 +12,11 @@ See the examples and functests directories.
    create_asset
    get_asset
    get_publicasset
-   filter_assets
+   get_publicevent
 
    create_event
+
+   filter_assets
    filter_events
    filter_publicevents
 

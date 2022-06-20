@@ -5,7 +5,7 @@ Test archivist
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist.constants import ROOT, HEADERS_RETRY_AFTER
+from archivist.constants import HEADERS_RETRY_AFTER
 from archivist.errors import (
     ArchivistNotFoundError,
     ArchivistTooManyRequestsError,
@@ -37,13 +37,13 @@ class TestArchivistDelete(TestArchivistMethods):
         """
         Test default delete method
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200)
-            resp = self.arch.delete("path/path", "entity/xxxxxxxx")
+            resp = self.arch.delete("path/path/entity/xxxxxxxx")
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
-                    (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
+                    ("path/path/entity/xxxxxxxx",),
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
@@ -58,26 +58,25 @@ class TestArchivistDelete(TestArchivistMethods):
         """
         Test delete method with error
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(404, identity="entity/xxxxxxxx")
             with self.assertRaises(ArchivistNotFoundError):
-                resp = self.arch.delete("path/path", "entity/xxxxxxxx")
+                resp = self.arch.delete("path/path/entity/xxxxxxxx")
 
     def test_delete_with_headers(self):
         """
         Test default delete method
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200)
             resp = self.arch.delete(
-                "path/path",
-                "id/xxxxxxxx",
+                "path/path/id/xxxxxxxx",
                 headers={"headerfield1": "headervalue1"},
             )
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
-                    (f"url/{ROOT}/path/path/id/xxxxxxxx",),
+                    ("path/path/id/xxxxxxxx",),
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
@@ -93,12 +92,11 @@ class TestArchivistDelete(TestArchivistMethods):
         """
         Test delete method with error
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
                 resp = self.arch.delete(
-                    "path/path",
-                    "id/xxxxxxxx",
+                    "path/path/id/xxxxxxxx",
                     headers={"headerfield1": "headervalue1"},
                 )
 
@@ -106,19 +104,19 @@ class TestArchivistDelete(TestArchivistMethods):
         """
         Test delete method with 429 retry and fail
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.delete("path/path", "entity/xxxxxxxx")
+                resp = self.arch.delete("path/path/entity/xxxxxxxx")
 
     def test_delete_with_429_retry_and_retries_fail(self):
         """
         Test delete method with 429 retry and retries_fail
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
@@ -126,23 +124,23 @@ class TestArchivistDelete(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.delete("path/path", "entity/xxxxxxxx")
+                resp = self.arch.delete("path/path/entity/xxxxxxxx")
 
     def test_delete_with_429_retry_and_success(self):
         """
         Test delete method with 429 retry and success
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(200),
             )
-            resp = self.arch.delete("path/path", "entity/xxxxxxxx")
+            resp = self.arch.delete("path/path/entity/xxxxxxxx")
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
-                    (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
+                    ("path/path/entity/xxxxxxxx",),
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",

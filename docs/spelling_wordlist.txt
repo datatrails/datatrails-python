@@ -26,10 +26,12 @@ macclesfield
 mimetype
 onwards
 params
+publicurl
 sbom
 sboms
 sbomType
 stdout
+str
 sublogger
 subloggers
 submodule

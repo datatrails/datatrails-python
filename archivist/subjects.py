@@ -26,9 +26,8 @@ from json import loads as json_loads
 from logging import getLogger
 from typing import Dict, List, Optional
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .constants import (
     SUBJECTS_SUBPATH,
@@ -60,6 +59,8 @@ class _SubjectsClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{SUBJECTS_SUBPATH}"
+        self._label = f"{self._subpath}/{SUBJECTS_LABEL}"
 
     def __str__(self) -> str:
         return f"SubjectsClient({self._archivist.url})"
@@ -103,12 +104,7 @@ class _SubjectsClient:
 
         """
         LOGGER.debug("Create Subject from data %s", data)
-        return Subject(
-            **self._archivist.post(
-                f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}",
-                data,
-            )
-        )
+        return Subject(**self._archivist.post(self._label, data))
 
     def create_from_b64(self, data: Dict) -> Subject:
         """Create subject
@@ -139,12 +135,7 @@ class _SubjectsClient:
         outdata["display_name"] = data["display_name"]
         LOGGER.debug("data %s", outdata)
 
-        return Subject(
-            **self._archivist.post(
-                f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}",
-                outdata,
-            )
-        )
+        return Subject(**self._archivist.post(self._label, outdata))
 
     def wait_for_confirmation(self, identity: str) -> Subject:
         """Wait for subject to be confirmed.
@@ -174,12 +165,7 @@ class _SubjectsClient:
             :class:`Subject` instance
 
         """
-        return Subject(
-            **self._archivist.get(
-                SUBJECTS_SUBPATH,
-                identity,
-            )
-        )
+        return Subject(**self._archivist.get(f"{self._subpath}/{identity}"))
 
     def update(
         self,
@@ -205,8 +191,7 @@ class _SubjectsClient:
         """
         return Subject(
             **self._archivist.patch(
-                SUBJECTS_SUBPATH,
-                identity,
+                f"{self._subpath}/{identity}",
                 self.__params(
                     display_name=display_name,
                     wallet_pub_keys=wallet_pub_keys,
@@ -227,7 +212,7 @@ class _SubjectsClient:
             :class:`Subject` instance - empty?
 
         """
-        return self._archivist.delete(SUBJECTS_SUBPATH, identity)
+        return self._archivist.delete(f"{self._subpath}/{identity}")
 
     def __params(
         self,
@@ -263,7 +248,7 @@ class _SubjectsClient:
 
         """
         return self._archivist.count(
-            f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}",
+            self._label,
             params=self.__params(display_name=display_name),
         )
 
@@ -288,7 +273,7 @@ class _SubjectsClient:
         return (
             Subject(**a)
             for a in self._archivist.list(
-                f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}",
+                self._label,
                 SUBJECTS_LABEL,
                 page_size=page_size,
                 params=self.__params(display_name=display_name),

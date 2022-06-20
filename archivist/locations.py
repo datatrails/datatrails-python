@@ -26,9 +26,8 @@ from copy import deepcopy
 from logging import getLogger
 from typing import Dict, Optional, Tuple
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 from .dictmerge import _deepmerge
@@ -72,6 +71,8 @@ class _LocationsClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{LOCATIONS_SUBPATH}"
+        self._label = f"{self._subpath}/{LOCATIONS_LABEL}"
 
     def __str__(self) -> str:
         return f"LocationsClient({self._archivist.url})"
@@ -105,12 +106,7 @@ class _LocationsClient:
             :class:`Location` instance
 
         """
-        return Location(
-            **self._archivist.post(
-                f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}",
-                data,
-            )
-        )
+        return Location(**self._archivist.post(self._label, data))
 
     def create_if_not_exists(self, data: Dict) -> Tuple[Optional[Location], bool]:
         """
@@ -171,12 +167,7 @@ class _LocationsClient:
             :class:`Location` instance
 
         """
-        return Location(
-            **self._archivist.get(
-                LOCATIONS_SUBPATH,
-                identity,
-            )
-        )
+        return Location(**self._archivist.get(f"{self._subpath}/{identity}"))
 
     def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
         params = deepcopy(props) if props else {}
@@ -200,9 +191,7 @@ class _LocationsClient:
             integer count of locations.
 
         """
-        return self._archivist.count(
-            f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}", params=self.__params(props, attrs)
-        )
+        return self._archivist.count(self._label, params=self.__params(props, attrs))
 
     def list(
         self,
@@ -228,7 +217,7 @@ class _LocationsClient:
         return (
             Location(**a)
             for a in self._archivist.list(
-                f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}",
+                self._label,
                 LOCATIONS_LABEL,
                 page_size=page_size,
                 params=self.__params(props, attrs),
@@ -252,7 +241,7 @@ class _LocationsClient:
         """
         return Location(
             **self._archivist.get_by_signature(
-                f"{LOCATIONS_SUBPATH}/{LOCATIONS_LABEL}",
+                self._label,
                 LOCATIONS_LABEL,
                 params=self.__params(props, attrs),
             )

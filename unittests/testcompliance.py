@@ -95,7 +95,7 @@ class TestCompliance(TestCase):
         """
         Test compliance
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_response = MockResponse(
                 200,
                 **RESPONSE,
@@ -140,9 +140,7 @@ class TestCompliance(TestCase):
         """
         Test compliance
         """
-        with mock.patch.object(
-            self.arch._session, "get"
-        ) as mock_get, mock.patch.object(
+        with mock.patch.object(self.arch.session, "get") as mock_get, mock.patch.object(
             self.arch.compliance_policies, "read"
         ) as mock_read:
             mock_read.return_value = MockResponse(200, **POLICY)

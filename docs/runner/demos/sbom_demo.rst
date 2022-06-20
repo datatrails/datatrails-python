@@ -3,7 +3,7 @@
 SBOM Demo
 ..................................
 
-.. literalinclude:: ../../functests/test_resources/sbom_story.yaml
+.. literalinclude:: ../../../functests/test_resources/sbom_story.yaml
    :language: yaml
 
 

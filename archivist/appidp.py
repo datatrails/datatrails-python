@@ -24,17 +24,14 @@
 from logging import getLogger
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=too-few-public-methods
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .constants import (
     APPIDP_SUBPATH,
     APPIDP_LABEL,
     APPIDP_TOKEN,
 )
-from .dictmerge import _deepmerge
-from .type_aliases import NoneOnError
 
 LOGGER = getLogger(__name__)
 
@@ -56,6 +53,8 @@ class _AppIDPClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{APPIDP_SUBPATH}"
+        self._label = f"{self._subpath}/{APPIDP_LABEL}"
 
     def __str__(self) -> str:
         return f"AppIDPClient({self._archivist.url})"
@@ -73,7 +72,7 @@ class _AppIDPClient:
         """
         return AppIDP(
             **self._archivist.post(
-                f"{APPIDP_SUBPATH}/{APPIDP_LABEL}/{APPIDP_TOKEN}",
+                f"{self._label}/{APPIDP_TOKEN}",
                 {
                     "grant_type": "client_credentials",
                     "client_id": client_id,

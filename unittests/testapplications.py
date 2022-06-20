@@ -73,7 +73,7 @@ class TestApplications(TestCase):
         """
         Test application creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             application = self.arch.applications.create(
@@ -107,7 +107,7 @@ class TestApplications(TestCase):
         """
         Test application reading
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
             application = self.arch.applications.read(IDENTITY)
@@ -130,7 +130,7 @@ class TestApplications(TestCase):
         """
         Test application deleting
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
             application = self.arch.applications.delete(IDENTITY)
@@ -152,7 +152,7 @@ class TestApplications(TestCase):
         """
         Test application deleting
         """
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, **RESPONSE)
 
             application = self.arch.applications.update(
@@ -178,7 +178,7 @@ class TestApplications(TestCase):
         """
         Test read method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
                 resp = self.arch.applications.read(IDENTITY)
@@ -187,7 +187,7 @@ class TestApplications(TestCase):
         """
         Test application listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 applications=[
@@ -228,7 +228,7 @@ class TestApplications(TestCase):
         """
         Test application listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 applications=[
@@ -275,7 +275,7 @@ class TestApplications(TestCase):
         """
         Test Application regenerate
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             sbom = self.arch.applications.regenerate(IDENTITY)

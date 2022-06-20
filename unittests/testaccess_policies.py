@@ -91,6 +91,9 @@ class TestAccessPolicies(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_access_policies_str(self):
         """
         Test access_policy str
@@ -105,7 +108,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             access_policy = self.arch.access_policies.create(
@@ -143,7 +146,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy reading
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
             access_policy = self.arch.access_policies.read(IDENTITY)
@@ -166,7 +169,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy deleting
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
             access_policy = self.arch.access_policies.delete(IDENTITY)
@@ -188,7 +191,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy deleting
         """
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, **RESPONSE)
 
             access_policy = self.arch.access_policies.update(
@@ -217,7 +220,7 @@ class TestAccessPolicies(TestCase):
         """
         Test read method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
                 resp = self.arch.access_policies.read(IDENTITY)
@@ -226,7 +229,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -261,7 +264,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -296,7 +299,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 access_policies=[
@@ -337,7 +340,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 access_policies=[
@@ -382,7 +385,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -422,7 +425,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -468,7 +471,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -507,7 +510,7 @@ class TestAccessPolicies(TestCase):
         """
         Test access_policy counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},

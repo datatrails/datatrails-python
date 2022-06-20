@@ -10,9 +10,8 @@ import yaml
 
 from ... import about
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from ... import archivist as type_helper
+from ... import archivist as type_helper  # pylint:disable=unused-import
 
 
 LOGGER = getLogger(__name__)

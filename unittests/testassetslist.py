@@ -38,7 +38,7 @@ class TestAssetsList(TestAssetsBase):
         """
         Test asset listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 assets=[
@@ -79,7 +79,7 @@ class TestAssetsList(TestAssetsBase):
         """
         Test asset listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 assets=[
@@ -130,7 +130,7 @@ class TestAssetsList(TestAssetsBase):
         """
         Test asset listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 assets=[

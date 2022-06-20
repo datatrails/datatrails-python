@@ -25,11 +25,10 @@ from logging import getLogger
 from typing import Dict, Optional, Tuple
 from copy import deepcopy
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
-
+from .asset import Asset
 from .constants import (
     ASSETS_SUBPATH,
     ASSETS_LABEL,
@@ -37,8 +36,7 @@ from .constants import (
 )
 from . import confirmer
 from .dictmerge import _deepmerge
-from .errors import ArchivistNotFoundError
-from .type_aliases import NoneOnError
+from .errors import ArchivistBadFieldError, ArchivistNotFoundError
 from .utils import selector_signature
 
 # These are now hardcoded and not user-selectable. Eventually they will be removed from
@@ -51,57 +49,11 @@ BEHAVIOURS = [
 LOGGER = getLogger(__name__)
 
 
-class Asset(dict):
-    """Asset
-
-    Asset object has dictionary attributes and properties.
-
-    """
-
-    @property
-    def primary_image(self) -> NoneOnError[str]:
-        """Primary Image
-
-        Attachment that is the primary image of the asset.
-
-        Returns:
-            :class:`Attachment` instance
-
-        """
-        try:
-            attachments = self["attributes"]["arc_attachments"]
-        except (KeyError, TypeError):
-            pass
-        else:
-            return next(  # pragma: no cover
-                (
-                    a
-                    for a in attachments
-                    if "arc_display_name" in a
-                    if a["arc_display_name"] == "arc_primary_image"
-                ),
-                None,
-            )
-
-        return None
-
-    @property
-    def name(self) -> NoneOnError[str]:
-        """str: name of the asset"""
-        name = None
-        try:
-            name = self["attributes"]["arc_display_name"]
-        except (KeyError, TypeError):
-            pass
-
-        return name
-
-
-class _AssetsClient:
-    """AssetsClient
+class _AssetsPublic:
+    """AssetsReader
 
     Access to assets entities using CRUD interface. This class is usually
-    accessed as an attribute of the Archivist class.
+    accessed as an attribute of the Archivist or Public class.
 
     Args:
         archivist (Archivist): :class:`Archivist` instance
@@ -110,9 +62,60 @@ class _AssetsClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._public = archivist.public
+        self._subpath = f"{archivist.root}/{ASSETS_SUBPATH}"
 
     def __str__(self) -> str:
-        return f"AssetsClient({self._archivist.url})"
+        return "AssetsPublic()"
+
+    def _identity(self, identity: str) -> str:
+        """Return fully qualified identity
+        If public then expect a full url as argument
+        """
+        if self._public:
+            return identity
+
+        return f"{self._subpath}/{identity}"
+
+    def read(self, identity: str) -> Asset:
+        """Read asset
+
+        Reads asset.
+
+        Args:
+            identity (str): assets identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx
+
+        Returns:
+            :class:`Asset` instance
+
+        """
+        return Asset(**self._archivist.get(self._identity(identity)))
+
+
+class _AssetsRestricted(_AssetsPublic):
+    """AssetsRestricted
+
+    Access to assets entities using CRUD interface. This class is usually
+    accessed as an attribute of the Archivist or Public class.
+
+    Args:
+        archivist (Archivist): :class:`Archivist` instance
+
+    """
+
+    def __init__(self, archivist: "type_helper.Archivist"):
+        super().__init__(archivist)
+        self._label = f"{self._subpath}/{ASSETS_LABEL}"
+
+    def __str__(self) -> str:
+        return f"AssetsRestricted({self._archivist.url})"
+
+    def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
+        params = deepcopy(props) if props else {}
+        if attrs:
+            params["attributes"] = attrs
+
+        return _deepmerge(self._archivist.fixtures.get(f"{ASSETS_LABEL}"), params)
 
     def create(
         self,
@@ -155,12 +158,7 @@ class _AssetsClient:
             :class:`Asset` instance
 
         """
-        asset = Asset(
-            **self._archivist.post(
-                f"{ASSETS_SUBPATH}/{ASSETS_LABEL}",
-                data,
-            )
-        )
+        asset = Asset(**self._archivist.post(self._label, data))
         if not confirm:
             return asset
 
@@ -281,46 +279,6 @@ class _AssetsClient:
         # pylint: disable=protected-access
         return confirmer._wait_for_confirmation(self, identity)
 
-    def read(self, identity: str) -> Asset:
-        """Read asset
-
-        Reads asset.
-
-        Args:
-            identity (str): assets identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx
-
-        Returns:
-            :class:`Asset` instance
-
-        """
-        return Asset(**self._archivist.get(ASSETS_SUBPATH, identity))
-
-    def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
-        params = deepcopy(props) if props else {}
-        if attrs:
-            params["attributes"] = attrs
-
-        return _deepmerge(self._archivist.fixtures.get(ASSETS_LABEL), params)
-
-    def count(
-        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
-    ) -> int:
-        """Count assets.
-
-        Counts number of assets that match criteria.
-
-        Args:
-            props (dict): e.g. {"confirmation_status": "CONFIRMED" }
-            attrs (dict): e.g. {"arc_display_type": "door" }
-
-        Returns:
-            integer count of assets.
-
-        """
-        return self._archivist.count(
-            f"{ASSETS_SUBPATH}/{ASSETS_LABEL}", params=self.__params(props, attrs)
-        )
-
     def wait_for_confirmed(
         self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
     ) -> bool:
@@ -349,6 +307,23 @@ class _AssetsClient:
         # pylint: disable=protected-access
         return confirmer._wait_for_confirmed(self, props=newprops, attrs=attrs)
 
+    def count(
+        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
+    ) -> int:
+        """Count assets.
+
+        Counts number of assets that match criteria.
+
+        Args:
+            props (dict): e.g. {"confirmation_status": "CONFIRMED" }
+            attrs (dict): e.g. {"arc_display_type": "door" }
+
+        Returns:
+            integer count of assets.
+
+        """
+        return self._archivist.count(self._label, params=self.__params(props, attrs))
+
     def list(
         self,
         *,
@@ -372,7 +347,7 @@ class _AssetsClient:
         return (
             Asset(**a)
             for a in self._archivist.list(
-                f"{ASSETS_SUBPATH}/{ASSETS_LABEL}",
+                self._label,
                 ASSETS_LABEL,
                 page_size=page_size,
                 params=self.__params(props, attrs),
@@ -394,10 +369,30 @@ class _AssetsClient:
             :class:`Asset` instance
 
         """
+        assets_label = f"public{ASSETS_LABEL}" if self._public else ASSETS_LABEL
         return Asset(
             **self._archivist.get_by_signature(
-                f"{ASSETS_SUBPATH}/{ASSETS_LABEL}",
-                ASSETS_LABEL,
+                self._label,
+                assets_label,
                 params=self.__params(props, attrs),
             )
         )
+
+    def publicurl(self, identity: str) -> str:
+        """Read asset public url
+
+        Reads assets public url.
+
+        Args:
+            identity (str): assets identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx
+
+        Returns:
+            :str: publicurl as string
+
+        """
+        body = self._archivist.get(f"{self._identity(identity)}:publicurl")
+        publicurl = body.get("publicurl")
+        if publicurl is None:
+            raise ArchivistBadFieldError("No publicurl found in response")
+
+        return publicurl

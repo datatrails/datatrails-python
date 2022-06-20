@@ -196,7 +196,7 @@ class TestSBOM(TestCase):
         now = now_timestamp()
         print("Title:", self.title, now)
         with open(TEST_SBOM_PATH, "rb") as fd:
-            metadata = self.arch.sboms.upload(fd)
+            metadata = self.arch.sboms.upload(fd, confirm=True)
 
         print("first upload", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity

@@ -5,7 +5,6 @@ Test archivist
 from os import environ
 from unittest import mock
 
-from archivist.constants import ROOT
 from archivist.errors import (
     ArchivistBadFieldError,
     ArchivistDuplicateError,
@@ -34,7 +33,7 @@ class TestArchivistSignature(TestArchivistMethods):
         """
         Test default get_by_signature method
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[
@@ -50,7 +49,7 @@ class TestArchivistSignature(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path",),
+                        ("path/path",),
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
@@ -66,7 +65,7 @@ class TestArchivistSignature(TestArchivistMethods):
         """
         Test default get_by_signature method
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[],
@@ -80,7 +79,7 @@ class TestArchivistSignature(TestArchivistMethods):
         """
         Test default get_by_signature method
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[
@@ -101,7 +100,7 @@ class TestArchivistSignature(TestArchivistMethods):
         """
         Test default list method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[

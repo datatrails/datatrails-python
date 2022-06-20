@@ -3,7 +3,7 @@
 Door Entry Demo
 ..................................
 
-.. literalinclude:: ../../functests/test_resources/door_entry_story.yaml
+.. literalinclude:: ../../../functests/test_resources/door_entry_story.yaml
    :language: yaml
 
 

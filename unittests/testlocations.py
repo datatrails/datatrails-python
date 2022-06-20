@@ -169,7 +169,7 @@ class TestLocations(TestCase):
         """
         Test location creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             location = self.arch.locations.create(PROPS, attrs=ATTRS)
@@ -200,9 +200,9 @@ class TestLocations(TestCase):
         """
         Test location creation
         """
-        with mock.patch.object(
-            self.arch._session, "get"
-        ) as mock_get, mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "get") as mock_get, mock.patch.object(
+            self.arch.session, "post"
+        ) as mock_post:
             mock_get.return_value = MockResponse(
                 200,
                 locations=[
@@ -248,9 +248,9 @@ class TestLocations(TestCase):
         """
         Test location creation
         """
-        with mock.patch.object(
-            self.arch._session, "get"
-        ) as mock_get, mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "get") as mock_get, mock.patch.object(
+            self.arch.session, "post"
+        ) as mock_post:
             mock_get.side_effect = ArchivistNotFoundError
             mock_post.return_value = MockResponse(200, **RESPONSE)
             location, existed = self.arch.locations.create_if_not_exists(
@@ -292,9 +292,9 @@ class TestLocations(TestCase):
         """
         Test location creation
         """
-        with mock.patch.object(
-            self.arch._session, "get"
-        ) as mock_get, mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "get") as mock_get, mock.patch.object(
+            self.arch.session, "post"
+        ) as mock_post:
             mock_get.side_effect = ArchivistNotFoundError
             mock_post.return_value = MockResponse(200, **RESPONSE)
             location, existed = self.arch.locations.create_if_not_exists(
@@ -334,7 +334,7 @@ class TestLocations(TestCase):
         """
         Test asset reading
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
             asset = self.arch.locations.read(IDENTITY)
@@ -357,7 +357,7 @@ class TestLocations(TestCase):
         """
         Test read method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
                 resp = self.arch.locations.read(IDENTITY)
@@ -366,7 +366,7 @@ class TestLocations(TestCase):
         """
         Test location counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -401,7 +401,7 @@ class TestLocations(TestCase):
         """
         Test location counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -436,7 +436,7 @@ class TestLocations(TestCase):
         """
         Test location counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -471,7 +471,7 @@ class TestLocations(TestCase):
         """
         Test location listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 locations=[
@@ -512,7 +512,7 @@ class TestLocations(TestCase):
         """
         Test location listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 locations=[
@@ -561,7 +561,7 @@ class TestLocations(TestCase):
         """
         Test location read_by_signature
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 locations=[

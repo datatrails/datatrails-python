@@ -6,7 +6,7 @@ from logging import getLogger
 from os import environ
 from unittest import TestCase
 
-from archivist.archivist import Archivist
+from archivist.archivistpublic import ArchivistPublic
 from archivist.logger import set_logger
 
 # pylint: disable=missing-docstring
@@ -27,10 +27,11 @@ class TestPublicAssetsBase(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", None, max_time=1)
+        self.public = ArchivistPublic(max_time=1)
 
     def tearDown(self):
-        self.arch = None
+        self.public.close()
+        self.public = None
 
 
 class TestPublicAssetsUtil(TestPublicAssetsBase):
@@ -43,7 +44,7 @@ class TestPublicAssetsUtil(TestPublicAssetsBase):
         Test assets str
         """
         self.assertEqual(
-            str(self.arch.publicassets),
-            "PublicAssetsClient(url)",
+            str(self.public.assets),
+            "AssetsPublic()",
             msg="Incorrect str",
         )
