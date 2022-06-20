@@ -96,7 +96,7 @@ class TestSubjects(TestCase):
         """
         Test subject creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             subject = self.arch.subjects.create(
@@ -129,7 +129,7 @@ class TestSubjects(TestCase):
         """
         Test subject creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             subject = self.arch.subjects.create_from_b64(
@@ -165,7 +165,7 @@ class TestSubjects(TestCase):
         """
         Test subjects creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             subject = self.arch.subjects.create(
                 DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
@@ -175,7 +175,7 @@ class TestSubjects(TestCase):
                 RESPONSE,
                 msg="CREATE method called incorrectly",
             )
-            with mock.patch.object(self.arch._session, "get") as mock_get:
+            with mock.patch.object(self.arch.session, "get") as mock_get:
                 mock_get.side_effect = [
                     MockResponse(200, **RESPONSE),
                     MockResponse(200, **RESPONSE_WITH_PENDING),
@@ -191,7 +191,7 @@ class TestSubjects(TestCase):
         """
         Test subject reading
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
             subject = self.arch.subjects.read(IDENTITY)
@@ -214,7 +214,7 @@ class TestSubjects(TestCase):
         """
         Test subject deleting
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
             subject = self.arch.subjects.delete(IDENTITY)
@@ -236,7 +236,7 @@ class TestSubjects(TestCase):
         """
         Test subject deleting
         """
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, **RESPONSE)
 
             subject = self.arch.subjects.update(
@@ -265,7 +265,7 @@ class TestSubjects(TestCase):
         """
         Test read method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
                 resp = self.arch.subjects.read(IDENTITY)
@@ -274,7 +274,7 @@ class TestSubjects(TestCase):
         """
         Test subject counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -309,7 +309,7 @@ class TestSubjects(TestCase):
         """
         Test subject counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -344,7 +344,7 @@ class TestSubjects(TestCase):
         """
         Test subject listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 subjects=[
@@ -385,7 +385,7 @@ class TestSubjects(TestCase):
         """
         Test subject listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 subjects=[
@@ -441,7 +441,7 @@ class TestSubjectsConfirm(TestCase):
         """
         Test subjects creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             subject = self.arch.subjects.create(
                 DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
@@ -451,7 +451,7 @@ class TestSubjectsConfirm(TestCase):
                 RESPONSE,
                 msg="CREATE method called incorrectly",
             )
-            with mock.patch.object(self.arch._session, "get") as mock_get:
+            with mock.patch.object(self.arch.session, "get") as mock_get:
                 mock_get.side_effect = [
                     MockResponse(200, **RESPONSE),
                     MockResponse(200, **RESPONSE_WITH_PENDING),

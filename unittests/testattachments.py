@@ -8,12 +8,8 @@ from unittest import TestCase, mock
 from archivist.archivist import Archivist
 from archivist.constants import (
     ROOT,
-    ASSETS_SUBPATH,
-    ASSETS_LABEL,
-    EVENTS_LABEL,
     ATTACHMENTS_SUBPATH,
     ATTACHMENTS_LABEL,
-    ATTACHMENTS_ASSETS_EVENTS_LABEL,
 )
 
 from .mock_response import MockResponse
@@ -30,7 +26,6 @@ PROPS = {
 UUID = "b2678528-0136-4876-ad56-904e12c4b4c6"
 IDENTITY = f"{ATTACHMENTS_LABEL}/{UUID}"
 SUBPATH = f"{ATTACHMENTS_SUBPATH}/{ATTACHMENTS_LABEL}"
-ASSET_OR_EVENT_ID = f"{ASSETS_LABEL}/xxxx/{EVENTS_LABEL}/yyyy"
 RESPONSE = {
     **PROPS,
     "identity": IDENTITY,
@@ -120,7 +115,7 @@ class TestAttachmentsBase(TestCase):
 #        """
 #        Test attachment create
 #        """
-#        with mock.patch.object(self.arch._session, "post") as mock_post, mock.patch(
+#        with mock.patch.object(self.arch.session, "post") as mock_post, mock.patch(
 #            "archivist.attachments.open",
 #            mock_open(read_data="a long string"),
 #        ) as mocked_open:
@@ -175,7 +170,7 @@ class TestAttachmentsUpload(TestAttachmentsBase):
         """
         Test attachment upload
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             attachment = self.arch.attachments.upload(self.mockstream)
@@ -246,13 +241,15 @@ class TestAttachmentsDownload(TestAttachmentsBase):
     maxDiff = None
 
     def common_attachments_download(
-        self, input_params, expected_params, asset_or_event_id=None
+        self,
+        input_params,
+        expected_params,
     ):
         """
         Test attachment download
         """
 
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
 
             def iter_content():
                 i = 0
@@ -279,20 +276,11 @@ class TestAttachmentsDownload(TestAttachmentsBase):
                     IDENTITY,
                     fd,
                     params=input_params,
-                    asset_or_event_id=asset_or_event_id,
                 )
-                if asset_or_event_id is None:
-                    arg1 = f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}"
-                else:
-                    arg1 = (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}/{ATTACHMENTS_ASSETS_EVENTS_LABEL}"
-                        f"/{asset_or_event_id}/{UUID}"
-                    )
-
                 args, kwargs = mock_get.call_args
                 self.assertEqual(
                     args,
-                    (arg1,),
+                    (f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}",),
                     msg="DOWNLOAD method called incorrectly",
                 )
                 self.assertEqual(
@@ -319,13 +307,6 @@ class TestAttachmentsDownload(TestAttachmentsBase):
         """
 
         self.common_attachments_download(None, {})
-
-    def test_attachments_download_with_asset_id(self):
-        """
-        Test attachment download
-        """
-
-        self.common_attachments_download(None, {}, asset_or_event_id=ASSET_OR_EVENT_ID)
 
     def test_attachments_download_with_allow_insecure(self):
         """
@@ -360,7 +341,7 @@ class TestAttachmentsInfo(TestAttachmentsBase):
         Test attachment info
         """
 
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 **INFO,
@@ -370,47 +351,6 @@ class TestAttachmentsInfo(TestAttachmentsBase):
             self.assertEqual(
                 args,
                 (f"url/{ROOT}/{ATTACHMENTS_SUBPATH}/{IDENTITY}/info",),
-                msg="INFO method called incorrectly",
-            )
-            self.assertEqual(
-                kwargs,
-                {
-                    "headers": {
-                        "authorization": "Bearer authauthauth",
-                    },
-                    "params": None,
-                    "verify": True,
-                },
-                msg="INFO method called incorrectly",
-            )
-            self.assertEqual(
-                info,
-                INFO,
-                msg="INFO method called incorrectly",
-            )
-
-    def test_attachments_info_with_asset_id(self):
-        """
-        Test attachment info
-        """
-
-        with mock.patch.object(self.arch._session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                **INFO,
-            )
-            info = self.arch.attachments.info(
-                IDENTITY, asset_or_event_id=ASSET_OR_EVENT_ID
-            )
-            args, kwargs = mock_get.call_args
-            self.assertEqual(
-                args,
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}/{ATTACHMENTS_ASSETS_EVENTS_LABEL}"
-                        f"/{ASSET_OR_EVENT_ID}/{UUID}/info"
-                    ),
-                ),
                 msg="INFO method called incorrectly",
             )
             self.assertEqual(

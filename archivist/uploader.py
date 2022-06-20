@@ -8,9 +8,7 @@ import backoff
 from .errors import ArchivistNotFoundError
 
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import sboms
 from .utils import backoff_handler
 
 MAX_TIME = 1200

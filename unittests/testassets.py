@@ -69,7 +69,7 @@ class TestAssetsUtil(TestAssetsBase):
         """
         self.assertEqual(
             str(self.arch.assets),
-            "AssetsClient(url)",
+            "AssetsRestricted(url)",
             msg="Incorrect str",
         )
 
@@ -83,7 +83,7 @@ class TestAssetsCreate(TestAssetsBase):
         """
         Test asset creation
         """
-        with mock.patch.object(self.arch._session, "post", autospec=True) as mock_post:
+        with mock.patch.object(self.arch.session, "post", autospec=True) as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
@@ -120,7 +120,7 @@ class TestAssetsCreate(TestAssetsBase):
         """
         arch = copy(self.arch)
         arch.fixtures = FIXTURES
-        with mock.patch.object(arch._session, "post", autospec=True) as mock_post:
+        with mock.patch.object(arch.session, "post", autospec=True) as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE_FIXTURES)
             asset = arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
             args, kwargs = mock_post.call_args
@@ -145,8 +145,8 @@ class TestAssetsCreate(TestAssetsBase):
         Test asset confirmation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
 
@@ -158,8 +158,8 @@ class TestAssetsCreate(TestAssetsBase):
         Test asset confirmation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),
@@ -173,8 +173,8 @@ class TestAssetsCreate(TestAssetsBase):
         Test asset confirmation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),
@@ -199,8 +199,8 @@ class TestAssetsCreateConfirm(TestAssetsBaseConfirm):
         Test asset creation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
             asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
@@ -215,8 +215,8 @@ class TestAssetsCreateConfirm(TestAssetsBaseConfirm):
         Test asset creation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
             asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=False)
@@ -232,8 +232,8 @@ class TestAssetsCreateConfirm(TestAssetsBaseConfirm):
         Test asset confirmation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),
@@ -257,8 +257,8 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         Test asset creation
         """
         with mock.patch.object(
-            self.arch._session, "post", autospec=True
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post", autospec=True
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 assets=[
@@ -313,9 +313,9 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         Test asset creation
         """
         with mock.patch.object(
-            self.arch._session, "post", autospec=True
+            self.arch.session, "post", autospec=True
         ) as mock_post, mock.patch.object(
-            self.arch._session, "get"
+            self.arch.session, "get"
         ) as mock_get, mock.patch.object(
             self.arch.locations, "create_if_not_exists"
         ) as mock_location, mock.patch.object(

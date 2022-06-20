@@ -49,7 +49,7 @@ class TestAssetsWait(TestAssetsBase):
             {"page_size": 1, "confirmation_status": "PENDING"},
             {"page_size": 1, "confirmation_status": "FAILED"},
         )
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
                     200,
@@ -92,7 +92,7 @@ class TestAssetsWait(TestAssetsBase):
         """
         Test asset counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
                     200,
@@ -111,7 +111,7 @@ class TestAssetsWait(TestAssetsBase):
         Test asset counting
         """
         ## last call to get looks for FAILED assets
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
                     200,
@@ -165,7 +165,7 @@ class TestAssetsWait(TestAssetsBase):
         Test asset counting
         """
         ## last call to get looks for FAILED assets
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
                     200,

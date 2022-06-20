@@ -31,20 +31,15 @@ from typing import BinaryIO, Dict, Optional
 
 from requests.models import Response
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .constants import (
-    ASSETS_SUBPATH,
     ATTACHMENTS_SUBPATH,
     ATTACHMENTS_LABEL,
-    ATTACHMENTS_ASSETS_EVENTS_LABEL,
-    SEP,
 )
 from .dictmerge import _deepmerge
 from .utils import get_url
-from .type_aliases import NoneOnError
 
 LOGGER = getLogger(__name__)
 
@@ -70,6 +65,8 @@ class _AttachmentsClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{ATTACHMENTS_SUBPATH}"
+        self._label = f"{self._subpath}/{ATTACHMENTS_LABEL}"
 
     def __str__(self) -> str:
         return f"AttachmentsClient({self._archivist.url})"
@@ -156,7 +153,7 @@ class _AttachmentsClient:
         LOGGER.debug("Upload Attachment")
         return Attachment(
             **self._archivist.post_file(
-                f"{ATTACHMENTS_SUBPATH}/{ATTACHMENTS_LABEL}",
+                self._label,
                 fd,
                 mtype,
             )
@@ -173,8 +170,7 @@ class _AttachmentsClient:
         fd: BinaryIO,
         *,
         params: Optional[Dict] = None,
-        asset_or_event_id: Optional[str] = None,
-    ) -> Response:
+    ) -> dict:
         """Read attachment
 
         Reads attachment into data sink (usually a file opened for write)..
@@ -185,30 +181,13 @@ class _AttachmentsClient:
             identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
             fd (file): opened file descriptor or other file-type sink..
             params (dict): e.g. {"allow_insecure": "true"} OR {"strict": "true" }
-            asset_or_event_id (str): optional asset or event identity
-
-        asset_or_event_id has one of the following forms:
-
-            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
         Returns:
-            REST response
+            JSON as dict
 
         """
-        if asset_or_event_id is not None:
-            uuid = identity.split(SEP)[1]
-            identity = SEP.join((asset_or_event_id, uuid))
-            return self._archivist.get_file(
-                SEP.join((ASSETS_SUBPATH, ATTACHMENTS_ASSETS_EVENTS_LABEL)),
-                identity,
-                fd,
-                params=self.__params(params),
-            )
-
         return self._archivist.get_file(
-            ATTACHMENTS_SUBPATH,
-            identity,
+            f"{self._subpath}/{identity}",
             fd,
             params=self.__params(params),
         )
@@ -216,8 +195,6 @@ class _AttachmentsClient:
     def info(
         self,
         identity: str,
-        *,
-        asset_or_event_id: Optional[str] = None,
     ) -> Response:
         """Read attachment info
 
@@ -225,28 +202,9 @@ class _AttachmentsClient:
 
         Args:
             identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
-            asset_or_event_id (str): optional asset or event identity
-
-        asset_or_event_id has one of the following forms:
-
-            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
         Returns:
             REST response
 
         """
-        if asset_or_event_id is not None:
-            uuid = identity.split(SEP)[1]
-            identity = SEP.join((asset_or_event_id, uuid))
-            return self._archivist.get(
-                SEP.join((ASSETS_SUBPATH, ATTACHMENTS_ASSETS_EVENTS_LABEL)),
-                identity,
-                tail="info",
-            )
-
-        return self._archivist.get(
-            ATTACHMENTS_SUBPATH,
-            identity,
-            tail="info",
-        )
+        return self._archivist.get(f"{self._subpath}/{identity}/info")

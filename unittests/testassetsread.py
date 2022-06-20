@@ -12,6 +12,7 @@ from archivist.constants import (
     HEADERS_TOTAL_COUNT,
     ROOT,
 )
+from archivist.errors import ArchivistBadFieldError
 from archivist.logger import set_logger
 
 from .mock_response import MockResponse
@@ -23,6 +24,15 @@ from .testassetsconstants import (
     RESPONSE_NO_ATTACHMENTS,
 )
 
+PUBLICURL = (
+    "https://app.rkvst.io/archivist/publicassets/13f23360-14c7-4d00-ac29-0a862584060e"
+)
+RESPONSE_PUBLICURL = {
+    "publicurl": PUBLICURL,
+}
+RESPONSE_BAD_PUBLICURL = {
+    "badpublicurl": PUBLICURL,
+}
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -43,7 +53,7 @@ class TestAssetsRead(TestAssetsBase):
         """
         Test asset reading
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE_NO_ATTACHMENTS)
 
             asset = self.arch.assets.read(IDENTITY)
@@ -61,6 +71,30 @@ class TestAssetsRead(TestAssetsBase):
                 msg="There should be no name property",
             )
 
+    def test_assets_publicurl(self):
+        """
+        Test asset reading publicurl
+        """
+        with mock.patch.object(self.arch.session, "get") as mock_get:
+            mock_get.return_value = MockResponse(200, **RESPONSE_PUBLICURL)
+
+            publicurl = self.arch.assets.publicurl(IDENTITY)
+            self.assertEqual(
+                publicurl,
+                PUBLICURL,
+                msg="Public url is incorrect",
+            )
+
+    def test_assets_publicurl_bad_response(self):
+        """
+        Test asset reading publicurl with bad response
+        """
+        with mock.patch.object(self.arch.session, "get") as mock_get:
+            mock_get.return_value = MockResponse(200, **RESPONSE_BAD_PUBLICURL)
+
+            with self.assertRaises(ArchivistBadFieldError):
+                publicurl = self.arch.assets.publicurl(IDENTITY)
+
 
 class TestAssetsCount(TestAssetsBase):
     """
@@ -71,7 +105,7 @@ class TestAssetsCount(TestAssetsBase):
         """
         Test asset counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -106,7 +140,7 @@ class TestAssetsCount(TestAssetsBase):
         """
         Test asset counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -143,7 +177,7 @@ class TestAssetsCount(TestAssetsBase):
         """
         Test asset counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},

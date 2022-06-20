@@ -60,7 +60,7 @@ class TestAppIDP(TestCase):
         """
         Test appidp token
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             appidp = self.arch.appidp.token(

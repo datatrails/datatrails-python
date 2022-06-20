@@ -3,7 +3,7 @@
 Estate Info Demo
 ..................................
 
-.. literalinclude:: ../../functests/test_resources/estate_info_story.yaml
+.. literalinclude:: ../../../functests/test_resources/estate_info_story.yaml
    :language: yaml
 
 

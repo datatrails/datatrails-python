@@ -17,10 +17,9 @@ from .constants import (
 from .errors import ArchivistUnconfirmedError
 
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import assets
-from . import events
+from . import assets  # pylint:disable=unused-import
+from . import events  # pylint:disable=unused-import
 from .utils import backoff_handler
 
 MAX_TIME = 1200
@@ -48,14 +47,14 @@ def __on_giveup_confirmation(details):
 
 @overload
 def _wait_for_confirmation(
-    self: "assets._AssetsClient", identity: str
+    self: "assets._AssetsPublic", identity: str
 ) -> "assets.Asset":
     ...  # pragma: no cover
 
 
 @overload
 def _wait_for_confirmation(
-    self: "events._EventsClient", identity: str
+    self: "events._EventsPublic", identity: str
 ) -> "events.Event":
     ...  # pragma: no cover
 

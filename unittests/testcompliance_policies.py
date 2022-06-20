@@ -103,7 +103,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test compliance_policy creation
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **SINCE_RESPONSE)
 
             compliance_policy = self.arch.compliance_policies.create(
@@ -136,7 +136,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test compliance_policy reading
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **SINCE_RESPONSE)
 
             compliance_policy = self.arch.compliance_policies.read(IDENTITY)
@@ -159,7 +159,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test compliance_policy deleting
         """
-        with mock.patch.object(self.arch._session, "delete") as mock_delete:
+        with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
             compliance_policy = self.arch.compliance_policies.delete(IDENTITY)
@@ -181,7 +181,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test read method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
                 resp = self.arch.compliance_policies.read(IDENTITY)
@@ -190,7 +190,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test compliance_policy counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -225,7 +225,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test compliance_policy counting
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
@@ -257,7 +257,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test compliance_policy listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 compliance_policies=[
@@ -298,7 +298,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test compliance_policy listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 compliance_policies=[
@@ -343,7 +343,7 @@ class TestCompliancePolicies(TestCase):
         """
         Test compliance policies read_by_signature
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 compliance_policies=[

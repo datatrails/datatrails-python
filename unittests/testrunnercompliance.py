@@ -106,6 +106,9 @@ class TestRunnerCompliance(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def tearDown(self):
+        self.arch.close()
+
     @mock.patch("archivist.runner.time_sleep")
     def test_runner_compliance_policies_create(self, mock_sleep):
         """

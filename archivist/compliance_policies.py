@@ -29,9 +29,8 @@ from copy import deepcopy
 from logging import getLogger
 from typing import Dict, Optional, Union
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .compliance_policy_requests import (
     CompliancePolicySince,
@@ -40,7 +39,6 @@ from .compliance_policy_requests import (
     CompliancePolicyDynamicTolerance,
     CompliancePolicyRichness,
 )
-from .compliance_policy_type import CompliancePolicyType
 from .constants import (
     COMPLIANCE_POLICIES_SUBPATH,
     COMPLIANCE_POLICIES_LABEL,
@@ -77,6 +75,8 @@ class _CompliancePoliciesClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{COMPLIANCE_POLICIES_SUBPATH}"
+        self._label = f"{self._subpath}/{COMPLIANCE_POLICIES_LABEL}"
 
     def __str__(self) -> str:
         return f"CompliancePoliciesClient({self._archivist.url})"
@@ -121,12 +121,7 @@ class _CompliancePoliciesClient:
             :class:`CompliancePolicy` instance
 
         """
-        return CompliancePolicy(
-            **self._archivist.post(
-                f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}",
-                data,
-            )
-        )
+        return CompliancePolicy(**self._archivist.post(self._label, data))
 
     def read(self, identity: str) -> CompliancePolicy:
         """Read compliance policy
@@ -141,9 +136,7 @@ class _CompliancePoliciesClient:
             :class:`CompliancePolicy` instance
 
         """
-        return CompliancePolicy(
-            **self._archivist.get(COMPLIANCE_POLICIES_SUBPATH, identity)
-        )
+        return CompliancePolicy(**self._archivist.get(f"{self._subpath}/{identity}"))
 
     def delete(self, identity: str) -> Dict:
         """Delete Compliance Policy
@@ -158,7 +151,7 @@ class _CompliancePoliciesClient:
             :class:`CompliancePolicy` instance - empty?
 
         """
-        return self._archivist.delete(COMPLIANCE_POLICIES_SUBPATH, identity)
+        return self._archivist.delete(f"{self._subpath}/{identity}")
 
     def __params(self, props: Optional[Dict]) -> Dict:
         params = deepcopy(props) if props else {}
@@ -180,7 +173,7 @@ class _CompliancePoliciesClient:
 
         """
         return self._archivist.count(
-            f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}",
+            self._label,
             params=self.__params(props),
         )
 
@@ -200,7 +193,7 @@ class _CompliancePoliciesClient:
         return (
             CompliancePolicy(**a)
             for a in self._archivist.list(
-                f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}",
+                self._label,
                 COMPLIANCE_POLICIES_LABEL,
                 page_size=page_size,
                 params=self.__params(props),
@@ -221,7 +214,7 @@ class _CompliancePoliciesClient:
         """
         return CompliancePolicy(
             **self._archivist.get_by_signature(
-                f"{COMPLIANCE_POLICIES_SUBPATH}/{COMPLIANCE_POLICIES_LABEL}",
+                self._label,
                 COMPLIANCE_POLICIES_LABEL,
                 params=self.__params(props),
             )

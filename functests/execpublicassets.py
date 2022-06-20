@@ -3,14 +3,16 @@ Test public assets creation
 """
 
 from copy import deepcopy
-from os import getenv
 from json import dumps as json_dumps
+from os import getenv
+from time import sleep
 from unittest import TestCase
 
 from archivist.archivist import Archivist
 from archivist.assets import BEHAVIOURS
 from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
+from archivist.timestamp import now_timestamp
 from archivist.utils import get_auth
 
 # pylint: disable=fixme
@@ -49,6 +51,16 @@ REQUEST_EXISTS_ATTACHMENTS = {
         "arc_display_type": "Traffic light with violation camera",
         "some_custom_attribute": "value",
     },
+    "attachments": [
+        {
+            "filename": "functests/test_resources/telephone.jpg",
+            "content_type": "image/jpg",
+        },
+        {
+            "url": "https://secure.eicar.org/eicarcom2.zip",
+            "content_type": "application/zip",
+        },
+    ],
     "public": True,
 }
 
@@ -68,9 +80,8 @@ class TestPublicAssetCreate(TestCase):
             client_secret=getenv("TEST_CLIENT_SECRET"),
             client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
         )
-        self.arch = Archivist(
-            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300
-        )
+        self.url = getenv("TEST_ARCHIVIST")
+        self.arch = Archivist(self.url, auth, verify=False, max_time=300)
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
@@ -102,9 +113,12 @@ class TestPublicAssetCreate(TestCase):
             True,
             msg="Asset is not public",
         )
-        count = self.arch.publicevents.count(asset_id=asset["identity"])
+        asset_publicurl = self.arch.assets.publicurl(asset["identity"])
+        print("asset_publicurl", asset_publicurl)
+        public = self.arch.Public
+        count = public.events.count(asset_id=asset_publicurl)
         print("count", count)
-        events = self.arch.publicevents.list(asset_id=asset["identity"])
+        events = public.events.list(asset_id=asset_publicurl)
         print("events", json_dumps(list(events), sort_keys=True, indent=4))
 
     def test_public_asset_create_khipu(self):
@@ -130,9 +144,12 @@ class TestPublicAssetCreate(TestCase):
             True,
             msg="Asset is not public",
         )
-        count = self.arch.publicevents.count(asset_id=asset["identity"])
+        asset_publicurl = self.arch.assets.publicurl(asset["identity"])
+        print("publicurl", asset_publicurl)
+        public = self.arch.Public
+        count = public.events.count(asset_id=asset_publicurl)
         print("count", count)
-        events = self.arch.publicevents.list(asset_id=asset["identity"])
+        events = public.events.list(asset_id=asset_publicurl)
         print("events", json_dumps(list(events), sort_keys=True, indent=4))
 
     def test_public_asset_create_event(self):
@@ -152,7 +169,7 @@ class TestPublicAssetCreate(TestCase):
             identity,
             msg="Identity is None",
         )
-
+        asset_publicurl = self.arch.assets.publicurl(asset["identity"])
         # different behaviours are also different.
         props = {
             "operation": "Record",
@@ -181,7 +198,68 @@ class TestPublicAssetCreate(TestCase):
             identity, props=props, attrs=attrs, confirm=True
         )
         print("event", json_dumps(event, sort_keys=True, indent=4))
-        count = self.arch.publicevents.count(asset_id=identity)
-        print("count", count)
-        events = self.arch.publicevents.list(asset_id=identity)
-        print("events", json_dumps(list(events), sort_keys=True, indent=4))
+        event_publicurl = self.arch.events.publicurl(event["identity"])
+
+        public = self.arch.Public
+        event = public.events.read(event_publicurl)
+        print("event", json_dumps(event, sort_keys=True, indent=4))
+
+    def test_asset_create_if_not_exists_with_bad_attachment_assetattachment(self):
+        """
+        Test asset creation if not exists - check attachment for scanned status.
+
+        Because we use create_if_not_exists the asset and attachments will persist.
+
+        The test checks the scanned timestamp and checks scanned status.
+        The first attachment should return OK after 24 hours and the second attachment
+        should return bad after 24 hours.
+
+        """
+        request_data = deepcopy(REQUEST_EXISTS_ATTACHMENTS)
+        request_data["attributes"]["arc_namespace"] = now_timestamp()
+        print("request_data", json_dumps(request_data, indent=4))
+        asset, existed = self.arch.assets.create_if_not_exists(
+            request_data,
+            confirm=True,
+        )
+        print("asset", json_dumps(asset, indent=4))
+        print("existed", existed)
+
+        asset_id = asset["identity"]
+        # first attachment is ok....
+        attachment_id = asset["attributes"]["arc_attachments"][0][
+            "arc_attachment_identity"
+        ]
+        public_asset_id = self.arch.assets.publicurl(asset_id)
+        print("public asset id", public_asset_id)
+        public = self.arch.Public
+        sleep(30)  # until we implement confirmed logic
+        info = public.assetattachments.info(public_asset_id, attachment_id)
+        print("info attachment1", json_dumps(info, indent=4))
+        timestamp = info["scanned_timestamp"]
+        if timestamp:
+            print(attachment_id, "scanned last at", timestamp)
+            print(attachment_id, "scanned status", info["scanned_status"])
+            print(attachment_id, "scanned reason", info["scanned_reason"])
+            self.assertEqual(
+                info["scanned_status"],
+                "SCANNED_OK",
+                msg="First attachment is not clean",
+            )
+
+        # second attachment is bad when scanned....
+        attachment_id = asset["attributes"]["arc_attachments"][1][
+            "arc_attachment_identity"
+        ]
+        info = public.assetattachments.info(public_asset_id, attachment_id)
+        print("info attachment1", json_dumps(info, indent=4))
+        timestamp = info["scanned_timestamp"]
+        if timestamp:
+            print(attachment_id, "scanned last at", timestamp)
+            print(attachment_id, "scanned status", info["scanned_status"])
+            print(attachment_id, "scanned reason", info["scanned_reason"])
+            self.assertEqual(
+                info["scanned_status"],
+                "SCANNED_BAD",
+                msg="First attachment should not be clean",
+            )

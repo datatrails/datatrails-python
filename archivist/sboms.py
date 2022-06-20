@@ -32,9 +32,8 @@ from logging import getLogger
 from requests.models import Response
 from xmltodict import parse as xmltodict_parse
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .constants import (
     SBOMS_SUBPATH,
@@ -65,6 +64,8 @@ class _SBOMSClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{SBOMS_SUBPATH}"
+        self._label = f"{self._subpath}/{SBOMS_LABEL}"
 
     def __str__(self) -> str:
         return f"SBOMSClient({self._archivist.url})"
@@ -242,7 +243,7 @@ class _SBOMSClient:
 
         sbom = SBOM(
             **self._archivist.post_file(
-                f"{SBOMS_SUBPATH}/{SBOMS_LABEL}",
+                self._label,
                 fd,
                 mtype,
                 form="sbom",
@@ -285,11 +286,7 @@ class _SBOMSClient:
             REST response
 
         """
-        return self._archivist.get_file(
-            SBOMS_SUBPATH,
-            identity,
-            fd,
-        )
+        return self._archivist.get_file(f"{self._subpath}/{identity}", fd)
 
     def read(self, identity: str) -> SBOM:
         """Read SBOM metadata
@@ -304,11 +301,7 @@ class _SBOMSClient:
 
         """
         return SBOM(
-            **self._archivist.get(
-                SBOMS_SUBPATH,
-                identity,
-                tail=SBOMS_METADATA,
-            )
+            **self._archivist.get(f"{self._subpath}/{identity}/{SBOMS_METADATA}")
         )
 
     def __params(self, metadata: Optional[Dict]) -> Dict:
@@ -345,7 +338,7 @@ class _SBOMSClient:
         return (
             SBOM(**a)
             for a in self._archivist.list(
-                f"{SBOMS_SUBPATH}/{SBOMS_LABEL}/{SBOMS_WILDCARD}",
+                f"{self._label}/{SBOMS_WILDCARD}",
                 SBOMS_LABEL,
                 page_size=page_size,
                 params=params,
@@ -368,9 +361,8 @@ class _SBOMSClient:
         LOGGER.debug("Publish SBOM %s", identity)
         sbom = SBOM(
             **self._archivist.post(
-                f"{SBOMS_SUBPATH}/{identity}",
+                f"{self._subpath}/{identity}:{SBOMS_PUBLISH}",
                 None,
-                verb=SBOMS_PUBLISH,
             )
         )
         if not confirm:
@@ -410,9 +402,8 @@ class _SBOMSClient:
         LOGGER.debug("Withdraw SBOM %s", identity)
         sbom = SBOM(
             **self._archivist.post(
-                f"{SBOMS_SUBPATH}/{identity}",
+                f"{self._subpath}/{identity}:{SBOMS_WITHDRAW}",
                 None,
-                verb=SBOMS_WITHDRAW,
             )
         )
         if not confirm:

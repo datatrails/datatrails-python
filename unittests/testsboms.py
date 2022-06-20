@@ -92,7 +92,7 @@ class TestSBOMS(TestCase):
         """
         Test attachment upload
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             sbom = self.arch.sboms.upload(
@@ -181,7 +181,7 @@ class TestSBOMS(TestCase):
         """
         Test attachment upload
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             sbom = self.arch.sboms.upload(self.mockstream)
@@ -254,8 +254,8 @@ class TestSBOMS(TestCase):
         Test upload confirmation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 ArchivistNotFoundError("sbom not found"),
@@ -277,7 +277,7 @@ class TestSBOMS(TestCase):
         Test SBOM download
         """
 
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
 
             def iter_content():
                 i = 0
@@ -329,7 +329,7 @@ class TestSBOMS(TestCase):
         """
         Test SBOM metadata reading
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
             sbom = self.arch.sboms.read(IDENTITY)
@@ -352,7 +352,7 @@ class TestSBOMS(TestCase):
         """
         Test SBOM publish
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             sbom = self.arch.sboms.publish(IDENTITY)
@@ -376,8 +376,8 @@ class TestSBOMS(TestCase):
         Test publish confirmation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE),
@@ -395,7 +395,7 @@ class TestSBOMS(TestCase):
         """
         Test SBOM withdraw
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             sbom = self.arch.sboms.withdraw(IDENTITY)
@@ -419,8 +419,8 @@ class TestSBOMS(TestCase):
         Test withdawan confirmation
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE),
@@ -438,7 +438,7 @@ class TestSBOMS(TestCase):
         """
         Test sboms listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 sboms=[
@@ -479,7 +479,7 @@ class TestSBOMS(TestCase):
         """
         Test sboms listing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 sboms=[
@@ -543,8 +543,8 @@ class TestSBOMSConfirm(TestCase):
         Test sbom upload
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE),
@@ -561,8 +561,8 @@ class TestSBOMSConfirm(TestCase):
         Test sbom upload
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE),
@@ -581,8 +581,8 @@ class TestSBOMSConfirm(TestCase):
         Test sbom publication
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **PUBLISHED_RESPONSE)
             sbom = self.arch.sboms.publish(IDENTITY, confirm=True)
@@ -597,8 +597,8 @@ class TestSBOMSConfirm(TestCase):
         Test sbom withdrawal
         """
         with mock.patch.object(
-            self.arch._session, "post"
-        ) as mock_post, mock.patch.object(self.arch._session, "get") as mock_get:
+            self.arch.session, "post"
+        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **WITHDRAWN_RESPONSE)
             sbom = self.arch.sboms.withdraw(IDENTITY, confirm=True)

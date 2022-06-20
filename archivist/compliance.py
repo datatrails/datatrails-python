@@ -24,15 +24,13 @@
 from logging import getLogger
 from typing import Optional
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .constants import (
     COMPLIANCE_SUBPATH,
     COMPLIANCE_LABEL,
 )
-from .type_aliases import NoneOnError
 
 
 LOGGER = getLogger(__name__)
@@ -60,6 +58,8 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{COMPLIANCE_SUBPATH}"
+        self._label = f"{self._subpath}/{COMPLIANCE_LABEL}"
 
     def __str__(self) -> str:
         return f"ComplianceClient({self._archivist.url})"
@@ -88,10 +88,9 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
         """
         params = {"compliant_at": compliant_at} if compliant_at is not None else None
         response = self._archivist.get(
-            f"{COMPLIANCE_SUBPATH}/{COMPLIANCE_LABEL}",
-            asset_id,
+            f"{self._label}/{asset_id}",
             params=params,
-        )  # type: ignore
+        )
         if report is True:
             self.compliant_at_report(response)
         return Compliance(**response)

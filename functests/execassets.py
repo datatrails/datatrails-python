@@ -86,6 +86,7 @@ class TestAssetCreate(TestCase):
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
 
     def tearDown(self):
+        self.arch.close()
         self.arch = None
         self.attrs = None
         self.traffic_light = None
@@ -182,17 +183,11 @@ class TestAssetCreate(TestCase):
         """
         Test list
         """
-        # get identity of first asset
-        identity = None
-        for asset in self.arch.assets.list():
-            print("asset", json_dumps(asset, sort_keys=True, indent=4))
-            identity = asset["identity"]
-            break
-
-        self.assertIsNotNone(
-            identity,
-            msg="Identity is None",
+        asset, existed = self.arch.assets.create_if_not_exists(
+            REQUEST_EXISTS_ATTACHMENTS,
+            confirm=True,
         )
+        identity = asset["identity"]
 
         # different behaviours are also different.
         props = {
@@ -244,6 +239,7 @@ class TestAssetCreateIfNotExists(TestCase):
         )
 
     def tearDown(self):
+        self.arch.close()
         self.arch = None
 
     def test_asset_create_if_not_exists_with_bad_attachment(self):
@@ -270,7 +266,6 @@ class TestAssetCreateIfNotExists(TestCase):
         ]
         info = self.arch.attachments.info(
             attachment_id,
-            asset_or_event_id=asset["identity"],
         )
         print("info attachment1", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]
@@ -290,7 +285,64 @@ class TestAssetCreateIfNotExists(TestCase):
         ]
         info = self.arch.attachments.info(
             attachment_id,
-            asset_or_event_id=asset["identity"],
+        )
+        print("info attachment1", json_dumps(info, indent=4))
+        timestamp = info["scanned_timestamp"]
+        if timestamp:
+            print(attachment_id, "scanned last at", timestamp)
+            print(attachment_id, "scanned status", info["scanned_status"])
+            print(attachment_id, "scanned reason", info["scanned_reason"])
+            self.assertEqual(
+                info["scanned_status"],
+                "SCANNED_BAD",
+                msg="First attachment should not be clean",
+            )
+
+    def test_asset_create_if_not_exists_with_bad_attachment_assetattachment(self):
+        """
+        Test asset creation if not exists - check attachment for scanned status.
+
+        Because we use create_if_not_exists the asset and attachments will persist.
+
+        The test checks the scanned timestamp and checks scanned status.
+        The first attachment should return OK after 24 hours and the second attachment
+        should return bad after 24 hours.
+
+        """
+        asset, existed = self.arch.assets.create_if_not_exists(
+            REQUEST_EXISTS_ATTACHMENTS,
+            confirm=True,
+        )
+        print("asset", json_dumps(asset, indent=4))
+        print("existed", existed)
+
+        # first attachment is ok....
+        attachment_id = asset["attributes"]["arc_attachments"][0][
+            "arc_attachment_identity"
+        ]
+        info = self.arch.assetattachments.info(
+            asset["identity"],
+            attachment_id,
+        )
+        print("info attachment1", json_dumps(info, indent=4))
+        timestamp = info["scanned_timestamp"]
+        if timestamp:
+            print(attachment_id, "scanned last at", timestamp)
+            print(attachment_id, "scanned status", info["scanned_status"])
+            print(attachment_id, "scanned reason", info["scanned_reason"])
+            self.assertEqual(
+                info["scanned_status"],
+                "SCANNED_OK",
+                msg="First attachment is not clean",
+            )
+
+        # second attachment is bad when scanned....
+        attachment_id = asset["attributes"]["arc_attachments"][1][
+            "arc_attachment_identity"
+        ]
+        info = self.arch.assetattachments.info(
+            asset["identity"],
+            attachment_id,
         )
         print("info attachment1", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]

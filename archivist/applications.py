@@ -24,9 +24,8 @@
 from logging import getLogger
 from typing import Dict, Optional
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .constants import (
     APPLICATIONS_SUBPATH,
@@ -56,6 +55,8 @@ class _ApplicationsClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._subpath = f"{archivist.root}/{APPLICATIONS_SUBPATH}"
+        self._label = f"{self._subpath}/{APPLICATIONS_LABEL}"
 
     def __str__(self) -> str:
         return f"ApplicationsClient({self._archivist.url})"
@@ -94,12 +95,7 @@ class _ApplicationsClient:
             :class:`Application` instance
 
         """
-        return Application(
-            **self._archivist.post(
-                f"{APPLICATIONS_SUBPATH}/{APPLICATIONS_LABEL}",
-                data,
-            )
-        )
+        return Application(**self._archivist.post(self._label, data))
 
     def read(self, identity: str) -> Application:
         """Read Application
@@ -113,12 +109,7 @@ class _ApplicationsClient:
             :class:`Application` instance
 
         """
-        return Application(
-            **self._archivist.get(
-                APPLICATIONS_SUBPATH,
-                identity,
-            )
-        )
+        return Application(**self._archivist.get(f"{self._subpath}/{identity}"))
 
     def update(
         self,
@@ -142,8 +133,7 @@ class _ApplicationsClient:
         """
         return Application(
             **self._archivist.patch(
-                APPLICATIONS_SUBPATH,
-                identity,
+                f"{self._subpath}/{identity}",
                 self.__params(
                     display_name=display_name,
                     custom_claims=custom_claims,
@@ -163,7 +153,7 @@ class _ApplicationsClient:
             :class:`Application` instance - empty?
 
         """
-        return self._archivist.delete(APPLICATIONS_SUBPATH, identity)
+        return self._archivist.delete(f"{self._subpath}/{identity}")
 
     def __params(
         self,
@@ -203,7 +193,7 @@ class _ApplicationsClient:
         return (
             Application(**a)
             for a in self._archivist.list(
-                f"{APPLICATIONS_SUBPATH}/{APPLICATIONS_LABEL}",
+                self._label,
                 APPLICATIONS_LABEL,
                 page_size=page_size,
                 params=self.__params(display_name=display_name),
@@ -225,8 +215,7 @@ class _ApplicationsClient:
         LOGGER.debug("Regenerate %s", identity)
         return Application(
             **self._archivist.post(
-                f"{APPLICATIONS_SUBPATH}/{identity}",
+                f"{self._subpath}/{identity}:{APPLICATIONS_REGENERATE}",
                 None,
-                verb=APPLICATIONS_REGENERATE,
             )
         )

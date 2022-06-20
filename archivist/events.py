@@ -26,12 +26,10 @@ from copy import deepcopy
 from logging import getLogger
 from typing import Dict, Optional
 
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper
+from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .constants import (
-    SEP,
     ASSETS_SUBPATH,
     ASSETS_WILDCARD,
     CONFIRMATION_STATUS,
@@ -40,7 +38,7 @@ from .constants import (
 )
 from . import confirmer
 from .dictmerge import _deepmerge
-from .errors import ArchivistNotFoundError
+from .errors import ArchivistBadFieldError, ArchivistNotFoundError
 
 
 LOGGER = getLogger(__name__)
@@ -101,8 +99,8 @@ class Event(dict):
         return None
 
 
-class _EventsClient:
-    """EventsClient
+class _EventsPublic:
+    """EventsPublic
 
     Access to events entities using the CRUD interface. This class is usually
     accessed as an attribute of the Archivist class.
@@ -114,9 +112,169 @@ class _EventsClient:
 
     def __init__(self, archivist: "type_helper.Archivist"):
         self._archivist = archivist
+        self._public = archivist.public
+        self._subpath = f"{archivist.root}/{ASSETS_SUBPATH}"
 
     def __str__(self) -> str:
-        return f"EventsClient({self._archivist.url})"
+        return "EventsPublic()"
+
+    def _identity(self, identity: str) -> str:
+        """Return fully qualified identity
+        If public then expect a full url as argument
+        """
+        if self._public:
+            return identity
+
+        return f"{self._subpath}/{identity}"
+
+    def read(self, identity: str) -> Event:
+        """Read event
+
+        Reads event.
+
+        Args:
+            identity (str): events identity e.g. assets/xxxxxxx.../events/yyyyyyy...
+
+        Returns:
+            :class:`Event` instance
+
+        """
+        return Event(**self._archivist.get(f"{self._identity(identity)}"))
+
+    def _params(
+        self, props: Optional[Dict], attrs: Optional[Dict], asset_attrs: Optional[Dict]
+    ) -> Dict:
+        params = deepcopy(props) if props else {}
+        if attrs:
+            params["event_attributes"] = attrs
+        if asset_attrs:
+            params["asset_attributes"] = asset_attrs
+
+        return _deepmerge(self._archivist.fixtures.get(EVENTS_LABEL), params)
+
+    def count(
+        self,
+        *,
+        asset_id: Optional[str] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
+        asset_attrs: Optional[Dict] = None,
+    ) -> int:
+        """Count events.
+
+        Counts number of events that match criteria.
+
+        Args:
+            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+            props (dict): optional properties e.g. {"confirmation_status": "CONFIRMED" }
+            attrs (dict): optional attributes e.g. {"arc_display_type": "open" }
+            asset_attrs (dict): optional asset_attributes e.g. {"arc_display_type": "door" }
+
+        Returns:
+            integer count of assets.
+
+        """
+
+        # wildcarding not allowed when public - asset_id is required (not optional)
+        # if asset_id is wildcarded a 401 will be returned from upstream
+        if not self._public:
+            asset_id = asset_id or ASSETS_WILDCARD
+
+        LOGGER.debug("asset_id %s", asset_id)
+        LOGGER.debug("event_id %s", f"{self._identity(asset_id)}/{EVENTS_LABEL}")
+        return self._archivist.count(
+            f"{self._identity(asset_id)}/{EVENTS_LABEL}",
+            params=self._params(props, attrs, asset_attrs),
+        )
+
+    def list(
+        self,
+        *,
+        asset_id: Optional[str] = None,
+        page_size: Optional[int] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
+        asset_attrs: Optional[Dict] = None,
+    ):
+        """List events.
+
+        Lists events that match criteria.
+
+        Args:
+            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+            props (dict): e.g. {"tracked": "TRACKED" }
+            attrs (dict): e.g. {"arc_display_type": "open" }
+            asset_attrs (dict): optional asset_attributes e.g. {"arc_display_type": "door" }
+            page_size (int): optional page size. (Rarely used).
+
+        Returns:
+            iterable that returns :class:`Event` instances
+
+        """
+        # wildcarding not allowed when public - asset_id is required (not optional)
+        # if asset_id is wildcarded a 401 will be returned from upstream
+        if not self._public:
+            asset_id = asset_id or ASSETS_WILDCARD
+
+        return (
+            Event(**a)
+            for a in self._archivist.list(
+                f"{self._identity(asset_id)}/{EVENTS_LABEL}",
+                EVENTS_LABEL,
+                page_size=page_size,
+                params=self._params(props, attrs, asset_attrs),
+            )
+        )
+
+    def read_by_signature(
+        self,
+        *,
+        asset_id: Optional[str] = None,
+        props: Optional[Dict] = None,
+        attrs: Optional[Dict] = None,
+        asset_attrs: Optional[Dict] = None,
+    ) -> Event:
+        """Read event by signature.
+
+        Reads event that meets criteria. Only one event is expected.
+
+        Args:
+            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
+            props (dict): e.g. {"tracked": "TRACKED" }
+            attrs (dict): e.g. {"arc_display_type": "open" }
+            asset_attrs (dict): optional asset_attributes e.g. {"arc_display_type": "door" }
+
+        Returns:
+            :class:`Event` instance
+
+        """
+        # wildcarding not allowed when public - asset_id is required (not optional)
+        # if asset_id is wildcarded a 401 will be returned from upstream
+        if not self._public:
+            asset_id = asset_id or ASSETS_WILDCARD
+
+        return Event(
+            **self._archivist.get_by_signature(
+                f"{self._identity(asset_id)}/{EVENTS_LABEL}",
+                EVENTS_LABEL,
+                params=self._params(props, attrs, asset_attrs),
+            )
+        )
+
+
+class _EventsRestricted(_EventsPublic):
+    """EventsRestricted
+
+    Access to events entities using the CRUD interface. This class is usually
+    accessed as an attribute of the Archivist class.
+
+    Args:
+        archivist (Archivist): :class:`Archivist` instance
+
+    """
+
+    def __str__(self) -> str:
+        return f"EventsRestricted({self._archivist.url})"
 
     def create(
         self,
@@ -146,7 +304,7 @@ class _EventsClient:
         LOGGER.debug("Create Event %s/%s", asset_id, props)
         return self.create_from_data(
             asset_id,
-            self.__params(props, attrs, asset_attrs),
+            self._params(props, attrs, asset_attrs),
             confirm=confirm,
         )
 
@@ -204,10 +362,7 @@ class _EventsClient:
         data["event_attributes"] = event_attributes
 
         event = Event(
-            **self._archivist.post(
-                SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
-                data,
-            )
+            **self._archivist.post(f"{self._subpath}/{asset_id}/{EVENTS_LABEL}", data)
         )
         if not confirm:
             return event
@@ -229,65 +384,6 @@ class _EventsClient:
         confirmer.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
         return confirmer._wait_for_confirmation(self, identity)
-
-    def read(self, identity: str) -> Event:
-        """Read event
-
-        Reads event.
-
-        Args:
-            identity (str): events identity e.g. assets/xxxxxxx.../events/yyyyyyy...
-
-        Returns:
-            :class:`Event` instance
-
-        """
-        return Event(
-            **self._archivist.get(
-                ASSETS_SUBPATH,
-                identity,
-            )
-        )
-
-    def __params(
-        self, props: Optional[Dict], attrs: Optional[Dict], asset_attrs: Optional[Dict]
-    ) -> Dict:
-        params = deepcopy(props) if props else {}
-        if attrs:
-            params["event_attributes"] = attrs
-        if asset_attrs:
-            params["asset_attributes"] = asset_attrs
-
-        return _deepmerge(self._archivist.fixtures.get(EVENTS_LABEL), params)
-
-    def count(
-        self,
-        *,
-        asset_id: Optional[str] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
-        asset_attrs: Optional[Dict] = None,
-    ) -> int:
-        """Count events.
-
-        Counts number of events that match criteria.
-
-        Args:
-            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-            props (dict): optional properties e.g. {"confirmation_status": "CONFIRMED" }
-            attrs (dict): optional attributes e.g. {"arc_display_type": "open" }
-            asset_attrs (dict): optional asset_attributes e.g. {"arc_display_type": "door" }
-
-        Returns:
-            integer count of assets.
-
-        """
-
-        asset_id = asset_id or ASSETS_WILDCARD
-        return self._archivist.count(
-            SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
-            params=self.__params(props, attrs, asset_attrs),
-        )
 
     def wait_for_confirmed(
         self,
@@ -333,68 +429,21 @@ class _EventsClient:
             asset_attrs=asset_attrs,
         )
 
-    def list(
-        self,
-        *,
-        asset_id: Optional[str] = None,
-        page_size: Optional[int] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
-        asset_attrs: Optional[Dict] = None,
-    ):
-        """List events.
+    def publicurl(self, identity: str) -> str:
+        """Read event public url
 
-        Lists events that match criteria.
+        Reads event public url.
 
         Args:
-            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-            props (dict): e.g. {"tracked": "TRACKED" }
-            attrs (dict): e.g. {"arc_display_type": "open" }
-            asset_attrs (dict): optional asset_attributes e.g. {"arc_display_type": "door" }
-            page_size (int): optional page size. (Rarely used).
+            identity (str): events identity e.g. assets/xxxxxxx.../events/yyyyyyy...
 
         Returns:
-            iterable that returns :class:`Event` instances
+            :str:public url as a string
 
         """
-        asset_id = asset_id or ASSETS_WILDCARD
-        return (
-            Event(**a)
-            for a in self._archivist.list(
-                SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
-                EVENTS_LABEL,
-                page_size=page_size,
-                params=self.__params(props, attrs, asset_attrs),
-            )
-        )
+        body = self._archivist.get(f"{self._identity(identity)}:publicurl")
+        publicurl = body.get("publicurl")
+        if publicurl is None:
+            raise ArchivistBadFieldError("No publicurl found in response")
 
-    def read_by_signature(
-        self,
-        *,
-        asset_id: Optional[str] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
-        asset_attrs: Optional[Dict] = None,
-    ) -> Event:
-        """Read event by signature.
-
-        Reads event that meets criteria. Only one event is expected.
-
-        Args:
-            asset_id (str): optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-            props (dict): e.g. {"tracked": "TRACKED" }
-            attrs (dict): e.g. {"arc_display_type": "open" }
-            asset_attrs (dict): optional asset_attributes e.g. {"arc_display_type": "door" }
-
-        Returns:
-            :class:`Event` instance
-
-        """
-        asset_id = asset_id or ASSETS_WILDCARD
-        return Event(
-            **self._archivist.get_by_signature(
-                SEP.join((ASSETS_SUBPATH, asset_id, EVENTS_LABEL)),
-                EVENTS_LABEL,
-                params=self.__params(props, attrs, asset_attrs),
-            )
-        )
+        return publicurl

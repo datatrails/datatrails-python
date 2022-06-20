@@ -7,7 +7,7 @@ from os import environ
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist.constants import ROOT, HEADERS_TOTAL_COUNT, HEADERS_RETRY_AFTER
+from archivist.constants import HEADERS_TOTAL_COUNT, HEADERS_RETRY_AFTER
 from archivist.errors import (
     ArchivistBadRequestError,
     ArchivistError,
@@ -58,87 +58,102 @@ class TestArchivist(TestCase):
         Test illegal url
         """
         with self.assertRaises(ArchivistError):
-            arch = Archivist("url/", "authauthauth")
+            arch = Archivist("https://app.rkvst.io/", "authauthauth")
 
     def test_archivist(self):
         """
         Test default archivist creation
         """
-        arch = Archivist("url", "authauthauth")
+        arch = Archivist("https://app.rkvst.io", "authauthauth")
         self.assertEqual(
             str(arch),
-            "Archivist(url)",
+            "Archivist(https://app.rkvst.io)",
             msg="Incorrect str",
         )
         self.assertEqual(
             str(arch.access_policies),
-            "AccessPoliciesClient(url)",
+            "AccessPoliciesClient(https://app.rkvst.io)",
             msg="Incorrect access_policies",
         )
         self.assertEqual(
             str(arch.appidp),
-            "AppIDPClient(url)",
+            "AppIDPClient(https://app.rkvst.io)",
             msg="Incorrect appidp",
         )
         self.assertEqual(
             str(arch.applications),
-            "ApplicationsClient(url)",
+            "ApplicationsClient(https://app.rkvst.io)",
             msg="Incorrect applications",
         )
         self.assertEqual(
             str(arch.assets),
-            "AssetsClient(url)",
+            "AssetsRestricted(https://app.rkvst.io)",
+            msg="Incorrect assets",
+        )
+        self.assertEqual(
+            str(arch.assetattachments),
+            "AssetAttachmentsClient(https://app.rkvst.io)",
             msg="Incorrect assets",
         )
         self.assertEqual(
             str(arch.attachments),
-            "AttachmentsClient(url)",
+            "AttachmentsClient(https://app.rkvst.io)",
             msg="Incorrect attachments",
         )
         self.assertEqual(
             str(arch.compliance),
-            "ComplianceClient(url)",
+            "ComplianceClient(https://app.rkvst.io)",
             msg="Incorrect compliance",
         )
         self.assertEqual(
             str(arch.compliance_policies),
-            "CompliancePoliciesClient(url)",
+            "CompliancePoliciesClient(https://app.rkvst.io)",
             msg="Incorrect compliance_policies",
         )
         self.assertEqual(
             str(arch.events),
-            "EventsClient(url)",
+            "EventsRestricted(https://app.rkvst.io)",
             msg="Incorrect events",
         )
         self.assertEqual(
             str(arch.locations),
-            "LocationsClient(url)",
+            "LocationsClient(https://app.rkvst.io)",
             msg="Incorrect locations",
         )
         self.assertEqual(
             str(arch.runner),
-            "Runner(url)",
+            "Runner(https://app.rkvst.io)",
             msg="Incorrect runner",
         )
         self.assertEqual(
             str(arch.sboms),
-            "SBOMSClient(url)",
+            "SBOMSClient(https://app.rkvst.io)",
             msg="Incorrect sboms",
         )
         self.assertEqual(
             str(arch.subjects),
-            "SubjectsClient(url)",
+            "SubjectsClient(https://app.rkvst.io)",
             msg="Incorrect subjects",
         )
         self.assertEqual(
+            str(arch.Public),
+            "ArchivistPublic()",
+            msg="Incorrect Public",
+        )
+        self.assertEqual(
             arch.url,
-            "url",
+            "https://app.rkvst.io",
             msg="Incorrect url",
         )
         self.assertEqual(
             arch.auth,
             "authauthauth",
             msg="Incorrect auth",
+        )
+        self.assertEqual(
+            arch.root,
+            "https://app.rkvst.io/archivist",
+            msg="Incorrect root",
         )
         self.assertEqual(
             arch.verify,
@@ -152,7 +167,7 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with app registration
         """
-        arch = Archivist("url", (CLIENT_ID, CLIENT_SECRET))
+        arch = Archivist("https://app.rkvst.io", (CLIENT_ID, CLIENT_SECRET))
         with mock.patch.object(arch.appidp, "token") as mock_token:
             mock_token.return_value = RESPONSE
             self.assertEqual(
@@ -165,7 +180,7 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with no token
         """
-        arch = Archivist("url", None)
+        arch = Archivist("https://app.rkvst.io", None)
         self.assertIsNone(
             arch.auth,
             msg="Incorrect auth",
@@ -175,7 +190,7 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with appidp token
         """
-        arch = Archivist("url", (CLIENT_ID, CLIENT_SECRET))
+        arch = Archivist("https://app.rkvst.io", (CLIENT_ID, CLIENT_SECRET))
         with mock.patch.object(arch.appidp, "token") as mock_token:
             mock_token.return_value = NONE_RESPONSE
             with self.assertRaises(ArchivistError):
@@ -185,7 +200,7 @@ class TestArchivist(TestCase):
         """
         Test archivist copy
         """
-        arch = Archivist("url", "authauthauth", verify=False)
+        arch = Archivist("https://app.rkvst.io", "authauthauth", verify=False)
         arch1 = copy(arch)
         self.assertEqual(
             arch.url,
@@ -207,7 +222,7 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with no verify
         """
-        arch = Archivist("url", "authauthauth", verify=False)
+        arch = Archivist("https://app.rkvst.io", "authauthauth", verify=False)
         self.assertFalse(
             arch.verify,
             msg="verify must be False",
@@ -220,7 +235,7 @@ class TestArchivistMethods(TestCase):
     """
 
     def setUp(self):
-        self.arch = Archivist("url", "authauthauth")
+        self.arch = Archivist("https://app.rkvst.io", "authauthauth")
 
 
 class TestArchivistPatch(TestArchivistMethods):
@@ -233,13 +248,13 @@ class TestArchivistPatch(TestArchivistMethods):
         Test default patch method
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, request=request)
-            resp = self.arch.patch("path/path", "entity/xxxx", request)
+            resp = self.arch.patch("path/path/entity/xxxx", request)
             args, kwargs = mock_patch.call_args
             self.assertEqual(
                 args,
-                (f"url/{ROOT}/path/path/entity/xxxx",),
+                ("path/path/entity/xxxx",),
                 msg="POST method args called incorrectly",
             )
             self.assertEqual(
@@ -259,30 +274,29 @@ class TestArchivistPatch(TestArchivistMethods):
         Test post method with error
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(
                 400, request=request, field1="value1"
             )
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.patch("path/path", "entity/xxxx", request)
+                resp = self.arch.patch("path/path/entity/xxxx", request)
 
     def test_patch_with_headers(self):
         """
         Test default patch method
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, request=request)
             resp = self.arch.patch(
-                "path/path",
-                "entity/xxxx",
+                "path/path/entity/xxxx",
                 request,
                 headers={"headerfield1": "headervalue1"},
             )
             args, kwargs = mock_patch.call_args
             self.assertEqual(
                 args,
-                (f"url/{ROOT}/path/path/entity/xxxx",),
+                ("path/path/entity/xxxx",),
                 msg="PATCH method args called incorrectly",
             )
             self.assertEqual(
@@ -303,12 +317,11 @@ class TestArchivistPatch(TestArchivistMethods):
         Test patch method with error
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(429, request=request)
             with self.assertRaises(ArchivistTooManyRequestsError):
                 resp = self.arch.patch(
-                    "path/path",
-                    "id/xxxxxxxx",
+                    "path/path/id/xxxxxxxx",
                     request,
                 )
 
@@ -317,15 +330,14 @@ class TestArchivistPatch(TestArchivistMethods):
         Test patch method with 429 retry and fail
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
                 MockResponse(429, request=request),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
                 resp = self.arch.patch(
-                    "path/path",
-                    "id/xxxxxxxx",
+                    "path/path/id/xxxxxxxx",
                     request,
                 )
 
@@ -334,7 +346,7 @@ class TestArchivistPatch(TestArchivistMethods):
         Test patch method with 429 retry and retries_fail
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
@@ -343,8 +355,7 @@ class TestArchivistPatch(TestArchivistMethods):
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
                 resp = self.arch.patch(
-                    "path/path",
-                    "id/xxxxxxxx",
+                    "path/path/id/xxxxxxxx",
                     request,
                 )
 
@@ -353,17 +364,17 @@ class TestArchivistPatch(TestArchivistMethods):
         Test patch method with 429 retry and success
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "patch") as mock_patch:
+        with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}, request=request),
                 MockResponse(200, request=request),
             )
-            resp = self.arch.patch("path/path", "entity/xxxxxxxx", request)
+            resp = self.arch.patch("path/path/entity/xxxxxxxx", request)
             args, kwargs = mock_patch.call_args
             self.assertEqual(
                 args,
-                (f"url/{ROOT}/path/path/entity/xxxxxxxx",),
+                ("path/path/entity/xxxxxxxx",),
                 msg="PATCH method args called incorrectly",
             )
             self.assertEqual(
@@ -388,7 +399,7 @@ class TestArchivistCount(TestArchivistMethods):
         """
         Test default count method
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 headers={HEADERS_TOTAL_COUNT.lower(): 1},
@@ -409,7 +420,7 @@ class TestArchivistCount(TestArchivistMethods):
         """
         Test default count method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 400,
                 things=[
@@ -426,7 +437,7 @@ class TestArchivistCount(TestArchivistMethods):
         Tests the default count method raises a ArchivistHeaderError when the
         expected count header field is missing
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[
@@ -442,7 +453,7 @@ class TestArchivistCount(TestArchivistMethods):
         """
         Test count method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
                 count = self.arch.count("path/path")
@@ -451,7 +462,7 @@ class TestArchivistCount(TestArchivistMethods):
         """
         Test count method with 429 retry and fail
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429),
@@ -463,7 +474,7 @@ class TestArchivistCount(TestArchivistMethods):
         """
         Test count method with 429 retry and retries_fail
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
@@ -477,7 +488,7 @@ class TestArchivistCount(TestArchivistMethods):
         """
         Test count method with 429 retry and success
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),

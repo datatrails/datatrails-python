@@ -6,7 +6,7 @@ from io import BytesIO
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist.constants import ROOT, HEADERS_RETRY_AFTER
+from archivist.constants import HEADERS_RETRY_AFTER
 from archivist.errors import (
     ArchivistBadRequestError,
     ArchivistTooManyRequestsError,
@@ -39,13 +39,13 @@ class TestArchivistPost(TestArchivistMethods):
         Test default post method
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, request=request)
             resp = self.arch.post("path/path", request)
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
-                (f"url/{ROOT}/path/path",),
+                ("path/path",),
                 msg="POST method args called incorrectly",
             )
             self.assertEqual(
@@ -65,7 +65,7 @@ class TestArchivistPost(TestArchivistMethods):
         Test post method with error
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(400, request=request, field1="value1")
             with self.assertRaises(ArchivistBadRequestError):
                 resp = self.arch.post("path/path", request)
@@ -75,7 +75,7 @@ class TestArchivistPost(TestArchivistMethods):
         Test post method with 429
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(429, request=request, field1="value1")
             with self.assertRaises(ArchivistTooManyRequestsError):
                 resp = self.arch.post("path/path", request)
@@ -85,7 +85,7 @@ class TestArchivistPost(TestArchivistMethods):
         Test post method with 429 retry and fail
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429),
@@ -98,7 +98,7 @@ class TestArchivistPost(TestArchivistMethods):
         Test post method with 429 retry and retries_fail
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
@@ -113,7 +113,7 @@ class TestArchivistPost(TestArchivistMethods):
         Test post method with 429 retry and success
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
@@ -123,7 +123,7 @@ class TestArchivistPost(TestArchivistMethods):
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
-                (f"url/{ROOT}/path/path",),
+                ("path/path",),
                 msg="POST method args called incorrectly",
             )
             self.assertEqual(
@@ -143,7 +143,7 @@ class TestArchivistPost(TestArchivistMethods):
         Test default post method
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, request=request)
             resp = self.arch.post(
                 "path/path",
@@ -153,7 +153,7 @@ class TestArchivistPost(TestArchivistMethods):
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
-                (f"url/{ROOT}/path/path",),
+                ("path/path",),
                 msg="POST method args called incorrectly",
             )
             self.assertEqual(
@@ -173,7 +173,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         Test default post_file method
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200)
             resp = self.arch.post_file(
                 "path/path",
@@ -188,7 +188,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 args[0],
-                f"url/{ROOT}/path/path",
+                "path/path",
                 msg="Incorrect first argument",
             )
             self.assertEqual(
@@ -237,7 +237,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         Test default post_file method
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200)
             resp = self.arch.post_file(
                 "path/path",
@@ -253,7 +253,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 args[0],
-                f"url/{ROOT}/path/path",
+                "path/path",
                 msg="Incorrect first argument",
             )
             self.assertEqual(
@@ -302,7 +302,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         Test post method with error
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
                 resp = self.arch.post_file(
@@ -315,7 +315,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         Test post method with error
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
                 resp = self.arch.post_file(
@@ -328,7 +328,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         Test post method with 429 retry and fail
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429),
@@ -344,7 +344,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         Test post method with 429 retry and retries_fail
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
@@ -362,7 +362,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         Test post method with 429 retry and success
         """
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
@@ -382,7 +382,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 args[0],
-                f"url/{ROOT}/path/path",
+                "path/path",
                 msg="Incorrect first argument",
             )
             self.assertEqual(
@@ -441,13 +441,13 @@ class TestArchivistPostWithoutAuth(TestCase):
         Test default post method
         """
         request = {"field1": "value1"}
-        with mock.patch.object(self.arch._session, "post") as mock_post:
+        with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, request=request)
             resp = self.arch.post("path/path", request)
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
-                (f"url/{ROOT}/path/path",),
+                ("path/path",),
                 msg="POST method args called incorrectly",
             )
             self.assertEqual(

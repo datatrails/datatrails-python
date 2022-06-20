@@ -5,7 +5,7 @@ Test archivist
 from os import environ
 from unittest import mock
 
-from archivist.constants import ROOT, HEADERS_TOTAL_COUNT, HEADERS_RETRY_AFTER
+from archivist.constants import HEADERS_TOTAL_COUNT, HEADERS_RETRY_AFTER
 from archivist.errors import (
     ArchivistBadFieldError,
     ArchivistBadRequestError,
@@ -34,7 +34,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test default list method
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[
@@ -53,7 +53,7 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path",),
+                        ("path/path",),
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
@@ -69,7 +69,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test default list method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 400,
                 things=[
@@ -85,7 +85,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test default list method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[
@@ -101,7 +101,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test default list method
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[
@@ -126,7 +126,7 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path",),
+                        ("path/path",),
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
@@ -143,7 +143,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test default list method
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[
@@ -168,7 +168,7 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path",),
+                        ("path/path",),
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
@@ -185,7 +185,7 @@ class TestArchivistList(TestArchivistMethods):
         Test default list method
         """
         values = ("value10", "value11")
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(
                 200,
                 things=[
@@ -213,7 +213,7 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path",),
+                        ("path/path",),
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
@@ -238,7 +238,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         values = ("value10", "value11", "value12", "value13")
         paging = ({"page_size": 2}, {"page_size": 2, "page_token": "token"})
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
                     200,
@@ -280,7 +280,7 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path",),
+                        ("path/path",),
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
@@ -309,7 +309,7 @@ class TestArchivistList(TestArchivistMethods):
             {**params, "page_size": 2},
             {"page_size": 2, "page_token": "token"},
         )
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = [
                 MockResponse(
                     200,
@@ -352,7 +352,7 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path",),
+                        ("path/path",),
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
@@ -375,7 +375,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test list method with error
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
                 things = list(self.arch.list("path/path", "things"))
@@ -384,7 +384,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test list method with 429 retry and fail
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429),
@@ -396,7 +396,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test list method with 429 retry and retries_fail
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
@@ -410,7 +410,7 @@ class TestArchivistList(TestArchivistMethods):
         """
         Test list method with 429 retry and success
         """
-        with mock.patch.object(self.arch._session, "get") as mock_get:
+        with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.side_effect = (
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
@@ -434,7 +434,7 @@ class TestArchivistList(TestArchivistMethods):
                 self.assertEqual(
                     tuple(a),
                     (
-                        (f"url/{ROOT}/path/path",),
+                        ("path/path",),
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
