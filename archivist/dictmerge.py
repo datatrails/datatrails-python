@@ -35,53 +35,42 @@ def assets_ext_attr(assets: list) -> list:
     extended_attributes_asset = []
     for asset in assets:
         for item in asset["attributes"]:
-            if "arc_" not in item and asset not in extended_attributes_asset:
+            if not item.startswith("arc_") and asset not in extended_attributes_asset:
                 extended_attributes_asset.append(asset)
     return extended_attributes_asset
 
 
 def attachment_identities_assets(assets_with_attachments: list) -> list:
     """Create list of attachment identities"""
-    global total_attachments_assets
-    total_attachments_assets = []
+    total_attachments_assets = set()
     for asset in assets_with_attachments:
-        total_attachments_assets.append(
-            [
-                item["arc_attachment_identity"]
-                for item in asset["attributes"]["arc_attachments"]
-                if item["arc_attachment_identity"] not in total_attachments_assets
-            ]
-        )
+        for item in asset["attributes"]["arc_attachments"]:
+            total_attachments_assets.add(item["arc_attachment_identity"])
     return total_attachments_assets
 
 
 def events_ext_attr(events: list) -> list:
     """Create list of events with extended attribute(s)"""
-    global extended_attributes_event
     extended_attributes_event = []
     for event in events:
         for item in event["event_attributes"]:
-            if "arc_" not in item and event not in extended_attributes_event:
+            if not item.startswith("arc_") and event not in extended_attributes_event:
                 extended_attributes_event.append(event)
     return extended_attributes_event
 
 
 def attachment_identities_events(events_with_attachments: list) -> list:
     """Create list of attachment identities"""
-    global total_attachments_events
-    total_attachments_events = []
+    total_attachments_events = set()
     for event in events_with_attachments:
-        total_attachments_events.append(
-            [
-                item["arc_attachment_identity"]
-                for item in event["event_attributes"]["arc_attachments"]
-                if item["arc_attachment_identity"] not in total_attachments_events
-            ]
-        )
+        for item in event["event_attributes"]["arc_attachments"]:
+            total_attachments_events.add(item["arc_attachment_identity"])
     return total_attachments_events
 
 
 def level_1_sanitization(dct: dict) -> dict:
+    """Sanitize values of attributes with custom keys."""
+
     def modify_key(k, v):
         return k
 
@@ -92,6 +81,8 @@ def level_1_sanitization(dct: dict) -> dict:
 
 
 def level_2_sanitization(dct: dict) -> dict:
+    """Sanitize all attribute values."""
+
     def modify_key(k, v):
         return k
 
@@ -102,6 +93,8 @@ def level_2_sanitization(dct: dict) -> dict:
 
 
 def level_3_sanitization(dct: dict) -> dict:
+    """Sanitize all attribute values and all custom keys."""
+
     def modify_key(k, v):
         return "#" * len(k) if "arc_" not in k else k
 
@@ -112,6 +105,8 @@ def level_3_sanitization(dct: dict) -> dict:
 
 
 def level_4_sanitization(dct: dict) -> dict:
+    """Sanitize all attribute keys and values."""
+
     def modify_key(k, v):
         return "#" * len(k) if k else k
 
@@ -122,6 +117,8 @@ def level_4_sanitization(dct: dict) -> dict:
 
 
 def level_5_sanitization(dct: dict) -> dict:
+    """Replace attribute dictionary with None."""
+
     def modify_key(k, v):
         return None
 
