@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Public Event &mdash; RKVST 0.16.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Create Event Example" href="create_event.html" />
+    <link rel="prev" title="Get Public Asset Example" href="get_publicasset.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html">
+            <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_publicasset.html">Get Public Asset Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Get Public Event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_events.html">Filter Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_publicevents.html">Filter Public Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan_test.html">Scan Test Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_filter.html">Filter IAM subjects Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="applications_registration.html">Create IAM Application Registration and Tokens</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runner.html">Runner Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="getting_started.html">Getting started</a> &raquo;</li>
+      <li>Get Public Event</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="get-public-event">
+<span id="get-publiceventref"></span><h1>Get Public Event<a class="headerlink" href="#get-public-event" title="Permalink to this headline"></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Get events of a public asset given url to event.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">archivist.archivistpublic</span> <span class="kn">import</span> <span class="n">ArchivistPublic</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Main function of getting public events.&quot;&quot;&quot;</span>
+    <span class="c1"># Initialize connection to ArchivistPublic</span>
+    <span class="n">public</span> <span class="o">=</span> <span class="n">ArchivistPublic</span><span class="p">()</span>
+
+    <span class="c1"># URL is the fully-attested URL returned by archivist</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">public</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">read</span><span class="p">(</span>
+        <span class="s2">&quot;https://app.rkvst.io/archivist/&quot;</span>
+        <span class="s2">&quot;publicassets/87b1a84c-1c6f-442b-923e-a97516f4d275&quot;</span>
+        <span class="s2">&quot;events/abcdef4c-1c6f-442b-923e-a97516f4d275&quot;</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;event&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get_publicasset.html" class="btn btn-neutral float-left" title="Get Public Asset Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="create_event.html" class="btn btn-neutral float-right" title="Create Event Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

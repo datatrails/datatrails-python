@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Attachments Class &mdash; RKVST 0.15.1 documentation</title>
+  <title>Attachments Class &mdash; RKVST 0.16.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -33,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.15.1
+                0.16.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -53,7 +53,6 @@
 <li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="publicevents.html">Public Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
@@ -169,7 +168,7 @@ or event creation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.attachments._AttachmentsClient.download">
-<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_or_event_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient.download" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient.download" title="Permalink to this definition"></a></dt>
 <dd><p>Read attachment</p>
 <p>Reads attachment into data sink (usually a file opened for write)..
 Note that returns the response as the body will be consumed by the
@@ -180,43 +179,25 @@ fd iterator</p>
 <li><p><strong>identity</strong> (<em>str</em>) -- attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>fd</strong> (<em>file</em>) -- opened file descriptor or other file-type sink..</p></li>
 <li><p><strong>params</strong> (<em>dict</em>) -- e.g. {&quot;allow_insecure&quot;: &quot;true&quot;} OR {&quot;strict&quot;: &quot;true&quot; }</p></li>
-<li><p><strong>asset_or_event_id</strong> (<em>str</em>) -- optional asset or event identity</p></li>
 </ul>
 </dd>
-</dl>
-<p>asset_or_event_id has one of the following forms:</p>
-<blockquote>
-<div><p>assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>REST response</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>JSON as dict</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.attachments._AttachmentsClient.info">
-<span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_or_event_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient.info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient.info" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient.info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient.info" title="Permalink to this definition"></a></dt>
 <dd><p>Read attachment info</p>
 <p>Reads attachment info</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>identity</strong> (<em>str</em>) -- attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
-<li><p><strong>asset_or_event_id</strong> (<em>str</em>) -- optional asset or event identity</p></li>
-</ul>
+<dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
-</dl>
-<p>asset_or_event_id has one of the following forms:</p>
-<blockquote>
-<div><p>assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
-assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>REST response</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>REST response</p>
 </dd>
 </dl>
 </dd></dl>

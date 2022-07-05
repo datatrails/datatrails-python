@@ -53,37 +53,6 @@ For further reading:
 
    execute
    execute_template
-   generic
-   assets_count
-   assets_create
-   assets_create_if_not_exists
-   assets_list
-   assets_wait_for_confirmed
-   compliance_compliant_at
-   compliance_policies_create
-   composite_estate_info
-   events_count
-   events_create
-   events_list
-   locations_count
-   locations_create
-   locations_list
-   publicevents_count
-   publicevents_list
-   subjects_count.rst
-   subjects_create.rst
-   subjects_create_b64.rst
-   subjects_list.rst
-   subjects_read.rst
-   subjects_update.rst
-   subjects_wait_for_confirmation.rst
    
-   compliance_policies_demo
-   compliance_policies_demo_dynamic_tolerance
-   compliance_policies_demo_richness
-   door_entry_demo
-   publicassets_demo
-   estate_info_demo
-   sbom_demo
-   synsation_demo
-   wipp_demo
+   components/index
+   demos/index

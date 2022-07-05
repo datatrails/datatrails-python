@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; RKVST 0.15.1 documentation</title>
+  <title>Index &mdash; RKVST 0.16.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.15.1
+                0.16.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -50,7 +50,6 @@
 <li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="publicevents.html">Public Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
@@ -94,8 +93,6 @@
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
- | <a href="#F"><strong>F</strong></a>
- | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
@@ -107,7 +104,6 @@
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
- | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
 </div>
@@ -122,7 +118,9 @@
 </li>
       <li><a href="iam/appregistrations.html#archivist.applications._ApplicationsClient">_ApplicationsClient (class in archivist.applications)</a>
 </li>
-      <li><a href="assets.html#archivist.assets._AssetsClient">_AssetsClient (class in archivist.assets)</a>
+      <li><a href="assets.html#archivist.assets._AssetsPublic">_AssetsPublic (class in archivist.assets)</a>
+</li>
+      <li><a href="assets.html#archivist.assets._AssetsRestricted">_AssetsRestricted (class in archivist.assets)</a>
 </li>
       <li><a href="attachments.html#archivist.attachments._AttachmentsClient">_AttachmentsClient (class in archivist.attachments)</a>
 </li>
@@ -132,13 +130,17 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="events.html#archivist.events._EventsClient">_EventsClient (class in archivist.events)</a>
+      <li><a href="events.html#archivist.events._EventsPublic">_EventsPublic (class in archivist.events)</a>
 </li>
+      <li><a href="events.html#archivist.events._EventsRestricted">_EventsRestricted (class in archivist.events)</a>
+</li>
+      <li><a href="assets.html#archivist.assets._AssetsPublic._identity">_identity() (archivist.assets._AssetsPublic method)</a>
+
+      <ul>
+        <li><a href="events.html#archivist.events._EventsPublic._identity">(archivist.events._EventsPublic method)</a>
+</li>
+      </ul></li>
       <li><a href="locations.html#archivist.locations._LocationsClient">_LocationsClient (class in archivist.locations)</a>
-</li>
-      <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient">_PublicEventsClient (class in archivist.publicevents)</a>
-</li>
-      <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient._PublicEventsClient__prefix">_PublicEventsClient__prefix() (archivist.publicevents._PublicEventsClient method)</a>
 </li>
       <li><a href="runner.html#archivist.runner._Runner">_Runner (class in archivist.runner)</a>
 </li>
@@ -262,20 +264,13 @@
         <li><a href="logger.html#module-archivist.logger">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     archivist.proof_mechanism
 
       <ul>
         <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">module</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li>
-    archivist.publicevents
-
-      <ul>
-        <li><a href="publicevents.html#module-archivist.publicevents">module</a>
 </li>
       </ul></li>
       <li>
@@ -351,8 +346,6 @@
 </li>
       <li><a href="runner.html#archivist.runner._Step.args">args() (archivist.runner._Step method)</a>
 </li>
-      <li><a href="assets.html#archivist.assets.Asset">Asset (class in archivist.assets)</a>
-</li>
       <li><a href="attachments.html#archivist.attachments.Attachment">Attachment (class in archivist.attachments)</a>
 </li>
       <li><a href="archivist.html#archivist.archivist.Archivist.auth">auth (archivist.archivist.Archivist property)</a>
@@ -398,17 +391,13 @@
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count">count() (archivist.access_policies._AccessPoliciesClient method)</a>
 
       <ul>
-        <li><a href="archivist.html#archivist.archivist.Archivist.count">(archivist.archivist.Archivist method)</a>
-</li>
-        <li><a href="assets.html#archivist.assets._AssetsClient.count">(archivist.assets._AssetsClient method)</a>
+        <li><a href="assets.html#archivist.assets._AssetsRestricted.count">(archivist.assets._AssetsRestricted method)</a>
 </li>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.count">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
-        <li><a href="events.html#archivist.events._EventsClient.count">(archivist.events._EventsClient method)</a>
+        <li><a href="events.html#archivist.events._EventsPublic.count">(archivist.events._EventsPublic method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.count">(archivist.locations._LocationsClient method)</a>
-</li>
-        <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient.count">(archivist.publicevents._PublicEventsClient method)</a>
 </li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.count">(archivist.subjects._SubjectsClient method)</a>
 </li>
@@ -424,13 +413,13 @@
       <ul>
         <li><a href="iam/appregistrations.html#archivist.applications._ApplicationsClient.create">(archivist.applications._ApplicationsClient method)</a>
 </li>
-        <li><a href="assets.html#archivist.assets._AssetsClient.create">(archivist.assets._AssetsClient method)</a>
+        <li><a href="assets.html#archivist.assets._AssetsRestricted.create">(archivist.assets._AssetsRestricted method)</a>
 </li>
         <li><a href="attachments.html#archivist.attachments._AttachmentsClient.create">(archivist.attachments._AttachmentsClient method)</a>
 </li>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.create">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
-        <li><a href="events.html#archivist.events._EventsClient.create">(archivist.events._EventsClient method)</a>
+        <li><a href="events.html#archivist.events._EventsRestricted.create">(archivist.events._EventsRestricted method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.create">(archivist.locations._LocationsClient method)</a>
 </li>
@@ -446,18 +435,18 @@
       <ul>
         <li><a href="iam/appregistrations.html#archivist.applications._ApplicationsClient.create_from_data">(archivist.applications._ApplicationsClient method)</a>
 </li>
-        <li><a href="assets.html#archivist.assets._AssetsClient.create_from_data">(archivist.assets._AssetsClient method)</a>
+        <li><a href="assets.html#archivist.assets._AssetsRestricted.create_from_data">(archivist.assets._AssetsRestricted method)</a>
 </li>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.create_from_data">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
-        <li><a href="events.html#archivist.events._EventsClient.create_from_data">(archivist.events._EventsClient method)</a>
+        <li><a href="events.html#archivist.events._EventsRestricted.create_from_data">(archivist.events._EventsRestricted method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.create_from_data">(archivist.locations._LocationsClient method)</a>
 </li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.create_from_data">(archivist.subjects._SubjectsClient method)</a>
 </li>
       </ul></li>
-      <li><a href="assets.html#archivist.assets._AssetsClient.create_if_not_exists">create_if_not_exists() (archivist.assets._AssetsClient method)</a>
+      <li><a href="assets.html#archivist.assets._AssetsRestricted.create_if_not_exists">create_if_not_exists() (archivist.assets._AssetsRestricted method)</a>
 
       <ul>
         <li><a href="locations.html#archivist.locations._LocationsClient.create_if_not_exists">(archivist.locations._LocationsClient method)</a>
@@ -512,28 +501,6 @@
   </ul></td>
 </tr></table>
 
-<h2 id="F">F</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="archivist.html#archivist.archivist.Archivist.fixtures">fixtures (archivist.archivist.Archivist property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="G">G</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="archivist.html#archivist.archivist.Archivist.get">get() (archivist.archivist.Archivist method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="archivist.html#archivist.archivist.Archivist.get_by_signature">get_by_signature() (archivist.archivist.Archivist method)</a>
-</li>
-      <li><a href="archivist.html#archivist.archivist.Archivist.get_file">get_file() (archivist.archivist.Archivist method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -563,24 +530,18 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="runner.html#archivist.runner._ActionMap.label">label() (archivist.runner._ActionMap method)</a>
 </li>
-      <li><a href="archivist.html#archivist.archivist.Archivist.last_response">last_response() (archivist.archivist.Archivist method)</a>
-</li>
       <li><a href="iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list">list() (archivist.access_policies._AccessPoliciesClient method)</a>
 
       <ul>
         <li><a href="iam/appregistrations.html#archivist.applications._ApplicationsClient.list">(archivist.applications._ApplicationsClient method)</a>
 </li>
-        <li><a href="archivist.html#archivist.archivist.Archivist.list">(archivist.archivist.Archivist method)</a>
-</li>
-        <li><a href="assets.html#archivist.assets._AssetsClient.list">(archivist.assets._AssetsClient method)</a>
+        <li><a href="assets.html#archivist.assets._AssetsRestricted.list">(archivist.assets._AssetsRestricted method)</a>
 </li>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.list">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
-        <li><a href="events.html#archivist.events._EventsClient.list">(archivist.events._EventsClient method)</a>
+        <li><a href="events.html#archivist.events._EventsPublic.list">(archivist.events._EventsPublic method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.list">(archivist.locations._LocationsClient method)</a>
-</li>
-        <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient.list">(archivist.publicevents._PublicEventsClient method)</a>
 </li>
         <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.list">(archivist.sboms._SBOMSClient method)</a>
 </li>
@@ -602,8 +563,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="timestamp.html#archivist.timestamp.make_timestamp">make_timestamp() (in module archivist.timestamp)</a>
-</li>
-      <li><a href="archivist.html#archivist.archivist.Archivist.max_time">max_time (archivist.archivist.Archivist property)</a>
 </li>
       <li>
     module
@@ -639,8 +598,6 @@
 </li>
         <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">archivist.proof_mechanism</a>
 </li>
-        <li><a href="publicevents.html#module-archivist.publicevents">archivist.publicevents</a>
-</li>
         <li><a href="runner.html#module-archivist.runner">archivist.runner</a>
 </li>
         <li><a href="sboms/sbommetadata.html#module-archivist.sbommetadata">archivist.sbommetadata</a>
@@ -661,8 +618,6 @@
       <li><a href="iam/access_policies.html#archivist.access_policies.AccessPolicy.name">name (archivist.access_policies.AccessPolicy property)</a>
 
       <ul>
-        <li><a href="assets.html#archivist.assets.Asset.name">(archivist.assets.Asset property)</a>
-</li>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies.CompliancePolicy.name">(archivist.compliance_policies.CompliancePolicy property)</a>
 </li>
         <li><a href="locations.html#archivist.locations.Location.name">(archivist.locations.Location property)</a>
@@ -694,14 +649,22 @@
 </li>
       <li><a href="archivist.html#archivist.archivist.Archivist.post">post() (archivist.archivist.Archivist method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="archivist.html#archivist.archivist.Archivist.post_file">post_file() (archivist.archivist.Archivist method)</a>
 </li>
-      <li><a href="assets.html#archivist.assets.Asset.primary_image">primary_image (archivist.assets.Asset property)</a>
-</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism">ProofMechanism (class in archivist.proof_mechanism)</a>
 </li>
+      <li><a href="archivist.html#archivist.archivist.Archivist.Public">Public (archivist.archivist.Archivist property)</a>
+</li>
+      <li><a href="archivist.html#archivist.archivist.Archivist.public">public (archivist.archivist.Archivist property)</a>
+</li>
+      <li><a href="assets.html#archivist.assets._AssetsRestricted.publicurl">publicurl() (archivist.assets._AssetsRestricted method)</a>
+
+      <ul>
+        <li><a href="events.html#archivist.events._EventsRestricted.publicurl">(archivist.events._EventsRestricted method)</a>
+</li>
+      </ul></li>
       <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.publish">publish() (archivist.sboms._SBOMSClient method)</a>
 </li>
   </ul></td>
@@ -715,15 +678,13 @@
       <ul>
         <li><a href="iam/appregistrations.html#archivist.applications._ApplicationsClient.read">(archivist.applications._ApplicationsClient method)</a>
 </li>
-        <li><a href="assets.html#archivist.assets._AssetsClient.read">(archivist.assets._AssetsClient method)</a>
+        <li><a href="assets.html#archivist.assets._AssetsPublic.read">(archivist.assets._AssetsPublic method)</a>
 </li>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.read">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
-        <li><a href="events.html#archivist.events._EventsClient.read">(archivist.events._EventsClient method)</a>
+        <li><a href="events.html#archivist.events._EventsPublic.read">(archivist.events._EventsPublic method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.read">(archivist.locations._LocationsClient method)</a>
-</li>
-        <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient.read">(archivist.publicevents._PublicEventsClient method)</a>
 </li>
         <li><a href="sboms/sboms.html#archivist.sboms._SBOMSClient.read">(archivist.sboms._SBOMSClient method)</a>
 </li>
@@ -732,19 +693,19 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="assets.html#archivist.assets._AssetsClient.read_by_signature">read_by_signature() (archivist.assets._AssetsClient method)</a>
+      <li><a href="assets.html#archivist.assets._AssetsRestricted.read_by_signature">read_by_signature() (archivist.assets._AssetsRestricted method)</a>
 
       <ul>
         <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient.read_by_signature">(archivist.compliance_policies._CompliancePoliciesClient method)</a>
 </li>
-        <li><a href="events.html#archivist.events._EventsClient.read_by_signature">(archivist.events._EventsClient method)</a>
+        <li><a href="events.html#archivist.events._EventsPublic.read_by_signature">(archivist.events._EventsPublic method)</a>
 </li>
         <li><a href="locations.html#archivist.locations._LocationsClient.read_by_signature">(archivist.locations._LocationsClient method)</a>
 </li>
-        <li><a href="publicevents.html#archivist.publicevents._PublicEventsClient.read_by_signature">(archivist.publicevents._PublicEventsClient method)</a>
-</li>
       </ul></li>
       <li><a href="iam/appregistrations.html#archivist.applications._ApplicationsClient.regenerate">regenerate() (archivist.applications._ApplicationsClient method)</a>
+</li>
+      <li><a href="archivist.html#archivist.archivist.Archivist.root">root (archivist.archivist.Archivist property)</a>
 </li>
       <li><a href="runner.html#archivist.runner._Runner.run_step">run_step() (archivist.runner._Runner method)</a>
 </li>
@@ -807,29 +768,21 @@
   </ul></td>
 </tr></table>
 
-<h2 id="V">V</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="archivist.html#archivist.archivist.Archivist.verify">verify (archivist.archivist.Archivist property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="assets.html#archivist.assets._AssetsClient.wait_for_confirmation">wait_for_confirmation() (archivist.assets._AssetsClient method)</a>
+      <li><a href="assets.html#archivist.assets._AssetsRestricted.wait_for_confirmation">wait_for_confirmation() (archivist.assets._AssetsRestricted method)</a>
 
       <ul>
-        <li><a href="events.html#archivist.events._EventsClient.wait_for_confirmation">(archivist.events._EventsClient method)</a>
+        <li><a href="events.html#archivist.events._EventsRestricted.wait_for_confirmation">(archivist.events._EventsRestricted method)</a>
 </li>
         <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient.wait_for_confirmation">(archivist.subjects._SubjectsClient method)</a>
 </li>
       </ul></li>
-      <li><a href="assets.html#archivist.assets._AssetsClient.wait_for_confirmed">wait_for_confirmed() (archivist.assets._AssetsClient method)</a>
+      <li><a href="assets.html#archivist.assets._AssetsRestricted.wait_for_confirmed">wait_for_confirmed() (archivist.assets._AssetsRestricted method)</a>
 
       <ul>
-        <li><a href="events.html#archivist.events._EventsClient.wait_for_confirmed">(archivist.events._EventsClient method)</a>
+        <li><a href="events.html#archivist.events._EventsRestricted.wait_for_confirmed">(archivist.events._EventsRestricted method)</a>
 </li>
       </ul></li>
   </ul></td>

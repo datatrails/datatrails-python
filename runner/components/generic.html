@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generic Story Runner YAML &mdash; RKVST 0.16.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Assets Count Story Runner YAML" href="assets_count.html" />
+    <link rel="prev" title="Story Runner Components" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.16.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Story Runner</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../execute.html">Example of runner code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../execute_template.html">Example of templated runner code</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Story Runner Components</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Generic Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="assets_wait_for_confirmed.html">Assets Wait For Confirmed Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locations_list.html">Locations List Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subjects_list.html">Subjects List Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subjects_read.html">Subjects Read Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subjects_update.html">Subjects Update Story Runner YAML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subjects_wait_for_confirmation.html">Subjects Wait For Confirmation Story Runner YAML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../demos/index.html">Story Runner Demos</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runner.html">Runner Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../getting_started.html">Getting started</a> &raquo;</li>
+          <li><a href="../index.html">Story Runner</a> &raquo;</li>
+          <li><a href="index.html">Story Runner Components</a> &raquo;</li>
+      <li>Generic Story Runner YAML</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="generic-story-runner-yaml">
+<span id="generic-yamlref"></span><h1>Generic Story Runner YAML<a class="headerlink" href="#generic-story-runner-yaml" title="Permalink to this headline"></a></h1>
+<p>Each step has some control values in the <code class="code docutils literal notranslate"><span class="pre">step</span></code> dictionary. Some of these values are
+required, optional or required for a particular operation.</p>
+<p>Each step follows the same pattern:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span><span class="w"></span>
+<span class="nt">steps</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ASSETS_CREATE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create new EV Pump with id 1.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">wait_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Radiation bag 1</span><span class="w"></span>
+<span class="w">      </span><span class="nt">location_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cape Town</span><span class="w"></span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">................definition of request body and other</span><span class="w"></span>
+<span class="w">                    </span><span class="l l-Scalar l-Scalar-Plain">parameters</span><span class="w"></span>
+</pre></div>
+</div>
+<dl class="field-list">
+<dt class="field-odd">action</dt>
+<dd class="field-odd"><p>Required for every operation. This is a predefined constant that maps to
+a method e.g. &quot;ASSETS_CREATE&quot; will call the assets.create_from_data() method</p>
+</dd>
+<dt class="field-even">description</dt>
+<dd class="field-even"><p>Optional but recommended.
+Emits this string to stdout.</p>
+</dd>
+<dt class="field-odd">wait_time</dt>
+<dd class="field-odd"><p>The story runner will pause for this number of seconds before execution.
+Primarily used to demonstrate compliance policy evaluation. One pauses
+before creating events and before evaluating compliance to allow
+(for example) the asset to become non-compliant. (demonstration)</p>
+</dd>
+<dt class="field-even">print_response</dt>
+<dd class="field-even"><p>Emit JSON representation of response. Useful for debugging purposes.</p>
+</dd>
+<dt class="field-odd">asset_label</dt>
+<dd class="field-odd"><p>For create type actions (ASSETS_CREATE, ASSETS_CREATE_IF_NOT_EXISTS) the label is used
+by the runner to keep track of assets.</p>
+<p>For other actions which require access to an asset, this value is used as a key to
+obtain the identity of such a previously-created asset.</p>
+<p>In this way one can create assets and then refer to them in later steps of the story.</p>
+<p>Additionally this label can be an explicit asset identity of the form:</p>
+<blockquote>
+<div><p>assets/add30235-1424-4fda-840a-d5ef82c4c96fa</p>
+</div></blockquote>
+<p>when accessing a previously created asset. (i.e. not when creating an asset)</p>
+</dd>
+<dt class="field-even">location_label</dt>
+<dd class="field-even"><p>For location create type actions (LOCATIONS_CREATE_IF_NOT_EXISTS) the label is used
+by the runner to keep track of locations.</p>
+<p>For other actions which require access to an location, this value is used as a key to
+obtain the identity of such a previously-created location.</p>
+<p>In this way one can create locations and then refer to them in later steps of the story.</p>
+<p>Additionally this label can be an explicit location identity of the form:</p>
+<blockquote>
+<div><p>locations/add30235-1424-4fda-840a-d5ef82c4c96fa</p>
+</div></blockquote>
+<p>when accessing a previously created location. (i.e. not when creating a location)</p>
+</dd>
+<dt class="field-odd">subject_label</dt>
+<dd class="field-odd"><p>For subject create type actions (SUBJECTS_CREATE) the label is used
+by the runner to keep track of subjects.</p>
+<p>For other actions which require access to a subject, this value is used as a key to
+obtain the identity of such a previously-created subject.</p>
+<p>In this way one can create subjects and then refer to them in later steps of the story.</p>
+<p>Additionally this label can be an explicit subject identity of the form:</p>
+<blockquote>
+<div><p>subjects/add30235-1424-4fda-840a-d5ef82c4c96fa</p>
+</div></blockquote>
+<p>when accessing a previously created subject. (i.e. not when creating a subject)</p>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Story Runner Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="assets_count.html" class="btn btn-neutral float-right" title="Assets Count Story Runner YAML" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

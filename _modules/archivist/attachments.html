@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.attachments &mdash; RKVST 0.15.1 documentation</title>
+  <title>archivist.attachments &mdash; RKVST 0.16.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.15.1
+                0.16.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -50,7 +50,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../publicevents.html">Public Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
@@ -120,20 +119,15 @@
 
 <span class="kn">from</span> <span class="nn">requests.models</span> <span class="kn">import</span> <span class="n">Response</span>
 
-<span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>  <span class="c1"># pylint:disable=unused-import</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">ASSETS_SUBPATH</span><span class="p">,</span>
     <span class="n">ATTACHMENTS_SUBPATH</span><span class="p">,</span>
     <span class="n">ATTACHMENTS_LABEL</span><span class="p">,</span>
-    <span class="n">ATTACHMENTS_ASSETS_EVENTS_LABEL</span><span class="p">,</span>
-    <span class="n">SEP</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">get_url</span>
-<span class="kn">from</span> <span class="nn">.type_aliases</span> <span class="kn">import</span> <span class="n">NoneOnError</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -159,6 +153,8 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">archivist</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">ATTACHMENTS_SUBPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">ATTACHMENTS_LABEL</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AttachmentsClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
@@ -245,7 +241,7 @@
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Upload Attachment&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Attachment</span><span class="p">(</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post_file</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ATTACHMENTS_SUBPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">ATTACHMENTS_LABEL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">,</span>
                 <span class="n">fd</span><span class="p">,</span>
                 <span class="n">mtype</span><span class="p">,</span>
             <span class="p">)</span>
@@ -262,8 +258,7 @@
         <span class="n">fd</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">asset_or_event_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Read attachment</span>
 
 <span class="sd">        Reads attachment into data sink (usually a file opened for write)..</span>
@@ -274,30 +269,13 @@
 <span class="sd">            identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</span>
 <span class="sd">            fd (file): opened file descriptor or other file-type sink..</span>
 <span class="sd">            params (dict): e.g. {&quot;allow_insecure&quot;: &quot;true&quot;} OR {&quot;strict&quot;: &quot;true&quot; }</span>
-<span class="sd">            asset_or_event_id (str): optional asset or event identity</span>
-
-<span class="sd">        asset_or_event_id has one of the following forms:</span>
-
-<span class="sd">            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="sd">            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            REST response</span>
+<span class="sd">            JSON as dict</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">asset_or_event_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">uuid</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">SEP</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">identity</span> <span class="o">=</span> <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">asset_or_event_id</span><span class="p">,</span> <span class="n">uuid</span><span class="p">))</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span>
-                <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">ASSETS_SUBPATH</span><span class="p">,</span> <span class="n">ATTACHMENTS_ASSETS_EVENTS_LABEL</span><span class="p">)),</span>
-                <span class="n">identity</span><span class="p">,</span>
-                <span class="n">fd</span><span class="p">,</span>
-                <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
-            <span class="p">)</span>
-
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span>
-            <span class="n">ATTACHMENTS_SUBPATH</span><span class="p">,</span>
-            <span class="n">identity</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">fd</span><span class="p">,</span>
             <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
         <span class="p">)</span></div>
@@ -305,8 +283,6 @@
 <div class="viewcode-block" id="_AttachmentsClient.info"><a class="viewcode-back" href="../../attachments.html#archivist.attachments._AttachmentsClient.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">asset_or_event_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Read attachment info</span>
 
@@ -314,31 +290,12 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="sd">            asset_or_event_id (str): optional asset or event identity</span>
-
-<span class="sd">        asset_or_event_id has one of the following forms:</span>
-
-<span class="sd">            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="sd">            assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            REST response</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">asset_or_event_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">uuid</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">SEP</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">identity</span> <span class="o">=</span> <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">asset_or_event_id</span><span class="p">,</span> <span class="n">uuid</span><span class="p">))</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                <span class="n">SEP</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">ASSETS_SUBPATH</span><span class="p">,</span> <span class="n">ATTACHMENTS_ASSETS_EVENTS_LABEL</span><span class="p">)),</span>
-                <span class="n">identity</span><span class="p">,</span>
-                <span class="n">tail</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="n">ATTACHMENTS_SUBPATH</span><span class="p">,</span>
-            <span class="n">identity</span><span class="p">,</span>
-            <span class="n">tail</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">/info&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

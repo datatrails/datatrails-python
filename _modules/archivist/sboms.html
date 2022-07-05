@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.sboms &mdash; RKVST 0.15.1 documentation</title>
+  <title>archivist.sboms &mdash; RKVST 0.16.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.15.1
+                0.16.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -50,7 +50,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../publicevents.html">Public Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
@@ -121,9 +120,8 @@
 <span class="kn">from</span> <span class="nn">requests.models</span> <span class="kn">import</span> <span class="n">Response</span>
 <span class="kn">from</span> <span class="nn">xmltodict</span> <span class="kn">import</span> <span class="n">parse</span> <span class="k">as</span> <span class="n">xmltodict_parse</span>
 
-<span class="c1"># pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used</span>
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>  <span class="c1"># pylint:disable=unused-import</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">SBOMS_SUBPATH</span><span class="p">,</span>
@@ -154,6 +152,8 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">archivist</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">SBOMS_SUBPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">SBOMS_LABEL</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SBOMSClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
@@ -331,7 +331,7 @@
 
         <span class="n">sbom</span> <span class="o">=</span> <span class="n">SBOM</span><span class="p">(</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post_file</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">SBOMS_SUBPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">SBOMS_LABEL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">,</span>
                 <span class="n">fd</span><span class="p">,</span>
                 <span class="n">mtype</span><span class="p">,</span>
                 <span class="n">form</span><span class="o">=</span><span class="s2">&quot;sbom&quot;</span><span class="p">,</span>
@@ -374,11 +374,7 @@
 <span class="sd">            REST response</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span>
-            <span class="n">SBOMS_SUBPATH</span><span class="p">,</span>
-            <span class="n">identity</span><span class="p">,</span>
-            <span class="n">fd</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.read"><a class="viewcode-back" href="../../sboms/sboms.html#archivist.sboms._SBOMSClient.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SBOM</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Read SBOM metadata</span>
@@ -393,11 +389,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">SBOM</span><span class="p">(</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                <span class="n">SBOMS_SUBPATH</span><span class="p">,</span>
-                <span class="n">identity</span><span class="p">,</span>
-                <span class="n">tail</span><span class="o">=</span><span class="n">SBOMS_METADATA</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">SBOMS_METADATA</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
@@ -434,7 +426,7 @@
         <span class="k">return</span> <span class="p">(</span>
             <span class="n">SBOM</span><span class="p">(</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">SBOMS_SUBPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">SBOMS_LABEL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">SBOMS_WILDCARD</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">SBOMS_WILDCARD</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">SBOMS_LABEL</span><span class="p">,</span>
                 <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
                 <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
@@ -457,9 +449,8 @@
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Publish SBOM </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span>
         <span class="n">sbom</span> <span class="o">=</span> <span class="n">SBOM</span><span class="p">(</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">SBOMS_SUBPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">SBOMS_PUBLISH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="kc">None</span><span class="p">,</span>
-                <span class="n">verb</span><span class="o">=</span><span class="n">SBOMS_PUBLISH</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">confirm</span><span class="p">:</span>
@@ -499,9 +490,8 @@
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Withdraw SBOM </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span>
         <span class="n">sbom</span> <span class="o">=</span> <span class="n">SBOM</span><span class="p">(</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">SBOMS_SUBPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">SBOMS_WITHDRAW</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="kc">None</span><span class="p">,</span>
-                <span class="n">verb</span><span class="o">=</span><span class="n">SBOMS_WITHDRAW</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">confirm</span><span class="p">:</span>
