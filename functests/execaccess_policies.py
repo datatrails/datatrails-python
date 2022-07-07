@@ -8,6 +8,7 @@ from unittest import TestCase, skipIf
 from uuid import uuid4
 
 from archivist.archivist import Archivist
+from archivist.constants import ASSET_BEHAVIOURS
 from archivist.utils import get_auth
 
 # pylint: disable=fixme
@@ -44,7 +45,7 @@ FILTERS = [
 ACCESS_PERMISSIONS = [
     {
         "subjects": [],
-        "behaviours": ["Attachments", "RecordEvidence"],
+        "behaviours": ASSET_BEHAVIOURS,
         "include_attributes": [
             "arc_display_name",
             "arc_display_type",

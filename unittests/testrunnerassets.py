@@ -13,6 +13,7 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.assets import Asset
+from archivist.constants import ASSET_BEHAVIOURS
 from archivist.errors import ArchivistInvalidOperationError
 from archivist.events import Event
 from archivist.logger import set_logger
@@ -25,7 +26,7 @@ LOGGER = getLogger(__name__)
 ASSET_ID = "assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ASSET_NAME = "radiation bag 1"
 ASSETS_CREATE_ARGS = {
-    "behaviours": ["RecordEvidence", "Attachments"],
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "radioactive": True,
@@ -43,7 +44,7 @@ ASSETS_CREATE_IF_NOT_EXISTS = {
     "selector": {
         "attributes.arc_display_name",
     },
-    "behaviours": ["RecordEvidence", "Attachments"],
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "radioactive": True,
@@ -59,7 +60,7 @@ ASSETS_RESPONSE = {
         "radiation_level": 0,
         "weight": 0,
     },
-    "behaviours": ["Attachments", "RecordEvidence"],
+    "behaviours": ASSET_BEHAVIOURS,
     "confirmation_status": "CONFIRMED",
     "identity": ASSET_ID,
 }
@@ -70,7 +71,7 @@ ASSETS_NO_NAME_RESPONSE = {
         "radiation_level": 0,
         "weight": 0,
     },
-    "behaviours": ["Attachments", "RecordEvidence"],
+    "behaviours": ASSET_BEHAVIOURS,
     "confirmation_status": "CONFIRMED",
     "identity": ASSET_ID,
 }

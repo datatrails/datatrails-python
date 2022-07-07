@@ -6,6 +6,7 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
+    ASSET_BEHAVIOURS,
     ROOT,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
@@ -54,7 +55,7 @@ ACCESS_PERMISSIONS = [
             "subjects/6a951b62-0a26-4c22-a886-1082297b063b",
             "subjects/a24306e5-dc06-41ba-a7d6-2b6b3e1df48d",
         ],
-        "behaviours": ["Attachments", "RecordEvidence"],
+        "behaviours": ASSET_BEHAVIOURS,
         "include_attributes": [
             "arc_display_name",
             "arc_display_type",

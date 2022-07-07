@@ -7,6 +7,13 @@ ROOT = "archivist"
 SEP = "/"
 VERBSEP = ":"
 
+# These are now hardcoded and not user-selectable. Eventually they will be removed from
+# the backend API and removed from this package.
+ASSET_BEHAVIOURS = [
+    "Attachments",
+    "RecordEvidence",
+]
+
 # define in MIME canonical form
 HEADERS_REQUEST_TOTAL_COUNT = "X-Request-Total-Count"
 HEADERS_TOTAL_COUNT = "X-Total-Count"
