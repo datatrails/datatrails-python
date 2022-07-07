@@ -11,8 +11,7 @@ from os import getenv
 from warnings import filterwarnings
 
 from archivist.archivist import Archivist
-from archivist.assets import BEHAVIOURS
-from archivist.constants import SBOM_PACKAGE, SBOM_RELEASE
+from archivist.constants import ASSET_BEHAVIOURS, SBOM_PACKAGE, SBOM_RELEASE
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
@@ -43,7 +42,7 @@ def sbom_release(arch, release, sbom_filename):
                     ],
                 },
             ],
-            "behaviours": BEHAVIOURS,
+            "behaviours": ASSET_BEHAVIOURS,
             "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             "attributes": {
                 "arc_display_name": ASSET_NAME,

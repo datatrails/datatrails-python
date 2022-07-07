@@ -30,6 +30,7 @@ from . import archivist as type_helper  # pylint:disable=unused-import
 
 from .asset import Asset
 from .constants import (
+    ASSET_BEHAVIOURS,
     ASSETS_SUBPATH,
     ASSETS_LABEL,
     CONFIRMATION_STATUS,
@@ -38,13 +39,6 @@ from . import confirmer
 from .dictmerge import _deepmerge
 from .errors import ArchivistBadFieldError, ArchivistNotFoundError
 from .utils import selector_signature
-
-# These are now hardcoded and not user-selectable. Eventually they will be removed from
-# the backend API and removed from this package.
-BEHAVIOURS = [
-    "Attachments",
-    "RecordEvidence",
-]
 
 LOGGER = getLogger(__name__)
 
@@ -140,7 +134,7 @@ class _AssetsRestricted(_AssetsPublic):
         LOGGER.debug("Create Asset %s", attrs)
         # default behaviours  are added first - any set in user-specified fixtures or
         # in the method args will overide...
-        newprops = _deepmerge({"behaviours": BEHAVIOURS}, props)
+        newprops = _deepmerge({"behaviours": ASSET_BEHAVIOURS}, props)
         data = self.__params(newprops, attrs)
         return self.create_from_data(data, confirm=confirm)
 

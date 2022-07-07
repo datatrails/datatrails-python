@@ -13,6 +13,7 @@ from unittest import TestCase
 
 from archivist.archivist import Archivist
 from archivist.assets import Asset
+from archivist.constants import ASSET_BEHAVIOURS
 from archivist.logger import set_logger
 from archivist.runner import tree
 
@@ -30,7 +31,7 @@ ASSETS_RESPONSE = {
         "radiation_level": 0,
         "weight": 0,
     },
-    "behaviours": ["Attachments", "RecordEvidence"],
+    "behaviours": ASSET_BEHAVIOURS,
     "confirmation_status": "CONFIRMED",
     "identity": ASSET_ID,
 }
@@ -41,7 +42,7 @@ ASSETS_NO_NAME_RESPONSE = {
         "radiation_level": 0,
         "weight": 0,
     },
-    "behaviours": ["Attachments", "RecordEvidence"],
+    "behaviours": ASSET_BEHAVIOURS,
     "confirmation_status": "CONFIRMED",
     "identity": ASSET_ID,
 }

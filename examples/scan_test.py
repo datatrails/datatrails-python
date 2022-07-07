@@ -9,7 +9,7 @@ from sys import exit as sys_exit
 from warnings import filterwarnings
 
 from archivist.archivist import Archivist
-from archivist.assets import BEHAVIOURS
+from archivist.constants import ASSET_BEHAVIOURS
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
@@ -49,7 +49,7 @@ def scan_test(arch, datestring, scanned_expected=False):
                     ],
                 },
             ],
-            "behaviours": BEHAVIOURS,
+            "behaviours": ASSET_BEHAVIOURS,
             "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             "attributes": {
                 "arc_display_name": asset_name,

@@ -5,8 +5,8 @@ Test assets constants
 from unittest import TestCase
 
 from archivist.archivist import Archivist
-from archivist.assets import BEHAVIOURS
 from archivist.constants import (
+    ASSET_BEHAVIOURS,
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     ATTACHMENTS_LABEL,
@@ -91,7 +91,7 @@ ATTRS = {
     ],
 }
 REQUEST = {
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_firmware_version": "1.0",
@@ -109,7 +109,7 @@ REQUEST = {
 }
 REQUEST_KWARGS = {
     "json": {
-        "behaviours": BEHAVIOURS,
+        "behaviours": ASSET_BEHAVIOURS,
         "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
         "attributes": {
             "arc_firmware_version": "1.0",
@@ -132,7 +132,7 @@ REQUEST_KWARGS = {
 }
 RESPONSE = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
         "arc_firmware_version": "1.0",
         "arc_serial_number": "vtl-x4-07",
@@ -159,7 +159,7 @@ REQUEST_EXISTS = {
             ]
         },
     ],
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
@@ -173,7 +173,7 @@ REQUEST_EXISTS = {
 }
 REQUEST_EXISTS_KWARGS = {
     "json": {
-        "behaviours": BEHAVIOURS,
+        "behaviours": ASSET_BEHAVIOURS,
         "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
         "attributes": {
             "arc_display_name": ASSET_NAME,
@@ -192,7 +192,7 @@ REQUEST_EXISTS_KWARGS = {
 }
 RESPONSE_EXISTS = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": "namespace",
@@ -216,7 +216,7 @@ REQUEST_EXISTS_ATTACHMENTS = {
             ]
         },
     ],
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
@@ -236,7 +236,7 @@ REQUEST_EXISTS_ATTACHMENTS = {
 }
 REQUEST_EXISTS_KWARGS_ATTACHMENTS = {
     "json": {
-        "behaviours": BEHAVIOURS,
+        "behaviours": ASSET_BEHAVIOURS,
         "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
         "attributes": {
             "arc_display_name": ASSET_NAME,
@@ -272,7 +272,7 @@ RESPONSE_ATTACHMENTS = {
 }
 RESPONSE_EXISTS_ATTACHMENTS = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
         "arc_namespace": "namespace",
         "arc_firmware_version": "1.0",
@@ -307,7 +307,7 @@ REQUEST_EXISTS_LOCATION = {
             ]
         },
     ],
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
@@ -342,7 +342,7 @@ REQUEST_EXISTS_LOCATION = {
 }
 REQUEST_EXISTS_KWARGS_LOCATION = {
     "json": {
-        "behaviours": BEHAVIOURS,
+        "behaviours": ASSET_BEHAVIOURS,
         "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
         "attributes": {
             "arc_display_name": ASSET_NAME,
@@ -362,7 +362,7 @@ REQUEST_EXISTS_KWARGS_LOCATION = {
 }
 RESPONSE_EXISTS_LOCATION = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": "namespace",
@@ -400,7 +400,7 @@ REQUEST_EXISTS_LOCATION_IDENTITY = {
             ]
         },
     ],
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
@@ -419,7 +419,7 @@ REQUEST_EXISTS_LOCATION_IDENTITY = {
 # ---------------
 
 REQUEST_FIXTURES = {
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": ATTRS_FIXTURES,
 }
@@ -433,30 +433,30 @@ REQUEST_FIXTURES_KWARGS = {
 
 RESPONSE_FIXTURES = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": ATTRS_FIXTURES,
     "confirmation_status": "CONFIRMED",
 }
 RESPONSE_NO_ATTACHMENTS = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": ATTRS_NO_ATTACHMENTS,
     "confirmation_status": "CONFIRMED",
 }
 RESPONSE_NO_CONFIRMATION = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": ATTRS,
 }
 RESPONSE_PENDING = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": ATTRS,
     "confirmation_status": "PENDING",
 }
 RESPONSE_FAILED = {
     "identity": IDENTITY,
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "attributes": ATTRS,
     "confirmation_status": "FAILED",
 }

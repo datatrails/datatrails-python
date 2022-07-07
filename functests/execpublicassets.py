@@ -9,7 +9,7 @@ from time import sleep
 from unittest import TestCase
 
 from archivist.archivist import Archivist
-from archivist.assets import BEHAVIOURS
+from archivist.constants import ASSET_BEHAVIOURS
 from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 from archivist.timestamp import now_timestamp
@@ -40,7 +40,7 @@ REQUEST_EXISTS_ATTACHMENTS = {
             ]
         },
     ],
-    "behaviours": BEHAVIOURS,
+    "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
