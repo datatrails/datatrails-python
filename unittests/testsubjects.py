@@ -22,7 +22,7 @@ from .mock_response import MockResponse
 # pylint: disable=unused-variable
 
 DISPLAY_NAME = "Subject display name"
-WALLET_PUB_KEYS = [
+WALLET_PUB_KEY = [
     (
         "04c1173bf7844bf1c607b79c18db091b9558ffe581bf132b8cf3b37657230fa321a088"
         "0b54a79a88b28bc710ede6dcf3d8272c5210bfd41ea83188e385d12c189c"
@@ -30,7 +30,7 @@ WALLET_PUB_KEYS = [
 ]
 WALLET_ADDRESSES = ["0xAab979509B595084F5C113c5622Ca9A7844C58B5"]
 
-TESSERA_PUB_KEYS = ["efdg9J0QhSB2g4IxKcaXgJmNKbzpxs03FFYIiYYuekk="]
+TESSERA_PUB_KEY = ["efdg9J0QhSB2g4IxKcaXgJmNKbzpxs03FFYIiYYuekk="]
 
 SUBJECT_STRING = (
     "eyJpZGVudGl0eSI6ICJzdWJqZWN0cy8wMDAwMDAwMC0wMDAwLTAwMDAtMDA"
@@ -52,9 +52,9 @@ SUBPATH = f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}"
 RESPONSE = {
     "identity": IDENTITY,
     "display_name": DISPLAY_NAME,
-    "wallet_pub_key": WALLET_PUB_KEYS,
+    "wallet_pub_key": WALLET_PUB_KEY,
     "wallet_address": WALLET_ADDRESSES,
-    "tessera_pub_key": TESSERA_PUB_KEYS,
+    "tessera_pub_key": TESSERA_PUB_KEY,
 }
 RESPONSE_WITH_PENDING = {
     **RESPONSE,
@@ -66,8 +66,8 @@ RESPONSE_WITH_CONFIRMATION = {
 }
 REQUEST = {
     "display_name": DISPLAY_NAME,
-    "wallet_pub_key": WALLET_PUB_KEYS,
-    "tessera_pub_key": TESSERA_PUB_KEYS,
+    "wallet_pub_key": WALLET_PUB_KEY,
+    "tessera_pub_key": TESSERA_PUB_KEY,
 }
 UPDATE = {"display_name": DISPLAY_NAME}
 
@@ -100,7 +100,7 @@ class TestSubjects(TestCase):
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             subject = self.arch.subjects.create(
-                DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+                DISPLAY_NAME, WALLET_PUB_KEY, TESSERA_PUB_KEY
             )
             args, kwargs = mock_post.call_args
             self.assertEqual(
@@ -168,7 +168,7 @@ class TestSubjects(TestCase):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             subject = self.arch.subjects.create(
-                DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+                DISPLAY_NAME, WALLET_PUB_KEY, TESSERA_PUB_KEY
             )
             self.assertEqual(
                 subject,
@@ -444,7 +444,7 @@ class TestSubjectsConfirm(TestCase):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
             subject = self.arch.subjects.create(
-                DISPLAY_NAME, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+                DISPLAY_NAME, WALLET_PUB_KEY, TESSERA_PUB_KEY
             )
             self.assertEqual(
                 subject,

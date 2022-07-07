@@ -66,7 +66,7 @@ class _SubjectsClient:
         return f"SubjectsClient({self._archivist.url})"
 
     def create(
-        self, display_name: str, wallet_pub_keys: List, tessera_pub_keys: List
+        self, display_name: str, wallet_pub_key: List, tessera_pub_key: List
     ) -> Subject:
         """Create subject
 
@@ -74,8 +74,8 @@ class _SubjectsClient:
 
         Args:
             display_name (str): display name of subject.
-            wallet_pub_keys (list): wallet public keys
-            tessera_pub_keys (list): tessera public keys
+            wallet_pub_key (list): wallet public keys
+            tessera_pub_key (list): tessera public keys
 
         Returns:
             :class:`Subject` instance
@@ -85,8 +85,8 @@ class _SubjectsClient:
         return self.create_from_data(
             self.__params(
                 display_name=display_name,
-                wallet_pub_keys=wallet_pub_keys,
-                tessera_pub_keys=tessera_pub_keys,
+                wallet_pub_key=wallet_pub_key,
+                tessera_pub_key=tessera_pub_key,
             ),
         )
 
@@ -172,8 +172,8 @@ class _SubjectsClient:
         identity: str,
         *,
         display_name: str = None,
-        wallet_pub_keys: Optional[List[str]] = None,
-        tessera_pub_keys: Optional[List[str]] = None,
+        wallet_pub_key: Optional[List[str]] = None,
+        tessera_pub_key: Optional[List[str]] = None,
     ) -> Subject:
         """Update Subject
 
@@ -182,8 +182,8 @@ class _SubjectsClient:
         Args:
             identity (str): subjects identity e.g. subjects/xxxxxxxxxxxxxxxxxxxxxxx
             display_name (str): display name of subject.
-            wallet_pub_keys (list): wallet public keys
-            tessera_pub_keys (list): tessera public keys
+            wallet_pub_key (list): wallet public keys
+            tessera_pub_key (list): tessera public keys
 
         Returns:
             :class:`Subject` instance
@@ -194,8 +194,8 @@ class _SubjectsClient:
                 f"{self._subpath}/{identity}",
                 self.__params(
                     display_name=display_name,
-                    wallet_pub_keys=wallet_pub_keys,
-                    tessera_pub_keys=tessera_pub_keys,
+                    wallet_pub_key=wallet_pub_key,
+                    tessera_pub_key=tessera_pub_key,
                 ),
             )
         )
@@ -218,8 +218,8 @@ class _SubjectsClient:
         self,
         *,
         display_name: Optional[str] = None,
-        wallet_pub_keys: Optional[List[str]] = None,
-        tessera_pub_keys: Optional[List[str]] = None,
+        wallet_pub_key: Optional[List[str]] = None,
+        tessera_pub_key: Optional[List[str]] = None,
     ) -> Dict:
 
         params = {}
@@ -227,11 +227,11 @@ class _SubjectsClient:
         if display_name is not None:
             params["display_name"] = display_name
 
-        if wallet_pub_keys is not None:
-            params["wallet_pub_key"] = wallet_pub_keys
+        if wallet_pub_key is not None:
+            params["wallet_pub_key"] = wallet_pub_key
 
-        if tessera_pub_keys is not None:
-            params["tessera_pub_key"] = tessera_pub_keys
+        if tessera_pub_key is not None:
+            params["tessera_pub_key"] = tessera_pub_key
 
         return _deepmerge(self._archivist.fixtures.get(SUBJECTS_LABEL), params)
 

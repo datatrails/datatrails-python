@@ -25,6 +25,7 @@ Story Runner Components
    subjects_count
    subjects_create
    subjects_create_b64
+   subjects_delete
    subjects_list
    subjects_read
    subjects_update
