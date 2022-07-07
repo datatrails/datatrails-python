@@ -1,5 +1,5 @@
 """
-Test archivist
+Test assets constants
 """
 
 from unittest import TestCase

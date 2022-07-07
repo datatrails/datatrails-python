@@ -1,5 +1,5 @@
 """
-Test archivist
+Test events constants
 """
 
 from unittest import TestCase

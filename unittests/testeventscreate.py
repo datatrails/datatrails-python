@@ -1,5 +1,5 @@
 """
-Test archivist
+Test events create
 """
 
 from unittest import mock

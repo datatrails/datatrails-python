@@ -1,5 +1,5 @@
 """
-Test runner
+Test runner assets
 """
 from logging import getLogger
 from os import environ

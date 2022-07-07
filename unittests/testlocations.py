@@ -1,5 +1,5 @@
 """
-Test archivist
+Test locations
 """
 
 from unittest import TestCase, mock

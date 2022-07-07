@@ -1,5 +1,5 @@
 """
-Test runner
+Test runner location
 """
 from logging import getLogger
 from os import environ

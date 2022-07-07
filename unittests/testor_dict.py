@@ -1,5 +1,5 @@
 """
-Test archivist
+Test or_dict
 """
 
 # pylint: disable=missing-docstring
