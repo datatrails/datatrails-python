@@ -35,6 +35,7 @@ class SBOM:
     withdrawn_date: str
     published_date: str
     rkvst_link: str = ""
+    tenantid: str = ""
 
     def dict(self):
         """Emit dictionary representation"""
