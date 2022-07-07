@@ -153,15 +153,18 @@ class _ActionMap(dict):
             "keywords": ("display_name",),
         }
         self["SUBJECTS_CREATE"] = {
-            "action": archivist.subjects.create,
+            "action": archivist.subjects.create_from_data,
             "delete": archivist.subjects.delete,
-            "keywords": ("display_name", "wallet_pub_keys", "tessera_pub_keys"),
             "set_subject_label": True,
         }
         self["SUBJECTS_CREATE_FROM_B64"] = {
             "action": archivist.subjects.create_from_b64,
             "delete": archivist.subjects.delete,
             "set_subject_label": True,
+        }
+        self["SUBJECTS_DELETE"] = {
+            "action": archivist.subjects.delete,
+            "use_subject_label": "add_arg_identity",
         }
         self["SUBJECTS_LIST"] = {
             "action": archivist.subjects.list,
@@ -175,8 +178,8 @@ class _ActionMap(dict):
             "action": archivist.subjects.update,
             "keywords": (
                 "display_name",
-                "wallet_pub_keys",
-                "tessera_pub_keys",
+                "wallet_pub_key",
+                "tessera_pub_key",
             ),
             "use_subject_label": "add_arg_identity",
         }

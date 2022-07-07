@@ -16,7 +16,7 @@ not be accessible to later actions in the story.
           print_response: true
           subject_label: A subject
         display_name: A subject
-        wallet_pub_keys:
+        wallet_pub_key:
           - wallet_pub_key1
-        tessera_pub_keys:
+        tessera_pub_key:
           - tessera_pub_key2

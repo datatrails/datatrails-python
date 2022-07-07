@@ -23,7 +23,7 @@ else:
 LOGGER = logger.LOGGER
 
 DISPLAY_NAME = "Subject display name"
-WALLET_PUB_KEYS = [
+WALLET_PUB_KEY = [
     (
         "04c1173bf7844bf1c607b79c18db091b9558ffe581bf132b8cf3b37657230fa321a088"
         "0b54a79a88b28bc710ede6dcf3d8272c5210bfd41ea83188e385d12c189c"
@@ -31,7 +31,7 @@ WALLET_PUB_KEYS = [
 ]
 WALLET_ADDRESSES = ["0xAab979509B595084F5C113c5622Ca9A7844C58B5"]
 
-TESSERA_PUB_KEYS = ["efdg9J0QhSB2g4IxKcaXgJmNKbzpxs03FFYIiYYuekk="]
+TESSERA_PUB_KEY = ["efdg9J0QhSB2g4IxKcaXgJmNKbzpxs03FFYIiYYuekk="]
 
 SUBJECT_STRING = (
     "eyJpZGVudGl0eSI6ICJzdWJqZWN0cy8wMDAwMDAwMC0wMDAwLTAwMDAtMDA"
@@ -70,7 +70,7 @@ class TestSubjects(TestCase):
         Test subject creation
         """
         subject = self.arch.subjects.create(
-            self.display_name, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+            self.display_name, WALLET_PUB_KEY, TESSERA_PUB_KEY
         )
         self.assertEqual(
             subject["display_name"],
@@ -96,12 +96,12 @@ class TestSubjects(TestCase):
         )
         self.assertEqual(
             subject["wallet_pub_key"],
-            WALLET_PUB_KEYS,
+            WALLET_PUB_KEY,
             msg="Incorrect wallet_pub_key",
         )
         self.assertEqual(
             subject["tessera_pub_key"],
-            TESSERA_PUB_KEYS,
+            TESSERA_PUB_KEY,
             msg="Incorrect tessera_pub_key",
         )
 
@@ -110,7 +110,7 @@ class TestSubjects(TestCase):
         Test subject update
         """
         subject = self.arch.subjects.create(
-            self.display_name, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+            self.display_name, WALLET_PUB_KEY, TESSERA_PUB_KEY
         )
         self.assertEqual(
             subject["display_name"],
@@ -120,8 +120,8 @@ class TestSubjects(TestCase):
         subject = self.arch.subjects.update(
             subject["identity"],
             display_name=self.display_name,
-            wallet_pub_keys=WALLET_PUB_KEYS,
-            tessera_pub_keys=TESSERA_PUB_KEYS,
+            wallet_pub_key=WALLET_PUB_KEY,
+            tessera_pub_key=TESSERA_PUB_KEY,
         )
 
     def test_subjects_delete(self):
@@ -129,7 +129,7 @@ class TestSubjects(TestCase):
         Test subject delete
         """
         subject = self.arch.subjects.create(
-            self.display_name, WALLET_PUB_KEYS, TESSERA_PUB_KEYS
+            self.display_name, WALLET_PUB_KEY, TESSERA_PUB_KEY
         )
         self.assertEqual(
             subject["display_name"],

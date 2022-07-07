@@ -6,9 +6,9 @@ steps:
       print_response: true
       subject_label: A subject
     display_name: A subject
-    wallet_pub_keys:
+    wallet_pub_key:
       - 04c1173bf7844bf1c607b79c18db091b9558ffe581bf132b8cf3b37657230fa321a0880b54a79a88b28bc710ede6dcf3d8272c5210bfd41ea83188e385d12c189c
-    tessera_pub_keys:
+    tessera_pub_key:
       - efdg9J0QhSB2g4IxKcaXgJmNKbzpxs03FFYIiYYuekk=
 
   - step:
@@ -51,5 +51,17 @@ steps:
       description: Update a subjects entity.
       print_response: true
       subject_label: A subject
-    wallet_pub_keys:
+    wallet_pub_key:
       - 04c1173bf7844bf1c607b79c18db091b9558ffe581bf132b8cf3b37657230fa321a0880b54a79a88b28bc710ede6dcf3d8272c5210bfd41ea83188e385d12c189c
+
+  - step:
+      action: SUBJECTS_DELETE
+      description: Delete subject
+      print_response: true
+      subject_label: A subject
+
+  - step:
+      action: SUBJECTS_DELETE
+      description: Delete subject
+      print_response: true
+      subject_label: An imported subject
