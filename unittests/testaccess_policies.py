@@ -196,7 +196,7 @@ class TestAccessPolicies(TestCase):
 
             access_policy = self.arch.access_policies.update(
                 IDENTITY,
-                PROPS,
+                props=PROPS,
             )
             args, kwargs = mock_patch.call_args
             self.assertEqual(
@@ -381,46 +381,6 @@ class TestAccessPolicies(TestCase):
                     msg="GET method called incorrectly",
                 )
 
-    def test_access_policies_count_matching_access_policies(self):
-        """
-        Test access_policy counting
-        """
-        with mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 1},
-                access_policies=[
-                    RESPONSE,
-                ],
-            )
-
-            count = self.arch.access_policies.count_matching_access_policies(ASSET_ID)
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    (
-                        (
-                            f"url/{ROOT}/"
-                            f"{ACCESS_POLICIES_SUBPATH}/{ASSET_ID}/{ACCESS_POLICIES_LABEL}"
-                        ),
-                    ),
-                    {
-                        "headers": {
-                            "authorization": "Bearer authauthauth",
-                            HEADERS_REQUEST_TOTAL_COUNT: "true",
-                        },
-                        "params": {"page_size": 1},
-                        "verify": True,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-            self.assertEqual(
-                count,
-                1,
-                msg="Incorrect count",
-            )
-
     def test_access_policies_list_matching_access_policies(self):
         """
         Test access_policy counting
@@ -466,45 +426,6 @@ class TestAccessPolicies(TestCase):
                     ),
                     msg="GET method called incorrectly",
                 )
-
-    def test_access_policies_count_matching_assets(self):
-        """
-        Test access_policy counting
-        """
-        with mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_get.return_value = MockResponse(
-                200,
-                headers={HEADERS_TOTAL_COUNT: 1},
-                assets=[
-                    ASSET,
-                ],
-            )
-
-            count = self.arch.access_policies.count_matching_assets(IDENTITY)
-            self.assertEqual(
-                tuple(mock_get.call_args),
-                (
-                    (
-                        (
-                            f"url/{ROOT}/{ACCESS_POLICIES_SUBPATH}/{IDENTITY}/{ASSETS_LABEL}"
-                        ),
-                    ),
-                    {
-                        "headers": {
-                            "authorization": "Bearer authauthauth",
-                            HEADERS_REQUEST_TOTAL_COUNT: "true",
-                        },
-                        "params": {"page_size": 1},
-                        "verify": True,
-                    },
-                ),
-                msg="GET method called incorrectly",
-            )
-            self.assertEqual(
-                count,
-                1,
-                msg="Incorrect count",
-            )
 
     def test_access_policies_list_matching_assets(self):
         """

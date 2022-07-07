@@ -129,6 +129,7 @@ class _AccessPoliciesClient:
     def update(
         self,
         identity,
+        *,
         props: Optional[Dict] = None,
         filters: Optional[List] = None,
         access_permissions: Optional[List] = None,
@@ -228,22 +229,6 @@ class _AccessPoliciesClient:
         )
 
     # additional queries on different endpoints
-    def count_matching_assets(self, access_policy_id: str) -> int:
-        """Count assets that match access_policy.
-
-        Counts number of assets that match an access_policy.
-
-        Args:
-            access_policy_id (str): e.g. access_policies/xxxxxxxxxxxxxxx
-
-        Returns:
-            integer count of assets.
-
-        """
-        return self._archivist.count(
-            f"{self._subpath}/{access_policy_id}/{ASSETS_LABEL}"
-        )
-
     def list_matching_assets(
         self, access_policy_id: str, *, page_size: Optional[int] = None
     ):
@@ -266,22 +251,6 @@ class _AccessPoliciesClient:
                 ASSETS_LABEL,
                 page_size=page_size,
             )
-        )
-
-    def count_matching_access_policies(self, asset_id: str) -> int:
-        """Count access policies that match asset.
-
-        Counts number of access policies that match asset.
-
-        Args:
-            asset_id (str): e.g. assets/xxxxxxxxxxxxxxx
-
-        Returns:
-            integer count of access policies.
-
-        """
-        return self._archivist.count(
-            f"{self._subpath}/{asset_id}/{ACCESS_POLICIES_LABEL}"
         )
 
     def list_matching_access_policies(
