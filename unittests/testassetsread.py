@@ -1,5 +1,5 @@
 """
-Test archivist
+Test assets read
 """
 
 from logging import getLogger

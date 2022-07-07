@@ -1,5 +1,5 @@
 """
-Test archivist
+Test compliance policy request
 """
 
 # pylint: disable=missing-docstring

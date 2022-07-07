@@ -1,5 +1,5 @@
 """
-Test compliance policy
+Test compliance
 """
 
 from logging import getLogger

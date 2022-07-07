@@ -1,5 +1,5 @@
 """
-Test archivist
+Test public assets attachments
 """
 
 from io import BytesIO

@@ -1,5 +1,5 @@
 """
-Test archivist
+Test dictmerge
 """
 
 # pylint: disable=missing-docstring

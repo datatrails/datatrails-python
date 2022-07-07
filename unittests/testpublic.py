@@ -1,5 +1,5 @@
 """
-Test archivist
+Test public
 """
 
 from copy import copy

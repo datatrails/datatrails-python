@@ -1,5 +1,5 @@
 """
-Test archivist
+Test archivist delete
 """
 
 from unittest import TestCase, mock

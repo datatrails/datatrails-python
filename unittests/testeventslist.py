@@ -1,5 +1,5 @@
 """
-Test archivist
+Test events list
 """
 
 from unittest import mock

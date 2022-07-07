@@ -1,5 +1,5 @@
 """
-Test archivist
+Test public assets
 """
 
 from logging import getLogger

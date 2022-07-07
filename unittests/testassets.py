@@ -1,5 +1,5 @@
 """
-Test archivist
+Test assets
 """
 
 from copy import copy

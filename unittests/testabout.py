@@ -1,5 +1,5 @@
 """
-Test archivist
+Test about method
 """
 
 # pylint: disable=attribute-defined-outside-init

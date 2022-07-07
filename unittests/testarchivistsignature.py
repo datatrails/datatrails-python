@@ -1,5 +1,5 @@
 """
-Test archivist
+Test archivist signature
 """
 
 from os import environ
