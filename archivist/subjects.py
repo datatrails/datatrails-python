@@ -90,6 +90,24 @@ class _SubjectsClient:
             ),
         )
 
+    def import_subject(self, name: str, subject: Subject) -> Subject:
+        """Create subject from another subject usually
+           from another organization.
+
+        Args:
+            name (str): of the subject
+            subject (Subject): Subject object
+
+        Returns:
+            :class:`Subject` instance
+
+        """
+        return self.create(
+            name,
+            subject["wallet_pub_key"],
+            subject["tessera_pub_key"],
+        )
+
     def create_from_data(self, data: Dict) -> Subject:
         """Create subject
 

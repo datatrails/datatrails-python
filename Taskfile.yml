@@ -72,6 +72,12 @@ tasks:
     cmds:
       - ./scripts/builder.sh ./scripts/functests.sh
 
+  notebooks:
+    desc: Run jupyter notebooks
+    deps: [about]
+    cmds:
+      - ./scripts/notebooks.sh
+
   publish:
     desc: publish wheel package (will require username and password)
     deps: [about]

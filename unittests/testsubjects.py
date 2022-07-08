@@ -125,6 +125,37 @@ class TestSubjects(TestCase):
                 msg="CREATE method called incorrectly",
             )
 
+    def test_subjects_import_subject(self):
+        """
+        Test subject import_subject
+        """
+        with mock.patch.object(self.arch.session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+
+            subject = self.arch.subjects.import_subject(DISPLAY_NAME, RESPONSE)
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                subject,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
     def test_subjects_create_from_b64(self):
         """
         Test subject creation

@@ -8,6 +8,8 @@ dist/
 *,cover
 htmlcov/
 coverage.xml
+.ipython/
+.jupyter/
 .cache/
 .local/
 .python_history
