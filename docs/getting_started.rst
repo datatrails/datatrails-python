@@ -11,6 +11,8 @@ See the examples and functests directories.
 
    create_asset
    get_asset
+   sharing_asset
+
    get_publicasset
    get_publicevent
 

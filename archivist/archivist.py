@@ -154,7 +154,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     def __getattr__(self, value: str):
         """Create endpoints on demand"""
         LOGGER.debug("getattr %s", value)
-        LOGGER.debug("CLIENTS %s", self.CLIENTS)
         client = self.CLIENTS.get(value)
 
         if client is None:

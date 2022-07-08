@@ -3,21 +3,25 @@ Test access_policies
 """
 
 from copy import deepcopy
+from json import dumps as json_dumps
 from os import getenv
+from time import sleep
 from unittest import TestCase, skipIf
 from uuid import uuid4
 
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
+from archivist.constants import SUBJECTS_SELF_ID
+from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
-SELF_SUBJECT = "subjects/00000000-0000-0000-0000-000000000000"
-
 DISPLAY_NAME = "AccessPolicy display name"
+ARC_DISPLAY_TYPE = "Traffic light with violation camera"
+EXT_VENDOR_NAME = "SynsationIndustries"
 PROPS = {
     "display_name": DISPLAY_NAME,
     "description": "Policy description",
@@ -25,35 +29,72 @@ PROPS = {
 FILTERS = [
     {
         "or": [
-            "attributes.arc_home_location_identity=locations/5ea815f0-4de1-4a84-9377-701e880fe8ae",
-            "attributes.arc_home_location_identity=locations/27eed70b-9e2b-4db1-b8c4-e36505350dcc",
+            "attributes.arc_namespace=namespace",
         ]
     },
     {
         "or": [
-            "attributes.arc_display_type=Valve",
-            "attributes.arc_display_type=Pump",
+            f"attributes.arc_display_type={ARC_DISPLAY_TYPE}",
         ]
     },
     {
         "or": [
-            "attributes.ext_vendor_name=SynsationIndustries",
+            f"attributes.ext_vendor_name={EXT_VENDOR_NAME}",
         ]
     },
 ]
 
+BARE_ACCESS_PERMISSIONS = [
+    {
+        "subjects": [],
+        "behaviours": ASSET_BEHAVIOURS,
+    }
+]
 ACCESS_PERMISSIONS = [
     {
         "subjects": [],
         "behaviours": ASSET_BEHAVIOURS,
         "include_attributes": [
+            "arc_description",
             "arc_display_name",
             "arc_display_type",
             "arc_firmware_version",
         ],
-        "user_attributes": [{"or": ["group:maintainers", "group:supervisors"]}],
-    }
+    },
 ]
+
+ASSET_NAME = "Telephone with 2 attachments - one bad or not scanned 2022-03-01"
+REQUEST_EXISTS_ATTACHMENTS = {
+    "selector": [
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
+        },
+    ],
+    "behaviours": ASSET_BEHAVIOURS,
+    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
+    "attributes": {
+        "arc_display_name": ASSET_NAME,
+        "arc_namespace": "namespace",
+        "arc_firmware_version": "1.0",
+        "arc_serial_number": "vtl-x4-07",
+        "arc_description": "Traffic flow control light at A603 North East",
+        "arc_display_type": ARC_DISPLAY_TYPE,
+        "ext_vendor_name": EXT_VENDOR_NAME,
+    },
+    "attachments": [
+        {
+            "filename": "functests/test_resources/telephone.jpg",
+            "content_type": "image/jpg",
+        },
+        {
+            "url": "https://secure.eicar.org/eicarcom2.zip",
+            "content_type": "application/zip",
+        },
+    ],
+}
 
 
 class TestAccessPoliciesBase(TestCase):
@@ -73,8 +114,16 @@ class TestAccessPoliciesBase(TestCase):
         )
         self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
 
-        self.props = deepcopy(PROPS)
-        self.props["display_name"] = f"{DISPLAY_NAME} {uuid4()}"
+        # these are for access_policies
+        self.ac_props = deepcopy(PROPS)
+        self.ac_props["display_name"] = f"{DISPLAY_NAME} {uuid4()}"
+
+        self.ac_access_permissions = deepcopy(ACCESS_PERMISSIONS)
+
+    def tearDown(self):
+        self.ac_access_permissions = None
+        self.ac_props = None
+        self.arch = None
 
 
 class TestAccessPoliciesSimple(TestAccessPoliciesBase):
@@ -88,41 +137,154 @@ class TestAccessPoliciesSimple(TestAccessPoliciesBase):
         """
         Test access_policy list
         """
-        # TODO: filtering on display_name does not currently work...
+        for idx in range(3):
+            access_policy = self.arch.access_policies.create(
+                self.ac_props,
+                FILTERS,
+                self.ac_access_permissions,
+            )
+            self.assertEqual(
+                access_policy["display_name"],
+                self.ac_props["display_name"],
+                msg="Incorrect display name",
+            )
+
+        count = self.arch.access_policies.count(
+            display_name=self.ac_props["display_name"]
+        )
+        self.assertEqual(
+            count,
+            3,
+            msg="Count is incorrect",
+        )
         access_policies = self.arch.access_policies.list(
-            display_name=self.props["display_name"]
+            display_name=self.ac_props["display_name"]
         )
         for access_policy in access_policies:
             self.assertEqual(
                 access_policy["display_name"],
-                self.props["display_name"],
+                self.ac_props["display_name"],
                 msg="Incorrect display name",
             )
             self.assertGreater(
                 len(access_policy["display_name"]),
                 0,
-                msg="No access policies found",
+                msg="Illegal display name",
+            )
+            self.arch.access_policies.delete(
+                access_policy["identity"],
             )
 
-    def test_access_policies_count(self):
+    def test_access_policies_create(self):
         """
-        Test access_policy count
+        Test access_policy creation
         """
-        count = self.arch.access_policies.count()
-        self.assertGreaterEqual(
-            count,
-            0,
-            msg="Count is not zero",
+        access_policy = self.arch.access_policies.create(
+            self.ac_props,
+            FILTERS,
+            self.ac_access_permissions,
         )
+        self.assertEqual(
+            access_policy["display_name"],
+            self.ac_props["display_name"],
+            msg="Incorrect display name",
+        )
+        self.arch.access_policies.delete(
+            access_policy["identity"],
+        )
+
+    def test_access_policies_update(self):
+        """
+        Test access_policy update
+        """
+        access_policy = self.arch.access_policies.create(
+            self.ac_props,
+            FILTERS,
+            self.ac_access_permissions,
+        )
+        self.assertEqual(
+            access_policy["display_name"],
+            self.ac_props["display_name"],
+            msg="Incorrect display name",
+        )
+        access_policy = self.arch.access_policies.update(
+            access_policy["identity"],
+            props=self.ac_props,
+            filters=FILTERS,
+            access_permissions=ACCESS_PERMISSIONS,
+        )
+        self.arch.access_policies.delete(
+            access_policy["identity"],
+        )
+
+    def test_access_policies_delete(self):
+        """
+        Test access_policy delete
+        """
+        access_policy = self.arch.access_policies.create(
+            self.ac_props,
+            FILTERS,
+            self.ac_access_permissions,
+        )
+        self.assertEqual(
+            access_policy["display_name"],
+            self.ac_props["display_name"],
+            msg="Incorrect display name",
+        )
+        access_policy = self.arch.access_policies.delete(
+            access_policy["identity"],
+        )
+        self.assertEqual(
+            access_policy,
+            {},
+            msg="Empty access_policy",
+        )
+
+
+# Specified permissions with expected results
+TESTDATA = [
+    {
+        "name": "include_attributes",
+        "permission": {
+            "include_attributes": [
+                "arc_description",
+                "arc_display_name",
+                "arc_display_type",
+                "arc_firmware_version",
+            ],
+        },
+        "expected": {
+            "arc_display_name": "Org1 asset",
+            "arc_display_type": "Traffic light with violation camera",
+            "arc_firmware_version": "1.0",
+            "arc_description": "Traffic flow control light at A603 North East",
+        },
+    },
+    {
+        "name": "asset_attributes_read",
+        "permission": {
+            "asset_attributes_read": [
+                "arc_display_name",
+                "arc_display_type",
+                "arc_firmware_version",
+            ],
+        },
+        "expected": {
+            "arc_display_name": "Org1 asset",
+            "arc_display_type": "Traffic light with violation camera",
+            "arc_firmware_version": "1.0",
+        },
+    },
+]
 
 
 @skipIf(
     getenv("TEST_AUTHTOKEN_FILENAME_2") is None,
     "cannot run test as TEST_AUTHTOKEN_FILENAME_2 is not set",
 )
-class TestAccessPolicies(TestAccessPoliciesBase):
+class TestAccessPoliciesShare(TestAccessPoliciesBase):
     """
-    Test Archivist AccessPolicies Create method
+    Test Archivist AccessPolicies sharing
     """
 
     maxDiff = None
@@ -134,84 +296,202 @@ class TestAccessPolicies(TestAccessPoliciesBase):
         self.arch_2 = Archivist(getenv("TEST_ARCHIVIST"), auth_2, verify=False)
 
         # creates reciprocal subjects for arch 1 and arch 2.
-        self_subject_1 = self.arch.subjects.read(SELF_SUBJECT)
-        self_subject_2 = self.arch_2.subjects.read(SELF_SUBJECT)
+        my_subject_1 = self.arch.subjects.read(SUBJECTS_SELF_ID)
+        my_subject_2 = self.arch_2.subjects.read(SUBJECTS_SELF_ID)
 
-        subject_1 = self.arch.subjects.create(
+        # subject 1 contains details of subject 2 to be shared
+        self.subject_1 = self.arch.subjects.import_subject(
             "org2_subject",
-            self_subject_2["wallet_pub_key"],
-            self_subject_2["tessera_pub_key"],
+            my_subject_2,
         )
 
-        subject_2 = self.arch_2.subjects.create(
+        # subject 2 contains details of subject 1 to be shared
+        self.subject_2 = self.arch_2.subjects.import_subject(
             "org1_subject",
-            self_subject_1["wallet_pub_key"],
-            self_subject_1["tessera_pub_key"],
+            my_subject_1,
         )
 
         # check the subjects are confirmed
-        self.arch.subjects.wait_for_confirmation(subject_1["identity"])
-        self.arch_2.subjects.wait_for_confirmation(subject_2["identity"])
+        self.arch.subjects.wait_for_confirmation(self.subject_1["identity"])
+        self.arch_2.subjects.wait_for_confirmation(self.subject_2["identity"])
 
-        # modify access_permissions...
-        self.access_permissions = deepcopy(ACCESS_PERMISSIONS)
-        self.access_permissions[0]["subjects"] = [subject_1["identity"]]
+    def _create_asset(self, label, arch, uuid):
+        asset_data = deepcopy(REQUEST_EXISTS_ATTACHMENTS)
+        asset_data["attributes"]["arc_namespace"] = uuid
+        asset_data["attributes"]["arc_display_name"] = f"{label} asset"
+        asset, existed = arch.assets.create_if_not_exists(
+            asset_data,
+            confirm=True,
+        )
+        print(label, ": asset", json_dumps(asset, indent=4))
+        print(label, ": existed", existed)
+        return asset
 
-    def test_access_policies_create(self):
-        """
-        Test access_policy creation
-        """
-        access_policy = self.arch.access_policies.create(
-            self.props,
-            FILTERS,
-            self.access_permissions,
+    def _create_access_policy(self, label, arch, uuid, subject, testdata):
+        access_permissions = deepcopy(BARE_ACCESS_PERMISSIONS)
+        access_permissions[0]["subjects"] = [
+            subject["identity"],
+        ]
+        for k, v in testdata["permission"].items():
+            access_permissions[0][k] = v
+
+        ac_props = deepcopy(PROPS)
+        ac_props["display_name"] = f"{DISPLAY_NAME} {uuid}"
+
+        filters = deepcopy(FILTERS)
+        filters[0]["or"][0] = f"attributes.arc_namespace={uuid}"
+        access_policy = arch.access_policies.create(
+            ac_props,
+            filters,
+            access_permissions,
         )
         self.assertEqual(
             access_policy["display_name"],
-            self.props["display_name"],
+            ac_props["display_name"],
             msg="Incorrect display name",
+        )
+        print(label, ": access_policy", json_dumps(access_policy, indent=4))
+        return access_policy
+
+    def _list_matching_assets(self, label, arch, assets, expected_asset, access_policy):
+        for idx, asset in enumerate(
+            arch.access_policies.list_matching_assets(access_policy["identity"])
+        ):
+            title = assets.get(asset["identity"])
+            # only deal with assets created during this test
+            if title:
+                print(label, ":", idx, ":Matching asset", title)
+                print(label, ":", idx, ":Matching asset", json_dumps(asset, indent=4))
+                self.assertEqual(
+                    expected_asset["identity"],
+                    asset["identity"],
+                    msg="Incorrect asset",
+                )
+
+    def _list_matching_access_policies(
+        self, label, arch, access_policies, expected_access_policy, asset
+    ):
+        for idx, access_policy in enumerate(
+            arch.access_policies.list_matching_access_policies(asset["identity"])
+        ):
+            title = access_policies.get(access_policy["identity"])
+            # only deal with access_policies created during this test
+            if title:
+                print(
+                    label,
+                    ":",
+                    idx,
+                    ":Matching access_policy",
+                    title,
+                )
+                print(
+                    label,
+                    ":",
+                    idx,
+                    ":Matching access_policy",
+                    json_dumps(access_policy, indent=4),
+                )
+                self.assertEqual(
+                    expected_access_policy["identity"],
+                    access_policy["identity"],
+                    msg="Incorrect access_policy",
+                )
+
+    def test_access_policies_share_assets_symmetrically(self):
+        """
+        Test access_policy share asset between 2 tokens/organisations/tenants
+        """
+        testdata = TESTDATA[0]
+        print()
+        assets = {}  # maps identity to name
+        access_policies = {}  # maps identity to name
+        uuid = str(uuid4())  # stamps assets and access policies as unique
+
+        print("1. create unique org1 asset and access_policy")
+        org1_asset = self._create_asset("Org1", self.arch, uuid)
+        assets[org1_asset["identity"]] = "org1_asset"
+
+        org1_access_policy = self._create_access_policy(
+            "Org1", self.arch, uuid, self.subject_1, testdata
+        )
+        access_policies[org1_access_policy["identity"]] = "org1_access_policy"
+
+        print("2. create org2 asset and access_policy")
+        org2_asset = self._create_asset("Org2", self.arch_2, uuid)
+        assets[org2_asset["identity"]] = "org2_asset"
+
+        org2_access_policy = self._create_access_policy(
+            "Org2", self.arch_2, uuid, self.subject_2, testdata
+        )
+        access_policies[org2_access_policy["identity"]] = "org2_access_policy"
+
+        print("3. First org - list matching assets")
+        self._list_matching_assets(
+            "Org1", self.arch, assets, org1_asset, org1_access_policy
         )
 
-    def test_access_policies_update(self):
-        """
-        Test access_policy update
-        """
-        access_policy = self.arch.access_policies.create(
-            self.props,
-            FILTERS,
-            self.access_permissions,
-        )
-        self.assertEqual(
-            access_policy["display_name"],
-            self.props["display_name"],
-            msg="Incorrect display name",
-        )
-        access_policy = self.arch.access_policies.update(
-            access_policy["identity"],
-            props=self.props,
-            filters=FILTERS,
-            access_permissions=ACCESS_PERMISSIONS,
+        print("4. First org - list matching access policies")
+        self._list_matching_access_policies(
+            "Org1", self.arch, access_policies, org1_access_policy, org1_asset
         )
 
-    def test_access_policies_delete(self):
+        print("5. Second org - list matching assets")
+        self._list_matching_assets(
+            "Org2", self.arch_2, assets, org2_asset, org2_access_policy
+        )
+
+        print("6. Second org - list matching access policies")
+        self._list_matching_access_policies(
+            "Org2", self.arch_2, access_policies, org2_access_policy, org2_asset
+        )
+
+        print("7. First org - read asset from second org")
+        asset = self.arch.assets.read(org2_asset["identity"])
+        print("Org1: asset", json_dumps(asset, indent=4))
+
+        print("8. Second org - read asset from first org")
+        asset = self.arch_2.assets.read(org1_asset["identity"])
+        print("Org2: asset", json_dumps(asset, indent=4))
+
+        self.arch.access_policies.delete(
+            org1_access_policy["identity"],
+        )
+        self.arch_2.access_policies.delete(
+            org2_access_policy["identity"],
+        )
+
+    def test_access_policies_share_asset_with_different_attributes(self):
         """
-        Test access_policy delete
+        Test access_policy share asset between 2 tokens/organisations/tenants
         """
-        access_policy = self.arch.access_policies.create(
-            self.props,
-            FILTERS,
-            self.access_permissions,
-        )
-        self.assertEqual(
-            access_policy["display_name"],
-            self.props["display_name"],
-            msg="Incorrect display name",
-        )
-        access_policy = self.arch.access_policies.delete(
-            access_policy["identity"],
-        )
-        self.assertEqual(
-            access_policy,
-            {},
-            msg="Empty access_policy",
-        )
+        for idx, testdata in enumerate(TESTDATA):
+            with self.subTest(testdata["name"], idx=idx):
+                print()
+                assets = {}  # maps identity to name
+                access_policies = {}  # maps identity to name
+                uuid = str(uuid4())  # stamps assets and access policies as unique
+
+                print("1. create unique org1 asset and access_policy")
+                org1_asset = self._create_asset("Org1", self.arch, uuid)
+                assets[org1_asset["identity"]] = "org1_asset"
+
+                org1_access_policy = self._create_access_policy(
+                    "Org1", self.arch, uuid, self.subject_1, testdata
+                )
+                access_policies[org1_access_policy["identity"]] = "org1_access_policy"
+
+                sleep(2)  # let the access policy become available
+
+                print("2. read org1 asset from org2")
+                asset = self.arch_2.assets.read(org1_asset["identity"])
+                print("Org2: asset", json_dumps(asset, indent=4))
+                print("Org2: expected", json_dumps(testdata["expected"], indent=4))
+                print("Org2: attributes", json_dumps(asset["attributes"], indent=4))
+                self.assertEqual(
+                    testdata["expected"],
+                    asset["attributes"],
+                    msg="Incorrect attributes",
+                )
+                self.arch.access_policies.delete(
+                    org1_access_policy["identity"],
+                )
