@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scan Test Example &mdash; RKVST 0.16.0 documentation</title>
+  <title>Scan Test Example &mdash; RKVST 0.17.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -33,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.16.0
+                0.17.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -49,6 +49,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sharing_asset.html">Sharing Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="get_publicasset.html">Get Public Asset Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="get_publicevent.html">Get Public Event</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event Example</a></li>
@@ -118,7 +119,7 @@
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">filterwarnings</span>
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
-<span class="kn">from</span> <span class="nn">archivist.assets</span> <span class="kn">import</span> <span class="n">BEHAVIOURS</span>
+<span class="kn">from</span> <span class="nn">archivist.constants</span> <span class="kn">import</span> <span class="n">ASSET_BEHAVIOURS</span>
 <span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
 <span class="kn">from</span> <span class="nn">archivist.utils</span> <span class="kn">import</span> <span class="n">get_auth</span>
 
@@ -158,7 +159,7 @@
                     <span class="p">],</span>
                 <span class="p">},</span>
             <span class="p">],</span>
-            <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">BEHAVIOURS</span><span class="p">,</span>
+            <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
             <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">SIMPLE_HASH</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="n">asset_name</span><span class="p">,</span>

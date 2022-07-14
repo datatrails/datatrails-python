@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.subjects &mdash; RKVST 0.16.0 documentation</title>
+  <title>archivist.subjects &mdash; RKVST 0.17.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.16.0
+                0.17.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -154,7 +154,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SubjectsClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
 <div class="viewcode-block" id="_SubjectsClient.create"><a class="viewcode-back" href="../../iam/subjects.html#archivist.subjects._SubjectsClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wallet_pub_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">tessera_pub_keys</span><span class="p">:</span> <span class="n">List</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wallet_pub_key</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">tessera_pub_key</span><span class="p">:</span> <span class="n">List</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subject</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Create subject</span>
 
@@ -162,8 +162,8 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            display_name (str): display name of subject.</span>
-<span class="sd">            wallet_pub_keys (list): wallet public keys</span>
-<span class="sd">            tessera_pub_keys (list): tessera public keys</span>
+<span class="sd">            wallet_pub_key (list): wallet public keys</span>
+<span class="sd">            tessera_pub_key (list): tessera public keys</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            :class:`Subject` instance</span>
@@ -173,9 +173,27 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span>
                 <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span>
-                <span class="n">wallet_pub_keys</span><span class="o">=</span><span class="n">wallet_pub_keys</span><span class="p">,</span>
-                <span class="n">tessera_pub_keys</span><span class="o">=</span><span class="n">tessera_pub_keys</span><span class="p">,</span>
+                <span class="n">wallet_pub_key</span><span class="o">=</span><span class="n">wallet_pub_key</span><span class="p">,</span>
+                <span class="n">tessera_pub_key</span><span class="o">=</span><span class="n">tessera_pub_key</span><span class="p">,</span>
             <span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_SubjectsClient.import_subject"><a class="viewcode-back" href="../../iam/subjects.html#archivist.subjects._SubjectsClient.import_subject">[docs]</a>    <span class="k">def</span> <span class="nf">import_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Subject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subject</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create subject from another subject usually</span>
+<span class="sd">           from another organization.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): of the subject</span>
+<span class="sd">            subject (Subject): Subject object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`Subject` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span>
+            <span class="n">subject</span><span class="p">[</span><span class="s2">&quot;wallet_pub_key&quot;</span><span class="p">],</span>
+            <span class="n">subject</span><span class="p">[</span><span class="s2">&quot;tessera_pub_key&quot;</span><span class="p">],</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SubjectsClient.create_from_data"><a class="viewcode-back" href="../../iam/subjects.html#archivist.subjects._SubjectsClient.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subject</span><span class="p">:</span>
@@ -260,8 +278,8 @@
         <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">wallet_pub_keys</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tessera_pub_keys</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">wallet_pub_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tessera_pub_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subject</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Update Subject</span>
 
@@ -270,8 +288,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            identity (str): subjects identity e.g. subjects/xxxxxxxxxxxxxxxxxxxxxxx</span>
 <span class="sd">            display_name (str): display name of subject.</span>
-<span class="sd">            wallet_pub_keys (list): wallet public keys</span>
-<span class="sd">            tessera_pub_keys (list): tessera public keys</span>
+<span class="sd">            wallet_pub_key (list): wallet public keys</span>
+<span class="sd">            tessera_pub_key (list): tessera public keys</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            :class:`Subject` instance</span>
@@ -282,8 +300,8 @@
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span>
                     <span class="n">display_name</span><span class="o">=</span><span class="n">display_name</span><span class="p">,</span>
-                    <span class="n">wallet_pub_keys</span><span class="o">=</span><span class="n">wallet_pub_keys</span><span class="p">,</span>
-                    <span class="n">tessera_pub_keys</span><span class="o">=</span><span class="n">tessera_pub_keys</span><span class="p">,</span>
+                    <span class="n">wallet_pub_key</span><span class="o">=</span><span class="n">wallet_pub_key</span><span class="p">,</span>
+                    <span class="n">tessera_pub_key</span><span class="o">=</span><span class="n">tessera_pub_key</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
@@ -306,8 +324,8 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">display_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">wallet_pub_keys</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tessera_pub_keys</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">wallet_pub_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tessera_pub_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
@@ -315,11 +333,11 @@
         <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">display_name</span>
 
-        <span class="k">if</span> <span class="n">wallet_pub_keys</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;wallet_pub_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wallet_pub_keys</span>
+        <span class="k">if</span> <span class="n">wallet_pub_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;wallet_pub_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wallet_pub_key</span>
 
-        <span class="k">if</span> <span class="n">tessera_pub_keys</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;tessera_pub_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tessera_pub_keys</span>
+        <span class="k">if</span> <span class="n">tessera_pub_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;tessera_pub_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tessera_pub_key</span>
 
         <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SUBJECTS_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 

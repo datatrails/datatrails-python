@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.access_policies &mdash; RKVST 0.16.0 documentation</title>
+  <title>archivist.access_policies &mdash; RKVST 0.17.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.16.0
+                0.17.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -217,6 +217,7 @@
 <div class="viewcode-block" id="_AccessPoliciesClient.update"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">identity</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">access_permissions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -316,22 +317,6 @@
         <span class="p">)</span></div>
 
     <span class="c1"># additional queries on different endpoints</span>
-<div class="viewcode-block" id="_AccessPoliciesClient.count_matching_assets"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count_matching_assets">[docs]</a>    <span class="k">def</span> <span class="nf">count_matching_assets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_policy_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Count assets that match access_policy.</span>
-
-<span class="sd">        Counts number of assets that match an access_policy.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            access_policy_id (str): e.g. access_policies/xxxxxxxxxxxxxxx</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            integer count of assets.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">access_policy_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">ASSETS_LABEL</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span></div>
-
 <div class="viewcode-block" id="_AccessPoliciesClient.list_matching_assets"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list_matching_assets">[docs]</a>    <span class="k">def</span> <span class="nf">list_matching_assets</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">access_policy_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">):</span>
@@ -354,22 +339,6 @@
                 <span class="n">ASSETS_LABEL</span><span class="p">,</span>
                 <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="_AccessPoliciesClient.count_matching_access_policies"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count_matching_access_policies">[docs]</a>    <span class="k">def</span> <span class="nf">count_matching_access_policies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Count access policies that match asset.</span>
-
-<span class="sd">        Counts number of access policies that match asset.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            asset_id (str): e.g. assets/xxxxxxxxxxxxxxx</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            integer count of access policies.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">asset_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">ACCESS_POLICIES_LABEL</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="_AccessPoliciesClient.list_matching_access_policies"><a class="viewcode-back" href="../../iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list_matching_access_policies">[docs]</a>    <span class="k">def</span> <span class="nf">list_matching_access_policies</span><span class="p">(</span>

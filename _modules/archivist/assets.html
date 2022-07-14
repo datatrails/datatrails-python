@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.assets &mdash; RKVST 0.16.0 documentation</title>
+  <title>archivist.assets &mdash; RKVST 0.17.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.16.0
+                0.17.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -118,6 +118,7 @@
 
 <span class="kn">from</span> <span class="nn">.asset</span> <span class="kn">import</span> <span class="n">Asset</span>
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
     <span class="n">ASSETS_SUBPATH</span><span class="p">,</span>
     <span class="n">ASSETS_LABEL</span><span class="p">,</span>
     <span class="n">CONFIRMATION_STATUS</span><span class="p">,</span>
@@ -126,13 +127,6 @@
 <span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">ArchivistBadFieldError</span><span class="p">,</span> <span class="n">ArchivistNotFoundError</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">selector_signature</span>
-
-<span class="c1"># These are now hardcoded and not user-selectable. Eventually they will be removed from</span>
-<span class="c1"># the backend API and removed from this package.</span>
-<span class="n">BEHAVIOURS</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Attachments&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;RecordEvidence&quot;</span><span class="p">,</span>
-<span class="p">]</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -228,7 +222,7 @@
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create Asset </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
         <span class="c1"># default behaviours  are added first - any set in user-specified fixtures or</span>
         <span class="c1"># in the method args will overide...</span>
-        <span class="n">newprops</span> <span class="o">=</span> <span class="n">_deepmerge</span><span class="p">({</span><span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">BEHAVIOURS</span><span class="p">},</span> <span class="n">props</span><span class="p">)</span>
+        <span class="n">newprops</span> <span class="o">=</span> <span class="n">_deepmerge</span><span class="p">({</span><span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">},</span> <span class="n">props</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">newprops</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="n">confirm</span><span class="p">)</span></div>
 

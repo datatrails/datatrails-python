@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sharing Asset Example &mdash; RKVST 0.17.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Get Public Asset Example" href="get_publicasset.html" />
+    <link rel="prev" title="Get Asset Example" href="get_asset.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html">
+            <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.17.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sharing Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_publicasset.html">Get Public Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_publicevent.html">Get Public Event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_events.html">Filter Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_publicevents.html">Filter Public Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan_test.html">Scan Test Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_filter.html">Filter IAM subjects Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="applications_registration.html">Create IAM Application Registration and Tokens</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runner.html">Runner Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="getting_started.html">Getting started</a> &raquo;</li>
+      <li>Sharing Asset Example</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sharing-asset-example">
+<span id="sharing-assetref"></span><h1>Sharing Asset Example<a class="headerlink" href="#sharing-asset-example" title="Permalink to this headline"></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an asset for Archivist with token.</span>
+
+<span class="sd">   Create an access_policy that shares an asset when certain criteria are met.</span>
+
+<span class="sd">   Access the asset from another Archivist connection using a second token with different</span>
+<span class="sd">   access rights.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+
+<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+<span class="kn">from</span> <span class="nn">archivist.constants</span> <span class="kn">import</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span> <span class="n">SUBJECTS_SELF_ID</span>
+<span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
+<span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
+<span class="kn">from</span> <span class="nn">archivist.utils</span> <span class="kn">import</span> <span class="n">get_auth</span>
+
+
+<span class="k">def</span> <span class="nf">create_example_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create an asset using Archivist Connection.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        arch: archivist connection.</span>
+<span class="sd">        label: convenience label to easily distinguish the 2 organizations.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Asset: a new asset created.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_display_name&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s display name</span>
+        <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_display_description&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s description</span>
+        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_display_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
+        <span class="s2">&quot;ext_vendor_name&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Select the mechanism used to prove evidence for the asset.  If the selected proof</span>
+    <span class="c1"># mechanism is not enabled for your tenant then an error will occur.</span>
+    <span class="c1"># If unspecified then SIMPLE_HASH is used.</span>
+    <span class="c1"># proof_mechanism = ProofMechanism.KHIPU.name</span>
+    <span class="c1">#</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">KHIPU</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># The first argument is the properties of the asset</span>
+    <span class="c1"># The second argument is the attributes of the asset</span>
+    <span class="c1"># The third argument is wait for confirmation:</span>
+    <span class="c1">#   If @confirm@ is True then this function will not</span>
+    <span class="c1">#   return until the asset is confirmed on the blockchain and ready</span>
+    <span class="c1">#   to accept events (or an error occurs)</span>
+    <span class="c1">#</span>
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">create_archivist</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create connection to archivist&quot;&quot;&quot;</span>
+    <span class="c1"># Get authorization token. The token grants certain rights and access permissions.</span>
+    <span class="c1"># The token can represent the root principal or user in an organization. Different tokens</span>
+    <span class="c1"># could indicate different users in the same organization or membership of different</span>
+    <span class="c1"># organiastions.</span>
+    <span class="n">auth</span> <span class="o">=</span> <span class="n">get_auth</span><span class="p">(</span>
+        <span class="n">auth_token</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ARCHIVIST_AUTHTOKEN_</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
+    <span class="c1"># of an asset or event creation - the default is 1200 seconds but one can optionally</span>
+    <span class="c1"># specify a different value here particularly when creating assets on SIMPLE_HASH</span>
+    <span class="c1"># (rather than KHIPU) as confirmation times are much shorter in this case.</span>
+    <span class="k">return</span> <span class="n">Archivist</span><span class="p">(</span>
+        <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+        <span class="n">auth</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">import_subject</span><span class="p">(</span><span class="n">acme</span><span class="p">,</span> <span class="n">weyland</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add subjects record for weyland in acme&#39;s environment&quot;&quot;&quot;</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">acme</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">import_subject</span><span class="p">(</span>
+        <span class="s2">&quot;weyland&quot;</span><span class="p">,</span>
+        <span class="n">weyland</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">SUBJECTS_SELF_ID</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># must wait for confirmation</span>
+    <span class="n">acme</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">wait_for_confirmation</span><span class="p">(</span><span class="n">subject</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">subject</span>
+
+
+<span class="k">def</span> <span class="nf">create_example_access_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create access policy&quot;&quot;&quot;</span>
+    <span class="c1"># consists of a filter selection entry and a selection criteria to restrict/redact</span>
+    <span class="c1"># values of the asset attributes available to the sharee.</span>
+
+    <span class="c1"># values pertaining to the access polcy itself.</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2"> access policy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2"> Policy description&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Filtering - access will be allowed to any asset that contains both these</span>
+    <span class="c1"># attributes that equal these values. This happens to match the asset created</span>
+    <span class="c1"># previously.</span>
+    <span class="n">filters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;attributes.arc_display_type=</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_display_type&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;attributes.ext_vendor_name=</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+
+    <span class="c1"># one must be the subject to gain access and only those fields</span>
+    <span class="c1"># specified in include_attributes will be emitted.</span>
+    <span class="n">access_permissions</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;subjects&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">subject</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
+            <span class="s2">&quot;include_attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arc_display_name&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">props</span><span class="p">,</span>
+        <span class="n">filters</span><span class="p">,</span>
+        <span class="n">access_permissions</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Main function of share-asset.&quot;&quot;&quot;</span>
+    <span class="c1"># optional call to set the logger level for all subsystems. The argument can</span>
+    <span class="c1"># be either &quot;INFO&quot; or &quot;DEBUG&quot;. For more sophisticated logging control see the</span>
+    <span class="c1"># documentation.</span>
+    <span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+
+    <span class="c1"># For demonstration purposes we are going to assume that 2 organizations are</span>
+    <span class="c1"># going to share an asset. The 2 organizations are ACME Corp and Weyland-Yutani</span>
+    <span class="c1"># Corporation.</span>
+    <span class="n">acme</span> <span class="o">=</span> <span class="n">create_archivist</span><span class="p">(</span><span class="s2">&quot;acme&quot;</span><span class="p">)</span>
+    <span class="n">weyland</span> <span class="o">=</span> <span class="n">create_archivist</span><span class="p">(</span><span class="s2">&quot;weyland&quot;</span><span class="p">)</span>
+
+    <span class="c1"># set a subject for weyland in acme&#39;s environment. The identity will be used as a</span>
+    <span class="c1"># filter in the access permissions of the access_policy.</span>
+    <span class="n">weyland_subject_on_acme</span> <span class="o">=</span> <span class="n">import_subject</span><span class="p">(</span><span class="n">acme</span><span class="p">,</span> <span class="n">weyland</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;weyland_subject on acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">weyland_subject_on_acme</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># acme creates an asset</span>
+    <span class="n">acme_asset</span> <span class="o">=</span> <span class="n">create_example_asset</span><span class="p">(</span><span class="n">acme</span><span class="p">,</span> <span class="s2">&quot;acme&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset created in acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># now we want acme to share this asset to weyland via an access policy.</span>
+    <span class="n">access_policy</span> <span class="o">=</span> <span class="n">create_example_access_policy</span><span class="p">(</span><span class="n">acme</span><span class="p">,</span> <span class="s2">&quot;acme&quot;</span><span class="p">,</span> <span class="n">weyland_subject_on_acme</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;access policy created in acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">access_policy</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># display the asset as retrieved by weyland</span>
+    <span class="c1"># NB: the attributes dict is redacted...</span>
+    <span class="n">weyland_asset</span> <span class="o">=</span> <span class="n">weyland</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset read from weyland&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">weyland_asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># list matching access policies</span>
+    <span class="n">access_policies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">acme</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">list_matching_access_policies</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;access policies read from acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">access_policies</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># delete all the access policies</span>
+    <span class="k">for</span> <span class="n">access_policy</span> <span class="ow">in</span> <span class="n">access_policies</span><span class="p">:</span>
+        <span class="n">acme</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">access_policy</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+
+    <span class="c1"># list matching access policies</span>
+    <span class="n">access_policies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">acme</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">list_matching_access_policies</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;access policies read from acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">access_policies</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># display the asset as retrieved by the sharee</span>
+    <span class="c1"># NB the asset is still shared even though there are no access policies</span>
+    <span class="n">weyland_asset</span> <span class="o">=</span> <span class="n">weyland</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset read from weyland&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">weyland_asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get_asset.html" class="btn btn-neutral float-left" title="Get Asset Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="get_publicasset.html" class="btn btn-neutral float-right" title="Get Public Asset Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
