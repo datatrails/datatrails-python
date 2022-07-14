@@ -71,58 +71,58 @@ def attachment_identities_events(events_with_attachments: list) -> list:
 def level_1_sanitization(dct: dict) -> dict:
     """Sanitize values of attributes with custom keys."""
 
-    def modify_key(k, v):
+    def modify_key(k):
         return k
 
     def modify_value(k, v):
         return "#" * len(v) if "arc_" not in k else v
 
-    return {modify_key(k, v): modify_value(k, v) for k, v in dct.items()}
+    return {modify_key(k): modify_value(k, v) for k, v in dct.items()}
 
 
 def level_2_sanitization(dct: dict) -> dict:
     """Sanitize all attribute values."""
 
-    def modify_key(k, v):
+    def modify_key(k):
         return k
 
-    def modify_value(k, v):
+    def modify_value(v):
         return "#" * len(v) if v else v
 
-    return {modify_key(k, v): modify_value(k, v) for k, v in dct.items()}
+    return {modify_key(k): modify_value(v) for k, v in dct.items()}
 
 
 def level_3_sanitization(dct: dict) -> dict:
     """Sanitize all attribute values and all custom keys."""
 
-    def modify_key(k, v):
+    def modify_key(k):
         return "#" * len(k) if "arc_" not in k else k
 
-    def modify_value(k, v):
+    def modify_value(v):
         return "#" * len(v) if v else v
 
-    return {modify_key(k, v): modify_value(k, v) for k, v in dct.items()}
+    return {modify_key(k): modify_value(v) for k, v in dct.items()}
 
 
 def level_4_sanitization(dct: dict) -> dict:
     """Sanitize all attribute keys and values."""
 
-    def modify_key(k, v):
+    def modify_key(k):
         return "#" * len(k) if k else k
 
-    def modify_value(k, v):
+    def modify_value(v):
         return "#" * len(v) if v else v
 
-    return {modify_key(k, v): modify_value(k, v) for k, v in dct.items()}
+    return {modify_key(k): modify_value(v) for k, v in dct.items()}
 
 
 def level_5_sanitization(dct: dict) -> dict:
     """Replace attribute dictionary with None."""
 
-    def modify_key(k, v):
+    def modify_key():
         return None
 
-    def modify_value(k, v):
+    def modify_value():
         return None
 
-    return {modify_key(k, v): modify_value(k, v) for k, v in dct.items()}
+    return {modify_key(): modify_value() for k, v in dct.items()}
