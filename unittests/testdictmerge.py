@@ -132,7 +132,10 @@ EXPECTED_ATTACHMENT_IDENTITIES_ASSET = {"blobs/ea4bcf42-2b72-4903-919b-b856443fc
 
 EVENT_TEST_DATA = [
     {
-        "identity": "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7/events/25606a10-42c0-429c-ae94-e2df7ee8a5dc",
+        "identity": (
+            "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7/"
+            "events/25606a10-42c0-429c-ae94-e2df7ee8a5dc"
+        ),
         "asset_identity": "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7",
         "event_attributes": {
             "test": "test",
@@ -164,7 +167,10 @@ EVENT_TEST_DATA = [
         "from": "0xD71D6404F57a081637661F2DAac32Ca37047f240",
     },
     {
-        "identity": "assets/525e4c24-711c-457d-b528-f9a4879f0759/events/401b83eb-3da7-467f-942d-cba33203a129",
+        "identity": (
+            "assets/525e4c24-711c-457d-b528-f9a4879f0759/"
+            "events/401b83eb-3da7-467f-942d-cba33203a129"
+        ),
         "asset_identity": "assets/525e4c24-711c-457d-b528-f9a4879f0759",
         "event_attributes": {
             "arc_attachments": [],
@@ -176,7 +182,9 @@ EVENT_TEST_DATA = [
                     "arc_attachment_identity": "blobs/ea4bcf42-2b72-4903-919b-b856443fc511",
                     "arc_display_name": "Inspection Standards",
                     "arc_hash_alg": "SHA256",
-                    "arc_hash_value": "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff",
+                    "arc_hash_value": (
+                        "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff"
+                    ),
                     "mime_type": "application/pdf",
                 }
             ]
@@ -208,7 +216,10 @@ EVENT_TEST_DATA = [
 
 EXPECTED_EVENTS_EXT_ATTR = [
     {
-        "identity": "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7/events/25606a10-42c0-429c-ae94-e2df7ee8a5dc",
+        "identity": (
+            "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7/"
+            "events/25606a10-42c0-429c-ae94-e2df7ee8a5dc"
+        ),
         "asset_identity": "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7",
         "event_attributes": {
             "test": "test",
@@ -243,14 +254,19 @@ EXPECTED_EVENTS_EXT_ATTR = [
 
 EVENT_WITH_ATTACHMENT = [
     {
-        "identity": "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7/events/5f299e54-93cd-406b-943f-1c1717612127",
+        "identity": (
+            "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7/"
+            "events/5f299e54-93cd-406b-943f-1c1717612127"
+        ),
         "asset_identity": "assets/2ae491bd-ac42-406f-8bf5-fa7d25cd53e7",
         "event_attributes": {
             "arc_attachments": [
                 {
                     "arc_display_name": "Inspection Standards",
                     "arc_hash_alg": "SHA256",
-                    "arc_hash_value": "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff",
+                    "arc_hash_value": (
+                        "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff"
+                    ),
                     "arc_attachment_identity": "blobs/1718b2c9-8764-4733-8926-4688c7ad192e",
                 }
             ],
@@ -286,7 +302,10 @@ EVENT_WITH_ATTACHMENT = [
 
 EVENT_WITH_ASSET_ATTACHMENT = [
     {
-        "identity": "assets/525e4c24-711c-457d-b528-f9a4879f0759/events/401b83eb-3da7-467f-942d-cba33203a129",
+        "identity": (
+            "assets/525e4c24-711c-457d-b528-f9a4879f0759/"
+            "events/401b83eb-3da7-467f-942d-cba33203a129"
+        ),
         "asset_identity": "assets/525e4c24-711c-457d-b528-f9a4879f0759",
         "event_attributes": {
             "arc_attachments": [],
@@ -296,7 +315,9 @@ EVENT_WITH_ASSET_ATTACHMENT = [
             "arc_attachments": [
                 {
                     "arc_hash_alg": "SHA256",
-                    "arc_hash_value": "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff",
+                    "arc_hash_value": (
+                        "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff"
+                    ),
                     "mime_type": "application/pdf",
                     "arc_attachment_identity": "blobs/ea4bcf42-2b72-4903-919b-b856443fc511",
                     "arc_display_name": "Inspection Standards",

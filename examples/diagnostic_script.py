@@ -1,5 +1,7 @@
 """Summarize usage of RKVST and return estate for customer support purposes."""
 
+# pylint: disable=too-many-locals
+
 import os
 import argparse
 import json
@@ -8,7 +10,7 @@ import shutil
 
 from archivist.archivist import Archivist
 from archivist.logger import set_logger
-import archivist.dictmerge
+#import archivist.dictmerge
 
 # functions copied below because I was unable to import \
 # them from dictmerge, I believe it is a conflict because I have a copy \
