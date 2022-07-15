@@ -5,6 +5,7 @@ Test dictmerge
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=too-few-public-methods
+# pylint: disable=too-many-locals
 
 from unittest import TestCase
 
@@ -24,7 +25,9 @@ ASSET_TEST_DATA = [
             "arc_display_type": "Nested attribute",
             "arc_attachments": [
                 {
-                    "arc_hash_value": "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff",
+                    "arc_hash_value": (
+                        "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff"
+                    ),
                     "mime_type": "application/pdf",
                     "arc_attachment_identity": "blobs/ea4bcf42-2b72-4903-919b-b856443fc511",
                     "arc_display_name": "Inspection Standards",
@@ -104,7 +107,9 @@ ASSET_WITH_ATTACHMENT = [
             "arc_display_type": "Nested attribute",
             "arc_attachments": [
                 {
-                    "arc_hash_value": "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff",
+                    "arc_hash_value": (
+                        "b6ec2d1829b8fbf0d58c4f4d87a56a68b16236ef173c7b8b23713078010049ff"
+                    ),
                     "mime_type": "application/pdf",
                     "arc_attachment_identity": "blobs/ea4bcf42-2b72-4903-919b-b856443fc511",
                     "arc_display_name": "Inspection Standards",
