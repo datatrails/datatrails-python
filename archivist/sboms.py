@@ -183,7 +183,7 @@ class _SBOMSClient:
             with open(filename, "rb") as fd:
                 sbom = self.upload(
                     fd,
-                    confirm=data.get("confirm", False),
+                    confirm=data.get("confirm", True),
                     mtype=data.get("content_type"),
                     params=data.get("params"),
                 )
@@ -194,7 +194,7 @@ class _SBOMSClient:
             get_url(url, fd)
             sbom = self.upload(
                 fd,
-                confirm=data.get("confirm", False),
+                confirm=data.get("confirm", True),
                 mtype=data.get("content_type"),
                 params=data.get("params"),
             )
@@ -218,7 +218,7 @@ class _SBOMSClient:
         self,
         fd: BinaryIO,
         *,
-        confirm: bool = False,
+        confirm: bool = True,
         mtype: Optional[str] = None,
         params: Optional[Dict] = None,
     ) -> SBOM:
@@ -345,7 +345,7 @@ class _SBOMSClient:
             )
         )
 
-    def publish(self, identity: str, confirm: bool = False) -> SBOM:
+    def publish(self, identity: str, confirm: bool = True) -> SBOM:
         """Publish SBOMt
 
         Makes an SBOM public.
@@ -386,7 +386,7 @@ class _SBOMSClient:
         # pylint: disable=protected-access
         return publisher._wait_for_publication(self, identity)  # type: ignore
 
-    def withdraw(self, identity: str, confirm: bool = False) -> SBOM:
+    def withdraw(self, identity: str, confirm: bool = True) -> SBOM:
         """Withdraw SBOM
 
         Withdraws an SBOM.

@@ -116,7 +116,7 @@ class _AssetsRestricted(_AssetsPublic):
         *,
         props: Optional[Dict] = None,
         attrs: Optional[Dict] = None,
-        confirm: bool = False,
+        confirm: bool = True,
     ) -> Asset:
         """Create asset
 
@@ -138,7 +138,7 @@ class _AssetsRestricted(_AssetsPublic):
         data = self.__params(newprops, attrs)
         return self.create_from_data(data, confirm=confirm)
 
-    def create_from_data(self, data: Dict, *, confirm: bool = False) -> Asset:
+    def create_from_data(self, data: Dict, *, confirm: bool = True) -> Asset:
         """Create asset
 
         Creates asset with request body from data stream.
@@ -159,7 +159,7 @@ class _AssetsRestricted(_AssetsPublic):
         return self.wait_for_confirmation(asset["identity"])
 
     def create_if_not_exists(
-        self, data: Dict, *, confirm: bool = False
+        self, data: Dict, *, confirm: bool = True
     ) -> Tuple[Asset, bool]:
         """
         Creates an asset and associated locations and attachments if asset
