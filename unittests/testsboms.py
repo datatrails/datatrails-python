@@ -103,6 +103,7 @@ class TestSBOMS(TestCase):
                     "component": "spdx-test-component",
                     "version": "v0.0.1",
                 },
+                confirm=False,
             )
             args, kwargs = mock_post.call_args
             self.assertEqual(
@@ -185,7 +186,10 @@ class TestSBOMS(TestCase):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            sbom = self.arch.sboms.upload(self.mockstream)
+            sbom = self.arch.sboms.upload(
+                self.mockstream,
+                confirm=False,
+            )
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
@@ -356,7 +360,7 @@ class TestSBOMS(TestCase):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            sbom = self.arch.sboms.publish(IDENTITY)
+            sbom = self.arch.sboms.publish(IDENTITY, confirm=False)
             self.assertEqual(
                 tuple(mock_post.call_args),
                 (
@@ -399,7 +403,7 @@ class TestSBOMS(TestCase):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            sbom = self.arch.sboms.withdraw(IDENTITY)
+            sbom = self.arch.sboms.withdraw(IDENTITY, confirm=False)
             self.assertEqual(
                 tuple(mock_post.call_args),
                 (

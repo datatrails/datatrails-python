@@ -283,7 +283,7 @@ class _EventsRestricted(_EventsPublic):
         attrs: Dict,
         *,
         asset_attrs: Optional[Dict] = None,
-        confirm: bool = False,
+        confirm: bool = True,
     ) -> Event:
         """Create event
 
@@ -308,7 +308,7 @@ class _EventsRestricted(_EventsPublic):
             confirm=confirm,
         )
 
-    def create_from_data(self, asset_id: str, data: Dict, *, confirm=False) -> Event:
+    def create_from_data(self, asset_id: str, data: Dict, *, confirm=True) -> Event:
         """Create event
 
         Creates event for given asset from data.
