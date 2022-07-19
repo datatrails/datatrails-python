@@ -99,11 +99,14 @@ class TestAssetCreate(TestCase):
             attrs=self.traffic_light,
             confirm=True,
         )
+        print("asset", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
             asset["proof_mechanism"],
             ProofMechanism.SIMPLE_HASH.name,
             msg="Incorrect asset proof mechanism",
         )
+        tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
+        print("tenancy", json_dumps(tenancy, sort_keys=True, indent=4))
 
     def test_asset_create_khipu(self):
         """
@@ -121,6 +124,9 @@ class TestAssetCreate(TestCase):
             ProofMechanism.KHIPU.name,
             msg="Incorrect asset proof mechanism",
         )
+        tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
+        print("tenancy", json_dumps(tenancy, sort_keys=True, indent=4))
+
         events = self.arch.events.list(asset_id=asset["identity"])
         print("events", json_dumps(list(events), sort_keys=True, indent=4))
         asset = self.arch.events.wait_for_confirmation(asset["identity"])
@@ -217,6 +223,9 @@ class TestAssetCreate(TestCase):
             identity, props=props, attrs=attrs, confirm=True
         )
         print("event", json_dumps(event, sort_keys=True, indent=4))
+
+        tenancy = self.arch.tenancies.publicinfo(event["tenant_identity"])
+        print("tenancy", json_dumps(tenancy, sort_keys=True, indent=4))
 
 
 class TestAssetCreateIfNotExists(TestCase):

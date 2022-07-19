@@ -8,9 +8,12 @@ with suitable properties and attributes.
 
 """
 from os import getenv
+from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.utils import get_auth
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 def main():

@@ -3,6 +3,7 @@
 from logging import getLogger
 from os import environ
 from sys import exit as sys_exit
+from warnings import filterwarnings
 
 from pyaml_env import parse_config
 
@@ -11,6 +12,8 @@ from archivist import about
 # pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from archivist import archivist as type_helper
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 LOGGER = getLogger(__name__)

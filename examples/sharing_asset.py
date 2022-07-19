@@ -8,12 +8,15 @@
 
 from json import dumps as json_dumps
 from os import getenv
+from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS, SUBJECTS_SELF_ID
 from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 def create_example_asset(arch, label):

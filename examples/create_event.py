@@ -1,17 +1,42 @@
 """Create an event for an asset given url to Archivist and user Token.
 
-The module contains four functions: main, create_asset and create_event.
-Main function parses in a url to the Archivist and credentials, which is a user authorization.
+The module contains four functions: main, create_asset, create_event and
+get_verified_domain.
+
 The main function would initialize an archivist connection using the url and
-the credentials, called "arch", then call create_assets and pass in "arch" and
-create_assets will build create_asset, which is a archivist connection function
+the credentials, called "arch".
+
+create_asset will execute 'assets.create', which is a archivist connection function
 to create a new asset for the archivist through archivist connection. The main funciton then
 calls create_event and pass in "arch" and the created asset to create a new event for the asset.
+
+In both cases the verified domain name is displayed.
 """
+from json import dumps as json_dumps
 from os import getenv
+from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.logger import set_logger
+
+filterwarnings("ignore", message="Unverified HTTPS request")
+
+
+def get_verified_domain(arch, identity):
+    """Get the verified domain for the tenant.
+
+    Args:
+        arch: archivist connection.
+        asset: an asset
+
+    Returns:
+        verified_domain: name of the verified domain
+                         for the asset.
+
+    """
+
+    tenancy = arch.tenancies.publicinfo(identity)
+    return tenancy.get("verified_domain", "")
 
 
 def create_event(arch, asset):
@@ -52,6 +77,7 @@ def create_event(arch, asset):
     }
 
     return arch.events.create(asset["identity"], props=props, attrs=attrs, confirm=True)
+
     # alternatively if some work can be done whilst the event is confirmed then this call can be
     # replaced by a two-step alternative:
 
@@ -130,13 +156,21 @@ def main():
         "https://app.rkvst.io",
         (client_id, client_secret),
     )
+
     # Create a new asset
     asset = create_asset(arch)
+    print("Asset", json_dumps(asset, sort_keys=True, indent=4))
+    print("Verified domain '", get_verified_domain(arch, asset["tenant_identity"]), "'")
+
     # Create a new event
     event = create_event(arch, asset)
+    print("Event", json_dumps(event, sort_keys=True, indent=4))
+    print("Verified domain '", get_verified_domain(arch, event["tenant_identity"]), "'")
+
     # Fetch the event
     event = arch.events.read(event["identity"])
-    print("Event", event)
+    print("Event", json_dumps(event, sort_keys=True, indent=4))
+    print("Verified domain '", get_verified_domain(arch, event["tenant_identity"]), "'")
 
 
 if __name__ == "__main__":

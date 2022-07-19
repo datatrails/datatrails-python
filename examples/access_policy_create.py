@@ -8,9 +8,12 @@ will be created.
 """
 
 from os import getenv
+from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 def main():
