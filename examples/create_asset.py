@@ -7,11 +7,14 @@ the credentials, called "arch", then call arch.assets.create() and the asset wil
 """
 
 from os import getenv
+from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 def create_asset(arch):

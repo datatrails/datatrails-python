@@ -2,7 +2,11 @@
 
 """
 
+from warnings import filterwarnings
+
 from archivist.archivistpublic import ArchivistPublic
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 def main():

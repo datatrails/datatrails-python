@@ -20,6 +20,7 @@
    events
    locations
    attachments
+   tenancies
    compliance_policies/index
    sboms/index
    iam/index

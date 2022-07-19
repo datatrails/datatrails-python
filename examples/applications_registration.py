@@ -10,9 +10,12 @@ Create JWT token after updating, regenerating secrets.
 
 from json import dumps as json_dumps
 from uuid import uuid4
+from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.proof_mechanism import ProofMechanism
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 def main():

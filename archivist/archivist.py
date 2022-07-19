@@ -64,6 +64,8 @@ from .locations import _LocationsClient
 from .runner import _Runner
 from .sboms import _SBOMSClient
 from .subjects import _SubjectsClient
+from .tenancies import _TenanciesClient
+
 from .type_aliases import MachineAuth
 
 LOGGER = getLogger(__name__)
@@ -99,6 +101,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         "runner": _Runner,
         "sboms": _SBOMSClient,
         "subjects": _SubjectsClient,
+        "tenancies": _TenanciesClient,
     }
 
     def __init__(
@@ -147,6 +150,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         self.runner: _Runner
         self.sboms: _SBOMSClient
         self.subjects: _SubjectsClient
+        self.tenancies: _TenanciesClient
 
     def __str__(self) -> str:
         return f"Archivist({self._url})"

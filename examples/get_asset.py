@@ -7,9 +7,12 @@ The main function would then call arch.assets.read_by_signature() to get one ass
 the instance.
 """
 from os import getenv
+from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistNotFoundError, ArchivistDuplicateError
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 def main():

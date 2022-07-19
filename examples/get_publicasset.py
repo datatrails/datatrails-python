@@ -1,7 +1,11 @@
 """Get a public asset from a instance of Archivist
 """
 
+from warnings import filterwarnings
+
 from archivist.archivistpublic import ArchivistPublic
+
+filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 def main():

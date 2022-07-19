@@ -69,3 +69,10 @@ SBOM_RELEASE = "Software Package Release"
 SUBJECTS_SUBPATH = "iam/v1"
 SUBJECTS_LABEL = "subjects"
 SUBJECTS_SELF_ID = "subjects/00000000-0000-0000-0000-000000000000"
+
+TENANCIES_SUBPATH = "v1"
+TENANCIES_LABEL = "tenancies"
+
+# values of tenant identity in response from other endpoints is 'tenant'
+# and not 'tenancies'.
+TENANCIES_PREFIX = "tenant"
