@@ -50,6 +50,7 @@ setup(
         "console_scripts": [
             "archivist_runner = archivist.cmds.runner.main:main",
             "archivist_template = archivist.cmds.template.main:main",
+            "archivist_usage = archivist.cmds.usage.main:main",
         ],
     },
 )

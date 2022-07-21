@@ -33,10 +33,15 @@ def _dotdict(dct: Optional[dict]) -> Optional[dict]:
 def assets_ext_attr(assets: list) -> list:
     """Create list of assets with extended attribute(s)"""
     extended_attributes_asset = []
-    for asset in assets:
-        for item in asset["attributes"]:
-            if not item.startswith("arc_") and asset not in extended_attributes_asset:
-                extended_attributes_asset.append(asset)
+    #for asset in assets:
+    #    for item in asset["attributes"]:
+    #        if not item.startswith("arc_") and asset not in extended_attributes_asset:
+    #            extended_attributes_asset.append(asset)
+    #extended_attributes_asset = [asset for asset in assets
+    #if item.startswith("arc_") for item in asset["attributes"]]
+    extended_attributes_asset = [asset for asset in [item for item in asset["attributes"] if item.startswith("arc_")]]
+    extended_attributes_asset = [asset for asset in [item for item in asset["attributes"] if item.startswith("arc_")]]
+    ## to use list comprehension, how can you append the entire asset after filtering attributes?
     return extended_attributes_asset
 
 
@@ -46,16 +51,21 @@ def attachment_identities_assets(assets_with_attachments: list) -> list:
     for asset in assets_with_attachments:
         for item in asset["attributes"]["arc_attachments"]:
             total_attachments_assets.add(item["arc_attachment_identity"])
+        # total_attachments_assets = [item["arc_attachment_identity"] for item
+        # in asset["attributes"]["arc_attachments"]] #for asset in assets_with_attachments]
     return total_attachments_assets
 
 
 def events_ext_attr(events: list) -> list:
     """Create list of events with extended attribute(s)"""
     extended_attributes_event = []
-    for event in events:
-        for item in event["event_attributes"]:
-            if not item.startswith("arc_") and event not in extended_attributes_event:
-                extended_attributes_event.append(event)
+    #for event in events:
+     #   for item in event["event_attributes"]:
+      #      if not item.startswith("arc_") and event not in extended_attributes_event:
+       #         extended_attributes_event.append(event)
+    extended_attributes_event = [
+        e for e in events if (item.startswith("arc_") for item in e["event_attributes"])
+    ]
     return extended_attributes_event
 
 

@@ -2,15 +2,16 @@
 
 # pylint: disable=too-many-locals
 
-import os
-import argparse
-import json
+from os import environ, path, makedirs, remove, getcwd
+from argparse import ArgumentParser
+from json import dump as json_dump
 from datetime import datetime
-import shutil
+from shutil import move, make_archive
 
 from archivist.archivist import Archivist
 from archivist.logger import set_logger
-#import archivist.dictmerge
+
+# import archivist.dictmerge
 
 # functions copied below because I was unable to import \
 # them from dictmerge, I believe it is a conflict because I have a copy \
@@ -60,7 +61,7 @@ def main():
     Summarize usage of RKVST.
     """
 
-    parser = argparse.ArgumentParser(description="RKVST Diagnostic Tool")
+    parser = ArgumentParser(description="RKVST Diagnostic Tool")
 
     parser.add_argument(
         "--url", "-u", default="https://app.rkvst.io", help="RKVST URL to access"
@@ -68,13 +69,13 @@ def main():
     parser.add_argument(
         "--client_id",
         "-c",
-        default=os.environ.get("RKVST_CLIENT_ID"),
+        default=environ.get("RKVST_CLIENT_ID"),
         help="Specify Application CLIENT_ID inline",
     )
     parser.add_argument(
         "--client_secret",
         "-s",
-        default=os.environ.get("RKVST_CLIENT_SECRET"),
+        default=environ.get("RKVST_CLIENT_SECRET"),
         help="Specify Application CLIENT_SECRET inline",
     )
 
@@ -155,40 +156,43 @@ def main():
     # Create directories for output storage
     directory_a = "total_estate"
     directory_b = "assets_with_associated_events"
-    parent_directory = os.path.abspath(os.getcwd())
-    path_a = os.path.join(parent_directory, directory_a)
-    path_b = os.path.join(path_a, directory_b)
-    os.makedirs(path_a, exist_ok=True)
-    os.makedirs(path_b, exist_ok=True)
+    parent_directory = path.abspath(getcwd())
+    path_a = path.join(parent_directory, directory_a)
+    path_b = path.join(path_a, directory_b)
+    makedirs(path_a, exist_ok=True)
+    makedirs(path_b, exist_ok=True)
 
     # Create a zip file containing detials of each asset, event, etc.
     estate_list = [assets, events, subjects, access_policies, summary_output]
     file_list = ["assets", "events", "subjects", "access_policies", "summary"]
     for item, name in zip(estate_list, file_list):
         with open(f"{name}.json", "w", encoding="utf8") as outfile:
-            json.dump(item, outfile, indent=4)
-        if os.path.exists(os.path.join(path_a, f"{name}.json")):
-            os.remove(os.path.join(path_a, f"{name}.json"))
-        shutil.move(os.path.join(parent_directory, f"{name}.json"), path_a)
+            json_dump(item, outfile, indent=4)
+        if path.exists(path.join(path_a, f"{name}.json")):
+            remove(path.join(path_a, f"{name}.json"))
+        move(path.join(parent_directory, f"{name}.json"), path_a)
 
     # Create folder with files for each asset and associated events.
     list_groups = []
     for asset in assets:
         event_list = []
         for event in events:
-            if asset["identity"] == event["asset_identity"]:
-                event_list.append(event)
+            #   if asset["identity"] == event["asset_identity"]:
+            #      event_list.append(event)
+            event_list = [
+                e for e in events if asset["identity"] == event["asset_identity"]
+            ]
         list_groups.append({str(asset["identity"]): event_list})
 
     for row in list_groups:
         file_name = [x.replace("/", "_") for x in row]
         with open(f"{file_name}.json", "w", encoding="utf8") as outfile:
-            json.dump(row, outfile, indent=4)
-        if os.path.exists(os.path.join(path_b, f"{file_name}.json")):
-            os.remove(os.path.join(path_b, f"{file_name}.json"))
-        shutil.move(os.path.join(parent_directory, f"{file_name}.json"), path_b)
+            json_dump(row, outfile, indent=4)
+        if path.exists(path.join(path_b, f"{file_name}.json")):
+            remove(path.join(path_b, f"{file_name}.json"))
+        move(path.join(parent_directory, f"{file_name}.json"), path_b)
 
-    shutil.make_archive("total_estate", "zip", "total_estate")
+    make_archive("total_estate", "zip", "total_estate")
 
     set_logger("DEBUG")
 
