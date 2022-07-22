@@ -78,6 +78,10 @@ class _TenanciesClient:
             identity (str): tenancies identity e.g. tenancies/xxxxxxxxxxxxxxxxxxxxxxx
                                                  or tenant/xxxxxxxxxxxxxxxxxxxxxxx
 
+        The tenant identity returned by most endpoints has the prefix 'tenant/'.
+        However the tenancies endpoint expects 'tenancies/'. This is a wart in the
+        archivist API and will be fixed at some future date.
+
         Returns:
             :class:`Tenant` instance
 

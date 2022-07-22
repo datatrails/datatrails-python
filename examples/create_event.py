@@ -27,7 +27,7 @@ def get_verified_domain(arch, identity):
 
     Args:
         arch: archivist connection.
-        asset: an asset
+        identity: an identity of a tenant
 
     Returns:
         verified_domain: name of the verified domain
