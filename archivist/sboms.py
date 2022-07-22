@@ -241,8 +241,8 @@ class _SBOMSClient:
 
         LOGGER.debug("Upload SBOM %s", params)
 
-        sbom = SBOM(
-            **self._archivist.post_file(
+        sbom = SBOM.from_dict(
+            self._archivist.post_file(
                 self._label,
                 fd,
                 mtype,
@@ -300,8 +300,8 @@ class _SBOMSClient:
             BOM
 
         """
-        return SBOM(
-            **self._archivist.get(f"{self._subpath}/{identity}/{SBOMS_METADATA}")
+        return SBOM.from_dict(
+            self._archivist.get(f"{self._subpath}/{identity}/{SBOMS_METADATA}")
         )
 
     def __params(self, metadata: Optional[Dict]) -> Dict:
@@ -336,7 +336,7 @@ class _SBOMSClient:
         """
         params = self.__params(metadata)
         return (
-            SBOM(**a)
+            SBOM.from_dict(a)
             for a in self._archivist.list(
                 f"{self._label}/{SBOMS_WILDCARD}",
                 SBOMS_LABEL,
@@ -359,8 +359,8 @@ class _SBOMSClient:
 
         """
         LOGGER.debug("Publish SBOM %s", identity)
-        sbom = SBOM(
-            **self._archivist.post(
+        sbom = SBOM.from_dict(
+            self._archivist.post(
                 f"{self._subpath}/{identity}:{SBOMS_PUBLISH}",
                 None,
             )
@@ -400,8 +400,8 @@ class _SBOMSClient:
 
         """
         LOGGER.debug("Withdraw SBOM %s", identity)
-        sbom = SBOM(
-            **self._archivist.post(
+        sbom = SBOM.from_dict(
+            self._archivist.post(
                 f"{self._subpath}/{identity}:{SBOMS_WITHDRAW}",
                 None,
             )

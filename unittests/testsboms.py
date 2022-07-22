@@ -49,6 +49,7 @@ PROPS = {
     "rkvst_link": "",
     "tenantid": "",
 }
+
 PUBLISHED_PROPS = {**PROPS, **{"published_date": "2021-11-11T17:02:06Z"}}
 WITHDRAWN_PROPS = {**PROPS, **{"withdrawn_date": "2021-11-11T17:02:06Z"}}
 
@@ -57,6 +58,11 @@ SUBPATH = f"{SBOMS_SUBPATH}/{SBOMS_LABEL}"
 RESPONSE = {
     **PROPS,
     "identity": IDENTITY,
+}
+# the extra field should be ignored
+EXTRA_RESPONSE = {
+    **RESPONSE,
+    "extra": "extra",
 }
 PUBLISHED_RESPONSE = {
     **PUBLISHED_PROPS,
@@ -68,16 +74,26 @@ WITHDRAWN_RESPONSE = {
 }
 
 
-class TestSBOMS(TestCase):
+class TestSBOMSBase(TestCase):
     """
-    Test Archivist SBOMS Create method
+    Test Archivist SBOMS
     """
 
     maxDiff = None
 
     def setUp(self):
         self.arch = Archivist("url", "authauthauth", max_time=1)
-        self.mockstream = BytesIO(b"somelongstring")
+
+    def tearDown(self):
+        self.arch = None
+
+
+class TestSBOMS(TestSBOMSBase):
+    """
+    Test Archivist SBOMS Create method
+    """
+
+    maxDiff = None
 
     def test_sboms_str(self):
         """
@@ -88,6 +104,42 @@ class TestSBOMS(TestCase):
             "SBOMSClient(url)",
             msg="Incorrect str",
         )
+
+    def test_sboms_from_dict(self):
+        """
+        Test sboms from_dict
+        """
+        self.assertEqual(
+            SBOM.from_dict(RESPONSE),
+            SBOM(**RESPONSE),
+            msg="Incorrect SBOM",
+        )
+
+    def test_sboms_from_dict_with_extra_field(self):
+        """
+        Test sboms from_dict
+        """
+        self.assertEqual(
+            SBOM.from_dict(EXTRA_RESPONSE),
+            SBOM(**RESPONSE),
+            msg="Incorrect SBOM",
+        )
+
+
+class TestSBOMSUploadDownload(TestSBOMSBase):
+    """
+    Test Archivist SBOMS Upload and Download
+    """
+
+    maxDiff = None
+
+    def setUp(self):
+        super().setUp()
+        self.mockstream = BytesIO(b"somelongstring")
+
+    def tearDown(self):
+        super().tearDown()
+        self.mockstream = None
 
     def test_sboms_upload_spdx(self):
         """

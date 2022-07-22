@@ -6,6 +6,7 @@
 # pylint:disable=too-many-instance-attributes
 
 from dataclasses import dataclass, asdict
+from inspect import signature as inspect_signature
 from logging import getLogger
 from typing import List
 
@@ -41,3 +42,12 @@ class SBOM:
         """Emit dictionary representation"""
         d = asdict(self)
         return d
+
+    @classmethod
+    def from_dict(cls, indict):
+        """Ignore unexpected fields"""
+        params = inspect_signature(cls).parameters
+        diff = set(indict) - set(params)
+        if diff:
+            LOGGER.info("WARN: extra keys %s ignored", diff)
+        return cls(**{k: indict[k] for k in params})
