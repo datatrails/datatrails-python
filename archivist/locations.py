@@ -22,18 +22,18 @@
 
 """
 
+from __future__ import annotations
 from copy import deepcopy
 from logging import getLogger
-from typing import Dict, Optional, Tuple
+from typing import Any, Optional, Tuple
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
 from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 from .utils import selector_signature
-from .type_aliases import NoneOnError
 
 
 LOGGER = getLogger(__name__)
@@ -47,7 +47,7 @@ class Location(dict):
     """
 
     @property
-    def name(self) -> NoneOnError[str]:
+    def name(self) -> str | None:
         """str: name of the location"""
         name = None
         try:
@@ -69,15 +69,17 @@ class _LocationsClient:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{LOCATIONS_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{LOCATIONS_SUBPATH}"
         self._label = f"{self._subpath}/{LOCATIONS_LABEL}"
 
     def __str__(self) -> str:
         return f"LocationsClient({self._archivist.url})"
 
-    def create(self, props: Dict, *, attrs: Optional[Dict] = None) -> Location:
+    def create(
+        self, props: dict[str, Any], *, attrs: Optional[dict[str, Any]] = None
+    ) -> Location:
         """Create location
 
         Creates location with defined properties and attributes.
@@ -93,7 +95,7 @@ class _LocationsClient:
         LOGGER.debug("Create Location %s", props)
         return self.create_from_data(self.__params(props, attrs))
 
-    def create_from_data(self, data: Dict) -> Location:
+    def create_from_data(self, data: dict[str, Any]) -> Location:
         """Create location
 
         Creates location with request body from data stream.
@@ -108,7 +110,7 @@ class _LocationsClient:
         """
         return Location(**self._archivist.post(self._label, data))
 
-    def create_if_not_exists(self, data: Dict) -> Tuple[Optional[Location], bool]:
+    def create_if_not_exists(self, data: dict[str, Any]) -> Tuple[Location, bool]:
         """
         Create a location if not already exists
 
@@ -137,7 +139,7 @@ class _LocationsClient:
             tuple of :class:`Location` instance, Boolean True if already exists
 
         """
-        location = None
+
         data = deepcopy(data)
         selector = data.pop("selector")  # must exist
         props, attrs = selector_signature(selector, data)
@@ -169,7 +171,9 @@ class _LocationsClient:
         """
         return Location(**self._archivist.get(f"{self._subpath}/{identity}"))
 
-    def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
+    def __params(
+        self, props: Optional[dict[str, Any]], attrs: Optional[dict[str, Any]]
+    ) -> dict[str, Any]:
         params = deepcopy(props) if props else {}
         if attrs:
             params["attributes"] = attrs
@@ -177,7 +181,10 @@ class _LocationsClient:
         return _deepmerge(self._archivist.fixtures.get(LOCATIONS_LABEL), params)
 
     def count(
-        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
+        self,
+        *,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> int:
         """Count locations.
 
@@ -197,8 +204,8 @@ class _LocationsClient:
         self,
         *,
         page_size: Optional[int] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ):
         """List locations.
 
@@ -225,7 +232,10 @@ class _LocationsClient:
         )
 
     def read_by_signature(
-        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
+        self,
+        *,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> Location:
         """Read location by signature.
 

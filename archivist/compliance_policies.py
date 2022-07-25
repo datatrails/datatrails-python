@@ -25,12 +25,13 @@
 
 """
 
+from __future__ import annotations
 from copy import deepcopy
 from logging import getLogger
-from typing import Dict, Optional, Union
+from typing import Any, Optional, Union
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .compliance_policy_requests import (
     CompliancePolicySince,
@@ -73,9 +74,9 @@ class _CompliancePoliciesClient:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{COMPLIANCE_POLICIES_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{COMPLIANCE_POLICIES_SUBPATH}"
         self._label = f"{self._subpath}/{COMPLIANCE_POLICIES_LABEL}"
 
     def __str__(self) -> str:
@@ -108,7 +109,7 @@ class _CompliancePoliciesClient:
         """
         return self.create_from_data(policy.dict())
 
-    def create_from_data(self, data: Dict) -> CompliancePolicy:
+    def create_from_data(self, data: dict[str, Any]) -> CompliancePolicy:
         """Create compliance_policy
 
         Creates compliance_policy with request body from data stream.
@@ -138,7 +139,7 @@ class _CompliancePoliciesClient:
         """
         return CompliancePolicy(**self._archivist.get(f"{self._subpath}/{identity}"))
 
-    def delete(self, identity: str) -> Dict:
+    def delete(self, identity: str) -> dict[str, Any]:
         """Delete Compliance Policy
 
         Deletes compliance policy.
@@ -153,14 +154,14 @@ class _CompliancePoliciesClient:
         """
         return self._archivist.delete(f"{self._subpath}/{identity}")
 
-    def __params(self, props: Optional[Dict]) -> Dict:
+    def __params(self, props: Optional[dict[str, Any]]) -> dict[str, Any]:
         params = deepcopy(props) if props else {}
         # pylint: disable=protected-access
         return _deepmerge(
             self._archivist.fixtures.get(COMPLIANCE_POLICIES_LABEL), params
         )
 
-    def count(self, *, props: Optional[Dict] = None) -> int:
+    def count(self, *, props: Optional[dict[str, Any]] = None) -> int:
         """Count compliance policies.
 
         Counts number of compliance policies that match criteria.
@@ -177,7 +178,9 @@ class _CompliancePoliciesClient:
             params=self.__params(props),
         )
 
-    def list(self, *, page_size: Optional[int] = None, props: Dict = None):
+    def list(
+        self, *, page_size: Optional[int] = None, props: Optional[dict[str, Any]] = None
+    ):
         """List compliance policies.
 
         Lists compliance policies that match criteria.
@@ -200,7 +203,7 @@ class _CompliancePoliciesClient:
             )
         )
 
-    def read_by_signature(self, *, props: Dict = None):
+    def read_by_signature(self, *, props: Optional[dict[str, Any]] = None):
         """Read compliance policy by signature.
 
         Reads compliance policy that meets criteria. Only one compliance policy is expected.

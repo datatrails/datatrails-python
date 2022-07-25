@@ -1,5 +1,11 @@
 version: '3'
 
+includes:
+  # Task file to be used inside the dev-containter   
+  dev:
+    taskfile: ./Taskfile_dev.yml
+    dir: ./ 
+
 tasks:
 
   about:
@@ -42,6 +48,7 @@ tasks:
       - ./scripts/builder.sh python3 --version
       - ./scripts/builder.sh pycodestyle --format=pylint setup.py archivist examples functests unittests
       - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc setup.py archivist examples functests unittests
+      - ./scripts/builder.sh python3 -m pyright archivist
 
   clean:
     desc: Clean git repo
@@ -65,6 +72,12 @@ tasks:
     deps: [about]
     cmds:
       - ./scripts/builder.sh black setup.py archivist examples functests unittests
+
+  type-check:
+    desc: Runs the pyright type checker against the core archivst files 
+    deps: [about]
+    cmds:
+      - ./scripts/builder.sh pyright archivist
 
   functests:
     desc: Run functests - requires an archivist instance and a authtoken

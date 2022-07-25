@@ -1,5 +1,6 @@
 # pylint:  disable=missing-docstring
 
+from __future__ import annotations
 from logging import getLogger
 from os import environ
 from sys import exit as sys_exit
@@ -9,13 +10,13 @@ from pyaml_env import parse_config
 from ... import about
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from ... import archivist as type_helper  # pylint:disable=unused-import
+from ... import archivist
 
 
 LOGGER = getLogger(__name__)
 
 
-def run(arch: "type_helper.Archivist", args):
+def run(arch: archivist.Archivist, args):
 
     LOGGER.info("Using version %s of jitsuin-archivist", about.__version__)
     LOGGER.info("Namespace %s", args.namespace)

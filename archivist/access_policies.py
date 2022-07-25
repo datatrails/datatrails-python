@@ -21,12 +21,13 @@
 
 """
 
-from typing import Dict, List, Optional
+from __future__ import annotations
 from logging import getLogger
 from copy import deepcopy
+from typing import Any, Generator, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .assets import Asset
 from .constants import (
@@ -35,7 +36,6 @@ from .constants import (
     ASSETS_LABEL,
 )
 from .dictmerge import _deepmerge
-from .type_aliases import NoneOnError
 
 
 LOGGER = getLogger(__name__)
@@ -45,7 +45,7 @@ class AccessPolicy(dict):
     """AccessPolicy object"""
 
     @property
-    def name(self) -> NoneOnError[str]:
+    def name(self) -> str | None:
         """str: name of the access policy"""
         return self.get("display_name")
 
@@ -61,16 +61,19 @@ class _AccessPoliciesClient:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{ACCESS_POLICIES_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{ACCESS_POLICIES_SUBPATH}"
         self._label = f"{self._subpath}/{ACCESS_POLICIES_LABEL}"
 
     def __str__(self) -> str:
         return f"AccessPoliciesClient({self._archivist.url})"
 
     def create(
-        self, props: Dict, filters: List, access_permissions: List
+        self,
+        props: dict[str, Any],
+        filters: list[dict[str, Any]],
+        access_permissions: list[dict[str, Any]],
     ) -> AccessPolicy:
         """Create access policy
 
@@ -92,7 +95,7 @@ class _AccessPoliciesClient:
             ),
         )
 
-    def create_from_data(self, data: Dict) -> AccessPolicy:
+    def create_from_data(self, data: dict[str, Any]) -> AccessPolicy:
         """Create access policy
 
         Creates access policy with request body from data stream.
@@ -130,9 +133,9 @@ class _AccessPoliciesClient:
         self,
         identity,
         *,
-        props: Optional[Dict] = None,
-        filters: Optional[List] = None,
-        access_permissions: Optional[List] = None,
+        props: Optional[dict[str, Any]] = None,
+        filters: Optional[list[dict]] = None,
+        access_permissions: Optional[list[dict]] = None,
     ) -> AccessPolicy:
         """Update Access Policy
 
@@ -157,7 +160,7 @@ class _AccessPoliciesClient:
             )
         )
 
-    def delete(self, identity: str) -> Dict:
+    def delete(self, identity: str) -> dict[str, Any]:
         """Delete Access Policy
 
         Deletes access policy.
@@ -173,11 +176,11 @@ class _AccessPoliciesClient:
 
     def __params(
         self,
-        props: Optional[Dict],
+        props: Optional[dict[str, Any]],
         *,
-        filters: Optional[List] = None,
-        access_permissions: Optional[List] = None,
-    ) -> Dict:
+        filters: list[dict] | None = None,
+        access_permissions: list[dict] | None = None,
+    ) -> dict[str, Any]:
         params = deepcopy(props) if props else {}
         if filters is not None:
             params["filters"] = filters
@@ -204,7 +207,7 @@ class _AccessPoliciesClient:
 
     def list(
         self, *, page_size: Optional[int] = None, display_name: Optional[str] = None
-    ):
+    ) -> Generator[AccessPolicy, None, None]:
         """List access policies.
 
         List access policies that match criteria.
@@ -231,7 +234,7 @@ class _AccessPoliciesClient:
     # additional queries on different endpoints
     def list_matching_assets(
         self, access_policy_id: str, *, page_size: Optional[int] = None
-    ):
+    ) -> Generator[Asset, None, None]:
         """List matching assets.
 
         List assets that match access policy.
@@ -255,7 +258,7 @@ class _AccessPoliciesClient:
 
     def list_matching_access_policies(
         self, asset_id: str, *, page_size: Optional[int] = None
-    ):
+    ) -> Generator[AccessPolicy, None, None]:
         """List matching access policies.
 
         List access policies that match asset.

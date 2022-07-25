@@ -9,7 +9,7 @@ from iso8601 import parse_date
 from rfc3339 import rfc3339
 
 
-def parse_timestamp(date_string):
+def parse_timestamp(date_string: str):
     """Parse an Archivist timestamp to a datetime object
 
     See https://pypi.org/project/iso8601/
@@ -24,7 +24,7 @@ def parse_timestamp(date_string):
     return parse_date(date_string)
 
 
-def make_timestamp(date_object):
+def make_timestamp(date_object: datetime):
     """Format a datetime object into an Archivist format timestamp string
 
     See https://pypi.org/project/rfc3339/

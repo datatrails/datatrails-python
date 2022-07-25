@@ -5,10 +5,10 @@
 # pylint:disable=too-few-public-methods
 # pylint:disable=too-many-instance-attributes
 
+from __future__ import annotations
 from dataclasses import dataclass, asdict
 from inspect import signature as inspect_signature
 from logging import getLogger
-from typing import List
 
 # NB: the order of the fields is important. Fields with default values must
 #    appear after fields without.
@@ -23,11 +23,11 @@ class SBOM:
     """
 
     identity: str
-    authors: List[str]
+    authors: list[str]
     supplier: str
     component: str
     version: str
-    hashes: List[str]
+    hashes: list[str]
     unique_id: str
     upload_date: str
     uploaded_by: str

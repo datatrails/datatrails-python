@@ -21,11 +21,12 @@
 
 """
 
+from __future__ import annotations
 from logging import getLogger
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 # pylint:disable=too-few-public-methods
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import (
     APPIDP_SUBPATH,
@@ -51,9 +52,9 @@ class _AppIDPClient:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{APPIDP_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{APPIDP_SUBPATH}"
         self._label = f"{self._subpath}/{APPIDP_LABEL}"
 
     def __str__(self) -> str:

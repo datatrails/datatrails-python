@@ -1,10 +1,11 @@
 """assets confirmer interface
 """
 
+from __future__ import annotations
 from logging import getLogger
 
 from copy import deepcopy
-from typing import overload
+from typing import Any, Optional, overload, Union
 
 import backoff
 
@@ -18,22 +19,29 @@ from .errors import ArchivistUnconfirmedError
 
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import assets  # pylint:disable=unused-import
-from . import events  # pylint:disable=unused-import
+from . import assets
+from . import events
 from .utils import backoff_handler
 
-MAX_TIME = 1200
 
+MAX_TIME = 1200
 LOGGER = getLogger(__name__)
+
+# pylint: disable=protected-access
+PublicManagers = Union[assets._AssetsPublic, events._EventsPublic]
+PrivateManagers = Union[assets._AssetsRestricted, events._EventsRestricted]
+Managers = Union[PublicManagers, PrivateManagers]
+
+ReturnTypes = Union[assets.Asset, events.Event]
 
 
 def __lookup_max_time():
     return MAX_TIME
 
 
-def __on_giveup_confirmation(details):
-    identity = details["args"][1]
-    elapsed = details["elapsed"]
+def __on_giveup_confirmation(details: dict[str, Any]):
+    identity: str = details["args"][1]
+    elapsed: str = details["elapsed"]
     raise ArchivistUnconfirmedError(
         f"confirmation for {identity} timed out after {elapsed} seconds"
     )
@@ -47,27 +55,38 @@ def __on_giveup_confirmation(details):
 
 @overload
 def _wait_for_confirmation(
-    self: "assets._AssetsPublic", identity: str
-) -> "assets.Asset":
+    self: assets._AssetsRestricted, identity: str
+) -> assets.Asset:
+    ...  # pragma: no cover
+
+
+@overload
+def _wait_for_confirmation(self: assets._AssetsPublic, identity: str) -> assets.Asset:
     ...  # pragma: no cover
 
 
 @overload
 def _wait_for_confirmation(
-    self: "events._EventsPublic", identity: str
-) -> "events.Event":
+    self: events._EventsRestricted, identity: str
+) -> events.Event:
+    ...  # pragma: no cover
+
+
+@overload
+def _wait_for_confirmation(self: events._EventsPublic, identity: str) -> events.Event:
     ...  # pragma: no cover
 
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,
+    logger=None,  # type: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_confirmation,
 )
-def _wait_for_confirmation(self, identity):
+def _wait_for_confirmation(self: Managers, identity: str) -> ReturnTypes:
     """Return None until entity is confirmed"""
+
     entity = self.read(identity)
 
     LOGGER.debug("entity %s", entity)
@@ -84,13 +103,13 @@ def _wait_for_confirmation(self, identity):
     if entity[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
         return entity
 
-    return None
+    return None  # type: ignore
 
 
-def __on_giveup_confirmed(details):
-    self = details["args"][0]
+def __on_giveup_confirmed(details: dict[str, Any]):
+    self: PrivateManagers = details["args"][0]
     count = self.pending_count
-    elapsed = details["elapsed"]
+    elapsed: int = details["elapsed"]
     raise ArchivistUnconfirmedError(
         f"{count} pending assets still present after {elapsed} seconds"
     )
@@ -98,12 +117,14 @@ def __on_giveup_confirmed(details):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,
+    logger=None,  # type: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_confirmed,
 )
-def _wait_for_confirmed(self, *, props=None, **kwargs) -> bool:
+def _wait_for_confirmed(
+    self: PrivateManagers, *, props: Optional[dict[str, Any]] = None, **kwargs: Any
+) -> bool:
     """Return False until all entities are confirmed"""
 
     # look for unconfirmed entities

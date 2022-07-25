@@ -21,10 +21,11 @@
 
 """
 
+from __future__ import annotations
 from logging import getLogger
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 
 LOGGER = getLogger(__name__)
@@ -42,8 +43,8 @@ class _CompositeClient:
     These mthods are not unittested and provided as a convenience.
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
 
     def __str__(self) -> str:
         return f"CompositeClient({self._archivist.url})"

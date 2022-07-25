@@ -21,12 +21,13 @@
 
 """
 
+from __future__ import annotations
 from logging import getLogger
-from typing import Dict, Optional, Tuple
+from typing import Any, Optional, Tuple
 from copy import deepcopy
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .asset import Asset
 from .constants import (
@@ -54,10 +55,10 @@ class _AssetsPublic:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._public = archivist.public
-        self._subpath = f"{archivist.root}/{ASSETS_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._public = archivist_instance.public
+        self._subpath = f"{archivist_instance.root}/{ASSETS_SUBPATH}"
 
     def __str__(self) -> str:
         return "AssetsPublic()"
@@ -97,14 +98,17 @@ class _AssetsRestricted(_AssetsPublic):
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        super().__init__(archivist)
+    def __init__(self, archivist_instance: archivist.Archivist):
+        super().__init__(archivist_instance)
         self._label = f"{self._subpath}/{ASSETS_LABEL}"
+        self.pending_count: int = 0
 
     def __str__(self) -> str:
         return f"AssetsRestricted({self._archivist.url})"
 
-    def __params(self, props: Optional[Dict], attrs: Optional[Dict]) -> Dict:
+    def __params(
+        self, props: Optional[dict[str, Any]], attrs: Optional[dict[str, Any]]
+    ) -> dict[str, Any]:
         params = deepcopy(props) if props else {}
         if attrs:
             params["attributes"] = attrs
@@ -114,8 +118,8 @@ class _AssetsRestricted(_AssetsPublic):
     def create(
         self,
         *,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
         confirm: bool = True,
     ) -> Asset:
         """Create asset
@@ -138,7 +142,7 @@ class _AssetsRestricted(_AssetsPublic):
         data = self.__params(newprops, attrs)
         return self.create_from_data(data, confirm=confirm)
 
-    def create_from_data(self, data: Dict, *, confirm: bool = True) -> Asset:
+    def create_from_data(self, data: dict[str, Any], *, confirm: bool = True) -> Asset:
         """Create asset
 
         Creates asset with request body from data stream.
@@ -159,7 +163,7 @@ class _AssetsRestricted(_AssetsPublic):
         return self.wait_for_confirmation(asset["identity"])
 
     def create_if_not_exists(
-        self, data: Dict, *, confirm: bool = True
+        self, data: dict[str, Any], *, confirm: bool = True
     ) -> Tuple[Asset, bool]:
         """
         Creates an asset and associated locations and attachments if asset
@@ -274,7 +278,10 @@ class _AssetsRestricted(_AssetsPublic):
         return confirmer._wait_for_confirmation(self, identity)
 
     def wait_for_confirmed(
-        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
+        self,
+        *,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> bool:
         """Wait for assets to be confirmed.
 
@@ -302,7 +309,10 @@ class _AssetsRestricted(_AssetsPublic):
         return confirmer._wait_for_confirmed(self, props=newprops, attrs=attrs)
 
     def count(
-        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
+        self,
+        *,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> int:
         """Count assets.
 
@@ -322,8 +332,8 @@ class _AssetsRestricted(_AssetsPublic):
         self,
         *,
         page_size: Optional[int] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ):
         """List assets.
 
@@ -349,7 +359,10 @@ class _AssetsRestricted(_AssetsPublic):
         )
 
     def read_by_signature(
-        self, *, props: Optional[Dict] = None, attrs: Optional[Dict] = None
+        self,
+        *,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
     ) -> Asset:
         """Read Asset by signature.
 
