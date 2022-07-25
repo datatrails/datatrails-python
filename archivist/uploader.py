@@ -1,11 +1,12 @@
 """uploader interface
 """
-
+from __future__ import annotations
 from logging import getLogger
 
 import backoff
 
 from .errors import ArchivistNotFoundError
+from . import sboms
 
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -30,17 +31,17 @@ def __on_giveup_uploading(details):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,
+    logger=None,  # type: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_uploading,
 )
-def _wait_for_uploading(self, identity):
+def _wait_for_uploading(self: sboms._SBOMSClient, identity: str) -> sboms.SBOM:
     """Return None until identity is found"""
     try:
         LOGGER.debug("Uploader Read %s", identity)
         entity = self.read(identity)
     except ArchivistNotFoundError:
-        return None
+        return None  # type: ignore
 
     return entity

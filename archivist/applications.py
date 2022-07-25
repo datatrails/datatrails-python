@@ -21,11 +21,12 @@
 
 """
 
+from __future__ import annotations
 from logging import getLogger
-from typing import Dict, Optional
+from typing import Any, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import (
     APPLICATIONS_SUBPATH,
@@ -53,15 +54,15 @@ class _ApplicationsClient:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{APPLICATIONS_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{APPLICATIONS_SUBPATH}"
         self._label = f"{self._subpath}/{APPLICATIONS_LABEL}"
 
     def __str__(self) -> str:
         return f"ApplicationsClient({self._archivist.url})"
 
-    def create(self, display_name: str, custom_claims: Dict) -> Application:
+    def create(self, display_name: str, custom_claims: dict[str, str]) -> Application:
         """Create application
 
         Creates application with defined attributes.
@@ -82,7 +83,7 @@ class _ApplicationsClient:
             ),
         )
 
-    def create_from_data(self, data: Dict) -> Application:
+    def create_from_data(self, data: dict[str, Any]) -> Application:
         """Create application
 
         Creates application with request body from data stream.
@@ -115,8 +116,8 @@ class _ApplicationsClient:
         self,
         identity: str,
         *,
-        display_name: str = None,
-        custom_claims: Optional[Dict] = None,
+        display_name: Optional[str] = None,
+        custom_claims: Optional[dict[str, str]] = None,
     ) -> Application:
         """Update Application
 
@@ -141,7 +142,7 @@ class _ApplicationsClient:
             )
         )
 
-    def delete(self, identity: str) -> Dict:
+    def delete(self, identity: str) -> dict[str, Any]:
         """Delete Application
 
         Deletes application.
@@ -159,8 +160,8 @@ class _ApplicationsClient:
         self,
         *,
         display_name: Optional[str] = None,
-        custom_claims: Optional[Dict] = None,
-    ) -> Dict:
+        custom_claims: Optional[dict[str, str]] = None,
+    ) -> dict[str, Any]:
 
         params = {}
 

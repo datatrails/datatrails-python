@@ -22,12 +22,13 @@
 
 """
 
+from __future__ import annotations
 from copy import deepcopy
 from logging import getLogger
-from typing import Dict, Optional
+from typing import Any, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import (
     ASSETS_SUBPATH,
@@ -52,21 +53,21 @@ class Event(dict):
     """
 
     @property
-    def when(self):
+    def when(self) -> str | None:
         """when
 
         Timestamp of event
 
         """
         try:
-            when = self["timestamp_declared"]
+            when: str = self["timestamp_declared"]
         except KeyError:
             pass
         else:
             return when
 
         try:
-            when = self["timestamp_accepted"]
+            when: str = self["timestamp_accepted"]
         except KeyError:
             pass
         else:
@@ -75,7 +76,7 @@ class Event(dict):
         return None
 
     @property
-    def who(self):
+    def who(self) -> str | None:
         """who
 
         Principal identity.
@@ -83,14 +84,14 @@ class Event(dict):
         """
 
         try:
-            who = self["principal_declared"]["display_name"]
+            who: str = self["principal_declared"]["display_name"]
         except (KeyError, TypeError):
             pass
         else:
             return who
 
         try:
-            who = self["principal_accepted"]["display_name"]
+            who: str = self["principal_accepted"]["display_name"]
         except (KeyError, TypeError):
             pass
         else:
@@ -110,10 +111,10 @@ class _EventsPublic:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._public = archivist.public
-        self._subpath = f"{archivist.root}/{ASSETS_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._public = archivist_instance.public
+        self._subpath = f"{archivist_instance.root}/{ASSETS_SUBPATH}"
 
     def __str__(self) -> str:
         return "EventsPublic()"
@@ -122,6 +123,7 @@ class _EventsPublic:
         """Return fully qualified identity
         If public then expect a full url as argument
         """
+
         if self._public:
             return identity
 
@@ -142,8 +144,11 @@ class _EventsPublic:
         return Event(**self._archivist.get(f"{self._identity(identity)}"))
 
     def _params(
-        self, props: Optional[Dict], attrs: Optional[Dict], asset_attrs: Optional[Dict]
-    ) -> Dict:
+        self,
+        props: Optional[dict[str, Any]],
+        attrs: Optional[dict[str, Any]],
+        asset_attrs: Optional[dict[str, Any]],
+    ) -> dict[str, Any]:
         params = deepcopy(props) if props else {}
         if attrs:
             params["event_attributes"] = attrs
@@ -156,9 +161,9 @@ class _EventsPublic:
         self,
         *,
         asset_id: Optional[str] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
-        asset_attrs: Optional[Dict] = None,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
+        asset_attrs: Optional[dict[str, Any]] = None,
     ) -> int:
         """Count events.
 
@@ -177,13 +182,17 @@ class _EventsPublic:
 
         # wildcarding not allowed when public - asset_id is required (not optional)
         # if asset_id is wildcarded a 401 will be returned from upstream
-        if not self._public:
-            asset_id = asset_id or ASSETS_WILDCARD
+        if not self._public and not asset_id:
+            asset_id = ASSETS_WILDCARD
 
+        # The type checker rightly points out in the case of an event being public but with no
+        # asset_id will cause issues in the _identity function and the count function
         LOGGER.debug("asset_id %s", asset_id)
-        LOGGER.debug("event_id %s", f"{self._identity(asset_id)}/{EVENTS_LABEL}")
+        LOGGER.debug(
+            "event_id %s", f"{self._identity(asset_id)}/{EVENTS_LABEL}"  # type:ignore
+        )
         return self._archivist.count(
-            f"{self._identity(asset_id)}/{EVENTS_LABEL}",
+            f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # type:ignore
             params=self._params(props, attrs, asset_attrs),
         )
 
@@ -192,9 +201,9 @@ class _EventsPublic:
         *,
         asset_id: Optional[str] = None,
         page_size: Optional[int] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
-        asset_attrs: Optional[Dict] = None,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
+        asset_attrs: Optional[dict[str, Any]] = None,
     ):
         """List events.
 
@@ -219,7 +228,7 @@ class _EventsPublic:
         return (
             Event(**a)
             for a in self._archivist.list(
-                f"{self._identity(asset_id)}/{EVENTS_LABEL}",
+                f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # type:ignore
                 EVENTS_LABEL,
                 page_size=page_size,
                 params=self._params(props, attrs, asset_attrs),
@@ -230,9 +239,9 @@ class _EventsPublic:
         self,
         *,
         asset_id: Optional[str] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
-        asset_attrs: Optional[Dict] = None,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
+        asset_attrs: Optional[dict[str, Any]] = None,
     ) -> Event:
         """Read event by signature.
 
@@ -255,7 +264,7 @@ class _EventsPublic:
 
         return Event(
             **self._archivist.get_by_signature(
-                f"{self._identity(asset_id)}/{EVENTS_LABEL}",
+                f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # type:ignore
                 EVENTS_LABEL,
                 params=self._params(props, attrs, asset_attrs),
             )
@@ -273,16 +282,20 @@ class _EventsRestricted(_EventsPublic):
 
     """
 
+    def __init__(self, archivist_instance: archivist.Archivist):
+        super().__init__(archivist_instance)
+        self.pending_count: int = 0
+
     def __str__(self) -> str:
         return f"EventsRestricted({self._archivist.url})"
 
     def create(
         self,
         asset_id: str,
-        props: Dict,
-        attrs: Dict,
+        props: dict[str, Any],
+        attrs: dict[str, Any],
         *,
-        asset_attrs: Optional[Dict] = None,
+        asset_attrs: Optional[dict[str, Any]] = None,
         confirm: bool = True,
     ) -> Event:
         """Create event
@@ -308,7 +321,9 @@ class _EventsRestricted(_EventsPublic):
             confirm=confirm,
         )
 
-    def create_from_data(self, asset_id: str, data: Dict, *, confirm=True) -> Event:
+    def create_from_data(
+        self, asset_id: str, data: dict[str, Any], *, confirm: bool = True
+    ) -> Event:
         """Create event
 
         Creates event for given asset from data.
@@ -367,7 +382,8 @@ class _EventsRestricted(_EventsPublic):
         if not confirm:
             return event
 
-        return self.wait_for_confirmation(event["identity"])
+        event_id: str = event["identity"]
+        return self.wait_for_confirmation(event_id)
 
     def wait_for_confirmation(self, identity: str) -> Event:
         """Wait for event to be confirmed.
@@ -389,9 +405,9 @@ class _EventsRestricted(_EventsPublic):
         self,
         *,
         asset_id: Optional[str] = None,
-        props: Optional[Dict] = None,
-        attrs: Optional[Dict] = None,
-        asset_attrs: Optional[Dict] = None,
+        props: Optional[dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
+        asset_attrs: Optional[dict[str, Any]] = None,
     ) -> bool:
         """Wait for events to be confirmed.
 

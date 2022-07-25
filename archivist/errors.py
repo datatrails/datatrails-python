@@ -8,6 +8,8 @@ import json
 from logging import getLogger
 from typing import Optional
 
+from requests import Response
+
 from .constants import HEADERS_RETRY_AFTER
 from .headers import _headers_get
 
@@ -90,7 +92,7 @@ class Archivist5xxError(ArchivistError):
     """Any other 5xx error"""
 
 
-def __identity(response):
+def __identity(response: Response) -> str:
     identity = "unknown"
     if response.request:
         LOGGER.debug("Request %s", response.request)
@@ -109,7 +111,7 @@ def __identity(response):
     return identity
 
 
-def __description(response):
+def __description(response: Response) -> str:
     status_code = response.status_code
     if status_code == 404:
         return f"{__identity(response)} not found ({status_code})"
@@ -119,7 +121,7 @@ def __description(response):
     return f"{url}: {text} ({status_code})"
 
 
-def _parse_response(response):
+def _parse_response(response: Response):
     """Parse REST response
 
     Validates REST response. This is a convenience function called

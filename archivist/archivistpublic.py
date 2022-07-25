@@ -22,10 +22,11 @@
 
 """
 
+from __future__ import annotations
 from logging import getLogger
 from collections import deque
 from copy import deepcopy
-from typing import BinaryIO, Dict, List, Optional
+from typing import Any, BinaryIO, Optional
 
 import requests
 from requests.models import Response
@@ -78,7 +79,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
     def __init__(
         self,
         *,
-        fixtures: Optional[Dict] = None,
+        fixtures: Optional[dict[str, Any]] = None,
         verify: bool = True,
         max_time: float = MAX_TIME,
     ):
@@ -97,7 +98,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
     def __str__(self) -> str:
         return "ArchivistPublic()"
 
-    def __getattr__(self, value: str):
+    def __getattr__(self, value: str) -> object:
         """Create endpoints on demand"""
         client = self.CLIENTS.get(value)
 
@@ -142,12 +143,12 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         return self._max_time
 
     @property
-    def fixtures(self) -> Dict:
+    def fixtures(self) -> dict[str, Any]:
         """dict: Contains predefined attributes for each endpoint"""
         return self._fixtures
 
     @fixtures.setter
-    def fixtures(self, fixtures: Dict):
+    def fixtures(self, fixtures: dict[str, Any]):
         """dict: Contains predefined attributes for each endpoint"""
         self._fixtures = _deepmerge(self._fixtures, fixtures)
 
@@ -158,7 +159,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
             max_time=self._max_time,
         )
 
-    def _add_headers(self, headers: Optional[Dict]) -> Dict:
+    def _add_headers(self, headers: Optional[dict]) -> dict[str, str]:
         if headers is not None:
             newheaders = {**headers}
         else:
@@ -174,9 +175,9 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         self,
         url: str,
         *,
-        headers: Optional[Dict] = None,
-        params: Optional[Dict] = None,
-    ) -> Dict:
+        headers: Optional[dict[str, str]] = None,
+        params: Optional[dict[str, Any]] = None,
+    ) -> dict[str, Any]:
         """GET method (REST)
 
         Args:
@@ -209,8 +210,8 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         url: str,
         fd: BinaryIO,
         *,
-        headers: Optional[Dict] = None,
-        params: Optional[Dict] = None,
+        headers: Optional[dict[str, str]] = None,
+        params: Optional[dict[str, Any]] = None,
     ) -> Response:
         """GET method (REST) - chunked
 
@@ -252,10 +253,10 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
     def __list(
         self,
         url: str,
-        params: Optional[Dict],
+        params: Optional[dict[str, Any]],
         *,
         page_size: Optional[int] = None,
-        headers: Optional[Dict] = None,
+        headers: Optional[dict[str, str]] = None,
     ) -> Response:
         if page_size is not None:
             if params is not None:
@@ -278,7 +279,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
 
         return response
 
-    def last_response(self, *, responses: int = 1) -> List[Response]:
+    def last_response(self, *, responses: int = 1) -> list[Response]:
         """Returns the requested number of response objects from the response ring buffer
 
         Args:
@@ -292,8 +293,13 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         return list(self._response_ring_buffer)[:responses]
 
     def get_by_signature(
-        self, url: str, field: str, params: Dict, *, headers: Optional[Dict] = None
-    ) -> Dict:
+        self,
+        url: str,
+        field: str,
+        params: dict[str, Any],
+        *,
+        headers: Optional[dict[str, str]] = None,
+    ) -> dict[str, Any]:
         """GET method (REST) with params string
 
         Reads an entity indirectly by searching for its signature
@@ -339,7 +345,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
 
         return records[0]
 
-    def count(self, url: str, *, params: Optional[Dict] = None) -> int:
+    def count(self, url: str, *, params: Optional[dict[str, Any]] = None) -> int:
         """GET method (REST) with params string
 
         Returns the count of objects that match params
@@ -363,7 +369,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
             headers={HEADERS_REQUEST_TOTAL_COUNT: "true"},
         )
 
-        count = _headers_get(response.headers, HEADERS_TOTAL_COUNT)  # type: ignore
+        count = _headers_get(response.headers, HEADERS_TOTAL_COUNT)
 
         if count is None:
             raise ArchivistHeaderError("Did not get a count in the header")
@@ -376,8 +382,8 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         field: str,
         *,
         page_size: Optional[int] = None,
-        params: Optional[Dict] = None,
-        headers: Optional[Dict] = None,
+        params: Optional[dict[str, Any]] = None,
+        headers: Optional[dict[str, str]] = None,
     ):
         """GET method (REST) with params string
 

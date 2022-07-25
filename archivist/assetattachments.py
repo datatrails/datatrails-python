@@ -24,15 +24,16 @@
 
 # pylint:disable=too-few-public-methods
 
+from __future__ import annotations
 from copy import deepcopy
 from logging import getLogger
-from typing import BinaryIO, Dict, Optional
+from typing import Any, BinaryIO, Optional
 from urllib.parse import urlparse
 
 from requests.models import Response
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import (
     SEP,
@@ -56,10 +57,10 @@ class _AssetAttachmentsClient:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._public = archivist.public
-        self._subpath = f"{archivist.root}/{ASSETATTACHMENTS_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._public = archivist_instance.public
+        self._subpath = f"{archivist_instance.root}/{ASSETATTACHMENTS_SUBPATH}"
         self._label = f"{self._subpath}/{ASSETATTACHMENTS_LABEL}"
 
     def __str__(self) -> str:
@@ -96,7 +97,7 @@ class _AssetAttachmentsClient:
 
         return f"{self._label}/{identity}/{uuid}"
 
-    def __params(self, params: Optional[Dict]) -> Dict:
+    def __params(self, params: Optional[dict[str, Any]]) -> dict[str, Any]:
         params = deepcopy(params) if params else {}
         # pylint: disable=protected-access
         return _deepmerge(self._archivist.fixtures.get(ATTACHMENTS_LABEL), params)
@@ -107,8 +108,8 @@ class _AssetAttachmentsClient:
         attachment_id: str,
         fd: BinaryIO,
         *,
-        params: Optional[Dict] = None,
-    ) -> dict:
+        params: Optional[dict[str, Any]] = None,
+    ) -> Response:
         """Read attachment
 
         Reads attachment into data sink (usually a file opened for write).
@@ -142,7 +143,7 @@ class _AssetAttachmentsClient:
         self,
         identity: str,
         attachment_id: str,
-    ) -> Response:
+    ) -> dict[str, Any]:
         """Read asset attachment info
 
         Reads asset attachment info

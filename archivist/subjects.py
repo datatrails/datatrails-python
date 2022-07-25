@@ -21,13 +21,14 @@
 
 """
 
+from __future__ import annotations
 from base64 import b64decode
 from json import loads as json_loads
 from logging import getLogger
-from typing import Dict, List, Optional
+from typing import Any, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import (
     SUBJECTS_SUBPATH,
@@ -57,16 +58,16 @@ class _SubjectsClient:
 
     maxDiff = None
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{SUBJECTS_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{SUBJECTS_SUBPATH}"
         self._label = f"{self._subpath}/{SUBJECTS_LABEL}"
 
     def __str__(self) -> str:
         return f"SubjectsClient({self._archivist.url})"
 
     def create(
-        self, display_name: str, wallet_pub_key: List, tessera_pub_key: List
+        self, display_name: str, wallet_pub_key: list[str], tessera_pub_key: list[str]
     ) -> Subject:
         """Create subject
 
@@ -108,7 +109,7 @@ class _SubjectsClient:
             subject["tessera_pub_key"],
         )
 
-    def create_from_data(self, data: Dict) -> Subject:
+    def create_from_data(self, data: dict[str, Any]) -> Subject:
         """Create subject
 
         Creates subject with request body from data stream.
@@ -124,7 +125,7 @@ class _SubjectsClient:
         LOGGER.debug("Create Subject from data %s", data)
         return Subject(**self._archivist.post(self._label, data))
 
-    def create_from_b64(self, data: Dict) -> Subject:
+    def create_from_b64(self, data: dict[str, Any]) -> Subject:
         """Create subject
 
         Creates subject with request body from b64 encoded string
@@ -189,9 +190,9 @@ class _SubjectsClient:
         self,
         identity: str,
         *,
-        display_name: str = None,
-        wallet_pub_key: Optional[List[str]] = None,
-        tessera_pub_key: Optional[List[str]] = None,
+        display_name: Optional[str] = None,
+        wallet_pub_key: Optional[list[str]] = None,
+        tessera_pub_key: Optional[list[str]] = None,
     ) -> Subject:
         """Update Subject
 
@@ -218,7 +219,7 @@ class _SubjectsClient:
             )
         )
 
-    def delete(self, identity: str) -> Dict:
+    def delete(self, identity: str) -> dict[str, Any]:
         """Delete Subject
 
         Deletes subject.
@@ -236,9 +237,9 @@ class _SubjectsClient:
         self,
         *,
         display_name: Optional[str] = None,
-        wallet_pub_key: Optional[List[str]] = None,
-        tessera_pub_key: Optional[List[str]] = None,
-    ) -> Dict:
+        wallet_pub_key: Optional[list[str]] = None,
+        tessera_pub_key: Optional[list[str]] = None,
+    ) -> dict[str, Any]:
 
         params = {}
 

@@ -3,19 +3,20 @@ Base runner class for interpreting yaml story files.
 
 """
 
+from __future__ import annotations
 from collections import defaultdict
 from functools import partialmethod
 from json import dumps as json_dumps
 from logging import getLogger
 from time import sleep as time_sleep
 from types import GeneratorType
-from typing import Dict, Optional, Tuple
+from typing import Any, Callable, Optional, Tuple
 from uuid import UUID
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 # pylint:disable=missing-function-docstring
 # pylint:disable=protected-access
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 from .errors import ArchivistError, ArchivistInvalidOperationError
 
 LOGGER = getLogger(__name__)
@@ -46,67 +47,67 @@ class _ActionMap(dict):
     #                                    a dictionary
     # similarly for location and subjects labels
     #
-    def __init__(self, archivist: "type_helper.Archivist"):
+    def __init__(self, archivist_instance: archivist.Archivist):
         super().__init__()
-        self.archivist = archivist
+        self._archivist = archivist_instance
 
         # please keep in alphabetical order
         self["ASSETS_ATTACHMENT_INFO"] = {
-            "action": archivist.attachments.info,
+            "action": self._archivist.attachments.info,
             "use_asset_label": "add_arg_identity",
         }
         self["ASSETS_COUNT"] = {
-            "action": archivist.assets.count,
+            "action": self._archivist.assets.count,
             "keywords": (
                 "props",
                 "attrs",
             ),
         }
         self["ASSETS_CREATE_IF_NOT_EXISTS"] = {
-            "action": archivist.assets.create_if_not_exists,
+            "action": self._archivist.assets.create_if_not_exists,
             "keywords": ("confirm",),
             "set_asset_label": True,
             "use_location_label": "add_data_location_identity",
         }
         self["ASSETS_CREATE"] = {
-            "action": archivist.assets.create_from_data,
+            "action": self._archivist.assets.create_from_data,
             "keywords": ("confirm",),
             "set_asset_label": True,
         }
         self["ASSETS_LIST"] = {
-            "action": archivist.assets.list,
+            "action": self._archivist.assets.list,
             "keywords": (
                 "props",
                 "attrs",
             ),
         }
         self["ASSETS_WAIT_FOR_CONFIRMED"] = {
-            "action": archivist.assets.wait_for_confirmed,
+            "action": self._archivist.assets.wait_for_confirmed,
             "keywords": (
                 "props",
                 "attrs",
             ),
         }
         self["COMPOSITE_ESTATE_INFO"] = {
-            "action": archivist.composite.estate_info,
+            "action": self._archivist.composite.estate_info,
         }
         self["COMPLIANCE_POLICIES_CREATE"] = {
-            "action": archivist.compliance_policies.create_from_data,
-            "delete": archivist.compliance_policies.delete,
+            "action": self._archivist.compliance_policies.create_from_data,
+            "delete": self._archivist.compliance_policies.delete,
         }
         self["COMPLIANCE_COMPLIANT_AT"] = {
-            "action": archivist.compliance.compliant_at,
+            "action": self._archivist.compliance.compliant_at,
             "keywords": ("report",),
             "use_asset_label": "add_arg_identity",
         }
         self["EVENTS_CREATE"] = {
-            "action": archivist.events.create_from_data,
+            "action": self._archivist.events.create_from_data,
             "keywords": ("confirm",),
             "use_asset_label": "add_arg_identity",
             "use_location_label": "add_data_location_identity",
         }
         self["EVENTS_COUNT"] = {
-            "action": archivist.events.count,
+            "action": self._archivist.events.count,
             "keywords": (
                 "asset_id",
                 "props",
@@ -116,7 +117,7 @@ class _ActionMap(dict):
             "use_asset_label": "add_kwarg_asset_identity",
         }
         self["EVENTS_LIST"] = {
-            "action": archivist.events.list,
+            "action": self._archivist.events.list,
             "keywords": (
                 "asset_id",
                 "props",
@@ -126,56 +127,56 @@ class _ActionMap(dict):
             "use_asset_label": "add_kwarg_asset_identity",
         }
         self["LOCATIONS_COUNT"] = {
-            "action": archivist.locations.count,
+            "action": self._archivist.locations.count,
             "keywords": (
                 "props",
                 "attrs",
             ),
         }
         self["LOCATIONS_CREATE_IF_NOT_EXISTS"] = {
-            "action": archivist.locations.create_if_not_exists,
+            "action": self._archivist.locations.create_if_not_exists,
             "keywords": ("confirm",),
             "set_location_label": True,
         }
         self["LOCATIONS_LIST"] = {
-            "action": archivist.locations.list,
+            "action": self._archivist.locations.list,
             "keywords": (
                 "props",
                 "attrs",
             ),
         }
         self["LOCATIONS_READ"] = {
-            "action": archivist.locations.read,
+            "action": self._archivist.locations.read,
             "use_location_label": "add_arg_identity",
         }
         self["SUBJECTS_COUNT"] = {
-            "action": archivist.subjects.count,
+            "action": self._archivist.subjects.count,
             "keywords": ("display_name",),
         }
         self["SUBJECTS_CREATE"] = {
-            "action": archivist.subjects.create_from_data,
-            "delete": archivist.subjects.delete,
+            "action": self._archivist.subjects.create_from_data,
+            "delete": self._archivist.subjects.delete,
             "set_subject_label": True,
         }
         self["SUBJECTS_CREATE_FROM_B64"] = {
-            "action": archivist.subjects.create_from_b64,
-            "delete": archivist.subjects.delete,
+            "action": self._archivist.subjects.create_from_b64,
+            "delete": self._archivist.subjects.delete,
             "set_subject_label": True,
         }
         self["SUBJECTS_DELETE"] = {
-            "action": archivist.subjects.delete,
+            "action": self._archivist.subjects.delete,
             "use_subject_label": "add_arg_identity",
         }
         self["SUBJECTS_LIST"] = {
-            "action": archivist.subjects.list,
+            "action": self._archivist.subjects.list,
             "keywords": ("display_name",),
         }
         self["SUBJECTS_READ"] = {
-            "action": archivist.subjects.read,
+            "action": self._archivist.subjects.read,
             "use_subject_label": "add_arg_identity",
         }
         self["SUBJECTS_UPDATE"] = {
-            "action": archivist.subjects.update,
+            "action": self._archivist.subjects.update,
             "keywords": (
                 "display_name",
                 "wallet_pub_key",
@@ -184,11 +185,11 @@ class _ActionMap(dict):
             "use_subject_label": "add_arg_identity",
         }
         self["SUBJECTS_WAIT_FOR_CONFIRMATION"] = {
-            "action": archivist.subjects.wait_for_confirmation,
+            "action": self._archivist.subjects.wait_for_confirmation,
             "use_subject_label": "add_arg_identity",
         }
 
-    def ops(self, action_name: str) -> Dict:
+    def ops(self, action_name: str) -> dict[str, Any]:
         """
         Get valid entry in map
         """
@@ -197,14 +198,14 @@ class _ActionMap(dict):
             raise ArchivistInvalidOperationError(f"Illegal Action '{action_name}'")
         return ops
 
-    def action(self, action_name: str) -> Dict:
+    def action(self, action_name: str) -> Callable:
         """
         Get valid action in map
         """
         # if an exception occurs here then the dict initialised above is faulty.
-        return self.ops(action_name).get("action")
+        return self.ops(action_name).get("action")  # type: ignore
 
-    def keywords(self, action_name: str) -> Tuple:
+    def keywords(self, action_name: str) -> Tuple | None:
         """
         Get keywords in map
         """
@@ -224,15 +225,15 @@ class _ActionMap(dict):
 
 
 class _Step(dict):  # pylint:disable=too-many-instance-attributes
-    def __init__(self, archivist: "type_helper.Archivist", **kwargs):
+    def __init__(self, archivist_instance: archivist.Archivist, **kwargs):
         super().__init__(**kwargs)
-        self._archivist = archivist
-        self._args = None
-        self._kwargs = None
+        self._archivist = archivist_instance
+        self._args: list[Any] = []
+        self._kwargs: dict[str, Any] = {}
         self._actions = None
         self._action = None
         self._action_name = None
-        self._data = None
+        self._data = {}
         self._keywords = None
         self._delete_method = None
         self._labels = {}
@@ -313,10 +314,10 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
 
     def identity_from_label(self, noun, identity_method):
         label = self.get(f"{noun}_label")
-        if not label.startswith(f"{noun}s/"):
+        if not label.startswith(f"{noun}s/"):  # type: ignore
             return identity_method(label)
 
-        uid = label.split("/")[1]
+        uid = label.split("/")[1]  # type: ignore
         try:
             _ = UUID(uid, version=4)
         except ValueError:
@@ -357,7 +358,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         return self._actions
 
     @property
-    def action(self):
+    def action(self) -> Callable:
         if self._action is None:
             self._action = self.actions.action(self.action_name)
 
@@ -394,15 +395,15 @@ class _Runner:
     ArchivistRunner takes a url, token_file.
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self.entities = None
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self.entities: defaultdict
         self.deletions = {}
 
     def __str__(self) -> str:
         return f"Runner({self._archivist.url})"
 
-    def __call__(self, config: Dict):
+    def __call__(self, config: dict[str, Any]):
         """
         The dict config contains a list of `steps` to be performed serially, e.g.
 
@@ -438,7 +439,7 @@ class _Runner:
         except (ArchivistError, KeyError) as ex:
             LOGGER.info("Runner exception %s", ex)
 
-    def run_steps(self, config: Dict):
+    def run_steps(self, config: dict[str, Any]):
         """Runs all defined steps in self.config."""
         self.entities = tree()
         for step in config["steps"]:
@@ -447,7 +448,7 @@ class _Runner:
         self.delete()
         self._archivist.close()
 
-    def run_step(self, step: Dict):
+    def run_step(self, step: dict[str, Any]):
         """Runs a step given parameters and the type of step.
 
         Args:
@@ -477,7 +478,7 @@ class _Runner:
             if s.label("set", noun) and label is not None:
                 self.entities[label] = response
 
-    def set_deletions(self, response: Dict, delete_method):
+    def set_deletions(self, response: dict[str, Any], delete_method):
         """sets entry to be deleted"""
 
         if delete_method is not None:

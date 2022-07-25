@@ -1,6 +1,7 @@
 """Some convenience stuff
 """
 
+from __future__ import annotations
 from io import BytesIO
 from logging import getLogger
 from typing import Tuple
@@ -85,7 +86,7 @@ def get_auth(
     return None
 
 
-def selector_signature(selector: list, data: dict) -> Tuple[dict, dict]:
+def selector_signature(selector: list, data: dict) -> Tuple[dict, dict | None]:
     """
     Convert a selector to a signature for list and count methods
 

@@ -29,11 +29,11 @@
     attachments, IAM subjects and IAM access policies documented elsewhere.
 
 """
-
+from __future__ import annotations
 from logging import getLogger
 from copy import deepcopy
 from time import time
-from typing import BinaryIO, Dict, Optional, Union
+from typing import Any, BinaryIO, Optional, Tuple
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
@@ -66,7 +66,6 @@ from .sboms import _SBOMSClient
 from .subjects import _SubjectsClient
 from .tenancies import _TenanciesClient
 
-from .type_aliases import MachineAuth
 
 LOGGER = getLogger(__name__)
 
@@ -79,7 +78,8 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
 
     Args:
         url (str): URL of archivist endpoint
-        auth: string representing JWT token.
+        auth: string representing JWT token, or a Tuple pair representing an
+        Appregistration ID and secret.
         verify: if True the certificate is verified
         max_time (float): maximum time in seconds to wait for confirmation
 
@@ -107,9 +107,9 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     def __init__(
         self,
         url: str,
-        auth: Union[None, str, MachineAuth],
+        auth: str | Tuple[str, str] | None,
         *,
-        fixtures: Optional[Dict] = None,
+        fixtures: Optional[dict[str, dict[Any, Any]]] = None,
         verify: bool = True,
         max_time: float = MAX_TIME,
     ):
@@ -120,13 +120,11 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         )
 
         if isinstance(auth, tuple):
+            self._machine_auth = auth
             self._auth = None
-            self._client_id = auth[0]
-            self._client_secret = auth[1]
         else:
             self._auth = auth
-            self._client_id = None
-            self._client_secret = None
+            self._machine_auth = None
 
         self._expires_at = 0
         if url.endswith("/"):
@@ -155,7 +153,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     def __str__(self) -> str:
         return f"Archivist({self._url})"
 
-    def __getattr__(self, value: str):
+    def __getattr__(self, value: str) -> object:
         """Create endpoints on demand"""
         LOGGER.debug("getattr %s", value)
         client = self.CLIENTS.get(value)
@@ -183,20 +181,24 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         return self._root
 
     @property
-    def auth(self) -> str:
-        """str: authorization token."""
-        if self._client_id is not None and self._expires_at < time():
-            apptoken = self.appidp.token(self._client_id, self._client_secret)  # type: ignore
+    def auth(self) -> str | None:
+        """str: authorization token"""
+
+        if self._auth is None and self._machine_auth is None:
+            return None
+
+        if self._machine_auth and self._expires_at < time():
+            apptoken = self.appidp.token(*self._machine_auth)
             self._auth = apptoken.get("access_token")
             if self._auth is None:
                 raise ArchivistError("Auth token from client id,secret is invalid")
             self._expires_at = time() + apptoken["expires_in"] - 10  # fudge factor
             LOGGER.info("Refresh token")
 
-        return self._auth  # type: ignore
+        return self._auth
 
     @property
-    def Public(self):  # pylint: disable=invalid-name
+    def Public(self) -> ArchivistPublic:  # pylint: disable=invalid-name
         """Get a Public instance"""
         return ArchivistPublic(
             fixtures=deepcopy(self._fixtures),
@@ -204,7 +206,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             max_time=self._max_time,
         )
 
-    def __copy__(self):
+    def __copy__(self) -> Archivist:
         return Archivist(
             self._url,
             self.auth,
@@ -213,8 +215,9 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             max_time=self._max_time,
         )
 
-    def _add_headers(self, headers: Optional[Dict]) -> Dict:
-        if headers is not None:
+    def _add_headers(self, headers: dict[str, str] | None) -> dict[str, Any]:
+
+        if isinstance(headers, dict):
             newheaders = {**headers}
         else:
             newheaders = {}
@@ -232,11 +235,11 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     def post(
         self,
         url: str,
-        request: Optional[Dict],
+        request: dict[str, Any] | None,
         *,
-        headers: Optional[Dict] = None,
-        data: Optional[bool] = False,
-    ) -> Dict:
+        headers: Optional[dict[str, Any]] = None,
+        data: dict[str, Any] | bool = False,
+    ) -> dict[str, Any]:
         """POST method (REST)
 
         Creates an entity
@@ -275,11 +278,11 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         self,
         url: str,
         fd: BinaryIO,
-        mtype: str,
+        mtype: str | None,
         *,
-        form: Optional[str] = "file",
-        params: Optional[Dict] = None,
-    ) -> Dict:
+        form: str = "file",
+        params: Optional[dict] = None,
+    ) -> dict[str, Any]:
         """POST method (REST) - upload binary
 
         Uploads a file to an endpoint
@@ -319,7 +322,9 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         return response.json()
 
     @retry_429
-    def delete(self, url: str, *, headers: Optional[Dict] = None) -> Dict:
+    def delete(
+        self, url: str, *, headers: Optional[dict[str, Any]] = None
+    ) -> dict[str, Any]:
         """DELETE method (REST)
 
         Deletes an entity
@@ -349,10 +354,10 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     def patch(
         self,
         url: str,
-        request: Dict,
+        request: dict[str, Any],
         *,
-        headers: Optional[Dict] = None,
-    ) -> Dict:
+        headers: Optional[dict[str, Any]] = None,
+    ) -> dict[str, Any]:
         """PATCH method (REST)
 
         Updates the specified entity.

@@ -50,7 +50,7 @@ class EnumAction(argparse.Action):
 
     def __call__(self, parser, namespace, values, option_string=None):
         # Convert value back into an Enum
-        value = self._enum[values]
+        value = self._enum[values]  # type: ignore
         setattr(namespace, self.dest, value)
 
 

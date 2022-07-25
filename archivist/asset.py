@@ -1,8 +1,7 @@
 """Asset data class
 
 """
-
-from .type_aliases import NoneOnError
+from __future__ import annotations
 
 
 class Asset(dict):
@@ -13,7 +12,7 @@ class Asset(dict):
     """
 
     @property
-    def primary_image(self) -> NoneOnError[str]:
+    def primary_image(self) -> str | None:
         """Primary Image
 
         Attachment that is the primary image of the asset.
@@ -40,7 +39,7 @@ class Asset(dict):
         return None
 
     @property
-    def name(self) -> NoneOnError[str]:
+    def name(self) -> str | None:
         """str: name of the asset"""
         name = None
         try:

@@ -4,8 +4,8 @@
 
 """
 
+from __future__ import annotations
 from dataclasses import dataclass, asdict
-from typing import List
 
 from .compliance_policy_type import CompliancePolicyType
 from .or_dict import and_list
@@ -23,7 +23,7 @@ class CompliancePolicyBase:
 
     description: str
     display_name: str
-    asset_filter: List[List]
+    asset_filter: list[list]
 
     def dict(self):
         """Emit dictionary representation"""
@@ -88,7 +88,7 @@ class CompliancePolicyRichness(CompliancePolicyBase):
     complies with a set of assertions.
     """
 
-    richness_assertions: List[List]
+    richness_assertions: list[list]
     compliance_type: str = CompliancePolicyType.COMPLIANCE_RICHNESS.name
 
     def dict(self):

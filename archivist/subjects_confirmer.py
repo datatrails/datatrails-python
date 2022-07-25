@@ -1,9 +1,11 @@
 """assets confirmer interface
 """
 
+from __future__ import annotations
 from logging import getLogger
-
 import backoff
+
+from . import subjects
 
 from .constants import (
     CONFIRMATION_CONFIRMED,
@@ -34,18 +36,20 @@ def __on_giveup_confirmation(details):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,
+    logger=None,  # type: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_confirmation,
 )
-def _wait_for_confirmation(self, identity):
+def _wait_for_confirmation(
+    self: subjects._SubjectsClient, identity: str
+) -> subjects.Subject:
     """Return None until subjects is confirmed"""
     subject = self.read(identity)
     if CONFIRMATION_STATUS not in subject:
-        return None
+        return None  # type: ignore
 
     if subject[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
         return subject
 
-    return None
+    return None  # type: ignore

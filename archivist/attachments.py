@@ -24,15 +24,16 @@
 
 # pylint:disable=too-few-public-methods
 
+from __future__ import annotations
 from copy import deepcopy
 from io import BytesIO
 from logging import getLogger
-from typing import BinaryIO, Dict, Optional
+from typing import BinaryIO, Optional, Any
 
 from requests.models import Response
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import (
     ATTACHMENTS_SUBPATH,
@@ -63,15 +64,15 @@ class _AttachmentsClient:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{ATTACHMENTS_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{ATTACHMENTS_SUBPATH}"
         self._label = f"{self._subpath}/{ATTACHMENTS_LABEL}"
 
     def __str__(self) -> str:
         return f"AttachmentsClient({self._archivist.url})"
 
-    def create(self, data: Dict) -> Dict:  # pragma: no cover
+    def create(self, data: dict[str, Any]) -> dict[str, Any]:  # pragma: no cover
         """
         Create an attachment and return struct suitable for use in an asset
         or event creation.
@@ -136,7 +137,7 @@ class _AttachmentsClient:
 
         return result
 
-    def upload(self, fd: BinaryIO, *, mtype: str = None) -> Attachment:
+    def upload(self, fd: BinaryIO, *, mtype: Optional[str] = None) -> Attachment:
         """Create attachment
 
         Creates attachment from opened file or other data source.
@@ -159,7 +160,7 @@ class _AttachmentsClient:
             )
         )
 
-    def __params(self, params: Optional[Dict]) -> Dict:
+    def __params(self, params: Optional[dict[str, Any]]) -> dict[str, Any]:
         params = deepcopy(params) if params else {}
         # pylint: disable=protected-access
         return _deepmerge(self._archivist.fixtures.get(ATTACHMENTS_LABEL), params)
@@ -169,8 +170,8 @@ class _AttachmentsClient:
         identity: str,
         fd: BinaryIO,
         *,
-        params: Optional[Dict] = None,
-    ) -> dict:
+        params: Optional[dict[str, Any]] = None,
+    ) -> Response:
         """Read attachment
 
         Reads attachment into data sink (usually a file opened for write)..
@@ -195,7 +196,7 @@ class _AttachmentsClient:
     def info(
         self,
         identity: str,
-    ) -> Response:
+    ) -> dict[str, Any]:
         """Read attachment info
 
         Reads attachment info

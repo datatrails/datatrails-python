@@ -24,7 +24,8 @@
 
 # pylint:disable=too-few-public-methods
 
-from typing import BinaryIO, Dict, Optional
+from __future__ import annotations
+from typing import BinaryIO, Optional, Any
 from copy import deepcopy
 from io import BytesIO
 from logging import getLogger
@@ -33,7 +34,7 @@ from requests.models import Response
 from xmltodict import parse as xmltodict_parse
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import (
     SBOMS_SUBPATH,
@@ -62,16 +63,16 @@ class _SBOMSClient:
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{SBOMS_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{SBOMS_SUBPATH}"
         self._label = f"{self._subpath}/{SBOMS_LABEL}"
 
     def __str__(self) -> str:
         return f"SBOMSClient({self._archivist.url})"
 
     @staticmethod
-    def parse(data: Dict) -> Dict:  # pragma: no cover
+    def parse(data: dict[str, Any]) -> dict[str, Any]:  # pragma: no cover
         """
         parse the sbom and extract pertinent information
 
@@ -133,7 +134,7 @@ class _SBOMSClient:
 
         return result
 
-    def create(self, data: Dict) -> Dict:  # pragma: no cover
+    def create(self, data: dict[str, Any]) -> dict[str, Any]:  # pragma: no cover
         """
         Create an sbom and return struct suitable for use in an asset
         or event creation.
@@ -220,7 +221,7 @@ class _SBOMSClient:
         *,
         confirm: bool = True,
         mtype: Optional[str] = None,
-        params: Optional[Dict] = None,
+        params: Optional[dict[str, Any]] = None,
     ) -> SBOM:
         """Create SBOM
 
@@ -269,7 +270,7 @@ class _SBOMSClient:
         """
         uploader.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
-        return uploader._wait_for_uploading(self, identity)  # type: ignore
+        return uploader._wait_for_uploading(self, identity)
 
     def download(self, identity: str, fd: BinaryIO) -> Response:
         """Read SBOM
@@ -304,7 +305,7 @@ class _SBOMSClient:
             self._archivist.get(f"{self._subpath}/{identity}/{SBOMS_METADATA}")
         )
 
-    def __params(self, metadata: Optional[Dict]) -> Dict:
+    def __params(self, metadata: Optional[dict[str, Any]]) -> dict[str, Any]:
         params = deepcopy(metadata) if metadata else {}
         return _deepmerge(self._archivist.fixtures.get(SBOMS_LABEL), params)
 
@@ -312,7 +313,7 @@ class _SBOMSClient:
         self,
         *,
         page_size: Optional[int] = None,
-        metadata: Optional[Dict] = None,
+        metadata: Optional[dict[str, Any]] = None,
     ):
         """List SBOMS.
 
@@ -384,7 +385,7 @@ class _SBOMSClient:
         """
         publisher.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
-        return publisher._wait_for_publication(self, identity)  # type: ignore
+        return publisher._wait_for_publication(self, identity)
 
     def withdraw(self, identity: str, confirm: bool = True) -> SBOM:
         """Withdraw SBOM
@@ -425,4 +426,4 @@ class _SBOMSClient:
         """
         withdrawer.MAX_TIME = self._archivist.max_time
         # pylint: disable=protected-access
-        return withdrawer._wait_for_withdrawn(self, identity)  # type: ignore
+        return withdrawer._wait_for_withdrawn(self, identity)

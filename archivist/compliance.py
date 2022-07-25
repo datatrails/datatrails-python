@@ -21,11 +21,12 @@
 
 """
 
+from __future__ import annotations
 from logging import getLogger
-from typing import Optional
+from typing import Any, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist as type_helper  # pylint:disable=unused-import
+from . import archivist
 
 from .constants import (
     COMPLIANCE_SUBPATH,
@@ -56,9 +57,9 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
 
     """
 
-    def __init__(self, archivist: "type_helper.Archivist"):
-        self._archivist = archivist
-        self._subpath = f"{archivist.root}/{COMPLIANCE_SUBPATH}"
+    def __init__(self, archivist_instance: archivist.Archivist):
+        self._archivist = archivist_instance
+        self._subpath = f"{archivist_instance.root}/{COMPLIANCE_SUBPATH}"
         self._label = f"{self._subpath}/{COMPLIANCE_LABEL}"
 
     def __str__(self) -> str:
@@ -95,7 +96,7 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
             self.compliant_at_report(response)
         return Compliance(**response)
 
-    def compliant_at_report(self, compliance: Compliance):
+    def compliant_at_report(self, compliance: dict[str, Any]):
         """
         Prints report of compliance_at request
 
