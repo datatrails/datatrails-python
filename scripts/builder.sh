@@ -7,6 +7,12 @@
 #     ./scripts/builder.sh /bin/bash   # for shell
 #     ./scripts/builder.sh             # enters python REPL
 
+if [ "$USER" = "builder" -o "$USER" = "vscode" ]
+then
+    "$@"
+    exit 0
+fi
+
 docker run \
     --rm -it \
     -v $(pwd):/home/builder \

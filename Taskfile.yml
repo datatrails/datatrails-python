@@ -1,11 +1,5 @@
 version: '3'
 
-includes:
-  # Task file to be used inside the dev-containter   
-  dev:
-    taskfile: ./Taskfile_dev.yml
-    dir: ./ 
-
 tasks:
 
   about:
@@ -24,31 +18,31 @@ tasks:
   builder:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - docker build --no-cache --build-arg VERSION=3.7 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+      - ./scripts/build.sh "3.7"
 
   builder-3.8:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - docker build --no-cache --build-arg VERSION=3.8 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+      - ./scripts/build.sh "3.8"
 
   builder-3.9:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - docker build --no-cache --build-arg VERSION=3.9 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+      - ./scripts/build.sh "3.9"
 
   builder-3.10:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - docker build --no-cache --build-arg VERSION=3.10 -f Dockerfile-builder -t jitsuin-archivist-python-builder .
+      - ./scripts/build.sh "3.10"
 
   check:
     desc: Check the style, bug and quality of the code
     deps: [about]
     cmds:
       - ./scripts/builder.sh python3 --version
+      - ./scripts/builder.sh python3 -m pyright archivist
       - ./scripts/builder.sh pycodestyle --format=pylint setup.py archivist examples functests unittests
       - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc setup.py archivist examples functests unittests
-      - ./scripts/builder.sh python3 -m pyright archivist
 
   clean:
     desc: Clean git repo

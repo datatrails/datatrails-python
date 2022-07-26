@@ -154,13 +154,19 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         return f"Archivist({self._url})"
 
     def __getattr__(self, value: str) -> object:
-        """Create endpoints on demand"""
+        """Create endpoints on demand
+
+        This only gets called when an atribute is not found.
+        In this case the client attribute in question may not exist.
+        """
         LOGGER.debug("getattr %s", value)
         client = self.CLIENTS.get(value)
 
         if client is None:
             raise AttributeError
 
+        # set attribute so the method is no longer called for this
+        # particular client
         c = client(self)
         super().__setattr__(value, c)
         return c
