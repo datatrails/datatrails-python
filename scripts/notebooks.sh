@@ -2,6 +2,13 @@
 #
 # run jupyter notebooks
 #
+
+if [ "$USER" = "builder" -o "$USER" = "vscode" ]
+then
+    echo "Cannot run notebooks inside container"
+    exit 0
+fi
+
 docker run --rm -it \
     -v $(pwd):/home/builder \
     -u $(id -u):$(id -g) \

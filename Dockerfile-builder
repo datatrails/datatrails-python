@@ -9,9 +9,15 @@ FROM python:${VERSION}-bullseye
 #
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN curl -fsSOL https://taskfile.dev/install.sh \
+  && sh install.sh \
+  && rm -f install.sh
+
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+
 RUN apt-get update \
   && apt-get upgrade -y --no-install-recommends \
-  && apt-get install -y libenchant-2-2 \
+  && apt-get install -y nodejs libenchant-2-2 \
   && apt-get autoremove \
   && apt-get autoclean \
   && apt-get clean \
