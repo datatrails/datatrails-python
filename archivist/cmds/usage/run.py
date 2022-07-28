@@ -1,5 +1,6 @@
 """Run RKVST usage summary script."""
 
+from contextlib import suppress
 from logging import getLogger
 from sys import exit as sys_exit
 
@@ -7,12 +8,14 @@ from os import path, makedirs, remove, getcwd
 from json import dump as json_dump
 from datetime import datetime
 from shutil import move, make_archive
+from contextlib import suppress
 
 from archivist.dictmerge import (
     assets_ext_attr,
     attachment_identities_assets,
     events_ext_attr,
     attachment_identities_events,
+    _deepmerge,
 )
 
 LOGGER = getLogger(__name__)
@@ -33,8 +36,13 @@ def run(arch, args):
     assets_with_location = list(
         arch.assets.list(
             props=props,
-            attrs=dict(
-                list(attrs.items()) + list({"arc_home_location_identity": "*"}.items())
+            attrs=_deepmerge(
+                attrs,
+                [
+                    a
+                    for a in assets
+                    if a.get("attributes", {}).get("arc_home_location_identity")
+                ],
             ),
         )
     )
@@ -43,7 +51,14 @@ def run(arch, args):
     assets_with_attachments = list(
         arch.assets.list(
             props=props,
-            attrs=dict(list(attrs.items()) + list({"arc_attachments": "*"}.items())),
+            attrs=_deepmerge(
+                attrs,
+                [
+                    a
+                    for a in assets
+                    if a.get("attributes", {}).get("arc_attachments").get("arc_attachment_identity")
+                ],
+            ),
         )
     )
     total_attachments_assets = attachment_identities_assets(assets_with_attachments)
@@ -58,7 +73,14 @@ def run(arch, args):
     events_with_attachments = list(
         arch.events.list(
             props=props,
-            attrs=dict(list(attrs.items()) + list({"arc_attachments": "*"}.items())),
+            attrs=_deepmerge(
+                attrs,
+                [
+                    e
+                    for e in events
+                    if e.get("event_attributes", {}).get("arc_attachments").get("arc_attachment_identity")
+                ],
+            ),
         )
     )
     total_attachments_events = attachment_identities_events(events_with_attachments)
@@ -102,7 +124,7 @@ def run(arch, args):
     for item, name in zip(estate_list, file_list):
         with open(f"{name}.json", "w", encoding="utf8") as outfile:
             json_dump(item, outfile, indent=4)
-        if path.exists(path.join(path_a, f"{name}.json")):
+        with suppress(FileNotFoundError):
             remove(path.join(path_a, f"{name}.json"))
         move(path.join(parent_directory, f"{name}.json"), path_a)
 
