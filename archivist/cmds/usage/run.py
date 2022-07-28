@@ -8,7 +8,6 @@ from os import path, makedirs, remove, getcwd
 from json import dump as json_dump
 from datetime import datetime
 from shutil import move, make_archive
-from contextlib import suppress
 
 from archivist.dictmerge import (
     assets_ext_attr,
@@ -56,7 +55,9 @@ def run(arch, args):
                 [
                     a
                     for a in assets
-                    if a.get("attributes", {}).get("arc_attachments").get("arc_attachment_identity")
+                    if a.get("attributes", {})
+                    .get("arc_attachments")
+                    .get("arc_attachment_identity")
                 ],
             ),
         )
@@ -78,7 +79,9 @@ def run(arch, args):
                 [
                     e
                     for e in events
-                    if e.get("event_attributes", {}).get("arc_attachments").get("arc_attachment_identity")
+                    if e.get("event_attributes", {})
+                    .get("arc_attachments")
+                    .get("arc_attachment_identity")
                 ],
             ),
         )
