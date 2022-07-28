@@ -5,9 +5,8 @@ from sys import exit as sys_exit
 from sys import stdout as sys_stdout
 
 from archivist.archivist import Archivist
-from ...parser import common_parser
-
-from .run import run
+from archivist.cmds.usage.run import run
+from archivist.parser import common_parser
 
 LOGGER = getLogger(__name__)
 
