@@ -40,17 +40,6 @@ def assets_ext_attr(assets: list) -> list:
     return extended_attributes_asset
 
 
-def attachment_identities_assets(assets_with_attachments: list) -> list:
-    """Create list of attachment identities"""
-    for asset in assets_with_attachments:
-        total_attachments_assets = {
-            item["arc_attachment_identity"]
-            for item in asset["attributes"]["arc_attachments"]
-        }
-    total_attachments_assets = list(filter(None, total_attachments_assets))
-    return total_attachments_assets
-
-
 def events_ext_attr(events: list) -> list:
     """Create list of events with extended attribute(s)"""
     extended_attributes_event = [
@@ -61,11 +50,29 @@ def events_ext_attr(events: list) -> list:
     return extended_attributes_event
 
 
-def attachment_identities_events(events_with_attachments: list) -> list:
-    """Create list of attachment identities"""
-    for event in events_with_attachments:
-        total_attachments_events = {
-            item["arc_attachment_identity"]
-            for item in event["event_attributes"]["arc_attachments"]
-        }
-    return total_attachments_events
+def assets_location(assets: list) -> list:
+    """Filter assets down to those with an associated location ID."""
+    assets_with_location = [
+        asset
+        for asset in assets
+        if asset["attributes"].get("arc_home_location_identity", [])
+    ]
+    return assets_with_location
+
+
+def assets_attachment(assets: list) -> list:
+    """Filter assets down to those with an associated attachment ID."""
+    assets_with_attachment = [
+        asset for asset in assets if asset["attributes"].get("arc_attachments", [])
+    ]
+    return assets_with_attachment
+
+
+def events_attachment(events: list) -> list:
+    """Filter assets down to those with an associated attachment."""
+    events_with_attachment = [
+        event
+        for event in events
+        if event["event_attributes"].get("arc_attachments", [])
+    ]
+    return events_with_attachment

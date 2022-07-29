@@ -10,11 +10,11 @@ from datetime import datetime
 from shutil import move, make_archive
 
 from archivist.dictmerge import (
+    assets_attachment,
     assets_ext_attr,
-    attachment_identities_assets,
+    assets_location,
     events_ext_attr,
-    attachment_identities_events,
-    _deepmerge,
+    events_attachment,
 )
 
 LOGGER = getLogger(__name__)
@@ -32,37 +32,10 @@ def run(arch, args):
     extended_attributes_asset = assets_ext_attr(assets)
 
     # Assets with Associated Location
-    assets_with_location = list(
-        arch.assets.list(
-            props=props,
-            attrs=_deepmerge(
-                attrs,
-                [
-                    a
-                    for a in assets
-                    if a.get("attributes", {}).get("arc_home_location_identity")
-                ],
-            ),
-        )
-    )
+    assets_with_location = assets_location(assets)
 
     # Assets with Attachments
-    assets_with_attachments = list(
-        arch.assets.list(
-            props=props,
-            attrs=_deepmerge(
-                attrs,
-                [
-                    a
-                    for a in assets
-                    if a.get("attributes", {})
-                    .get("arc_attachments")
-                    .get("arc_attachment_identity")
-                ],
-            ),
-        )
-    )
-    total_attachments_assets = attachment_identities_assets(assets_with_attachments)
+    assets_with_attachments = assets_attachment(assets)
 
     # Total Number of Events
     events = list(arch.events.list(props=props, attrs=attrs))
@@ -71,22 +44,7 @@ def run(arch, args):
     extended_attributes_event = events_ext_attr(events)
 
     # Events with Attachments
-    events_with_attachments = list(
-        arch.events.list(
-            props=props,
-            attrs=_deepmerge(
-                attrs,
-                [
-                    e
-                    for e in events
-                    if e.get("event_attributes", {})
-                    .get("arc_attachments")
-                    .get("arc_attachment_identity")
-                ],
-            ),
-        )
-    )
-    total_attachments_events = attachment_identities_events(events_with_attachments)
+    events_with_attachments = events_attachment(events)
 
     # Average Events per Asset
     avg_events_per_asset = len(events) / len(assets)
@@ -97,6 +55,9 @@ def run(arch, args):
     # Total Number of Access Policies
     access_policies = list(arch.access_policies.list())
 
+    # Total Number of Compliance Policies
+    compliance_policies = list(arch.compliance_policies.list())
+
     summary_output = {
         "Date of Scan": str(datetime.now()),
         "Number of Assets": len(assets),
@@ -106,10 +67,11 @@ def run(arch, args):
         "Events with Extended Attributes": len(extended_attributes_event),
         "Events with Attachments": len(events_with_attachments),
         "Average Events per Asset": round(avg_events_per_asset),
-        "Total Number of Attachments": len(total_attachments_assets)
-        + len(total_attachments_events),
+        "Total Number of Attachments": len(assets_with_attachments)
+        + len(events_with_attachments),
         "Number of Subjects": len(subjects),
         "Number of Access Policies": len(access_policies),
+        "Number of Compliance Policies": len(compliance_policies),
     }
 
     # Create directories for output storage
@@ -122,8 +84,22 @@ def run(arch, args):
     makedirs(path_b, exist_ok=True)
 
     # Create a zip file containing detials of each asset, event, etc.
-    estate_list = [assets, events, subjects, access_policies, summary_output]
-    file_list = ["assets", "events", "subjects", "access_policies", "summary"]
+    estate_list = [
+        assets,
+        events,
+        subjects,
+        access_policies,
+        compliance_policies,
+        summary_output,
+    ]
+    file_list = [
+        "assets",
+        "events",
+        "subjects",
+        "access_policies",
+        "compliance_policies",
+        "summary",
+    ]
     for item, name in zip(estate_list, file_list):
         with open(f"{name}.json", "w", encoding="utf8") as outfile:
             json_dump(item, outfile, indent=4)

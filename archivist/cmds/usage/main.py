@@ -4,9 +4,8 @@ from logging import getLogger
 from sys import exit as sys_exit
 from sys import stdout as sys_stdout
 
-from archivist.archivist import Archivist
 from archivist.cmds.usage.run import run
-from archivist.parser import common_parser
+from archivist.parser import common_parser, endpoint
 
 LOGGER = getLogger(__name__)
 
@@ -16,10 +15,7 @@ def main():
 
     args = parser.parse_args()
 
-    arch = Archivist(
-        args.url,
-        (args.client_id, args.client_secret),
-    )
+    arch = endpoint(args)
 
     run(arch, args)
 
