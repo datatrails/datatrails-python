@@ -57,6 +57,7 @@ class TestCompliancePolicyRequests(TestCase):
                     ["x", "z"],
                 ],
                 event_display_type="current_outstanding event_display_type",
+                closing_event_display_type="current_outstanding closing_event_display_type",
             ).dict(),
             {
                 "compliance_type": "COMPLIANCE_CURRENT_OUTSTANDING",
@@ -67,6 +68,7 @@ class TestCompliancePolicyRequests(TestCase):
                     {"or": ["x", "z"]},
                 ],
                 "event_display_type": "current_outstanding event_display_type",
+                "closing_event_display_type": "current_outstanding closing_event_display_type",
             },
             msg="Incorrect dictionary",
         )
@@ -115,7 +117,7 @@ class TestCompliancePolicyRequests(TestCase):
                     ["x", "z"],
                 ],
                 event_display_type="dynamic_tolerance event_display_type",
-                closing_event_display_type="period_outstanding closing_event_display_type",
+                closing_event_display_type="dynamic_tolerance closing_event_display_type",
                 dynamic_window=86400,
                 dynamic_variability=0.5,
             ).dict(),
@@ -128,7 +130,7 @@ class TestCompliancePolicyRequests(TestCase):
                     {"or": ["x", "z"]},
                 ],
                 "event_display_type": "dynamic_tolerance event_display_type",
-                "closing_event_display_type": "period_outstanding closing_event_display_type",
+                "closing_event_display_type": "dynamic_tolerance closing_event_display_type",
                 "dynamic_window": 86400,
                 "dynamic_variability": 0.5,
             },
