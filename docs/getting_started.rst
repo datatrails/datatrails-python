@@ -25,6 +25,8 @@ See the examples and functests directories.
    access_policy_create
    access_policies_filter
 
+   compliance_policies_since
+
    runner/index
 
    scan_test

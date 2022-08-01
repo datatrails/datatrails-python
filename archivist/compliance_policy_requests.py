@@ -50,6 +50,7 @@ class CompliancePolicyCurrentOutstanding(CompliancePolicyBase):
     """
 
     event_display_type: str
+    closing_event_display_type: str
     compliance_type: str = CompliancePolicyType.COMPLIANCE_CURRENT_OUTSTANDING.name
 
 

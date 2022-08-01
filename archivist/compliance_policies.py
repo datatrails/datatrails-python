@@ -167,7 +167,7 @@ class _CompliancePoliciesClient:
         Counts number of compliance policies that match criteria.
 
         Args:
-            props (dict): e.g. {"display_name": "foo" }
+            props (dict): e.g. {"compliance_type": "COMPLIANCE_RICHNESS" }
 
         Returns:
             integer count of compliance policies.
