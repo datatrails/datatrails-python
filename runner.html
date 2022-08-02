@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Runner Class &mdash; RKVST 0.17.0 documentation</title>
+  <title>Runner Class &mdash; RKVST 0.17.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -33,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.0
+                0.17.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -55,6 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
@@ -92,11 +93,11 @@
 <p>Base runner class for interpreting yaml story files.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="archivist.runner._ActionMap">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_ActionMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_ActionMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_ActionMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_ActionMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap" title="Permalink to this definition"></a></dt>
 <dd><p>Map of actions and keywords for an action</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.runner._ActionMap.action">
-<span class="sig-name descname"><span class="pre">action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/archivist/runner.html#_ActionMap.action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.action" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="_modules/archivist/runner.html#_ActionMap.action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.action" title="Permalink to this definition"></a></dt>
 <dd><p>Get valid action in map</p>
 </dd></dl>
 
@@ -108,7 +109,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.runner._ActionMap.keywords">
-<span class="sig-name descname"><span class="pre">keywords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="reference internal" href="_modules/archivist/runner.html#_ActionMap.keywords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.keywords" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">keywords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/archivist/runner.html#_ActionMap.keywords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.keywords" title="Permalink to this definition"></a></dt>
 <dd><p>Get keywords in map</p>
 </dd></dl>
 
@@ -120,7 +121,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.runner._ActionMap.ops">
-<span class="sig-name descname"><span class="pre">ops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/archivist/runner.html#_ActionMap.ops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.ops" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/archivist/runner.html#_ActionMap.ops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.ops" title="Permalink to this definition"></a></dt>
 <dd><p>Get valid entry in map</p>
 </dd></dl>
 
@@ -128,7 +129,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="archivist.runner._Runner">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_Runner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Runner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_Runner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Runner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner" title="Permalink to this definition"></a></dt>
 <dd><p>ArchivistRunner takes a url, token_file.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.runner._Runner.delete">
@@ -144,7 +145,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.runner._Runner.run_step">
-<span class="sig-name descname"><span class="pre">run_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Runner.run_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.run_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Runner.run_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.run_step" title="Permalink to this definition"></a></dt>
 <dd><p>Runs a step given parameters and the type of step.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -155,13 +156,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.runner._Runner.run_steps">
-<span class="sig-name descname"><span class="pre">run_steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Runner.run_steps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.run_steps" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Runner.run_steps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.run_steps" title="Permalink to this definition"></a></dt>
 <dd><p>Runs all defined steps in self.config.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.runner._Runner.set_deletions">
-<span class="sig-name descname"><span class="pre">set_deletions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Runner.set_deletions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.set_deletions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_deletions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Runner.set_deletions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.set_deletions" title="Permalink to this definition"></a></dt>
 <dd><p>sets entry to be deleted</p>
 </dd></dl>
 
@@ -169,7 +170,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="archivist.runner._Step">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_Step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Step" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_Step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Step" title="Permalink to this definition"></a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="archivist.runner._Step.args">
 <span class="sig-name descname"><span class="pre">args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/runner.html#_Step.args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Step.args" title="Permalink to this definition"></a></dt>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Since Compliance Policy &mdash; RKVST 0.17.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Story Runner" href="runner/index.html" />
+    <link rel="prev" title="Filter IAM access_policies" href="access_policies_filter.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html">
+            <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.17.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="create_asset.html">Create Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_asset.html">Get Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sharing_asset.html">Sharing Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_publicasset.html">Get Public Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_publicevent.html">Get Public Event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_event.html">Create Event Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_assets.html">Filter Assets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_events.html">Filter Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter_publicevents.html">Filter Public Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Since Compliance Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan_test.html">Scan Test Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjects_filter.html">Filter IAM subjects Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="applications_registration.html">Create IAM Application Registration and Tokens</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runner.html">Runner Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="getting_started.html">Getting started</a> &raquo;</li>
+      <li>Since Compliance Policy</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="since-compliance-policy">
+<span id="compliance-policies-sinceref"></span><h1>Since Compliance Policy<a class="headerlink" href="#since-compliance-policy" title="Permalink to this headline"></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Define a compliance policy that alerts when an asset has expired.</span>
+
+<span class="sd">Main function parses in a url to the Archivist and client credentials , which is</span>
+<span class="sd">a user authorization. The main function would initialize an archivist connection</span>
+<span class="sd">using the url and the credentials, called &quot;arch&quot;, then call arch.access_policies.list()</span>
+<span class="sd">with suitable properties and attributes.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">uuid4</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">filterwarnings</span>
+
+<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+<span class="kn">from</span> <span class="nn">archivist.compliance_policy_requests</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CompliancePolicySince</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">archivist.utils</span> <span class="kn">import</span> <span class="n">get_auth</span>
+
+<span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Unverified HTTPS request&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_archivist</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Create Archivist endpoint.&quot;&quot;&quot;</span>
+
+    <span class="c1"># client id and client secret is obtained from the appidp endpoint - see the</span>
+    <span class="c1"># application registrations example code in examples/applications_registration.py</span>
+    <span class="c1">#</span>
+    <span class="c1"># client id is an environment variable. client_secret is stored in a file in a</span>
+    <span class="c1"># directory that has 0700 permissions. The location of this file is set in</span>
+    <span class="c1"># the client_secret_file environment variable.</span>
+    <span class="c1">#</span>
+    <span class="n">auth</span> <span class="o">=</span> <span class="n">get_auth</span><span class="p">(</span>
+        <span class="n">auth_token</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_AUTHTOKEN&quot;</span><span class="p">),</span>
+        <span class="n">auth_token_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_AUTHTOKEN_FILENAME&quot;</span><span class="p">),</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_ID&quot;</span><span class="p">),</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET&quot;</span><span class="p">),</span>
+        <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET_FILENAME&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Initialize connection to Archivist</span>
+    <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+        <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+        <span class="n">auth</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">arch</span>
+
+
+<span class="k">def</span> <span class="nf">create_compliance_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compliance policy which expires 10 seconds after a</span>
+<span class="sd">    Maintenance Performed event on a &#39;Traffic Light&#39; has occurred.</span>
+
+<span class="sd">    Usually the expiry time is on the order of days or weeks..</span>
+
+<span class="sd">    Additionally the use of tag is simply to make this example</span>
+<span class="sd">    repeatable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">compliance_policy</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">CompliancePolicySince</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maintenance should be performed every 10 seconds&quot;</span><span class="p">,</span>
+            <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Regular Maintenance of Traffic light&quot;</span><span class="p">,</span>
+            <span class="n">asset_filter</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">[</span><span class="s2">&quot;attributes.arc_display_type=Traffic Light&quot;</span><span class="p">],</span>
+            <span class="p">],</span>
+            <span class="n">event_display_type</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Maintenance Performed </span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">time_period_seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># very short so we can test</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SINCE_POLICY:&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">compliance_policy</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">compliance_policy</span>
+
+
+<span class="k">def</span> <span class="nf">create_traffic_light</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a traffic light.</span>
+
+<span class="sd">    Note that arc_display_type siginfies a Traffic Light</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">traffic_light</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Traffic light model 54&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;Traffic flow control light at A603 North East&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Traffic Light&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TRAFFIC_LIGHT:&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">traffic_light</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">traffic_light</span>
+
+
+<span class="k">def</span> <span class="nf">perform_maintenance</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">traffic_light</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform maintenance on traffic light</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">maintenance_performed</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">traffic_light</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;Record&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;behaviour&quot;</span><span class="p">:</span> <span class="s2">&quot;RecordEvidence&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;Maintenance performed on traffic light&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Maintenance Performed </span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MAINTENANCE_PERFORMED:&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">maintenance_performed</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect to archivist, create an asset, create a compliance policy</span>
+<span class="sd">    execute an event on the asset and check if the asset has expired</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># first get Archivist connection.</span>
+    <span class="n">arch</span> <span class="o">=</span> <span class="n">get_archivist</span><span class="p">()</span>
+
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">uuid4</span><span class="p">()</span>  <span class="c1"># make this example repeatable</span>
+
+    <span class="c1"># make a SINCE compliance policy that alerts when the</span>
+    <span class="c1"># maintenance performed event has expired.</span>
+    <span class="n">compliance_policy</span> <span class="o">=</span> <span class="n">create_compliance_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+
+    <span class="c1"># create an asset that matches the assets_filter field in the</span>
+    <span class="c1"># compliance policy.</span>
+    <span class="n">traffic_light</span> <span class="o">=</span> <span class="n">create_traffic_light</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+
+    <span class="c1"># perform maintenance on the asset which is valid for 10 seconds.</span>
+    <span class="n">perform_maintenance</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">traffic_light</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+
+    <span class="c1"># and check compliance - should be OK.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sleep 1 second...&quot;</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">compliance</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">compliant_at</span><span class="p">(</span>
+        <span class="n">traffic_light</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COMPLIANCE (true):&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">compliance</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># however waiting long enough (&gt; 10s) will cause the asset to</span>
+    <span class="c1"># become non-compliant...</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sleep 15 seconds...&quot;</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">compliance</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">compliant_at</span><span class="p">(</span>
+        <span class="n">traffic_light</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COMPLIANCE (false):&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">compliance</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="c1"># finally delete the compliance_policy</span>
+    <span class="n">arch</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
+        <span class="n">compliance_policy</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="access_policies_filter.html" class="btn btn-neutral float-left" title="Filter IAM access_policies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="runner/index.html" class="btn btn-neutral float-right" title="Story Runner" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

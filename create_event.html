@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Event Example &mdash; RKVST 0.17.0 documentation</title>
+  <title>Create Event Example &mdash; RKVST 0.17.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -33,7 +33,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.0
+                0.17.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -58,6 +58,7 @@
 <li class="toctree-l2"><a class="reference internal" href="filter_publicevents.html">Filter Public Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_policy_create.html">Create IAM access_policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_policies_filter.html">Filter IAM access_policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies_since.html">Since Compliance Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scan_test.html">Scan Test Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="subject_create.html">Create IAM subject Example</a></li>
@@ -73,6 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
@@ -110,18 +112,43 @@
 <span id="create-eventref"></span><h1>Create Event Example<a class="headerlink" href="#create-event-example" title="Permalink to this headline"></a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an event for an asset given url to Archivist and user Token.</span>
 
-<span class="sd">The module contains four functions: main, create_asset and create_event.</span>
-<span class="sd">Main function parses in a url to the Archivist and credentials, which is a user authorization.</span>
+<span class="sd">The module contains four functions: main, create_asset, create_event and</span>
+<span class="sd">get_verified_domain.</span>
+
 <span class="sd">The main function would initialize an archivist connection using the url and</span>
-<span class="sd">the credentials, called &quot;arch&quot;, then call create_assets and pass in &quot;arch&quot; and</span>
-<span class="sd">create_assets will build create_asset, which is a archivist connection function</span>
+<span class="sd">the credentials, called &quot;arch&quot;.</span>
+
+<span class="sd">create_asset will execute &#39;assets.create&#39;, which is a archivist connection function</span>
 <span class="sd">to create a new asset for the archivist through archivist connection. The main funciton then</span>
 <span class="sd">calls create_event and pass in &quot;arch&quot; and the created asset to create a new event for the asset.</span>
+
+<span class="sd">In both cases the verified domain name is displayed.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">filterwarnings</span>
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
+
+<span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Unverified HTTPS request&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_verified_domain</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">identity</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get the verified domain for the tenant.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        arch: archivist connection.</span>
+<span class="sd">        identity: an identity of a tenant</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        verified_domain: name of the verified domain</span>
+<span class="sd">                         for the asset.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">tenancy</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">tenancies</span><span class="o">.</span><span class="n">publicinfo</span><span class="p">(</span><span class="n">identity</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tenancy</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;verified_domain&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">create_event</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">asset</span><span class="p">):</span>
@@ -162,6 +189,7 @@
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span> <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
     <span class="c1"># alternatively if some work can be done whilst the event is confirmed then this call can be</span>
     <span class="c1"># replaced by a two-step alternative:</span>
 
@@ -240,13 +268,21 @@
         <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
         <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">),</span>
     <span class="p">)</span>
+
     <span class="c1"># Create a new asset</span>
     <span class="n">asset</span> <span class="o">=</span> <span class="n">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">asset</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Verified domain &#39;&quot;</span><span class="p">,</span> <span class="n">get_verified_domain</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">asset</span><span class="p">[</span><span class="s2">&quot;tenant_identity&quot;</span><span class="p">]),</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
+
     <span class="c1"># Create a new event</span>
     <span class="n">event</span> <span class="o">=</span> <span class="n">create_event</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Verified domain &#39;&quot;</span><span class="p">,</span> <span class="n">get_verified_domain</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;tenant_identity&quot;</span><span class="p">]),</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
+
     <span class="c1"># Fetch the event</span>
     <span class="n">event</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Verified domain &#39;&quot;</span><span class="p">,</span> <span class="n">get_verified_domain</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;tenant_identity&quot;</span><span class="p">]),</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

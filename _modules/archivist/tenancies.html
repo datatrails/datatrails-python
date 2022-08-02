@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.appidp &mdash; RKVST 0.17.1 documentation</title>
+  <title>archivist.tenancies &mdash; RKVST 0.17.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -77,7 +77,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>archivist.appidp</li>
+      <li>archivist.tenancies</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -86,10 +86,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for archivist.appidp</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Appidp interface</span>
+  <h1>Source code for archivist.tenancies</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Tenancies interface</span>
 
-<span class="sd">   Access to the Appidp endpoint.</span>
+<span class="sd">   Access to the tenancies endpoint.</span>
 
 <span class="sd">   The user is not expected to use this class directly. It is an attribute of the</span>
 <span class="sd">   :class:`Archivist` class.</span>
@@ -106,7 +106,7 @@
 <span class="sd">          &quot;https://app.rkvst.io&quot;,</span>
 <span class="sd">          authtoken,</span>
 <span class="sd">      )</span>
-<span class="sd">      appidp = arch.appidp.token(...)</span>
+<span class="sd">      tenancy = arch.tenancies.read(...)</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -114,26 +114,26 @@
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
-<span class="c1"># pylint:disable=too-few-public-methods</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">APPIDP_SUBPATH</span><span class="p">,</span>
-    <span class="n">APPIDP_LABEL</span><span class="p">,</span>
-    <span class="n">APPIDP_TOKEN</span><span class="p">,</span>
+    <span class="n">TENANCIES_LABEL</span><span class="p">,</span>
+    <span class="n">TENANCIES_PREFIX</span><span class="p">,</span>
+    <span class="n">TENANCIES_SUBPATH</span><span class="p">,</span>
 <span class="p">)</span>
+
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="AppIDP"><a class="viewcode-back" href="../../iam/appidp.html#archivist.appidp.AppIDP">[docs]</a><span class="k">class</span> <span class="nc">AppIDP</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Appidp object&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="Tenant"><a class="viewcode-back" href="../../tenancies.html#archivist.tenancies.Tenant">[docs]</a><span class="k">class</span> <span class="nc">Tenant</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tenant object&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="_AppIDPClient"><a class="viewcode-back" href="../../iam/appidp.html#archivist.appidp._AppIDPClient">[docs]</a><span class="k">class</span> <span class="nc">_AppIDPClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;AppIDP Client</span>
+<div class="viewcode-block" id="_TenanciesClient"><a class="viewcode-back" href="../../tenancies.html#archivist.tenancies._TenanciesClient">[docs]</a><span class="k">class</span> <span class="nc">_TenanciesClient</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;TenanciesClient</span>
 
-<span class="sd">    Access to appidp entities. This class is usually</span>
+<span class="sd">    Access to tenants entities using CRUD interface. This class is usually</span>
 <span class="sd">    accessed as an attribute of the Archivist class.</span>
 
 <span class="sd">    Args:</span>
@@ -141,34 +141,44 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">maxDiff</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">Archivist</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist_instance</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">archivist_instance</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">APPIDP_SUBPATH</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">APPIDP_LABEL</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">archivist_instance</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">TENANCIES_SUBPATH</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">TENANCIES_LABEL</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AppIDPClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;TenanciesClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-<div class="viewcode-block" id="_AppIDPClient.token"><a class="viewcode-back" href="../../iam/appidp.html#archivist.appidp._AppIDPClient.token">[docs]</a>    <span class="k">def</span> <span class="nf">token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AppIDP</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create access token from client id and secret</span>
+<div class="viewcode-block" id="_TenanciesClient._identity"><a class="viewcode-back" href="../../tenancies.html#archivist.tenancies._TenanciesClient._identity">[docs]</a>    <span class="k">def</span> <span class="nf">_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Returns identity suitable for endpoint&quot;&quot;&quot;</span>
+        <span class="n">prefix</span><span class="p">,</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="o">==</span> <span class="n">TENANCIES_PREFIX</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">TENANCIES_LABEL</span><span class="p">,</span> <span class="n">uuid</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">identity</span></div>
+
+<div class="viewcode-block" id="_TenanciesClient.publicinfo"><a class="viewcode-back" href="../../tenancies.html#archivist.tenancies._TenanciesClient.publicinfo">[docs]</a>    <span class="k">def</span> <span class="nf">publicinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tenant</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Read Tenant public info</span>
+
+<span class="sd">        Reads Tenant public info</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            client_id (str): client id</span>
-<span class="sd">            client_secret (str): client_secret</span>
+<span class="sd">            identity (str): tenancies identity e.g. tenancies/xxxxxxxxxxxxxxxxxxxxxxx</span>
+<span class="sd">                                                 or tenant/xxxxxxxxxxxxxxxxxxxxxxx</span>
+
+<span class="sd">        The tenant identity returned by most endpoints has the prefix &#39;tenant/&#39;.</span>
+<span class="sd">        However the tenancies endpoint expects &#39;tenancies/&#39;. This is a wart in the</span>
+<span class="sd">        archivist API and will be fixed at some future date.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            :class:`AppIDP` instance</span>
+<span class="sd">            :class:`Tenant` instance</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">AppIDP</span><span class="p">(</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">APPIDP_TOKEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="p">{</span>
-                    <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">client_id</span><span class="p">,</span>
-                    <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="n">client_secret</span><span class="p">,</span>
-                <span class="p">},</span>
-                <span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="k">return</span> <span class="n">Tenant</span><span class="p">(</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_identity</span><span class="p">(</span><span class="n">identity</span><span class="p">)</span><span class="si">}</span><span class="s2">:publicinfo&quot;</span>
             <span class="p">)</span>
         <span class="p">)</span></div></div>
 </pre></div>

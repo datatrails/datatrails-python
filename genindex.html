@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; RKVST 0.17.0 documentation</title>
+  <title>Index &mdash; RKVST 0.17.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.0
+                0.17.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
@@ -93,6 +94,7 @@
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
@@ -128,16 +130,18 @@
 </li>
       <li><a href="compliance_policies/compliance_policies.html#archivist.compliance_policies._CompliancePoliciesClient">_CompliancePoliciesClient (class in archivist.compliance_policies)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="events.html#archivist.events._EventsPublic">_EventsPublic (class in archivist.events)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="events.html#archivist.events._EventsRestricted">_EventsRestricted (class in archivist.events)</a>
 </li>
       <li><a href="assets.html#archivist.assets._AssetsPublic._identity">_identity() (archivist.assets._AssetsPublic method)</a>
 
       <ul>
         <li><a href="events.html#archivist.events._EventsPublic._identity">(archivist.events._EventsPublic method)</a>
+</li>
+        <li><a href="tenancies.html#archivist.tenancies._TenanciesClient._identity">(archivist.tenancies._TenanciesClient method)</a>
 </li>
       </ul></li>
       <li><a href="locations.html#archivist.locations._LocationsClient">_LocationsClient (class in archivist.locations)</a>
@@ -149,6 +153,8 @@
       <li><a href="runner.html#archivist.runner._Step">_Step (class in archivist.runner)</a>
 </li>
       <li><a href="iam/subjects.html#archivist.subjects._SubjectsClient">_SubjectsClient (class in archivist.subjects)</a>
+</li>
+      <li><a href="tenancies.html#archivist.tenancies._TenanciesClient">_TenanciesClient (class in archivist.tenancies)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -264,8 +270,6 @@
         <li><a href="logger.html#module-archivist.logger">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     archivist.proof_mechanism
 
@@ -273,6 +277,8 @@
         <li><a href="proof_mechanism.html#module-archivist.proof_mechanism">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     archivist.runner
 
@@ -299,6 +305,13 @@
 
       <ul>
         <li><a href="iam/subjects.html#module-archivist.subjects">module</a>
+</li>
+      </ul></li>
+      <li>
+    archivist.tenancies
+
+      <ul>
+        <li><a href="tenancies.html#module-archivist.tenancies">module</a>
 </li>
       </ul></li>
       <li>
@@ -497,6 +510,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sboms/sbommetadata.html#archivist.sbommetadata.SBOM.from_dict">from_dict() (archivist.sbommetadata.SBOM class method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -604,6 +625,8 @@
 </li>
         <li><a href="iam/subjects.html#module-archivist.subjects">archivist.subjects</a>
 </li>
+        <li><a href="tenancies.html#module-archivist.tenancies">archivist.tenancies</a>
+</li>
         <li><a href="timestamp.html#module-archivist.timestamp">archivist.timestamp</a>
 </li>
       </ul></li>
@@ -649,13 +672,15 @@
 </li>
       <li><a href="archivist.html#archivist.archivist.Archivist.post_file">post_file() (archivist.archivist.Archivist method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="proof_mechanism.html#archivist.proof_mechanism.ProofMechanism">ProofMechanism (class in archivist.proof_mechanism)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="archivist.html#archivist.archivist.Archivist.Public">Public (archivist.archivist.Archivist property)</a>
 </li>
       <li><a href="archivist.html#archivist.archivist.Archivist.public">public (archivist.archivist.Archivist property)</a>
+</li>
+      <li><a href="tenancies.html#archivist.tenancies._TenanciesClient.publicinfo">publicinfo() (archivist.tenancies._TenanciesClient method)</a>
 </li>
       <li><a href="assets.html#archivist.assets._AssetsRestricted.publicurl">publicurl() (archivist.assets._AssetsRestricted method)</a>
 
@@ -733,10 +758,12 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="iam/appidp.html#archivist.appidp._AppIDPClient.token">token() (archivist.appidp._AppIDPClient method)</a>
+      <li><a href="tenancies.html#archivist.tenancies.Tenant">Tenant (class in archivist.tenancies)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="iam/appidp.html#archivist.appidp._AppIDPClient.token">token() (archivist.appidp._AppIDPClient method)</a>
+</li>
       <li><a href="runner.html#archivist.runner.tree">tree() (in module archivist.runner)</a>
 </li>
   </ul></td>

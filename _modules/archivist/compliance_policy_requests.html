@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.compliance_policy_requests &mdash; RKVST 0.17.0 documentation</title>
+  <title>archivist.compliance_policy_requests &mdash; RKVST 0.17.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -30,7 +30,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.0
+                0.17.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tenancies.html">Tenancies Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
@@ -92,8 +93,8 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">asdict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">from</span> <span class="nn">.compliance_policy_type</span> <span class="kn">import</span> <span class="n">CompliancePolicyType</span>
 <span class="kn">from</span> <span class="nn">.or_dict</span> <span class="kn">import</span> <span class="n">and_list</span>
@@ -111,7 +112,7 @@
 
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">asset_filter</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">asset_filter</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span>
 
 <div class="viewcode-block" id="CompliancePolicyBase.dict"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyBase.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Emit dictionary representation&quot;&quot;&quot;</span>
@@ -138,6 +139,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">event_display_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">closing_event_display_type</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">compliance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CompliancePolicyType</span><span class="o">.</span><span class="n">COMPLIANCE_CURRENT_OUTSTANDING</span><span class="o">.</span><span class="n">name</span></div>
 
 
@@ -176,7 +178,7 @@
 <span class="sd">    complies with a set of assertions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">richness_assertions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">richness_assertions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span>
     <span class="n">compliance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CompliancePolicyType</span><span class="o">.</span><span class="n">COMPLIANCE_RICHNESS</span><span class="o">.</span><span class="n">name</span>
 
 <div class="viewcode-block" id="CompliancePolicyRichness.dict"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyRichness.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
