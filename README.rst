@@ -199,13 +199,13 @@ Python
     from sys import exit as sys_exit
     from sys import stdout as sys_stdout
 
-    from archivist import archivist as type_helper
     from archivist import about
+    from archivist.archivist import Archivist
     from archivist.parser import common_parser, endpoint
 
     LOGGER = getLogger(__name__)
 
-    def run(arch: "type_helper.Archivist", args):
+    def run(arch: Archivist, args):
 
         LOGGER.info("Using version %s of jitsuin-archivist", about.__version__)
         LOGGER.info("Namespace %s", args.namespace)

@@ -69,7 +69,7 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
         self,
         asset_id,
         *,
-        compliant_at: Optional[str] = None,
+        compliant_at: Optional[bool] = None,
         report: Optional[str] = None,
     ) -> Compliance:
         """
@@ -101,7 +101,7 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
         Prints report of compliance_at request
 
         Args:
-            response (dict): compliance object encapsulating response from compliant_at
+            compliance (dict): compliance object encapsulating response from compliant_at
         """
 
         LOGGER.info("Compliant %s", compliance["compliant"])
