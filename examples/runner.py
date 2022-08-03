@@ -8,10 +8,7 @@ from warnings import filterwarnings
 from pyaml_env import parse_config
 
 from archivist import about
-
-# pylint:disable=unused-import      # To prevent cyclical import errors forward referencing is used
-# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from archivist import archivist as type_helper
+from archivist.archivist import Archivist
 
 filterwarnings("ignore", message="Unverified HTTPS request")
 
@@ -19,7 +16,7 @@ filterwarnings("ignore", message="Unverified HTTPS request")
 LOGGER = getLogger(__name__)
 
 
-def run(arch: "type_helper.Archivist", args):
+def run(arch: Archivist, args):
 
     LOGGER.info("Using version %s of jitsuin-archivist", about.__version__)
     LOGGER.info("Namespace %s", args.namespace)
