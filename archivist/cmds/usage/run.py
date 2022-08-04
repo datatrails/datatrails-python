@@ -19,8 +19,10 @@ from archivist.dictmerge import (
 
 LOGGER = getLogger(__name__)
 
+# pylint:disable=too-many-locals
 
-def run(arch, args):
+
+def run(arch, args):  # pylint:disable=unused-argument
     """Run diagnostic script."""
     props = {"confirmation_status": "CONFIRMED"}
     attrs = {}  # attributes can be added to filer by name, type, etc.
@@ -39,6 +41,7 @@ def run(arch, args):
 
     # Total Number of Events
     events = list(arch.events.list(props=props, attrs=attrs))
+    # original requirements suggested that assets and events be separate
 
     # Events with Extended Attributes
     extended_attributes_event = events_ext_attr(events)

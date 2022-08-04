@@ -1,16 +1,19 @@
-# pylint:  disable=missing-docstring
+"""Main function to run usage summary script."""
 
 from logging import getLogger
-from sys import exit as sys_exit
-from sys import stdout as sys_stdout
 
-from archivist.cmds.usage.run import run
-from archivist.parser import common_parser, endpoint
+from ...parser import common_parser, endpoint
+
+# from archivist.cmds.usage.run import run
+from .run import run
+
+# from archivist.parser import common_parser, endpoint
 
 LOGGER = getLogger(__name__)
 
 
 def main():
+    """Run diagnostic script."""
     parser = common_parser(description="RKVST Diagnostic Tool")
 
     args = parser.parse_args()
@@ -18,6 +21,3 @@ def main():
     arch = endpoint(args)
 
     run(arch, args)
-
-    parser.print_help(sys_stdout)
-    sys_exit(1)
