@@ -36,8 +36,8 @@ jobs:
     - name: Run integrity checks
       run: |
         ./scripts/version.sh
-        pycodestyle --format=pylint setup.py archivist examples functests unittests
-        python3 -m pylint --rcfile=pylintrc setup.py archivist examples functests unittests
+        pycodestyle --format=pylint archivist examples functests unittests
+        python3 -m pylint --rcfile=pylintrc archivist examples functests unittests
         python3 -m pyright archivist
         black archivist examples unittests functests
         (cd docs && make clean && make html)

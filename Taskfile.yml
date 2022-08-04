@@ -41,8 +41,8 @@ tasks:
     cmds:
       - ./scripts/builder.sh python3 --version
       - ./scripts/builder.sh python3 -m pyright archivist
-      - ./scripts/builder.sh pycodestyle --format=pylint setup.py archivist examples functests unittests
-      - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc setup.py archivist examples functests unittests
+      - ./scripts/builder.sh pycodestyle --format=pylint archivist examples functests unittests
+      - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc archivist examples functests unittests
 
   clean:
     desc: Clean git repo
@@ -65,7 +65,7 @@ tasks:
     desc: Format code using black
     deps: [about]
     cmds:
-      - ./scripts/builder.sh black setup.py archivist examples functests unittests
+      - ./scripts/builder.sh black archivist examples functests unittests
 
   type-check:
     desc: Runs the pyright type checker against the core archivst files 
@@ -101,7 +101,4 @@ tasks:
     desc: Builds python wheel package
     deps: [about]
     cmds:
-      - rm -rf *egg-info
-      - rm -rf build
-      - rm -f dist/*
-      - python3 setup.py bdist_wheel
+      - ./scripts/builder.sh ./scripts/wheel.sh
