@@ -30,7 +30,7 @@ jobs:
         sudo rm -rf /var/lib/apt/lists/*
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements-dev.txt
-        python3 -m pip install build setuptools wheel twine
+        python3 -m pip install setuptools wheel
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}

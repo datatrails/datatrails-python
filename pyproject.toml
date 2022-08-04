@@ -1,0 +1,14 @@
+[build-system]
+requires = [ "setuptools>=61.0", "wheel", "setuptools-git-versioning", ]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools-git-versioning]
+enabled = true
+template = "{tag}"
+dev_template = "{tag}.post{ccount}+git.{sha}"
+dirty_template = "{tag}.post{ccount}+git.{sha}.dirty"
+count_commits_from_version_file = false
+
+[tool.pyright]
+include = ["archivist"]
+
