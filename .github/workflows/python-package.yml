@@ -37,7 +37,7 @@ jobs:
       run: |
         ./scripts/version.sh
         pycodestyle --format=pylint archivist examples functests unittests
-        python3 -m pylint --rcfile=pylintrc archivist examples functests unittests
+        python3 -m pylint archivist examples functests unittests
         python3 -m pyright archivist
         black archivist examples unittests functests
         (cd docs && make clean && make html)

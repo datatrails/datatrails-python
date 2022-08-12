@@ -42,7 +42,7 @@ tasks:
       - ./scripts/builder.sh python3 --version
       - ./scripts/builder.sh python3 -m pyright archivist
       - ./scripts/builder.sh pycodestyle --format=pylint archivist examples functests unittests
-      - ./scripts/builder.sh python3 -m pylint --rcfile=pylintrc archivist examples functests unittests
+      - ./scripts/builder.sh python3 -m pylint archivist examples functests unittests
 
   clean:
     desc: Clean git repo
