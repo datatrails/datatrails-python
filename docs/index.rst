@@ -29,6 +29,7 @@
    errors
    logger
    proof_mechanism
+   sbom
 
 Indices and tables
 ==================

@@ -11,7 +11,6 @@ tasks:
 
   audit:
     desc: Audit the code
-    deps: [about]
     cmds:
       - ./scripts/builder.sh pip-audit -r requirements.txt
 
@@ -57,7 +56,7 @@ tasks:
 
   docs:
     desc: Create sphinx documentation
-    deps: [about]
+    deps: [about, sbom]
     cmds:
       - ./scripts/builder.sh /bin/bash -c "cd docs && make clean && make html"
 
@@ -90,6 +89,11 @@ tasks:
     deps: [about]
     cmds:
       - ./scripts/builder.sh python3 -m twine upload --repository pypi dist/*
+
+  sbom:
+    desc: Audit the code
+    cmds:
+      - ./scripts/builder.sh ./scripts/sbom.sh
 
   unittests:
     desc: Run unittests
