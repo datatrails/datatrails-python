@@ -11,7 +11,6 @@ from uuid import uuid4
 
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
-from archivist.constants import SUBJECTS_SELF_ID
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
@@ -296,24 +295,15 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         self.arch_2 = Archivist(getenv("TEST_ARCHIVIST"), auth_2, verify=False)
 
         # creates reciprocal subjects for arch 1 and arch 2.
-        my_subject_1 = self.arch.subjects.read(SUBJECTS_SELF_ID)
-        my_subject_2 = self.arch_2.subjects.read(SUBJECTS_SELF_ID)
-
         # subject 1 contains details of subject 2 to be shared
-        self.subject_1 = self.arch.subjects.import_subject(
+        self.subject_1, self.subject_2 = self.arch.subjects.share(
             "org2_subject",
-            my_subject_2,
-        )
-
-        # subject 2 contains details of subject 1 to be shared
-        self.subject_2 = self.arch_2.subjects.import_subject(
             "org1_subject",
-            my_subject_1,
+            self.arch_2,
         )
-
-        # check the subjects are confirmed
-        self.arch.subjects.wait_for_confirmation(self.subject_1["identity"])
-        self.arch_2.subjects.wait_for_confirmation(self.subject_2["identity"])
+        print()
+        print("Org1: subject_1", json_dumps(self.subject_1, indent=4))
+        print("Org2: subject_2", json_dumps(self.subject_2, indent=4))
 
     def _create_asset(self, label, arch, uuid):
         asset_data = deepcopy(REQUEST_EXISTS_ATTACHMENTS)
