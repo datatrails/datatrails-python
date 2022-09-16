@@ -46,6 +46,7 @@ def get_url(url: str, fd: BytesIO):  # pragma no cover
     response = requests_get(
         url,
         stream=True,
+        timeout=30,
     )
 
     for chunk in response.iter_content(chunk_size=4096):

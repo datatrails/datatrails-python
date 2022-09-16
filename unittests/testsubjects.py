@@ -2,6 +2,7 @@
 Test subjects
 """
 
+from os import environ
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
@@ -13,15 +14,19 @@ from archivist.constants import (
     SUBJECTS_LABEL,
 )
 from archivist.errors import ArchivistBadRequestError, ArchivistUnconfirmedError
+from archivist.logger import set_logger
 
 from .mock_response import MockResponse
 
+if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
+    set_logger(environ["TEST_DEBUG"])
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
 DISPLAY_NAME = "Subject display name"
+DISPLAY_NAME2 = "Subject display name2"
 WALLET_PUB_KEY = [
     (
         "04c1173bf7844bf1c607b79c18db091b9558ffe581bf132b8cf3b37657230fa321a088"
@@ -47,11 +52,20 @@ SUBJECT_STRING = (
 )
 
 IDENTITY = f"{SUBJECTS_LABEL}/xxxxxxxx"
+IDENTITY2 = f"{SUBJECTS_LABEL}/yyyyyyyy"
 SUBPATH = f"{SUBJECTS_SUBPATH}/{SUBJECTS_LABEL}"
 
 RESPONSE = {
     "identity": IDENTITY,
     "display_name": DISPLAY_NAME,
+    "wallet_pub_key": WALLET_PUB_KEY,
+    "wallet_address": WALLET_ADDRESSES,
+    "tessera_pub_key": TESSERA_PUB_KEY,
+}
+# response when getting from second archivist when sharing
+RESPONSE2 = {
+    "identity": IDENTITY2,
+    "display_name": DISPLAY_NAME2,
     "wallet_pub_key": WALLET_PUB_KEY,
     "wallet_address": WALLET_ADDRESSES,
     "tessera_pub_key": TESSERA_PUB_KEY,
@@ -64,8 +78,17 @@ RESPONSE_WITH_CONFIRMATION = {
     **RESPONSE,
     "confirmation_status": "CONFIRMED",
 }
+RESPONSE2_WITH_CONFIRMATION = {
+    **RESPONSE2,
+    "confirmation_status": "CONFIRMED",
+}
 REQUEST = {
     "display_name": DISPLAY_NAME,
+    "wallet_pub_key": WALLET_PUB_KEY,
+    "tessera_pub_key": TESSERA_PUB_KEY,
+}
+REQUEST2 = {
+    "display_name": DISPLAY_NAME2,
     "wallet_pub_key": WALLET_PUB_KEY,
     "tessera_pub_key": TESSERA_PUB_KEY,
 }
@@ -81,6 +104,7 @@ class TestSubjects(TestCase):
 
     def setUp(self):
         self.arch = Archivist("url", "authauthauth", max_time=1)
+        self.arch2 = Archivist("url", "authauthauth", max_time=1)
 
     def test_subjects_str(self):
         """
@@ -122,6 +146,72 @@ class TestSubjects(TestCase):
             self.assertEqual(
                 subject,
                 RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+
+    def test_subjects_share(self):
+        """
+        Test subject share
+        """
+        with mock.patch.object(
+            self.arch.session, "post"
+        ) as mock_post1, mock.patch.object(
+            self.arch.session, "get"
+        ) as mock_get1, mock.patch.object(
+            self.arch2.session, "post"
+        ) as mock_post2, mock.patch.object(
+            self.arch2.session, "get"
+        ) as mock_get2:
+            mock_post1.return_value = MockResponse(200, **RESPONSE_WITH_CONFIRMATION)
+            mock_get1.return_value = MockResponse(200, **RESPONSE_WITH_CONFIRMATION)
+            mock_post2.return_value = MockResponse(200, **RESPONSE2_WITH_CONFIRMATION)
+            mock_get2.return_value = MockResponse(200, **RESPONSE2_WITH_CONFIRMATION)
+
+            subject1, subject2 = self.arch.subjects.share(
+                DISPLAY_NAME, DISPLAY_NAME2, self.arch2
+            )
+            args, kwargs = mock_post1.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                subject1,
+                RESPONSE_WITH_CONFIRMATION,
+                msg="CREATE method called incorrectly",
+            )
+            args, kwargs = mock_post2.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST2,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                    },
+                    "verify": True,
+                },
+                msg="CREATE method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                subject2,
+                RESPONSE2_WITH_CONFIRMATION,
                 msg="CREATE method called incorrectly",
             )
 

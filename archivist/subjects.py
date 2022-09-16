@@ -25,14 +25,15 @@ from __future__ import annotations
 from base64 import b64decode
 from json import loads as json_loads
 from logging import getLogger
-from typing import Any, Optional
+from typing import Any, Optional, Tuple
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from . import archivist
 
 from .constants import (
-    SUBJECTS_SUBPATH,
     SUBJECTS_LABEL,
+    SUBJECTS_SELF_ID,
+    SUBJECTS_SUBPATH,
 )
 from . import subjects_confirmer
 from .dictmerge import _deepmerge
@@ -91,12 +92,38 @@ class _SubjectsClient:
             ),
         )
 
-    def import_subject(self, name: str, subject: Subject) -> Subject:
+    def share(
+        self, name: str, other_name: str, other_archivist: archivist.Archivist
+    ) -> Tuple[Subject, Subject]:
+        """Import the self subjects from the foreign archivist connection
+           from another organization - mutually share.
+
+        Args:
+            name (str): display_name of the foreign self subject in this archivist
+            other_name (str): display_name of the self subject in other archivist
+            other_archivist (Archivist): Archivist object
+
+        Returns:
+            2-tuple of :class:`Subject` instance
+
+        """
+        subject1 = self.import_subject(
+            name, other_archivist.subjects.read(SUBJECTS_SELF_ID)
+        )
+        subject2 = other_archivist.subjects.import_subject(
+            other_name, self.read(SUBJECTS_SELF_ID)
+        )
+        subject1 = self.wait_for_confirmation(subject1["identity"])
+        subject2 = other_archivist.subjects.wait_for_confirmation(subject2["identity"])
+
+        return subject1, subject2
+
+    def import_subject(self, display_name: str, subject: Subject) -> Subject:
         """Create subject from another subject usually
            from another organization.
 
         Args:
-            name (str): of the subject
+            display_name (str): display_name of the subject
             subject (Subject): Subject object
 
         Returns:
@@ -104,7 +131,7 @@ class _SubjectsClient:
 
         """
         return self.create(
-            name,
+            display_name,
             subject["wallet_pub_key"],
             subject["tessera_pub_key"],
         )
@@ -289,6 +316,8 @@ class _SubjectsClient:
             iterable that returns :class:`Subject` instances
 
         """
+
+        LOGGER.debug("List '%s'", display_name)
         return (
             Subject(**a)
             for a in self._archivist.list(
