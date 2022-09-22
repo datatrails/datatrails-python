@@ -48,7 +48,7 @@ jobs:
             exit 1
         fi
         ./scripts/unittests.sh
-    - uses: trailofbits/gh-action-pip-audit@v1.0.0
+    - uses: pypa/gh-action-pip-audit@v1.0.0
       with:
         inputs: requirements.txt
 
