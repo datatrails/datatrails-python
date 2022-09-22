@@ -1,6 +1,6 @@
-<bom xmlns="http://cyclonedx.org/schema/bom/1.4" serialNumber="urn:uuid:be00c1e6-7a4c-44e4-b956-b347b2fab027" version="1">
+<bom xmlns="http://cyclonedx.org/schema/bom/1.4" version="1" serialNumber="urn:uuid:6972b5d7-57e4-4402-99db-518f80ba0468">
   <metadata>
-    <timestamp>2022-10-20T16:20:41.344123+00:00</timestamp>
+    <timestamp>2022-10-25T07:52:58.134553+00:00</timestamp>
     <tools>
       <tool>
         <vendor>CycloneDX</vendor>
@@ -36,102 +36,87 @@
     </tools>
   </metadata>
   <components>
-    <component bom-ref="1471a160-98ec-4b04-94cc-a33cae7eadfb" type="library">
+    <component type="library" bom-ref="f42e1c06-d324-4af2-9262-e68bac47357b">
       <name>backoff</name>
       <version>1.11.1</version>
     </component>
-    <component bom-ref="749c396a-2515-4179-8546-efc61ea75df9" type="library">
+    <component type="library" bom-ref="e73e8672-2a6b-4dd9-847d-9aa929dfa397">
       <name>certifi</name>
       <version>2022.9.24</version>
     </component>
-    <component bom-ref="7f4ed824-486a-4e83-a00b-23cc2e521ce0" type="library">
+    <component type="library" bom-ref="736703d4-ef3f-4fe4-ab1d-13b467f69b70">
       <name>charset-normalizer</name>
       <version>2.1.1</version>
     </component>
-    <component bom-ref="10000e0d-cd25-478a-bce1-e6f116d3beed" type="library">
+    <component type="library" bom-ref="bf8b417d-0c6b-451b-9faa-cdadf630742d">
       <name>flatten-dict</name>
       <version>0.4.2</version>
     </component>
-    <component bom-ref="91041df7-2b6e-434b-b840-cd133b3955d8" type="library">
+    <component type="library" bom-ref="23e74d9f-a4f6-49ea-80e4-620604bc449e">
       <name>idna</name>
       <version>3.4</version>
     </component>
-    <component bom-ref="1e7c8bca-8c7b-41b4-876e-01e0470b98c4" type="library">
-      <name>importlib-metadata</name>
-      <version>5.0.0</version>
-    </component>
-    <component bom-ref="b768363b-b88f-40e8-aae6-08914ec129ed" type="library">
+    <component type="library" bom-ref="d34906a1-bdd4-4262-8c57-c82664ca7762">
       <name>iso8601</name>
       <version>1.1.0</version>
     </component>
-    <component bom-ref="d492ae1a-0c2e-41fa-9c3a-ad01edf62c2a" type="library">
+    <component type="library" bom-ref="d81490aa-3685-4a63-81d6-3acb0ec51f81">
       <name>jinja2</name>
       <version>3.1.2</version>
     </component>
-    <component bom-ref="0d00c1bf-8b6d-4822-866a-3cde9bd413a7" type="library">
+    <component type="library" bom-ref="f84107c9-c7b7-4581-ae90-70db7bd14b24">
       <name>markupsafe</name>
       <version>2.1.1</version>
     </component>
-    <component bom-ref="d4a19f74-d866-4bda-aaa2-27220fd0c80b" type="library">
+    <component type="library" bom-ref="41c40d92-ce65-4fc5-a01b-9a17655dec55">
       <name>pyaml-env</name>
       <version>1.1.5</version>
     </component>
-    <component bom-ref="e901d5b9-6cd0-4fd8-a723-56a9c0fa56f9" type="library">
+    <component type="library" bom-ref="f8f7daab-f7b2-48e9-b440-be220bfbb00e">
       <name>pyyaml</name>
       <version>5.4.1</version>
     </component>
-    <component bom-ref="27224582-a638-49fa-a25e-8f4e8b573deb" type="library">
+    <component type="library" bom-ref="d6d52049-e8d7-4a9c-9d28-4b15dac8a087">
       <name>requests</name>
       <version>2.28.1</version>
     </component>
-    <component bom-ref="652d927d-7b57-4043-8736-0c9197cff8aa" type="library">
+    <component type="library" bom-ref="2f26a6c5-384e-4f61-88cc-763d4c264e22">
       <name>requests-toolbelt</name>
-      <version>0.10.0</version>
+      <version>0.10.1</version>
     </component>
-    <component bom-ref="b922a9df-ca9b-4136-be92-34b88cad97f1" type="library">
+    <component type="library" bom-ref="0289bf5b-b99b-4f49-8e23-4d0a4bd648c6">
       <name>rfc3339</name>
       <version>6.2</version>
     </component>
-    <component bom-ref="eacde9de-a7d2-4ad7-b438-5cddd3ee9d55" type="library">
+    <component type="library" bom-ref="d505de3d-67ff-4117-bbb4-dfb967a7d380">
       <name>six</name>
       <version>1.16.0</version>
     </component>
-    <component bom-ref="334f7bd4-dd57-4bbd-810b-f99fd12e1f6e" type="library">
-      <name>typing-extensions</name>
-      <version>4.4.0</version>
-    </component>
-    <component bom-ref="46264144-31ec-4e6d-aba5-5af700f2c4e1" type="library">
+    <component type="library" bom-ref="0ad0be84-0a8d-4e3f-9a04-82552bca0f8a">
       <name>urllib3</name>
       <version>1.26.12</version>
     </component>
-    <component bom-ref="f915cd49-861c-4af4-b118-9e430880ffe2" type="library">
+    <component type="library" bom-ref="7b5f3013-0842-4f70-a248-ff8fd73ccf5e">
       <name>xmltodict</name>
       <version>0.13.0</version>
     </component>
-    <component bom-ref="58098dd1-550f-4240-87f1-73fe07e4fea8" type="library">
-      <name>zipp</name>
-      <version>3.9.0</version>
-    </component>
   </components>
   <dependencies>
-    <dependency ref="1471a160-98ec-4b04-94cc-a33cae7eadfb"/>
-    <dependency ref="749c396a-2515-4179-8546-efc61ea75df9"/>
-    <dependency ref="7f4ed824-486a-4e83-a00b-23cc2e521ce0"/>
-    <dependency ref="10000e0d-cd25-478a-bce1-e6f116d3beed"/>
-    <dependency ref="91041df7-2b6e-434b-b840-cd133b3955d8"/>
-    <dependency ref="1e7c8bca-8c7b-41b4-876e-01e0470b98c4"/>
-    <dependency ref="b768363b-b88f-40e8-aae6-08914ec129ed"/>
-    <dependency ref="d492ae1a-0c2e-41fa-9c3a-ad01edf62c2a"/>
-    <dependency ref="0d00c1bf-8b6d-4822-866a-3cde9bd413a7"/>
-    <dependency ref="d4a19f74-d866-4bda-aaa2-27220fd0c80b"/>
-    <dependency ref="e901d5b9-6cd0-4fd8-a723-56a9c0fa56f9"/>
-    <dependency ref="27224582-a638-49fa-a25e-8f4e8b573deb"/>
-    <dependency ref="652d927d-7b57-4043-8736-0c9197cff8aa"/>
-    <dependency ref="b922a9df-ca9b-4136-be92-34b88cad97f1"/>
-    <dependency ref="eacde9de-a7d2-4ad7-b438-5cddd3ee9d55"/>
-    <dependency ref="334f7bd4-dd57-4bbd-810b-f99fd12e1f6e"/>
-    <dependency ref="46264144-31ec-4e6d-aba5-5af700f2c4e1"/>
-    <dependency ref="f915cd49-861c-4af4-b118-9e430880ffe2"/>
-    <dependency ref="58098dd1-550f-4240-87f1-73fe07e4fea8"/>
+    <dependency ref="f42e1c06-d324-4af2-9262-e68bac47357b"/>
+    <dependency ref="e73e8672-2a6b-4dd9-847d-9aa929dfa397"/>
+    <dependency ref="736703d4-ef3f-4fe4-ab1d-13b467f69b70"/>
+    <dependency ref="bf8b417d-0c6b-451b-9faa-cdadf630742d"/>
+    <dependency ref="23e74d9f-a4f6-49ea-80e4-620604bc449e"/>
+    <dependency ref="d34906a1-bdd4-4262-8c57-c82664ca7762"/>
+    <dependency ref="d81490aa-3685-4a63-81d6-3acb0ec51f81"/>
+    <dependency ref="f84107c9-c7b7-4581-ae90-70db7bd14b24"/>
+    <dependency ref="41c40d92-ce65-4fc5-a01b-9a17655dec55"/>
+    <dependency ref="f8f7daab-f7b2-48e9-b440-be220bfbb00e"/>
+    <dependency ref="d6d52049-e8d7-4a9c-9d28-4b15dac8a087"/>
+    <dependency ref="2f26a6c5-384e-4f61-88cc-763d4c264e22"/>
+    <dependency ref="0289bf5b-b99b-4f49-8e23-4d0a4bd648c6"/>
+    <dependency ref="d505de3d-67ff-4117-bbb4-dfb967a7d380"/>
+    <dependency ref="0ad0be84-0a8d-4e3f-9a04-82552bca0f8a"/>
+    <dependency ref="7b5f3013-0842-4f70-a248-ff8fd73ccf5e"/>
   </dependencies>
 </bom>

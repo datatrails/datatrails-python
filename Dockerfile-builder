@@ -17,7 +17,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 
 RUN apt-get update \
   && apt-get upgrade -y --no-install-recommends \
-  && apt-get install -y nodejs libenchant-2-2 \
+  && apt-get install -y --fix-missing nodejs libenchant-2-2 \
   && apt-get autoremove \
   && apt-get autoclean \
   && apt-get clean \
