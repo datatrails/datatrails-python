@@ -79,7 +79,7 @@ class TestAssetCreate(TestCase):
             client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
         )
         self.arch = Archivist(
-            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300
+            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=600
         )
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
@@ -244,7 +244,7 @@ class TestAssetCreateIfNotExists(TestCase):
             client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
         )
         self.arch = Archivist(
-            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300
+            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=600
         )
 
     def tearDown(self):
