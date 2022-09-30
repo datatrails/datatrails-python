@@ -6,7 +6,7 @@ from filecmp import clear_cache, cmp
 from json import dumps as json_dumps
 from io import BytesIO
 from os import getenv, remove
-from unittest import TestCase
+from unittest import TestCase, skipIf
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
@@ -108,6 +108,19 @@ class TestAttachmentsCreate(TestCase):
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             msg="UPLOAD incorrect mimetype",
         )
+
+    @skipIf(
+        getenv("TEST_BLOB_IDENTITY") is None,
+        "cannot run test as TEST_BLOB_IDENTITY is not set",
+    )
+    def test_attachment_info(self):
+        """
+        Test file info through the SDK
+        Test file download through the SDK
+        """
+        file_uuid = getenv("TEST_BLOB_IDENTITY")
+        info = self.arch.attachments.info(file_uuid)
+        print("attachment info", json_dumps(info, indent=4))
 
     def test_attachment_upload_and_download_allow_insecure(self):
         """
