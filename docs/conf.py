@@ -73,6 +73,7 @@ spelling_word_list_filename='spelling_wordlist.txt'
 spelling_show_suggestions=True
 spelling_verbose=True
 
+source_suffix = [ '.md', '.rst']
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".

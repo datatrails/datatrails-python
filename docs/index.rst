@@ -12,23 +12,10 @@
 
    features
    getting_started
-   runner/index
    fixtures
-   runner
-   archivist
-   assets
-   events
-   locations
-   attachments
-   tenancies
-   compliance_policies/index
-   sboms/index
-   iam/index
+   code/index
 
-   timestamp
-   errors
    logger
-   proof_mechanism
    sbom
 
 Indices and tables
