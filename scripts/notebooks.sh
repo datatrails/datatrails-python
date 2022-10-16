@@ -5,7 +5,7 @@
 
 if [ "$USER" = "builder" -o "$USER" = "vscode" ]
 then
-    echo "Cannot run notebooks inside container"
+    echo "Cannot run notebooks.sh inside container"
     exit 0
 fi
 

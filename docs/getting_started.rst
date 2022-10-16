@@ -9,6 +9,8 @@ See the examples and functests directories.
    :maxdepth: 2
    :caption: Contents:
 
+   applications_registration
+
    create_asset
    get_asset
    sharing_asset
@@ -34,4 +36,3 @@ See the examples and functests directories.
    subject_create
    subjects_filter
 
-   applications_registration
