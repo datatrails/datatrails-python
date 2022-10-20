@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compliance &mdash; RKVST 0.17.1 documentation</title>
+  <title>Compliance &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
@@ -16,7 +16,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -33,7 +35,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.1
+                v0.17.2-0-gb114cfe
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -60,7 +62,15 @@
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies.html">Compliance Policies Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policies_type.html">Compliance Policy types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compliance_policy_requests.html">Compliance Policy Requests</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Compliance</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Compliance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.compliance.Compliance"><code class="docutils literal notranslate"><span class="pre">Compliance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.compliance._ComplianceClient"><code class="docutils literal notranslate"><span class="pre">_ComplianceClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.compliance._ComplianceClient.compliant_at"><code class="docutils literal notranslate"><span class="pre">_ComplianceClient.compliant_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.compliance._ComplianceClient.compliant_at_report"><code class="docutils literal notranslate"><span class="pre">_ComplianceClient.compliant_at_report()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
@@ -69,6 +79,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../errors.html">Errors Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
         </div>
@@ -96,7 +107,7 @@
            <div itemprop="articleBody">
              
   <section id="module-archivist.compliance">
-<span id="compliance"></span><span id="complianceref"></span><h1>Compliance<a class="headerlink" href="#module-archivist.compliance" title="Permalink to this headline"></a></h1>
+<span id="compliance"></span><span id="complianceref"></span><h1>Compliance<a class="headerlink" href="#module-archivist.compliance" title="Permalink to this heading"></a></h1>
 <p>Compliance interface</p>
 <p>Access to the compliance endpoint.</p>
 <p>The user is not expected to use this class directly. It is an attribute of the
@@ -121,7 +132,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="archivist.compliance._ComplianceClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.compliance.</span></span><span class="sig-name descname"><span class="pre">_ComplianceClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance.html#_ComplianceClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance._ComplianceClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.compliance.</span></span><span class="sig-name descname"><span class="pre">_ComplianceClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/compliance.html#_ComplianceClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance._ComplianceClient" title="Permalink to this definition"></a></dt>
 <dd><p>ComplianceClient</p>
 <p>Access to compliance entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
@@ -132,7 +143,7 @@ accessed as an attribute of the Archivist class.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.compliance._ComplianceClient.compliant_at">
-<span class="sig-name descname"><span class="pre">compliant_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compliant_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#archivist.compliance.Compliance" title="archivist.compliance.Compliance"><span class="pre">archivist.compliance.Compliance</span></a></span></span><a class="reference internal" href="../_modules/archivist/compliance.html#_ComplianceClient.compliant_at"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance._ComplianceClient.compliant_at" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compliant_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compliant_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#archivist.compliance.Compliance" title="archivist.compliance.Compliance"><span class="pre">Compliance</span></a></span></span><a class="reference internal" href="../_modules/archivist/compliance.html#_ComplianceClient.compliant_at"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance._ComplianceClient.compliant_at" title="Permalink to this definition"></a></dt>
 <dd><p>Reads compliance of a particular asset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -157,7 +168,7 @@ format: rfc3339 - UTC only
 <dd><p>Prints report of compliance_at request</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>response</strong> (<em>dict</em>) -- compliance object encapsulating response from compliant_at</p>
+<dd class="field-odd"><p><strong>compliance</strong> (<em>dict</em>) -- compliance object encapsulating response from compliant_at</p>
 </dd>
 </dl>
 </dd></dl>

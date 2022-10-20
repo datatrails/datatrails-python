@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SBOM CDX for PySDK &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Proof Mechanism Enumeration" href="proof_mechanism.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html">
+            <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.17.2-0-gb114cfe
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runner.html">Runner Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SBOM CDX for PySDK</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>SBOM CDX for PySDK</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sbom-cdx-for-pysdk">
+<span id="sbomxmlref"></span><h1>SBOM CDX for PySDK<a class="headerlink" href="#sbom-cdx-for-pysdk" title="Permalink to this heading"></a></h1>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;bom</span> <span class="na">xmlns=</span><span class="s">&quot;http://cyclonedx.org/schema/bom/1.4&quot;</span> <span class="na">serialNumber=</span><span class="s">&quot;urn:uuid:be00c1e6-7a4c-44e4-b956-b347b2fab027&quot;</span> <span class="na">version=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;metadata&gt;</span>
+    <span class="nt">&lt;timestamp&gt;</span>2022-10-20T16:20:41.344123+00:00<span class="nt">&lt;/timestamp&gt;</span>
+    <span class="nt">&lt;tools&gt;</span>
+      <span class="nt">&lt;tool&gt;</span>
+        <span class="nt">&lt;vendor&gt;</span>CycloneDX<span class="nt">&lt;/vendor&gt;</span>
+        <span class="nt">&lt;name&gt;</span>cyclonedx-python-lib<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;version&gt;</span>3.1.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;externalReferences&gt;</span>
+          <span class="nt">&lt;reference</span> <span class="na">type=</span><span class="s">&quot;build-system&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib/actions<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;/reference&gt;</span>
+          <span class="nt">&lt;reference</span> <span class="na">type=</span><span class="s">&quot;distribution&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://pypi.org/project/cyclonedx-python-lib/<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;/reference&gt;</span>
+          <span class="nt">&lt;reference</span> <span class="na">type=</span><span class="s">&quot;documentation&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://cyclonedx.github.io/cyclonedx-python-lib/<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;/reference&gt;</span>
+          <span class="nt">&lt;reference</span> <span class="na">type=</span><span class="s">&quot;issue-tracker&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib/issues<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;/reference&gt;</span>
+          <span class="nt">&lt;reference</span> <span class="na">type=</span><span class="s">&quot;license&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/LICENSE<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;/reference&gt;</span>
+          <span class="nt">&lt;reference</span> <span class="na">type=</span><span class="s">&quot;release-notes&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/CHANGELOG.md<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;/reference&gt;</span>
+          <span class="nt">&lt;reference</span> <span class="na">type=</span><span class="s">&quot;vcs&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;/reference&gt;</span>
+          <span class="nt">&lt;reference</span> <span class="na">type=</span><span class="s">&quot;website&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;url&gt;</span>https://cyclonedx.org<span class="nt">&lt;/url&gt;</span>
+          <span class="nt">&lt;/reference&gt;</span>
+        <span class="nt">&lt;/externalReferences&gt;</span>
+      <span class="nt">&lt;/tool&gt;</span>
+    <span class="nt">&lt;/tools&gt;</span>
+  <span class="nt">&lt;/metadata&gt;</span>
+  <span class="nt">&lt;components&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;1471a160-98ec-4b04-94cc-a33cae7eadfb&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>backoff<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>1.11.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;749c396a-2515-4179-8546-efc61ea75df9&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>certifi<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>2022.9.24<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;7f4ed824-486a-4e83-a00b-23cc2e521ce0&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>charset-normalizer<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>2.1.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;10000e0d-cd25-478a-bce1-e6f116d3beed&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>flatten-dict<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>0.4.2<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;91041df7-2b6e-434b-b840-cd133b3955d8&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>idna<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>3.4<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;1e7c8bca-8c7b-41b4-876e-01e0470b98c4&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>importlib-metadata<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>5.0.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;b768363b-b88f-40e8-aae6-08914ec129ed&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>iso8601<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;d492ae1a-0c2e-41fa-9c3a-ad01edf62c2a&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>jinja2<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>3.1.2<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;0d00c1bf-8b6d-4822-866a-3cde9bd413a7&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>markupsafe<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>2.1.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;d4a19f74-d866-4bda-aaa2-27220fd0c80b&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>pyaml-env<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>1.1.5<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;e901d5b9-6cd0-4fd8-a723-56a9c0fa56f9&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>pyyaml<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>5.4.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;27224582-a638-49fa-a25e-8f4e8b573deb&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>requests<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>2.28.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;652d927d-7b57-4043-8736-0c9197cff8aa&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>requests-toolbelt<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>0.10.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;b922a9df-ca9b-4136-be92-34b88cad97f1&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>rfc3339<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>6.2<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;eacde9de-a7d2-4ad7-b438-5cddd3ee9d55&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>six<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>1.16.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;334f7bd4-dd57-4bbd-810b-f99fd12e1f6e&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>typing-extensions<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.4.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;46264144-31ec-4e6d-aba5-5af700f2c4e1&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>urllib3<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>1.26.12<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;f915cd49-861c-4af4-b118-9e430880ffe2&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>xmltodict<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>0.13.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+    <span class="nt">&lt;component</span> <span class="na">bom-ref=</span><span class="s">&quot;58098dd1-550f-4240-87f1-73fe07e4fea8&quot;</span> <span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;name&gt;</span>zipp<span class="nt">&lt;/name&gt;</span>
+      <span class="nt">&lt;version&gt;</span>3.9.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/component&gt;</span>
+  <span class="nt">&lt;/components&gt;</span>
+  <span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;1471a160-98ec-4b04-94cc-a33cae7eadfb&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;749c396a-2515-4179-8546-efc61ea75df9&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;7f4ed824-486a-4e83-a00b-23cc2e521ce0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;10000e0d-cd25-478a-bce1-e6f116d3beed&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;91041df7-2b6e-434b-b840-cd133b3955d8&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;1e7c8bca-8c7b-41b4-876e-01e0470b98c4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;b768363b-b88f-40e8-aae6-08914ec129ed&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;d492ae1a-0c2e-41fa-9c3a-ad01edf62c2a&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;0d00c1bf-8b6d-4822-866a-3cde9bd413a7&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;d4a19f74-d866-4bda-aaa2-27220fd0c80b&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;e901d5b9-6cd0-4fd8-a723-56a9c0fa56f9&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;27224582-a638-49fa-a25e-8f4e8b573deb&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;652d927d-7b57-4043-8736-0c9197cff8aa&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;b922a9df-ca9b-4136-be92-34b88cad97f1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;eacde9de-a7d2-4ad7-b438-5cddd3ee9d55&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;334f7bd4-dd57-4bbd-810b-f99fd12e1f6e&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;46264144-31ec-4e6d-aba5-5af700f2c4e1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;f915cd49-861c-4af4-b118-9e430880ffe2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;dependency</span> <span class="na">ref=</span><span class="s">&quot;58098dd1-550f-4240-87f1-73fe07e4fea8&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/bom&gt;</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="proof_mechanism.html" class="btn btn-neutral float-left" title="Proof Mechanism Enumeration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

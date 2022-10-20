@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RKVST Python Client &mdash; RKVST 0.17.1 documentation</title>
+  <title>RKVST Python Client &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -16,7 +16,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -32,7 +34,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.1
+                v0.17.2-0-gb114cfe
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -62,6 +64,7 @@
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
         </div>
@@ -88,13 +91,13 @@
            <div itemprop="articleBody">
              
   <section id="rkvst-python-client">
-<span id="readme"></span><h1>RKVST Python Client<a class="headerlink" href="#rkvst-python-client" title="Permalink to this headline"></a></h1>
+<span id="readme"></span><h1>RKVST Python Client<a class="headerlink" href="#rkvst-python-client" title="Permalink to this heading"></a></h1>
 <p>The standard RKVST Python Client.</p>
 <p>Please note that the canonical API for RKVST is always the REST API
 documented at <a class="reference external" href="https://docs.rkvst.com">https://docs.rkvst.com</a></p>
 </section>
 <section id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline"></a></h1>
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading"></a></h1>
 <p>This package currently is tested against Python versions 3.7,3.8,3.9 and 3.10.</p>
 <p>The current default version is 3.7 - this means that this package will not
 use any features specific to versions 3.8 and later.</p>
@@ -103,7 +106,7 @@ basis. We may ask you to update your Python version to help solve the problem,
 if it cannot be reasonably resolved in your current version.</p>
 </section>
 <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
 <p>Use standard python pip utility:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m pip install jitsuin-archivist
 </pre></div>
@@ -116,7 +119,7 @@ ERROR: No matching distribution found for jitsuin-archivist</p>
 </div>
 </section>
 <section id="example">
-<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h1>
+<h1>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h1>
 <p>You can then use the examples code to create assets (see examples directory):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an asset in RKVST with User Token.</span>
 
@@ -225,7 +228,7 @@ ERROR: No matching distribution found for jitsuin-archivist</p>
 </div>
 </section>
 <section id="notebooks">
-<h1>Notebooks<a class="headerlink" href="#notebooks" title="Permalink to this headline"></a></h1>
+<h1>Notebooks<a class="headerlink" href="#notebooks" title="Permalink to this heading"></a></h1>
 <p>Some jupyter notebooks are available to exercise the examples code. Do the following:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>task builder      # only necessary first time checking out repo.
 ./scripts/notebooks.sh
@@ -253,23 +256,23 @@ or create a new notebook and follow current code in examples directory.
 Please note that security tokens will be required - either a JWT or Application ID and secret and these should be stored in files in the local credentials directory.</p>
 </section>
 <section id="file-story-runner">
-<h1>File Story Runner<a class="headerlink" href="#file-story-runner" title="Permalink to this headline"></a></h1>
+<h1>File Story Runner<a class="headerlink" href="#file-story-runner" title="Permalink to this heading"></a></h1>
 <p>You can run scenarios - a sequence of steps - from a python dictionary or from a yaml
 or json file.</p>
 <section id="python">
-<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline"></a></h2>
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 <span class="kn">from</span> <span class="nn">pyaml_env</span> <span class="kn">import</span> <span class="n">parse_config</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">exit</span> <span class="k">as</span> <span class="n">sys_exit</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span> <span class="k">as</span> <span class="n">sys_stdout</span>
 
-<span class="kn">from</span> <span class="nn">archivist</span> <span class="kn">import</span> <span class="n">archivist</span> <span class="k">as</span> <span class="n">type_helper</span>
 <span class="kn">from</span> <span class="nn">archivist</span> <span class="kn">import</span> <span class="n">about</span>
+<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.parser</span> <span class="kn">import</span> <span class="n">common_parser</span><span class="p">,</span> <span class="n">endpoint</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">arch</span><span class="p">:</span> <span class="s2">&quot;type_helper.Archivist&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">arch</span><span class="p">:</span> <span class="n">Archivist</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using version </span><span class="si">%s</span><span class="s2"> of jitsuin-archivist&quot;</span><span class="p">,</span> <span class="n">about</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Namespace </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span><span class="p">)</span>
@@ -297,7 +300,7 @@ or json file.</p>
 </div>
 </section>
 <section id="command-line">
-<h2>Command Line<a class="headerlink" href="#command-line" title="Permalink to this headline"></a></h2>
+<h2>Command Line<a class="headerlink" href="#command-line" title="Permalink to this heading"></a></h2>
 <p>This functionality is also available with the CLI tool <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code>, which is bundled with version v0.10 onwards of the <code class="code docutils literal notranslate"><span class="pre">jitsuin-archivist</span></code>.</p>
 <p>You can verify the installation by running the following:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner -h
@@ -322,7 +325,7 @@ or json file.</p>
 </div>
 </section>
 <section id="example-yaml-snippet">
-<h2>Example Yaml Snippet<a class="headerlink" href="#example-yaml-snippet" title="Permalink to this headline"></a></h2>
+<h2>Example Yaml Snippet<a class="headerlink" href="#example-yaml-snippet" title="Permalink to this heading"></a></h2>
 <p>This is an example of creating an asset and creating an event for that asset. The
 yaml file consists of a list of steps.</p>
 <p>Each step consists of control parameters (specified in the 'step' dictionary) and
@@ -386,7 +389,7 @@ every operation - in this case the name of the asset is 'radiation bag 1'.</p>
 </section>
 </section>
 <section id="logging">
-<h1>Logging<a class="headerlink" href="#logging" title="Permalink to this headline"></a></h1>
+<h1>Logging<a class="headerlink" href="#logging" title="Permalink to this heading"></a></h1>
 <p>Follows the Django model as described here: <a class="reference external" href="https://docs.djangoproject.com/en/3.2/topics/logging/">https://docs.djangoproject.com/en/3.2/topics/logging/</a></p>
 <p>The base logger for this package is rooted at &quot;archivist&quot; with subloggers for each endpoint:</p>
 <div class="admonition note">
@@ -439,13 +442,13 @@ which should be called before anything else:</p>
 </div>
 </section>
 <section id="development">
-<h1>Development<a class="headerlink" href="#development" title="Permalink to this headline"></a></h1>
+<h1>Development<a class="headerlink" href="#development" title="Permalink to this heading"></a></h1>
 <p>For instructions on contributing to the RKVST SDK see DEVELOPMENT.md.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Attachments Class &mdash; RKVST 0.17.1 documentation</title>
+  <title>Attachments Class &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -16,7 +16,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,7 +35,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.1
+                v0.17.2-0-gb114cfe
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -54,7 +56,17 @@
 <li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Attachments Class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Attachments Class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.attachments.Attachment"><code class="docutils literal notranslate"><span class="pre">Attachment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.attachments._AttachmentsClient"><code class="docutils literal notranslate"><span class="pre">_AttachmentsClient</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.attachments._AttachmentsClient.create"><code class="docutils literal notranslate"><span class="pre">_AttachmentsClient.create()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.attachments._AttachmentsClient.download"><code class="docutils literal notranslate"><span class="pre">_AttachmentsClient.download()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.attachments._AttachmentsClient.info"><code class="docutils literal notranslate"><span class="pre">_AttachmentsClient.info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.attachments._AttachmentsClient.upload"><code class="docutils literal notranslate"><span class="pre">_AttachmentsClient.upload()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
@@ -63,6 +75,7 @@
 <li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
         </div>
@@ -89,7 +102,7 @@
            <div itemprop="articleBody">
              
   <section id="module-archivist.attachments">
-<span id="attachments-class"></span><span id="attachmentsref"></span><h1>Attachments Class<a class="headerlink" href="#module-archivist.attachments" title="Permalink to this headline"></a></h1>
+<span id="attachments-class"></span><span id="attachmentsref"></span><h1>Attachments Class<a class="headerlink" href="#module-archivist.attachments" title="Permalink to this heading"></a></h1>
 <p>Attachments interface</p>
 <p>Direct access to the attachments endpoint</p>
 <p>The user is not expected to use this class directly. It is an attribute of the
@@ -115,7 +128,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="archivist.attachments._AttachmentsClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.attachments.</span></span><span class="sig-name descname"><span class="pre">_AttachmentsClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">archivist.archivist.Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.attachments.</span></span><span class="sig-name descname"><span class="pre">_AttachmentsClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient" title="Permalink to this definition"></a></dt>
 <dd><p>AttachmentsClient</p>
 <p>Access to attachments entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
@@ -169,7 +182,7 @@ or event creation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.attachments._AttachmentsClient.download">
-<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient.download" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Response</span></span></span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient.download" title="Permalink to this definition"></a></dt>
 <dd><p>Read attachment</p>
 <p>Reads attachment into data sink (usually a file opened for write)..
 Note that returns the response as the body will be consumed by the
@@ -205,7 +218,7 @@ fd iterator</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.attachments._AttachmentsClient.upload">
-<span class="sig-name descname"><span class="pre">upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#archivist.attachments.Attachment" title="archivist.attachments.Attachment"><span class="pre">archivist.attachments.Attachment</span></a></span></span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient.upload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient.upload" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#archivist.attachments.Attachment" title="archivist.attachments.Attachment"><span class="pre">Attachment</span></a></span></span><a class="reference internal" href="_modules/archivist/attachments.html#_AttachmentsClient.upload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.attachments._AttachmentsClient.upload" title="Permalink to this definition"></a></dt>
 <dd><p>Create attachment</p>
 <p>Creates attachment from opened file or other data source.</p>
 <dl class="field-list simple">

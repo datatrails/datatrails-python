@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.subjects &mdash; RKVST 0.17.1 documentation</title>
+  <title>archivist.subjects &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
@@ -15,7 +15,9 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -30,7 +32,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.1
+                v0.17.2-0-gb114cfe
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -60,6 +62,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
         </div>
@@ -114,14 +117,15 @@
 <span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">loads</span> <span class="k">as</span> <span class="n">json_loads</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span>
 
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">SUBJECTS_SUBPATH</span><span class="p">,</span>
     <span class="n">SUBJECTS_LABEL</span><span class="p">,</span>
+    <span class="n">SUBJECTS_SELF_ID</span><span class="p">,</span>
+    <span class="n">SUBJECTS_SUBPATH</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">subjects_confirmer</span>
 <span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_deepmerge</span>
@@ -180,12 +184,38 @@
             <span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_SubjectsClient.import_subject"><a class="viewcode-back" href="../../iam/subjects.html#archivist.subjects._SubjectsClient.import_subject">[docs]</a>    <span class="k">def</span> <span class="nf">import_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Subject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subject</span><span class="p">:</span>
+<div class="viewcode-block" id="_SubjectsClient.share"><a class="viewcode-back" href="../../iam/subjects.html#archivist.subjects._SubjectsClient.share">[docs]</a>    <span class="k">def</span> <span class="nf">share</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">other_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">other_archivist</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">Archivist</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Subject</span><span class="p">,</span> <span class="n">Subject</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Import the self subjects from the foreign archivist connection</span>
+<span class="sd">           from another organization - mutually share.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): display_name of the foreign self subject in this archivist</span>
+<span class="sd">            other_name (str): display_name of the self subject in other archivist</span>
+<span class="sd">            other_archivist (Archivist): Archivist object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            2-tuple of :class:`Subject` instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">subject1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">import_subject</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">other_archivist</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">SUBJECTS_SELF_ID</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">subject2</span> <span class="o">=</span> <span class="n">other_archivist</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">import_subject</span><span class="p">(</span>
+            <span class="n">other_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">SUBJECTS_SELF_ID</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">subject1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_confirmation</span><span class="p">(</span><span class="n">subject1</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+        <span class="n">subject2</span> <span class="o">=</span> <span class="n">other_archivist</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">wait_for_confirmation</span><span class="p">(</span><span class="n">subject2</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">subject1</span><span class="p">,</span> <span class="n">subject2</span></div>
+
+<div class="viewcode-block" id="_SubjectsClient.import_subject"><a class="viewcode-back" href="../../iam/subjects.html#archivist.subjects._SubjectsClient.import_subject">[docs]</a>    <span class="k">def</span> <span class="nf">import_subject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Subject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subject</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Create subject from another subject usually</span>
 <span class="sd">           from another organization.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            name (str): of the subject</span>
+<span class="sd">            display_name (str): display_name of the subject</span>
 <span class="sd">            subject (Subject): Subject object</span>
 
 <span class="sd">        Returns:</span>
@@ -193,7 +223,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-            <span class="n">name</span><span class="p">,</span>
+            <span class="n">display_name</span><span class="p">,</span>
             <span class="n">subject</span><span class="p">[</span><span class="s2">&quot;wallet_pub_key&quot;</span><span class="p">],</span>
             <span class="n">subject</span><span class="p">[</span><span class="s2">&quot;tessera_pub_key&quot;</span><span class="p">],</span>
         <span class="p">)</span></div>
@@ -378,6 +408,8 @@
 <span class="sd">            iterable that returns :class:`Subject` instances</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;List &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">display_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="n">Subject</span><span class="p">(</span><span class="o">**</span><span class="n">a</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">list</span><span class="p">(</span>

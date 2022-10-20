@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Errors Parsing &mdash; RKVST 0.17.1 documentation</title>
+  <title>Errors Parsing &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -16,7 +16,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,7 +35,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.17.1
+                v0.17.2-0-gb114cfe
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -60,9 +62,30 @@
 <li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Errors Parsing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Errors Parsing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.Archivist4xxError"><code class="docutils literal notranslate"><span class="pre">Archivist4xxError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.Archivist5xxError"><code class="docutils literal notranslate"><span class="pre">Archivist5xxError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistBadFieldError"><code class="docutils literal notranslate"><span class="pre">ArchivistBadFieldError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistBadRequestError"><code class="docutils literal notranslate"><span class="pre">ArchivistBadRequestError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistDuplicateError"><code class="docutils literal notranslate"><span class="pre">ArchivistDuplicateError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistError"><code class="docutils literal notranslate"><span class="pre">ArchivistError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistForbiddenError"><code class="docutils literal notranslate"><span class="pre">ArchivistForbiddenError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistHeaderError"><code class="docutils literal notranslate"><span class="pre">ArchivistHeaderError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistInvalidOperationError"><code class="docutils literal notranslate"><span class="pre">ArchivistInvalidOperationError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistNotFoundError"><code class="docutils literal notranslate"><span class="pre">ArchivistNotFoundError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistNotImplementedError"><code class="docutils literal notranslate"><span class="pre">ArchivistNotImplementedError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistPaymentRequiredError"><code class="docutils literal notranslate"><span class="pre">ArchivistPaymentRequiredError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistTooManyRequestsError"><code class="docutils literal notranslate"><span class="pre">ArchivistTooManyRequestsError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistUnauthenticatedError"><code class="docutils literal notranslate"><span class="pre">ArchivistUnauthenticatedError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistUnavailableError"><code class="docutils literal notranslate"><span class="pre">ArchivistUnavailableError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistUnconfirmedError"><code class="docutils literal notranslate"><span class="pre">ArchivistUnconfirmedError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistUnpublishedError"><code class="docutils literal notranslate"><span class="pre">ArchivistUnpublishedError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#archivist.errors.ArchivistUnwithdrawnError"><code class="docutils literal notranslate"><span class="pre">ArchivistUnwithdrawnError</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
         </div>
@@ -89,7 +112,7 @@
            <div itemprop="articleBody">
              
   <section id="module-archivist.errors">
-<span id="errors-parsing"></span><span id="errorsref"></span><h1>Errors Parsing<a class="headerlink" href="#module-archivist.errors" title="Permalink to this headline"></a></h1>
+<span id="errors-parsing"></span><span id="errorsref"></span><h1>Errors Parsing<a class="headerlink" href="#module-archivist.errors" title="Permalink to this heading"></a></h1>
 <p>Archivist exceptions</p>
 <p>All exceptions are derived from a base ArchivistError class.</p>
 <dl class="py exception">
