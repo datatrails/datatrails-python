@@ -8,6 +8,7 @@ pip-audit~=2.4
 pycodestyle~=2.9
 pylint~=2.14
 pyright~=1.1.271
+unittest-xml-reporting~=3.2.0
 
 # uploading to pypi
 build~=0.8
