@@ -21,3 +21,4 @@ coverage.xml
 .vscode
 stuntidp*
 .npm/
+functest-results/

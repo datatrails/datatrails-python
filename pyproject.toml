@@ -24,6 +24,7 @@ count_commits_from_version_file = false
 
 [tool.pyright]
 include = ["archivist"]
+typeCheckingMode = "basic"
 
 [tool.pylint.main]
 # Analyse import fallback blocks. This can be used to support both Python 2 and 3

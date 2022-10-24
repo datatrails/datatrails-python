@@ -67,7 +67,7 @@ tasks:
       - ./scripts/builder.sh black archivist examples functests unittests
 
   type-check:
-    desc: Runs the pyright type checker against the core archivst files 
+    desc: Runs the pyright type checker against the core archivst files
     deps: [about]
     cmds:
       - ./scripts/builder.sh pyright archivist
@@ -77,6 +77,12 @@ tasks:
     deps: [about]
     cmds:
       - ./scripts/builder.sh ./scripts/functests.sh
+
+  pipeline-functests:
+    desc: Run functests with Junit xml output
+    deps: [about]
+    cmds:
+      - ./scripts/builder.sh ./scripts/pipeline_functests.sh
 
   notebooks:
     desc: Run jupyter notebooks
