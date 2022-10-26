@@ -165,8 +165,8 @@ class TestSubjects(TestCase):
         Test subject count
         """
         count = self.arch.subjects.count()
-        self.assertGreater(
+        self.assertIsInstance(
             count,
-            0,
-            msg="Count is zero",
+            int,
+            msg="Count did not return an integer",
         )
