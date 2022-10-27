@@ -57,7 +57,7 @@ class TestSBOM(TestCase):
 
     def tearDown(self) -> None:
         """Remove the downloaded sbom for subsequent test runs"""
-        self.arch = None
+        self.arch.close()
         with suppress(FileNotFoundError):
             remove(TEST_SBOM_DOWNLOAD_PATH)
 
@@ -278,21 +278,3 @@ class TestSBOM(TestCase):
         )
         for i, m in enumerate(metadatas):
             print(i, ":", json_dumps(m.dict(), indent=4))
-
-
-class TestSBOMWithApplication(TestSBOM):
-    """
-    Test Archivist SBOM upload/download
-    """
-
-    maxDiff = None
-
-    def setUp(self):
-        super().setUp()
-        self.title = "TestSBOMWithApplication"
-        application = self.arch.applications.create(
-            DISPLAY_NAME,
-            CUSTOM_CLAIMS,
-        )
-        auth = (application["client_id"], application["credentials"][0]["secret"])
-        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)

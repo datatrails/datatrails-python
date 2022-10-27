@@ -35,23 +35,23 @@ def main():
         client_secret = tokenfile.read().strip()
 
     # Initialize connection to Archivist
-    arch = Archivist(
+    with Archivist(
         "https://app.rkvst.io",
         (client_id, client_secret),
-    )
+    ) as arch:
 
-    # list all assets with required attributes and properties
-    props = {"confirmation_status": "CONFIRMED"}
-    attrs = {"arc_display_type": "Traffic light"}
+        # list all assets with required attributes and properties
+        props = {"confirmation_status": "CONFIRMED"}
+        attrs = {"arc_display_type": "Traffic light"}
 
-    # iterate through the generator....
-    for asset in arch.assets.list(props=props, attrs=attrs):
-        print("asset", asset)
+        # iterate through the generator....
+        for asset in arch.assets.list(props=props, attrs=attrs):
+            print("asset", asset)
 
-    # alternatively one could pull the list and cache locally...
-    assets = list(arch.assets.list(props=props, attrs=attrs))
-    for asset in assets:
-        print("asset", asset)
+        # alternatively one could pull the list and cache locally...
+        assets = list(arch.assets.list(props=props, attrs=attrs))
+        for asset in assets:
+            print("asset", asset)
 
 
 if __name__ == "__main__":

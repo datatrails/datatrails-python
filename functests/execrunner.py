@@ -45,7 +45,7 @@ class TestRunner(TestCase):
         )
 
     def tearDown(self):
-        self.arch = None
+        self.arch.close()
 
     def test_runner_dynamic_tolerance(self):
         """

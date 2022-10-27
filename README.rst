@@ -135,14 +135,14 @@ You can then use the examples code to create assets (see examples directory):
         # of an asset or event creation - the default is 1200 seconds but one can optionally
         # specify a different value here particularly when creating assets on SIMPLE_HASH
         # (rather than KHIPU) as confirmation times are much shorter in this case.
-        arch = Archivist(
+        with arch = Archivist(
             "https://app.rkvst.io",
             (client_id, client_secret),
             max_time=300,
-        )
-        # Create a new asset
-        asset = create_asset(arch)
-        print("Asset", asset)
+        ) as arch:
+            # Create a new asset
+            asset = create_asset(arch)
+            print("Asset", asset)
 
 
     if __name__ == "__main__":

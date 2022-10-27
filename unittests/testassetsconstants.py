@@ -473,7 +473,7 @@ class TestAssetsBase(TestCase):
         self.arch = Archivist("url", "authauthauth", max_time=1)
 
     def tearDown(self):
-        self.arch = None
+        self.arch.close()
 
 
 class TestAssetsBaseConfirm(TestCase):
@@ -487,4 +487,4 @@ class TestAssetsBaseConfirm(TestCase):
         self.arch = Archivist("url", "authauthauth", max_time=100)
 
     def tearDown(self):
-        self.arch = None
+        self.arch.close()

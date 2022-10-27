@@ -109,6 +109,15 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         super().__setattr__(value, c)
         return c
 
+    def __enter__(self):
+        """Just return self on entering - the session property will
+        create the session when needed
+        """
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
     @property
     def session(self) -> requests.Session:
         """creates and returns session"""
@@ -117,7 +126,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         return self._session
 
     def close(self):
-        """closes current session"""
+        """closes current session if open"""
         if self._session is not None:
             self._session.close()
             self._session = None

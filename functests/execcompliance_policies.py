@@ -102,6 +102,9 @@ class TestCompliancePoliciesBase(TestCase):
         self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
         print()
 
+    def tearDown(self):
+        self.arch.close()
+
 
 class TestCompliancePolicies(TestCompliancePoliciesBase):
     def test_compliancepolicies_create_since(self):

@@ -64,6 +64,9 @@ class TestAttachmentsBase(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_attachments_str(self):
         """
         Test attachments str

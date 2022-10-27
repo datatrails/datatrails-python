@@ -59,6 +59,9 @@ class TestApplications(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_applications_str(self):
         """
         Test applications str

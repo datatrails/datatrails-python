@@ -98,21 +98,21 @@ def main():
         client_secret_filename=getenv("CLIENT_SECRET_FILENAME"),
     )
 
-    arch = Archivist(rkvst_url, auth, verify=False, max_time=300)
+    with Archivist(rkvst_url, auth, verify=False, max_time=300) as arch:
 
-    asset, event = sbom_release(
-        arch, getenv("BUILD_BUILDNUMBER"), getenv("SBOM_FILEPATH")
-    )
+        asset, event = sbom_release(
+            arch, getenv("BUILD_BUILDNUMBER"), getenv("SBOM_FILEPATH")
+        )
 
-    rkvst_path = "archivist/v2"
+        rkvst_path = "archivist/v2"
 
-    asset_url = f"{rkvst_url}/{rkvst_path}/{asset['identity']}"
-    event_url = f"{rkvst_url}/{rkvst_path}/{event['identity']}"
+        asset_url = f"{rkvst_url}/{rkvst_path}/{asset['identity']}"
+        event_url = f"{rkvst_url}/{rkvst_path}/{event['identity']}"
 
-    print(f"##vso[task.setvariable variable=RKVST_ASSET_URL]{asset_url}")
-    print(f"##vso[task.setvariable variable=RKVST_EVENT_URL]{event_url}")
-    print(f"##[debug]Asset url: {asset_url}")
-    print(f"##[debug]Event url: {event_url}")
+        print(f"##vso[task.setvariable variable=RKVST_ASSET_URL]{asset_url}")
+        print(f"##vso[task.setvariable variable=RKVST_EVENT_URL]{event_url}")
+        print(f"##[debug]Asset url: {asset_url}")
+        print(f"##[debug]Event url: {event_url}")
 
 
 if __name__ == "__main__":

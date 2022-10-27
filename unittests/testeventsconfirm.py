@@ -32,7 +32,7 @@ class TestEventsConfirm(TestCase):
         self.arch = Archivist("url", "authauthauth", max_time=100)
 
     def tearDown(self):
-        self.arch = None
+        self.arch.close()
 
     def test_events_create_with_confirmation(self):
         """

@@ -28,22 +28,22 @@ def main():
         client_secret = tokenfile.read().strip()
 
     # Initialize connection to Archivist
-    arch = Archivist(
+    with Archivist(
         "https://app.rkvst.io",
         (client_id, client_secret),
-    )
+    ) as arch:
 
-    # count subjects...
-    print("no.of subjects", arch.subjects.count(display_name="Some display name"))
+        # count subjects...
+        print("no.of subjects", arch.subjects.count(display_name="Some display name"))
 
-    # iterate through the generator....
-    for subject in arch.subjects.list(display_name="Some display name"):
-        print("subject", subject)
+        # iterate through the generator....
+        for subject in arch.subjects.list(display_name="Some display name"):
+            print("subject", subject)
 
-    # alternatively one could pull the list for all subjects and cache locally...
-    subjects = list(arch.subjects.list())
-    for subject in subjects:
-        print("subject", subject)
+        # alternatively one could pull the list for all subjects and cache locally...
+        subjects = list(arch.subjects.list())
+        for subject in subjects:
+            print("subject", subject)
 
 
 if __name__ == "__main__":

@@ -87,7 +87,7 @@ class TestPublicAssetCreate(TestCase):
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
 
     def tearDown(self):
-        self.arch = None
+        self.arch.close()
         self.attrs = None
         self.traffic_light = None
 

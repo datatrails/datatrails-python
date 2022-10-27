@@ -14,21 +14,21 @@ def main():
 
     """
     # Initialize connection to ArchivistPublic
-    public = ArchivistPublic()
+    with ArchivistPublic() as public:
 
-    # Get all public events with required attributes and properties
-    props = {"confirmation_status": "CONFIRMED"}
-    attrs = {"arc_display_type": "Traffic light"}
+        # Get all public events with required attributes and properties
+        props = {"confirmation_status": "CONFIRMED"}
+        attrs = {"arc_display_type": "Traffic light"}
 
-    for event in public.events.list(
-        asset_id=(
-            "https://app.rkvst.io/archivist/"
-            "publicassets/87b1a84c-1c6f-442b-923e-a97516f4d275"
-        ),
-        props=props,
-        attrs=attrs,
-    ):
-        print("event", event)
+        for event in public.events.list(
+            asset_id=(
+                "https://app.rkvst.io/archivist/"
+                "publicassets/87b1a84c-1c6f-442b-923e-a97516f4d275"
+            ),
+            props=props,
+            attrs=attrs,
+        ):
+            print("event", event)
 
 
 if __name__ == "__main__":

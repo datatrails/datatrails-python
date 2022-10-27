@@ -64,169 +64,169 @@ class TestArchivist(TestCase):
         """
         Test default archivist creation
         """
-        arch = Archivist("https://app.rkvst.io", "authauthauth")
-        self.assertEqual(
-            str(arch),
-            "Archivist(https://app.rkvst.io)",
-            msg="Incorrect str",
-        )
-        self.assertEqual(
-            str(arch.access_policies),
-            "AccessPoliciesClient(https://app.rkvst.io)",
-            msg="Incorrect access_policies",
-        )
-        self.assertEqual(
-            str(arch.appidp),
-            "AppIDPClient(https://app.rkvst.io)",
-            msg="Incorrect appidp",
-        )
-        self.assertEqual(
-            str(arch.applications),
-            "ApplicationsClient(https://app.rkvst.io)",
-            msg="Incorrect applications",
-        )
-        self.assertEqual(
-            str(arch.assets),
-            "AssetsRestricted(https://app.rkvst.io)",
-            msg="Incorrect assets",
-        )
-        self.assertEqual(
-            str(arch.assetattachments),
-            "AssetAttachmentsClient(https://app.rkvst.io)",
-            msg="Incorrect assets",
-        )
-        self.assertEqual(
-            str(arch.attachments),
-            "AttachmentsClient(https://app.rkvst.io)",
-            msg="Incorrect attachments",
-        )
-        self.assertEqual(
-            str(arch.compliance),
-            "ComplianceClient(https://app.rkvst.io)",
-            msg="Incorrect compliance",
-        )
-        self.assertEqual(
-            str(arch.compliance_policies),
-            "CompliancePoliciesClient(https://app.rkvst.io)",
-            msg="Incorrect compliance_policies",
-        )
-        self.assertEqual(
-            str(arch.events),
-            "EventsRestricted(https://app.rkvst.io)",
-            msg="Incorrect events",
-        )
-        self.assertEqual(
-            str(arch.locations),
-            "LocationsClient(https://app.rkvst.io)",
-            msg="Incorrect locations",
-        )
-        self.assertEqual(
-            str(arch.runner),
-            "Runner(https://app.rkvst.io)",
-            msg="Incorrect runner",
-        )
-        self.assertEqual(
-            str(arch.sboms),
-            "SBOMSClient(https://app.rkvst.io)",
-            msg="Incorrect sboms",
-        )
-        self.assertEqual(
-            str(arch.subjects),
-            "SubjectsClient(https://app.rkvst.io)",
-            msg="Incorrect subjects",
-        )
-        self.assertEqual(
-            str(arch.Public),
-            "ArchivistPublic()",
-            msg="Incorrect Public",
-        )
-        self.assertEqual(
-            arch.url,
-            "https://app.rkvst.io",
-            msg="Incorrect url",
-        )
-        self.assertEqual(
-            arch.auth,
-            "authauthauth",
-            msg="Incorrect auth",
-        )
-        self.assertEqual(
-            arch.root,
-            "https://app.rkvst.io/archivist",
-            msg="Incorrect root",
-        )
-        self.assertEqual(
-            arch.verify,
-            True,
-            msg="verify must be True",
-        )
-        with self.assertRaises(AttributeError):
-            e = arch.Illegal_endpoint
+        with Archivist("https://app.rkvst.io", "authauthauth") as arch:
+            self.assertEqual(
+                str(arch),
+                "Archivist(https://app.rkvst.io)",
+                msg="Incorrect str",
+            )
+            self.assertEqual(
+                str(arch.access_policies),
+                "AccessPoliciesClient(https://app.rkvst.io)",
+                msg="Incorrect access_policies",
+            )
+            self.assertEqual(
+                str(arch.appidp),
+                "AppIDPClient(https://app.rkvst.io)",
+                msg="Incorrect appidp",
+            )
+            self.assertEqual(
+                str(arch.applications),
+                "ApplicationsClient(https://app.rkvst.io)",
+                msg="Incorrect applications",
+            )
+            self.assertEqual(
+                str(arch.assets),
+                "AssetsRestricted(https://app.rkvst.io)",
+                msg="Incorrect assets",
+            )
+            self.assertEqual(
+                str(arch.assetattachments),
+                "AssetAttachmentsClient(https://app.rkvst.io)",
+                msg="Incorrect assets",
+            )
+            self.assertEqual(
+                str(arch.attachments),
+                "AttachmentsClient(https://app.rkvst.io)",
+                msg="Incorrect attachments",
+            )
+            self.assertEqual(
+                str(arch.compliance),
+                "ComplianceClient(https://app.rkvst.io)",
+                msg="Incorrect compliance",
+            )
+            self.assertEqual(
+                str(arch.compliance_policies),
+                "CompliancePoliciesClient(https://app.rkvst.io)",
+                msg="Incorrect compliance_policies",
+            )
+            self.assertEqual(
+                str(arch.events),
+                "EventsRestricted(https://app.rkvst.io)",
+                msg="Incorrect events",
+            )
+            self.assertEqual(
+                str(arch.locations),
+                "LocationsClient(https://app.rkvst.io)",
+                msg="Incorrect locations",
+            )
+            self.assertEqual(
+                str(arch.runner),
+                "Runner(https://app.rkvst.io)",
+                msg="Incorrect runner",
+            )
+            self.assertEqual(
+                str(arch.sboms),
+                "SBOMSClient(https://app.rkvst.io)",
+                msg="Incorrect sboms",
+            )
+            self.assertEqual(
+                str(arch.subjects),
+                "SubjectsClient(https://app.rkvst.io)",
+                msg="Incorrect subjects",
+            )
+            self.assertEqual(
+                str(arch.Public),
+                "ArchivistPublic()",
+                msg="Incorrect Public",
+            )
+            self.assertEqual(
+                arch.url,
+                "https://app.rkvst.io",
+                msg="Incorrect url",
+            )
+            self.assertEqual(
+                arch.auth,
+                "authauthauth",
+                msg="Incorrect auth",
+            )
+            self.assertEqual(
+                arch.root,
+                "https://app.rkvst.io/archivist",
+                msg="Incorrect root",
+            )
+            self.assertEqual(
+                arch.verify,
+                True,
+                msg="verify must be True",
+            )
+            with self.assertRaises(AttributeError):
+                e = arch.Illegal_endpoint
 
     def test_archivist_token(self):
         """
         Test archivist creation with app registration
         """
-        arch = Archivist("https://app.rkvst.io", (CLIENT_ID, CLIENT_SECRET))
-        with mock.patch.object(arch.appidp, "token") as mock_token:
-            mock_token.return_value = RESPONSE
-            self.assertEqual(
-                arch.auth,
-                ACCESS_TOKEN,
-                msg="Incorrect auth",
-            )
+        with Archivist("https://app.rkvst.io", (CLIENT_ID, CLIENT_SECRET)) as arch:
+            with mock.patch.object(arch.appidp, "token") as mock_token:
+                mock_token.return_value = RESPONSE
+                self.assertEqual(
+                    arch.auth,
+                    ACCESS_TOKEN,
+                    msg="Incorrect auth",
+                )
 
     def test_archivist_none_token(self):
         """
         Test archivist creation with no token
         """
-        arch = Archivist("https://app.rkvst.io", None)
-        self.assertIsNone(
-            arch.auth,
-            msg="Incorrect auth",
-        )
+        with Archivist("https://app.rkvst.io", None) as arch:
+            self.assertIsNone(
+                arch.auth,
+                msg="Incorrect auth",
+            )
 
     def test_archivist_appidp_token(self):
         """
         Test archivist creation with appidp token
         """
-        arch = Archivist("https://app.rkvst.io", (CLIENT_ID, CLIENT_SECRET))
-        with mock.patch.object(arch.appidp, "token") as mock_token:
-            mock_token.return_value = NONE_RESPONSE
-            with self.assertRaises(ArchivistError):
-                _ = arch.auth
+        with Archivist("https://app.rkvst.io", (CLIENT_ID, CLIENT_SECRET)) as arch:
+            with mock.patch.object(arch.appidp, "token") as mock_token:
+                mock_token.return_value = NONE_RESPONSE
+                with self.assertRaises(ArchivistError):
+                    _ = arch.auth
 
     def test_archivist_copy(self):
         """
         Test archivist copy
         """
-        arch = Archivist("https://app.rkvst.io", "authauthauth", verify=False)
-        arch1 = copy(arch)
-        self.assertEqual(
-            arch.url,
-            arch1.url,
-            msg="Incorrect url",
-        )
-        self.assertEqual(
-            arch.verify,
-            arch1.verify,
-            msg="Incorrect verify",
-        )
-        self.assertEqual(
-            arch.fixtures,
-            arch1.fixtures,
-            msg="Incorrect fixtures",
-        )
+        with Archivist("https://app.rkvst.io", "authauthauth", verify=False) as arch:
+            arch1 = copy(arch)
+            self.assertEqual(
+                arch.url,
+                arch1.url,
+                msg="Incorrect url",
+            )
+            self.assertEqual(
+                arch.verify,
+                arch1.verify,
+                msg="Incorrect verify",
+            )
+            self.assertEqual(
+                arch.fixtures,
+                arch1.fixtures,
+                msg="Incorrect fixtures",
+            )
 
     def test_archivist_no_verify(self):
         """
         Test archivist creation with no verify
         """
-        arch = Archivist("https://app.rkvst.io", "authauthauth", verify=False)
-        self.assertFalse(
-            arch.verify,
-            msg="verify must be False",
-        )
+        with Archivist("https://app.rkvst.io", "authauthauth", verify=False) as arch:
+            self.assertFalse(
+                arch.verify,
+                msg="verify must be False",
+            )
 
 
 class TestArchivistMethods(TestCase):
@@ -236,6 +236,9 @@ class TestArchivistMethods(TestCase):
 
     def setUp(self):
         self.arch = Archivist("https://app.rkvst.io", "authauthauth")
+
+    def tearDown(self):
+        self.arch.close()
 
 
 class TestArchivistPatch(TestArchivistMethods):

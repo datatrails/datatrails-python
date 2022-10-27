@@ -51,6 +51,7 @@ class TestAttachmentsCreate(TestCase):
 
     def tearDown(self) -> None:
         """Remove the downloaded image for subsequent test runs"""
+        self.arch.close()
         with suppress(FileNotFoundError):
             remove(self.TEST_IMAGE_DOWNLOAD_PATH)
 
@@ -191,6 +192,9 @@ class TestAttachmentstMalware(TestCase):
             client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
         )
         self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
+
+    def tearDown(self):
+        self.arch.close()
 
     def test_attachment_malware_scan1(self):
         """

@@ -28,6 +28,9 @@ class TestArchivistMethods(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def tearDown(self):
+        self.arch.close()
+
 
 class TestArchivistPost(TestArchivistMethods):
     """

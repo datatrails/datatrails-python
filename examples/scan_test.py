@@ -135,18 +135,18 @@ def main():
         client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
     )
 
-    arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300)
+    with Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300) as arch:
 
-    print("##[group]Today")
-    today = date.today()
-    scan_test(arch, today.strftime("%Y-%m-%d"))
+        print("##[group]Today")
+        today = date.today()
+        scan_test(arch, today.strftime("%Y-%m-%d"))
 
-    # currently scans run mon-fri
-    # so if today is mon, previous day is fri, otherwise previous day is yesterday
-    print("##[group]Previous day")
-    days_delta = 3 if today.strftime("%a") == "Mon" else 1
-    previous_day = datetime.now() - timedelta(days=days_delta)
-    scan_test(arch, previous_day.strftime("%Y-%m-%d"), scanned_expected=True)
+        # currently scans run mon-fri
+        # so if today is mon, previous day is fri, otherwise previous day is yesterday
+        print("##[group]Previous day")
+        days_delta = 3 if today.strftime("%a") == "Mon" else 1
+        previous_day = datetime.now() - timedelta(days=days_delta)
+        scan_test(arch, previous_day.strftime("%Y-%m-%d"), scanned_expected=True)
 
 
 if __name__ == "__main__":

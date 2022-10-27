@@ -35,66 +35,66 @@ class TestPublic(TestCase):
         """
         Test default public creation
         """
-        public = ArchivistPublic()
-        self.assertEqual(
-            str(public),
-            "ArchivistPublic()",
-            msg="Incorrect str",
-        )
-        self.assertEqual(
-            str(public.assets),
-            "AssetsPublic()",
-            msg="Incorrect assets",
-        )
-        self.assertEqual(
-            str(public.events),
-            "EventsPublic()",
-            msg="Incorrect events",
-        )
-        self.assertEqual(
-            public.verify,
-            True,
-            msg="verify must be True",
-        )
-        self.assertEqual(
-            public.public,
-            True,
-            msg="verify must be True",
-        )
-        with self.assertRaises(AttributeError):
-            e = public.Illegal_endpoint
+        with ArchivistPublic() as public:
+            self.assertEqual(
+                str(public),
+                "ArchivistPublic()",
+                msg="Incorrect str",
+            )
+            self.assertEqual(
+                str(public.assets),
+                "AssetsPublic()",
+                msg="Incorrect assets",
+            )
+            self.assertEqual(
+                str(public.events),
+                "EventsPublic()",
+                msg="Incorrect events",
+            )
+            self.assertEqual(
+                public.verify,
+                True,
+                msg="verify must be True",
+            )
+            self.assertEqual(
+                public.public,
+                True,
+                msg="verify must be True",
+            )
+            with self.assertRaises(AttributeError):
+                e = public.Illegal_endpoint
 
     def test_public_copy(self):
         """
         Test public copy
         """
-        public = ArchivistPublic(verify=False)
-        public1 = copy(public)
-        self.assertEqual(
-            public.verify,
-            public1.verify,
-            msg="Incorrect verify",
-        )
-        self.assertEqual(
-            public.fixtures,
-            public1.fixtures,
-            msg="Incorrect fixtures",
-        )
-        self.assertEqual(
-            public.public,
-            public1.public,
-            msg="Incorrect public",
-        )
+        with ArchivistPublic(verify=False) as public:
+            public1 = copy(public)
+            self.assertEqual(
+                public.verify,
+                public1.verify,
+                msg="Incorrect verify",
+            )
+            self.assertEqual(
+                public.fixtures,
+                public1.fixtures,
+                msg="Incorrect fixtures",
+            )
+            self.assertEqual(
+                public.public,
+                public1.public,
+                msg="Incorrect public",
+            )
 
     def test_public_no_verify(self):
         """
         Test public creation with no verify
         """
-        public = ArchivistPublic(verify=False)
-        self.assertFalse(
-            public.verify,
-            msg="verify must be False",
-        )
+        with ArchivistPublic(verify=False) as public:
+            self.assertFalse(
+                public.verify,
+                msg="verify must be False",
+            )
 
 
 class TestPublicMethods(TestCase):
@@ -104,6 +104,9 @@ class TestPublicMethods(TestCase):
 
     def setUp(self):
         self.public = ArchivistPublic()
+
+    def tearDown(self):
+        self.public.close()
 
 
 class TestPublicCount(TestPublicMethods):

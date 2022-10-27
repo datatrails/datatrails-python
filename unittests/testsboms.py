@@ -85,7 +85,7 @@ class TestSBOMSBase(TestCase):
         self.arch = Archivist("url", "authauthauth", max_time=1)
 
     def tearDown(self):
-        self.arch = None
+        self.arch.close()
 
 
 class TestSBOMS(TestSBOMSBase):

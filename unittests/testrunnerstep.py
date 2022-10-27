@@ -41,6 +41,9 @@ class TestRunnerStep(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_runner_step_with_delete_method(self):
         """
         Test runner step

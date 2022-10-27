@@ -67,32 +67,32 @@ class TestFixtures(TestCase):
         """
         Test default archivist creation
         """
-        arch = Archivist("url", "authauthauth")
-        self.assertEqual(
-            arch.fixtures,
-            {},
-            msg="Incorrect fixtures",
-        )
-        arch.fixtures = FIXTURE1
-        self.assertEqual(
-            arch.fixtures,
-            FIXTURE1,
-            msg="Incorrect fixtures",
-        )
+        with Archivist("url", "authauthauth") as arch:
+            self.assertEqual(
+                arch.fixtures,
+                {},
+                msg="Incorrect fixtures",
+            )
+            arch.fixtures = FIXTURE1
+            self.assertEqual(
+                arch.fixtures,
+                FIXTURE1,
+                msg="Incorrect fixtures",
+            )
 
-        # prove that copy recreates all underlying fixtures
-        newarch = copy(arch)
+            # prove that copy recreates all underlying fixtures
+            newarch = copy(arch)
 
-        newarch.fixtures = FIXTURE2
-        self.assertEqual(
-            newarch.fixtures,
-            FIXTURE3,
-            msg="Incorrect fixtures",
-        )
+            newarch.fixtures = FIXTURE2
+            self.assertEqual(
+                newarch.fixtures,
+                FIXTURE3,
+                msg="Incorrect fixtures",
+            )
 
-        # but original arch is untouched
-        self.assertEqual(
-            arch.fixtures,
-            FIXTURE1,
-            msg="Incorrect fixtures",
-        )
+            # but original arch is untouched
+            self.assertEqual(
+                arch.fixtures,
+                FIXTURE1,
+                msg="Incorrect fixtures",
+            )

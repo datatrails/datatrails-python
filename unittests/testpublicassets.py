@@ -31,7 +31,6 @@ class TestPublicAssetsBase(TestCase):
 
     def tearDown(self):
         self.public.close()
-        self.public = None
 
 
 class TestPublicAssetsUtil(TestPublicAssetsBase):
