@@ -122,7 +122,7 @@ class TestAccessPoliciesBase(TestCase):
     def tearDown(self):
         self.ac_access_permissions = None
         self.ac_props = None
-        self.arch = None
+        self.arch.close()
 
 
 class TestAccessPoliciesSimple(TestAccessPoliciesBase):
@@ -304,6 +304,10 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         print()
         print("Org1: subject_1", json_dumps(self.subject_1, indent=4))
         print("Org2: subject_2", json_dumps(self.subject_2, indent=4))
+
+    def tearDown(self):
+        super().tearDown()
+        self.arch_2.close()
 
     def _create_asset(self, label, arch, uuid):
         asset_data = deepcopy(REQUEST_EXISTS_ATTACHMENTS)

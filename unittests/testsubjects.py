@@ -558,6 +558,9 @@ class TestSubjectsConfirm(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth", max_time=100)
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_subjects_create_with_confirmation(self):
         """
         Test subjects creation

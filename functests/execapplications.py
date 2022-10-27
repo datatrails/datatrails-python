@@ -53,6 +53,9 @@ class TestApplications(TestCase):
         self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_applications_create(self):
         """
         Test application creation
@@ -220,44 +223,44 @@ class TestApplications(TestCase):
 
         # archivist using app registration
         print("New Arch")
-        new_arch = Archivist(
+        with Archivist(
             getenv("TEST_ARCHIVIST"),
             (application["client_id"], application["credentials"][0]["secret"]),
             verify=False,
-        )
+        ) as new_arch:
 
-        # now we create an asset and add events 10 times with a 60s sleep
-        # this should trigger a token refresh
-        traffic_light = deepcopy(ATTRS)
-        traffic_light["arc_display_type"] = "Traffic light with violation camera"
-        asset = new_arch.assets.create(
-            props={
-                "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-            },
-            attrs=traffic_light,
-            confirm=True,
-        )
-        print("create asset", json_dumps(asset, indent=4))
-        self.assertEqual(
-            asset["proof_mechanism"],
-            ProofMechanism.SIMPLE_HASH.name,
-            msg="Incorrect asset proof mechanism",
-        )
-        identity = asset["identity"]
-        props = {
-            "operation": "Record",
-            "behaviour": "RecordEvidence",
-        }
-
-        # should cause at least 2 refreshes of token
-        for i in range(25):
-            sleep(60)
-            event = new_arch.events.create(
-                identity,
-                props=props,
-                attrs={
-                    "arc_description": f"Safety conformance approved for version {i}",
+            # now we create an asset and add events 10 times with a 60s sleep
+            # this should trigger a token refresh
+            traffic_light = deepcopy(ATTRS)
+            traffic_light["arc_display_type"] = "Traffic light with violation camera"
+            asset = new_arch.assets.create(
+                props={
+                    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
                 },
+                attrs=traffic_light,
                 confirm=True,
             )
-            print(i, "create event", json_dumps(event, indent=4))
+            print("create asset", json_dumps(asset, indent=4))
+            self.assertEqual(
+                asset["proof_mechanism"],
+                ProofMechanism.SIMPLE_HASH.name,
+                msg="Incorrect asset proof mechanism",
+            )
+            identity = asset["identity"]
+            props = {
+                "operation": "Record",
+                "behaviour": "RecordEvidence",
+            }
+
+            # should cause at least 2 refreshes of token
+            for i in range(25):
+                sleep(60)
+                event = new_arch.events.create(
+                    identity,
+                    props=props,
+                    attrs={
+                        "arc_description": f"Safety conformance approved for version {i}",
+                    },
+                    confirm=True,
+                )
+                print(i, "create event", json_dumps(event, indent=4))

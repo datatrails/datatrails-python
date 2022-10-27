@@ -46,6 +46,9 @@ class TestAppIDP(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_appidp_str(self):
         """
         Test appidp str

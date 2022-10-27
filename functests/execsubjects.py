@@ -65,6 +65,9 @@ class TestSubjects(TestCase):
         self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_subjects_create(self):
         """
         Test subject creation

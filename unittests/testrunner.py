@@ -58,6 +58,9 @@ class TestRunner(TestCase):
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_runner_str(self):
         """
         Test runner str

@@ -32,6 +32,9 @@ class TestRunnerActionMap(TestCase):
         self.arch = Archivist("url", "authauthauth")
         self.actionmap = _ActionMap(self.arch)
 
+    def tearDown(self):
+        self.arch.close()
+
     def test_runner_actionmap_action(self):
         """
         Test runner action map

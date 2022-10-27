@@ -189,6 +189,9 @@ def main():
     weyland_asset = weyland.assets.read(acme_asset["identity"])
     print("asset read from weyland", json_dumps(weyland_asset, indent=4))
 
+    acme.close()
+    weyland.close()
+
 
 if __name__ == "__main__":
     main()

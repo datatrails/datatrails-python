@@ -151,6 +151,7 @@ def main():
     arch.compliance_policies.delete(
         compliance_policy["identity"],
     )
+    arch.close()
 
 
 if __name__ == "__main__":

@@ -33,24 +33,24 @@ def main():
         client_secret = tokenfile.read().strip()
 
     # Initialize connection to Archivist
-    arch = Archivist(
+    with Archivist(
         "https://app.rkvst.io",
         (client_id, client_secret),
-    )
-    try:
-        asset = arch.assets.read_by_signature(
-            props={"tracked": "TRACKED"},
-            attrs={"arc_display_type": "door"},
-        )
-    except (ArchivistNotFoundError, ArchivistDuplicateError) as ex:
-        print("Unable to get asset", ex)
+    ) as arch:
+        try:
+            asset = arch.assets.read_by_signature(
+                props={"tracked": "TRACKED"},
+                attrs={"arc_display_type": "door"},
+            )
+        except (ArchivistNotFoundError, ArchivistDuplicateError) as ex:
+            print("Unable to get asset", ex)
 
-    else:
+        else:
+            print("Asset", asset["identity"])
+
+        # alternatively get by identity
+        asset = arch.assets.read(asset["identity"])
         print("Asset", asset["identity"])
-
-    # alternatively get by identity
-    asset = arch.assets.read(asset["identity"])
-    print("Asset", asset["identity"])
 
 
 if __name__ == "__main__":

@@ -34,25 +34,27 @@ def main():
     )
 
     # Initialize connection to Archivist
-    arch = Archivist(
+    with Archivist(
         "https://app.rkvst.io",
         auth,
-    )
+    ) as arch:
 
-    # count access_policies...
-    print(
-        "no.of access_policies",
-        arch.access_policies.count(display_name="Some display name"),
-    )
+        # count access_policies...
+        print(
+            "no.of access_policies",
+            arch.access_policies.count(display_name="Some display name"),
+        )
 
-    # iterate through the generator....
-    for access_policy in arch.access_policies.list(display_name="Some display name"):
-        print("access_policy", access_policy)
+        # iterate through the generator....
+        for access_policy in arch.access_policies.list(
+            display_name="Some display name"
+        ):
+            print("access_policy", access_policy)
 
-    # alternatively one could pull the list for all access policies and cache locally...
-    access_policies = list(arch.access_policies.list())
-    for access_policy in access_policies:
-        print("access_policy", access_policy)
+        # alternatively one could pull the list for all access policies and cache locally...
+        access_policies = list(arch.access_policies.list())
+        for access_policy in access_policies:
+            print("access_policy", access_policy)
 
 
 if __name__ == "__main__":

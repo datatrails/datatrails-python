@@ -34,20 +34,20 @@ def main():
         client_secret = tokenfile.read().strip()
 
     # Initialize connection to Archivist
-    arch = Archivist(
+    with Archivist(
         "https://app.rkvst.io",
         (client_id, client_secret),
-    )
-    # Get all events with required attributes and properties
-    props = {"confirmation_status": "CONFIRMED"}
-    attrs = {"arc_display_type": "Traffic light"}
-    for event in arch.events.list(asset_id="assets/-", props=props, attrs=attrs):
-        print("event", event)
+    ) as arch:
+        # Get all events with required attributes and properties
+        props = {"confirmation_status": "CONFIRMED"}
+        attrs = {"arc_display_type": "Traffic light"}
+        for event in arch.events.list(asset_id="assets/-", props=props, attrs=attrs):
+            print("event", event)
 
-    # alternatively one could pull the list and cache locally...
-    events = arch.events.list(asset_id="assets/-", props=props, attrs=attrs)
-    for event in events:
-        print("event", event)
+        # alternatively one could pull the list and cache locally...
+        events = arch.events.list(asset_id="assets/-", props=props, attrs=attrs)
+        for event in events:
+            print("event", event)
 
 
 if __name__ == "__main__":

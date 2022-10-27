@@ -152,25 +152,37 @@ def main():
         client_secret = tokenfile.read().strip()
 
     # Initialize connection to Archivist
-    arch = Archivist(
+    with Archivist(
         "https://app.rkvst.io",
         (client_id, client_secret),
-    )
+    ) as arch:
 
-    # Create a new asset
-    asset = create_asset(arch)
-    print("Asset", json_dumps(asset, sort_keys=True, indent=4))
-    print("Verified domain '", get_verified_domain(arch, asset["tenant_identity"]), "'")
+        # Create a new asset
+        asset = create_asset(arch)
+        print("Asset", json_dumps(asset, sort_keys=True, indent=4))
+        print(
+            "Verified domain '",
+            get_verified_domain(arch, asset["tenant_identity"]),
+            "'",
+        )
 
-    # Create a new event
-    event = create_event(arch, asset)
-    print("Event", json_dumps(event, sort_keys=True, indent=4))
-    print("Verified domain '", get_verified_domain(arch, event["tenant_identity"]), "'")
+        # Create a new event
+        event = create_event(arch, asset)
+        print("Event", json_dumps(event, sort_keys=True, indent=4))
+        print(
+            "Verified domain '",
+            get_verified_domain(arch, event["tenant_identity"]),
+            "'",
+        )
 
-    # Fetch the event
-    event = arch.events.read(event["identity"])
-    print("Event", json_dumps(event, sort_keys=True, indent=4))
-    print("Verified domain '", get_verified_domain(arch, event["tenant_identity"]), "'")
+        # Fetch the event
+        event = arch.events.read(event["identity"])
+        print("Event", json_dumps(event, sort_keys=True, indent=4))
+        print(
+            "Verified domain '",
+            get_verified_domain(arch, event["tenant_identity"]),
+            "'",
+        )
 
 
 if __name__ == "__main__":
