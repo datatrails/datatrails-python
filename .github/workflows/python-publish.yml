@@ -36,7 +36,9 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        rm -f archivist/about.py
         ./scripts/version.sh
+        cat archivist/about.py
         python3 -m build --sdist
         python3 -m build --wheel
         twine check dist/*
