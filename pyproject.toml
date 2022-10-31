@@ -17,10 +17,6 @@ omit = [
 
 [tool.setuptools-git-versioning]
 enabled = true
-template = "{tag}"
-dev_template = "{tag}.post{ccount}+git.{sha}"
-dirty_template = "{tag}.post{ccount}+git.{sha}.dirty"
-count_commits_from_version_file = false
 
 [tool.pyright]
 include = ["archivist"]
