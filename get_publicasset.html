@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Get Public Asset Example &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
+  <title>Get Public Asset Example &mdash; RKVST v0.17.3-0-g44b51c9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -35,7 +35,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.2-0-gb114cfe
+                v0.17.3-0-g44b51c9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -126,11 +126,11 @@
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Main function of get_publicasset.&quot;&quot;&quot;</span>
     <span class="c1"># Initialize connection to Archivist - no auth required</span>
-    <span class="n">public</span> <span class="o">=</span> <span class="n">ArchivistPublic</span><span class="p">()</span>
-    <span class="n">asset</span> <span class="o">=</span> <span class="n">public</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read</span><span class="p">(</span>
-        <span class="s2">&quot;https://app.rkvst.io/archivist/publicassets/dc0dfc17-1d93-4b7a-8636-f740f40f7f52&quot;</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">ArchivistPublic</span><span class="p">()</span> <span class="k">as</span> <span class="n">public</span><span class="p">:</span>
+        <span class="n">asset</span> <span class="o">=</span> <span class="n">public</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read</span><span class="p">(</span>
+            <span class="s2">&quot;https://app.rkvst.io/archivist/publicassets/dc0dfc17-1d93-4b7a-8636-f740f40f7f52&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create IAM access_policy &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
+  <title>Create IAM access_policy &mdash; RKVST v0.17.3-0-g44b51c9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -35,7 +35,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.2-0-gb114cfe
+                v0.17.3-0-g44b51c9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -149,59 +149,59 @@
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">client_secret_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
         <span class="n">client_secret</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
-    <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
         <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">),</span>
-    <span class="p">)</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
 
-    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Friendly name of the policy&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Description of the policy&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">filters</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;attributes.arc_home_location_identity=&quot;</span>
-                <span class="s2">&quot;locations/5ea815f0-4de1-4a84-9377-701e880fe8ae&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;attributes.arc_home_location_identity=&quot;</span>
-                <span class="s2">&quot;locations/27eed70b-9e2b-4db1-b8c4-e36505350dcc&quot;</span><span class="p">,</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;attributes.arc_display_type=Valve&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;attributes.arc_display_type=Pump&quot;</span><span class="p">,</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;attributes.ext_vendor_name=SynsationIndustries&quot;</span><span class="p">,</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-    <span class="p">]</span>
-    <span class="n">access_permissions</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;asset_attributes_read&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toner_colour&quot;</span><span class="p">,</span> <span class="s2">&quot;toner_type&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;asset_attributes_write&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toner_colour&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
-            <span class="s2">&quot;event_arc_display_type_read&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toner_type&quot;</span><span class="p">,</span> <span class="s2">&quot;toner_colour&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;event_arc_display_type_write&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toner_replacement&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;include_attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;arc_display_name&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arc_display_type&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arc_firmware_version&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="s2">&quot;subjects&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;subjects/6a951b62-0a26-4c22-a886-1082297b063b&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;subjects/a24306e5-dc06-41ba-a7d6-2b6b3e1df48d&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="s2">&quot;user_attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span><span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;group:maintainers&quot;</span><span class="p">,</span> <span class="s2">&quot;group:supervisors&quot;</span><span class="p">]},</span>
-            <span class="p">],</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Friendly name of the policy&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Description of the policy&quot;</span><span class="p">,</span>
         <span class="p">}</span>
-    <span class="p">]</span>
-    <span class="n">access_policy</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">access_permissions</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;access Policy&quot;</span><span class="p">,</span> <span class="n">access_policy</span><span class="p">)</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&quot;attributes.arc_home_location_identity=&quot;</span>
+                    <span class="s2">&quot;locations/5ea815f0-4de1-4a84-9377-701e880fe8ae&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;attributes.arc_home_location_identity=&quot;</span>
+                    <span class="s2">&quot;locations/27eed70b-9e2b-4db1-b8c4-e36505350dcc&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&quot;attributes.arc_display_type=Valve&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;attributes.arc_display_type=Pump&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&quot;attributes.ext_vendor_name=SynsationIndustries&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+        <span class="p">]</span>
+        <span class="n">access_permissions</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;asset_attributes_read&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toner_colour&quot;</span><span class="p">,</span> <span class="s2">&quot;toner_type&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;asset_attributes_write&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toner_colour&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
+                <span class="s2">&quot;event_arc_display_type_read&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toner_type&quot;</span><span class="p">,</span> <span class="s2">&quot;toner_colour&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;event_arc_display_type_write&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;toner_replacement&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;include_attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&quot;arc_display_name&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;arc_display_type&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;arc_firmware_version&quot;</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;subjects&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&quot;subjects/6a951b62-0a26-4c22-a886-1082297b063b&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;subjects/a24306e5-dc06-41ba-a7d6-2b6b3e1df48d&quot;</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;user_attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span><span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;group:maintainers&quot;</span><span class="p">,</span> <span class="s2">&quot;group:supervisors&quot;</span><span class="p">]},</span>
+                <span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+        <span class="n">access_policy</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">access_permissions</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;access Policy&quot;</span><span class="p">,</span> <span class="n">access_policy</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

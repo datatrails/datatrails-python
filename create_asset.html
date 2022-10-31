@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Asset Example &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
+  <title>Create Asset Example &mdash; RKVST v0.17.3-0-g44b51c9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -35,7 +35,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.2-0-gb114cfe
+                v0.17.3-0-g44b51c9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -220,14 +220,14 @@
     <span class="c1"># of an asset or event creation - the default is 1200 seconds but one can optionally</span>
     <span class="c1"># specify a different value here particularly when creating assets on SIMPLE_HASH</span>
     <span class="c1"># (rather than KHIPU) as confirmation times are much shorter in this case.</span>
-    <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
         <span class="n">auth</span><span class="p">,</span>
         <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="c1"># Create a new asset</span>
-    <span class="n">asset</span> <span class="o">=</span> <span class="n">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
+        <span class="c1"># Create a new asset</span>
+        <span class="n">asset</span> <span class="o">=</span> <span class="n">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

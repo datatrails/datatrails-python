@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scan Test Example &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
+  <title>Scan Test Example &mdash; RKVST v0.17.3-0-g44b51c9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -35,7 +35,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.2-0-gb114cfe
+                v0.17.3-0-g44b51c9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -250,18 +250,18 @@
         <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TEST_CLIENT_SECRET_FILENAME&quot;</span><span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TEST_ARCHIVIST&quot;</span><span class="p">),</span> <span class="n">auth</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TEST_ARCHIVIST&quot;</span><span class="p">),</span> <span class="n">auth</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;##[group]Today&quot;</span><span class="p">)</span>
-    <span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
-    <span class="n">scan_test</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;##[group]Today&quot;</span><span class="p">)</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+        <span class="n">scan_test</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
 
-    <span class="c1"># currently scans run mon-fri</span>
-    <span class="c1"># so if today is mon, previous day is fri, otherwise previous day is yesterday</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;##[group]Previous day&quot;</span><span class="p">)</span>
-    <span class="n">days_delta</span> <span class="o">=</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%a</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Mon&quot;</span> <span class="k">else</span> <span class="mi">1</span>
-    <span class="n">previous_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days_delta</span><span class="p">)</span>
-    <span class="n">scan_test</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">previous_day</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">scanned_expected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># currently scans run mon-fri</span>
+        <span class="c1"># so if today is mon, previous day is fri, otherwise previous day is yesterday</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;##[group]Previous day&quot;</span><span class="p">)</span>
+        <span class="n">days_delta</span> <span class="o">=</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%a</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Mon&quot;</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="n">previous_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days_delta</span><span class="p">)</span>
+        <span class="n">scan_test</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">previous_day</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">scanned_expected</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

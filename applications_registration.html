@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create IAM Application Registration and Tokens &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
+  <title>Create IAM Application Registration and Tokens &mdash; RKVST v0.17.3-0-g44b51c9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -35,7 +35,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.2-0-gb114cfe
+                v0.17.3-0-g44b51c9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -144,96 +144,96 @@
         <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
     <span class="c1"># Initialize connection to Archivist</span>
-    <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
         <span class="n">authtoken</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
 
-    <span class="c1"># create application</span>
-    <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Application display name </span><span class="si">{</span><span class="n">uuid4</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;serial_number&quot;</span><span class="p">:</span> <span class="s2">&quot;TL1000000101&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;has_cyclist_light&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;create application&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># create application</span>
+        <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Application display name </span><span class="si">{</span><span class="n">uuid4</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;serial_number&quot;</span><span class="p">:</span> <span class="s2">&quot;TL1000000101&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;has_cyclist_light&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;create application&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># convert to token</span>
-    <span class="n">appidp</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;appidp&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">appidp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># convert to token</span>
+        <span class="n">appidp</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;appidp&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">appidp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># regenerate secrets</span>
-    <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">regenerate</span><span class="p">(</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;regenerate application&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># regenerate secrets</span>
+        <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">regenerate</span><span class="p">(</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;regenerate application&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># convert to token</span>
-    <span class="n">appidp</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;appidp&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">appidp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># convert to token</span>
+        <span class="n">appidp</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;appidp&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">appidp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># update application</span>
-    <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
-        <span class="n">custom_claims</span><span class="o">=</span><span class="p">{</span>
-            <span class="s2">&quot;serial_number&quot;</span><span class="p">:</span> <span class="s2">&quot;TL2000000202&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;has_cyclist_light&quot;</span><span class="p">:</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;update application&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># update application</span>
+        <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+            <span class="n">custom_claims</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;serial_number&quot;</span><span class="p">:</span> <span class="s2">&quot;TL2000000202&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;has_cyclist_light&quot;</span><span class="p">:</span> <span class="s2">&quot;false&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;update application&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># convert to token</span>
-    <span class="n">appidp</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;appidp&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">appidp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># convert to token</span>
+        <span class="n">appidp</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;appidp&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">appidp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># regenerate secrets</span>
-    <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">regenerate</span><span class="p">(</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;regenerate application&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># regenerate secrets</span>
+        <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">regenerate</span><span class="p">(</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;regenerate application&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># convert to token</span>
-    <span class="n">appidp</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;appidp&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">appidp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># convert to token</span>
+        <span class="n">appidp</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">appidp</span><span class="o">.</span><span class="n">token</span><span class="p">(</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span>
+            <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;appidp&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">appidp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># now create Archivist with automatically refreshed jwt token</span>
-    <span class="c1"># this archivist does not allow app registrations.</span>
-    <span class="n">arch1</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
-        <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
-        <span class="p">(</span><span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span> <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">]),</span>
-    <span class="p">)</span>
-    <span class="c1"># create an asset</span>
-    <span class="n">asset</span> <span class="o">=</span> <span class="n">arch1</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">props</span><span class="o">=</span><span class="p">{</span>
-            <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">SIMPLE_HASH</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-        <span class="p">},</span>
-        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
-            <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;display_description&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;desplay_type&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;some_custom_attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
-        <span class="p">},</span>
-        <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="c1"># now create Archivist with automatically refreshed jwt token</span>
+        <span class="c1"># this archivist does not allow app registrations.</span>
+        <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span>
+            <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">application</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">],</span> <span class="n">application</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;secret&quot;</span><span class="p">]),</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">arch1</span><span class="p">:</span>
+            <span class="c1"># create an asset</span>
+            <span class="n">asset</span> <span class="o">=</span> <span class="n">arch1</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">props</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">SIMPLE_HASH</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;display_description&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;desplay_type&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;some_custom_attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 
-    <span class="c1"># delete application</span>
-    <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
-        <span class="n">application</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
+            <span class="c1"># delete application</span>
+            <span class="n">application</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
+                <span class="n">application</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

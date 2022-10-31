@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Get Asset Example &mdash; RKVST v0.17.2-0-gb114cfe documentation</title>
+  <title>Get Asset Example &mdash; RKVST v0.17.3-0-g44b51c9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
@@ -35,7 +35,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.2-0-gb114cfe
+                v0.17.3-0-g44b51c9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -148,24 +148,24 @@
         <span class="n">client_secret</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
     <span class="c1"># Initialize connection to Archivist</span>
-    <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
         <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">asset</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read_by_signature</span><span class="p">(</span>
-            <span class="n">props</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tracked&quot;</span><span class="p">:</span> <span class="s2">&quot;TRACKED&quot;</span><span class="p">},</span>
-            <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;door&quot;</span><span class="p">},</span>
-        <span class="p">)</span>
-    <span class="k">except</span> <span class="p">(</span><span class="n">ArchivistNotFoundError</span><span class="p">,</span> <span class="n">ArchivistDuplicateError</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to get asset&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">asset</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read_by_signature</span><span class="p">(</span>
+                <span class="n">props</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tracked&quot;</span><span class="p">:</span> <span class="s2">&quot;TRACKED&quot;</span><span class="p">},</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;door&quot;</span><span class="p">},</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">ArchivistNotFoundError</span><span class="p">,</span> <span class="n">ArchivistDuplicateError</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unable to get asset&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
 
-    <span class="k">else</span><span class="p">:</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+
+        <span class="c1"># alternatively get by identity</span>
+        <span class="n">asset</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
-
-    <span class="c1"># alternatively get by identity</span>
-    <span class="n">asset</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
