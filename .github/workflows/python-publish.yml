@@ -39,19 +39,18 @@ jobs:
         rm -f archivist/about.py
         ./scripts/version.sh
         cat archivist/about.py
-        echo "GITHUB_REF=$GITHUB_REF"
-#       python3 -m build --sdist
-#       python3 -m build --wheel
-#       twine check dist/*
-#       twine upload dist/*
-#   - name: Build docs
-#     run: |
-#       ls -l
-#       cd ./docs
-#       make html
-#   - name: Publish docs
-#     uses: peaceiris/actions-gh-pages@v3
-#     with:
-#       github_token: ${{ secrets.GITHUB_TOKEN }}
-#       publish_dir: "./docs/_build/html"
-#       cname: python.rkvst.com
+        python3 -m build --sdist
+        python3 -m build --wheel
+        twine check dist/*
+        twine upload dist/*
+    - name: Build docs
+      run: |
+        ls -l
+        cd ./docs
+        make html
+    - name: Publish docs
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: "./docs/_build/html"
+        cname: python.rkvst.com
