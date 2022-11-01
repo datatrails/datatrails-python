@@ -2,7 +2,12 @@
 #
 # inserts version into python package
 #
-version=$(git describe --tags --long --dirty)
+if [ -n "${GITHUB_REF}" ]
+then
+    version=$(echo ${GITHUB_REF} | rev | cut -d'/' -f1 | rev )
+else
+    version=$(git describe --tags --long --dirty)
+fi
 
 cat > archivist/about.py <<EOF
 """Archivist SDK
