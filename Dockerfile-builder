@@ -17,18 +17,28 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 
 RUN apt-get update \
   && apt-get upgrade -y --no-install-recommends \
-  && apt-get install -y --fix-missing nodejs libenchant-2-2 \
+  && apt-get install -y --fix-missing \
+         nodejs \
+         libenchant-2-2 \
+         pandoc \
+         zip \
   && apt-get autoremove \
   && apt-get autoclean \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements-dev.txt /tmp/
+RUN mkdir -p /tmp/docs
+COPY docs/requirements.txt /tmp/docs/
+RUN find /tmp -type f
+COPY docs/notebooks/requirements.txt /tmp/docs/notebooks/
+RUN find /tmp -type f
 
 RUN python3 -m pip install --upgrade pip \
   && python3 -m pip install -U -r /tmp/requirements-dev.txt \
   && rm -f /tmp/requirements-dev.txt \
-  && rm -f /tmp/requirements.txt
+  && rm -f /tmp/requirements.txt \
+  && rm -rf /tmp/docs
 
 ENV USER=builder
 ENV HOME=/home/${USER}

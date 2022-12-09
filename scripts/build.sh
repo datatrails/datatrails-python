@@ -13,7 +13,6 @@ then
 fi
 
 docker build \
-    --no-cache \
     --build-arg VERSION="$1" \
     -f Dockerfile-builder \
-    -t jitsuin-archivist-python-builder .
+    -t archivist-python-builder .

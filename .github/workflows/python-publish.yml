@@ -23,7 +23,11 @@ jobs:
         export DEBIAN_FRONTEND=noninteractive
         sudo apt-get update
         sudo apt-get upgrade -y --no-install-recommends
-        sudo apt-get install -y libenchant-2-2
+        sudo apt-get install -y --fix-missing \
+                 nodejs \
+                 libenchant-2-2 \
+                 pandoc \
+                 zip
         sudo apt-get autoremove
         sudo apt-get autoclean
         sudo apt-get clean
@@ -38,16 +42,14 @@ jobs:
       run: |
         rm -f archivist/about.py
         ./scripts/version.sh
-        cat archivist/about.py
         python3 -m build --sdist
         python3 -m build --wheel
         twine check dist/*
         twine upload dist/*
     - name: Build docs
       run: |
-        ls -l
-        cd ./docs
-        make html
+        ./scripts/zipnotebooks.sh
+        (cd docs && make clean && make html)
     - name: Publish docs
       uses: peaceiris/actions-gh-pages@v3
       with:
