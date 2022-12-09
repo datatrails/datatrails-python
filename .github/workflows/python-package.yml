@@ -24,15 +24,19 @@ jobs:
       run: |
         export DEBIAN_FRONTEND=noninteractive
         sudo apt-get update
-        sudo apt-get upgrade -y --no-install-recommends 
-        sudo apt-get install -y libenchant-2-2
+        sudo apt-get upgrade -y --no-install-recommends
+        sudo apt-get install -y --fix-missing \
+                 nodejs \
+                 libenchant-2-2 \
+                 pandoc \
+                 zip
         sudo apt-get autoremove
         sudo apt-get autoclean
         sudo apt-get clean
         sudo rm -rf /var/lib/apt/lists/*
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements-dev.txt
-        python3 -m pip install wheel
+        python3 -m pip install setuptools wheel
     - name: Run integrity checks
       run: |
         ./scripts/version.sh
@@ -40,6 +44,7 @@ jobs:
         python3 -m pylint archivist examples functests unittests
         python3 -m pyright archivist
         black archivist examples unittests functests
+        ./scripts/zipnotebooks.sh
         (cd docs && make clean && make html)
         modified=$(git status -s | wc -l)
         if [ $modified -gt 0 ]

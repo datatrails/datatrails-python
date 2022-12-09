@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 #
-# run jupyter notebooks
+# run jupyter notebooks in a virtual environment
 #
+# requires the rkvst-venv virtual environment to be present 
+# ('task venv')
 
 if [ "$USER" = "builder" -o "$USER" = "vscode" ]
 then
@@ -9,11 +11,13 @@ then
     exit 0
 fi
 
-docker run --rm -it \
-    -v $(pwd):/home/builder \
-    -u $(id -u):$(id -g) \
-    -p 8888:8888 \
-    -e PYTHONPATH=/home/builder \
-    jitsuin-archivist-python-builder \
-    jupyter notebook --ip 0.0.0.0 --no-browser --notebook-dir=/home/builder/notebooks
+NOTEBOOKDIR=rkvst-venv/notebooks
 
+source rkvst-venv/bin/activate
+mkdir -p "${NOTEBOOKDIR}"
+
+# The customer will download the notebooks from python.rkvst.com but
+# we will copy locally
+cp archivist/notebooks/*.ipynb "${NOTEBOOKDIR}"/
+jupyter notebook --ip 0.0.0.0 --notebook-dir="${NOTEBOOKDIR}"
+deactivate

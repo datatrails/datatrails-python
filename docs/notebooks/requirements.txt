@@ -1,0 +1,9 @@
+#
+# jupyter notebooks
+ipython~=7.34
+jupyter~=1.0
+jupyterlab~=3.5
+jupyter-console~=6.4
+jupyter-contrib-nbextensions~=0.7
+
+wheel

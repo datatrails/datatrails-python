@@ -9,6 +9,7 @@ dataclass
 dataclasses
 dialogs
 dicts
+distros
 ef
 fd
 fda
@@ -21,6 +22,7 @@ jinja
 jitsuin
 jpg
 json
+jupyter
 Khipus
 kwargs
 macclesfield
@@ -28,6 +30,7 @@ mimetype
 onwards
 params
 publicurl
+py
 sbom
 sboms
 sbomType

@@ -54,11 +54,17 @@ class EnumAction(argparse.Action):
         setattr(namespace, self.dest, value)
 
 
-def common_parser(description: str):
-    """Construct parser with security option for token/auth authentication"""
+def simple_parser(description: str):
+    """Construct parser with bare minimum features"""
     parser = argparse.ArgumentParser(
         description=description,
     )
+    return parser
+
+
+def common_parser(description: str):
+    """Construct parser with security option for token/auth authentication"""
+    parser = simple_parser(description)
     parser.add_argument(
         "-v",
         "--verbose",

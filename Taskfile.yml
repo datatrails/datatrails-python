@@ -61,7 +61,7 @@ tasks:
 
   docs:
     desc: Create sphinx documentation
-    deps: [about, sbom]
+    deps: [about, zipnotebooks]
     cmds:
       - ./scripts/builder.sh /bin/bash -c "cd docs && make clean && make html"
 
@@ -70,12 +70,6 @@ tasks:
     deps: [about]
     cmds:
       - ./scripts/builder.sh black archivist examples functests unittests
-
-  type-check:
-    desc: Runs the pyright type checker against the core archivst files
-    deps: [about]
-    cmds:
-      - ./scripts/builder.sh pyright archivist
 
   functests:
     desc: Run functests - requires an archivist instance and a authtoken
@@ -106,14 +100,30 @@ tasks:
     cmds:
       - ./scripts/builder.sh ./scripts/sbom.sh
 
+  type-check:
+    desc: Runs the pyright type checker against the core archivist files
+    deps: [about]
+    cmds:
+      - ./scripts/builder.sh python3 -m pyright archivist
+
   unittests:
     desc: Run unittests
     deps: [about]
     cmds:
       - ./scripts/builder.sh ./scripts/unittests.sh
 
+  venv:
+    desc: Builds the virtual environment
+    cmds:
+      - ./scripts/venv.sh
+
   wheel:
     desc: Builds python wheel package
     deps: [about]
     cmds:
       - ./scripts/builder.sh ./scripts/wheel.sh
+
+  zipnotebooks:
+    desc: Zips notebooks so they can be downloaded
+    cmds:
+      - ./scripts/builder.sh ./scripts/zipnotebooks.sh

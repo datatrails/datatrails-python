@@ -31,5 +31,5 @@ docker run \
     -e TEST_DEBUG \
     -e TEST_REFRESH_TOKEN \
     -e GITHUB_REF \
-    jitsuin-archivist-python-builder \
+    archivist-python-builder \
     "$@"

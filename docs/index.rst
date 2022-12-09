@@ -12,6 +12,7 @@
 
    features
    getting_started
+   notebooks
    fixtures
    code/index
 
