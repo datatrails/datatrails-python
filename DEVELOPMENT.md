@@ -43,21 +43,21 @@ Host *
 ```
 > i.e. 'githubUserHandle' viz:
 >
->    git clone ssh-githubUserHandle:githubUserHandle/archivist-python.git
+>    git clone ssh-githubUserHandle:githubUserHandle/rkvst-python.git
 >
 
 
 ```bash
 mkdir githubUserHandle
 cd githubUserHandle
-git clone ssh-githubUserHandle:githubUserHandle/archivist-python.git
+git clone ssh-githubUserHandle:githubUserHandle/rkvst-python.git
 ```
 
 Enter the new cloned fork and add the original upstream repo as a remote:
 
 ```bash
-cd archivist-python
-git remote add upstream ssh-githubUserHandle:jitsuin-inc/archivist-python.git
+cd rkvst-python
+git remote add upstream ssh-githubUserHandle:rkvst/rkvst-python.git
 git remote -v
 ```
 
@@ -305,7 +305,7 @@ Push the changes upstream(the set-upstream option is only required the first tim
 git push --set-upstream origin dev/githubUserHandle/some-proposed-fix
 ```
 
-Enter the github ui at https://github.com/jitsuin-inc/archivist-python and
+Enter the github ui at https://github.com/rkvst/rkvst-python and
 generate a pull request.
 
 Reviewers will be notified when a PR is generated and you will receive feedback.

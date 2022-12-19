@@ -27,8 +27,8 @@ Usually these field values are derived from an environment variable
     steps:
       - step:
           action: ASSETS_CREATE_IF_NOT_EXISTS
-          description: Create a door in Paris at Jitsuin offices.
-          asset_label: Jitsuin Paris Front Door
+          description: Create a door in Paris at RKVST offices.
+          asset_label: RKVST Paris Front Door
         selector:
           - attributes:
             - arc_display_name
@@ -37,19 +37,19 @@ Usually these field values are derived from an environment variable
           - RecordEvidence
           - Attachments
         attributes:
-          arc_display_name: Jitsuin Paris Front Door
+          arc_display_name: RKVST Paris Front Door
           arc_namespace: door entry
           arc_display_type: door
           arc_firmware_version: v1.0
           arc_serial_number: das-j1-01
-          arc_description: Electronic door entry system to Jitsuin France
-          wavestone_asset_id: paris.france.jitsuin.das
+          arc_description: Electronic door entry system to RKVST France
+          wavestone_asset_id: paris.france.rkvst.das
         location:
           selector:
             - display_name
             - attributes:
               - namespace
-          display_name: Jitsuin Paris
+          display_name: RKVST Paris
           description: Sales and sales support for the French region
           latitude: 48.8339211
           longitude: 2.371345

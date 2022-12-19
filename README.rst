@@ -28,14 +28,14 @@ Use standard python pip utility:
 
 .. code:: bash
 
-    python3 -m pip install jitsuin-archivist
+    python3 -m pip install rkvst-archivist
 
 If your version of python3 is too old an error of this type or similar will be emitted:
 
 .. note:: 
 
-    ERROR: Could not find a version that satisfies the requirement jitsuin-archivist (from versions: none)
-    ERROR: No matching distribution found for jitsuin-archivist
+    ERROR: Could not find a version that satisfies the requirement rkvst-archivist (from versions: none)
+    ERROR: No matching distribution found for rkvst-archivist
 
 Example
 =============
@@ -207,7 +207,7 @@ Python
 
     def run(arch: Archivist, args):
 
-        LOGGER.info("Using version %s of jitsuin-archivist", about.__version__)
+        LOGGER.info("Using version %s of rkvst-archivist", about.__version__)
         LOGGER.info("Namespace %s", args.namespace)
 
         with open(args.yamlfile, "r", encoding="utf-8") as y:
@@ -234,7 +234,7 @@ Python
 Command Line
 ------------
 
-This functionality is also available with the CLI tool :code:`archivist_runner`, which is bundled with version v0.10 onwards of the :code:`jitsuin-archivist`.
+This functionality is also available with the CLI tool :code:`archivist_runner`, which is bundled with version v0.10 onwards of the :code:`rkvst-archivist`.
 
 You can verify the installation by running the following:
 

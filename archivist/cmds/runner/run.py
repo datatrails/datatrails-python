@@ -18,7 +18,7 @@ LOGGER = getLogger(__name__)
 
 def run(arch: archivist.Archivist, args):
 
-    LOGGER.info("Using version %s of jitsuin-archivist", about.__version__)
+    LOGGER.info("Using version %s of rkvst-archivist", about.__version__)
     LOGGER.info("Namespace %s", args.namespace)
 
     # if namespace is specified on the commandline then override any environment

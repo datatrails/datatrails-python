@@ -184,17 +184,17 @@ class _AssetsRestricted(_AssetsPublic):
                   - RecordEvidence
                   - Attachments
                 attributes:
-                  arc_display_name: Jitsuin Front Door
+                  arc_display_name: RKVST Front Door
                   arc_firmware_version: "1.0"
                   arc_serial_number: das-j1-01
-                  arc_description: Electronic door entry system to Jitsuin France
-                  wavestone_asset_id: paris.france.jitsuin.das
+                  arc_description: Electronic door entry system to RKVST France
+                  wavestone_asset_id: paris.france.rkvst.das
                 location:
                   identity: locations/xxxxxxxxxxxxxxxxxxxxxxxxxx
                 location:
                   selector:
                     - display_name
-                  display_name: Jitsuin Paris
+                  display_name: RKVST Paris
                   description: Sales and sales support for the French region
                   latitude: 48.8339211,
                   longitude: 2.371345,

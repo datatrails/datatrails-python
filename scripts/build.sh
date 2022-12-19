@@ -15,4 +15,4 @@ fi
 docker build \
     --build-arg VERSION="$1" \
     -f Dockerfile-builder \
-    -t archivist-python-builder .
+    -t rkvst-python-builder .
