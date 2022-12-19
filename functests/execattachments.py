@@ -29,7 +29,7 @@ class TestAttachmentsCreate(TestCase):
 
     TEST_DOCX_PATH = "functests/test_resources/loremipsum.docx"
     TEST_DOCX_DOWNLOAD_PATH = "functests/test_resources/downloaded_loremipsum.docx"
-    TEST_IMAGE_PATH = "functests/test_resources/Jitsuin_Logo_RGB.jpg"
+    TEST_IMAGE_PATH = "functests/test_resources/rkvst_logo.png"
     TEST_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
 
     def setUp(self):

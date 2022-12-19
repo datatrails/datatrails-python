@@ -63,7 +63,7 @@ def scan_test(arch, datestring, scanned_expected=False):
             "attachments": [
                 {
                     "url": (
-                        "https://raw.githubusercontent.com/jitsuin-inc/archivist-python/"
+                        "https://raw.githubusercontent.com/rkvst/rkvst-python/"
                         "main/functests/test_resources/telephone.jpg"
                     ),
                     "content_type": "image/jpg",

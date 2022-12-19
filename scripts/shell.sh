@@ -15,5 +15,5 @@ docker run \
     --rm -it \
     -v $(pwd):/home/builder \
     -u $(id -u):$(id -g) \
-    archivist-python-builder \
+    rkvst-python-builder \
     "/bin/bash"

@@ -10,7 +10,7 @@ a dictionary. Usually the dictionary is read from a yaml or json file.
    :language: python
 
 
-This functionality is also available with the CLI tool :code:`archivist_runner`, which is bundled with version v0.10 onwards of the :code:`jitsuin-archivist` PIP installation.
+This functionality is also available with the CLI tool :code:`archivist_runner`.
 
 See the `installation instructions`_ for more information.
 

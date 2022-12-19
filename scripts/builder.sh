@@ -31,5 +31,5 @@ docker run \
     -e TEST_DEBUG \
     -e TEST_REFRESH_TOKEN \
     -e GITHUB_REF \
-    archivist-python-builder \
+    rkvst-python-builder \
     "$@"

@@ -19,7 +19,6 @@ iam
 instantiation
 iterable
 jinja
-jitsuin
 jpg
 json
 jupyter
@@ -31,6 +30,7 @@ onwards
 params
 publicurl
 py
+rkvst
 sbom
 sboms
 sbomType
