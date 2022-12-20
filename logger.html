@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logger &mdash; RKVST v0.17.5 documentation</title>
+  <title>Logger &mdash; RKVST v0.18.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
   <!--[if lt IE 9]>
@@ -19,11 +20,12 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Proof Mechanism Enumeration" href="proof_mechanism.html" />
-    <link rel="prev" title="Errors Parsing" href="errors.html" /> 
+    <link rel="next" title="SBOM CDX for PySDK" href="sbom.html" />
+    <link rel="prev" title="Proof Mechanism Enumeration" href="code/proof_mechanism.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,7 +37,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.5
+                v0.18.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -49,25 +51,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Note Books (BETA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="runner.html">Runner Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="assets.html">Assets Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="locations.html">Locations Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code/index.html">Code Reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Logger</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#archivist.logger.set_logger"><code class="docutils literal notranslate"><span class="pre">set_logger()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
@@ -94,7 +84,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="logger">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="logger">
 <span id="loggerref"></span><h1>Logger<a class="headerlink" href="#logger" title="Permalink to this heading"></a></h1>
 <p>The first (optional) call from the archivist package is to set the logger.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
@@ -137,8 +151,8 @@ urllib3 package.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="errors.html" class="btn btn-neutral float-left" title="Errors Parsing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="proof_mechanism.html" class="btn btn-neutral float-right" title="Proof Mechanism Enumeration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="code/proof_mechanism.html" class="btn btn-neutral float-left" title="Proof Mechanism Enumeration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sbom.html" class="btn btn-neutral float-right" title="SBOM CDX for PySDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

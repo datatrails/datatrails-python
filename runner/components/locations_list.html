@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locations List Story Runner YAML &mdash; RKVST v0.17.5 documentation</title>
+  <title>Locations List Story Runner YAML &mdash; RKVST v0.18.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
@@ -19,6 +20,7 @@
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -35,7 +37,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.5
+                v0.18.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -48,54 +50,61 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Story Runner</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../execute.html">Example of runner code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../execute_template.html">Example of templated runner code</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">Story Runner Components</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="generic.html">Generic Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="assets_wait_for_confirmed.html">Assets Wait For Confirmed Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Locations List Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="subjects_delete.html">Subjects Delete Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="subjects_list.html">Subjects List Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="subjects_read.html">Subjects Read Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="subjects_update.html">Subjects Update Story Runner YAML</a></li>
-<li class="toctree-l3"><a class="reference internal" href="subjects_wait_for_confirmation.html">Subjects Wait For Confirmation Story Runner YAML</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../getting_started.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../applications_registration.html">Create IAM Application Registration and Tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../create_asset.html">Create Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../get_asset.html">Get Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sharing_asset.html">Sharing Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../get_publicasset.html">Get Public Asset Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../get_publicevent.html">Get Public Event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../create_event.html">Create Event Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../filter_assets.html">Filter Assets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../filter_events.html">Filter Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../filter_publicevents.html">Filter Public Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../access_policy_create.html">Create IAM access_policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../access_policies_filter.html">Filter IAM access_policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../compliance_policies_since.html">Since Compliance Policy</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Story Runner</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../execute.html">Example of runner code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execute_template.html">Example of templated runner code</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Story Runner Components</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="generic.html">Generic Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="assets_count.html">Assets Count Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="assets_create.html">Assets Create Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="assets_create_if_not_exists.html">Assets Create If not exists Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="assets_list.html">Assets List Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="assets_wait_for_confirmed.html">Assets Wait For Confirmed Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="compliance_compliant_at.html">Compliance Compliant_at Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="compliance_policies_create.html">Compliance Policy Create Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="composite_estate_info.html">Estate Info Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Locations List Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subjects_delete.html">Subjects Delete Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subjects_list.html">Subjects List Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subjects_read.html">Subjects Read Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subjects_update.html">Subjects Update Story Runner YAML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subjects_wait_for_confirmation.html">Subjects Wait For Confirmation Story Runner YAML</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../demos/index.html">Story Runner Demos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../demos/index.html">Story Runner Demos</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../scan_test.html">Scan Test Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subject_create.html">Create IAM subject Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../subjects_filter.html">Filter IAM subjects Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks.html">Note Books (BETA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runner.html">Runner Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tenancies.html">Tenancies Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/index.html">Code Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
@@ -125,7 +134,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="locations-list-story-runner-yaml">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="locations-list-story-runner-yaml">
 <span id="locations-list-yamlref"></span><h1>Locations List Story Runner YAML<a class="headerlink" href="#locations-list-story-runner-yaml" title="Permalink to this heading"></a></h1>
 <p>List all locations that match criteria..</p>
 <p>Setting <code class="code docutils literal notranslate"><span class="pre">print_response:</span> <span class="pre">true</span></code> is necessary to print the full result.</p>

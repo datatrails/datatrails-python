@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.compliance_policy_requests &mdash; RKVST v0.17.5 documentation</title>
+  <title>archivist.compliance_policy_requests &mdash; RKVST v0.18.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
@@ -18,6 +19,7 @@
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -32,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.5
+                v0.18.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -46,22 +48,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks.html">Note Books (BETA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runner.html">Runner Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tenancies.html">Tenancies Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/index.html">Code Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
@@ -107,7 +97,7 @@
 <span class="c1">#    in every case.</span>
 
 
-<div class="viewcode-block" id="CompliancePolicyBase"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyBase">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="CompliancePolicyBase"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyBase">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">CompliancePolicyBase</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compliance policy base definition</span>
@@ -117,14 +107,14 @@
     <span class="n">display_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">asset_filter</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span>
 
-<div class="viewcode-block" id="CompliancePolicyBase.dict"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyBase.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CompliancePolicyBase.dict"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyBase.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Emit dictionary representation&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;asset_filter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">and_list</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;asset_filter&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">d</span></div></div>
 
 
-<div class="viewcode-block" id="CompliancePolicySince"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicySince">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="CompliancePolicySince"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicySince">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">CompliancePolicySince</span><span class="p">(</span><span class="n">CompliancePolicyBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compliance policy that indicates if an event has &#39;expired&#39;</span>
@@ -135,7 +125,7 @@
     <span class="n">compliance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CompliancePolicyType</span><span class="o">.</span><span class="n">COMPLIANCE_SINCE</span><span class="o">.</span><span class="n">name</span></div>
 
 
-<div class="viewcode-block" id="CompliancePolicyCurrentOutstanding"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyCurrentOutstanding">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="CompliancePolicyCurrentOutstanding"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyCurrentOutstanding">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">CompliancePolicyCurrentOutstanding</span><span class="p">(</span><span class="n">CompliancePolicyBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compliance policy that indicates if an event has been &#39;closed&#39;</span>
@@ -146,7 +136,7 @@
     <span class="n">compliance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CompliancePolicyType</span><span class="o">.</span><span class="n">COMPLIANCE_CURRENT_OUTSTANDING</span><span class="o">.</span><span class="n">name</span></div>
 
 
-<div class="viewcode-block" id="CompliancePolicyPeriodOutstanding"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyPeriodOutstanding">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="CompliancePolicyPeriodOutstanding"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyPeriodOutstanding">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">CompliancePolicyPeriodOutstanding</span><span class="p">(</span><span class="n">CompliancePolicyBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compliance policy that indicates if an event has been &#39;closed&#39; within</span>
@@ -159,7 +149,7 @@
     <span class="n">compliance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CompliancePolicyType</span><span class="o">.</span><span class="n">COMPLIANCE_PERIOD_OUTSTANDING</span><span class="o">.</span><span class="n">name</span></div>
 
 
-<div class="viewcode-block" id="CompliancePolicyDynamicTolerance"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyDynamicTolerance">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="CompliancePolicyDynamicTolerance"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyDynamicTolerance">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">CompliancePolicyDynamicTolerance</span><span class="p">(</span><span class="n">CompliancePolicyBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compliance policy that indicates if the average time between opening</span>
@@ -174,7 +164,7 @@
     <span class="n">compliance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CompliancePolicyType</span><span class="o">.</span><span class="n">COMPLIANCE_DYNAMIC_TOLERANCE</span><span class="o">.</span><span class="n">name</span></div>
 
 
-<div class="viewcode-block" id="CompliancePolicyRichness"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyRichness">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="CompliancePolicyRichness"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyRichness">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">CompliancePolicyRichness</span><span class="p">(</span><span class="n">CompliancePolicyBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compliance policy that indicates if an asset has an attribute that</span>
@@ -184,7 +174,7 @@
     <span class="n">richness_assertions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span>
     <span class="n">compliance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">CompliancePolicyType</span><span class="o">.</span><span class="n">COMPLIANCE_RICHNESS</span><span class="o">.</span><span class="n">name</span>
 
-<div class="viewcode-block" id="CompliancePolicyRichness.dict"><a class="viewcode-back" href="../../compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyRichness.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CompliancePolicyRichness.dict"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policy_requests.html#archivist.compliance_policy_requests.CompliancePolicyRichness.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Emit dictionary representation&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;asset_filter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">and_list</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;asset_filter&quot;</span><span class="p">])</span>

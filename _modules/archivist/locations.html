@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.locations &mdash; RKVST v0.17.5 documentation</title>
+  <title>archivist.locations &mdash; RKVST v0.18.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
@@ -18,6 +19,7 @@
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -32,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.5
+                v0.18.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -46,22 +48,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks.html">Note Books (BETA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runner.html">Runner Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tenancies.html">Tenancies Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/index.html">Code Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
@@ -131,7 +121,7 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Location"><a class="viewcode-back" href="../../locations.html#archivist.locations.Location">[docs]</a><span class="k">class</span> <span class="nc">Location</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="Location"><a class="viewcode-back" href="../../code/locations.html#archivist.locations.Location">[docs]</a><span class="k">class</span> <span class="nc">Location</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Location</span>
 
 <span class="sd">    Location object has dictionary attributes.</span>
@@ -150,7 +140,7 @@
         <span class="k">return</span> <span class="n">name</span></div>
 
 
-<div class="viewcode-block" id="_LocationsClient"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient">[docs]</a><span class="k">class</span> <span class="nc">_LocationsClient</span><span class="p">:</span>
+<div class="viewcode-block" id="_LocationsClient"><a class="viewcode-back" href="../../code/locations.html#archivist.locations._LocationsClient">[docs]</a><span class="k">class</span> <span class="nc">_LocationsClient</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;LocationsClient</span>
 
 <span class="sd">    Access to locations entities using CRUD interface. This class is usually</span>
@@ -169,7 +159,7 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;LocationsClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-<div class="viewcode-block" id="_LocationsClient.create"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
+<div class="viewcode-block" id="_LocationsClient.create"><a class="viewcode-back" href="../../code/locations.html#archivist.locations._LocationsClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Location</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Create location</span>
@@ -187,7 +177,7 @@
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create Location </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="_LocationsClient.create_from_data"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Location</span><span class="p">:</span>
+<div class="viewcode-block" id="_LocationsClient.create_from_data"><a class="viewcode-back" href="../../code/locations.html#archivist.locations._LocationsClient.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Location</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Create location</span>
 
 <span class="sd">        Creates location with request body from data stream.</span>
@@ -202,7 +192,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Location</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="_LocationsClient.create_if_not_exists"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient.create_if_not_exists">[docs]</a>    <span class="k">def</span> <span class="nf">create_if_not_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Location</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<div class="viewcode-block" id="_LocationsClient.create_if_not_exists"><a class="viewcode-back" href="../../code/locations.html#archivist.locations._LocationsClient.create_if_not_exists">[docs]</a>    <span class="k">def</span> <span class="nf">create_if_not_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Location</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a location if not already exists</span>
 
@@ -249,7 +239,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="_LocationsClient.read"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Location</span><span class="p">:</span>
+<div class="viewcode-block" id="_LocationsClient.read"><a class="viewcode-back" href="../../code/locations.html#archivist.locations._LocationsClient.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Location</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Read location</span>
 
 <span class="sd">        Reads location.</span>
@@ -272,7 +262,7 @@
 
         <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">LOCATIONS_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 
-<div class="viewcode-block" id="_LocationsClient.count"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+<div class="viewcode-block" id="_LocationsClient.count"><a class="viewcode-back" href="../../code/locations.html#archivist.locations._LocationsClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -292,7 +282,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="_LocationsClient.list"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
+<div class="viewcode-block" id="_LocationsClient.list"><a class="viewcode-back" href="../../code/locations.html#archivist.locations._LocationsClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">page_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -323,7 +313,7 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_LocationsClient.read_by_signature"><a class="viewcode-back" href="../../locations.html#archivist.locations._LocationsClient.read_by_signature">[docs]</a>    <span class="k">def</span> <span class="nf">read_by_signature</span><span class="p">(</span>
+<div class="viewcode-block" id="_LocationsClient.read_by_signature"><a class="viewcode-back" href="../../code/locations.html#archivist.locations._LocationsClient.read_by_signature">[docs]</a>    <span class="k">def</span> <span class="nf">read_by_signature</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>

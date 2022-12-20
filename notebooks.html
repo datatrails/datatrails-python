@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Note Books (BETA) &mdash; RKVST v0.18.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Manage Credentials" href="notebooks/Manage_Credentials.html" />
+    <link rel="prev" title="Filter IAM subjects Example" href="subjects_filter.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html">
+            <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.18.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Note Books (BETA)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-the-rkvst-python-sdk">Installing the RKVST python SDK</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linux">Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macos">MacOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#download-notebooks">Download Notebooks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Manage_Credentials.html">Manage Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Share_Asset.html">Sharing an Asset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code/index.html">Code Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sbom.html">SBOM CDX for PySDK</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Note Books (BETA)</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="note-books-beta">
+<span id="notebooksref"></span><h1>Note Books (BETA)<a class="headerlink" href="#note-books-beta" title="Permalink to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is a Work-In-Progress</p>
+</div>
+<p>These are a collection of jupyter notebooks that demonstrate typical use cases of the RKVST
+system.</p>
+<p>They can be downloaded and executed on a Linux, Mac or Windows machines. The only requirement
+is that python3.7 to python3.11 and pip command-line too have been installed.</p>
+<section id="installing-the-rkvst-python-sdk">
+<h2>Installing the RKVST python SDK<a class="headerlink" href="#installing-the-rkvst-python-sdk" title="Permalink to this heading"></a></h2>
+<p>The bare requirement is that a version of python3 (3.7 to 3.11) is installed together with
+the pip command-line tool.</p>
+<section id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this heading"></a></h3>
+<p>Most Linux distros come with a suitable version of python3 already installed. The only extra requirement
+is to install the pip command-line utility.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m ensurepip --upgrade
+</pre></div>
+</div>
+</section>
+<section id="macos">
+<h3>MacOS<a class="headerlink" href="#macos" title="Permalink to this heading"></a></h3>
+<p>Python installation instructions for MacOS are <a class="reference external" href="https://www.python.org/downloads/macos/">pythonmac installation instructions</a></p>
+<p>Open a terminal and ensure that python and pip are available:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python --version
+pip --version
+</pre></div>
+</div>
+</section>
+<section id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading"></a></h3>
+<p>Python installation instructions for Windows are <a class="reference external" href="https://www.python.org/downloads/windows/">pythonwindows installation instructions</a></p>
+<p>Execute the installer. Ensure the following:</p>
+<ul class="simple">
+<li><p>Installation of pip is enabled</p></li>
+<li><p>py launcher is enabled</p></li>
+<li><p>Associate file with python is enabled</p></li>
+<li><p>Create shortcuts for installed applications</p></li>
+<li><p>Add Python to Path</p></li>
+</ul>
+<p>Open a 'cmd' terminal and ensure that python and pip are available:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python --version
+pip --version
+</pre></div>
+</div>
+</section>
+</section>
+<section id="download-notebooks">
+<h2>Download Notebooks<a class="headerlink" href="#download-notebooks" title="Permalink to this heading"></a></h2>
+<p>See <a class="reference download internal" download="" href="_downloads/5a0eecca0b8984c348e89ecb5ed79ebd/notebooks.zip"><code class="xref download docutils literal notranslate"><span class="pre">Notebooks</span></code></a>.</p>
+<div class="toctree-wrapper compound" id="gallery">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Manage_Credentials.html">Manage Credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Share_Asset.html">Sharing an Asset</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="subjects_filter.html" class="btn btn-neutral float-left" title="Filter IAM subjects Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="notebooks/Manage_Credentials.html" class="btn btn-neutral float-right" title="Manage Credentials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

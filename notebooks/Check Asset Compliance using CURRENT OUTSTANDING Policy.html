@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Asset Compliance: CURRENT_OUTSTANDING policy &mdash; RKVST v0.18.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Check Asset Compliance: SINCE policy" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html" />
+    <link rel="prev" title="Manage Credentials" href="Manage_Credentials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.18.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../notebooks.html">Note Books (BETA)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../notebooks.html#installing-the-rkvst-python-sdk">Installing the RKVST python SDK</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../notebooks.html#download-notebooks">Download Notebooks</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Manage_Credentials.html">Manage Credentials</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Share_Asset.html">Sharing an Asset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/index.html">Code Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sbom.html">SBOM CDX for PySDK</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../notebooks.html">Note Books (BETA)</a></li>
+      <li class="breadcrumb-item active">Create Asset Compliance: CURRENT_OUTSTANDING policy</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars and line breaks on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+    white-space: pre;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.jp-RenderedHTMLCommon thead,
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+.jp-RenderedHTMLCommon th,
+div.rendered_html th {
+  font-weight: bold;
+}
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.jp-RenderedHTMLCommon tbody tr:hover,
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="Create-Asset-Compliance:-CURRENT_OUTSTANDING-policy">
+<h1>Create Asset Compliance: CURRENT_OUTSTANDING policy<a class="headerlink" href="#Create-Asset-Compliance:-CURRENT_OUTSTANDING-policy" title="Permalink to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a compliance policy that alerts when an asset spends too long in a bad state.</span>
+
+<span class="c1"># Main function establishes a connection to RKVST using an App Registration then uses that</span>
+<span class="c1"># to create an access policy, test it in good and bad states, then cleans up.</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">uuid4</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">filterwarnings</span>
+
+<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+<span class="kn">from</span> <span class="nn">archivist.compliance_policy_requests</span> <span class="kn">import</span> <span class="n">CompliancePolicyCurrentOutstanding</span>
+<span class="kn">from</span> <span class="nn">archivist.constants</span> <span class="kn">import</span> <span class="n">ASSET_BEHAVIOURS</span>
+<span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
+<span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
+
+<span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Unverified HTTPS request&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Connection parameters. Fill in with client ID and secret from an appropriately</span>
+<span class="c1"># permissioned Application Registration</span>
+<span class="n">RKVST_URL</span> <span class="o">=</span> <span class="s2">&quot;https://app.rkvst.io&quot;</span>
+<span class="n">APPREG_CLIENT</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;</span>
+<span class="n">APPREG_SECRET</span> <span class="o">=</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_compliance_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compliance policy which notices when process steps are</span>
+<span class="sd">    not executed - eg &#39;you must close the door after you open it&#39;</span>
+<span class="sd">    or &#39;candidate software build must be approved before release&#39;</span>
+
+<span class="sd">    This example creates a policy that requires doors to be closed</span>
+<span class="sd">    after they are opened.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">compliance_policy</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">CompliancePolicyCurrentOutstanding</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Vault doors should be closed according to site security policy section Phys.Integ.02&quot;</span><span class="p">,</span>
+            <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Phys.Integ.02&quot;</span><span class="p">,</span>
+            <span class="n">asset_filter</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">[</span><span class="s2">&quot;attributes.arc_display_type=Vault Door&quot;</span><span class="p">],</span>
+            <span class="p">],</span>
+            <span class="n">event_display_type</span><span class="o">=</span><span class="s2">&quot;Open&quot;</span><span class="p">,</span>
+            <span class="n">closing_event_display_type</span><span class="o">=</span><span class="s2">&quot;Close&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CURRENT_OUTSTANDING_POLICY:&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">compliance_policy</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">compliance_policy</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_door</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates an Asset record to track a particular door.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">door</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;selector&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;arc_display_name&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">,</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
+            <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">SIMPLE_HASH</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Gringott&#39;s Vault 2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;Main door to the second level security vault in Gringott&#39;s Wizarding Bank&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Vault Door&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DOOR:&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">door</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">door</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">open_door</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">door</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Open the vault door</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">door_opened</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">door</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;Record&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;behaviour&quot;</span><span class="p">:</span> <span class="s2">&quot;RecordEvidence&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;Open the door for Lucius Malfoy&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Open&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_correlation_value&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DOOR_OPENED:&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">door_opened</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">close_door</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">door</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Close the vault door</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">door_closed</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">door</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;Record&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;behaviour&quot;</span><span class="p">:</span> <span class="s2">&quot;RecordEvidence&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;Closed the door after Lucius Malfoy exited the vault&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Close&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_correlation_value&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DOOR_CLOSED:&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">door_closed</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Main function of compliance sample test.</span>
+
+<span class="sd"> * Connect to RKVST with client ID and secret credential</span>
+<span class="sd"> * Create minimal test objects to demonstrate the feature</span>
+<span class="sd"> * Test interactions</span>
+<span class="sd"> * Clean up</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># optional call to set the logger level for all subsystems. The argument can</span>
+<span class="c1"># be either &quot;INFO&quot; or &quot;DEBUG&quot;. For more sophisticated logging control see the</span>
+<span class="c1"># documentation.</span>
+<span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+
+<span class="c1"># Initialize connection to RKVST</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to RKVST&quot;</span><span class="p">)</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">RKVST_URL</span><span class="p">,</span> <span class="p">(</span><span class="n">APPREG_CLIENT</span><span class="p">,</span> <span class="n">APPREG_SECRET</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compliance policies with related events (eg open/close, order/ship/deliver</span>
+<span class="c1"># type situations) require events to be linked through a correlation value.</span>
+<span class="c1"># In many cases this will be obvious (a CVE tag for vulnerability management,</span>
+<span class="c1"># or a works ticket number for maintenance, or even a timestamp) but here</span>
+<span class="c1"># we&#39;ll just make a UUID to make sure it&#39;s unique and this test is repeatable</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="n">uuid4</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tag for this run: </span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a compliance policy that alerts when doors are left open</span>
+<span class="n">compliance_policy</span> <span class="o">=</span> <span class="n">create_compliance_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create an asset that matches the assets_filter field in the</span>
+<span class="c1"># compliance policy.</span>
+<span class="n">gringotts_vault</span> <span class="o">=</span> <span class="n">create_door</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open the door</span>
+<span class="n">open_door</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">gringotts_vault</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+
+<span class="c1"># Check compliance: should fail because the door is open</span>
+<span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">compliance_nok</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">compliant_at</span><span class="p">(</span>
+    <span class="n">gringotts_vault</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COMPLIANCE (should be false):&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">compliance_nok</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now close the door</span>
+<span class="n">close_door</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">gringotts_vault</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+
+<span class="c1"># Check compliance - should be OK because the door is now closed</span>
+<span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">compliance_ok</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">compliant_at</span><span class="p">(</span>
+    <span class="n">gringotts_vault</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COMPLIANCE (should be true):&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">compliance_ok</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># However the fact that it is OK *now* is a bit of a red herring. It</span>
+<span class="c1"># was non-compliant in the past and this may be an issue that needs to</span>
+<span class="c1"># be verified during an investigation, insurance claim, or other dispute.</span>
+<span class="c1"># We can check the audit history for compliance *at a point in time* and</span>
+<span class="c1"># get a verifiable answer to the state of that asset at that time.</span>
+
+<span class="c1"># To make sure the example works with such short time frames we grab the</span>
+<span class="c1"># time from the previous not OK compliance call, but you can choose any</span>
+<span class="c1"># arbitrary time in a real forensic process</span>
+<span class="n">time_of_suspicion</span> <span class="o">=</span> <span class="n">compliance_nok</span><span class="p">[</span><span class="s2">&quot;compliant_at&quot;</span><span class="p">]</span>
+<span class="n">compliance_nok</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">compliant_at</span><span class="p">(</span>
+    <span class="n">gringotts_vault</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span> <span class="n">compliant_at</span><span class="o">=</span><span class="n">time_of_suspicion</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;HISTORICAL COMPLIANCE (should be false):&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">compliance_nok</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># finally clean up by deleting the compliance_policy</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
+    <span class="n">compliance_policy</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Manage_Credentials.html" class="btn btn-neutral float-left" title="Manage Credentials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html" class="btn btn-neutral float-right" title="Check Asset Compliance: SINCE policy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

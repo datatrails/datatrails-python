@@ -1,0 +1,286 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "5950c6ba",
+   "metadata": {},
+   "source": [
+    "Create Event With Verified Domain\n",
+    "============================\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c85b9e96",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Create an event for an asset given url to Archivist and user Token.\n",
+    "#\n",
+    "# The module contains four functions: main, create_asset, create_event and\n",
+    "# get_verified_domain.\n",
+    "#\n",
+    "# The main function would initialize an archivist connection using the url and\n",
+    "# the credentials, called \"arch\".\n",
+    "\n",
+    "# create_asset will execute 'assets.create', which is a archivist connection function\n",
+    "# to create a new asset for the archivist through archivist connection. The main funciton then\n",
+    "# calls create_event and pass in \"arch\" and the created asset to create a new event for the asset.\n",
+    "\n",
+    "# In both cases the verified domain name is displayed."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "001b25e3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from json import dumps as json_dumps\n",
+    "from os import getenv\n",
+    "from warnings import filterwarnings\n",
+    "\n",
+    "from archivist.archivist import Archivist\n",
+    "from archivist.logger import set_logger\n",
+    "\n",
+    "filterwarnings(\"ignore\", message=\"Unverified HTTPS request\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a877ffed",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "URL = \"https://app.rkvst.io\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "acdf240c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def get_verified_domain(arch, entity):\n",
+    "    \"\"\"Get the verified domain for the asset/event.\n",
+    "\n",
+    "    Args:\n",
+    "        arch: archivist connection.\n",
+    "        entity: an asset or event\n",
+    "\n",
+    "    Returns:\n",
+    "        verified_domain: name of the verified domain\n",
+    "                         for the asset or event.\n",
+    "\n",
+    "    \"\"\"\n",
+    "\n",
+    "    tenancy = arch.tenancies.publicinfo(entity[\"tenant_identity\"])\n",
+    "    return tenancy.get(\"verified_domain\", \"\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8889c68d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def create_event(arch, asset):\n",
+    "    \"\"\"Create an event for the passed-in asset.\n",
+    "\n",
+    "    Args:\n",
+    "        arch: archivist connection.\n",
+    "        asset: an asset created using aconn\n",
+    "\n",
+    "    Returns:\n",
+    "        new_event: a new event for the asset.\n",
+    "\n",
+    "    \"\"\"\n",
+    "\n",
+    "    # props can be defined for different behaviours and the attributes associated with\n",
+    "    # different behaviours are also different.\n",
+    "    props = {\n",
+    "        \"operation\": \"Record\",\n",
+    "        # This event is used to record evidence.\n",
+    "        \"behaviour\": \"RecordEvidence\",\n",
+    "        # Optional Client-claimed time at which the maintenance was performed\n",
+    "        \"timestamp_declared\": \"2019-11-27T14:44:19Z\",\n",
+    "        # Optional Client-claimed identity of person performing the operation\n",
+    "        \"principal_declared\": {\n",
+    "            \"issuer\": \"idp.synsation.io/1234\",\n",
+    "            \"subject\": \"phil.b\",\n",
+    "            \"email\": \"phil.b@synsation.io\",\n",
+    "        },\n",
+    "    }\n",
+    "    attrs = {\n",
+    "        # Required Details of the RecordEvidence request\n",
+    "        \"arc_description\": \"Safety conformance approved for version 1.6.\",\n",
+    "        # Required The evidence to be retained in the asset history\n",
+    "        \"arc_evidence\": \"DVA Conformance Report attached\",\n",
+    "        # Example Client can add any additional information in further attributes,\n",
+    "        # including free text or attachments\n",
+    "        \"conformance_report\": \"blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273\",\n",
+    "    }\n",
+    "\n",
+    "    return arch.events.create(asset[\"identity\"], props=props, attrs=attrs, confirm=True)\n",
+    "\n",
+    "    # alternatively if some work can be done whilst the event is confirmed then this call can be\n",
+    "    # replaced by a two-step alternative:\n",
+    "\n",
+    "    # event = arch.events.create(asset[\"identity\"], props=props, attrs=attrs, confirm=False)\n",
+    "\n",
+    "    # ... do something else here\n",
+    "    # and then wait for confirmation\n",
+    "\n",
+    "    # self.arch.events.wait_for_confirmation(event['identity'])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ba24d143",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def create_asset(arch):\n",
+    "    \"\"\"Create an asset using Archivist Connection.\n",
+    "\n",
+    "    Args:\n",
+    "        arch: archivist connection.\n",
+    "\n",
+    "    Returns:\n",
+    "        newasset: a new asset created.\n",
+    "\n",
+    "    \"\"\"\n",
+    "    attrs = {\n",
+    "        \"arc_display_name\": \"display_name\",  # Asset's display name in the user interface\n",
+    "        \"arc_description\": \"display_description\",  # Asset's description in the user interface\n",
+    "        \"arc_display_type\": \"desplay_type\",  # Arc_display_type is a free text field\n",
+    "        # allowing the creator of\n",
+    "        # an asset to specify the asset\n",
+    "        # type or class. Be careful when setting this:\n",
+    "        # assets are grouped by type and\n",
+    "        # sharing policies can be\n",
+    "        # configured to share assets based on\n",
+    "        # their arc_display_type.\n",
+    "        # So a mistake here can result in asset data being\n",
+    "        # under- or over-shared.\n",
+    "        \"some_custom_attribute\": \"value\"  # You can add any custom value as long as\n",
+    "        # it does not start with arc_\n",
+    "    }\n",
+    "    # The first argument is the attributes of the asset\n",
+    "    # The second argument is wait for confirmation:\n",
+    "    #   If @confirm@ is True then this function will not\n",
+    "    #   return until the asset is confirmed on the blockchain and ready\n",
+    "    #   to accept events (or an error occurs)\n",
+    "    #   After an asset is submitted to the blockchain (submitted),\n",
+    "    #   it will be in the \"Pending\" status.\n",
+    "    #   Once it is added to the blockchain, the status will be changed to \"Confirmed\"\n",
+    "    return arch.assets.create(attrs=attrs, confirm=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ec1909a6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\"\"\"Main function of create event.\n",
+    "\n",
+    "Parse in user input of url and auth token and use them to\n",
+    "create an example archivist connection and create an asset.\n",
+    "The main function then uses the asset to create an event for\n",
+    "the asset and fetch the event.\n",
+    "\n",
+    "\"\"\"\n",
+    "# optional call to set the logger level for all subsystems. The argument can\n",
+    "# be either \"INFO\" or \"DEBUG\". For more sophisticated logging control see the\n",
+    "# documentation.\n",
+    "set_logger(\"INFO\")\n",
+    "\n",
+    "# Get authorization token. The token grants certain rights and access permissions.\n",
+    "# The token can represent the root principal or user in an organization. Different tokens\n",
+    "# could indicate different users in the same organization or membership of different\n",
+    "# organisations.\n",
+    "\n",
+    "with open(\"/home/builder/credentials/token\", mode=\"r\", encoding=\"utf-8\") as tokenfile:\n",
+    "    auth = tokenfile.read().strip()\n",
+    "\n",
+    "# Initialize connection to Archivist\n",
+    "arch = Archivist(\n",
+    "    URL,\n",
+    "    auth,\n",
+    "    max_time=300,\n",
+    "    verify=False,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b7482420",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "# Create a new asset\n",
+    "asset = create_asset(arch)\n",
+    "print(\"Asset\", json_dumps(asset, sort_keys=True, indent=4))\n",
+    "print(\"Verified domain '\", get_verified_domain(arch, asset), \"'\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "bb5b0651",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Create a new event\n",
+    "event = create_event(arch, asset)\n",
+    "print(\"Event\", json_dumps(event, sort_keys=True, indent=4))\n",
+    "print(\"Verified domain '\", get_verified_domain(arch, event), \"'\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f8ac6dda",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Fetch the event\n",
+    "event = arch.events.read(event[\"identity\"])\n",
+    "print(\"Event\", json_dumps(event, sort_keys=True, indent=4))\n",
+    "print(\"Verified domain '\", get_verified_domain(arch, event), \"'\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.15"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

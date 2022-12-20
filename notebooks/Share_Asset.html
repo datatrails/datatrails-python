@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sharing an Asset &mdash; RKVST v0.18.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fixtures (Common Attributes)" href="../fixtures.html" />
+    <link rel="prev" title="Create Event With Verified Domain" href="Create%20Event%20with%20Verified%20Domain.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.18.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../notebooks.html">Note Books (BETA)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../notebooks.html#installing-the-rkvst-python-sdk">Installing the RKVST python SDK</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../notebooks.html#download-notebooks">Download Notebooks</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Manage_Credentials.html">Manage Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Sharing an Asset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code/index.html">Code Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sbom.html">SBOM CDX for PySDK</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../notebooks.html">Note Books (BETA)</a></li>
+      <li class="breadcrumb-item active">Sharing an Asset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars and line breaks on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+    white-space: pre;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.jp-RenderedHTMLCommon thead,
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+.jp-RenderedHTMLCommon th,
+div.rendered_html th {
+  font-weight: bold;
+}
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.jp-RenderedHTMLCommon tbody tr:hover,
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="Sharing-an-Asset">
+<h1>Sharing an Asset<a class="headerlink" href="#Sharing-an-Asset" title="Permalink to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an asset for Archivist with token.</span>
+
+<span class="sd">   Create an access_policy that shares an asset when certain criteria are met.</span>
+
+<span class="sd">   Access the asset from another Archivist connection using a second token with different</span>
+<span class="sd">   access rights.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
+
+<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+<span class="kn">from</span> <span class="nn">archivist.constants</span> <span class="kn">import</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span> <span class="n">SUBJECTS_SELF_ID</span>
+<span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
+<span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://app.rkvst.io&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_example_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create an asset using Archivist Connection.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        arch: archivist connection.</span>
+<span class="sd">        label: convenience label to easily distinguish the 2 organizations.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Asset: a new asset created.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_display_name&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s display name</span>
+        <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_display_description&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s description</span>
+        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_display_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
+        <span class="s2">&quot;ext_vendor_name&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Select the mechanism used to prove evidence for the asset.  If the selected proof</span>
+    <span class="c1"># mechanism is not enabled for your tenant then an error will occur.</span>
+    <span class="c1"># If unspecified then SIMPLE_HASH is used.</span>
+    <span class="c1"># proof_mechanism = ProofMechanism.KHIPU.name</span>
+    <span class="c1">#</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">SIMPLE_HASH</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># The first argument is the properties of the asset</span>
+    <span class="c1"># The second argument is the attributes of the asset</span>
+    <span class="c1"># The third argument is wait for confirmation:</span>
+    <span class="c1">#   If @confirm@ is True then this function will not</span>
+    <span class="c1">#   return until the asset is confirmed on the blockchain and ready</span>
+    <span class="c1">#   to accept events (or an error occurs)</span>
+    <span class="c1">#</span>
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_archivist</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create connection to archivist&quot;&quot;&quot;</span>
+    <span class="c1"># Get authorization token. The token grants certain rights and access permissions.</span>
+    <span class="c1"># The token can represent the root principal or user in an organization. Different tokens</span>
+    <span class="c1"># could indicate different users in the same organization or membership of different</span>
+    <span class="c1"># organiastions.</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;/home/builder/credentials/</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
+        <span class="n">auth_token</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
+    <span class="c1"># of an asset or event creation - the default is 1200 seconds but one can optionally</span>
+    <span class="c1"># specify a different value here particularly when creating assets on SIMPLE_HASH</span>
+    <span class="c1"># (rather than KHIPU) as confirmation times are much shorter in this case.</span>
+    <span class="k">return</span> <span class="n">Archivist</span><span class="p">(</span>
+        <span class="n">URL</span><span class="p">,</span>
+        <span class="n">auth_token</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">share_subjects</span><span class="p">(</span><span class="n">name1</span><span class="p">,</span> <span class="n">arch1</span><span class="p">,</span> <span class="n">name2</span><span class="p">,</span> <span class="n">arch2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Share subjects between 2 organizations&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">arch1</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">share</span><span class="p">(</span>
+        <span class="n">name1</span><span class="p">,</span>
+        <span class="n">name2</span><span class="p">,</span>
+        <span class="n">arch2</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_example_access_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create access policy&quot;&quot;&quot;</span>
+    <span class="c1"># consists of a filter selection entry and a selection criteria to restrict/redact</span>
+    <span class="c1"># values of the asset attributes available to the sharee.</span>
+
+    <span class="c1"># values pertaining to the access polciy itself.</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2"> access policy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2"> Policy description&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Filtering - access will be allowed to any asset that contains both these</span>
+    <span class="c1"># attributes that equal these values. This happens to match the asset created</span>
+    <span class="c1"># previously.</span>
+    <span class="n">filters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;attributes.arc_display_type=</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_display_type&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;attributes.ext_vendor_name=</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+
+    <span class="c1"># one must be the subject to gain access and only those fields</span>
+    <span class="c1"># specified in include_attributes will be emitted.</span>
+    <span class="n">access_permissions</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;subjects&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">subject</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
+            <span class="s2">&quot;include_attributes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arc_display_name&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">props</span><span class="p">,</span>
+        <span class="n">filters</span><span class="p">,</span>
+        <span class="n">access_permissions</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># optional call to set the logger level for all subsystems. The argument can</span>
+<span class="c1"># be either &quot;INFO&quot; or &quot;DEBUG&quot;. For more sophisticated logging control see the</span>
+<span class="c1"># documentation.</span>
+<span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For demonstration purposes we are going to assume that 2 organizations are</span>
+<span class="c1"># going to share an asset. The 2 organizations are ACME Corp and Weyland-Yutani</span>
+<span class="c1"># Corporation.</span>
+<span class="n">acme</span> <span class="o">=</span> <span class="n">create_archivist</span><span class="p">(</span><span class="s2">&quot;acme&quot;</span><span class="p">)</span>
+<span class="n">weyland</span> <span class="o">=</span> <span class="n">create_archivist</span><span class="p">(</span><span class="s2">&quot;weyland&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># acme creates an asset</span>
+<span class="n">acme_asset</span> <span class="o">=</span> <span class="n">create_example_asset</span><span class="p">(</span><span class="n">acme</span><span class="p">,</span> <span class="s2">&quot;acme&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset created in acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set a subject for weyland in acme&#39;s environment. The identity will be used as a</span>
+<span class="c1"># filter in the access permissions of the access_policy.</span>
+<span class="n">weyland_subject_on_acme</span><span class="p">,</span> <span class="n">acme_subject_on_weyland</span> <span class="o">=</span> <span class="n">share_subjects</span><span class="p">(</span>
+    <span class="s2">&quot;weyland on acme&quot;</span><span class="p">,</span> <span class="n">acme</span><span class="p">,</span> <span class="s2">&quot;acme_on_weyland&quot;</span><span class="p">,</span> <span class="n">weyland</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;weyland_subject on acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">weyland_subject_on_acme</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;acme_subject on acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">acme_subject_on_weyland</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># now we want acme to share this asset to weyland via an access policy.</span>
+<span class="n">access_policy</span> <span class="o">=</span> <span class="n">create_example_access_policy</span><span class="p">(</span><span class="n">acme</span><span class="p">,</span> <span class="s2">&quot;acme&quot;</span><span class="p">,</span> <span class="n">weyland_subject_on_acme</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;access policy created in acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">access_policy</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># display the asset as retrieved by the sharee</span>
+<span class="c1"># NB: the attributes dict is redacted...</span>
+<span class="n">weyland_asset</span> <span class="o">=</span> <span class="n">weyland</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset read from weyland&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">weyland_asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list matching access policies</span>
+<span class="n">access_policies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">acme</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">list_matching_access_policies</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;access policies read from acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">access_policies</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># delete all the access policies</span>
+<span class="k">for</span> <span class="n">access_policy</span> <span class="ow">in</span> <span class="n">access_policies</span><span class="p">:</span>
+    <span class="n">acme</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">access_policy</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list matching access policies</span>
+<span class="n">access_policies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">acme</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">list_matching_access_policies</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;access policies read from acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">access_policies</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># display the asset as retrieved by the sharee - the asset is still shared even though there are no access policies</span>
+<span class="c1"># NB: the attributes dict is redacted...</span>
+<span class="n">weyland_asset</span> <span class="o">=</span> <span class="n">weyland</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset read from weyland&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">weyland_asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Create%20Event%20with%20Verified%20Domain.html" class="btn btn-neutral float-left" title="Create Event With Verified Domain" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../fixtures.html" class="btn btn-neutral float-right" title="Fixtures (Common Attributes)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>

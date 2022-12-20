@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.compliance_policy_type &mdash; RKVST v0.17.5 documentation</title>
+  <title>archivist.compliance_policy_type &mdash; RKVST v0.18.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
@@ -18,6 +19,7 @@
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -32,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.17.5
+                v0.18.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -46,22 +48,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runner/index.html">Story Runner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks.html">Note Books (BETA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../fixtures.html">Fixtures (Common Attributes)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runner.html">Runner Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../archivist.html">Archivist Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../assets.html">Assets Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../events.html">Events Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../locations.html">Locations Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../attachments.html">Attachments Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tenancies.html">Tenancies Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../compliance_policies/index.html">Compliance Policies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../sboms/index.html">Software Bill of Materials (SBOM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../iam/index.html">Identity and Access Management (IAM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../timestamp.html">Timestamp Definition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../errors.html">Errors Parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/index.html">Code Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../logger.html">Logger</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../proof_mechanism.html">Proof Mechanism Enumeration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../sbom.html">SBOM CDX for PySDK</a></li>
 </ul>
 
@@ -100,7 +90,7 @@
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 
-<div class="viewcode-block" id="CompliancePolicyType"><a class="viewcode-back" href="../../compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType">[docs]</a><span class="k">class</span> <span class="nc">CompliancePolicyType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="CompliancePolicyType"><a class="viewcode-back" href="../../code/compliance_policies/compliance_policies_type.html#archivist.compliance_policy_type.CompliancePolicyType">[docs]</a><span class="k">class</span> <span class="nc">CompliancePolicyType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enumerate types of compliance policy</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Runner Class &mdash; RKVST v0.18.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Timestamp Definition" href="timestamp.html" />
+    <link rel="prev" title="IAM Application Get Token" href="iam/appidp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.18.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Note Books (BETA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fixtures.html">Fixtures (Common Attributes)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Code Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="archivist.html">Archivist Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assets.html">Assets Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html">Events Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locations.html">Locations Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compliance_policies/index.html">Compliance Policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sboms/index.html">Software Bill of Materials (SBOM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Runner Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.runner._ActionMap"><code class="docutils literal notranslate"><span class="pre">_ActionMap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._ActionMap.action"><code class="docutils literal notranslate"><span class="pre">_ActionMap.action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._ActionMap.delete"><code class="docutils literal notranslate"><span class="pre">_ActionMap.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._ActionMap.keywords"><code class="docutils literal notranslate"><span class="pre">_ActionMap.keywords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._ActionMap.label"><code class="docutils literal notranslate"><span class="pre">_ActionMap.label()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._ActionMap.ops"><code class="docutils literal notranslate"><span class="pre">_ActionMap.ops()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.runner._Runner"><code class="docutils literal notranslate"><span class="pre">_Runner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._Runner.delete"><code class="docutils literal notranslate"><span class="pre">_Runner.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._Runner.identity"><code class="docutils literal notranslate"><span class="pre">_Runner.identity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._Runner.run_step"><code class="docutils literal notranslate"><span class="pre">_Runner.run_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._Runner.run_steps"><code class="docutils literal notranslate"><span class="pre">_Runner.run_steps()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._Runner.set_deletions"><code class="docutils literal notranslate"><span class="pre">_Runner.set_deletions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.runner._Step"><code class="docutils literal notranslate"><span class="pre">_Step</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#archivist.runner._Step.args"><code class="docutils literal notranslate"><span class="pre">_Step.args()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#archivist.runner.tree"><code class="docutils literal notranslate"><span class="pre">tree()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="timestamp.html">Timestamp Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Errors Parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proof_mechanism.html">Proof Mechanism Enumeration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sbom.html">SBOM CDX for PySDK</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">RKVST</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Code Reference</a></li>
+      <li class="breadcrumb-item active">Runner Class</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="module-archivist.runner">
+<span id="runner-class"></span><span id="runnerref"></span><h1>Runner Class<a class="headerlink" href="#module-archivist.runner" title="Permalink to this heading"></a></h1>
+<p>Base runner class for interpreting yaml story files.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="archivist.runner._ActionMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_ActionMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_ActionMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap" title="Permalink to this definition"></a></dt>
+<dd><p>Map of actions and keywords for an action</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._ActionMap.action">
+<span class="sig-name descname"><span class="pre">action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="../_modules/archivist/runner.html#_ActionMap.action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.action" title="Permalink to this definition"></a></dt>
+<dd><p>Get valid action in map</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._ActionMap.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_ActionMap.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.delete" title="Permalink to this definition"></a></dt>
+<dd><p>Get delete_method in map</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._ActionMap.keywords">
+<span class="sig-name descname"><span class="pre">keywords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/archivist/runner.html#_ActionMap.keywords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.keywords" title="Permalink to this definition"></a></dt>
+<dd><p>Get keywords in map</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._ActionMap.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/archivist/runner.html#_ActionMap.label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.label" title="Permalink to this definition"></a></dt>
+<dd><p>Return whether this action uses or sets label</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._ActionMap.ops">
+<span class="sig-name descname"><span class="pre">ops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/archivist/runner.html#_ActionMap.ops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._ActionMap.ops" title="Permalink to this definition"></a></dt>
+<dd><p>Get valid entry in map</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="archivist.runner._Runner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_Runner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">Archivist</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_Runner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner" title="Permalink to this definition"></a></dt>
+<dd><p>ArchivistRunner takes a url, token_file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._Runner.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_Runner.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.delete" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes all entities</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._Runner.identity">
+<span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/archivist/runner.html#_Runner.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.identity" title="Permalink to this definition"></a></dt>
+<dd><p>Gets entity id</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._Runner.run_step">
+<span class="sig-name descname"><span class="pre">run_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_Runner.run_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.run_step" title="Permalink to this definition"></a></dt>
+<dd><p>Runs a step given parameters and the type of step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>step</strong> (<em>dict</em>) -- the steps map.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._Runner.run_steps">
+<span class="sig-name descname"><span class="pre">run_steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_Runner.run_steps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.run_steps" title="Permalink to this definition"></a></dt>
+<dd><p>Runs all defined steps in self.config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._Runner.set_deletions">
+<span class="sig-name descname"><span class="pre">set_deletions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_Runner.set_deletions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Runner.set_deletions" title="Permalink to this definition"></a></dt>
+<dd><p>sets entry to be deleted</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="archivist.runner._Step">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">_Step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archivist_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><span class="pre">Archivist</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_Step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Step" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="archivist.runner._Step.args">
+<span class="sig-name descname"><span class="pre">args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identity_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#_Step.args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner._Step.args" title="Permalink to this definition"></a></dt>
+<dd><p>Add args and kwargs to action.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="archivist.runner.tree">
+<span class="sig-prename descclassname"><span class="pre">archivist.runner.</span></span><span class="sig-name descname"><span class="pre">tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/archivist/runner.html#tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.runner.tree" title="Permalink to this definition"></a></dt>
+<dd><p>Recursive dict of dicts</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="iam/appidp.html" class="btn btn-neutral float-left" title="IAM Application Get Token" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timestamp.html" class="btn btn-neutral float-right" title="Timestamp Definition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+    <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7K46H3KK7N', {
+          'anonymize_ip': false,
+      });
+    </script> 
+
+</body>
+</html>
