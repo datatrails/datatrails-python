@@ -78,9 +78,13 @@ Download Notebooks
    :name: Gallery
 
    notebooks/Manage_Credentials
+   notebooks/Create Asset and Events
+   notebooks/Find Asset and Event Creation
+   notebooks/Find Asset and Create Attachment
    notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy
    notebooks/Check Asset Compliance using SINCE Policy
    notebooks/Create Event with Verified Domain
    notebooks/Share_Asset
+  
    
 
