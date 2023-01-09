@@ -105,13 +105,13 @@ class TestAccessPoliciesBase(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("TEST_AUTHTOKEN"),
-            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("TEST_CLIENT_ID"),
-            client_secret=getenv("TEST_CLIENT_SECRET"),
-            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+            auth_token=getenv("RKVST_AUTHTOKEN"),
+            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("RKVST_APPREG_CLIENT"),
+            client_secret=getenv("RKVST_APPREG_SECRET"),
+            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
 
         # these are for access_policies
         self.ac_props = deepcopy(PROPS)
@@ -278,8 +278,8 @@ TESTDATA = [
 
 
 @skipIf(
-    getenv("TEST_AUTHTOKEN_FILENAME_2") is None,
-    "cannot run test as TEST_AUTHTOKEN_FILENAME_2 is not set",
+    getenv("RKVST_AUTHTOKEN_FILENAME_2") is None,
+    "cannot run test as RKVST_AUTHTOKEN_FILENAME_2 is not set",
 )
 class TestAccessPoliciesShare(TestAccessPoliciesBase):
     """
@@ -290,9 +290,9 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
 
     def setUp(self):
         super().setUp()
-        with open(getenv("TEST_AUTHTOKEN_FILENAME_2"), encoding="utf-8") as fd:
+        with open(getenv("RKVST_AUTHTOKEN_FILENAME_2"), encoding="utf-8") as fd:
             auth_2 = fd.read().strip()
-        self.arch_2 = Archivist(getenv("TEST_ARCHIVIST"), auth_2, verify=False)
+        self.arch_2 = Archivist(getenv("RKVST_URL"), auth_2, verify=False)
 
         # creates reciprocal subjects for arch 1 and arch 2.
         # subject 1 contains details of subject 2 to be shared

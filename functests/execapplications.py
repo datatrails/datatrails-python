@@ -31,8 +31,8 @@ ATTRS = {
     "some_custom_attribute": "value",
 }
 
-if getenv("TEST_DEBUG") is not None:
-    set_logger(getenv("TEST_DEBUG"))
+if getenv("RKVST_DEBUG") is not None:
+    set_logger(getenv("RKVST_DEBUG"))
 
 
 class TestApplications(TestCase):
@@ -44,13 +44,13 @@ class TestApplications(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("TEST_AUTHTOKEN"),
-            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("TEST_CLIENT_ID"),
-            client_secret=getenv("TEST_CLIENT_SECRET"),
-            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+            auth_token=getenv("RKVST_AUTHTOKEN"),
+            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("RKVST_APPREG_CLIENT"),
+            client_secret=getenv("RKVST_APPREG_SECRET"),
+            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def tearDown(self):
@@ -201,8 +201,8 @@ class TestApplications(TestCase):
             )
 
     @skipIf(
-        getenv("TEST_REFRESH_TOKEN") is None,
-        "cannot run test as TEST_REFRESH_TOKEN is not set",
+        getenv("RKVST_REFRESH_TOKEN") is None,
+        "cannot run test as RKVST_REFRESH_TOKEN is not set",
     )
     def test_archivist_token(self):
         """
@@ -224,7 +224,7 @@ class TestApplications(TestCase):
         # archivist using app registration
         print("New Arch")
         with Archivist(
-            getenv("TEST_ARCHIVIST"),
+            getenv("RKVST_URL"),
             (application["client_id"], application["credentials"][0]["secret"]),
             verify=False,
         ) as new_arch:

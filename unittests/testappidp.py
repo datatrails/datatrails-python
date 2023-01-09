@@ -20,13 +20,13 @@ from .mock_response import MockResponse
 # pylint: disable=unused-variable
 
 SUBPATH = f"{APPIDP_SUBPATH}/{APPIDP_LABEL}/{APPIDP_TOKEN}"
-CLIENT_ID = "client_id-2f78-4fa0-9425-d59314845bc5"
-CLIENT_SECRET = "client_secret-388f5187e32d930d83"
+RKVST_APPREG_CLIENT = "client_id-2f78-4fa0-9425-d59314845bc5"
+RKVST_APPREG_SECRET = "client_secret-388f5187e32d930d83"
 ACCESS_TOKEN = "access_token-xbXATAWrEpepR7TklOxRB-yud92AsD6DGGasiEGN7MZKT0AIQ4Rw9s"
 REQUEST = {
     "grant_type": "client_credentials",
-    "client_id": CLIENT_ID,
-    "client_secret": CLIENT_SECRET,
+    "client_id": RKVST_APPREG_CLIENT,
+    "client_secret": RKVST_APPREG_SECRET,
 }
 
 RESPONSE = {
@@ -67,8 +67,8 @@ class TestAppIDP(TestCase):
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
             appidp = self.arch.appidp.token(
-                CLIENT_ID,
-                CLIENT_SECRET,
+                RKVST_APPREG_CLIENT,
+                RKVST_APPREG_SECRET,
             )
             args, kwargs = mock_post.call_args
             self.assertEqual(

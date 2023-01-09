@@ -23,17 +23,17 @@ from .mock_response import MockResponse
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    set_logger(environ["TEST_DEBUG"])
+if "RKVST_DEBUG" in environ and environ["RKVST_DEBUG"]:
+    set_logger(environ["RKVST_DEBUG"])
 
 
-CLIENT_ID = "client_id-2f78-4fa0-9425-d59314845bc5"
-CLIENT_SECRET = "client_secret-388f5187e32d930d83"
+RKVST_APPREG_CLIENT = "client_id-2f78-4fa0-9425-d59314845bc5"
+RKVST_APPREG_SECRET = "client_secret-388f5187e32d930d83"
 ACCESS_TOKEN = "access_token-xbXATAWrEpepR7TklOxRB-yud92AsD6DGGasiEGN7MZKT0AIQ4Rw9s"
 REQUEST = {
     "grant_type": "client_credentials",
-    "client_id": CLIENT_ID,
-    "client_secret": CLIENT_SECRET,
+    "client_id": RKVST_APPREG_CLIENT,
+    "client_secret": RKVST_APPREG_SECRET,
 }
 
 RESPONSE = {
@@ -167,7 +167,9 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with app registration
         """
-        with Archivist("https://app.rkvst.io", (CLIENT_ID, CLIENT_SECRET)) as arch:
+        with Archivist(
+            "https://app.rkvst.io", (RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET)
+        ) as arch:
             with mock.patch.object(arch.appidp, "token") as mock_token:
                 mock_token.return_value = RESPONSE
                 self.assertEqual(
@@ -190,7 +192,9 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with appidp token
         """
-        with Archivist("https://app.rkvst.io", (CLIENT_ID, CLIENT_SECRET)) as arch:
+        with Archivist(
+            "https://app.rkvst.io", (RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET)
+        ) as arch:
             with mock.patch.object(arch.appidp, "token") as mock_token:
                 mock_token.return_value = NONE_RESPONSE
                 with self.assertRaises(ArchivistError):

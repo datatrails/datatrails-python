@@ -11,6 +11,12 @@ then
     exit 0
 fi
 
+if [ ! -d rkvst-venv ]
+then
+    echo "venv does not exist - execute 'task venv'"
+    exit 1
+fi
+
 NOTEBOOKDIR=rkvst-venv/notebooks
 
 source rkvst-venv/bin/activate

@@ -2,38 +2,38 @@
 #
 # run functional tests
 #
-if [ -z "${TEST_ARCHIVIST}" ]
+if [ -z "${RKVST_URL}" ]
 then
-    echo "TEST_ARCHIVIST is undefined"
+    echo "RKVST_URL is undefined"
     exit 1
 fi
-if [ -n "${TEST_CLIENT_ID}" ]
+if [ -n "${RKVST_APPREG_CLIENT}" ]
 then
-    if [ -n "${TEST_CLIENT_SECRET_FILENAME}" ]
+    if [ -n "${RKVST_APPREG_SECRET_FILENAME}" ]
     then
-        if [ ! -s "${TEST_CLIENT_SECRET_FILENAME}" ]
+        if [ ! -s "${RKVST_APPREG_SECRET_FILENAME}" ]
         then
-            echo "${TEST_CLIENT_SECRET_FILENAME} does not exist"
+            echo "${RKVST_APPREG_SECRET_FILENAME} does not exist"
             exit 1
         fi
-    elif [ -z "${TEST_CLIENT_SECRET}" ]
+    elif [ -z "${RKVST_APPREG_SECRET}" ]
     then
-        echo "Both TEST_CLIENT_SECRET_FILENAME"
-        echo "and TEST_CLIENT_SECRET are undefined"
+        echo "Both RKVST_APPREG_SECRET_FILENAME"
+        echo "and RKVST_APPREG_SECRET are undefined"
         exit 1
     fi
 else
-    if [ -n "${TEST_AUTHTOKEN_FILENAME}" ]
+    if [ -n "${RKVST_AUTHTOKEN_FILENAME}" ]
     then
-        if [ ! -s "${TEST_AUTHTOKEN_FILENAME}" ]
+        if [ ! -s "${RKVST_AUTHTOKEN_FILENAME}" ]
         then
-            echo "${TEST_AUTHTOKEN_FILENAME} does not exist"
+            echo "${RKVST_AUTHTOKEN_FILENAME} does not exist"
             exit 1
         fi
-    elif [ -z "${TEST_AUTHTOKEN}" ]
+    elif [ -z "${RKVST_AUTHTOKEN}" ]
     then
-        echo "Both TEST_AUTHTOKEN_FILENAME"
-        echo "and TEST_AUTHTOKEN are undefined"
+        echo "Both RKVST_AUTHTOKEN_FILENAME"
+        echo "and RKVST_AUTHTOKEN are undefined"
         exit 1
     fi
 fi

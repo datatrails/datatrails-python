@@ -128,14 +128,14 @@ def main():
     main entry point
     """
     auth = get_auth(
-        auth_token=getenv("TEST_AUTHTOKEN"),
-        auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-        client_id=getenv("TEST_CLIENT_ID"),
-        client_secret=getenv("TEST_CLIENT_SECRET"),
-        client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+        auth_token=getenv("RKVST_AUTHTOKEN"),
+        auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+        client_id=getenv("RKVST_APPREG_CLIENT"),
+        client_secret=getenv("RKVST_APPREG_SECRET"),
+        client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
     )
 
-    with Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300) as arch:
+    with Archivist(getenv("RKVST_URL"), auth, verify=False, max_time=300) as arch:
 
         print("##[group]Today")
         today = date.today()

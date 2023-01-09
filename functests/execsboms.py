@@ -25,12 +25,12 @@ CUSTOM_CLAIMS = {
     "has_cyclist_light": "true",
 }
 
-TEST_SBOM_PATH = "functests/test_resources/bom.xml"
-TEST_SBOM_SPDX_PATH = "functests/test_resources/bom.spdx"
-TEST_SBOM_DOWNLOAD_PATH = "functests/test_resources/downloaded_bom.xml"
+RKVST_SBOM_PATH = "functests/test_resources/bom.xml"
+RKVST_SBOM_SPDX_PATH = "functests/test_resources/bom.spdx"
+RKVST_SBOM_DOWNLOAD_PATH = "functests/test_resources/downloaded_bom.xml"
 
-if getenv("TEST_DEBUG") is not None:
-    set_logger(getenv("TEST_DEBUG"))
+if getenv("RKVST_DEBUG") is not None:
+    set_logger(getenv("RKVST_DEBUG"))
 
 
 class TestSBOM(TestCase):
@@ -42,24 +42,24 @@ class TestSBOM(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("TEST_AUTHTOKEN"),
-            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("TEST_CLIENT_ID"),
-            client_secret=getenv("TEST_CLIENT_SECRET"),
-            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+            auth_token=getenv("RKVST_AUTHTOKEN"),
+            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("RKVST_APPREG_CLIENT"),
+            client_secret=getenv("RKVST_APPREG_SECRET"),
+            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
         self.file_uuid: str = ""
         self.title = "TestSBOM"
 
         with suppress(FileNotFoundError):
-            remove(TEST_SBOM_DOWNLOAD_PATH)
+            remove(RKVST_SBOM_DOWNLOAD_PATH)
 
     def tearDown(self) -> None:
         """Remove the downloaded sbom for subsequent test runs"""
         self.arch.close()
         with suppress(FileNotFoundError):
-            remove(TEST_SBOM_DOWNLOAD_PATH)
+            remove(RKVST_SBOM_DOWNLOAD_PATH)
 
     def test_sbom_upload_with_private_privacy(self):
         """
@@ -67,7 +67,7 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         print("Public Upload Title:", self.title, now)
-        with open(TEST_SBOM_PATH, "rb") as fd:
+        with open(RKVST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(
                 fd, confirm=True, params={"privacy": "PRIVATE"}
             )
@@ -88,7 +88,7 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         print("Illegal Upload Title:", self.title, now)
-        with open(TEST_SBOM_PATH, "rb") as fd:
+        with open(RKVST_SBOM_PATH, "rb") as fd:
             with self.assertRaises(ArchivistBadRequestError):
                 metadata = self.arch.sboms.upload(
                     fd, confirm=True, params={"privacy": "XXXXXX"}
@@ -100,7 +100,7 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         print("SPDX Upload Title:", self.title, now)
-        with open(TEST_SBOM_SPDX_PATH, "rb") as fd:
+        with open(RKVST_SBOM_SPDX_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(
                 fd,
                 confirm=True,
@@ -127,7 +127,7 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         print("SPDX Upload Title:", self.title, now)
-        with open(TEST_SBOM_SPDX_PATH, "rb") as fd:
+        with open(RKVST_SBOM_SPDX_PATH, "rb") as fd:
             with self.assertRaises(ArchivistBadRequestError):
                 metadata = self.arch.sboms.upload(
                     fd, confirm=True, params={"sbomType": "xxxxxxxx"}
@@ -139,7 +139,7 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         print("Confirmed Upload Title:", self.title, now)
-        with open(TEST_SBOM_PATH, "rb") as fd:
+        with open(RKVST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(fd, confirm=True)
         print("first upload", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
@@ -166,7 +166,7 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         print("CycloneDX-XML Upload Title:", self.title, now)
-        with open(TEST_SBOM_PATH, "rb") as fd:
+        with open(RKVST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(
                 fd, params={"sbomType": "cyclonedx-xml"}, confirm=True
             )
@@ -195,17 +195,17 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         print("Title:", self.title, now)
-        with open(TEST_SBOM_PATH, "rb") as fd:
+        with open(RKVST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(fd, confirm=True)
 
         print("first upload", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
-        with open(TEST_SBOM_DOWNLOAD_PATH, "wb") as fd:
+        with open(RKVST_SBOM_DOWNLOAD_PATH, "wb") as fd:
             sbom = self.arch.sboms.download(identity, fd)
 
         print("sbom", sbom)
         clear_cache()
-        self.assertTrue(cmp(TEST_SBOM_PATH, TEST_SBOM_DOWNLOAD_PATH, shallow=False))
+        self.assertTrue(cmp(RKVST_SBOM_PATH, RKVST_SBOM_DOWNLOAD_PATH, shallow=False))
 
         metadata1 = self.arch.sboms.read(identity)
         print("read", json_dumps(metadata1.dict(), indent=4))

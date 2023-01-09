@@ -121,8 +121,8 @@ they be run in a production environment.
 Set 2 environment variables and execute:
 
 ```bash
-export TEST_ARCHIVIST="https://app.rkvst.io"
-export TEST_AUTHTOKEN_FILENAME=credentials/authtoken
+export RKVST_URL="https://app.rkvst.io"
+export RKVST_AUTHTOKEN_FILENAME=credentials/authtoken
 task functests
 ```
 
@@ -130,39 +130,39 @@ NOTE: For the access policy functional tests, two separate tenancy tokens are ne
       Therefore add a another env variable for the second tenancy's auth token:
 
 ```
-export TEST_AUTHTOKEN_FILENAME_2=credentials/authtoken_tenant_2
+export RKVST_AUTHTOKEN_FILENAME_2=credentials/authtoken_tenant_2
 ```
 
 Alternatively one can use a direct environment variable for the authtoken:
 ```bash
-export TEST_AUTHTOKEN_FILENAME=
-export TEST_AUTHTOKEN="ey.....==="
+export RKVST_AUTHTOKEN_FILENAME=
+export RKVST_AUTHTOKEN="ey.....==="
 task functests
 ```
 
 Alternatively one can use a client id and secret obtained from the appregistrations endpoint:
 ```bash
-export TEST_AUTHTOKEN_FILENAME=
-export TEST_AUTHTOKEN=
-export TEST_CLIENT_ID=c5db8230-6e1c-4b80-9481-d70e647c0429
-export TEST_CLIENT_SECRET_FILENAME=credentials/client_secret
+export RKVST_AUTHTOKEN_FILENAME=
+export RKVST_AUTHTOKEN=
+export RKVST_APPREG_CLIENT=c5db8230-6e1c-4b80-9481-d70e647c0429
+export RKVST_APPREG_SECRET_FILENAME=credentials/client_secret
 task functests
 ```
 
 Additionally one set the appregistration directly in the environment:
 
 ```bash
-export TEST_AUTHTOKEN_FILENAME=
-export TEST_AUTHTOKEN=
-export TEST_CLIENT_ID=c5db8230-6e1c-4b80-9481-d70e647c0429
-export TEST_CLIENT_SECRET_FILENAME=
-export TEST_CLIENT_SECRET="ey.....................ab=="
+export RKVST_AUTHTOKEN_FILENAME=
+export RKVST_AUTHTOKEN=
+export RKVST_APPREG_CLIENT=c5db8230-6e1c-4b80-9481-d70e647c0429
+export RKVST_APPREG_SECRET_FILENAME=
+export RKVST_APPREG_SECRET="ey.....................ab=="
 task functests
 ```
 When running the runner tests one can specify a namespace to isolate instances of assets in differnt 
 runs:
 ```bash
-export ARCHIVIST_NAMESPACE=${RANDOM}
+export RKVST_NAMESPACE=${RANDOM}
 FUNCTEST=execrunner task functests
 ```
 
@@ -171,14 +171,14 @@ Additional environment variables:
 For testing sharing via an access policy requires a second auth token:
 
 ```bash
-TEST_AUTHTOKEN_FILENAME_2=
+RKVST_AUTHTOKEN_FILENAME_2=
 ```
 
 Testing of the client token refresh logic can take 10 to 20 minutes to complete.
 To enable this test set:
 
 ```bash
-TEST_REFRESH_TOKEN=anything
+RKVST_REFRESH_TOKEN=anything
 ```
 
 #### Testing Other Python Versions
