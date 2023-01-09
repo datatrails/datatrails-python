@@ -19,17 +19,17 @@ docker run \
     -u $(id -u):$(id -g) \
     -e FUNCTEST \
     -e UNITTEST \
-    -e ARCHIVIST_NAMESPACE \
-    -e TEST_ARCHIVIST \
-    -e TEST_AUTHTOKEN \
-    -e TEST_AUTHTOKEN_FILENAME \
-    -e TEST_AUTHTOKEN_FILENAME_2 \
-    -e TEST_BLOB_IDENTITY \
-    -e TEST_CLIENT_ID \
-    -e TEST_CLIENT_SECRET \
-    -e TEST_CLIENT_SECRET_FILENAME \
-    -e TEST_DEBUG \
-    -e TEST_REFRESH_TOKEN \
+    -e RKVST_NAMESPACE \
+    -e RKVST_URL \
+    -e RKVST_AUTHTOKEN \
+    -e RKVST_AUTHTOKEN_FILENAME \
+    -e RKVST_AUTHTOKEN_FILENAME_2 \
+    -e RKVST_BLOB_IDENTITY \
+    -e RKVST_APPREG_CLIENT \
+    -e RKVST_APPREG_SECRET \
+    -e RKVST_APPREG_SECRET_FILENAME \
+    -e RKVST_DEBUG \
+    -e RKVST_REFRESH_TOKEN \
     -e GITHUB_REF \
     rkvst-python-builder \
     "$@"

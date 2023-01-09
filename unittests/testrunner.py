@@ -17,8 +17,8 @@ from archivist.constants import ASSET_BEHAVIOURS
 from archivist.logger import set_logger
 from archivist.runner import tree
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    set_logger(environ["TEST_DEBUG"])
+if "RKVST_DEBUG" in environ and environ["RKVST_DEBUG"]:
+    set_logger(environ["RKVST_DEBUG"])
 
 LOGGER = getLogger(__name__)
 

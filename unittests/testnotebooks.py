@@ -30,16 +30,16 @@ class TestNotebooks(TestCase):
     """
 
     def setUp(self):
-        self.archivist = setenv("TEST_ARCHIVIST", "https://app.rkvst.io")
-        self.authtoken = setenv("TEST_AUTHTOKEN", "xxxxxxxxxxxxxxxxxxxx")
-        self.client_id = setenv("TEST_CLIENT_ID", "yyyyyyyyyyyyyyyyyyyy")
-        self.client_secret = setenv("TEST_CLIENT_SECRET", "zzzzzzzzzzzzzzzzzzzz")
+        self.archivist = setenv("RKVST_URL", "https://app.rkvst.io")
+        self.authtoken = setenv("RKVST_AUTHTOKEN", "xxxxxxxxxxxxxxxxxxxx")
+        self.client_id = setenv("RKVST_APPREG_CLIENT", "yyyyyyyyyyyyyyyyyyyy")
+        self.client_secret = setenv("RKVST_APPREG_SECRET", "zzzzzzzzzzzzzzzzzzzz")
 
     def tearDown(self):
-        unsetenv("TEST_ARCHIVIST", self.archivist)
-        unsetenv("TEST_AUTHTOKEN", self.authtoken)
-        unsetenv("TEST_CLIENT_ID", self.client_id)
-        unsetenv("TEST_CLIENT_SECRET", self.client_secret)
+        unsetenv("RKVST_URL", self.archivist)
+        unsetenv("RKVST_AUTHTOKEN", self.authtoken)
+        unsetenv("RKVST_APPREG_CLIENT", self.client_id)
+        unsetenv("RKVST_APPREG_SECRET", self.client_secret)
 
     def test_manage_credentials(self):
         """
@@ -50,19 +50,17 @@ class TestNotebooks(TestCase):
         ) as notebook:
             self.assertEqual(
                 notebook.ref("URL"),
-                os.getenv("TEST_ARCHIVIST"),
+                os.getenv("RKVST_URL"),
                 msg="Incorrect URL",
             )
             self.assertEqual(
                 notebook.ref("auth_token"),
-                os.getenv("TEST_AUTHTOKEN"),
+                os.getenv("RKVST_AUTHTOKEN"),
                 msg="Incorrect AUTHTOKEN",
             )
             self.assertEqual(
                 notebook.cell_output_text(5),
-                str(
-                    Archivist(os.getenv("TEST_ARCHIVIST"), os.getenv("TEST_AUTHTOKEN"))
-                ),
+                str(Archivist(os.getenv("RKVST_URL"), os.getenv("RKVST_AUTHTOKEN"))),
                 msg="Incorrect Archivist",
             )
             self.assertEqual(

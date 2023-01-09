@@ -91,11 +91,11 @@ def main():
     rkvst_url = getenv("RKVST_URL")
 
     auth = get_auth(
-        auth_token=getenv("AUTHTOKEN"),
-        auth_token_filename=getenv("AUTHTOKEN_FILENAME"),
-        client_id=getenv("CLIENT_ID"),
-        client_secret=getenv("CLIENT_SECRET"),
-        client_secret_filename=getenv("CLIENT_SECRET_FILENAME"),
+        auth_token=getenv("RKVST_AUTHTOKEN"),
+        auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+        client_id=getenv("RKVST_APPREG_CLIENT"),
+        client_secret=getenv("RKVST_APPREG_SECRET"),
+        client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
     )
 
     with Archivist(rkvst_url, auth, verify=False, max_time=300) as arch:

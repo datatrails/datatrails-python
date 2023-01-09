@@ -24,8 +24,8 @@ from archivist.utils import get_auth
 
 from archivist import logger
 
-if getenv("TEST_DEBUG") is not None:
-    logger.set_logger(getenv("TEST_DEBUG"))
+if getenv("RKVST_DEBUG") is not None:
+    logger.set_logger(getenv("RKVST_DEBUG"))
 else:
     logger.set_logger("INFO")
 
@@ -94,12 +94,12 @@ class TestCompliancePoliciesBase(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("TEST_CLIENT_ID"),
-            client_secret=getenv("TEST_CLIENT_SECRET"),
-            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("RKVST_APPREG_CLIENT"),
+            client_secret=getenv("RKVST_APPREG_SECRET"),
+            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
         print()
 
     def tearDown(self):

@@ -12,8 +12,8 @@ The first (optional) call from the archivist package is to set the logger.
     from archivist.archivist import Archivist
 
     set_logger("DEBUG")
-    client_id = getenv("ARCHIVIST_CLIENT_ID")
-    client_secret_file = getenv("ARCHIVIST_CLIENT_SECRET_FILENAME")
+    client_id = getenv("RKVST_APPREG_CLIENT")
+    client_secret_file = getenv("RKVST_APPREG_SECRET_FILENAME")
     with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
         client_secret = tokenfile.read().strip()
 

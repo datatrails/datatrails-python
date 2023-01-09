@@ -21,8 +21,8 @@ from .mock_response import MockResponse
 
 # pylint: disable=protected-access
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    set_logger(environ["TEST_DEBUG"])
+if "RKVST_DEBUG" in environ and environ["RKVST_DEBUG"]:
+    set_logger(environ["RKVST_DEBUG"])
 
 LOGGER = getLogger(__name__)
 

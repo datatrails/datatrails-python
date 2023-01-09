@@ -14,8 +14,8 @@ from archivist.logger import set_logger
 from archivist.utils import get_auth, get_url
 
 
-if getenv("TEST_DEBUG") is not None:
-    set_logger(getenv("TEST_DEBUG"))
+if getenv("RKVST_DEBUG") is not None:
+    set_logger(getenv("RKVST_DEBUG"))
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -27,53 +27,53 @@ class TestAttachmentsCreate(TestCase):
     Test Archivist Attachment Create method
     """
 
-    TEST_DOCX_PATH = "functests/test_resources/loremipsum.docx"
-    TEST_DOCX_DOWNLOAD_PATH = "functests/test_resources/downloaded_loremipsum.docx"
-    TEST_IMAGE_PATH = "functests/test_resources/rkvst_logo.png"
-    TEST_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
+    RKVST_DOCX_PATH = "functests/test_resources/loremipsum.docx"
+    RKVST_DOCX_DOWNLOAD_PATH = "functests/test_resources/downloaded_loremipsum.docx"
+    RKVST_IMAGE_PATH = "functests/test_resources/rkvst_logo.png"
+    RKVST_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("TEST_AUTHTOKEN"),
-            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("TEST_CLIENT_ID"),
-            client_secret=getenv("TEST_CLIENT_SECRET"),
-            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+            auth_token=getenv("RKVST_AUTHTOKEN"),
+            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("RKVST_APPREG_CLIENT"),
+            client_secret=getenv("RKVST_APPREG_SECRET"),
+            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
         self.file_uuid: str = ""
 
         with suppress(FileNotFoundError):
-            remove(self.TEST_IMAGE_DOWNLOAD_PATH)
+            remove(self.RKVST_IMAGE_DOWNLOAD_PATH)
 
         with suppress(FileNotFoundError):
-            remove(self.TEST_DOCX_DOWNLOAD_PATH)
+            remove(self.RKVST_DOCX_DOWNLOAD_PATH)
 
     def tearDown(self) -> None:
         """Remove the downloaded image for subsequent test runs"""
         self.arch.close()
         with suppress(FileNotFoundError):
-            remove(self.TEST_IMAGE_DOWNLOAD_PATH)
+            remove(self.RKVST_IMAGE_DOWNLOAD_PATH)
 
         with suppress(FileNotFoundError):
-            remove(self.TEST_DOCX_DOWNLOAD_PATH)
+            remove(self.RKVST_DOCX_DOWNLOAD_PATH)
 
     def test_attachment_upload_and_download(self):
         """
         Test file upload through the SDK
         Test file download through the SDK
         """
-        with open(self.TEST_IMAGE_PATH, "rb") as fd:
+        with open(self.RKVST_IMAGE_PATH, "rb") as fd:
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
+        with open(self.RKVST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(file_uuid, fd)
 
         # Check the downloaded file is identical to the one that was uploaded
         clear_cache()
         self.assertTrue(
-            cmp(self.TEST_IMAGE_PATH, self.TEST_IMAGE_DOWNLOAD_PATH, shallow=False)
+            cmp(self.RKVST_IMAGE_PATH, self.RKVST_IMAGE_DOWNLOAD_PATH, shallow=False)
         )
 
     def test_attachment_upload_and_download_docx(self):
@@ -81,7 +81,7 @@ class TestAttachmentsCreate(TestCase):
         Test file upload through the SDK
         Test file download through the SDK
         """
-        with open(self.TEST_DOCX_PATH, "rb") as fd:
+        with open(self.RKVST_DOCX_PATH, "rb") as fd:
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
@@ -93,7 +93,7 @@ class TestAttachmentsCreate(TestCase):
             msg="UPLOAD incorrect mimetype",
         )
 
-        with open(self.TEST_DOCX_DOWNLOAD_PATH, "wb") as fd:
+        with open(self.RKVST_DOCX_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(file_uuid, fd)
 
         print("attachment", attachment.headers)
@@ -111,15 +111,15 @@ class TestAttachmentsCreate(TestCase):
         )
 
     @skipIf(
-        getenv("TEST_BLOB_IDENTITY") is None,
-        "cannot run test as TEST_BLOB_IDENTITY is not set",
+        getenv("RKVST_BLOB_IDENTITY") is None,
+        "cannot run test as RKVST_BLOB_IDENTITY is not set",
     )
     def test_attachment_info(self):
         """
         Test file info through the SDK
         Test file download through the SDK
         """
-        file_uuid = getenv("TEST_BLOB_IDENTITY")
+        file_uuid = getenv("RKVST_BLOB_IDENTITY")
         info = self.arch.attachments.info(file_uuid)
         print("attachment info", json_dumps(info, indent=4))
 
@@ -128,11 +128,11 @@ class TestAttachmentsCreate(TestCase):
         Test file upload through the SDK
         Test file download through the SDK
         """
-        with open(self.TEST_IMAGE_PATH, "rb") as fd:
+        with open(self.RKVST_IMAGE_PATH, "rb") as fd:
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
+        with open(self.RKVST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(
                 file_uuid, fd, params={"allow_insecure": "true"}
             )
@@ -140,7 +140,7 @@ class TestAttachmentsCreate(TestCase):
         # Check the downloaded file is identical to the one that was uploaded
         clear_cache()
         self.assertTrue(
-            cmp(self.TEST_IMAGE_PATH, self.TEST_IMAGE_DOWNLOAD_PATH, shallow=False)
+            cmp(self.RKVST_IMAGE_PATH, self.RKVST_IMAGE_DOWNLOAD_PATH, shallow=False)
         )
 
     def test_attachment_upload_and_download_strict(self):
@@ -148,11 +148,11 @@ class TestAttachmentsCreate(TestCase):
         Test file upload through the SDK
         Test file download through the SDK
         """
-        with open(self.TEST_IMAGE_PATH, "rb") as fd:
+        with open(self.RKVST_IMAGE_PATH, "rb") as fd:
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        with open(self.TEST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
+        with open(self.RKVST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             with self.assertRaises(ArchivistBadRequestError):
                 attachment = self.arch.attachments.download(
                     file_uuid, fd, params={"strict": "true"}
@@ -166,32 +166,32 @@ class TestAttachmentstMalware(TestCase):
 
     # we dont want to actually store these files in our repo so download
     # every time.
-    TEST_MALWARE1 = "https://secure.eicar.org/eicar.com"
-    TEST_MALWARE2 = "https://secure.eicar.org/eicar.com.txt"
-    TEST_MALWARE3 = "https://secure.eicar.org/eicar.com.zip"
-    TEST_MALWARE4 = "https://secure.eicar.org/eicarcom2.zip"
+    RKVST_MALWARE1 = "https://secure.eicar.org/eicar.com"
+    RKVST_MALWARE2 = "https://secure.eicar.org/eicar.com.txt"
+    RKVST_MALWARE3 = "https://secure.eicar.org/eicar.com.zip"
+    RKVST_MALWARE4 = "https://secure.eicar.org/eicarcom2.zip"
 
     @classmethod
     def setUpClass(cls):
         cls.malware1 = BytesIO()
-        get_url(cls.TEST_MALWARE1, cls.malware1)
+        get_url(cls.RKVST_MALWARE1, cls.malware1)
 
         cls.malware2 = BytesIO()
-        get_url(cls.TEST_MALWARE2, cls.malware2)
+        get_url(cls.RKVST_MALWARE2, cls.malware2)
 
         cls.malware3 = BytesIO()
-        get_url(cls.TEST_MALWARE3, cls.malware3)
+        get_url(cls.RKVST_MALWARE3, cls.malware3)
 
         cls.malware4 = BytesIO()
-        get_url(cls.TEST_MALWARE4, cls.malware4)
+        get_url(cls.RKVST_MALWARE4, cls.malware4)
 
     def setUp(self):
         auth = get_auth(
-            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("TEST_CLIENT_ID"),
-            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("RKVST_APPREG_CLIENT"),
+            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("TEST_ARCHIVIST"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
 
     def tearDown(self):
         self.arch.close()

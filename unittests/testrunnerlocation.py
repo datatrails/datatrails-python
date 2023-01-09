@@ -19,8 +19,8 @@ from archivist.constants import (
 
 from archivist.logger import set_logger
 
-if "TEST_DEBUG" in environ and environ["TEST_DEBUG"]:
-    set_logger(environ["TEST_DEBUG"])
+if "RKVST_DEBUG" in environ and environ["RKVST_DEBUG"]:
+    set_logger(environ["RKVST_DEBUG"])
 
 LOGGER = getLogger(__name__)
 

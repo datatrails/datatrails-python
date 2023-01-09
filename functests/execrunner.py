@@ -18,8 +18,8 @@ from archivist.utils import get_auth
 
 from archivist import logger
 
-if getenv("TEST_DEBUG") is not None:
-    logger.set_logger(getenv("TEST_DEBUG"))
+if getenv("RKVST_DEBUG") is not None:
+    logger.set_logger(getenv("RKVST_DEBUG"))
 else:
     logger.set_logger("INFO")
 
@@ -35,14 +35,12 @@ class TestRunner(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token_filename=getenv("TEST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("TEST_CLIENT_ID"),
-            client_secret=getenv("TEST_CLIENT_SECRET"),
-            client_secret_filename=getenv("TEST_CLIENT_SECRET_FILENAME"),
+            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+            client_id=getenv("RKVST_APPREG_CLIENT"),
+            client_secret=getenv("RKVST_APPREG_SECRET"),
+            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(
-            getenv("TEST_ARCHIVIST"), auth, verify=False, max_time=300
-        )
+        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False, max_time=300)
 
     def tearDown(self):
         self.arch.close()
@@ -51,7 +49,7 @@ class TestRunner(TestCase):
         """
         Test runner with dynamic tolerance story
 
-        uses ARCHIVIST_NAMESPACE to set namespace value
+        uses RKVST_NAMESPACE to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -72,7 +70,7 @@ class TestRunner(TestCase):
         """
         Test runner with synsation story
 
-        uses ARCHIVIST_NAMESPACE to set namespace value
+        uses RKVST_NAMESPACE to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -113,7 +111,7 @@ class TestRunner(TestCase):
         """
         Test runner with richness story
 
-        uses ARCHIVIST_NAMESPACE to set namespace value
+        uses RKVST_NAMESPACE to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -135,7 +133,7 @@ class TestRunner(TestCase):
         """
         Test runner with door_entry story
 
-        uses ARCHIVIST_NAMESPACE to set namespace value
+        uses RKVST_NAMESPACE to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -171,7 +169,7 @@ class TestRunner(TestCase):
         """
         Test runner with wipp story
 
-        uses ARCHIVIST_NAMESPACE to set namespace value
+        uses RKVST_NAMESPACE to set namespace value
 
         run_steps is used so that exceptions are shown
         """

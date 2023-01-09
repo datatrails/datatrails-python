@@ -32,11 +32,11 @@ def get_archivist():
     # the client_secret_file environment variable.
     #
     auth = get_auth(
-        auth_token=getenv("ARCHIVIST_AUTHTOKEN"),
-        auth_token_filename=getenv("ARCHIVIST_AUTHTOKEN_FILENAME"),
-        client_id=getenv("ARCHIVIST_CLIENT_ID"),
-        client_secret=getenv("ARCHIVIST_CLIENT_SECRET"),
-        client_secret_filename=getenv("ARCHIVIST_CLIENT_SECRET_FILENAME"),
+        auth_token=getenv("RKVST_AUTHTOKEN"),
+        auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
+        client_id=getenv("RKVST_APPREG_CLIENT"),
+        client_secret=getenv("RKVST_APPREG_SECRET"),
+        client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
     )
 
     # Initialize connection to Archivist

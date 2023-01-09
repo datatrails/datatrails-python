@@ -10,6 +10,12 @@ then
     exit 0
 fi
 
+if [ ! -s dist/rkvst_archivist-*.whl ]
+then
+    echo "no wheel found - execute 'task wheel'"
+    exit 1
+fi
+
 rm -rf rkvst-venv
 python3 -m venv rkvst-venv
 source rkvst-venv/bin/activate

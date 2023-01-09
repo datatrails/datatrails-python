@@ -23,7 +23,7 @@ steps:
       - Attachments
     attributes:
       arc_display_name: ACME Corporation Detector SAAS
-      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+      arc_namespace: !ENV ${RKVST_NAMESPACE:namespace}
       arc_display_type: Software Package
       arc_description: Software Bill of Materials for Detector SAAS
       acme_sbom_license: www.gnu.org/licenses/gpl.txt
@@ -94,7 +94,7 @@ steps:
       print_response: true
     attrs:
       arc_display_type: Software Package
-      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+      arc_namespace: !ENV ${RKVST_NAMESPACE:namespace}
 
   - step:
       action: EVENTS_LIST
@@ -105,4 +105,4 @@ steps:
       confirmation_status: CONFIRMED
     attrs:
       arc_display_type: Software Package Release
-      arc_namespace: !ENV ${ARCHIVIST_NAMESPACE:namespace}
+      arc_namespace: !ENV ${RKVST_NAMESPACE:namespace}
