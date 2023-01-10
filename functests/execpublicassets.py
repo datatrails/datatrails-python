@@ -10,10 +10,11 @@ from unittest import TestCase
 
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
-from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 from archivist.timestamp import now_timestamp
 from archivist.utils import get_auth
+
+from archivist import logger
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -21,7 +22,11 @@ from archivist.utils import get_auth
 
 
 if getenv("RKVST_DEBUG") is not None:
-    set_logger(getenv("RKVST_DEBUG"))
+    logger.set_logger(getenv("RKVST_DEBUG"))
+else:
+    logger.set_logger("INFO")
+
+LOGGER = logger.LOGGER
 
 ATTRS = {
     "arc_firmware_version": "1.0",
@@ -44,7 +49,7 @@ REQUEST_EXISTS_ATTACHMENTS = {
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
-        "arc_namespace": "namespace",
+        "arc_namespace": getenv("RKVST_UNIQUE_ID"),
         "arc_firmware_version": "1.0",
         "arc_serial_number": "vtl-x4-07",
         "arc_description": "Traffic flow control light at A603 North East",

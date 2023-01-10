@@ -18,11 +18,11 @@ from archivist.compliance_policy_requests import (
 from archivist.compliance_policy_type import CompliancePolicyType
 from archivist.utils import get_auth
 
+from archivist import logger
+
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
-
-from archivist import logger
 
 if getenv("RKVST_DEBUG") is not None:
     logger.set_logger(getenv("RKVST_DEBUG"))

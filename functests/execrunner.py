@@ -12,11 +12,12 @@ import yaml
 from archivist.archivist import Archivist
 from archivist.utils import get_auth
 
+from archivist import logger
+
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
-from archivist import logger
 
 if getenv("RKVST_DEBUG") is not None:
     logger.set_logger(getenv("RKVST_DEBUG"))
@@ -49,7 +50,7 @@ class TestRunner(TestCase):
         """
         Test runner with dynamic tolerance story
 
-        uses RKVST_NAMESPACE to set namespace value
+        uses RKVST_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -70,7 +71,7 @@ class TestRunner(TestCase):
         """
         Test runner with synsation story
 
-        uses RKVST_NAMESPACE to set namespace value
+        uses RKVST_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -111,7 +112,7 @@ class TestRunner(TestCase):
         """
         Test runner with richness story
 
-        uses RKVST_NAMESPACE to set namespace value
+        uses RKVST_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -133,7 +134,7 @@ class TestRunner(TestCase):
         """
         Test runner with door_entry story
 
-        uses RKVST_NAMESPACE to set namespace value
+        uses RKVST_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -169,7 +170,7 @@ class TestRunner(TestCase):
         """
         Test runner with wipp story
 
-        uses RKVST_NAMESPACE to set namespace value
+        uses RKVST_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """

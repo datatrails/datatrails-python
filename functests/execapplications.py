@@ -10,9 +10,10 @@ from uuid import uuid4
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistUnauthenticatedError
-from archivist.logger import set_logger
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
+
+from archivist import logger
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -32,7 +33,11 @@ ATTRS = {
 }
 
 if getenv("RKVST_DEBUG") is not None:
-    set_logger(getenv("RKVST_DEBUG"))
+    logger.set_logger(getenv("RKVST_DEBUG"))
+else:
+    logger.set_logger("INFO")
+
+LOGGER = logger.LOGGER
 
 
 class TestApplications(TestCase):

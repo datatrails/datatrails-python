@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # run unittests
 #
@@ -15,11 +15,14 @@ python3 --version
 # single test
 #       UNITTEST=testcompliance_policy_type.TestCompliancePolicyType.test_compliance_policy_type task unittests
 #
+export RKVST_ARTIST_ATTACHMENT=archivist/notebooks/test_files/pexels-andrea-turner-707697.jpeg
+export RKVST_UNIQUE_ID=${SRANDOM}
 if [ -n "${UNITTEST}" ]
 then
     python3 -m unittest -v unittests.${UNITTEST}
     exit 0
 fi
+
 
 rm -f coverage.xml
 rm -rf htmlcov

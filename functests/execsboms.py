@@ -10,9 +10,10 @@ from unittest import TestCase
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
-from archivist.logger import set_logger
 from archivist.timestamp import now_timestamp
 from archivist.utils import get_auth
+
+from archivist import logger
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -30,7 +31,11 @@ RKVST_SBOM_SPDX_PATH = "functests/test_resources/bom.spdx"
 RKVST_SBOM_DOWNLOAD_PATH = "functests/test_resources/downloaded_bom.xml"
 
 if getenv("RKVST_DEBUG") is not None:
-    set_logger(getenv("RKVST_DEBUG"))
+    logger.set_logger(getenv("RKVST_DEBUG"))
+else:
+    logger.set_logger("INFO")
+
+LOGGER = logger.LOGGER
 
 
 class TestSBOM(TestCase):

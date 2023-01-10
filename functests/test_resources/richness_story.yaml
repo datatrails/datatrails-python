@@ -16,7 +16,7 @@ steps:
       - Attachments
     attributes:
       arc_display_name: radiation bag 1
-      arc_namespace: !ENV ${RKVST_NAMESPACE:namespace}
+      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
       radioactive: "true"
       radiation_level: "0"
       weight: "0"
@@ -31,7 +31,7 @@ steps:
       - Attachments
     attributes:
       arc_display_name: radiation bag 2
-      arc_namespace: !ENV ${RKVST_NAMESPACE:namespace}
+      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
       radioactive: "true"
       radiation_level: "0"
       weight: "0"
@@ -46,7 +46,7 @@ steps:
       - Attachments
     attributes:
       arc_display_name: radiation bag 3
-      arc_namespace: !ENV ${RKVST_NAMESPACE:namespace}
+      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
       radioactive: "true"
       radiation_level: "0"
       weight: "0"

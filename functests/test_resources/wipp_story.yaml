@@ -18,7 +18,7 @@ steps:
       - Attachments
     attributes:
       arc_display_name: Drum 1
-      arc_namespace: !ENV ${RKVST_NAMESPACE:namespace}
+      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
       arc_display_type: drum
       arc_description: Standard non-POC 55 gallon drum No. 1
       wipp_capacity: "55"
@@ -41,7 +41,7 @@ steps:
       - Attachments
     attributes:
       arc_display_name: Cask 1
-      arc_namespace: !ENV ${RKVST_NAMESPACE:namespace}
+      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
       arc_display_type: cask
       arc_description: NRC certified type-B road shipping container, capacity 3 x 55-gallon drum
       wipp_capacity: "3"
@@ -238,7 +238,7 @@ steps:
       latitude: 33.592177
       longitude: -84.406064
       attributes:
-        namespace: !ENV ${RKVST_NAMESPACE:namespace}
+        namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
     attachments:
       - filename: functests/test_resources/wipp/truck_departure.jpg
         content_type: image/jpg
@@ -268,7 +268,7 @@ steps:
       latitude: 33.592177
       longitude: -86.248379
       attributes:
-        namespace: !ENV ${RKVST_NAMESPACE:namespace}
+        namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
     attachments:
       - filename: functests/test_resources/wipp/truck_departure.jpg
         content_type: image/jpg

@@ -10,12 +10,16 @@ from unittest import TestCase, skipIf
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
-from archivist.logger import set_logger
 from archivist.utils import get_auth, get_url
 
+from archivist import logger
 
 if getenv("RKVST_DEBUG") is not None:
-    set_logger(getenv("RKVST_DEBUG"))
+    logger.set_logger(getenv("RKVST_DEBUG"))
+else:
+    logger.set_logger("INFO")
+
+LOGGER = logger.LOGGER
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
