@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # run functional tests
 #
@@ -52,6 +52,8 @@ python3 --version
 #       FUNCTEST=execapplications.TestApplications.test_appidp_token task functests
 #
 export PYTHONWARNINGS="ignore:Unverified HTTPS request"
+export RKVST_ARTIST_ATTACHMENT=archivist/notebooks/test_files/pexels-andrea-turner-707697.jpeg
+export RKVST_UNIQUE_ID=${SRANDOM}
 if [ -n "${FUNCTEST}" ]
 then
     python3 -m unittest -v functests.${FUNCTEST}

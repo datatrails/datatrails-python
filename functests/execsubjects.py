@@ -58,8 +58,6 @@ class TestSubjects(TestCase):
     def setUp(self):
         auth = get_auth(
             auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("RKVST_APPREG_CLIENT"),
-            client_secret=getenv("RKVST_APPREG_SECRET"),
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
         self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)

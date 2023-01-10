@@ -33,7 +33,7 @@ def run(arch: "type_helper.Archivist", args):
     # if namespace is specified on the commandline then override any environment
     # setting...
     if args.namespace:
-        environ["RKVST_NAMESPACE"] = args.namespace
+        environ["RKVST_UNIQUE_ID"] = args.namespace
 
     # environment is injected into the template
     with open(args.values, "r", encoding="utf-8") as fd:

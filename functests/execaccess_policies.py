@@ -14,6 +14,8 @@ from archivist.constants import ASSET_BEHAVIOURS
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
+from archivist import logger
+
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
@@ -94,6 +96,13 @@ REQUEST_EXISTS_ATTACHMENTS = {
         },
     ],
 }
+
+if getenv("RKVST_DEBUG") is not None:
+    logger.set_logger(getenv("RKVST_DEBUG"))
+else:
+    logger.set_logger("INFO")
+
+LOGGER = logger.LOGGER
 
 
 class TestAccessPoliciesBase(TestCase):

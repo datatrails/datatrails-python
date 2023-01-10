@@ -162,7 +162,7 @@ task functests
 When running the runner tests one can specify a namespace to isolate instances of assets in differnt 
 runs:
 ```bash
-export RKVST_NAMESPACE=${RANDOM}
+export RKVST_UNIQUE_ID=${RANDOM}
 FUNCTEST=execrunner task functests
 ```
 

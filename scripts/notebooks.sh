@@ -19,11 +19,15 @@ fi
 
 NOTEBOOKDIR=rkvst-venv/notebooks
 
+export RKVST_ARTIST_ATTACHMENT="test_files/pexels-andrea-turner-707697.jpeg"
+export RKVST_UNIQUE_ID=${SRANDOM}
+
 source rkvst-venv/bin/activate
 mkdir -p "${NOTEBOOKDIR}"
 
 # The customer will download the notebooks from python.rkvst.com but
 # we will copy locally
 cp archivist/notebooks/*.ipynb "${NOTEBOOKDIR}"/
+cp -r archivist/notebooks/test_files "${NOTEBOOKDIR}"/
 jupyter notebook --ip 0.0.0.0 --notebook-dir="${NOTEBOOKDIR}"
 deactivate

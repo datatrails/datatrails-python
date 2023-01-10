@@ -19,7 +19,7 @@ docker run \
     -u $(id -u):$(id -g) \
     -e FUNCTEST \
     -e UNITTEST \
-    -e RKVST_NAMESPACE \
+    -e RKVST_UNIQUE_ID \
     -e RKVST_URL \
     -e RKVST_AUTHTOKEN \
     -e RKVST_AUTHTOKEN_FILENAME \

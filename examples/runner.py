@@ -24,7 +24,7 @@ def run(arch: Archivist, args):
     # if namespace is specified on the commandline then override any environment
     # setting...
     if args.namespace:
-        environ["RKVST_NAMESPACE"] = args.namespace
+        environ["RKVST_UNIQUE_ID"] = args.namespace
 
     with open(args.yamlfile, "r", encoding="utf-8") as y:
         arch.runner(parse_config(data=y))
