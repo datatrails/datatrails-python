@@ -6,7 +6,6 @@ from filecmp import clear_cache, cmp
 from json import dumps as json_dumps
 from os import getenv, remove
 from time import sleep
-from unittest import TestCase
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
@@ -14,6 +13,8 @@ from archivist.timestamp import now_timestamp
 from archivist.utils import get_auth
 
 from archivist import logger
+
+from .constants import TestCase
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -30,10 +31,8 @@ RKVST_SBOM_PATH = "functests/test_resources/bom.xml"
 RKVST_SBOM_SPDX_PATH = "functests/test_resources/bom.spdx"
 RKVST_SBOM_DOWNLOAD_PATH = "functests/test_resources/downloaded_bom.xml"
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -71,16 +70,16 @@ class TestSBOM(TestCase):
         Test sbom upload with privacy
         """
         now = now_timestamp()
-        print("Public Upload Title:", self.title, now)
+        LOGGER.debug("Public Upload Title: %s %s", self.title, now)
         with open(RKVST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(
                 fd, confirm=True, params={"privacy": "PRIVATE"}
             )
-        print("first upload", json_dumps(metadata.dict(), indent=4))
+        LOGGER.debug("first upload %s", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
 
         metadata1 = self.arch.sboms.read(identity)
-        print("read", json_dumps(metadata1.dict(), indent=4))
+        LOGGER.debug("read %s", json_dumps(metadata1.dict(), indent=4))
         self.assertEqual(
             metadata,
             metadata1,
@@ -92,7 +91,7 @@ class TestSBOM(TestCase):
         Test sbom upload with privacy
         """
         now = now_timestamp()
-        print("Illegal Upload Title:", self.title, now)
+        LOGGER.debug("Illegal Upload Title: %s %s", self.title, now)
         with open(RKVST_SBOM_PATH, "rb") as fd:
             with self.assertRaises(ArchivistBadRequestError):
                 metadata = self.arch.sboms.upload(
@@ -104,7 +103,7 @@ class TestSBOM(TestCase):
         Test sbom upload with spdx
         """
         now = now_timestamp()
-        print("SPDX Upload Title:", self.title, now)
+        LOGGER.debug("SPDX Upload Title: %s %s", self.title, now)
         with open(RKVST_SBOM_SPDX_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(
                 fd,
@@ -115,11 +114,11 @@ class TestSBOM(TestCase):
                     "version": "v0.0.1",
                 },
             )
-        print("first upload", json_dumps(metadata.dict(), indent=4))
+        LOGGER.debug("first upload %s", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
 
         metadata1 = self.arch.sboms.read(identity)
-        print("read", json_dumps(metadata1.dict(), indent=4))
+        LOGGER.debug("read %s", json_dumps(metadata1.dict(), indent=4))
         self.assertEqual(
             metadata,
             metadata1,
@@ -131,7 +130,7 @@ class TestSBOM(TestCase):
         Test sbom upload with illegal format
         """
         now = now_timestamp()
-        print("SPDX Upload Title:", self.title, now)
+        LOGGER.debug("SPDX Upload Title: %s %s", self.title, now)
         with open(RKVST_SBOM_SPDX_PATH, "rb") as fd:
             with self.assertRaises(ArchivistBadRequestError):
                 metadata = self.arch.sboms.upload(
@@ -143,14 +142,14 @@ class TestSBOM(TestCase):
         Test sbom upload with confirmation
         """
         now = now_timestamp()
-        print("Confirmed Upload Title:", self.title, now)
+        LOGGER.debug("Confirmed Upload Title: %s %s", self.title, now)
         with open(RKVST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(fd, confirm=True)
-        print("first upload", json_dumps(metadata.dict(), indent=4))
+        LOGGER.debug("first upload %s", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
 
         metadata1 = self.arch.sboms.read(identity)
-        print("read", json_dumps(metadata1.dict(), indent=4))
+        LOGGER.debug("read %s", json_dumps(metadata1.dict(), indent=4))
         self.assertEqual(
             metadata,
             metadata1,
@@ -170,16 +169,16 @@ class TestSBOM(TestCase):
         Test sbom upload with cyclonedx-xml
         """
         now = now_timestamp()
-        print("CycloneDX-XML Upload Title:", self.title, now)
+        LOGGER.debug("CycloneDX-XML Upload Title: %s %s", self.title, now)
         with open(RKVST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(
                 fd, params={"sbomType": "cyclonedx-xml"}, confirm=True
             )
-        print("first upload", json_dumps(metadata.dict(), indent=4))
+        LOGGER.debug("first upload %s", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
 
         metadata1 = self.arch.sboms.read(identity)
-        print("read", json_dumps(metadata1.dict(), indent=4))
+        LOGGER.debug("read %s", json_dumps(metadata1.dict(), indent=4))
         self.assertEqual(
             metadata,
             metadata1,
@@ -199,21 +198,21 @@ class TestSBOM(TestCase):
         Test sbom upload and download through the SDK
         """
         now = now_timestamp()
-        print("Title:", self.title, now)
+        LOGGER.debug("Title: %s %s", self.title, now)
         with open(RKVST_SBOM_PATH, "rb") as fd:
             metadata = self.arch.sboms.upload(fd, confirm=True)
 
-        print("first upload", json_dumps(metadata.dict(), indent=4))
+        LOGGER.debug("first upload %s", json_dumps(metadata.dict(), indent=4))
         identity = metadata.identity
         with open(RKVST_SBOM_DOWNLOAD_PATH, "wb") as fd:
             sbom = self.arch.sboms.download(identity, fd)
 
-        print("sbom", sbom)
+        LOGGER.debug("sbom %s", sbom)
         clear_cache()
         self.assertTrue(cmp(RKVST_SBOM_PATH, RKVST_SBOM_DOWNLOAD_PATH, shallow=False))
 
         metadata1 = self.arch.sboms.read(identity)
-        print("read", json_dumps(metadata1.dict(), indent=4))
+        LOGGER.debug("read %s", json_dumps(metadata1.dict(), indent=4))
         self.assertEqual(
             metadata,
             metadata1,
@@ -234,17 +233,17 @@ class TestSBOM(TestCase):
         )
 
         for i, m in enumerate(metadatas):
-            print(i, ":", json_dumps(m.dict(), indent=4))
+            LOGGER.debug("%d: %s", i, json_dumps(m.dict(), indent=4))
 
         metadata2 = self.arch.sboms.publish(identity, confirm=True)
-        print("publish", json_dumps(metadata2.dict(), indent=4))
+        LOGGER.debug("publish %s", json_dumps(metadata2.dict(), indent=4))
         self.assertNotEqual(
             metadata1.published_date,
             metadata2.published_date,
             msg="Published_date not correct",
         )
         metadata3 = self.arch.sboms.publish(identity, confirm=True)
-        print("publish again", json_dumps(metadata3.dict(), indent=4))
+        LOGGER.debug("publish again %s", json_dumps(metadata3.dict(), indent=4))
         self.assertEqual(
             metadata2.published_date,
             metadata3.published_date,
@@ -252,7 +251,7 @@ class TestSBOM(TestCase):
         )
 
         metadata4 = self.arch.sboms.withdraw(identity, confirm=True)
-        print("withdraw", json_dumps(metadata4.dict(), indent=4))
+        LOGGER.debug("withdraw %s", json_dumps(metadata4.dict(), indent=4))
         self.assertNotEqual(
             metadata3.withdrawn_date,
             metadata4.withdrawn_date,
@@ -265,7 +264,7 @@ class TestSBOM(TestCase):
         )
 
         metadata5 = self.arch.sboms.withdraw(identity, confirm=True)
-        print("withdraw again", json_dumps(metadata5.dict(), indent=4))
+        LOGGER.debug("withdraw again %s", json_dumps(metadata5.dict(), indent=4))
         self.assertEqual(
             metadata4.withdrawn_date,
             metadata5.withdrawn_date,
@@ -282,4 +281,4 @@ class TestSBOM(TestCase):
             )
         )
         for i, m in enumerate(metadatas):
-            print(i, ":", json_dumps(m.dict(), indent=4))
+            LOGGER.debug("%d: %s", i, json_dumps(m.dict(), indent=4))

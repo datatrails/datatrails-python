@@ -21,8 +21,8 @@ from .testarchivist import TestArchivistMethods
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 
-if "RKVST_DEBUG" in environ and environ["RKVST_DEBUG"]:
-    set_logger(environ["RKVST_DEBUG"])
+if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
+    set_logger(environ["RKVST_LOGLEVEL"])
 
 
 class TestArchivistList(TestArchivistMethods):

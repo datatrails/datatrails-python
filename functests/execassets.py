@@ -5,7 +5,6 @@ Test assets creation
 from copy import copy, deepcopy
 from json import dumps as json_dumps
 from os import getenv
-from unittest import TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -15,15 +14,15 @@ from archivist.utils import get_auth
 
 from archivist import logger
 
+from .constants import TestCase
+
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -103,14 +102,14 @@ class TestAssetCreate(TestCase):
             attrs=self.traffic_light,
             confirm=True,
         )
-        print("asset", json_dumps(asset, sort_keys=True, indent=4))
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
             asset["proof_mechanism"],
             ProofMechanism.SIMPLE_HASH.name,
             msg="Incorrect asset proof mechanism",
         )
         tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
-        print("tenancy", json_dumps(tenancy, sort_keys=True, indent=4))
+        LOGGER.debug("tenancy %s", json_dumps(tenancy, sort_keys=True, indent=4))
 
     def test_asset_create_khipu(self):
         """
@@ -122,21 +121,21 @@ class TestAssetCreate(TestCase):
             },
             attrs=self.traffic_light,
         )
-        print("asset", json_dumps(asset, sort_keys=True, indent=4))
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
             asset["proof_mechanism"],
             ProofMechanism.KHIPU.name,
             msg="Incorrect asset proof mechanism",
         )
         tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
-        print("tenancy", json_dumps(tenancy, sort_keys=True, indent=4))
+        LOGGER.debug("tenancy %s", json_dumps(tenancy, sort_keys=True, indent=4))
 
         events = self.arch.events.list(asset_id=asset["identity"])
-        print("events", json_dumps(list(events), sort_keys=True, indent=4))
+        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
         asset = self.arch.events.wait_for_confirmation(asset["identity"])
-        print("asset", json_dumps(asset, sort_keys=True, indent=4))
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         events = self.arch.events.list(asset_id=asset["identity"])
-        print("events", json_dumps(list(events), sort_keys=True, indent=4))
+        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
 
     def test_asset_create_with_fixtures(self):
         """
@@ -226,10 +225,10 @@ class TestAssetCreate(TestCase):
         event = self.arch.events.create(
             identity, props=props, attrs=attrs, confirm=True
         )
-        print("event", json_dumps(event, sort_keys=True, indent=4))
+        LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
 
         tenancy = self.arch.tenancies.publicinfo(event["tenant_identity"])
-        print("tenancy", json_dumps(tenancy, sort_keys=True, indent=4))
+        LOGGER.debug("tenancy %s", json_dumps(tenancy, sort_keys=True, indent=4))
 
 
 class TestAssetCreateIfNotExists(TestCase):
@@ -268,8 +267,8 @@ class TestAssetCreateIfNotExists(TestCase):
             REQUEST_EXISTS_ATTACHMENTS,
             confirm=True,
         )
-        print("asset", json_dumps(asset, indent=4))
-        print("existed", existed)
+        LOGGER.debug("asset %s", json_dumps(asset, indent=4))
+        LOGGER.debug("existed %s", existed)
 
         # first attachment is ok....
         attachment_id = asset["attributes"]["arc_attachments"][0][
@@ -278,12 +277,12 @@ class TestAssetCreateIfNotExists(TestCase):
         info = self.arch.attachments.info(
             attachment_id,
         )
-        print("info attachment1", json_dumps(info, indent=4))
+        LOGGER.debug("info attachment1 %s", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]
         if timestamp:
-            print(attachment_id, "scanned last at", timestamp)
-            print(attachment_id, "scanned status", info["scanned_status"])
-            print(attachment_id, "scanned reason", info["scanned_reason"])
+            LOGGER.debug("%d: scanned last at %s", attachment_id, timestamp)
+            LOGGER.debug("%d: scanned status %s", attachment_id, info["scanned_status"])
+            LOGGER.debug("%d: scanned reason %s", attachment_id, info["scanned_reason"])
             self.assertEqual(
                 info["scanned_status"],
                 "SCANNED_OK",
@@ -297,12 +296,12 @@ class TestAssetCreateIfNotExists(TestCase):
         info = self.arch.attachments.info(
             attachment_id,
         )
-        print("info attachment1", json_dumps(info, indent=4))
+        LOGGER.debug("info attachment1 %s", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]
         if timestamp:
-            print(attachment_id, "scanned last at", timestamp)
-            print(attachment_id, "scanned status", info["scanned_status"])
-            print(attachment_id, "scanned reason", info["scanned_reason"])
+            LOGGER.debug("%d: scanned last at %s", attachment_id, timestamp)
+            LOGGER.debug("%d: scanned status %s", attachment_id, info["scanned_status"])
+            LOGGER.debug("%d: scanned reason %s", attachment_id, info["scanned_reason"])
             self.assertEqual(
                 info["scanned_status"],
                 "SCANNED_BAD",
@@ -324,8 +323,8 @@ class TestAssetCreateIfNotExists(TestCase):
             REQUEST_EXISTS_ATTACHMENTS,
             confirm=True,
         )
-        print("asset", json_dumps(asset, indent=4))
-        print("existed", existed)
+        LOGGER.debug("asset %s", json_dumps(asset, indent=4))
+        LOGGER.debug("existed %s", existed)
 
         # first attachment is ok....
         attachment_id = asset["attributes"]["arc_attachments"][0][
@@ -335,12 +334,12 @@ class TestAssetCreateIfNotExists(TestCase):
             asset["identity"],
             attachment_id,
         )
-        print("info attachment1", json_dumps(info, indent=4))
+        LOGGER.debug("info attachment1 %s", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]
         if timestamp:
-            print(attachment_id, "scanned last at", timestamp)
-            print(attachment_id, "scanned status", info["scanned_status"])
-            print(attachment_id, "scanned reason", info["scanned_reason"])
+            LOGGER.debug("%d: scanned last at %s", attachment_id, timestamp)
+            LOGGER.debug("%d: scanned status %s", attachment_id, info["scanned_status"])
+            LOGGER.debug("%d: scanned reason %s", attachment_id, info["scanned_reason"])
             self.assertEqual(
                 info["scanned_status"],
                 "SCANNED_OK",
@@ -355,12 +354,12 @@ class TestAssetCreateIfNotExists(TestCase):
             asset["identity"],
             attachment_id,
         )
-        print("info attachment1", json_dumps(info, indent=4))
+        LOGGER.debug("info attachment1 %s", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]
         if timestamp:
-            print(attachment_id, "scanned last at", timestamp)
-            print(attachment_id, "scanned status", info["scanned_status"])
-            print(attachment_id, "scanned reason", info["scanned_reason"])
+            LOGGER.debug("%d: scanned last at %s", attachment_id, timestamp)
+            LOGGER.debug("%d: scanned status %s", attachment_id, info["scanned_status"])
+            LOGGER.debug("%d: scanned reason %s", attachment_id, info["scanned_reason"])
             self.assertEqual(
                 info["scanned_status"],
                 "SCANNED_BAD",

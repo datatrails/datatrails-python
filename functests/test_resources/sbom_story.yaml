@@ -39,7 +39,7 @@ steps:
       action: EVENTS_CREATE
       description: Release YYYYMMDD.1 of Test SBOM for YAML story
       asset_label: ACME Corporation Detector SAAS
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     confirm: true
@@ -57,7 +57,7 @@ steps:
       action: EVENTS_CREATE
       description: Release YYYYMMDD.2 of Test SBOM for YAML story
       asset_label: ACME Corporation Detector SAAS
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     confirm: true
@@ -75,7 +75,7 @@ steps:
       action: EVENTS_CREATE
       description: Release YYYYMMDD.3 of Test SBOM for YAML story
       asset_label: ACME Corporation Detector SAAS
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     confirm: true
@@ -91,7 +91,7 @@ steps:
   - step:
       action: ASSETS_LIST
       description: List all sboms
-      print_response: true
+      LOGGER.debug_response: true
     attrs:
       arc_display_type: Software Package
       arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
@@ -99,7 +99,7 @@ steps:
   - step:
       action: EVENTS_LIST
       description: List all releases for this sbom
-      print_response: true
+      LOGGER.debug_response: true
       asset_label: ACME Corporation Detector SAAS
     props:
       confirmation_status: CONFIRMED

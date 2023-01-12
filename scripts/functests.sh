@@ -60,4 +60,4 @@ then
     exit 0
 fi
 
-python3 -m unittest discover -v -p exec*.py -s functests
+python3 -m unittest discover -v -p exec*.py -t . -s functests

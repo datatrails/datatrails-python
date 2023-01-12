@@ -18,8 +18,8 @@ from archivist.errors import ArchivistInvalidOperationError
 from archivist.events import Event
 from archivist.logger import set_logger
 
-if "RKVST_DEBUG" in environ and environ["RKVST_DEBUG"]:
-    set_logger(environ["RKVST_DEBUG"])
+if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
+    set_logger(environ["RKVST_LOGLEVEL"])
 
 LOGGER = getLogger(__name__)
 

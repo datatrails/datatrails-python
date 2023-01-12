@@ -5,7 +5,7 @@ from copy import deepcopy
 from json import dumps as json_dumps
 from os import getenv
 from time import sleep
-from unittest import TestCase, skipIf
+from unittest import skipIf
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -14,6 +14,8 @@ from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
 from archivist import logger
+
+from .constants import TestCase
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -32,10 +34,8 @@ ATTRS = {
     "some_custom_attribute": "value",
 }
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -69,7 +69,7 @@ class TestApplications(TestCase):
             self.display_name,
             CUSTOM_CLAIMS,
         )
-        print("create application", json_dumps(application, indent=4))
+        LOGGER.debug("create application %s", json_dumps(application, indent=4))
         self.assertEqual(
             application["display_name"],
             self.display_name,
@@ -84,7 +84,7 @@ class TestApplications(TestCase):
             self.display_name,
             CUSTOM_CLAIMS,
         )
-        print("create application", json_dumps(application, indent=4))
+        LOGGER.debug("create application %s", json_dumps(application, indent=4))
         self.assertEqual(
             application["display_name"],
             self.display_name,
@@ -95,7 +95,7 @@ class TestApplications(TestCase):
             display_name=self.display_name,
             custom_claims=CUSTOM_CLAIMS,
         )
-        print("update application", json_dumps(application, indent=4))
+        LOGGER.debug("update application %s", json_dumps(application, indent=4))
 
     def test_applications_delete(self):
         """
@@ -105,7 +105,7 @@ class TestApplications(TestCase):
             self.display_name,
             CUSTOM_CLAIMS,
         )
-        print("create application", json_dumps(application, indent=4))
+        LOGGER.debug("create application %s", json_dumps(application, indent=4))
         self.assertEqual(
             application["display_name"],
             self.display_name,
@@ -114,7 +114,7 @@ class TestApplications(TestCase):
         application = self.arch.applications.delete(
             application["identity"],
         )
-        print("delete application", json_dumps(application, indent=4))
+        LOGGER.debug("delete application %s", json_dumps(application, indent=4))
         self.assertEqual(
             application,
             {},
@@ -129,7 +129,7 @@ class TestApplications(TestCase):
             self.display_name,
             CUSTOM_CLAIMS,
         )
-        print("create application", json_dumps(application, indent=4))
+        LOGGER.debug("create application %s", json_dumps(application, indent=4))
         self.assertEqual(
             application["display_name"],
             self.display_name,
@@ -138,7 +138,7 @@ class TestApplications(TestCase):
         application = self.arch.applications.regenerate(
             application["identity"],
         )
-        print("regenerate application", json_dumps(application, indent=4))
+        LOGGER.debug("regenerate application %s", json_dumps(application, indent=4))
 
     def test_applications_list(self):
         """
@@ -155,7 +155,7 @@ class TestApplications(TestCase):
             msg="Incorrect display name",
         )
         for application in applications:
-            print("application", json_dumps(application, indent=4))
+            LOGGER.debug("application %s", json_dumps(application, indent=4))
 
         for application in applications:
             self.assertGreater(
@@ -177,7 +177,7 @@ class TestApplications(TestCase):
             self.display_name,
             CUSTOM_CLAIMS,
         )
-        print("create application", json_dumps(application, indent=4))
+        LOGGER.debug("create application %s", json_dumps(application, indent=4))
         self.assertEqual(
             application["display_name"],
             self.display_name,
@@ -187,7 +187,7 @@ class TestApplications(TestCase):
             application["client_id"],
             application["credentials"][0]["secret"],
         )
-        print("appidp", json_dumps(appidp, indent=4))
+        LOGGER.debug("appidp %s", json_dumps(appidp, indent=4))
 
     def test_appidp_token_404(self):
         """
@@ -214,12 +214,12 @@ class TestApplications(TestCase):
         Test archivist with client id/secret
         WARN: this test takes over 10 minutes
         """
-        print("This test takes over 10 minutes...")
+        LOGGER.debug("This test takes over 10 minutes...")
         application = self.arch.applications.create(
             self.display_name,
             CUSTOM_CLAIMS,
         )
-        print("create application", json_dumps(application, indent=4))
+        LOGGER.debug("create application %s", json_dumps(application, indent=4))
         self.assertEqual(
             application["display_name"],
             self.display_name,
@@ -227,7 +227,7 @@ class TestApplications(TestCase):
         )
 
         # archivist using app registration
-        print("New Arch")
+        LOGGER.debug("New Arch")
         with Archivist(
             getenv("RKVST_URL"),
             (application["client_id"], application["credentials"][0]["secret"]),
@@ -245,7 +245,7 @@ class TestApplications(TestCase):
                 attrs=traffic_light,
                 confirm=True,
             )
-            print("create asset", json_dumps(asset, indent=4))
+            LOGGER.debug("create asset %s", json_dumps(asset, indent=4))
             self.assertEqual(
                 asset["proof_mechanism"],
                 ProofMechanism.SIMPLE_HASH.name,
@@ -268,4 +268,4 @@ class TestApplications(TestCase):
                     },
                     confirm=True,
                 )
-                print(i, "create event", json_dumps(event, indent=4))
+                LOGGER.debug("%d: create event %s", i, json_dumps(event, indent=4))

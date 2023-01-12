@@ -2,7 +2,6 @@
 Test subjects
 """
 from os import getenv
-from unittest import TestCase
 
 from testbook import testbook
 
@@ -14,10 +13,10 @@ from archivist.archivist import Archivist
 
 from archivist import logger
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+from .constants import TestCase
+
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 

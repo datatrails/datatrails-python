@@ -3,7 +3,6 @@ Test subjects
 """
 from json import dumps as json_dumps
 from os import getenv
-from unittest import TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -15,10 +14,10 @@ from archivist.utils import get_auth
 
 from archivist import logger
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+from .constants import TestCase
+
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -89,7 +88,7 @@ class TestSubjects(TestCase):
                 "subject_string": SUBJECT_STRING,
             }
         )
-        print("subject:", json_dumps(subject, indent=4))
+        LOGGER.debug("subject: %s", json_dumps(subject, indent=4))
         self.assertEqual(
             subject["display_name"],
             self.display_name,
@@ -152,7 +151,7 @@ class TestSubjects(TestCase):
         """
         subjects = list(self.arch.subjects.list())
         for i, subject in enumerate(subjects):
-            print(i, ":", json_dumps(subject, indent=4))
+            LOGGER.debug("%d: %s", i, json_dumps(subject, indent=4))
 
         for subject in subjects:
             self.assertGreater(
