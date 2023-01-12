@@ -55,7 +55,7 @@ steps:
       action: EVENTS_CREATE
       description: Characterize Drum 1
       asset_label: Drum 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -80,7 +80,7 @@ steps:
       action: EVENTS_CREATE
       description: Tomograph Drum 1
       asset_label: Drum 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -106,7 +106,7 @@ steps:
       action: EVENTS_CREATE
       description: Loading Drum 1 into Cask 1
       asset_label: Drum 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -125,7 +125,7 @@ steps:
       action: EVENTS_CREATE
       description: Filled Cask 1 with Drum 1
       asset_label: Cask 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -144,7 +144,7 @@ steps:
       action: EVENTS_CREATE
       description: Preship inspection of Drum 1
       asset_label: Drum 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -161,7 +161,7 @@ steps:
       action: EVENTS_CREATE
       description: Preship inspection of Cask 1
       asset_label: Cask 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -178,7 +178,7 @@ steps:
       action: EVENTS_CREATE
       description: Departure of Drum 1
       asset_label: Drum 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -198,7 +198,7 @@ steps:
       action: EVENTS_CREATE
       description: Departure of Cask 1
       asset_label: Cask 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -219,7 +219,7 @@ steps:
       action: EVENTS_CREATE
       description: Atlanta Waypoint of Cask 1
       asset_label: Cask 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -249,7 +249,7 @@ steps:
       action: EVENTS_CREATE
       description: Talladega Waypoint of Cask 1
       asset_label: Cask 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -280,7 +280,7 @@ steps:
       action: EVENTS_CREATE
       description: Arrival of Drum 1
       asset_label: Drum 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -297,7 +297,7 @@ steps:
       action: EVENTS_CREATE
       description: Arrival of Cask 1
       asset_label: Cask 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -315,7 +315,7 @@ steps:
       action: EVENTS_CREATE
       description: Unloading Drum 1 from Cask 1
       asset_label: Drum 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -332,7 +332,7 @@ steps:
       action: EVENTS_CREATE
       description: Unloading Drum 1 from Cask 1
       asset_label: Cask 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:
@@ -350,7 +350,7 @@ steps:
       action: EVENTS_CREATE
       description: Drum 1 Emplacemant
       asset_label: Drum 1
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     event_attributes:

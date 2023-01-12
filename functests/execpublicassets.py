@@ -6,7 +6,6 @@ from copy import deepcopy
 from json import dumps as json_dumps
 from os import getenv
 from time import sleep
-from unittest import TestCase
 
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
@@ -16,15 +15,15 @@ from archivist.utils import get_auth
 
 from archivist import logger
 
+from .constants import TestCase
+
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -107,7 +106,7 @@ class TestPublicAssetCreate(TestCase):
             },
             confirm=True,
         )
-        print("asset", json_dumps(asset, sort_keys=True, indent=4))
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
             asset["proof_mechanism"],
             ProofMechanism.SIMPLE_HASH.name,
@@ -119,12 +118,12 @@ class TestPublicAssetCreate(TestCase):
             msg="Asset is not public",
         )
         asset_publicurl = self.arch.assets.publicurl(asset["identity"])
-        print("asset_publicurl", asset_publicurl)
+        LOGGER.debug("asset_publicurl %s", asset_publicurl)
         public = self.arch.Public
         count = public.events.count(asset_id=asset_publicurl)
-        print("count", count)
+        LOGGER.debug("count %s", count)
         events = public.events.list(asset_id=asset_publicurl)
-        print("events", json_dumps(list(events), sort_keys=True, indent=4))
+        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
 
     def test_public_asset_create_khipu(self):
         """
@@ -138,7 +137,7 @@ class TestPublicAssetCreate(TestCase):
             },
             confirm=True,
         )
-        print("asset", json_dumps(asset, sort_keys=True, indent=4))
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
             asset["proof_mechanism"],
             ProofMechanism.KHIPU.name,
@@ -150,12 +149,12 @@ class TestPublicAssetCreate(TestCase):
             msg="Asset is not public",
         )
         asset_publicurl = self.arch.assets.publicurl(asset["identity"])
-        print("publicurl", asset_publicurl)
+        LOGGER.debug("publicurl %s", asset_publicurl)
         public = self.arch.Public
         count = public.events.count(asset_id=asset_publicurl)
-        print("count", count)
+        LOGGER.debug("count %s", count)
         events = public.events.list(asset_id=asset_publicurl)
-        print("events", json_dumps(list(events), sort_keys=True, indent=4))
+        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
 
     def test_public_asset_create_event(self):
         """
@@ -168,7 +167,7 @@ class TestPublicAssetCreate(TestCase):
             },
             confirm=True,
         )
-        print("asset", json_dumps(asset, sort_keys=True, indent=4))
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         identity = asset["identity"]
         self.assertIsNotNone(
             identity,
@@ -202,12 +201,12 @@ class TestPublicAssetCreate(TestCase):
         event = self.arch.events.create(
             identity, props=props, attrs=attrs, confirm=True
         )
-        print("event", json_dumps(event, sort_keys=True, indent=4))
+        LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
         event_publicurl = self.arch.events.publicurl(event["identity"])
 
         public = self.arch.Public
         event = public.events.read(event_publicurl)
-        print("event", json_dumps(event, sort_keys=True, indent=4))
+        LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
 
     def test_asset_create_if_not_exists_with_bad_attachment_assetattachment(self):
         """
@@ -222,13 +221,13 @@ class TestPublicAssetCreate(TestCase):
         """
         request_data = deepcopy(REQUEST_EXISTS_ATTACHMENTS)
         request_data["attributes"]["arc_namespace"] = now_timestamp()
-        print("request_data", json_dumps(request_data, indent=4))
+        LOGGER.debug("request_data %s", json_dumps(request_data, indent=4))
         asset, existed = self.arch.assets.create_if_not_exists(
             request_data,
             confirm=True,
         )
-        print("asset", json_dumps(asset, indent=4))
-        print("existed", existed)
+        LOGGER.debug("asset %s", json_dumps(asset, indent=4))
+        LOGGER.debug("existed %s", existed)
 
         asset_id = asset["identity"]
         # first attachment is ok....
@@ -236,16 +235,16 @@ class TestPublicAssetCreate(TestCase):
             "arc_attachment_identity"
         ]
         public_asset_id = self.arch.assets.publicurl(asset_id)
-        print("public asset id", public_asset_id)
+        LOGGER.debug("public asset id %s", public_asset_id)
         public = self.arch.Public
         sleep(30)  # until we implement confirmed logic
         info = public.assetattachments.info(public_asset_id, attachment_id)
-        print("info attachment1", json_dumps(info, indent=4))
+        LOGGER.debug("info attachment1 %s", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]
         if timestamp:
-            print(attachment_id, "scanned last at", timestamp)
-            print(attachment_id, "scanned status", info["scanned_status"])
-            print(attachment_id, "scanned reason", info["scanned_reason"])
+            LOGGER.debug("%d: scanned last at %s", attachment_id, timestamp)
+            LOGGER.debug("%d: scanned status %s", attachment_id, info["scanned_status"])
+            LOGGER.debug("%d: scanned reason %s", attachment_id, info["scanned_reason"])
             self.assertEqual(
                 info["scanned_status"],
                 "SCANNED_OK",
@@ -257,12 +256,12 @@ class TestPublicAssetCreate(TestCase):
             "arc_attachment_identity"
         ]
         info = public.assetattachments.info(public_asset_id, attachment_id)
-        print("info attachment1", json_dumps(info, indent=4))
+        LOGGER.debug("info attachment1 %s", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]
         if timestamp:
-            print(attachment_id, "scanned last at", timestamp)
-            print(attachment_id, "scanned status", info["scanned_status"])
-            print(attachment_id, "scanned reason", info["scanned_reason"])
+            LOGGER.debug("%d: scanned last at %s", attachment_id, timestamp)
+            LOGGER.debug("%d: scanned status %s", attachment_id, info["scanned_status"])
+            LOGGER.debug("%d: scanned reason %s", attachment_id, info["scanned_reason"])
             self.assertEqual(
                 info["scanned_status"],
                 "SCANNED_BAD",

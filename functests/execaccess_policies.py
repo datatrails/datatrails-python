@@ -6,7 +6,7 @@ from copy import deepcopy
 from json import dumps as json_dumps
 from os import getenv
 from time import sleep
-from unittest import TestCase, skipIf
+from unittest import skipIf
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -15,6 +15,8 @@ from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
 from archivist import logger
+
+from .constants import TestCase
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -97,10 +99,8 @@ REQUEST_EXISTS_ATTACHMENTS = {
     ],
 }
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -310,9 +310,9 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
             "org1_subject",
             self.arch_2,
         )
-        print()
-        print("Org1: subject_1", json_dumps(self.subject_1, indent=4))
-        print("Org2: subject_2", json_dumps(self.subject_2, indent=4))
+        LOGGER.debug()
+        LOGGER.debug("Org1: subject_1 %s", json_dumps(self.subject_1, indent=4))
+        LOGGER.debug("Org2: subject_2 %s", json_dumps(self.subject_2, indent=4))
 
     def tearDown(self):
         super().tearDown()
@@ -326,8 +326,8 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
             asset_data,
             confirm=True,
         )
-        print(label, ": asset", json_dumps(asset, indent=4))
-        print(label, ": existed", existed)
+        LOGGER.debug(label, ": asset %s", json_dumps(asset, indent=4))
+        LOGGER.debug(label, ": existed %s", existed)
         return asset
 
     def _create_access_policy(self, label, arch, uuid, subject, testdata):
@@ -353,7 +353,7 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
             ac_props["display_name"],
             msg="Incorrect display name",
         )
-        print(label, ": access_policy", json_dumps(access_policy, indent=4))
+        LOGGER.debug(label, ": access_policy %s", json_dumps(access_policy, indent=4))
         return access_policy
 
     def _list_matching_assets(self, label, arch, assets, expected_asset, access_policy):
@@ -363,8 +363,10 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
             title = assets.get(asset["identity"])
             # only deal with assets created during this test
             if title:
-                print(label, ":", idx, ":Matching asset", title)
-                print(label, ":", idx, ":Matching asset", json_dumps(asset, indent=4))
+                LOGGER.debug("%s: %d Matching asse:t %s", label, idx, title)
+                LOGGER.debug(
+                    "%s: %d Matching asse:t %s", label, idx, json_dumps(asset, indent=4)
+                )
                 self.assertEqual(
                     expected_asset["identity"],
                     asset["identity"],
@@ -380,18 +382,11 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
             title = access_policies.get(access_policy["identity"])
             # only deal with access_policies created during this test
             if title:
-                print(
+                LOGGER.debug("%s: %d: Matching access policy: %s", label, idx, title)
+                LOGGER.debug(
+                    "%s: %d: Matching access policy: %s",
                     label,
-                    ":",
                     idx,
-                    ":Matching access_policy",
-                    title,
-                )
-                print(
-                    label,
-                    ":",
-                    idx,
-                    ":Matching access_policy",
                     json_dumps(access_policy, indent=4),
                 )
                 self.assertEqual(
@@ -405,12 +400,12 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         Test access_policy share asset between 2 tokens/organisations/tenants
         """
         testdata = TESTDATA[0]
-        print()
+        LOGGER.debug()
         assets = {}  # maps identity to name
         access_policies = {}  # maps identity to name
         uuid = str(uuid4())  # stamps assets and access policies as unique
 
-        print("1. create unique org1 asset and access_policy")
+        LOGGER.debug("1. create unique org1 asset and access_policy")
         org1_asset = self._create_asset("Org1", self.arch, uuid)
         assets[org1_asset["identity"]] = "org1_asset"
 
@@ -419,7 +414,7 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         )
         access_policies[org1_access_policy["identity"]] = "org1_access_policy"
 
-        print("2. create org2 asset and access_policy")
+        LOGGER.debug("2. create org2 asset and access_policy")
         org2_asset = self._create_asset("Org2", self.arch_2, uuid)
         assets[org2_asset["identity"]] = "org2_asset"
 
@@ -428,33 +423,33 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         )
         access_policies[org2_access_policy["identity"]] = "org2_access_policy"
 
-        print("3. First org - list matching assets")
+        LOGGER.debug("3. First org - list matching assets")
         self._list_matching_assets(
             "Org1", self.arch, assets, org1_asset, org1_access_policy
         )
 
-        print("4. First org - list matching access policies")
+        LOGGER.debug("4. First org - list matching access policies")
         self._list_matching_access_policies(
             "Org1", self.arch, access_policies, org1_access_policy, org1_asset
         )
 
-        print("5. Second org - list matching assets")
+        LOGGER.debug("5. Second org - list matching assets")
         self._list_matching_assets(
             "Org2", self.arch_2, assets, org2_asset, org2_access_policy
         )
 
-        print("6. Second org - list matching access policies")
+        LOGGER.debug("6. Second org - list matching access policies")
         self._list_matching_access_policies(
             "Org2", self.arch_2, access_policies, org2_access_policy, org2_asset
         )
 
-        print("7. First org - read asset from second org")
+        LOGGER.debug("7. First org - read asset from second org")
         asset = self.arch.assets.read(org2_asset["identity"])
-        print("Org1: asset", json_dumps(asset, indent=4))
+        LOGGER.debug("Org1: asset %s", json_dumps(asset, indent=4))
 
-        print("8. Second org - read asset from first org")
+        LOGGER.debug("8. Second org - read asset from first org")
         asset = self.arch_2.assets.read(org1_asset["identity"])
-        print("Org2: asset", json_dumps(asset, indent=4))
+        LOGGER.debug("Org2: asset %s", json_dumps(asset, indent=4))
 
         self.arch.access_policies.delete(
             org1_access_policy["identity"],
@@ -469,12 +464,12 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         """
         for idx, testdata in enumerate(TESTDATA):
             with self.subTest(testdata["name"], idx=idx):
-                print()
+                LOGGER.debug()
                 assets = {}  # maps identity to name
                 access_policies = {}  # maps identity to name
                 uuid = str(uuid4())  # stamps assets and access policies as unique
 
-                print("1. create unique org1 asset and access_policy")
+                LOGGER.debug("1. create unique org1 asset and access_policy")
                 org1_asset = self._create_asset("Org1", self.arch, uuid)
                 assets[org1_asset["identity"]] = "org1_asset"
 
@@ -485,11 +480,15 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
 
                 sleep(2)  # let the access policy become available
 
-                print("2. read org1 asset from org2")
+                LOGGER.debug("2. read org1 asset from org2")
                 asset = self.arch_2.assets.read(org1_asset["identity"])
-                print("Org2: asset", json_dumps(asset, indent=4))
-                print("Org2: expected", json_dumps(testdata["expected"], indent=4))
-                print("Org2: attributes", json_dumps(asset["attributes"], indent=4))
+                LOGGER.debug("Org2: asset %s", json_dumps(asset, indent=4))
+                LOGGER.debug(
+                    "Org2: expected %s", json_dumps(testdata["expected"], indent=4)
+                )
+                LOGGER.debug(
+                    "Org2: attributes %s", json_dumps(asset["attributes"], indent=4)
+                )
                 self.assertEqual(
                     testdata["expected"],
                     asset["attributes"],

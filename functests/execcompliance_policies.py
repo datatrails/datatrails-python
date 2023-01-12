@@ -4,7 +4,6 @@ Test compliance policies
 from json import dumps as json_dumps
 from os import getenv
 from time import sleep
-from unittest import TestCase
 from uuid import uuid4
 
 from archivist.archivist import Archivist
@@ -20,14 +19,14 @@ from archivist.utils import get_auth
 
 from archivist import logger
 
+from .constants import TestCase
+
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -100,7 +99,6 @@ class TestCompliancePoliciesBase(TestCase):
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
         self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
-        print()
 
     def tearDown(self):
         self.arch.close()
@@ -119,7 +117,7 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
             SINCE_POLICY.display_name,
             msg="Incorrect display name",
         )
-        print("SINCE_POLICY:", json_dumps(compliance_policy, indent=4))
+        LOGGER.debug("SINCE_POLICY: %s", json_dumps(compliance_policy, indent=4))
         self.arch.compliance_policies.delete(
             compliance_policy["identity"],
         )
@@ -136,7 +134,7 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
             RICHNESS_POLICY.display_name,
             msg="Incorrect display name",
         )
-        print("RICHNESS_POLICY:", json_dumps(compliance_policy, indent=4))
+        LOGGER.debug("RICHNESS_POLICY: %s", json_dumps(compliance_policy, indent=4))
         self.arch.compliance_policies.delete(
             compliance_policy["identity"],
         )
@@ -153,7 +151,9 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
             DYNAMIC_TOLERANCE_POLICY.display_name,
             msg="Incorrect display name",
         )
-        print("DYNAMIC_TOLERANCE_POLICY:", json_dumps(compliance_policy, indent=4))
+        LOGGER.debug(
+            "DYNAMIC_TOLERANCE_POLICY: %s", json_dumps(compliance_policy, indent=4)
+        )
         self.arch.compliance_policies.delete(
             compliance_policy["identity"],
         )
@@ -170,7 +170,9 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
             CURRENT_OUTSTANDING_POLICY.display_name,
             msg="Incorrect display name",
         )
-        print("CURRENT_OUTSTANDING_POLICY:", json_dumps(compliance_policy, indent=4))
+        LOGGER.debug(
+            "CURRENT_OUTSTANDING_POLICY: %s", json_dumps(compliance_policy, indent=4)
+        )
         self.arch.compliance_policies.delete(
             compliance_policy["identity"],
         )
@@ -187,7 +189,9 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
             PERIOD_OUTSTANDING_POLICY.display_name,
             msg="Incorrect display name",
         )
-        print("PERIOD_OUTSTANDING_POLICY:", json_dumps(compliance_policy, indent=4))
+        LOGGER.debug(
+            "PERIOD_OUTSTANDING_POLICY: %s", json_dumps(compliance_policy, indent=4)
+        )
         self.arch.compliance_policies.delete(
             compliance_policy["identity"],
         )
@@ -198,7 +202,7 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         """
         compliance_policies = list(self.arch.compliance_policies.list())
         for i, compliance_policy in enumerate(compliance_policies):
-            print(i, ":", json_dumps(compliance_policy, indent=4))
+            LOGGER.debug("%d: %s", i, json_dumps(compliance_policy, indent=4))
             self.assertGreater(
                 len(compliance_policy["display_name"]),
                 0,
@@ -215,29 +219,29 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         count = self.arch.compliance_policies.count(
             props={"compliance_type": CompliancePolicyType.COMPLIANCE_SINCE.name}
         )
-        print("No. of 'SINCE' compliance policies:", count)
+        LOGGER.debug("No. of 'SINCE' compliance policies: %d", count)
         count = self.arch.compliance_policies.count(
             props={"compliance_type": CompliancePolicyType.COMPLIANCE_RICHNESS.name}
         )
-        print("No. of 'RICHNESS' compliance policies:", count)
+        LOGGER.debug("No. of 'RICHNESS' compliance policies: %d", count)
         count = self.arch.compliance_policies.count(
             props={
                 "compliance_type": CompliancePolicyType.COMPLIANCE_DYNAMIC_TOLERANCE.name
             }
         )
-        print("No. of 'DYNAMIC_TOLERANCE' compliance policies:", count)
+        LOGGER.debug("No. of 'DYNAMIC_TOLERANCE' compliance policies: %d", count)
         count = self.arch.compliance_policies.count(
             props={
                 "compliance_type": CompliancePolicyType.COMPLIANCE_CURRENT_OUTSTANDING.name
             }
         )
-        print("No. of 'CURRENT_OUTSTANDING' compliance policies:", count)
+        LOGGER.debug("No. of 'CURRENT_OUTSTANDING' compliance policies: %d", count)
         count = self.arch.compliance_policies.count(
             props={
                 "compliance_type": CompliancePolicyType.COMPLIANCE_PERIOD_OUTSTANDING.name
             }
         )
-        print("No. of 'PERIOD_OUTSTANDING' compliance policies:", count)
+        LOGGER.debug("No. of 'PERIOD_OUTSTANDING' compliance policies: %d", count)
 
 
 TRAFFIC_LIGHT = {
@@ -269,13 +273,13 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
                 time_period_seconds=10,  # very short so we can test
             )
         )
-        print("SINCE_POLICY:", json_dumps(compliance_policy, indent=4))
+        LOGGER.debug("SINCE_POLICY: %s", json_dumps(compliance_policy, indent=4))
 
         traffic_light = self.arch.assets.create(
             attrs=TRAFFIC_LIGHT,
             confirm=True,
         )
-        print("TRAFFIC_LIGHT:", json_dumps(traffic_light, indent=4))
+        LOGGER.debug("TRAFFIC_LIGHT: %s", json_dumps(traffic_light, indent=4))
 
         maintenance_performed = self.arch.events.create(
             traffic_light["identity"],
@@ -286,25 +290,27 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
             },
             confirm=True,
         )
-        print("MAINTENANCE_PERFORMED:", json_dumps(maintenance_performed, indent=4))
+        LOGGER.debug(
+            "MAINTENANCE_PERFORMED: %s", json_dumps(maintenance_performed, indent=4)
+        )
 
-        print("Sleep 1 second...")
+        LOGGER.debug("Sleep 1 second...")
         sleep(1)
         compliance = self.arch.compliance.compliant_at(
             traffic_light["identity"],
         )
-        print("COMPLIANCE (true):", json_dumps(compliance, indent=4))
+        LOGGER.debug("COMPLIANCE (true): %s", json_dumps(compliance, indent=4))
         self.assertTrue(
             compliance["compliant"],
             msg="Assets should be compliant",
         )
 
-        print("Sleep 15 seconds...")
+        LOGGER.debug("Sleep 15 seconds...")
         sleep(15)
         compliance = self.arch.compliance.compliant_at(
             traffic_light["identity"],
         )
-        print("COMPLIANCE (false):", json_dumps(compliance, indent=4))
+        LOGGER.debug("COMPLIANCE (false): %s", json_dumps(compliance, indent=4))
         self.assertFalse(
             compliance["compliant"],
             msg="Assets should not be compliant",
@@ -330,13 +336,15 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
                 closing_event_display_type=f"Maintenance Performed {tag}",
             ),
         )
-        print("CURRENT_OUTSTANDING_POLICY:", json_dumps(compliance_policy, indent=4))
+        LOGGER.debug(
+            "CURRENT_OUTSTANDING_POLICY: %s", json_dumps(compliance_policy, indent=4)
+        )
 
         traffic_light = self.arch.assets.create(
             attrs=TRAFFIC_LIGHT,
             confirm=True,
         )
-        print("TRAFFIC_LIGHT:", json_dumps(traffic_light, indent=4))
+        LOGGER.debug("TRAFFIC_LIGHT: %s", json_dumps(traffic_light, indent=4))
 
         maintenance_request = self.arch.events.create(
             traffic_light["identity"],
@@ -348,15 +356,17 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
             },
             confirm=True,
         )
-        print("MAINTENANCE_REQUIRED:", json_dumps(maintenance_request, indent=4))
+        LOGGER.debug(
+            "MAINTENANCE_REQUIRED: %s", json_dumps(maintenance_request, indent=4)
+        )
 
-        print("Sleep 1 second...")
+        LOGGER.debug("Sleep 1 second...")
         sleep(1)
 
         compliance = self.arch.compliance.compliant_at(
             traffic_light["identity"],
         )
-        print("COMPLIANCE (false):", json_dumps(compliance, indent=4))
+        LOGGER.debug("COMPLIANCE (false): %s", json_dumps(compliance, indent=4))
         self.assertFalse(
             compliance["compliant"],
             msg="Assets should not be compliant",
@@ -372,15 +382,17 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
             },
             confirm=True,
         )
-        print("MAINTENANCE_PERFORMED:", json_dumps(maintenance_performed, indent=4))
+        LOGGER.debug(
+            "MAINTENANCE_PERFORMED: %s", json_dumps(maintenance_performed, indent=4)
+        )
 
-        print("Sleep 1 second...")
+        LOGGER.debug("Sleep 1 second...")
         sleep(1)
 
         compliance = self.arch.compliance.compliant_at(
             traffic_light["identity"],
         )
-        print("COMPLIANCE (true):", json_dumps(compliance, indent=4))
+        LOGGER.debug("COMPLIANCE (true): %s", json_dumps(compliance, indent=4))
         self.assertTrue(
             compliance["compliant"],
             msg="Assets should be compliant",

@@ -6,7 +6,7 @@ from filecmp import clear_cache, cmp
 from json import dumps as json_dumps
 from io import BytesIO
 from os import getenv, remove
-from unittest import TestCase, skipIf
+from unittest import skipIf
 
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
@@ -14,10 +14,10 @@ from archivist.utils import get_auth, get_url
 
 from archivist import logger
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+from .constants import TestCase
+
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -89,7 +89,7 @@ class TestAttachmentsCreate(TestCase):
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        print("attachment", json_dumps(attachment, indent=4))
+        LOGGER.debug("attachment %s", json_dumps(attachment, indent=4))
 
         self.assertEqual(
             attachment["mime_type"],
@@ -100,7 +100,7 @@ class TestAttachmentsCreate(TestCase):
         with open(self.RKVST_DOCX_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(file_uuid, fd)
 
-        print("attachment", attachment.headers)
+        LOGGER.debug("attachment %s", attachment.headers)
         self.assertEqual(
             attachment.headers["content-type"],
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -125,7 +125,7 @@ class TestAttachmentsCreate(TestCase):
         """
         file_uuid = getenv("RKVST_BLOB_IDENTITY")
         info = self.arch.attachments.info(file_uuid)
-        print("attachment info", json_dumps(info, indent=4))
+        LOGGER.debug("attachment info %s", json_dumps(info, indent=4))
 
     def test_attachment_upload_and_download_allow_insecure(self):
         """
@@ -205,33 +205,33 @@ class TestAttachmentstMalware(TestCase):
         Test file upload through the SDK
         """
         attachment = self.arch.attachments.upload(self.malware1)
-        print("attachment", json_dumps(attachment, indent=4))
+        LOGGER.debug("attachment %s", json_dumps(attachment, indent=4))
         response = self.arch.attachments.info(attachment["identity"])
-        print("response", json_dumps(response, indent=4))
+        LOGGER.debug("response %s", json_dumps(response, indent=4))
 
     def test_attachment_malware_scan2(self):
         """
         Test file upload through the SDK
         """
         attachment = self.arch.attachments.upload(self.malware2)
-        print("attachment", json_dumps(attachment, indent=4))
+        LOGGER.debug("attachment %s", json_dumps(attachment, indent=4))
         response = self.arch.attachments.info(attachment["identity"])
-        print("response", json_dumps(response, indent=4))
+        LOGGER.debug("response %s", json_dumps(response, indent=4))
 
     def test_attachment_malware_scan3(self):
         """
         Test file upload through the SDK
         """
         attachment = self.arch.attachments.upload(self.malware3)
-        print("attachment", json_dumps(attachment, indent=4))
+        LOGGER.debug("attachment %s", json_dumps(attachment, indent=4))
         response = self.arch.attachments.info(attachment["identity"])
-        print("response", json_dumps(response, indent=4))
+        LOGGER.debug("response %s", json_dumps(response, indent=4))
 
     def test_attachment_malware_scan4(self):
         """
         Test file upload through the SDK
         """
         attachment = self.arch.attachments.upload(self.malware4)
-        print("attachment", json_dumps(attachment, indent=4))
+        LOGGER.debug("attachment %s", json_dumps(attachment, indent=4))
         response = self.arch.attachments.info(attachment["identity"])
-        print("response", json_dumps(response, indent=4))
+        LOGGER.debug("response %s", json_dumps(response, indent=4))

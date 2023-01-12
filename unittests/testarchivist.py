@@ -23,8 +23,8 @@ from .mock_response import MockResponse
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 
-if "RKVST_DEBUG" in environ and environ["RKVST_DEBUG"]:
-    set_logger(environ["RKVST_DEBUG"])
+if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
+    set_logger(environ["RKVST_LOGLEVEL"])
 
 
 RKVST_APPREG_CLIENT = "client_id-2f78-4fa0-9425-d59314845bc5"

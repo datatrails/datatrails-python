@@ -3,7 +3,6 @@ Test runner
 """
 
 from os import getenv, environ
-from unittest import TestCase
 
 from jinja2 import Environment, FileSystemLoader
 from pyaml_env import parse_config
@@ -14,15 +13,15 @@ from archivist.utils import get_auth
 
 from archivist import logger
 
+from .constants import TestCase
+
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
 
-if getenv("RKVST_DEBUG") is not None:
-    logger.set_logger(getenv("RKVST_DEBUG"))
-else:
-    logger.set_logger("INFO")
+if getenv("RKVST_LOGLEVEL") is not None:
+    logger.set_logger(getenv("RKVST_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -54,7 +53,7 @@ class TestRunner(TestCase):
 
         run_steps is used so that exceptions are shown
         """
-        LOGGER.info("...")
+        LOGGER.debug("...")
         with open(
             "functests/test_resources/dynamic_tolerance_story.yaml",
             "r",
@@ -76,7 +75,7 @@ class TestRunner(TestCase):
         run_steps is used so that exceptions are shown
         """
 
-        LOGGER.info("...")
+        LOGGER.debug("...")
         jinja = Environment(
             loader=FileSystemLoader("functests/test_resources"),
             trim_blocks=True,
@@ -117,7 +116,7 @@ class TestRunner(TestCase):
         run_steps is used so that exceptions are shown
         """
 
-        LOGGER.info("...")
+        LOGGER.debug("...")
         with open(
             "functests/test_resources/richness_story.yaml",
             "r",
@@ -139,7 +138,7 @@ class TestRunner(TestCase):
         run_steps is used so that exceptions are shown
         """
 
-        LOGGER.info("...")
+        LOGGER.debug("...")
         with open(
             "functests/test_resources/door_entry_story.yaml",
             "r",
@@ -158,7 +157,7 @@ class TestRunner(TestCase):
         run_steps is used so that exceptions are shown
         """
 
-        LOGGER.info("...")
+        LOGGER.debug("...")
         with open(
             "functests/test_resources/estate_info_story.yaml",
             "r",
@@ -175,7 +174,7 @@ class TestRunner(TestCase):
         run_steps is used so that exceptions are shown
         """
 
-        LOGGER.info("...")
+        LOGGER.debug("...")
         with open(
             "functests/test_resources/wipp_story.yaml",
             "r",
@@ -195,7 +194,7 @@ class TestRunner(TestCase):
         run_steps is used so that exceptions are shown
         """
 
-        LOGGER.info("...")
+        LOGGER.debug("...")
         with open(
             "functests/test_resources/sbom_story.yaml",
             "r",
@@ -215,7 +214,7 @@ class TestRunner(TestCase):
         run_steps is used so that exceptions are shown
         """
 
-        LOGGER.info("...")
+        LOGGER.debug("...")
         with open(
             "functests/test_resources/subjects_story.yaml",
             "r",

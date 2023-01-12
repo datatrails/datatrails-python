@@ -28,7 +28,7 @@ docker run \
     -e RKVST_APPREG_CLIENT \
     -e RKVST_APPREG_SECRET \
     -e RKVST_APPREG_SECRET_FILENAME \
-    -e RKVST_DEBUG \
+    -e RKVST_LOGLEVEL \
     -e RKVST_REFRESH_TOKEN \
     -e GITHUB_REF \
     rkvst-python-builder \

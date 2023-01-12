@@ -3,7 +3,7 @@ steps:
   - step:
       action: SUBJECTS_CREATE
       description: Create a subjects entity.
-      print_response: true
+      LOGGER.debug_response: true
       subject_label: A subject
     display_name: A subject
     wallet_pub_key:
@@ -14,7 +14,7 @@ steps:
   - step:
       action: SUBJECTS_CREATE_FROM_B64
       description: Import a subjects entity.
-      print_response: true
+      LOGGER.debug_response: true
       subject_label: An imported subject
     display_name: An imported subject
     subject_string: >-
@@ -33,23 +33,23 @@ steps:
   - step:
       action: SUBJECTS_COUNT
       description: Count all subjects
-      print_response: true
+      LOGGER.debug_response: true
 
   - step:
       action: SUBJECTS_LIST
       description: List all subjects
-      print_response: true
+      LOGGER.debug_response: true
 
   - step:
       action: SUBJECTS_READ
       description: Read subject
-      print_response: true
+      LOGGER.debug_response: true
       subject_label: A subject
 
   - step:
       action: SUBJECTS_UPDATE
       description: Update a subjects entity.
-      print_response: true
+      LOGGER.debug_response: true
       subject_label: A subject
     wallet_pub_key:
       - 04c1173bf7844bf1c607b79c18db091b9558ffe581bf132b8cf3b37657230fa321a0880b54a79a88b28bc710ede6dcf3d8272c5210bfd41ea83188e385d12c189c
@@ -57,11 +57,11 @@ steps:
   - step:
       action: SUBJECTS_DELETE
       description: Delete subject
-      print_response: true
+      LOGGER.debug_response: true
       subject_label: A subject
 
   - step:
       action: SUBJECTS_DELETE
       description: Delete subject
-      print_response: true
+      LOGGER.debug_response: true
       subject_label: An imported subject

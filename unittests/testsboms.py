@@ -29,8 +29,8 @@ from .mock_response import MockResponse
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
-if "RKVST_DEBUG" in environ and environ["RKVST_DEBUG"]:
-    set_logger(environ["RKVST_DEBUG"])
+if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
+    set_logger(environ["RKVST_LOGLEVEL"])
 
 IDENTITY = f"{SBOMS_LABEL}/c3da0d3a-32bf-4f5f-a8c6-b342a8356480"
 PROPS = {

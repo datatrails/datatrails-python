@@ -1,7 +1,7 @@
 ---
 # The step field is a string that represents the method bound to an endpoint.
 #
-# Create a number of offices equipped with printers, coffee machines and security
+# Create a number of offices equipped with LOGGER.debugers, coffee machines and security
 # cameras
 #
 steps:
@@ -32,14 +32,14 @@ steps:
   - step:
       action: LOCATIONS_COUNT
       description: Count locations in namespace
-      print_response: true
+      LOGGER.debug_response: true
     attrs:
       namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
 
   - step:
       action: LOCATIONS_LIST
       description: List locations in namespace
-      print_response: true
+      LOGGER.debug_response: true
     attrs:
       namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
 
@@ -73,22 +73,22 @@ steps:
   - step:
       action: ASSETS_WAIT_FOR_CONFIRMED
       description: Wait for all assets to be confirmed
-      print_response: true
+      LOGGER.debug_response: true
     attrs:
       arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
 
   - step:
       action: ASSETS_LIST
-      description: List all printers
-      print_response: true
+      description: List all LOGGER.debugers
+      LOGGER.debug_response: true
     attrs:
-      arc_display_type: printer
+      arc_display_type: LOGGER.debuger
       arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
 
   - step:
       action: ASSETS_LIST
       description: List all coffee machines
-      print_response: true
+      LOGGER.debug_response: true
     attrs:
       arc_display_type: coffee machine
       arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
@@ -96,7 +96,7 @@ steps:
   - step:
       action: ASSETS_LIST
       description: List all security cameras
-      print_response: true
+      LOGGER.debug_response: true
     attrs:
       arc_display_type: security camera
       arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"

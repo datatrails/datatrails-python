@@ -86,7 +86,7 @@ steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create a door in Paris at Courts of Justice
-      print_response: true
+      LOGGER.debug_response: true
       asset_label: Courts of Justice Paris Front Door
     selector:
       - attributes:
@@ -262,7 +262,7 @@ steps:
       action: ASSETS_CREATE_IF_NOT_EXISTS
       description: Create Access Card 2
       asset_label: Access Card 2
-      print_response: true
+      LOGGER.debug_response: true
     selector:
       - attributes:
         - arc_display_name
@@ -341,7 +341,7 @@ steps:
       action: EVENTS_CREATE
       description: Courts of justice front door opened with card 2
       asset_label: Courts of Justice Paris Front Door
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     principal_declared:
@@ -364,7 +364,7 @@ steps:
       action: EVENTS_CREATE
       description: Access Card 2 opens Courts of justice front door
       asset_label: Access Card 2
-      print_response: true
+      LOGGER.debug_response: true
     operation: Record
     behaviour: RecordEvidence
     principal_declared:
@@ -386,7 +386,7 @@ steps:
   - step:
       action: ASSETS_LIST
       description: List all doors
-      print_response: true
+      LOGGER.debug_response: true
     attrs:
       arc_display_type: door
       arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
@@ -394,7 +394,7 @@ steps:
   - step:
       action: ASSETS_LIST
       description: List all cards
-      print_response: true
+      LOGGER.debug_response: true
     attrs:
       arc_display_type: card
       arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
@@ -402,11 +402,11 @@ steps:
   - step:
       action: EVENTS_LIST
       description: List all events for Courts of Justice Paris Front Door
-      print_response: true
+      LOGGER.debug_response: true
       asset_label: Courts of Justice Paris Front Door
 
   - step:
       action: EVENTS_LIST
       description: List all events for Access Card 2
-      print_response: true
+      LOGGER.debug_response: true
       asset_label: Access Card 2
