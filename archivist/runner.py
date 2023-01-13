@@ -202,7 +202,7 @@ class _ActionMap(dict):
         """
         Get valid action in map
         """
-        # if an exception occurs here then the dict initialised above is faulty.
+        # if an exception occurs here then the dict initialized above is faulty.
         return self.ops(action_name).get("action")  # type: ignore
 
     def keywords(self, action_name: str) -> Tuple | None:

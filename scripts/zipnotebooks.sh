@@ -15,7 +15,7 @@ then
     echo "${OUTDIR} does not exist"
     exit 1
 fi
-cp "${INDIR}"/*.ipynb "${OUTDIR}"
+cp -r "${INDIR}"/*.ipynb "${INDIR}"/test_files "${OUTDIR}"
 cd "${OUTDIR}"
 rm -f notebooks.zip
-zip notebooks.zip *.ipynb
+zip -r notebooks.zip *.ipynb test_files

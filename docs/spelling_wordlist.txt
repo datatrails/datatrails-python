@@ -2,6 +2,7 @@ api
 appidp
 args
 boolean
+chmod
 comparator
 config
 cyclonedx
@@ -16,6 +17,7 @@ fda
 formatters
 https
 iam
+icacls
 instantiation
 iterable
 jinja
