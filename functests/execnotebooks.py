@@ -49,19 +49,19 @@ class TestNotebooks(TestCase):
             msg="Incorrect URL",
         )
         self.assertEqual(
-            notebook.ref("APPREG_CLIENT"),
+            notebook.ref("RKVST_APPREG_CLIENT"),
             self.client_id,
-            msg="Incorrect APPREG_CLIENT",
+            msg="Incorrect RKVST_APPREG_CLIENT",
         )
         self.assertEqual(
-            notebook.ref("APPREG_SECRET"),
+            notebook.ref("RKVST_APPREG_SECRET"),
             self.client_secret,
-            msg="Incorrect APPREG_SECRET",
+            msg="Incorrect RKVST_APPREG_SECRET",
         )
         self.assertEqual(
-            notebook.cell_output_text(4),
+            notebook.cell_output_text(5),
             f"""Connecting to RKVST
-URL {self.url}""",
+RKVST_URL {self.url}""",
             msg="Incorrect cell output",
         )
 
@@ -91,8 +91,8 @@ URL {self.url}""",
                 0,
                 msg="Incorrect RKVST_UNIQUE_ID",
             )
-            self.check_notebook_cell(notebook, 7)
             self.check_notebook_cell(notebook, 8)
+            self.check_notebook_cell(notebook, 9)
             LOGGER.debug("=================================")
 
     def test_02_find_asset_create_attachment(self):
@@ -115,8 +115,8 @@ URL {self.url}""",
                 0,
                 msg="Incorrect RKVST_ARTIST_ATTACHMENT",
             )
-            self.check_notebook_cell(notebook, 8)
             self.check_notebook_cell(notebook, 9)
+            self.check_notebook_cell(notebook, 10)
             LOGGER.debug("=================================")
 
     def test_03_find_asset_create_event(self):
@@ -134,8 +134,8 @@ URL {self.url}""",
                 0,
                 msg="Incorrect RKVST_UNIQUE_ID",
             )
-            self.check_notebook_cell(notebook, 7)
             self.check_notebook_cell(notebook, 8)
+            self.check_notebook_cell(notebook, 9)
             LOGGER.debug("=================================")
 
     def test_create_event_with_verified_domain(self):
@@ -148,9 +148,9 @@ URL {self.url}""",
         ) as notebook:
             LOGGER.debug("\ncreate_event_with_verified_domain")
             self.basic_notebook_test(notebook)
-            self.check_notebook_cell(notebook, 8)
             self.check_notebook_cell(notebook, 9)
             self.check_notebook_cell(notebook, 10)
+            self.check_notebook_cell(notebook, 11)
             LOGGER.debug("=================================")
 
     def test_check_asset_compliance_current_outstanding(self):
@@ -163,13 +163,13 @@ URL {self.url}""",
         ) as notebook:
             LOGGER.debug("\ncheck_asset_compliance_current_outstanding")
             self.basic_notebook_test(notebook)
-            self.check_notebook_cell(notebook, 9)
             self.check_notebook_cell(notebook, 10)
             self.check_notebook_cell(notebook, 11)
             self.check_notebook_cell(notebook, 12)
             self.check_notebook_cell(notebook, 13)
             self.check_notebook_cell(notebook, 14)
             self.check_notebook_cell(notebook, 15)
+            self.check_notebook_cell(notebook, 16)
             LOGGER.debug("=================================")
 
     def test_check_asset_compliance_since(self):
@@ -182,8 +182,8 @@ URL {self.url}""",
         ) as notebook:
             LOGGER.debug("\ncheck_asset_compliance_since")
             self.basic_notebook_test(notebook)
-            self.check_notebook_cell(notebook, 9)
             self.check_notebook_cell(notebook, 10)
             self.check_notebook_cell(notebook, 11)
             self.check_notebook_cell(notebook, 12)
+            self.check_notebook_cell(notebook, 13)
             LOGGER.debug("=================================")

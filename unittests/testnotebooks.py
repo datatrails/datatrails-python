@@ -89,33 +89,33 @@ class TestNotebooks(TestCase):
             "archivist/notebooks/Manage_Credentials.ipynb", execute=True
         ) as notebook:
             self.assertEqual(
-                notebook.ref("URL"),
-                os.getenv("RKVST_URL"),
+                notebook.ref("RKVST_URL"),
+                f"{URL}",
                 msg="Incorrect URL",
             )
             self.assertEqual(
                 notebook.ref("auth_token"),
-                os.getenv("RKVST_AUTHTOKEN"),
+                f"{AUTHTOKEN}",
                 msg="Incorrect AUTHTOKEN",
             )
             self.assertEqual(
-                notebook.cell_output_text(5),
-                str(Archivist(os.getenv("RKVST_URL"), os.getenv("RKVST_AUTHTOKEN"))),
+                notebook.cell_output_text(6),
+                str(Archivist(f"{URL}", f"{AUTHTOKEN}")),
                 msg="Incorrect Archivist",
             )
             self.assertEqual(
-                notebook.cell_output_text(6),
-                f"""client_id {APPREG_CLIENT}
-client_secret {APPREG_SECRET}""",
+                notebook.cell_output_text(7),
+                f"""RKVST_APPREG_CLIENT {APPREG_CLIENT}
+RKVST_APPREG_SECRET {APPREG_SECRET}""",
                 msg="Incorrect appreg client id and secret",
             )
             self.assertEqual(
-                notebook.cell_output_text(7),
+                notebook.cell_output_text(8),
                 f"Archivist({URL})",
                 msg="Incorrect Archivist",
             )
             self.assertEqual(
-                notebook.cell_output_text(8),
+                notebook.cell_output_text(9),
                 f"Archivist({URL})",
                 msg="Incorrect Archivist",
             )
@@ -126,23 +126,23 @@ client_secret {APPREG_SECRET}""",
         """
         self.assertEqual(
             notebook.ref("RKVST_URL"),
-            os.getenv("RKVST_URL"),
+            f"{URL}",
             msg="Incorrect URL",
         )
         self.assertEqual(
-            notebook.ref("APPREG_CLIENT"),
-            os.getenv("RKVST_APPREG_CLIENT"),
+            notebook.ref("RKVST_APPREG_CLIENT"),
+            f"{APPREG_CLIENT}",
             msg="Incorrect APPREG_CLIENT",
         )
         self.assertEqual(
-            notebook.ref("APPREG_SECRET"),
-            os.getenv("RKVST_APPREG_SECRET"),
+            notebook.ref("RKVST_APPREG_SECRET"),
+            f"{APPREG_SECRET}",
             msg="Incorrect APPREG_SECRET",
         )
         self.assertEqual(
-            notebook.cell_output_text(4),
+            notebook.cell_output_text(5),
             f"""Connecting to RKVST
-URL {URL}""",
+RKVST_URL {URL}""",
             msg="Incorrect cell output",
         )
 
@@ -151,15 +151,15 @@ URL {URL}""",
         Test create_asset_and_events
         """
         with testbook(
-            "archivist/notebooks/Create Asset and Events.ipynb", execute=range(1, 5)
+            "archivist/notebooks/Create Asset and Events.ipynb", execute=(1, 2, 4, 5)
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-            # this is commenetd out as it does not work. There is no way of patching
+            # this is commented out as it does not work. There is no way of patching
             # an object in a notebook (no notebook.patch.object) as notebook code is
             # represented as strings we could 'eval' the strings but for security
-            # reasons the __Repr__ of the Archivist does not emit the credentials so
-            # this isnot possible.
+            # reasons the __repr__ of the Archivist does not emit the credentials so
+            # this is not possible.
             # so we will implement functional tests to test actual code
             # arch = notebook.ref("arch")
             # create_artist = notebook.ref("create_artist")
@@ -176,7 +176,7 @@ URL {URL}""",
         """
         with testbook(
             "archivist/notebooks/Create Event with Verified Domain.ipynb",
-            execute=range(1, 5),
+            execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
@@ -186,7 +186,7 @@ URL {URL}""",
         """
         with testbook(
             "archivist/notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy.ipynb",
-            execute=range(1, 5),
+            execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
@@ -196,7 +196,7 @@ URL {URL}""",
         """
         with testbook(
             "archivist/notebooks/Check Asset Compliance using SINCE Policy.ipynb",
-            execute=range(1, 5),
+            execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
@@ -206,7 +206,7 @@ URL {URL}""",
         """
         with testbook(
             "archivist/notebooks/Find Asset and Create Attachment.ipynb",
-            execute=range(1, 5),
+            execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
@@ -216,6 +216,6 @@ URL {URL}""",
         """
         with testbook(
             "archivist/notebooks/Find Asset and Event Creation.ipynb",
-            execute=range(1, 5),
+            execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)

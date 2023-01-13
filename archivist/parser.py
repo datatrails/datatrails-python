@@ -152,7 +152,7 @@ def endpoint(args):
         set_logger("INFO")
 
     arch = None
-    LOGGER.info("Initialising connection to RKVST...")
+    LOGGER.info("Initializing connection to RKVST...")
     fixtures = {}
     if args.proof_mechanism is not None:
         fixtures = {
