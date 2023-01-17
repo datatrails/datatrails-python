@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.errors &mdash; RKVST v0.18.1 documentation</title>
+  <title>archivist.errors &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -99,55 +99,55 @@
 
 
 <div class="viewcode-block" id="ArchivistError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base exception for archivist package&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base exception for archivist package&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistBadFieldError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistBadFieldError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistBadFieldError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Incorrect field name in list() method&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Incorrect field name in list() method&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistUnconfirmedError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistUnconfirmedError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistUnconfirmedError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;asset or event failed to confirm after fixed timeout&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;asset or event failed to confirm after fixed timeout&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistUnpublishedError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistUnpublishedError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistUnpublishedError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Sbom failed to publish after fixed timeout&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sbom failed to publish after fixed timeout&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistUnwithdrawnError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistUnwithdrawnError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistUnwithdrawnError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Sbom failed to be withdrawn after fixed timeout&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sbom failed to be withdrawn after fixed timeout&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistInvalidOperationError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistInvalidOperationError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistInvalidOperationError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Runner Operation is invalid&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runner Operation is invalid&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistBadRequestError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistBadRequestError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistBadRequestError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Ill-formed request or validation error (400)&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ill-formed request or validation error (400)&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistDuplicateError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistDuplicateError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistDuplicateError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Read by signature returns more than one asset&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read by signature returns more than one asset&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistUnauthenticatedError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistUnauthenticatedError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistUnauthenticatedError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;user is unknown (401)&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;user is unknown (401)&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistPaymentRequiredError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistPaymentRequiredError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistPaymentRequiredError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A quota has been reached (402)&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A quota has been reached (402)&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistForbiddenError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistForbiddenError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistForbiddenError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;User does not have permission (403)&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;User does not have permission (403)&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistNotFoundError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistNotFoundError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Entity does not exist (404)&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Entity does not exist (404)&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistTooManyRequestsError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistTooManyRequestsError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistTooManyRequestsError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Too many requests in too short a time (429)&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Too many requests in too short a time (429)&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">retry</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">retry</span><span class="p">)</span> <span class="k">if</span> <span class="n">retry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
@@ -155,23 +155,23 @@
 
 
 <div class="viewcode-block" id="Archivist4xxError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.Archivist4xxError">[docs]</a><span class="k">class</span> <span class="nc">Archivist4xxError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Any other 4xx error&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Any other 4xx error&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistNotImplementedError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistNotImplementedError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistNotImplementedError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Illegal REST verb (501) or option&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Illegal REST verb (501) or option&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistHeaderError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistHeaderError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistHeaderError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;When the expected header is not received&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;When the expected header is not received&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ArchivistUnavailableError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistUnavailableError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistUnavailableError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Service is unavailable (503)&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Service is unavailable (503)&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="Archivist5xxError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.Archivist5xxError">[docs]</a><span class="k">class</span> <span class="nc">Archivist5xxError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Any other 5xx error&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Any other 5xx error&quot;&quot;&quot;</span></div>
 
 
 <span class="k">def</span> <span class="nf">__identity</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -204,7 +204,7 @@
 
 
 <span class="k">def</span> <span class="nf">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="n">Response</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Parse REST response</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse REST response</span>
 
 <span class="sd">    Validates REST response. This is a convenience function called</span>
 <span class="sd">    by all REST calls.</span>

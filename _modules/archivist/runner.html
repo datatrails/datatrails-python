@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.runner &mdash; RKVST v0.18.1 documentation</title>
+  <title>archivist.runner &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -108,12 +108,12 @@
 
 
 <div class="viewcode-block" id="tree"><a class="viewcode-back" href="../../code/runner.html#archivist.runner.tree">[docs]</a><span class="k">def</span> <span class="nf">tree</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Recursive dict of dicts&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Recursive dict of dicts&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="_ActionMap"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._ActionMap">[docs]</a><span class="k">class</span> <span class="nc">_ActionMap</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Map of actions and keywords for an action</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -272,7 +272,7 @@
         <span class="p">}</span>
 
 <div class="viewcode-block" id="_ActionMap.ops"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._ActionMap.ops">[docs]</a>    <span class="k">def</span> <span class="nf">ops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get valid entry in map</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span>
@@ -281,26 +281,26 @@
         <span class="k">return</span> <span class="n">ops</span></div>
 
 <div class="viewcode-block" id="_ActionMap.action"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._ActionMap.action">[docs]</a>    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get valid action in map</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># if an exception occurs here then the dict initialised above is faulty.</span>
+        <span class="c1"># if an exception occurs here then the dict initialized above is faulty.</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;action&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="_ActionMap.keywords"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._ActionMap.keywords">[docs]</a>    <span class="k">def</span> <span class="nf">keywords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get keywords in map</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keywords&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_ActionMap.delete"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._ActionMap.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get delete_method in map</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;delete&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_ActionMap.label"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._ActionMap.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">noun</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return whether this action uses or sets label</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">(</span><span class="n">action_name</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">_label&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
@@ -337,7 +337,7 @@
     <span class="n">add_data_location_identity</span> <span class="o">=</span> <span class="n">partialmethod</span><span class="p">(</span><span class="n">add_data_identity</span><span class="p">,</span> <span class="s2">&quot;location&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="_Step.args"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._Step.args">[docs]</a>    <span class="k">def</span> <span class="nf">args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_method</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add args and kwargs to action.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="p">[]</span>
@@ -473,7 +473,7 @@
 
 
 <div class="viewcode-block" id="_Runner"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._Runner">[docs]</a><span class="k">class</span> <span class="nc">_Runner</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ArchivistRunner takes a url, token_file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -486,7 +486,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Runner(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The dict config contains a list of `steps` to be performed serially, e.g.</span>
 
 <span class="sd">        ```</span>
@@ -522,7 +522,7 @@
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Runner exception </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
 
 <div class="viewcode-block" id="_Runner.run_steps"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._Runner.run_steps">[docs]</a>    <span class="k">def</span> <span class="nf">run_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-        <span class="sd">&quot;&quot;&quot;Runs all defined steps in self.config.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs all defined steps in self.config.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">entities</span> <span class="o">=</span> <span class="n">tree</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;steps&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">run_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
@@ -531,7 +531,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="_Runner.run_step"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._Runner.run_step">[docs]</a>    <span class="k">def</span> <span class="nf">run_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-        <span class="sd">&quot;&quot;&quot;Runs a step given parameters and the type of step.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs a step given parameters and the type of step.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            step (dict): the steps map.</span>
@@ -561,20 +561,20 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span></div>
 
 <div class="viewcode-block" id="_Runner.set_deletions"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._Runner.set_deletions">[docs]</a>    <span class="k">def</span> <span class="nf">set_deletions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">delete_method</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;sets entry to be deleted&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sets entry to be deleted&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">delete_method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">identity</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">deletions</span><span class="p">[</span><span class="n">identity</span><span class="p">]</span> <span class="o">=</span> <span class="n">delete_method</span></div>
 
 <div class="viewcode-block" id="_Runner.delete"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._Runner.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Deletes all entities&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deletes all entities&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">identity</span><span class="p">,</span> <span class="n">delete_method</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">deletions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Delete </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span>
             <span class="n">delete_method</span><span class="p">(</span><span class="n">identity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_Runner.identity"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._Runner.identity">[docs]</a>    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Gets entity id&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets entity id&quot;&quot;&quot;</span>
 
         <span class="n">identity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>

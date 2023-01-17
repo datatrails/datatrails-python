@@ -1,0 +1,351 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "fb467649",
+   "metadata": {},
+   "source": [
+    "## Find Asset and Event Creation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "43758e9b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Find an Asset and create Events\n",
+    "#\n",
+    "# Main function, establishes a connection to RKVST using an App Registration then uses that\n",
+    "# to find an Asset and create Events.\n",
+    "#\n",
+    "# Note: The purpose of RKVST Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.\n",
+    "# The RKVST Python SDK is authored to work cleanly with more advanced coding techniques.\n",
+    "#\n",
+    "# RKVST Python SDK: https://github.com/rkvst/rkvst-python\n",
+    "#"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "40624149",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from json import dumps as json_dumps\n",
+    "from os import getenv\n",
+    "from warnings import filterwarnings\n",
+    "\n",
+    "from dotenv import load_dotenv\n",
+    "\n",
+    "from archivist.archivist import Archivist\n",
+    "from archivist.proof_mechanism import ProofMechanism\n",
+    "from archivist.logger import set_logger"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "9ce08e42",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%reload_ext dotenv\n",
+    "%dotenv -o notebooks.env"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "a76365aa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# URL, CLIENT, SECRET are environment variables that represent connection parameters.\n",
+    "#\n",
+    "# URL = represents the url to the RKVST application\n",
+    "# CLIENT = represents the client ID from an Application Registration\n",
+    "# SECRET = represents the client secret from an Application Registration\n",
+    "RKVST_URL = getenv(\"RKVST_URL\")\n",
+    "RKVST_APPREG_CLIENT = getenv(\"RKVST_APPREG_CLIENT\")\n",
+    "RKVST_APPREG_SECRET = getenv(\"RKVST_APPREG_SECRET\")\n",
+    "RKVST_UNIQUE_ID = getenv(\"RKVST_UNIQUE_ID\")\n",
+    "if not RKVST_UNIQUE_ID:\n",
+    "    raise Exception(\"RKVST_UNIQUE_ID is undefined\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "a834f2cd",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Connecting to RKVST\n",
+      "RKVST_URL https://app.rkvst.io\n"
+     ]
+    }
+   ],
+   "source": [
+    "\"\"\"\n",
+    "Main function of Asset and Event creation.\n",
+    "\n",
+    "* Connect to RKVST with client ID and client secret\n",
+    "* Creates an Asset and two Events\n",
+    "* Prints response of Asset and Event creation\n",
+    "\"\"\"\n",
+    "\n",
+    "# Optional call to set the logger level.  The argument can be either\n",
+    "# \"INFO\" or \"DEBUG\".  For more sophisticated logging control see our\n",
+    "# documentation.\n",
+    "set_logger(\"INFO\")\n",
+    "\n",
+    "# Initialize connection to RKVST\n",
+    "print(\"Connecting to RKVST\")\n",
+    "print(\"RKVST_URL\", RKVST_URL)\n",
+    "arch = Archivist(RKVST_URL, (RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET), max_time=300)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "aa63d95a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def get_artist(arch, name, artistid):\n",
+    "    \"\"\"\n",
+    "    Finds existing Artist asset by name and unique id\n",
+    "    \"\"\"\n",
+    "    attrs = {\n",
+    "        \"arc_display_type\": \"Artists\",\n",
+    "        \"arc_display_name\": name,\n",
+    "        \"artistid\": artistid,\n",
+    "    }\n",
+    "\n",
+    "    return arch.assets.read_by_signature(attrs=attrs)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "66df6ebc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def create_release(arch, asset, album_name, release):\n",
+    "    \"\"\"\n",
+    "    Creates an Event for existing Artist asset\n",
+    "    \"\"\"\n",
+    "    props = {\"operation\": \"Record\", \"behaviour\": \"RecordEvidence\"}\n",
+    "    attrs = {\n",
+    "        \"arc_description\": \"Artist Information for existing Artist\",\n",
+    "        \"arc_display_type\": \"Album Release for existing Artist\",\n",
+    "        \"album_name\": album_name,\n",
+    "        \"relase_year\": release,\n",
+    "    }\n",
+    "\n",
+    "    return arch.events.create(asset[\"identity\"], props=props, attrs=attrs)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "0055fe00",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Finding Asset\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Refresh token\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Asset {\n",
+      "    \"identity\": \"assets/cbd21a61-c126-4c02-b525-add1a74fb802\",\n",
+      "    \"behaviours\": [\n",
+      "        \"RecordEvidence\",\n",
+      "        \"Builtin\",\n",
+      "        \"AssetCreator\",\n",
+      "        \"Attachments\"\n",
+      "    ],\n",
+      "    \"attributes\": {\n",
+      "        \"arc_description\": \"British Soul Singer\",\n",
+      "        \"arc_display_name\": \"Adele Laurie Blue Adkins\",\n",
+      "        \"arc_display_type\": \"Artists\",\n",
+      "        \"artistid\": \"666769323\",\n",
+      "        \"genre\": \"Soul\",\n",
+      "        \"stage_name\": \"Adele\",\n",
+      "        \"arc_attachments\": [\n",
+      "            {\n",
+      "                \"arc_hash_alg\": \"SHA256\",\n",
+      "                \"arc_hash_value\": \"cf0dd630dcfb6e2eac65c362bf7d5ff382a4241ebf45a69a2541ee43320d4af6\",\n",
+      "                \"arc_attachment_identity\": \"blobs/9bfee457-b0ef-4fe9-a51f-16f96ddf8a8a\",\n",
+      "                \"arc_display_name\": \"arc_primary_image\"\n",
+      "            }\n",
+      "        ]\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"tracked\": \"TRACKED\",\n",
+      "    \"owner\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"at_time\": \"2023-01-16T11:54:18Z\",\n",
+      "    \"storage_integrity\": \"TENANT_STORAGE\",\n",
+      "    \"proof_mechanism\": \"SIMPLE_HASH\",\n",
+      "    \"chain_id\": \"827586838445807967\",\n",
+      "    \"public\": false,\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Finding existing artist by name and artist id\n",
+    "# Fill in the artistid from Create Asset and Events notebook\n",
+    "print(\"Finding Asset\")\n",
+    "asset = get_artist(arch, \"Adele Laurie Blue Adkins\", RKVST_UNIQUE_ID)\n",
+    "print(\"Asset\", json_dumps(asset, indent=4))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "8ac5add2",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Creating Events for existing Asset\n",
+      "Event for Album 25 {\n",
+      "    \"identity\": \"assets/cbd21a61-c126-4c02-b525-add1a74fb802/events/676e0177-c7a8-488e-adda-89438f2e3380\",\n",
+      "    \"asset_identity\": \"assets/cbd21a61-c126-4c02-b525-add1a74fb802\",\n",
+      "    \"event_attributes\": {\n",
+      "        \"arc_description\": \"Artist Information for existing Artist\",\n",
+      "        \"arc_display_type\": \"Album Release for existing Artist\",\n",
+      "        \"relase_year\": \"2015\",\n",
+      "        \"album_name\": \"25\"\n",
+      "    },\n",
+      "    \"asset_attributes\": {},\n",
+      "    \"operation\": \"Record\",\n",
+      "    \"behaviour\": \"RecordEvidence\",\n",
+      "    \"timestamp_declared\": \"2023-01-16T11:54:23Z\",\n",
+      "    \"timestamp_accepted\": \"2023-01-16T11:54:23Z\",\n",
+      "    \"timestamp_committed\": \"2023-01-16T11:54:23.062210882Z\",\n",
+      "    \"principal_declared\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"principal_accepted\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"transaction_id\": \"\",\n",
+      "    \"block_number\": 0,\n",
+      "    \"transaction_index\": 0,\n",
+      "    \"from\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n",
+      "Event for Album 30 {\n",
+      "    \"identity\": \"assets/cbd21a61-c126-4c02-b525-add1a74fb802/events/d20eb860-bd6b-4d29-951c-dbebb17e2839\",\n",
+      "    \"asset_identity\": \"assets/cbd21a61-c126-4c02-b525-add1a74fb802\",\n",
+      "    \"event_attributes\": {\n",
+      "        \"relase_year\": \"2021\",\n",
+      "        \"album_name\": \"30\",\n",
+      "        \"arc_description\": \"Artist Information for existing Artist\",\n",
+      "        \"arc_display_type\": \"Album Release for existing Artist\"\n",
+      "    },\n",
+      "    \"asset_attributes\": {},\n",
+      "    \"operation\": \"Record\",\n",
+      "    \"behaviour\": \"RecordEvidence\",\n",
+      "    \"timestamp_declared\": \"2023-01-16T11:54:23Z\",\n",
+      "    \"timestamp_accepted\": \"2023-01-16T11:54:23Z\",\n",
+      "    \"timestamp_committed\": \"2023-01-16T11:54:24.009826690Z\",\n",
+      "    \"principal_declared\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"principal_accepted\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"transaction_id\": \"\",\n",
+      "    \"block_number\": 0,\n",
+      "    \"transaction_index\": 0,\n",
+      "    \"from\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Create two Events that contain album release information for existing Artist\n",
+    "print(\"Creating Events for existing Asset\")\n",
+    "event_one = create_release(arch, asset, album_name=\"25\", release=\"2015\")\n",
+    "print(\"Event for Album 25\", json_dumps(event_one, indent=4))\n",
+    "event_two = create_release(arch, asset, album_name=\"30\", release=\"2021\")\n",
+    "print(\"Event for Album 30\", json_dumps(event_two, indent=4))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b1f0eb8f",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.15"
+  },
+  "vscode": {
+   "interpreter": {
+    "hash": "aee8b7b246df8f9039afb4144a1f6fd8d2ca17a180786b69acc140d282b71a49"
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

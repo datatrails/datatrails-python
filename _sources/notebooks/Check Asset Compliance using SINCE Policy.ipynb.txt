@@ -11,7 +11,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 1,
    "id": "c85b9e96",
    "metadata": {},
    "outputs": [],
@@ -26,7 +26,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 2,
    "id": "001b25e3",
    "metadata": {},
    "outputs": [],
@@ -36,6 +36,8 @@
     "from time import sleep\n",
     "from uuid import uuid4\n",
     "from warnings import filterwarnings\n",
+    "\n",
+    "from dotenv import load_dotenv\n",
     "\n",
     "from archivist.archivist import Archivist\n",
     "from archivist.compliance_policy_requests import (\n",
@@ -48,17 +50,70 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "a877ffed",
+   "execution_count": 3,
+   "id": "96987aaf",
    "metadata": {},
    "outputs": [],
    "source": [
-    "URL = \"https://app.rkvst.io\""
+    "%reload_ext dotenv\n",
+    "%dotenv -o notebooks.env"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 4,
+   "id": "a877ffed",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# URL, CLIENT, SECRET are environment variables that represent connection parameters.\n",
+    "#\n",
+    "# URL = represents the url to the RKVST application\n",
+    "# CLIENT = represents the client ID from an Application Registration\n",
+    "# SECRET = represents the client secret from an Application Registration\n",
+    "RKVST_URL = getenv(\"RKVST_URL\")\n",
+    "RKVST_APPREG_CLIENT = getenv(\"RKVST_APPREG_CLIENT\")\n",
+    "RKVST_APPREG_SECRET = getenv(\"RKVST_APPREG_SECRET\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "3fdc8e16",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Connecting to RKVST\n",
+      "RKVST_URL https://app.rkvst.io\n"
+     ]
+    }
+   ],
+   "source": [
+    "\"\"\"\n",
+    "Main function of Asset and Event creation.\n",
+    "\n",
+    "* Connect to RKVST with client ID and client secret\n",
+    "* Creates an Asset and two Events\n",
+    "* Prints response of Asset and Event creation\n",
+    "\"\"\"\n",
+    "\n",
+    "# Optional call to set the logger level.  The argument can be either\n",
+    "# \"INFO\" or \"DEBUG\".  For more sophisticated logging control see our\n",
+    "# documentation.\n",
+    "set_logger(\"INFO\")\n",
+    "\n",
+    "# Initialize connection to RKVST\n",
+    "print(\"Connecting to RKVST\")\n",
+    "print(\"RKVST_URL\", RKVST_URL)\n",
+    "arch = Archivist(RKVST_URL, (RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET), max_time=300)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
    "id": "acdf240c",
    "metadata": {},
    "outputs": [],
@@ -89,7 +144,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 7,
    "id": "8889c68d",
    "metadata": {},
    "outputs": [],
@@ -115,7 +170,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 8,
    "id": "ba24d143",
    "metadata": {},
    "outputs": [],
@@ -141,42 +196,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "ec1909a6",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "\"\"\"Main function of create event.\n",
-    "\n",
-    "Parse in user input of url and auth token and use them to\n",
-    "create an example archivist connection and create an asset.\n",
-    "\n",
-    "\"\"\"\n",
-    "# optional call to set the logger level for all subsystems. The argument can\n",
-    "# be either \"INFO\" or \"DEBUG\". For more sophisticated logging control see the\n",
-    "# documentation.\n",
-    "set_logger(\"INFO\")\n",
-    "\n",
-    "# Get authorization token. The token grants certain rights and access permissions.\n",
-    "# The token can represent the root principal or user in an organization. Different tokens\n",
-    "# could indicate different users in the same organization or membership of different\n",
-    "# organisations.\n",
-    "\n",
-    "with open(\"/home/builder/credentials/token\", mode=\"r\", encoding=\"utf-8\") as tokenfile:\n",
-    "    auth = tokenfile.read().strip()\n",
-    "\n",
-    "# Initialize connection to Archivist\n",
-    "arch = Archivist(\n",
-    "    URL,\n",
-    "    auth,\n",
-    "    max_time=300,\n",
-    "    verify=False,\n",
-    ")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 9,
    "id": "b7482420",
    "metadata": {
     "scrolled": true
@@ -188,34 +208,193 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 10,
    "id": "bb5b0651",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Refresh token\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "SINCE_POLICY: {\n",
+      "    \"identity\": \"compliance_policies/458957bc-4da7-4cc3-b37f-43fa53abe0cc\",\n",
+      "    \"compliance_type\": \"COMPLIANCE_SINCE\",\n",
+      "    \"description\": \"Maintenance should be performed every 10 seconds\",\n",
+      "    \"display_name\": \"Regular Maintenance of Traffic light\",\n",
+      "    \"asset_filter\": [\n",
+      "        {\n",
+      "            \"or\": [\n",
+      "                \"attributes.arc_display_type=Traffic Light\"\n",
+      "            ]\n",
+      "        }\n",
+      "    ],\n",
+      "    \"event_display_type\": \"Maintenance Performed a3f86bbf-737a-45d8-bd84-3d6612fb641e\",\n",
+      "    \"closing_event_display_type\": \"\",\n",
+      "    \"time_period_seconds\": \"10\",\n",
+      "    \"dynamic_window\": \"0\",\n",
+      "    \"dynamic_variability\": 0,\n",
+      "    \"richness_assertions\": []\n",
+      "}\n",
+      "compliance_policy {\n",
+      "    \"identity\": \"compliance_policies/458957bc-4da7-4cc3-b37f-43fa53abe0cc\",\n",
+      "    \"compliance_type\": \"COMPLIANCE_SINCE\",\n",
+      "    \"description\": \"Maintenance should be performed every 10 seconds\",\n",
+      "    \"display_name\": \"Regular Maintenance of Traffic light\",\n",
+      "    \"asset_filter\": [\n",
+      "        {\n",
+      "            \"or\": [\n",
+      "                \"attributes.arc_display_type=Traffic Light\"\n",
+      "            ]\n",
+      "        }\n",
+      "    ],\n",
+      "    \"event_display_type\": \"Maintenance Performed a3f86bbf-737a-45d8-bd84-3d6612fb641e\",\n",
+      "    \"closing_event_display_type\": \"\",\n",
+      "    \"time_period_seconds\": \"10\",\n",
+      "    \"dynamic_window\": \"0\",\n",
+      "    \"dynamic_variability\": 0,\n",
+      "    \"richness_assertions\": []\n",
+      "}\n"
+     ]
+    }
+   ],
    "source": [
     "# make a SINCE compliance policy that alerts when the\n",
     "# maintenance performed event has expired.\n",
-    "compliance_policy = create_compliance_policy(arch, tag)"
+    "compliance_policy = create_compliance_policy(arch, tag)\n",
+    "print(\"compliance_policy\", json_dumps(compliance_policy, indent=4))"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 11,
    "id": "f8ac6dda",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "TRAFFIC_LIGHT: {\n",
+      "    \"identity\": \"assets/b6f63a6d-24a1-4dd8-a6d7-21e50e603ceb\",\n",
+      "    \"behaviours\": [\n",
+      "        \"RecordEvidence\",\n",
+      "        \"Builtin\",\n",
+      "        \"AssetCreator\",\n",
+      "        \"Attachments\"\n",
+      "    ],\n",
+      "    \"attributes\": {\n",
+      "        \"arc_description\": \"Traffic flow control light at A603 North East\",\n",
+      "        \"arc_display_name\": \"Traffic light model 54\",\n",
+      "        \"arc_display_type\": \"Traffic Light\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"tracked\": \"TRACKED\",\n",
+      "    \"owner\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"at_time\": \"2023-01-16T11:52:27Z\",\n",
+      "    \"storage_integrity\": \"TENANT_STORAGE\",\n",
+      "    \"proof_mechanism\": \"SIMPLE_HASH\",\n",
+      "    \"chain_id\": \"827586838445807967\",\n",
+      "    \"public\": false,\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n",
+      "traffic_light {\n",
+      "    \"identity\": \"assets/b6f63a6d-24a1-4dd8-a6d7-21e50e603ceb\",\n",
+      "    \"behaviours\": [\n",
+      "        \"RecordEvidence\",\n",
+      "        \"Builtin\",\n",
+      "        \"AssetCreator\",\n",
+      "        \"Attachments\"\n",
+      "    ],\n",
+      "    \"attributes\": {\n",
+      "        \"arc_description\": \"Traffic flow control light at A603 North East\",\n",
+      "        \"arc_display_name\": \"Traffic light model 54\",\n",
+      "        \"arc_display_type\": \"Traffic Light\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"tracked\": \"TRACKED\",\n",
+      "    \"owner\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"at_time\": \"2023-01-16T11:52:27Z\",\n",
+      "    \"storage_integrity\": \"TENANT_STORAGE\",\n",
+      "    \"proof_mechanism\": \"SIMPLE_HASH\",\n",
+      "    \"chain_id\": \"827586838445807967\",\n",
+      "    \"public\": false,\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n"
+     ]
+    }
+   ],
    "source": [
     "# create an asset that matches the assets_filter field in the\n",
     "# compliance policy.\n",
-    "traffic_light = create_traffic_light(arch)"
+    "traffic_light = create_traffic_light(arch)\n",
+    "print(\"traffic_light\", json_dumps(traffic_light, indent=4))"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 12,
    "id": "d93be01f",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "MAINTENANCE_PERFORMED: {\n",
+      "    \"identity\": \"assets/b6f63a6d-24a1-4dd8-a6d7-21e50e603ceb/events/eba5bb05-d4ff-4d99-9205-41236560d24d\",\n",
+      "    \"asset_identity\": \"assets/b6f63a6d-24a1-4dd8-a6d7-21e50e603ceb\",\n",
+      "    \"event_attributes\": {\n",
+      "        \"arc_description\": \"Maintenance performed on traffic light\",\n",
+      "        \"arc_display_type\": \"Maintenance Performed a3f86bbf-737a-45d8-bd84-3d6612fb641e\"\n",
+      "    },\n",
+      "    \"asset_attributes\": {},\n",
+      "    \"operation\": \"Record\",\n",
+      "    \"behaviour\": \"RecordEvidence\",\n",
+      "    \"timestamp_declared\": \"2023-01-16T11:52:31Z\",\n",
+      "    \"timestamp_accepted\": \"2023-01-16T11:52:31Z\",\n",
+      "    \"timestamp_committed\": \"2023-01-16T11:52:31.599813432Z\",\n",
+      "    \"principal_declared\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"principal_accepted\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"transaction_id\": \"\",\n",
+      "    \"block_number\": 0,\n",
+      "    \"transaction_index\": 0,\n",
+      "    \"from\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n",
+      "Sleep 1 second...\n",
+      "COMPLIANCE (true): {\n",
+      "    \"compliant\": true,\n",
+      "    \"compliance\": [\n",
+      "        {\n",
+      "            \"compliance_policy_identity\": \"compliance_policies/458957bc-4da7-4cc3-b37f-43fa53abe0cc\",\n",
+      "            \"compliant\": true,\n",
+      "            \"reason\": \"\"\n",
+      "        }\n",
+      "    ],\n",
+      "    \"next_page_token\": \"\",\n",
+      "    \"compliant_at\": \"2023-01-16T11:52:33Z\"\n",
+      "}\n"
+     ]
+    }
+   ],
    "source": [
     "# perform maintenance on the asset which is valid for 10 seconds.\n",
     "perform_maintenance(arch, traffic_light, tag)\n",
@@ -226,8 +405,36 @@
     "compliance = arch.compliance.compliant_at(\n",
     "    traffic_light[\"identity\"],\n",
     ")\n",
-    "print(\"COMPLIANCE (true):\", json_dumps(compliance, indent=4))\n",
-    "\n",
+    "print(\"COMPLIANCE (true):\", json_dumps(compliance, indent=4))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "fe8e2a6e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Sleep 15 seconds...\n",
+      "COMPLIANCE (false): {\n",
+      "    \"compliant\": false,\n",
+      "    \"compliance\": [\n",
+      "        {\n",
+      "            \"compliance_policy_identity\": \"compliance_policies/458957bc-4da7-4cc3-b37f-43fa53abe0cc\",\n",
+      "            \"compliant\": false,\n",
+      "            \"reason\": \"Duration 20s exceeds limit 10s\"\n",
+      "        }\n",
+      "    ],\n",
+      "    \"next_page_token\": \"\",\n",
+      "    \"compliant_at\": \"2023-01-16T11:52:52Z\"\n",
+      "}\n"
+     ]
+    }
+   ],
+   "source": [
     "# however waiting long enough (> 10s) will cause the asset to\n",
     "# become non-compliant...\n",
     "print(\"Sleep 15 seconds...\")\n",
@@ -240,7 +447,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 14,
    "id": "40ffc716",
    "metadata": {},
    "outputs": [],
@@ -250,6 +457,14 @@
     "    compliance_policy[\"identity\"],\n",
     ")"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "bccec420",
+   "metadata": {},
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {
@@ -268,7 +483,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.15"
+   "version": "3.8.15"
   }
  },
  "nbformat": 4,

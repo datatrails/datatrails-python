@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sharing an Asset &mdash; RKVST v0.18.1 documentation</title>
+  <title>Sharing an Asset &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Fixtures (Common Attributes)" href="../fixtures.html" />
-    <link rel="prev" title="Create Event With Verified Domain" href="Create%20Event%20with%20Verified%20Domain.html" /> 
+    <link rel="prev" title="Check Asset Compliance: SINCE policy" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,7 +39,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -54,12 +54,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../notebooks.html">Note Books (BETA)</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../notebooks.html#installing-the-rkvst-python-sdk">Installing the RKVST python SDK</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../notebooks.html#download-notebooks">Download Notebooks</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Initialization%20and%20Credentials.html">Initialization and Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Manage_Credentials.html">Manage Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Create%20Asset%20and%20Events.html">Create Asset and Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Event%20Creation.html">Find Asset and Event Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Create%20Attachment.html">Find Asset and Create Attachment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Sharing an Asset</a></li>
 </ul>
 </li>
@@ -377,7 +380,7 @@ div.rendered_html tbody tr:hover {
 <section id="Sharing-an-Asset">
 <h1>Sharing an Asset<a class="headerlink" href="#Sharing-an-Asset" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an asset for Archivist with token.</span>
@@ -389,6 +392,9 @@ div.rendered_html tbody tr:hover {
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
+
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.constants</span> <span class="kn">import</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span> <span class="n">SUBJECTS_SELF_ID</span>
@@ -401,16 +407,101 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://app.rkvst.io&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">reload_ext</span> dotenv
+<span class="o">%</span><span class="k">dotenv</span> -o notebooks.env
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL, CLIENT, SECRET are environment variables that represent connection parameters.</span>
+<span class="c1">#</span>
+<span class="c1"># URL = represents the url to the RKVST application</span>
+<span class="c1"># CLIENT = represents the client ID from an Application Registration</span>
+<span class="c1"># SECRET = represents the client secret from an Application Registration</span>
+
+<span class="n">RKVST_URL</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">)</span>
+
+<span class="n">RKVST_APPREG_CLIENT</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">RKVST_APPREG_SECRET</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">RKVST_APPREG_CLIENT</span><span class="p">[</span><span class="s2">&quot;acme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_CLIENT&quot;</span><span class="p">)</span>
+<span class="n">RKVST_APPREG_SECRET</span><span class="p">[</span><span class="s2">&quot;acme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET&quot;</span><span class="p">)</span>
+<span class="n">RKVST_APPREG_CLIENT</span><span class="p">[</span><span class="s2">&quot;weyland&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;cccccccccccccccccccccccccccccccccccc&quot;</span>
+<span class="n">RKVST_APPREG_SECRET</span><span class="p">[</span>
+    <span class="s2">&quot;weyland&quot;</span>
+<span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Main function of Asset and Event creation.</span>
+
+<span class="sd">* Connect to RKVST with client ID and client secret</span>
+<span class="sd">* Creates an Asset and two Events</span>
+<span class="sd">* Prints response of Asset and Event creation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Optional call to set the logger level.  The argument can be either</span>
+<span class="c1"># &quot;INFO&quot; or &quot;DEBUG&quot;.  For more sophisticated logging control see our</span>
+<span class="c1"># documentation.</span>
+<span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize connection to acme</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to ACME&quot;</span><span class="p">)</span>
+<span class="n">acme</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="n">RKVST_URL</span><span class="p">,</span> <span class="p">(</span><span class="n">RKVST_APPREG_CLIENT</span><span class="p">[</span><span class="s2">&quot;acme&quot;</span><span class="p">],</span> <span class="n">RKVST_APPREG_SECRET</span><span class="p">[</span><span class="s2">&quot;acme&quot;</span><span class="p">]),</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Connecting to ACME
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize connection to weyland</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to WEYLAND&quot;</span><span class="p">)</span>
+<span class="n">acme</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="n">RKVST_URL</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">RKVST_APPREG_CLIENT</span><span class="p">[</span><span class="s2">&quot;weyland&quot;</span><span class="p">],</span> <span class="n">RKVST_APPREG_SECRET</span><span class="p">[</span><span class="s2">&quot;weyland&quot;</span><span class="p">]),</span>
+    <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Connecting to WEYLAND
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_example_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create an asset using Archivist Connection.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an asset using Archivist Connection.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        arch: archivist connection.</span>
@@ -448,38 +539,11 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_archivist</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create connection to archivist&quot;&quot;&quot;</span>
-    <span class="c1"># Get authorization token. The token grants certain rights and access permissions.</span>
-    <span class="c1"># The token can represent the root principal or user in an organization. Different tokens</span>
-    <span class="c1"># could indicate different users in the same organization or membership of different</span>
-    <span class="c1"># organiastions.</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;/home/builder/credentials/</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span>
-    <span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
-        <span class="n">auth_token</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-    <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
-    <span class="c1"># of an asset or event creation - the default is 1200 seconds but one can optionally</span>
-    <span class="c1"># specify a different value here particularly when creating assets on SIMPLE_HASH</span>
-    <span class="c1"># (rather than KHIPU) as confirmation times are much shorter in this case.</span>
-    <span class="k">return</span> <span class="n">Archivist</span><span class="p">(</span>
-        <span class="n">URL</span><span class="p">,</span>
-        <span class="n">auth_token</span><span class="p">,</span>
-        <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">share_subjects</span><span class="p">(</span><span class="n">name1</span><span class="p">,</span> <span class="n">arch1</span><span class="p">,</span> <span class="n">name2</span><span class="p">,</span> <span class="n">arch2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Share subjects between 2 organizations&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Share subjects between 2 organizations&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">arch1</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">share</span><span class="p">(</span>
         <span class="n">name1</span><span class="p">,</span>
         <span class="n">name2</span><span class="p">,</span>
@@ -489,11 +553,11 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_example_access_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create access policy&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create access policy&quot;&quot;&quot;</span>
     <span class="c1"># consists of a filter selection entry and a selection criteria to restrict/redact</span>
     <span class="c1"># values of the asset attributes available to the sharee.</span>
 
@@ -541,31 +605,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># optional call to set the logger level for all subsystems. The argument can</span>
-<span class="c1"># be either &quot;INFO&quot; or &quot;DEBUG&quot;. For more sophisticated logging control see the</span>
-<span class="c1"># documentation.</span>
-<span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For demonstration purposes we are going to assume that 2 organizations are</span>
-<span class="c1"># going to share an asset. The 2 organizations are ACME Corp and Weyland-Yutani</span>
-<span class="c1"># Corporation.</span>
-<span class="n">acme</span> <span class="o">=</span> <span class="n">create_archivist</span><span class="p">(</span><span class="s2">&quot;acme&quot;</span><span class="p">)</span>
-<span class="n">weyland</span> <span class="o">=</span> <span class="n">create_archivist</span><span class="p">(</span><span class="s2">&quot;weyland&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># acme creates an asset</span>
@@ -573,6 +614,89 @@ div.rendered_html tbody tr:hover {
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;asset created in acme&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">acme_asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ArchivistBadRequestError</span>                  Traceback (most recent call last)
+<span class="ansi-green-fg">/tmp/ipykernel_374487/4273452617.py</span> in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg"># acme creates an asset</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>acme_asset <span class="ansi-blue-fg">=</span> create_example_asset<span class="ansi-blue-fg">(</span>acme<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;acme&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;asset created in acme&#34;</span><span class="ansi-blue-fg">,</span> json_dumps<span class="ansi-blue-fg">(</span>acme_asset<span class="ansi-blue-fg">,</span> indent<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">4</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/tmp/ipykernel_374487/3608554041.py</span> in <span class="ansi-cyan-fg">create_example_asset</span><span class="ansi-blue-fg">(arch, label)</span>
+<span class="ansi-green-intense-fg ansi-bold">     33</span>     <span class="ansi-red-fg">#   to accept events (or an error occurs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     34</span>     <span class="ansi-red-fg">#</span>
+<span class="ansi-green-fg">---&gt; 35</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> arch<span class="ansi-blue-fg">.</span>assets<span class="ansi-blue-fg">.</span>create<span class="ansi-blue-fg">(</span>props<span class="ansi-blue-fg">=</span>props<span class="ansi-blue-fg">,</span> attrs<span class="ansi-blue-fg">=</span>attrs<span class="ansi-blue-fg">,</span> confirm<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/assets.py</span> in <span class="ansi-cyan-fg">create</span><span class="ansi-blue-fg">(self, props, attrs, confirm)</span>
+<span class="ansi-green-intense-fg ansi-bold">    141</span>         newprops <span class="ansi-blue-fg">=</span> _deepmerge<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">&#34;behaviours&#34;</span><span class="ansi-blue-fg">:</span> ASSET_BEHAVIOURS<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">,</span> props<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    142</span>         data <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>__params<span class="ansi-blue-fg">(</span>newprops<span class="ansi-blue-fg">,</span> attrs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 143</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>create_from_data<span class="ansi-blue-fg">(</span>data<span class="ansi-blue-fg">,</span> confirm<span class="ansi-blue-fg">=</span>confirm<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    144</span>
+<span class="ansi-green-intense-fg ansi-bold">    145</span>     <span class="ansi-green-fg">def</span> create_from_data<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">:</span> dict<span class="ansi-blue-fg">[</span>str<span class="ansi-blue-fg">,</span> Any<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span><span class="ansi-blue-fg">,</span> confirm<span class="ansi-blue-fg">:</span> bool <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> Asset<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/assets.py</span> in <span class="ansi-cyan-fg">create_from_data</span><span class="ansi-blue-fg">(self, data, confirm)</span>
+<span class="ansi-green-intense-fg ansi-bold">    157</span>
+<span class="ansi-green-intense-fg ansi-bold">    158</span>         &#34;&#34;&#34;
+<span class="ansi-green-fg">--&gt; 159</span><span class="ansi-red-fg">         </span>asset <span class="ansi-blue-fg">=</span> Asset<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>_archivist<span class="ansi-blue-fg">.</span>post<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_label<span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    160</span>         <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> confirm<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    161</span>             <span class="ansi-green-fg">return</span> asset
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/retry429.py</span> in <span class="ansi-cyan-fg">wrapper</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     24</span>         <span class="ansi-green-fg">while</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     25</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 26</span><span class="ansi-red-fg">                 </span>ret <span class="ansi-blue-fg">=</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     27</span>             <span class="ansi-green-fg">except</span> ArchivistTooManyRequestsError <span class="ansi-green-fg">as</span> ex<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     28</span>                 <span class="ansi-green-fg">if</span> ex<span class="ansi-blue-fg">.</span>retry <span class="ansi-blue-fg">&lt;=</span> <span class="ansi-cyan-fg">0</span> <span class="ansi-green-fg">or</span> no_of_retries <span class="ansi-blue-fg">&lt;=</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/archivist.py</span> in <span class="ansi-cyan-fg">post</span><span class="ansi-blue-fg">(self, url, request, headers, data)</span>
+<span class="ansi-green-intense-fg ansi-bold">    270</span>                 url<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    271</span>                 json<span class="ansi-blue-fg">=</span>request<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg">--&gt; 272</span><span class="ansi-red-fg">                 </span>headers<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>_add_headers<span class="ansi-blue-fg">(</span>headers<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    273</span>                 verify<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>verify<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    274</span>             )
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/archivist.py</span> in <span class="ansi-cyan-fg">_add_headers</span><span class="ansi-blue-fg">(self, headers)</span>
+<span class="ansi-green-intense-fg ansi-bold">    229</span>             newheaders <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">}</span>
+<span class="ansi-green-intense-fg ansi-bold">    230</span>
+<span class="ansi-green-fg">--&gt; 231</span><span class="ansi-red-fg">         </span>auth <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>auth  <span class="ansi-red-fg"># this may trigger a refetch so only do it once here</span>
+<span class="ansi-green-intense-fg ansi-bold">    232</span>         <span class="ansi-red-fg"># for appidp endpoint there may not be an authtoken</span>
+<span class="ansi-green-intense-fg ansi-bold">    233</span>         <span class="ansi-green-fg">if</span> auth <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/archivist.py</span> in <span class="ansi-cyan-fg">auth</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    195</span>
+<span class="ansi-green-intense-fg ansi-bold">    196</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>_machine_auth <span class="ansi-green-fg">and</span> self<span class="ansi-blue-fg">.</span>_expires_at <span class="ansi-blue-fg">&lt;</span> time<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 197</span><span class="ansi-red-fg">             </span>apptoken <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>appidp<span class="ansi-blue-fg">.</span>token<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>self<span class="ansi-blue-fg">.</span>_machine_auth<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    198</span>             self<span class="ansi-blue-fg">.</span>_auth <span class="ansi-blue-fg">=</span> apptoken<span class="ansi-blue-fg">.</span>get<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;access_token&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    199</span>             <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>_auth <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/appidp.py</span> in <span class="ansi-cyan-fg">token</span><span class="ansi-blue-fg">(self, client_id, client_secret)</span>
+<span class="ansi-green-intense-fg ansi-bold">     73</span>         &#34;&#34;&#34;
+<span class="ansi-green-intense-fg ansi-bold">     74</span>         return AppIDP(
+<span class="ansi-green-fg">---&gt; 75</span><span class="ansi-red-fg">             **self._archivist.post(
+</span><span class="ansi-green-intense-fg ansi-bold">     76</span>                 <span class="ansi-blue-fg">f&#34;{self._label}/{APPIDP_TOKEN}&#34;</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">     77</span>                 {
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/retry429.py</span> in <span class="ansi-cyan-fg">wrapper</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     24</span>         <span class="ansi-green-fg">while</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     25</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 26</span><span class="ansi-red-fg">                 </span>ret <span class="ansi-blue-fg">=</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     27</span>             <span class="ansi-green-fg">except</span> ArchivistTooManyRequestsError <span class="ansi-green-fg">as</span> ex<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     28</span>                 <span class="ansi-green-fg">if</span> ex<span class="ansi-blue-fg">.</span>retry <span class="ansi-blue-fg">&lt;=</span> <span class="ansi-cyan-fg">0</span> <span class="ansi-green-fg">or</span> no_of_retries <span class="ansi-blue-fg">&lt;=</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/archivist.py</span> in <span class="ansi-cyan-fg">post</span><span class="ansi-blue-fg">(self, url, request, headers, data)</span>
+<span class="ansi-green-intense-fg ansi-bold">    276</span>         error <span class="ansi-blue-fg">=</span> _parse_response<span class="ansi-blue-fg">(</span>response<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    277</span>         <span class="ansi-green-fg">if</span> error <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 278</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> error
+<span class="ansi-green-intense-fg ansi-bold">    279</span>
+<span class="ansi-green-intense-fg ansi-bold">    280</span>         <span class="ansi-green-fg">return</span> response<span class="ansi-blue-fg">.</span>json<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">ArchivistBadRequestError</span>: https://app.dev-paul-0.wild.jitsuin.io/archivist/iam/v1/appidp/token: {&#34;error&#34;:&#34;invalid_request&#34;,&#34;error_description&#34;:&#34;no client authentication mechanism provided&#34;} (400)
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -660,7 +784,7 @@ div.rendered_html tbody tr:hover {
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Create%20Event%20with%20Verified%20Domain.html" class="btn btn-neutral float-left" title="Create Event With Verified Domain" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html" class="btn btn-neutral float-left" title="Check Asset Compliance: SINCE policy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../fixtures.html" class="btn btn-neutral float-right" title="Fixtures (Common Attributes)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

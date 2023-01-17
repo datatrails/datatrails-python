@@ -11,7 +11,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 1,
    "id": "c85b9e96",
    "metadata": {},
    "outputs": [],
@@ -33,7 +33,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 2,
    "id": "001b25e3",
    "metadata": {},
    "outputs": [],
@@ -41,6 +41,8 @@
     "from json import dumps as json_dumps\n",
     "from os import getenv\n",
     "from warnings import filterwarnings\n",
+    "\n",
+    "from dotenv import load_dotenv\n",
     "\n",
     "from archivist.archivist import Archivist\n",
     "from archivist.logger import set_logger\n",
@@ -50,17 +52,70 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "a877ffed",
+   "execution_count": 3,
+   "id": "7158f0a4",
    "metadata": {},
    "outputs": [],
    "source": [
-    "URL = \"https://app.rkvst.io\""
+    "%reload_ext dotenv\n",
+    "%dotenv -o notebooks.env"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 4,
+   "id": "a877ffed",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# URL, CLIENT, SECRET are environment variables that represent connection parameters.\n",
+    "#\n",
+    "# URL = represents the url to the RKVST application\n",
+    "# CLIENT = represents the client ID from an Application Registration\n",
+    "# SECRET = represents the client secret from an Application Registration\n",
+    "RKVST_URL = getenv(\"RKVST_URL\")\n",
+    "RKVST_APPREG_CLIENT = getenv(\"RKVST_APPREG_CLIENT\")\n",
+    "RKVST_APPREG_SECRET = getenv(\"RKVST_APPREG_SECRET\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "c5f7d4e5",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Connecting to RKVST\n",
+      "RKVST_URL https://app.rkvst.io\n"
+     ]
+    }
+   ],
+   "source": [
+    "\"\"\"\n",
+    "Main function of Asset and Event creation.\n",
+    "\n",
+    "* Connect to RKVST with client ID and client secret\n",
+    "* Creates an Asset and two Events\n",
+    "* Prints response of Asset and Event creation\n",
+    "\"\"\"\n",
+    "\n",
+    "# Optional call to set the logger level.  The argument can be either\n",
+    "# \"INFO\" or \"DEBUG\".  For more sophisticated logging control see our\n",
+    "# documentation.\n",
+    "set_logger(\"INFO\")\n",
+    "\n",
+    "# Initialize connection to RKVST\n",
+    "print(\"Connecting to RKVST\")\n",
+    "print(\"RKVST_URL\", RKVST_URL)\n",
+    "arch = Archivist(RKVST_URL, (RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET), max_time=300)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
    "id": "acdf240c",
    "metadata": {},
    "outputs": [],
@@ -84,7 +139,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 7,
    "id": "8889c68d",
    "metadata": {},
    "outputs": [],
@@ -141,7 +196,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 8,
    "id": "ba24d143",
    "metadata": {},
    "outputs": [],
@@ -159,7 +214,7 @@
     "    attrs = {\n",
     "        \"arc_display_name\": \"display_name\",  # Asset's display name in the user interface\n",
     "        \"arc_description\": \"display_description\",  # Asset's description in the user interface\n",
-    "        \"arc_display_type\": \"desplay_type\",  # Arc_display_type is a free text field\n",
+    "        \"arc_display_type\": \"display_type\",  # Arc_display_type is a free text field\n",
     "        # allowing the creator of\n",
     "        # an asset to specify the asset\n",
     "        # type or class. Be careful when setting this:\n",
@@ -185,49 +240,51 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "ec1909a6",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "\"\"\"Main function of create event.\n",
-    "\n",
-    "Parse in user input of url and auth token and use them to\n",
-    "create an example archivist connection and create an asset.\n",
-    "The main function then uses the asset to create an event for\n",
-    "the asset and fetch the event.\n",
-    "\n",
-    "\"\"\"\n",
-    "# optional call to set the logger level for all subsystems. The argument can\n",
-    "# be either \"INFO\" or \"DEBUG\". For more sophisticated logging control see the\n",
-    "# documentation.\n",
-    "set_logger(\"INFO\")\n",
-    "\n",
-    "# Get authorization token. The token grants certain rights and access permissions.\n",
-    "# The token can represent the root principal or user in an organization. Different tokens\n",
-    "# could indicate different users in the same organization or membership of different\n",
-    "# organisations.\n",
-    "\n",
-    "with open(\"/home/builder/credentials/token\", mode=\"r\", encoding=\"utf-8\") as tokenfile:\n",
-    "    auth = tokenfile.read().strip()\n",
-    "\n",
-    "# Initialize connection to Archivist\n",
-    "arch = Archivist(\n",
-    "    URL,\n",
-    "    auth,\n",
-    "    max_time=300,\n",
-    "    verify=False,\n",
-    ")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 9,
    "id": "b7482420",
    "metadata": {
     "scrolled": true
    },
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Refresh token\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Asset {\n",
+      "    \"at_time\": \"2023-01-16T11:53:18Z\",\n",
+      "    \"attributes\": {\n",
+      "        \"arc_description\": \"display_description\",\n",
+      "        \"arc_display_name\": \"display_name\",\n",
+      "        \"arc_display_type\": \"display_type\",\n",
+      "        \"some_custom_attribute\": \"value\"\n",
+      "    },\n",
+      "    \"behaviours\": [\n",
+      "        \"Builtin\",\n",
+      "        \"AssetCreator\",\n",
+      "        \"Attachments\",\n",
+      "        \"RecordEvidence\"\n",
+      "    ],\n",
+      "    \"chain_id\": \"827586838445807967\",\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"identity\": \"assets/0047715f-368e-4a62-aa04-48e6fa974e85\",\n",
+      "    \"owner\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"proof_mechanism\": \"SIMPLE_HASH\",\n",
+      "    \"public\": false,\n",
+      "    \"storage_integrity\": \"TENANT_STORAGE\",\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\",\n",
+      "    \"tracked\": \"TRACKED\"\n",
+      "}\n",
+      "Verified domain '  '\n"
+     ]
+    }
+   ],
    "source": [
     "# Create a new asset\n",
     "asset = create_asset(arch)\n",
@@ -237,10 +294,51 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 10,
    "id": "bb5b0651",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Event {\n",
+      "    \"asset_attributes\": {},\n",
+      "    \"asset_identity\": \"assets/0047715f-368e-4a62-aa04-48e6fa974e85\",\n",
+      "    \"behaviour\": \"RecordEvidence\",\n",
+      "    \"block_number\": 0,\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"event_attributes\": {\n",
+      "        \"arc_description\": \"Safety conformance approved for version 1.6.\",\n",
+      "        \"arc_evidence\": \"DVA Conformance Report attached\",\n",
+      "        \"conformance_report\": \"blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273\"\n",
+      "    },\n",
+      "    \"from\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"identity\": \"assets/0047715f-368e-4a62-aa04-48e6fa974e85/events/f94ae41a-fe0d-4c2c-9486-46eeb2579a1f\",\n",
+      "    \"operation\": \"Record\",\n",
+      "    \"principal_accepted\": {\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\",\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\"\n",
+      "    },\n",
+      "    \"principal_declared\": {\n",
+      "        \"display_name\": \"\",\n",
+      "        \"email\": \"phil.b@synsation.io\",\n",
+      "        \"issuer\": \"idp.synsation.io/1234\",\n",
+      "        \"subject\": \"phil.b\"\n",
+      "    },\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\",\n",
+      "    \"timestamp_accepted\": \"2023-01-16T11:53:21Z\",\n",
+      "    \"timestamp_committed\": \"2023-01-16T11:53:21.760625716Z\",\n",
+      "    \"timestamp_declared\": \"2019-11-27T14:44:19Z\",\n",
+      "    \"transaction_id\": \"\",\n",
+      "    \"transaction_index\": 0\n",
+      "}\n",
+      "Verified domain '  '\n"
+     ]
+    }
+   ],
    "source": [
     "# Create a new event\n",
     "event = create_event(arch, asset)\n",
@@ -250,16 +348,65 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 11,
    "id": "f8ac6dda",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Event {\n",
+      "    \"asset_attributes\": {},\n",
+      "    \"asset_identity\": \"assets/0047715f-368e-4a62-aa04-48e6fa974e85\",\n",
+      "    \"behaviour\": \"RecordEvidence\",\n",
+      "    \"block_number\": 0,\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"event_attributes\": {\n",
+      "        \"arc_description\": \"Safety conformance approved for version 1.6.\",\n",
+      "        \"arc_evidence\": \"DVA Conformance Report attached\",\n",
+      "        \"conformance_report\": \"blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273\"\n",
+      "    },\n",
+      "    \"from\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"identity\": \"assets/0047715f-368e-4a62-aa04-48e6fa974e85/events/f94ae41a-fe0d-4c2c-9486-46eeb2579a1f\",\n",
+      "    \"operation\": \"Record\",\n",
+      "    \"principal_accepted\": {\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\",\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\"\n",
+      "    },\n",
+      "    \"principal_declared\": {\n",
+      "        \"display_name\": \"\",\n",
+      "        \"email\": \"phil.b@synsation.io\",\n",
+      "        \"issuer\": \"idp.synsation.io/1234\",\n",
+      "        \"subject\": \"phil.b\"\n",
+      "    },\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\",\n",
+      "    \"timestamp_accepted\": \"2023-01-16T11:53:21Z\",\n",
+      "    \"timestamp_committed\": \"2023-01-16T11:53:21.760625716Z\",\n",
+      "    \"timestamp_declared\": \"2019-11-27T14:44:19Z\",\n",
+      "    \"transaction_id\": \"\",\n",
+      "    \"transaction_index\": 0\n",
+      "}\n",
+      "Verified domain '  '\n"
+     ]
+    }
+   ],
    "source": [
     "# Fetch the event\n",
     "event = arch.events.read(event[\"identity\"])\n",
     "print(\"Event\", json_dumps(event, sort_keys=True, indent=4))\n",
     "print(\"Verified domain '\", get_verified_domain(arch, event), \"'\")"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "2bde1472",
+   "metadata": {},
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {
@@ -278,7 +425,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.15"
+   "version": "3.8.15"
   }
  },
  "nbformat": 4,

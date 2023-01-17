@@ -11,7 +11,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 1,
    "id": "c85b9e96",
    "metadata": {},
    "outputs": [],
@@ -24,7 +24,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 2,
    "id": "001b25e3",
    "metadata": {},
    "outputs": [],
@@ -34,6 +34,8 @@
     "from time import sleep\n",
     "from uuid import uuid4\n",
     "from warnings import filterwarnings\n",
+    "\n",
+    "from dotenv import load_dotenv\n",
     "\n",
     "from archivist.archivist import Archivist\n",
     "from archivist.compliance_policy_requests import CompliancePolicyCurrentOutstanding\n",
@@ -46,21 +48,70 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "a877ffed",
+   "execution_count": 3,
+   "id": "e4b24e8c",
    "metadata": {},
    "outputs": [],
    "source": [
-    "# Connection parameters. Fill in with client ID and secret from an appropriately\n",
-    "# permissioned Application Registration\n",
-    "RKVST_URL = \"https://app.rkvst.io\"\n",
-    "APPREG_CLIENT = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n",
-    "APPREG_SECRET = \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
+    "%reload_ext dotenv\n",
+    "%dotenv -o notebooks.env"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 4,
+   "id": "92835114",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# URL, CLIENT, SECRET are environment variables that represent connection parameters.\n",
+    "#\n",
+    "# URL = represents the url to the RKVST application\n",
+    "# CLIENT = represents the client ID from an Application Registration\n",
+    "# SECRET = represents the client secret from an Application Registration\n",
+    "RKVST_URL = getenv(\"RKVST_URL\")\n",
+    "RKVST_APPREG_CLIENT = getenv(\"RKVST_APPREG_CLIENT\")\n",
+    "RKVST_APPREG_SECRET = getenv(\"RKVST_APPREG_SECRET\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "d85dcf4c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Connecting to RKVST\n",
+      "RKVST_URL https://app.rkvst.io\n"
+     ]
+    }
+   ],
+   "source": [
+    "\"\"\"\n",
+    "Main function of Asset and Event creation.\n",
+    "\n",
+    "* Connect to RKVST with client ID and client secret\n",
+    "* Creates an Asset and two Events\n",
+    "* Prints response of Asset and Event creation\n",
+    "\"\"\"\n",
+    "\n",
+    "# Optional call to set the logger level.  The argument can be either\n",
+    "# \"INFO\" or \"DEBUG\".  For more sophisticated logging control see our\n",
+    "# documentation.\n",
+    "set_logger(\"INFO\")\n",
+    "\n",
+    "# Initialize connection to RKVST\n",
+    "print(\"Connecting to RKVST\")\n",
+    "print(\"RKVST_URL\", RKVST_URL)\n",
+    "arch = Archivist(RKVST_URL, (RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET), max_time=300)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
    "id": "acdf240c",
    "metadata": {},
    "outputs": [],
@@ -90,7 +141,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 7,
    "id": "8889c68d",
    "metadata": {},
    "outputs": [],
@@ -126,7 +177,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 8,
    "id": "ba24d143",
    "metadata": {},
    "outputs": [],
@@ -153,7 +204,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 9,
    "id": "bde8fc72",
    "metadata": {},
    "outputs": [],
@@ -180,36 +231,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "ec1909a6",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "\"\"\"Main function of compliance sample test.\n",
-    "\n",
-    " * Connect to RKVST with client ID and secret credential\n",
-    " * Create minimal test objects to demonstrate the feature\n",
-    " * Test interactions\n",
-    " * Clean up\n",
-    "\"\"\"\n",
-    "# optional call to set the logger level for all subsystems. The argument can\n",
-    "# be either \"INFO\" or \"DEBUG\". For more sophisticated logging control see the\n",
-    "# documentation.\n",
-    "set_logger(\"INFO\")\n",
-    "\n",
-    "# Initialize connection to RKVST\n",
-    "print(\"Connecting to RKVST\")\n",
-    "arch = Archivist(RKVST_URL, (APPREG_CLIENT, APPREG_SECRET))"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 10,
    "id": "b7482420",
    "metadata": {
     "scrolled": true
    },
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tag for this run: 5597da73-19e4-448b-80c0-33c79253961a\n"
+     ]
+    }
+   ],
    "source": [
     "# Compliance policies with related events (eg open/close, order/ship/deliver\n",
     "# type situations) require events to be linked through a correlation value.\n",
@@ -222,33 +257,199 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 11,
    "id": "bb5b0651",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Refresh token\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "CURRENT_OUTSTANDING_POLICY: {\n",
+      "    \"identity\": \"compliance_policies/253a31f2-ef9f-44ba-8940-4dafd23e32f9\",\n",
+      "    \"compliance_type\": \"COMPLIANCE_CURRENT_OUTSTANDING\",\n",
+      "    \"description\": \"Vault doors should be closed according to site security policy section Phys.Integ.02\",\n",
+      "    \"display_name\": \"Phys.Integ.02\",\n",
+      "    \"asset_filter\": [\n",
+      "        {\n",
+      "            \"or\": [\n",
+      "                \"attributes.arc_display_type=Vault Door\"\n",
+      "            ]\n",
+      "        }\n",
+      "    ],\n",
+      "    \"event_display_type\": \"Open\",\n",
+      "    \"closing_event_display_type\": \"Close\",\n",
+      "    \"time_period_seconds\": \"0\",\n",
+      "    \"dynamic_window\": \"0\",\n",
+      "    \"dynamic_variability\": 0,\n",
+      "    \"richness_assertions\": []\n",
+      "}\n",
+      "compliance_policy {\n",
+      "    \"identity\": \"compliance_policies/253a31f2-ef9f-44ba-8940-4dafd23e32f9\",\n",
+      "    \"compliance_type\": \"COMPLIANCE_CURRENT_OUTSTANDING\",\n",
+      "    \"description\": \"Vault doors should be closed according to site security policy section Phys.Integ.02\",\n",
+      "    \"display_name\": \"Phys.Integ.02\",\n",
+      "    \"asset_filter\": [\n",
+      "        {\n",
+      "            \"or\": [\n",
+      "                \"attributes.arc_display_type=Vault Door\"\n",
+      "            ]\n",
+      "        }\n",
+      "    ],\n",
+      "    \"event_display_type\": \"Open\",\n",
+      "    \"closing_event_display_type\": \"Close\",\n",
+      "    \"time_period_seconds\": \"0\",\n",
+      "    \"dynamic_window\": \"0\",\n",
+      "    \"dynamic_variability\": 0,\n",
+      "    \"richness_assertions\": []\n",
+      "}\n"
+     ]
+    }
+   ],
    "source": [
     "# make a compliance policy that alerts when doors are left open\n",
-    "compliance_policy = create_compliance_policy(arch)"
+    "compliance_policy = create_compliance_policy(arch)\n",
+    "print(\"compliance_policy\", json_dumps(compliance_policy, indent=4))"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 12,
    "id": "f8ac6dda",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "asset with selector {},{'arc_display_name': \"Gringott's Vault 2\", 'arc_display_type': 'Vault Door'} already exists\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DOOR: {\n",
+      "    \"identity\": \"assets/652b3fdf-736e-455f-81ec-fed5088a351c\",\n",
+      "    \"behaviours\": [\n",
+      "        \"AssetCreator\",\n",
+      "        \"Attachments\",\n",
+      "        \"RecordEvidence\",\n",
+      "        \"Builtin\"\n",
+      "    ],\n",
+      "    \"attributes\": {\n",
+      "        \"arc_display_name\": \"Gringott's Vault 2\",\n",
+      "        \"arc_display_type\": \"Vault Door\",\n",
+      "        \"arc_description\": \"Main door to the second level security vault in Gringott's Wizarding Bank\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"tracked\": \"TRACKED\",\n",
+      "    \"owner\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"at_time\": \"2023-01-16T11:51:30Z\",\n",
+      "    \"storage_integrity\": \"TENANT_STORAGE\",\n",
+      "    \"proof_mechanism\": \"SIMPLE_HASH\",\n",
+      "    \"chain_id\": \"827586838445807967\",\n",
+      "    \"public\": false,\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n",
+      "gringotts_vault {\n",
+      "    \"identity\": \"assets/652b3fdf-736e-455f-81ec-fed5088a351c\",\n",
+      "    \"behaviours\": [\n",
+      "        \"AssetCreator\",\n",
+      "        \"Attachments\",\n",
+      "        \"RecordEvidence\",\n",
+      "        \"Builtin\"\n",
+      "    ],\n",
+      "    \"attributes\": {\n",
+      "        \"arc_display_name\": \"Gringott's Vault 2\",\n",
+      "        \"arc_display_type\": \"Vault Door\",\n",
+      "        \"arc_description\": \"Main door to the second level security vault in Gringott's Wizarding Bank\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"tracked\": \"TRACKED\",\n",
+      "    \"owner\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"at_time\": \"2023-01-16T11:51:30Z\",\n",
+      "    \"storage_integrity\": \"TENANT_STORAGE\",\n",
+      "    \"proof_mechanism\": \"SIMPLE_HASH\",\n",
+      "    \"chain_id\": \"827586838445807967\",\n",
+      "    \"public\": false,\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n"
+     ]
+    }
+   ],
    "source": [
     "# create an asset that matches the assets_filter field in the\n",
     "# compliance policy.\n",
-    "gringotts_vault = create_door(arch)"
+    "gringotts_vault = create_door(arch)\n",
+    "print(\"gringotts_vault\", json_dumps(gringotts_vault, indent=4))"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 13,
    "id": "d93be01f",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DOOR_OPENED: {\n",
+      "    \"identity\": \"assets/652b3fdf-736e-455f-81ec-fed5088a351c/events/f4355906-bd65-4d3a-b726-4967936012dd\",\n",
+      "    \"asset_identity\": \"assets/652b3fdf-736e-455f-81ec-fed5088a351c\",\n",
+      "    \"event_attributes\": {\n",
+      "        \"arc_display_type\": \"Open\",\n",
+      "        \"arc_correlation_value\": \"5597da73-19e4-448b-80c0-33c79253961a\",\n",
+      "        \"arc_description\": \"Open the door for Lucius Malfoy\"\n",
+      "    },\n",
+      "    \"asset_attributes\": {},\n",
+      "    \"operation\": \"Record\",\n",
+      "    \"behaviour\": \"RecordEvidence\",\n",
+      "    \"timestamp_declared\": \"2023-01-16T11:51:36Z\",\n",
+      "    \"timestamp_accepted\": \"2023-01-16T11:51:36Z\",\n",
+      "    \"timestamp_committed\": \"2023-01-16T11:51:36.744394895Z\",\n",
+      "    \"principal_declared\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"principal_accepted\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"transaction_id\": \"\",\n",
+      "    \"block_number\": 0,\n",
+      "    \"transaction_index\": 0,\n",
+      "    \"from\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n",
+      "COMPLIANCE (should be false): {\n",
+      "    \"compliant\": false,\n",
+      "    \"compliance\": [\n",
+      "        {\n",
+      "            \"compliance_policy_identity\": \"compliance_policies/253a31f2-ef9f-44ba-8940-4dafd23e32f9\",\n",
+      "            \"compliant\": false,\n",
+      "            \"reason\": \"No closing event for Open\"\n",
+      "        }\n",
+      "    ],\n",
+      "    \"next_page_token\": \"\",\n",
+      "    \"compliant_at\": \"2023-01-16T11:51:42Z\"\n",
+      "}\n"
+     ]
+    }
+   ],
    "source": [
     "# Open the door\n",
     "open_door(arch, gringotts_vault, tag)\n",
@@ -263,10 +464,62 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 14,
    "id": "6e304daa",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DOOR_CLOSED: {\n",
+      "    \"identity\": \"assets/652b3fdf-736e-455f-81ec-fed5088a351c/events/e1d5c641-c1a4-4a8c-b07b-621ff054e86c\",\n",
+      "    \"asset_identity\": \"assets/652b3fdf-736e-455f-81ec-fed5088a351c\",\n",
+      "    \"event_attributes\": {\n",
+      "        \"arc_correlation_value\": \"5597da73-19e4-448b-80c0-33c79253961a\",\n",
+      "        \"arc_description\": \"Closed the door after Lucius Malfoy exited the vault\",\n",
+      "        \"arc_display_type\": \"Close\"\n",
+      "    },\n",
+      "    \"asset_attributes\": {},\n",
+      "    \"operation\": \"Record\",\n",
+      "    \"behaviour\": \"RecordEvidence\",\n",
+      "    \"timestamp_declared\": \"2023-01-16T11:51:42Z\",\n",
+      "    \"timestamp_accepted\": \"2023-01-16T11:51:42Z\",\n",
+      "    \"timestamp_committed\": \"2023-01-16T11:51:42.809012247Z\",\n",
+      "    \"principal_declared\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"principal_accepted\": {\n",
+      "        \"issuer\": \"https://app.rkvst.io/appidpv1\",\n",
+      "        \"subject\": \"437bd138-dade-4346-aadd-dfdfee51ddf4\",\n",
+      "        \"display_name\": \"Test Notebooks\",\n",
+      "        \"email\": \"\"\n",
+      "    },\n",
+      "    \"confirmation_status\": \"CONFIRMED\",\n",
+      "    \"transaction_id\": \"\",\n",
+      "    \"block_number\": 0,\n",
+      "    \"transaction_index\": 0,\n",
+      "    \"from\": \"0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce\",\n",
+      "    \"tenant_identity\": \"tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866\"\n",
+      "}\n",
+      "COMPLIANCE (should be true): {\n",
+      "    \"compliant\": true,\n",
+      "    \"compliance\": [\n",
+      "        {\n",
+      "            \"compliance_policy_identity\": \"compliance_policies/253a31f2-ef9f-44ba-8940-4dafd23e32f9\",\n",
+      "            \"compliant\": true,\n",
+      "            \"reason\": \"\"\n",
+      "        }\n",
+      "    ],\n",
+      "    \"next_page_token\": \"\",\n",
+      "    \"compliant_at\": \"2023-01-16T11:51:49Z\"\n",
+      "}\n"
+     ]
+    }
+   ],
    "source": [
     "# Now close the door\n",
     "close_door(arch, gringotts_vault, tag)\n",
@@ -281,10 +534,29 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 15,
    "id": "2edac120",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "HISTORICAL COMPLIANCE (should be false): {\n",
+      "    \"compliant\": false,\n",
+      "    \"compliance\": [\n",
+      "        {\n",
+      "            \"compliance_policy_identity\": \"compliance_policies/253a31f2-ef9f-44ba-8940-4dafd23e32f9\",\n",
+      "            \"compliant\": false,\n",
+      "            \"reason\": \"No closing event for Open\"\n",
+      "        }\n",
+      "    ],\n",
+      "    \"next_page_token\": \"\",\n",
+      "    \"compliant_at\": \"2023-01-16T11:51:42Z\"\n",
+      "}\n"
+     ]
+    }
+   ],
    "source": [
     "# However the fact that it is OK *now* is a bit of a red herring. It\n",
     "# was non-compliant in the past and this may be an issue that needs to\n",
@@ -304,7 +576,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 16,
    "id": "40ffc716",
    "metadata": {},
    "outputs": [],
@@ -314,6 +586,14 @@
     "    compliance_policy[\"identity\"],\n",
     ")"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b9aed548",
+   "metadata": {},
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {
@@ -332,7 +612,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.15"
+   "version": "3.8.15"
   }
  },
  "nbformat": 4,

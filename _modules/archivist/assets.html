@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.assets &mdash; RKVST v0.18.1 documentation</title>
+  <title>archivist.assets &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -127,7 +127,7 @@
 
 
 <div class="viewcode-block" id="_AssetsPublic"><a class="viewcode-back" href="../../code/assets.html#archivist.assets._AssetsPublic">[docs]</a><span class="k">class</span> <span class="nc">_AssetsPublic</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;AssetsReader</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;AssetsReader</span>
 
 <span class="sd">    Access to assets entities using CRUD interface. This class is usually</span>
 <span class="sd">    accessed as an attribute of the Archivist or Public class.</span>
@@ -146,7 +146,7 @@
         <span class="k">return</span> <span class="s2">&quot;AssetsPublic()&quot;</span>
 
 <div class="viewcode-block" id="_AssetsPublic._identity"><a class="viewcode-back" href="../../code/assets.html#archivist.assets._AssetsPublic._identity">[docs]</a>    <span class="k">def</span> <span class="nf">_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return fully qualified identity</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return fully qualified identity</span>
 <span class="sd">        If public then expect a full url as argument</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_public</span><span class="p">:</span>
@@ -155,7 +155,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 <div class="viewcode-block" id="_AssetsPublic.read"><a class="viewcode-back" href="../../code/assets.html#archivist.assets._AssetsPublic.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Asset</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Read asset</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read asset</span>
 
 <span class="sd">        Reads asset.</span>
 
@@ -170,7 +170,7 @@
 
 
 <div class="viewcode-block" id="_AssetsRestricted"><a class="viewcode-back" href="../../code/assets.html#archivist.assets._AssetsRestricted">[docs]</a><span class="k">class</span> <span class="nc">_AssetsRestricted</span><span class="p">(</span><span class="n">_AssetsPublic</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;AssetsRestricted</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;AssetsRestricted</span>
 
 <span class="sd">    Access to assets entities using CRUD interface. This class is usually</span>
 <span class="sd">    accessed as an attribute of the Archivist or Public class.</span>
@@ -204,7 +204,7 @@
         <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Asset</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create asset</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create asset</span>
 
 <span class="sd">        Creates asset with defined properties and attributes.</span>
 
@@ -225,7 +225,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="n">confirm</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_AssetsRestricted.create_from_data"><a class="viewcode-back" href="../../code/assets.html#archivist.assets._AssetsRestricted.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Asset</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create asset</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create asset</span>
 
 <span class="sd">        Creates asset with request body from data stream.</span>
 <span class="sd">        Suitable for reading data from a file using json.load or yaml.load</span>
@@ -247,7 +247,7 @@
 <div class="viewcode-block" id="_AssetsRestricted.create_if_not_exists"><a class="viewcode-back" href="../../code/assets.html#archivist.assets._AssetsRestricted.create_if_not_exists">[docs]</a>    <span class="k">def</span> <span class="nf">create_if_not_exists</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Asset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an asset and associated locations and attachments if asset</span>
 <span class="sd">        does not already exist.</span>
 
@@ -344,7 +344,7 @@
         <span class="k">return</span> <span class="n">asset</span><span class="p">,</span> <span class="n">existed</span></div>
 
 <div class="viewcode-block" id="_AssetsRestricted.wait_for_confirmation"><a class="viewcode-back" href="../../code/assets.html#archivist.assets._AssetsRestricted.wait_for_confirmation">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Asset</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Wait for asset to be confirmed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait for asset to be confirmed.</span>
 
 <span class="sd">        Waits asset to be confirmed.</span>
 
@@ -365,7 +365,7 @@
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Wait for assets to be confirmed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait for assets to be confirmed.</span>
 
 <span class="sd">        Waits for all assets that match criteria to be confirmed.</span>
 
@@ -396,7 +396,7 @@
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Count assets.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Count assets.</span>
 
 <span class="sd">        Counts number of assets that match criteria.</span>
 
@@ -417,7 +417,7 @@
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;List assets.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List assets.</span>
 
 <span class="sd">        Lists assets that match criteria.</span>
 
@@ -446,7 +446,7 @@
         <span class="n">props</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">attrs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Asset</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Read Asset by signature.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read Asset by signature.</span>
 
 <span class="sd">        Reads asset that meets criteria. Only one asset is expected.</span>
 
@@ -468,7 +468,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="_AssetsRestricted.publicurl"><a class="viewcode-back" href="../../code/assets.html#archivist.assets._AssetsRestricted.publicurl">[docs]</a>    <span class="k">def</span> <span class="nf">publicurl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Read asset public url</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read asset public url</span>
 
 <span class="sd">        Reads assets public url.</span>
 

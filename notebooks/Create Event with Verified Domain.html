@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Event With Verified Domain &mdash; RKVST v0.18.1 documentation</title>
+  <title>Create Event With Verified Domain &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Sharing an Asset" href="Share_Asset.html" />
-    <link rel="prev" title="Check Asset Compliance: SINCE policy" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html" /> 
+    <link rel="next" title="Create Asset Compliance: CURRENT_OUTSTANDING policy" href="Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html" />
+    <link rel="prev" title="Find Asset and Create Attachment" href="Find%20Asset%20and%20Create%20Attachment.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,7 +39,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -54,12 +54,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../notebooks.html">Note Books (BETA)</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../notebooks.html#installing-the-rkvst-python-sdk">Installing the RKVST python SDK</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../notebooks.html#download-notebooks">Download Notebooks</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Initialization%20and%20Credentials.html">Initialization and Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Manage_Credentials.html">Manage Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Create%20Asset%20and%20Events.html">Create Asset and Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Event%20Creation.html">Find Asset and Event Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Create%20Attachment.html">Find Asset and Create Attachment</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Create Event With Verified Domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Create Event With Verified Domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Share_Asset.html">Sharing an Asset</a></li>
 </ul>
 </li>
@@ -377,7 +380,7 @@ div.rendered_html tbody tr:hover {
 <section id="Create-Event-With-Verified-Domain">
 <h1>Create Event With Verified Domain<a class="headerlink" href="#Create-Event-With-Verified-Domain" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an event for an asset given url to Archivist and user Token.</span>
@@ -397,12 +400,14 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span> <span class="k">as</span> <span class="n">json_dumps</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">filterwarnings</span>
+
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
@@ -412,19 +417,68 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://app.rkvst.io&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">reload_ext</span> dotenv
+<span class="o">%</span><span class="k">dotenv</span> -o notebooks.env
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL, CLIENT, SECRET are environment variables that represent connection parameters.</span>
+<span class="c1">#</span>
+<span class="c1"># URL = represents the url to the RKVST application</span>
+<span class="c1"># CLIENT = represents the client ID from an Application Registration</span>
+<span class="c1"># SECRET = represents the client secret from an Application Registration</span>
+<span class="n">RKVST_URL</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">)</span>
+<span class="n">RKVST_APPREG_CLIENT</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_CLIENT&quot;</span><span class="p">)</span>
+<span class="n">RKVST_APPREG_SECRET</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Main function of Asset and Event creation.</span>
+
+<span class="sd">* Connect to RKVST with client ID and client secret</span>
+<span class="sd">* Creates an Asset and two Events</span>
+<span class="sd">* Prints response of Asset and Event creation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Optional call to set the logger level.  The argument can be either</span>
+<span class="c1"># &quot;INFO&quot; or &quot;DEBUG&quot;.  For more sophisticated logging control see our</span>
+<span class="c1"># documentation.</span>
+<span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+
+<span class="c1"># Initialize connection to RKVST</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to RKVST&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">,</span> <span class="n">RKVST_URL</span><span class="p">)</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">RKVST_URL</span><span class="p">,</span> <span class="p">(</span><span class="n">RKVST_APPREG_CLIENT</span><span class="p">,</span> <span class="n">RKVST_APPREG_SECRET</span><span class="p">),</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Connecting to RKVST
+RKVST_URL https://app.rkvst.io
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_verified_domain</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get the verified domain for the asset/event.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the verified domain for the asset/event.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        arch: archivist connection.</span>
@@ -442,11 +496,11 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_event</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">asset</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create an event for the passed-in asset.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an event for the passed-in asset.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        arch: archivist connection.</span>
@@ -497,11 +551,11 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create an asset using Archivist Connection.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an asset using Archivist Connection.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        arch: archivist connection.</span>
@@ -513,7 +567,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s display name in the user interface</span>
         <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;display_description&quot;</span><span class="p">,</span>  <span class="c1"># Asset&#39;s description in the user interface</span>
-        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;desplay_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
+        <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;display_type&quot;</span><span class="p">,</span>  <span class="c1"># Arc_display_type is a free text field</span>
         <span class="c1"># allowing the creator of</span>
         <span class="c1"># an asset to specify the asset</span>
         <span class="c1"># type or class. Be careful when setting this:</span>
@@ -538,43 +592,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Main function of create event.</span>
-
-<span class="sd">Parse in user input of url and auth token and use them to</span>
-<span class="sd">create an example archivist connection and create an asset.</span>
-<span class="sd">The main function then uses the asset to create an event for</span>
-<span class="sd">the asset and fetch the event.</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="c1"># optional call to set the logger level for all subsystems. The argument can</span>
-<span class="c1"># be either &quot;INFO&quot; or &quot;DEBUG&quot;. For more sophisticated logging control see the</span>
-<span class="c1"># documentation.</span>
-<span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
-
-<span class="c1"># Get authorization token. The token grants certain rights and access permissions.</span>
-<span class="c1"># The token can represent the root principal or user in an organization. Different tokens</span>
-<span class="c1"># could indicate different users in the same organization or membership of different</span>
-<span class="c1"># organisations.</span>
-
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/home/builder/credentials/token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
-    <span class="n">auth</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-<span class="c1"># Initialize connection to Archivist</span>
-<span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
-    <span class="n">URL</span><span class="p">,</span>
-    <span class="n">auth</span><span class="p">,</span>
-    <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new asset</span>
@@ -584,8 +603,48 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Refresh token
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Asset {
+    &#34;at_time&#34;: &#34;2023-01-16T11:53:18Z&#34;,
+    &#34;attributes&#34;: {
+        &#34;arc_description&#34;: &#34;display_description&#34;,
+        &#34;arc_display_name&#34;: &#34;display_name&#34;,
+        &#34;arc_display_type&#34;: &#34;display_type&#34;,
+        &#34;some_custom_attribute&#34;: &#34;value&#34;
+    },
+    &#34;behaviours&#34;: [
+        &#34;Builtin&#34;,
+        &#34;AssetCreator&#34;,
+        &#34;Attachments&#34;,
+        &#34;RecordEvidence&#34;
+    ],
+    &#34;chain_id&#34;: &#34;827586838445807967&#34;,
+    &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
+    &#34;identity&#34;: &#34;assets/0047715f-368e-4a62-aa04-48e6fa974e85&#34;,
+    &#34;owner&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
+    &#34;proof_mechanism&#34;: &#34;SIMPLE_HASH&#34;,
+    &#34;public&#34;: false,
+    &#34;storage_integrity&#34;: &#34;TENANT_STORAGE&#34;,
+    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;,
+    &#34;tracked&#34;: &#34;TRACKED&#34;
+}
+Verified domain &#39;  &#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new event</span>
@@ -595,8 +654,49 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Event {
+    &#34;asset_attributes&#34;: {},
+    &#34;asset_identity&#34;: &#34;assets/0047715f-368e-4a62-aa04-48e6fa974e85&#34;,
+    &#34;behaviour&#34;: &#34;RecordEvidence&#34;,
+    &#34;block_number&#34;: 0,
+    &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
+    &#34;event_attributes&#34;: {
+        &#34;arc_description&#34;: &#34;Safety conformance approved for version 1.6.&#34;,
+        &#34;arc_evidence&#34;: &#34;DVA Conformance Report attached&#34;,
+        &#34;conformance_report&#34;: &#34;blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273&#34;
+    },
+    &#34;from&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
+    &#34;identity&#34;: &#34;assets/0047715f-368e-4a62-aa04-48e6fa974e85/events/f94ae41a-fe0d-4c2c-9486-46eeb2579a1f&#34;,
+    &#34;operation&#34;: &#34;Record&#34;,
+    &#34;principal_accepted&#34;: {
+        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;email&#34;: &#34;&#34;,
+        &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
+        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;
+    },
+    &#34;principal_declared&#34;: {
+        &#34;display_name&#34;: &#34;&#34;,
+        &#34;email&#34;: &#34;phil.b@synsation.io&#34;,
+        &#34;issuer&#34;: &#34;idp.synsation.io/1234&#34;,
+        &#34;subject&#34;: &#34;phil.b&#34;
+    },
+    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;,
+    &#34;timestamp_accepted&#34;: &#34;2023-01-16T11:53:21Z&#34;,
+    &#34;timestamp_committed&#34;: &#34;2023-01-16T11:53:21.760625716Z&#34;,
+    &#34;timestamp_declared&#34;: &#34;2019-11-27T14:44:19Z&#34;,
+    &#34;transaction_id&#34;: &#34;&#34;,
+    &#34;transaction_index&#34;: 0
+}
+Verified domain &#39;  &#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fetch the event</span>
@@ -606,14 +706,63 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Event {
+    &#34;asset_attributes&#34;: {},
+    &#34;asset_identity&#34;: &#34;assets/0047715f-368e-4a62-aa04-48e6fa974e85&#34;,
+    &#34;behaviour&#34;: &#34;RecordEvidence&#34;,
+    &#34;block_number&#34;: 0,
+    &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
+    &#34;event_attributes&#34;: {
+        &#34;arc_description&#34;: &#34;Safety conformance approved for version 1.6.&#34;,
+        &#34;arc_evidence&#34;: &#34;DVA Conformance Report attached&#34;,
+        &#34;conformance_report&#34;: &#34;blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273&#34;
+    },
+    &#34;from&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
+    &#34;identity&#34;: &#34;assets/0047715f-368e-4a62-aa04-48e6fa974e85/events/f94ae41a-fe0d-4c2c-9486-46eeb2579a1f&#34;,
+    &#34;operation&#34;: &#34;Record&#34;,
+    &#34;principal_accepted&#34;: {
+        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;email&#34;: &#34;&#34;,
+        &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
+        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;
+    },
+    &#34;principal_declared&#34;: {
+        &#34;display_name&#34;: &#34;&#34;,
+        &#34;email&#34;: &#34;phil.b@synsation.io&#34;,
+        &#34;issuer&#34;: &#34;idp.synsation.io/1234&#34;,
+        &#34;subject&#34;: &#34;phil.b&#34;
+    },
+    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;,
+    &#34;timestamp_accepted&#34;: &#34;2023-01-16T11:53:21Z&#34;,
+    &#34;timestamp_committed&#34;: &#34;2023-01-16T11:53:21.760625716Z&#34;,
+    &#34;timestamp_declared&#34;: &#34;2019-11-27T14:44:19Z&#34;,
+    &#34;transaction_id&#34;: &#34;&#34;,
+    &#34;transaction_index&#34;: 0
+}
+Verified domain &#39;  &#39;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html" class="btn btn-neutral float-left" title="Check Asset Compliance: SINCE policy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Share_Asset.html" class="btn btn-neutral float-right" title="Sharing an Asset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Find%20Asset%20and%20Create%20Attachment.html" class="btn btn-neutral float-left" title="Find Asset and Create Attachment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html" class="btn btn-neutral float-right" title="Create Asset Compliance: CURRENT_OUTSTANDING policy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

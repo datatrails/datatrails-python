@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.tenancies &mdash; RKVST v0.18.1 documentation</title>
+  <title>archivist.tenancies &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -120,11 +120,11 @@
 
 
 <div class="viewcode-block" id="Tenant"><a class="viewcode-back" href="../../code/tenancies.html#archivist.tenancies.Tenant">[docs]</a><span class="k">class</span> <span class="nc">Tenant</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Tenant object&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tenant object&quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="_TenanciesClient"><a class="viewcode-back" href="../../code/tenancies.html#archivist.tenancies._TenanciesClient">[docs]</a><span class="k">class</span> <span class="nc">_TenanciesClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;TenanciesClient</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;TenanciesClient</span>
 
 <span class="sd">    Access to tenants entities using CRUD interface. This class is usually</span>
 <span class="sd">    accessed as an attribute of the Archivist class.</span>
@@ -145,7 +145,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;TenanciesClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
 <div class="viewcode-block" id="_TenanciesClient._identity"><a class="viewcode-back" href="../../code/tenancies.html#archivist.tenancies._TenanciesClient._identity">[docs]</a>    <span class="k">def</span> <span class="nf">_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Returns identity suitable for endpoint&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns identity suitable for endpoint&quot;&quot;&quot;</span>
         <span class="n">prefix</span><span class="p">,</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">identity</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">prefix</span> <span class="o">==</span> <span class="n">TENANCIES_PREFIX</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">TENANCIES_LABEL</span><span class="p">,</span> <span class="n">uuid</span><span class="p">))</span>
@@ -153,7 +153,7 @@
         <span class="k">return</span> <span class="n">identity</span></div>
 
 <div class="viewcode-block" id="_TenanciesClient.publicinfo"><a class="viewcode-back" href="../../code/tenancies.html#archivist.tenancies._TenanciesClient.publicinfo">[docs]</a>    <span class="k">def</span> <span class="nf">publicinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tenant</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Read Tenant public info</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read Tenant public info</span>
 
 <span class="sd">        Reads Tenant public info</span>
 

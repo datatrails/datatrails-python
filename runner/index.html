@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Story Runner &mdash; RKVST v0.18.1 documentation</title>
+  <title>Story Runner &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -37,7 +37,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -161,7 +161,7 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
     <span class="c1"># if namespace is specified on the commandline then override any environment</span>
     <span class="c1"># setting...</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span><span class="p">:</span>
-        <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ARCHIVIST_NAMESPACE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span>
+        <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;RKVST_UNIQUE_ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">yamlfile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">y</span><span class="p">:</span>
         <span class="n">arch</span><span class="o">.</span><span class="n">runner</span><span class="p">(</span><span class="n">parse_config</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">y</span><span class="p">))</span>
@@ -172,7 +172,7 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
 <p>This functionality is also available with the CLI tool <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code>.</p>
 <p>See the <a class="reference external" href="https://python.rkvst.com/index.html#installation">installation instructions</a> for more information.</p>
 <p>You can verify the installation by running the following:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner -h
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner<span class="w"> </span>-h
 </pre></div>
 </div>
 <p>Which will show you the available options when using <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code>.</p>
@@ -185,11 +185,11 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
 </ul>
 </div></blockquote>
 <p>Example usage:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner <span class="se">\</span>
-      -u https://app.rkvst.io <span class="se">\</span>
-      --client-id &lt;your-client-id&gt; <span class="se">\</span>
-      --client-secret &lt;your-client-secret&gt; <span class="se">\</span>
-      functests/test_resources/richness_story.yaml
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-u<span class="w"> </span>https://app.rkvst.io<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--client-id<span class="w"> </span>&lt;your-client-id&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--client-secret<span class="w"> </span>&lt;your-client-secret&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>functests/test_resources/richness_story.yaml
 </pre></div>
 </div>
 <p>For further reading:</p>

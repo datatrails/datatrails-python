@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logger &mdash; RKVST v0.18.1 documentation</title>
+  <title>Logger &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
@@ -37,7 +37,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -115,8 +115,8 @@
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 
 <span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
-<span class="n">client_id</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_ID&quot;</span><span class="p">)</span>
-<span class="n">client_secret_file</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET_FILENAME&quot;</span><span class="p">)</span>
+<span class="n">client_id</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_CLIENT&quot;</span><span class="p">)</span>
+<span class="n">client_secret_file</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET_FILENAME&quot;</span><span class="p">)</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">client_secret_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
     <span class="n">client_secret</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 

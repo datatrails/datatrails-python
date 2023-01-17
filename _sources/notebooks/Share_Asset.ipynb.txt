@@ -10,7 +10,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 3,
    "id": "86095794",
    "metadata": {},
    "outputs": [],
@@ -24,6 +24,9 @@
     "\"\"\"\n",
     "\n",
     "from json import dumps as json_dumps\n",
+    "from os import getenv\n",
+    "\n",
+    "from dotenv import load_dotenv\n",
     "\n",
     "from archivist.archivist import Archivist\n",
     "from archivist.constants import ASSET_BEHAVIOURS, SUBJECTS_SELF_ID\n",
@@ -34,16 +37,109 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "f0dc68f0",
+   "id": "cf422835",
    "metadata": {},
    "outputs": [],
    "source": [
-    "URL = \"https://app.rkvst.io\""
+    "%reload_ext dotenv\n",
+    "%dotenv -o notebooks.env"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 4,
+   "id": "f0dc68f0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# URL, CLIENT, SECRET are environment variables that represent connection parameters.\n",
+    "#\n",
+    "# URL = represents the url to the RKVST application\n",
+    "# CLIENT = represents the client ID from an Application Registration\n",
+    "# SECRET = represents the client secret from an Application Registration\n",
+    "\n",
+    "RKVST_URL = getenv(\"RKVST_URL\")\n",
+    "\n",
+    "RKVST_APPREG_CLIENT = {}\n",
+    "RKVST_APPREG_SECRET = {}\n",
+    "RKVST_APPREG_CLIENT[\"acme\"] = getenv(\"RKVST_APPREG_CLIENT\")\n",
+    "RKVST_APPREG_SECRET[\"acme\"] = getenv(\"RKVST_APPREG_SECRET\")\n",
+    "RKVST_APPREG_CLIENT[\"weyland\"] = \"cccccccccccccccccccccccccccccccccccc\"\n",
+    "RKVST_APPREG_SECRET[\n",
+    "    \"weyland\"\n",
+    "] = \"ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "20a1af0d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\"\"\"\n",
+    "Main function of Asset and Event creation.\n",
+    "\n",
+    "* Connect to RKVST with client ID and client secret\n",
+    "* Creates an Asset and two Events\n",
+    "* Prints response of Asset and Event creation\n",
+    "\"\"\"\n",
+    "\n",
+    "# Optional call to set the logger level.  The argument can be either\n",
+    "# \"INFO\" or \"DEBUG\".  For more sophisticated logging control see our\n",
+    "# documentation.\n",
+    "set_logger(\"INFO\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "7463028b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Connecting to ACME\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Initialize connection to acme\n",
+    "print(\"Connecting to ACME\")\n",
+    "acme = Archivist(\n",
+    "    RKVST_URL, (RKVST_APPREG_CLIENT[\"acme\"], RKVST_APPREG_SECRET[\"acme\"]), max_time=300\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "f5b427c0",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Connecting to WEYLAND\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Initialize connection to weyland\n",
+    "print(\"Connecting to WEYLAND\")\n",
+    "acme = Archivist(\n",
+    "    RKVST_URL,\n",
+    "    (RKVST_APPREG_CLIENT[\"weyland\"], RKVST_APPREG_SECRET[\"weyland\"]),\n",
+    "    max_time=300,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
    "id": "9ffed4c1",
    "metadata": {},
    "outputs": [],
@@ -87,36 +183,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "6369df70",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "def create_archivist(label):\n",
-    "    \"\"\"Create connection to archivist\"\"\"\n",
-    "    # Get authorization token. The token grants certain rights and access permissions.\n",
-    "    # The token can represent the root principal or user in an organization. Different tokens\n",
-    "    # could indicate different users in the same organization or membership of different\n",
-    "    # organiastions.\n",
-    "    with open(\n",
-    "        f\"/home/builder/credentials/{label}_token\", mode=\"r\", encoding=\"utf-8\"\n",
-    "    ) as tokenfile:\n",
-    "        auth_token = tokenfile.read().strip()\n",
-    "\n",
-    "    # Initialize connection to Archivist. max_time is the time to wait for confirmation\n",
-    "    # of an asset or event creation - the default is 1200 seconds but one can optionally\n",
-    "    # specify a different value here particularly when creating assets on SIMPLE_HASH\n",
-    "    # (rather than KHIPU) as confirmation times are much shorter in this case.\n",
-    "    return Archivist(\n",
-    "        URL,\n",
-    "        auth_token,\n",
-    "        max_time=300,\n",
-    "    )"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 9,
    "id": "b73faaf2",
    "metadata": {},
    "outputs": [],
@@ -132,7 +199,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 10,
    "id": "adb659e9",
    "metadata": {},
    "outputs": [],
@@ -187,37 +254,32 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "ee676092",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# optional call to set the logger level for all subsystems. The argument can\n",
-    "# be either \"INFO\" or \"DEBUG\". For more sophisticated logging control see the\n",
-    "# documentation.\n",
-    "set_logger(\"INFO\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "b05729f6",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# For demonstration purposes we are going to assume that 2 organizations are\n",
-    "# going to share an asset. The 2 organizations are ACME Corp and Weyland-Yutani\n",
-    "# Corporation.\n",
-    "acme = create_archivist(\"acme\")\n",
-    "weyland = create_archivist(\"weyland\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 11,
    "id": "a3930e4e",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "ArchivistBadRequestError",
+     "evalue": "https://app.dev-paul-0.wild.jitsuin.io/archivist/iam/v1/appidp/token: {\"error\":\"invalid_request\",\"error_description\":\"no client authentication mechanism provided\"} (400)",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mArchivistBadRequestError\u001b[0m                  Traceback (most recent call last)",
+      "\u001b[0;32m/tmp/ipykernel_374487/4273452617.py\u001b[0m in \u001b[0;36m<cell line: 2>\u001b[0;34m()\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m# acme creates an asset\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 2\u001b[0;31m \u001b[0macme_asset\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcreate_example_asset\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0macme\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"acme\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      3\u001b[0m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"asset created in acme\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mjson_dumps\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0macme_asset\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mindent\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;36m4\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/tmp/ipykernel_374487/3608554041.py\u001b[0m in \u001b[0;36mcreate_example_asset\u001b[0;34m(arch, label)\u001b[0m\n\u001b[1;32m     33\u001b[0m     \u001b[0;31m#   to accept events (or an error occurs)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     34\u001b[0m     \u001b[0;31m#\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 35\u001b[0;31m     \u001b[0;32mreturn\u001b[0m \u001b[0march\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0massets\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcreate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mprops\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mprops\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mattrs\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mattrs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mconfirm\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/assets.py\u001b[0m in \u001b[0;36mcreate\u001b[0;34m(self, props, attrs, confirm)\u001b[0m\n\u001b[1;32m    141\u001b[0m         \u001b[0mnewprops\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_deepmerge\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m{\u001b[0m\u001b[0;34m\"behaviours\"\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mASSET_BEHAVIOURS\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mprops\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    142\u001b[0m         \u001b[0mdata\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__params\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnewprops\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mattrs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 143\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcreate_from_data\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdata\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mconfirm\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mconfirm\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    144\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    145\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0mcreate_from_data\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdata\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mdict\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0mstr\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mAny\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mconfirm\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mbool\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;34m->\u001b[0m \u001b[0mAsset\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/assets.py\u001b[0m in \u001b[0;36mcreate_from_data\u001b[0;34m(self, data, confirm)\u001b[0m\n\u001b[1;32m    157\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    158\u001b[0m         \"\"\"\n\u001b[0;32m--> 159\u001b[0;31m         \u001b[0masset\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mAsset\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m**\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_archivist\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpost\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_label\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdata\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    160\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mconfirm\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    161\u001b[0m             \u001b[0;32mreturn\u001b[0m \u001b[0masset\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/retry429.py\u001b[0m in \u001b[0;36mwrapper\u001b[0;34m(*args, **kwargs)\u001b[0m\n\u001b[1;32m     24\u001b[0m         \u001b[0;32mwhile\u001b[0m \u001b[0;32mTrue\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     25\u001b[0m             \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 26\u001b[0;31m                 \u001b[0mret\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     27\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0mArchivistTooManyRequestsError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mex\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     28\u001b[0m                 \u001b[0;32mif\u001b[0m \u001b[0mex\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mretry\u001b[0m \u001b[0;34m<=\u001b[0m \u001b[0;36m0\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mno_of_retries\u001b[0m \u001b[0;34m<=\u001b[0m \u001b[0;36m0\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/archivist.py\u001b[0m in \u001b[0;36mpost\u001b[0;34m(self, url, request, headers, data)\u001b[0m\n\u001b[1;32m    270\u001b[0m                 \u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    271\u001b[0m                 \u001b[0mjson\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 272\u001b[0;31m                 \u001b[0mheaders\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_add_headers\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mheaders\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    273\u001b[0m                 \u001b[0mverify\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mverify\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    274\u001b[0m             )\n",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/archivist.py\u001b[0m in \u001b[0;36m_add_headers\u001b[0;34m(self, headers)\u001b[0m\n\u001b[1;32m    229\u001b[0m             \u001b[0mnewheaders\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    230\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 231\u001b[0;31m         \u001b[0mauth\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mauth\u001b[0m  \u001b[0;31m# this may trigger a refetch so only do it once here\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    232\u001b[0m         \u001b[0;31m# for appidp endpoint there may not be an authtoken\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    233\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mauth\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/archivist.py\u001b[0m in \u001b[0;36mauth\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    195\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    196\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_machine_auth\u001b[0m \u001b[0;32mand\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_expires_at\u001b[0m \u001b[0;34m<\u001b[0m \u001b[0mtime\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 197\u001b[0;31m             \u001b[0mapptoken\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mappidp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mtoken\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_machine_auth\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    198\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_auth\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mapptoken\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"access_token\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    199\u001b[0m             \u001b[0;32mif\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_auth\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/appidp.py\u001b[0m in \u001b[0;36mtoken\u001b[0;34m(self, client_id, client_secret)\u001b[0m\n\u001b[1;32m     73\u001b[0m         \"\"\"\n\u001b[1;32m     74\u001b[0m         return AppIDP(\n\u001b[0;32m---> 75\u001b[0;31m             **self._archivist.post(\n\u001b[0m\u001b[1;32m     76\u001b[0m                 \u001b[0;34mf\"{self._label}/{APPIDP_TOKEN}\"\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     77\u001b[0m                 {\n",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/retry429.py\u001b[0m in \u001b[0;36mwrapper\u001b[0;34m(*args, **kwargs)\u001b[0m\n\u001b[1;32m     24\u001b[0m         \u001b[0;32mwhile\u001b[0m \u001b[0;32mTrue\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     25\u001b[0m             \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 26\u001b[0;31m                 \u001b[0mret\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     27\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0mArchivistTooManyRequestsError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mex\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     28\u001b[0m                 \u001b[0;32mif\u001b[0m \u001b[0mex\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mretry\u001b[0m \u001b[0;34m<=\u001b[0m \u001b[0;36m0\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mno_of_retries\u001b[0m \u001b[0;34m<=\u001b[0m \u001b[0;36m0\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/github/rkvst-python/rkvst-venv/lib/python3.10/site-packages/archivist/archivist.py\u001b[0m in \u001b[0;36mpost\u001b[0;34m(self, url, request, headers, data)\u001b[0m\n\u001b[1;32m    276\u001b[0m         \u001b[0merror\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_parse_response\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mresponse\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    277\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0merror\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 278\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0merror\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    279\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    280\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mresponse\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mjson\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mArchivistBadRequestError\u001b[0m: https://app.dev-paul-0.wild.jitsuin.io/archivist/iam/v1/appidp/token: {\"error\":\"invalid_request\",\"error_description\":\"no client authentication mechanism provided\"} (400)"
+     ]
+    }
+   ],
    "source": [
     "# acme creates an asset\n",
     "acme_asset = create_example_asset(acme, \"acme\")\n",
@@ -337,7 +399,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.15"
+   "version": "3.10.6"
   }
  },
  "nbformat": 4,

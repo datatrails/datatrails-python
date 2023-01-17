@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Since Compliance Policy &mdash; RKVST v0.18.1 documentation</title>
+  <title>Since Compliance Policy &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
@@ -37,7 +37,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -151,7 +151,7 @@
 
 
 <span class="k">def</span> <span class="nf">get_archivist</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Create Archivist endpoint.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create Archivist endpoint.&quot;&quot;&quot;</span>
 
     <span class="c1"># client id and client secret is obtained from the appidp endpoint - see the</span>
     <span class="c1"># application registrations example code in examples/applications_registration.py</span>
@@ -161,11 +161,11 @@
     <span class="c1"># the client_secret_file environment variable.</span>
     <span class="c1">#</span>
     <span class="n">auth</span> <span class="o">=</span> <span class="n">get_auth</span><span class="p">(</span>
-        <span class="n">auth_token</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_AUTHTOKEN&quot;</span><span class="p">),</span>
-        <span class="n">auth_token_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_AUTHTOKEN_FILENAME&quot;</span><span class="p">),</span>
-        <span class="n">client_id</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_ID&quot;</span><span class="p">),</span>
-        <span class="n">client_secret</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET&quot;</span><span class="p">),</span>
-        <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ARCHIVIST_CLIENT_SECRET_FILENAME&quot;</span><span class="p">),</span>
+        <span class="n">auth_token</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_AUTHTOKEN&quot;</span><span class="p">),</span>
+        <span class="n">auth_token_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_AUTHTOKEN_FILENAME&quot;</span><span class="p">),</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_CLIENT&quot;</span><span class="p">),</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET&quot;</span><span class="p">),</span>
+        <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET_FILENAME&quot;</span><span class="p">),</span>
     <span class="p">)</span>
 
     <span class="c1"># Initialize connection to Archivist</span>
@@ -177,7 +177,7 @@
 
 
 <span class="k">def</span> <span class="nf">create_compliance_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compliance policy which expires 10 seconds after a</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compliance policy which expires 10 seconds after a</span>
 <span class="sd">    Maintenance Performed event on a &#39;Traffic Light&#39; has occurred.</span>
 
 <span class="sd">    Usually the expiry time is on the order of days or weeks..</span>
@@ -201,7 +201,7 @@
 
 
 <span class="k">def</span> <span class="nf">create_traffic_light</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a traffic light.</span>
 
 <span class="sd">    Note that arc_display_type siginfies a Traffic Light</span>
@@ -220,7 +220,7 @@
 
 
 <span class="k">def</span> <span class="nf">perform_maintenance</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">traffic_light</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform maintenance on traffic light</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">maintenance_performed</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
@@ -239,7 +239,7 @@
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Connect to archivist, create an asset, create a compliance policy</span>
 <span class="sd">    execute an event on the asset and check if the asset has expired</span>
 <span class="sd">    &quot;&quot;&quot;</span>

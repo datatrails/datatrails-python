@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Note Books (BETA) &mdash; RKVST v0.18.1 documentation</title>
+  <title>Note Books (BETA) &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
@@ -24,7 +24,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Manage Credentials" href="notebooks/Manage_Credentials.html" />
+    <link rel="next" title="Initialization and Credentials" href="notebooks/Initialization%20and%20Credentials.html" />
     <link rel="prev" title="Filter IAM subjects Example" href="subjects_filter.html" /> 
 </head>
 
@@ -37,7 +37,7 @@
             <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -52,17 +52,15 @@
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Note Books (BETA)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installing-the-rkvst-python-sdk">Installing the RKVST python SDK</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#linux">Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#macos">MacOS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="#download-notebooks">Download Notebooks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Initialization%20and%20Credentials.html">Initialization and Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/Manage_Credentials.html">Manage Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Create%20Asset%20and%20Events.html">Create Asset and Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Find%20Asset%20and%20Event%20Creation.html">Find Asset and Event Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Find%20Asset%20and%20Create%20Attachment.html">Find Asset and Create Attachment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notebooks/Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/Share_Asset.html">Sharing an Asset</a></li>
 </ul>
 </li>
@@ -129,57 +127,67 @@
 </div>
 <p>These are a collection of jupyter notebooks that demonstrate typical use cases of the RKVST
 system.</p>
-<p>They can be downloaded and executed on a Linux, Mac or Windows machines. The only requirement
-is that python3.7 to python3.11 and pip command-line too have been installed.</p>
-<section id="installing-the-rkvst-python-sdk">
-<h2>Installing the RKVST python SDK<a class="headerlink" href="#installing-the-rkvst-python-sdk" title="Permalink to this heading"></a></h2>
-<p>The bare requirement is that a version of python3 (3.7 to 3.11) is installed together with
-the pip command-line tool.</p>
-<section id="linux">
-<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this heading"></a></h3>
-<p>Most Linux distros come with a suitable version of python3 already installed. The only extra requirement
-is to install the pip command-line utility.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m ensurepip --upgrade
-</pre></div>
-</div>
-</section>
-<section id="macos">
-<h3>MacOS<a class="headerlink" href="#macos" title="Permalink to this heading"></a></h3>
-<p>Python installation instructions for MacOS are <a class="reference external" href="https://www.python.org/downloads/macos/">pythonmac installation instructions</a></p>
-<p>Open a terminal and ensure that python and pip are available:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python --version
-pip --version
-</pre></div>
-</div>
-</section>
-<section id="windows">
-<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading"></a></h3>
-<p>Python installation instructions for Windows are <a class="reference external" href="https://www.python.org/downloads/windows/">pythonwindows installation instructions</a></p>
-<p>Execute the installer. Ensure the following:</p>
-<ul class="simple">
-<li><p>Installation of pip is enabled</p></li>
-<li><p>py launcher is enabled</p></li>
-<li><p>Associate file with python is enabled</p></li>
-<li><p>Create shortcuts for installed applications</p></li>
-<li><p>Add Python to Path</p></li>
-</ul>
-<p>Open a 'cmd' terminal and ensure that python and pip are available:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python --version
-pip --version
-</pre></div>
-</div>
-</section>
-</section>
+<p>They can be downloaded and executed on Linux, Mac or Windows machines.</p>
+<p>The recommended jupyter environment is the JupyterLab Desktop which is available for Linux, Mac or Windows.</p>
+<p><a class="reference external" href="https://github.com/jupyterlab/jupyterlab-desktop">https://github.com/jupyterlab/jupyterlab-desktop</a></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><dl class="simple">
+<dt>Please install this on your desktop following the instructions described in this link.</dt><dd><ol class="arabic simple">
+<li><p>When prompted initialize a bundled python environment for JupyterLab Desktop.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><p>Download the Notebooks from the link below and unzip into a suitable folder.</p></li>
+<li><p>Execute JupyterLab Desktop and select the directory where the downloaded notebooks are located.</p></li>
+<li><p>Execute the 'Initialization and Credentials' notebook and set your credentials.</p></li>
+<li><p>Execute selected notebooks.</p></li>
+<li><p>Create new notebooks.....</p></li>
+</ol>
+</div></blockquote>
 <section id="download-notebooks">
 <h2>Download Notebooks<a class="headerlink" href="#download-notebooks" title="Permalink to this heading"></a></h2>
+<p>Download the notebooks into a suitable folder:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Recommended to call the folder '~/notebooks'</p></li>
+<li><p>Restrict access by changing the folder permissions 'chmod 700 ~/notebooks'</p></li>
+<li><p>On Windows only allow the owner access to this folder. Either use the dialog or the 'icacls' command.</p></li>
+</ol>
+</div></blockquote>
 <p>See <a class="reference download internal" download="" href="_downloads/5a0eecca0b8984c348e89ecb5ed79ebd/notebooks.zip"><code class="xref download docutils literal notranslate"><span class="pre">Notebooks</span></code></a>.</p>
-<div class="toctree-wrapper compound" id="gallery">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Preparation of Notebooks Environment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Initialization%20and%20Credentials.html">Initialization and Credentials</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Managing Credentials in Notebook Environment</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/Manage_Credentials.html">Manage Credentials</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Basic Asset and Event Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Create%20Asset%20and%20Events.html">Create Asset and Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Find%20Asset%20and%20Event%20Creation.html">Find Asset and Event Creation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Find%20Asset%20and%20Create%20Attachment.html">Find Asset and Create Attachment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Compliance Policies Examples</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Asset Sharing</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/Share_Asset.html">Sharing an Asset</a></li>
 </ul>
 </div>
@@ -191,7 +199,7 @@ pip --version
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="subjects_filter.html" class="btn btn-neutral float-left" title="Filter IAM subjects Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="notebooks/Manage_Credentials.html" class="btn btn-neutral float-right" title="Manage Credentials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="notebooks/Initialization%20and%20Credentials.html" class="btn btn-neutral float-right" title="Initialization and Credentials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

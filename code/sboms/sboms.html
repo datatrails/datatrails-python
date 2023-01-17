@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SBOMS Class &mdash; RKVST v0.18.1 documentation</title>
+  <title>SBOMS Class &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -37,7 +37,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -171,22 +171,22 @@ or event creation.</p>
 </dl>
 <p>A YAML representation of the data argument would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/sboms/gen1.xml</span><span class="w"></span>
-<span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">text/xml</span><span class="w"></span>
-<span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
-<span class="nt">params</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">privacy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PRIVATE</span><span class="w"></span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/sboms/gen1.xml</span>
+<span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">text/xml</span>
+<span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="nt">params</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">privacy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PRIVATE</span>
 </pre></div>
 </div>
 <p>OR</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://some.hostname/cdx.xml</span><span class="w"></span>
-<span class="w">   </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">text/xml</span><span class="w"></span>
-<span class="w">   </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
-<span class="w">   </span><span class="nt">params</span><span class="p">:</span><span class="w"></span>
-<span class="w">     </span><span class="nt">privacy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PRIVATE</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://some.hostname/cdx.xml</span>
+<span class="w">   </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">text/xml</span>
+<span class="w">   </span><span class="nt">confirm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="w">   </span><span class="nt">params</span><span class="p">:</span>
+<span class="w">     </span><span class="nt">privacy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PRIVATE</span>
 
-<span class="l l-Scalar l-Scalar-Plain">Either &#39;filename&#39; or &#39;url&#39; is required.</span><span class="w"></span>
-<span class="l l-Scalar l-Scalar-Plain">&#39;content_type&#39; is required.</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">Either &#39;filename&#39; or &#39;url&#39; is required.</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;content_type&#39; is required.</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -197,9 +197,9 @@ or event creation.</p>
 </dl>
 <p>A YAML representation of the result would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">arc_display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Acme Generation1 SBOM</span><span class="w"></span>
-<span class="nt">arc_attachment_identity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sboms/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span><span class="w"></span>
-<span class="l l-Scalar l-Scalar-Plain">.....</span><span class="w"></span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">arc_display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Acme Generation1 SBOM</span>
+<span class="nt">arc_attachment_identity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sboms/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+<span class="l l-Scalar l-Scalar-Plain">.....</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -261,13 +261,13 @@ fd iterator</p>
 </dl>
 <p>A YAML representation of the data argument would be:</p>
 <blockquote>
-<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/sboms/gen1.xml</span><span class="w"></span>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/sboms/gen1.xml</span>
 </pre></div>
 </div>
 <p>OR</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://some.hostname/cdx.xml</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://some.hostname/cdx.xml</span>
 
-<span class="l l-Scalar l-Scalar-Plain">Either &#39;filename&#39; or &#39;url&#39; is required.</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">Either &#39;filename&#39; or &#39;url&#39; is required.</span>
 </pre></div>
 </div>
 </div></blockquote>

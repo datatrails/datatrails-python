@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.sboms &mdash; RKVST v0.18.1 documentation</title>
+  <title>archivist.sboms &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -135,7 +135,7 @@
 
 
 <div class="viewcode-block" id="_SBOMSClient"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient">[docs]</a><span class="k">class</span> <span class="nc">_SBOMSClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;SBOMSClient</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;SBOMSClient</span>
 
 <span class="sd">    Access to SBOMs entities using CRUD interface. This class is usually</span>
 <span class="sd">    accessed as an attribute of the Archivist class.</span>
@@ -155,7 +155,7 @@
 
 <div class="viewcode-block" id="_SBOMSClient.parse"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.parse">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>  <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        parse the sbom and extract pertinent information</span>
 
 <span class="sd">        Args:</span>
@@ -217,7 +217,7 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.create"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>  <span class="c1"># pragma: no cover</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an sbom and return struct suitable for use in an asset</span>
 <span class="sd">        or event creation.</span>
 
@@ -305,7 +305,7 @@
         <span class="n">mtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SBOM</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create SBOM</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create SBOM</span>
 
 <span class="sd">        Creates SBOM from opened file or other data source.</span>
 
@@ -339,7 +339,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_uploading</span><span class="p">(</span><span class="n">sbom</span><span class="o">.</span><span class="n">identity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.wait_for_uploading"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.wait_for_uploading">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_uploading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SBOM</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Wait for sbom to be uploaded.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait for sbom to be uploaded.</span>
 
 <span class="sd">        Waits for sbom to be uploaded.</span>
 
@@ -355,7 +355,7 @@
         <span class="k">return</span> <span class="n">uploader</span><span class="o">.</span><span class="n">_wait_for_uploading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.download"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Read SBOM</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read SBOM</span>
 
 <span class="sd">        Reads SBOM into data sink (usually a file opened for write)..</span>
 <span class="sd">        Note that returns the response as the body will be consumed by the</span>
@@ -372,7 +372,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.read"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SBOM</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Read SBOM metadata</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read SBOM metadata</span>
 
 <span class="sd">        Reads SBOM metadata.</span>
 
@@ -397,7 +397,7 @@
         <span class="n">page_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;List SBOMS.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List SBOMS.</span>
 
 <span class="sd">        Lists SBOMS that match optional criteria:</span>
 
@@ -429,7 +429,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.publish"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.publish">[docs]</a>    <span class="k">def</span> <span class="nf">publish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SBOM</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Publish SBOMt</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Publish SBOMt</span>
 
 <span class="sd">        Makes an SBOM public.</span>
 
@@ -454,7 +454,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_publication</span><span class="p">(</span><span class="n">sbom</span><span class="o">.</span><span class="n">identity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.wait_for_publication"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.wait_for_publication">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_publication</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SBOM</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Wait for sbom to be published.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait for sbom to be published.</span>
 
 <span class="sd">        Waits for sbom to be published.</span>
 
@@ -470,7 +470,7 @@
         <span class="k">return</span> <span class="n">publisher</span><span class="o">.</span><span class="n">_wait_for_publication</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.withdraw"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.withdraw">[docs]</a>    <span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SBOM</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Withdraw SBOM</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Withdraw SBOM</span>
 
 <span class="sd">        Withdraws an SBOM.</span>
 
@@ -495,7 +495,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_withdrawn</span><span class="p">(</span><span class="n">sbom</span><span class="o">.</span><span class="n">identity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="_SBOMSClient.wait_for_withdrawn"><a class="viewcode-back" href="../../code/sboms/sboms.html#archivist.sboms._SBOMSClient.wait_for_withdrawn">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_withdrawn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SBOM</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Wait for sbom to be withdrawn.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait for sbom to be withdrawn.</span>
 
 <span class="sd">        Waits for sbom to be withdrawn.</span>
 

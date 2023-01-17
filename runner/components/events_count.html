@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Events Count Story Runner YAML &mdash; RKVST v0.18.1 documentation</title>
+  <title>Events Count Story Runner YAML &mdash; RKVST v0.19.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -37,7 +37,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.18.1
+                v0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -165,19 +165,19 @@
 for which the authorized credentials have Event write access.</p>
 <p><code class="code docutils literal notranslate"><span class="pre">props</span></code>, <code class="code docutils literal notranslate"><span class="pre">attrs</span></code> and <code class="code docutils literal notranslate"><span class="pre">asset_attrs</span></code> are optional.</p>
 <p>This example counts all 'open door' events for the Courts of Justice Front Door.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span><span class="w"></span>
-<span class="nt">steps</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_COUNT</span><span class="w"></span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">List all events for Courts of Justice Paris Front Door</span><span class="w"></span>
-<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Courts of Justice Paris Front Door</span><span class="w"></span>
-<span class="w">    </span><span class="nt">props</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">confirmation_status</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CONFIRMED</span><span class="w"></span>
-<span class="w">    </span><span class="nt">attrs</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">open</span><span class="w"></span>
-<span class="w">    </span><span class="nt">asset_attrs</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">door</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EVENTS_COUNT</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">List all events for Courts of Justice Paris Front Door</span>
+<span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Courts of Justice Paris Front Door</span>
+<span class="w">    </span><span class="nt">props</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">confirmation_status</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CONFIRMED</span>
+<span class="w">    </span><span class="nt">attrs</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">open</span>
+<span class="w">    </span><span class="nt">asset_attrs</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">arc_display_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">door</span>
 </pre></div>
 </div>
 </section>
