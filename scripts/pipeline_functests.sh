@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # run functests with xml reporting
 
