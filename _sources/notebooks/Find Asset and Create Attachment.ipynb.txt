@@ -25,7 +25,7 @@
     "# Note: The purpose of RKVST Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.\n",
     "# The RKVST Python SDK is authored to work cleanly with more advanced coding techniques.\n",
     "#\n",
-    "# RKVST Python SDK: https://github.com/jitsuin-inc/archivist-python\n",
+    "# RKVST Python SDK: https://github.com/rkvst/rkvst-python\n",
     "#"
    ]
   },
@@ -327,7 +327,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.15"
+   "version": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]"
   },
   "vscode": {
    "interpreter": {
