@@ -152,35 +152,11 @@ You can then use the examples code to create assets (see examples directory):
 Notebooks
 =================
 
-Some jupyter notebooks are available to exercise the examples code. Do the following:
+Some jupyter notebooks are available to exercise the examples code.
+These examples can be downloaded from python.rkvst.com and run in a local install
+of jupyter notebook such as jupyterLabDesktop.
 
-.. code:: text
-
-    task builder      # only necessary first time checking out repo.
-    ./scripts/notebooks.sh
-
-Something similar to the following will be emitted:
-
-.. code:: text
-
-    [I 2022-07-13 15:29:32.102 LabApp] JupyterLab extension loaded from /usr/local/lib/python3.7/site-packages/jupyterlab
-    [I 2022-07-13 15:29:32.102 LabApp] JupyterLab application directory is /usr/local/share/jupyter/lab
-    [I 15:29:32.106 NotebookApp] Serving notebooks from local directory: /home/builder/notebooks
-    [I 15:29:32.107 NotebookApp] Jupyter Notebook 6.4.12 is running at:
-    [I 15:29:32.107 NotebookApp] http://d77e9e7ff8a1:8888/?token=e51c0b5120f5cf76e06c0415896aee13b0849830a9c8c83f
-    [I 15:29:32.107 NotebookApp]  or http://127.0.0.1:8888/?token=e51c0b5120f5cf76e06c0415896aee13b0849830a9c8c83f
-    [I 15:29:32.107 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-    [C 15:29:32.110 NotebookApp]
-
-        To access the notebook, open this file in a browser:
-            file:///home/builder/.local/share/jupyter/runtime/nbserver-1-open.html
-        Or copy and paste one of these URLs:
-            http://d77e9e7ff8a1:8888/?token=e51c0b5120f5cf76e06c0415896aee13b0849830a9c8c83f
-         or http://127.0.0.1:8888/?token=e51c0b5120f5cf76e06c0415896aee13b0849830a9c8c83f
-
-Cut and paste one of the links given into your browser and use the various dialogs to select an available notebook
-or create a new notebook and follow current code in examples directory.
-Please note that security tokens will be required - either a JWT or Application ID and secret and these should be stored in files in the local credentials directory.
+Please consult https://python.rkvst.com/notebooks.html for details.
 
 
 File Story Runner
