@@ -24,6 +24,7 @@ jinja
 jpg
 json
 jupyter
+jupyterLabDesktop
 Khipus
 kwargs
 macclesfield
