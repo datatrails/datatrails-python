@@ -65,6 +65,7 @@ Download the notebooks into a suitable folder:
 
    notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy
    notebooks/Check Asset Compliance using SINCE Policy
+   notebooks/Create Compliance SINCE Policy.ipynb
 
 .. toctree::
    :maxdepth: 2
