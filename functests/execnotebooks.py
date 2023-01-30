@@ -187,3 +187,15 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 12)
             self.check_notebook_cell(notebook, 13)
             LOGGER.debug("=================================")
+
+    def test_create_compliance_since(self):
+        """
+        Test create_compliance_since
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance SINCE Policy.ipynb", execute=True
+        ) as notebook:
+            LOGGER.debug("\ncreate_compliance_since")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")

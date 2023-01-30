@@ -212,10 +212,20 @@ RKVST_URL {URL}""",
 
     def test_find_asset_create_event(self):
         """
-        Test find_asste_create_event
+        Test find_asset_create_event
         """
         with testbook(
             "archivist/notebooks/Find Asset and Event Creation.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)
+
+    def test_create_compliance_since(self):
+        """
+        Test create_compliance_since
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance SINCE Policy.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
