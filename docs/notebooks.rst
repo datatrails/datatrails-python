@@ -63,10 +63,11 @@ Download the notebooks into a suitable folder:
    :maxdepth: 2
    :caption: Compliance Policies Examples
 
-   notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy
-   notebooks/Check Asset Compliance using SINCE Policy
    notebooks/Create Compliance SINCE Policy
    notebooks/Create Compliance CURRENT OUTSTANDING Policy
+   notebooks/Create Compliance PERIOD OUTSTANDING Policy
+   notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy
+   notebooks/Check Asset Compliance using SINCE Policy
 
 .. toctree::
    :maxdepth: 2

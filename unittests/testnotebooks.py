@@ -239,3 +239,13 @@ RKVST_URL {URL}""",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
+
+    def test_create_compliance_period_outstanding(self):
+        """
+        Test create_compliance_period_outstanding
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance PERIOD OUTSTANDING Policy.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)
