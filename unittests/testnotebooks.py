@@ -249,3 +249,13 @@ RKVST_URL {URL}""",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
+
+    def test_create_compliance_richness(self):
+        """
+        Test create_compliance_richness
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance RICHNESS Policy.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)

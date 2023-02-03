@@ -66,6 +66,7 @@ Download the notebooks into a suitable folder:
    notebooks/Create Compliance SINCE Policy
    notebooks/Create Compliance CURRENT OUTSTANDING Policy
    notebooks/Create Compliance PERIOD OUTSTANDING Policy
+   notebooks/Create Compliance RICHNESS Policy
    notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy
    notebooks/Check Asset Compliance using SINCE Policy
 
