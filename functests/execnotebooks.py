@@ -238,3 +238,16 @@ RKVST_URL {self.url}""",
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
+
+    def test_create_compliance_dynamic_tolerance(self):
+        """
+        Test create_compliance_dynamic_tolerance
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance DYNAMIC TOLERANCE Policy.ipynb",
+            execute=True,
+        ) as notebook:
+            LOGGER.debug("\ncreate_compliance_dynamic_tolerance")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
