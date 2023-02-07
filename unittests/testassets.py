@@ -360,8 +360,8 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
             )
 
             if attachments_resp is not None:
-                mock_attachments.assert_called_once()
-                args, kwargs = mock_attachments.call_args
+                mock_attachments.assert_called()
+                args, kwargs = mock_attachments.call_args_list[0]
                 self.assertEqual(
                     args,
                     (req.get("attachments")[0],),

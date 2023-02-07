@@ -228,7 +228,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
 
         Args:
             url (str): e.g. assets/xxxxxxxxxxxxxxxxxxxxxx
-            identity (str): e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+            identity (str): e.g. blobs/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`
             fd (file): an iterable representing a file (usually from open())
                 the file must be opened in binary mode
             headers (dict): optional REST headers

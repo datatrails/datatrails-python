@@ -360,19 +360,20 @@ class _EventsRestricted(_EventsPublic):
 
         attachments = data.pop("attachments", None)
         if attachments is not None:
-            result = [self._archivist.attachments.create(a) for a in attachments]
-            for i, a in enumerate(attachments):
+            for a in attachments:
+                result = self._archivist.attachments.create(a)
                 if a.get("type") == SBOM_RELEASE:
                     sbom_result = self._archivist.sboms.parse(a)
                     for k, v in sbom_result.items():
                         event_attributes[f"sbom_{k}"] = v
 
-                    event_attributes["sbom_identity"] = result[i][
-                        "arc_attachment_identity"
-                    ]
-                    break
+                    event_attributes["sbom_identity"] = result["arc_blob_identity"]
 
-            event_attributes["arc_attachments"] = result
+                attachment_key = a.get("attachment", None)
+                if attachment_key is None:
+                    # failing that create a key from filename or url
+                    attachment_key = self._archivist.attachments.get_default_key(a)
+                event_attributes[attachment_key] = result
 
         data["event_attributes"] = event_attributes
 

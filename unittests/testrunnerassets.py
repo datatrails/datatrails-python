@@ -103,20 +103,24 @@ EVENTS_CREATE = {
     "behaviour": "RecordEvidence",
     "event_attributes": {
         "arc_display_type": "open",
-        "arc_attachments": [
-            {
-                "arc_attachment_identity": "blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                "arc_display_name": "an attachment 1",
-                "arc_hash_value": "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkijl",
-                "arc_hash_alg": "sha256",
-            },
-            {
-                "arc_attachment_identity": "blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                "arc_display_name": "an attachment 2",
-                "arc_hash_value": "042aea10a0f14f2d391373599be69d53a75dde9951fc3d3cd10b6100aa7f24",
-                "arc_hash_alg": "sha256",
-            },
-        ],
+        "an attachment 1": {
+            "arc_attribute_type": "arc_attachment",
+            "arc_blob_identity": "blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "arc_display_name": "an attachment 1",
+            "arc_blob_hash_value": (
+                "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkijl"
+            ),
+            "arc_blob_hash_alg": "sha256",
+        },
+        "an attachment 2": {
+            "arc_attribute_type": "arc_attachment",
+            "arc_blob_identity": "blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "arc_display_name": "an attachment 2",
+            "arc_blob_hash_value": (
+                "042aea10a0f14f2d391373599be69d53a75dde9951fc3d3cd10b6100aa7f24"
+            ),
+            "arc_blob_hash_alg": "sha256",
+        },
     },
     "location": {"identity": "locations/add30235-1424-4fda-840a-d5ef82c4c96f"},
 }
@@ -130,20 +134,24 @@ EVENT_RESPONSE = {
     "behaviour": "RecordEvidence",
     "event_attributes": {
         "arc_display_type": "open",
-        "arc_attachments": [
-            {
-                "arc_attachment_identity": "blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                "arc_display_name": "an attachment 1",
-                "arc_hash_value": "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkijl",
-                "arc_hash_alg": "sha256",
-            },
-            {
-                "arc_attachment_identity": "blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-                "arc_display_name": "an attachment 2",
-                "arc_hash_value": "042aea10a0f14f2d391373599be69d53a75dde9951fc3d3cd10b6100aa7f24",
-                "arc_hash_alg": "sha256",
-            },
-        ],
+        "an attachment 1": {
+            "arc_attribute_type": "arc_attachment",
+            "arc_blob_identity": "blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "arc_display_name": "an attachment 1",
+            "arc_blob_hash_value": (
+                "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkijl"
+            ),
+            "arc_blob_hash_alg": "sha256",
+        },
+        "an attachment 2": {
+            "arc_attribute_type": "arc_attachment",
+            "arc_blob_identity": "blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "arc_display_name": "an attachment 2",
+            "arc_blob_hash_value": (
+                "042aea10a0f14f2d391373599be69d53a75dde9951fc3d3cd10b6100aa7f24"
+            ),
+            "arc_blob_hash_alg": "sha256",
+        },
     },
     "asset_attributes": {
         "arc_display_type": "door",

@@ -59,10 +59,12 @@ REQUEST_EXISTS_ATTACHMENTS = {
         {
             "filename": "functests/test_resources/telephone.jpg",
             "content_type": "image/jpg",
+            "attachment": "telephone",
         },
         {
             "url": "https://secure.eicar.org/eicarcom2.zip",
             "content_type": "application/zip",
+            "attachment": "zipfile",
         },
     ],
 }
@@ -271,9 +273,7 @@ class TestAssetCreateIfNotExists(TestCase):
         LOGGER.debug("existed %s", existed)
 
         # first attachment is ok....
-        attachment_id = asset["attributes"]["arc_attachments"][0][
-            "arc_attachment_identity"
-        ]
+        attachment_id = asset["attributes"]["telephone"]["arc_blob_identity"]
         info = self.arch.attachments.info(
             attachment_id,
         )
@@ -290,9 +290,7 @@ class TestAssetCreateIfNotExists(TestCase):
             )
 
         # second attachment is bad when scanned....
-        attachment_id = asset["attributes"]["arc_attachments"][1][
-            "arc_attachment_identity"
-        ]
+        attachment_id = asset["attributes"]["zipfile"]["arc_blob_identity"]
         info = self.arch.attachments.info(
             attachment_id,
         )
@@ -327,9 +325,7 @@ class TestAssetCreateIfNotExists(TestCase):
         LOGGER.debug("existed %s", existed)
 
         # first attachment is ok....
-        attachment_id = asset["attributes"]["arc_attachments"][0][
-            "arc_attachment_identity"
-        ]
+        attachment_id = asset["attributes"]["telephone"]["arc_blob_identity"]
         info = self.arch.assetattachments.info(
             asset["identity"],
             attachment_id,
@@ -347,9 +343,7 @@ class TestAssetCreateIfNotExists(TestCase):
             )
 
         # second attachment is bad when scanned....
-        attachment_id = asset["attributes"]["arc_attachments"][1][
-            "arc_attachment_identity"
-        ]
+        attachment_id = asset["attributes"]["zipfile"]["arc_blob_identity"]
         info = self.arch.assetattachments.info(
             asset["identity"],
             attachment_id,

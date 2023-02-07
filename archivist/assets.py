@@ -204,6 +204,7 @@ class _AssetsRestricted(_AssetsPublic):
                 attachments:
                   - filename: functests/test_resources/doors/assets/entry-terminal.jpg
                     content_type: image/jpg
+                    attachment: terminal entry
 
             The 'selector' value is required and will usually specify the 'arc_display_name' as a
             secondary key. The keys in 'selector' must exist in the attributes of the asset.
@@ -250,9 +251,15 @@ class _AssetsRestricted(_AssetsPublic):
 
         # any attachments ?
         if attachments is not None:
-            data["attributes"]["arc_attachments"] = [
-                self._archivist.attachments.create(a) for a in attachments
-            ]
+            for a in attachments:
+                # attempt to get attachment to use as a key
+                attachment_key = a.get("attachment", None)
+                if attachment_key is None:
+                    # failing that create a key from filename or url
+                    attachment_key = self._archivist.attachments.get_default_key(a)
+                data["attributes"][attachment_key] = self._archivist.attachments.create(
+                    a
+                )
 
         asset = self.create_from_data(
             data=data,
