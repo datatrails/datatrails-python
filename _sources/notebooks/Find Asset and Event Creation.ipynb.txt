@@ -63,11 +63,12 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# URL, CLIENT, SECRET are environment variables that represent connection parameters.\n",
+    "# RKVST_URL, RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET are environment variables that represent connection parameters.\n",
     "#\n",
-    "# URL = represents the url to the RKVST application\n",
-    "# CLIENT = represents the client ID from an Application Registration\n",
-    "# SECRET = represents the client secret from an Application Registration\n",
+    "# RKVST_URL = represents the url to the RKVST application\n",
+    "# RKVST_APPREG_CLIENT = represents the client ID from an Application Registration\n",
+    "# RKVST_APPREG_SECRET = represents the client secret from an Application Registration\n",
+    "# RKVST_UNIQUE_ID = is an environment variable that is a unique identifier\n",
     "RKVST_URL = getenv(\"RKVST_URL\")\n",
     "RKVST_APPREG_CLIENT = getenv(\"RKVST_APPREG_CLIENT\")\n",
     "RKVST_APPREG_SECRET = getenv(\"RKVST_APPREG_SECRET\")\n",
@@ -216,7 +217,6 @@
    ],
    "source": [
     "# Finding existing artist by name and artist id\n",
-    "# Fill in the artistid from Create Asset and Events notebook\n",
     "print(\"Finding Asset\")\n",
     "asset = get_artist(arch, \"Adele Laurie Blue Adkins\", RKVST_UNIQUE_ID)\n",
     "print(\"Asset\", json_dumps(asset, indent=4))"
@@ -338,7 +338,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.8.15"
+   "version": "3.9.5 (v3.9.5:0a7dcbdb13, May  3 2021, 13:17:02) \n[Clang 6.0 (clang-600.0.57)]"
   },
   "vscode": {
    "interpreter": {

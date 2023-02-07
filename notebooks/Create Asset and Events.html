@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Asset and Events &mdash; RKVST v0.19.1 documentation</title>
+  <title>Create Asset and Events &mdash; RKVST v0.20.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -39,7 +39,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.19.1
+                v0.20.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -428,11 +428,12 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL, CLIENT, SECRET are environment variables that represent connection parameters.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># RKVST_URL, RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET are environment variables that represent connection parameters.</span>
 <span class="c1">#</span>
-<span class="c1"># URL = represents the url to the RKVST application</span>
-<span class="c1"># CLIENT = represents the client ID from an Application Registration</span>
-<span class="c1"># SECRET = represents the client secret from an Application Registration</span>
+<span class="c1"># RKVST_URL = represents the url to the RKVST application</span>
+<span class="c1"># RKVST_APPREG_CLIENT = represents the client ID from an Application Registration</span>
+<span class="c1"># RKVST_APPREG_SECRET = represents the client secret from an Application Registration</span>
+<span class="c1"># RKVST_UNIQUE_ID = is an environment variable that is a unique identifier</span>
 <span class="n">RKVST_URL</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">)</span>
 <span class="n">RKVST_APPREG_CLIENT</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_CLIENT&quot;</span><span class="p">)</span>
 <span class="n">RKVST_APPREG_SECRET</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET&quot;</span><span class="p">)</span>
@@ -522,7 +523,6 @@ RKVST_URL https://app.rkvst.io
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating an Asset for musical artist Adele</span>
-<span class="c1"># Use the above value for artistid</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating Asset&quot;</span><span class="p">)</span>
 <span class="n">asset</span> <span class="o">=</span> <span class="n">create_artist</span><span class="p">(</span>
     <span class="n">arch</span><span class="p">,</span>

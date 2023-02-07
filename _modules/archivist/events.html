@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.events &mdash; RKVST v0.19.1 documentation</title>
+  <title>archivist.events &mdash; RKVST v0.20.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.19.1
+                v0.20.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -442,19 +442,20 @@
 
         <span class="n">attachments</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;attachments&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">attachments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attachments</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">attachments</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attachments</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">SBOM_RELEASE</span><span class="p">:</span>
                     <span class="n">sbom_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">sboms</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sbom_result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                         <span class="n">event_attributes</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;sbom_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
 
-                    <span class="n">event_attributes</span><span class="p">[</span><span class="s2">&quot;sbom_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">][</span>
-                        <span class="s2">&quot;arc_attachment_identity&quot;</span>
-                    <span class="p">]</span>
-                    <span class="k">break</span>
+                    <span class="n">event_attributes</span><span class="p">[</span><span class="s2">&quot;sbom_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;arc_blob_identity&quot;</span><span class="p">]</span>
 
-            <span class="n">event_attributes</span><span class="p">[</span><span class="s2">&quot;arc_attachments&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+                <span class="n">attachment_key</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attachment&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">attachment_key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># failing that create a key from filename or url</span>
+                    <span class="n">attachment_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">get_default_key</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+                <span class="n">event_attributes</span><span class="p">[</span><span class="n">attachment_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
 
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;event_attributes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event_attributes</span>
 

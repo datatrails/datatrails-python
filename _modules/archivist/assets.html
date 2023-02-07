@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.assets &mdash; RKVST v0.19.1 documentation</title>
+  <title>archivist.assets &mdash; RKVST v0.20.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -34,7 +34,7 @@
             <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.19.1
+                v0.20.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -286,6 +286,7 @@
 <span class="sd">                attachments:</span>
 <span class="sd">                  - filename: functests/test_resources/doors/assets/entry-terminal.jpg</span>
 <span class="sd">                    content_type: image/jpg</span>
+<span class="sd">                    attachment: terminal entry</span>
 
 <span class="sd">            The &#39;selector&#39; value is required and will usually specify the &#39;arc_display_name&#39; as a</span>
 <span class="sd">            secondary key. The keys in &#39;selector&#39; must exist in the attributes of the asset.</span>
@@ -332,9 +333,15 @@
 
         <span class="c1"># any attachments ?</span>
         <span class="k">if</span> <span class="n">attachments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_attachments&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attachments</span>
-            <span class="p">]</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attachments</span><span class="p">:</span>
+                <span class="c1"># attempt to get attachment to use as a key</span>
+                <span class="n">attachment_key</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attachment&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">attachment_key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># failing that create a key from filename or url</span>
+                    <span class="n">attachment_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">get_default_key</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="n">attachment_key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                    <span class="n">a</span>
+                <span class="p">)</span>
 
         <span class="n">asset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span>
             <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>

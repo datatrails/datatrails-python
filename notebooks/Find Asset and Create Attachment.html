@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Find Asset and Create Attachment &mdash; RKVST v0.19.1 documentation</title>
+  <title>Find Asset and Create Attachment &mdash; RKVST v0.20.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -39,7 +39,7 @@
             <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.19.1
+                v0.20.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -388,8 +388,6 @@ div.rendered_html tbody tr:hover {
 <span class="c1"># Main function, establishes a connection to RKVST using an App Registration then uses that</span>
 <span class="c1"># to find existing Asset and create an attachment.</span>
 <span class="c1">#</span>
-<span class="c1"># The attachment is an image located in a folder named &quot;test_files&quot;</span>
-<span class="c1">#</span>
 <span class="c1"># Note: The purpose of RKVST Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.</span>
 <span class="c1"># The RKVST Python SDK is authored to work cleanly with more advanced coding techniques.</span>
 <span class="c1">#</span>
@@ -427,11 +425,13 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL, CLIENT, SECRET are environment variables that represent connection parameters.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># RKVST_URL, RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET are environment variables that represent connection parameters.</span>
 <span class="c1">#</span>
-<span class="c1"># URL = represents the url to the RKVST application</span>
-<span class="c1"># CLIENT = represents the client ID from an Application Registration</span>
-<span class="c1"># SECRET = represents the client secret from an Application Registration</span>
+<span class="c1"># RKVST_URL = represents the url to the RKVST application</span>
+<span class="c1"># RKVST_APPREG_CLIENT = represents the client ID from an Application Registration</span>
+<span class="c1"># RKVST_APPREG_SECRET = represents the client secret from an Application Registration</span>
+<span class="c1"># RKVST_UNIQUE_ID = is an environment variable that is a unique identifier</span>
+<span class="c1"># RKVST_ARTIST_ATTACHMENT = represents the location of the attachment</span>
 <span class="n">RKVST_URL</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">)</span>
 <span class="n">RKVST_APPREG_CLIENT</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_CLIENT&quot;</span><span class="p">)</span>
 <span class="n">RKVST_APPREG_SECRET</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET&quot;</span><span class="p">)</span>
@@ -490,9 +490,9 @@ RKVST_URL https://app.rkvst.io
         <span class="n">blob</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
         <span class="n">attachment</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-            <span class="s2">&quot;arc_attachment_identity&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;arc_hash_value&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;arc_hash_alg&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">][</span><span class="s2">&quot;alg&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;arc_blob_identity&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;arc_blob_hash_value&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;arc_blob_hash_alg&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">][</span><span class="s2">&quot;alg&quot;</span><span class="p">],</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">attachment</span>
 </pre></div>
@@ -527,7 +527,6 @@ RKVST_URL https://app.rkvst.io
     <span class="n">attachments</span> <span class="o">=</span> <span class="n">upload_attachment</span><span class="p">(</span>
         <span class="n">arch</span><span class="p">,</span> <span class="s2">&quot;pexels-andrea-turner-707697.jpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;arc_primary_image&quot;</span>
     <span class="p">)</span>
-    <span class="n">attachment_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">attachments</span><span class="p">]</span>
 
     <span class="n">props</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;operation&quot;</span><span class="p">:</span> <span class="s2">&quot;Record&quot;</span><span class="p">,</span> <span class="s2">&quot;behaviour&quot;</span><span class="p">:</span> <span class="s2">&quot;RecordEvidence&quot;</span><span class="p">}</span>
     <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
@@ -535,7 +534,7 @@ RKVST_URL https://app.rkvst.io
         <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Primary image&quot;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">asset_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;arc_attachments&quot;</span><span class="p">:</span> <span class="n">attachment_list</span><span class="p">}</span>
+    <span class="n">asset_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pexels-andrea-turner-707697&quot;</span><span class="p">:</span> <span class="n">attachments</span><span class="p">}</span>
 
     <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
         <span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span> <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">asset_attrs</span><span class="o">=</span><span class="n">asset_attrs</span>
@@ -548,7 +547,6 @@ RKVST_URL https://app.rkvst.io
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Finding existing artist by name and artist id</span>
-<span class="c1"># Fill in the artistid from Create Asset and Events notebook</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finding Asset&quot;</span><span class="p">)</span>
 <span class="n">asset</span> <span class="o">=</span> <span class="n">get_artist</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="s2">&quot;Adele Laurie Blue Adkins&quot;</span><span class="p">,</span> <span class="n">RKVST_UNIQUE_ID</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Asset&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">asset</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
