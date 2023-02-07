@@ -19,21 +19,24 @@ from archivist.proof_mechanism import ProofMechanism
 # pylint: disable=unused-variable
 
 PRIMARY_IMAGE = {
+    "arc_attribute_type": "arc_attachment",
     "arc_display_name": "arc_primary_image",
-    "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
-    "arc_hash_alg": "SHA256",
-    "arc_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
+    "arc_blob_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
+    "arc_blob_hash_alg": "SHA256",
+    "arc_blob_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
 }
 SECONDARY_IMAGE = {
+    "arc_attribute_type": "arc_attachment",
     "arc_display_name": "arc_secondary_image",
-    "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
-    "arc_hash_alg": "SHA256",
-    "arc_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
+    "arc_blob_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
+    "arc_blob_hash_alg": "SHA256",
+    "arc_blob_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
 }
 TERTIARY_IMAGE = {
-    "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
-    "arc_hash_alg": "SHA256",
-    "arc_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
+    "arc_attribute_type": "arc_attachment",
+    "arc_blob_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
+    "arc_blob_hash_alg": "SHA256",
+    "arc_blob_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
 }
 ASSET_NAME = "tcl.ppj.003"
 # also has no arc_display_name
@@ -232,6 +235,11 @@ REQUEST_EXISTS_ATTACHMENTS = {
             "filename": "test_filename1",
             "content_type": "image/jpg",
         },
+        {
+            "attachment": "test_filename2",
+            "filename": "test_filename1",
+            "content_type": "image/jpg",
+        },
     ],
 }
 REQUEST_EXISTS_KWARGS_ATTACHMENTS = {
@@ -246,17 +254,26 @@ REQUEST_EXISTS_KWARGS_ATTACHMENTS = {
             "arc_description": "Traffic flow control light at A603 North East",
             "arc_display_type": "Traffic light with violation camera",
             "some_custom_attribute": "value",
-            "arc_attachments": [
-                {
-                    "arc_attachment_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx",
-                    "arc_display_name": "arc_primary_image",
-                    "arc_hash_alg": "SHA256",
-                    "arc_hash_value": (
-                        "246c316e2cd6971ce5c83a3e61f9"
-                        "880fa6e2f14ae2976ee03500eb282fd03a60"
-                    ),
-                },
-            ],
+            "test_filename1": {
+                "arc_attribute_type": "arc_attachment",
+                "arc_blob_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx",
+                "arc_display_name": "arc_primary_image",
+                "arc_blob_hash_alg": "SHA256",
+                "arc_blob_hash_value": (
+                    "246c316e2cd6971ce5c83a3e61f9"
+                    "880fa6e2f14ae2976ee03500eb282fd03a60"
+                ),
+            },
+            "test_filename2": {
+                "arc_attribute_type": "arc_attachment",
+                "arc_blob_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx",
+                "arc_display_name": "arc_primary_image",
+                "arc_blob_hash_alg": "SHA256",
+                "arc_blob_hash_value": (
+                    "246c316e2cd6971ce5c83a3e61f9"
+                    "880fa6e2f14ae2976ee03500eb282fd03a60"
+                ),
+            },
         },
     },
     "headers": {
@@ -265,10 +282,11 @@ REQUEST_EXISTS_KWARGS_ATTACHMENTS = {
     "verify": True,
 }
 RESPONSE_ATTACHMENTS = {
-    "arc_attachment_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx",
+    "arc_attribute_type": "arc_attachment",
+    "arc_blob_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx",
     "arc_display_name": "arc_primary_image",
-    "arc_hash_alg": "SHA256",
-    "arc_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
+    "arc_blob_hash_alg": "SHA256",
+    "arc_blob_hash_value": "246c316e2cd6971ce5c83a3e61f9880fa6e2f14ae2976ee03500eb282fd03a60",
 }
 RESPONSE_EXISTS_ATTACHMENTS = {
     "identity": IDENTITY,
@@ -281,12 +299,13 @@ RESPONSE_EXISTS_ATTACHMENTS = {
         "arc_display_type": "Traffic light with violation camera",
         "some_custom_attribute": "value",
         "arc_display_name": ASSET_NAME,
-        "arc_attachments": [
+        "test_filename1": [
             {
-                "arc_attachment_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
+                "arc_attribute_type": "arc_attachment",
+                "arc_blob_identity": "blobs/87b1a84c-1c6f-442b-923e-a97516f4d275",
                 "arc_display_name": "arc_primary_image",
-                "arc_hash_alg": "SHA256",
-                "arc_hash_value": (
+                "arc_blob_hash_alg": "SHA256",
+                "arc_blob_hash_value": (
                     "246c316e2cd6971ce5c83a3e61f988"
                     "0fa6e2f14ae2976ee03500eb282fd03a60"
                 ),

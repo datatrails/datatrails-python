@@ -31,9 +31,9 @@ RESPONSE = {
     "identity": IDENTITY,
 }
 CREATE_RESULT = {
-    "arc_attachment_identity": IDENTITY,
-    "arc_hash_alg": "SHA256",
-    "arc_hash_value": "xxxxxxxxxxxxxxxxxxxxxxx",
+    "arc_blob_identity": IDENTITY,
+    "arc_blob_hash_alg": "SHA256",
+    "arc_blob_hash_value": "xxxxxxxxxxxxxxxxxxxxxxx",
 }
 
 INFO = {
@@ -52,6 +52,8 @@ INFO = {
     "scanned_bad_reason": "",
     "scanned_timestamp": "",
 }
+
+ATTACHMENT_DATA = {"filename": "/a/b/c/d.x"}
 
 
 class TestAttachmentsBase(TestCase):
@@ -75,6 +77,16 @@ class TestAttachmentsBase(TestCase):
             str(self.arch.attachments),
             "AttachmentsClient(url)",
             msg="Incorrect str",
+        )
+
+    def test_get_default_key(self):
+        """
+        Test get_default_key
+        """
+        self.assertEqual(
+            self.arch.attachments.get_default_key(ATTACHMENT_DATA),
+            "/a/b/c/d_x",
+            msg="Incorrect default key from filename",
         )
 
 

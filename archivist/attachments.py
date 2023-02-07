@@ -28,6 +28,7 @@ from __future__ import annotations
 from copy import deepcopy
 from io import BytesIO
 from logging import getLogger
+from os import path
 from typing import BinaryIO, Optional, Any
 
 from requests.models import Response
@@ -72,6 +73,18 @@ class _AttachmentsClient:
     def __str__(self) -> str:
         return f"AttachmentsClient({self._archivist.url})"
 
+    def get_default_key(self, data: dict[str, str]) -> str:
+        """
+        Return a key to use if no key was provided
+        either use filename or url as one of them is required
+        """
+        attachment_key = (
+            data.get("filename", "")
+            if data.get("filename", "")
+            else data.get("url", "")
+        )
+        return attachment_key.replace(".", "_")
+
     def create(self, data: dict[str, Any]) -> dict[str, Any]:  # pragma: no cover
         """
         Create an attachment and return struct suitable for use in an asset
@@ -108,14 +121,17 @@ class _AttachmentsClient:
             .. code-block:: yaml
 
                 arc_display_name: Telephone
-                arc_attachment_identity: blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                arc_hash_alg: SHA256
-                arc_hash_value: xxxxxxxxxxxxxxxxxxxxxxx
+                arc_blob_identity: blobs/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                arc_blob_hash_alg: SHA256
+                arc_blob_hash_value: xxxxxxxxxxxxxxxxxxxxxxx
+                arc_file_name: gdn_front.jpg
 
         """
         result = None
+        file_part = None
         filename = data.get("filename")
         if filename is not None:
+            _, file_part = path.split(filename)
             with open(filename, "rb") as fd:
                 attachment = self.upload(fd, mtype=data.get("content_type"))
 
@@ -126,10 +142,14 @@ class _AttachmentsClient:
             attachment = self.upload(fd, mtype=data.get("content_type"))
 
         result = {
-            "arc_attachment_identity": attachment["identity"],
-            "arc_hash_alg": attachment["hash"]["alg"],
-            "arc_hash_value": attachment["hash"]["value"],
+            "arc_attribute_type": "arc_attachment",
+            "arc_blob_identity": attachment["identity"],
+            "arc_blob_hash_alg": attachment["hash"]["alg"],
+            "arc_blob_hash_value": attachment["hash"]["value"],
         }
+
+        if file_part:
+            result["arc_file_name"] = file_part
 
         display_name = data.get("display_name")
         if display_name is not None:
@@ -179,7 +199,7 @@ class _AttachmentsClient:
         fd iterator
 
         Args:
-            identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
+            identity (str): attachment identity e.g. blobs/xxxxxxxxxxxxxxxxxxxxxxx
             fd (file): opened file descriptor or other file-type sink..
             params (dict): e.g. {"allow_insecure": "true"} OR {"strict": "true" }
 
@@ -202,7 +222,7 @@ class _AttachmentsClient:
         Reads attachment info
 
         Args:
-            identity (str): attachment identity e.g. attachments/xxxxxxxxxxxxxxxxxxxxxxx
+            identity (str): attachment identity e.g. blobs/xxxxxxxxxxxxxxxxxxxxxxx
 
         Returns:
             REST response

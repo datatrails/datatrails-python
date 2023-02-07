@@ -20,16 +20,16 @@ from archivist.constants import (
 ASSET_ID = f"{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
 
 PRIMARY_IMAGE = {
-    "arc_attachment_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "arc_blob_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "arc_display_name": "an attachment 2",
-    "arc_hash_value": "042aea10a0f14f2d391373599be69d53a75dde9951fc3d3cd10b6100aa7a9f24",
-    "arc_hash_alg": "sha256",
+    "arc_blob_hash_value": "042aea10a0f14f2d391373599be69d53a75dde9951fc3d3cd10b6100aa7a9f24",
+    "arc_blob_hash_alg": "sha256",
 }
 SECONDARY_IMAGE = {
-    "arc_attachment_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "arc_blob_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "arc_display_name": "an attachment 1",
-    "arc_hash_value": "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkojijl",
-    "arc_hash_alg": "sha256",
+    "arc_blob_hash_value": "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkojijl",
+    "arc_blob_hash_alg": "sha256",
 }
 PRINCIPAL_DECLARED = {
     "issuer": "idp.synsation.io/1234",
@@ -94,9 +94,11 @@ ASSET_ATTRS = {
 IDENTITY = f"{ASSET_ID}/{EVENTS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
 
 ATTACHMENTS = {
-    "arc_attachment_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "arc_hash_value": "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkojijl",
-    "arc_hash_alg": "sha256",
+    "arc_attribute_type": "arc_attachment",
+    "arc_blob_identity": f"{ATTACHMENTS_LABEL}/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "arc_blob_hash_value": "jnwpjocoqsssnundwlqalsqiiqsqp;lpiwpldkndwwlskqaalijopjkokkkojijl",
+    "arc_blob_hash_alg": "sha256",
+    "arc_file_name": "",
 }
 
 EVENT_ATTRS_ATTACHMENTS = {
@@ -109,7 +111,12 @@ EVENT_ATTRS_ATTACHMENTS = {
     },
     "attachments": [
         {
+            "attachment": "door open",
             "filename": "door_open.png",
+            "content_type": "image/jpg",
+        },
+        {
+            "filename": "door_closed.png",
             "content_type": "image/jpg",
         },
     ],
@@ -121,9 +128,8 @@ REQUEST_WITH_ATTACHMENTS = {
     "principal_declared": PRINCIPAL_DECLARED,
     "event_attributes": {
         "arc_description": "event description",
-        "arc_attachments": [
-            ATTACHMENTS,
-        ],
+        "door open": ATTACHMENTS,
+        "door_closed_png": ATTACHMENTS,
     },
 }
 RESPONSE_WITH_ATTACHMENTS = {
@@ -134,9 +140,8 @@ RESPONSE_WITH_ATTACHMENTS = {
     "principal_declared": PRINCIPAL_DECLARED,
     "event_attributes": {
         "arc_description": "event description",
-        "arc_attachments": [
-            ATTACHMENTS,
-        ],
+        "door open": ATTACHMENTS,
+        "door_closed_png": ATTACHMENTS,
     },
 }
 
@@ -233,6 +238,7 @@ EVENT_ATTRS_SBOMATTACHMENT = {
     },
     "attachments": [
         {
+            "attachment": "sbom_document",
             "filename": "gen1.xml",
             "content_type": "text/xml",
             "type": SBOM_RELEASE,
@@ -254,9 +260,7 @@ REQUEST_WITH_SBOMATTACHMENT = {
         "sbom_supplier": "CycloneDx 1.3 XML Default Supplier",
         "sbom_uuid": "urn:uuid:a24426e6-f122-4339-8b03-758a96a42e3b",
         "sbom_version": "CycloneDx 1.3 XML Default Version",
-        "arc_attachments": [
-            ATTACHMENTS,
-        ],
+        "sbom_document": ATTACHMENTS,
     },
 }
 RESPONSE_WITH_SBOMATTACHMENT = {
@@ -275,9 +279,7 @@ RESPONSE_WITH_SBOMATTACHMENT = {
         "sbom_supplier": "CycloneDx 1.3 XML Default Supplier",
         "sbom_uuid": "urn:uuid:a24426e6-f122-4339-8b03-758a96a42e3b",
         "sbom_version": "CycloneDx 1.3 XML Default Version",
-        "arc_attachments": [
-            ATTACHMENTS,
-        ],
+        "sbom_document": ATTACHMENTS,
     },
 }
 

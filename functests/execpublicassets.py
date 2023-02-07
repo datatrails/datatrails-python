@@ -59,10 +59,12 @@ REQUEST_EXISTS_ATTACHMENTS = {
         {
             "filename": "functests/test_resources/telephone.jpg",
             "content_type": "image/jpg",
+            "attachment": "telephone",
         },
         {
             "url": "https://secure.eicar.org/eicarcom2.zip",
             "content_type": "application/zip",
+            "attachment": "zipfile",
         },
     ],
     "public": True,
@@ -231,9 +233,7 @@ class TestPublicAssetCreate(TestCase):
 
         asset_id = asset["identity"]
         # first attachment is ok....
-        attachment_id = asset["attributes"]["arc_attachments"][0][
-            "arc_attachment_identity"
-        ]
+        attachment_id = asset["attributes"]["telephone"]["arc_blob_identity"]
         public_asset_id = self.arch.assets.publicurl(asset_id)
         LOGGER.debug("public asset id %s", public_asset_id)
         public = self.arch.Public
@@ -252,9 +252,7 @@ class TestPublicAssetCreate(TestCase):
             )
 
         # second attachment is bad when scanned....
-        attachment_id = asset["attributes"]["arc_attachments"][1][
-            "arc_attachment_identity"
-        ]
+        attachment_id = asset["attributes"]["zipfile"]["arc_blob_identity"]
         info = public.assetattachments.info(public_asset_id, attachment_id)
         LOGGER.debug("info attachment1 %s", json_dumps(info, indent=4))
         timestamp = info["scanned_timestamp"]

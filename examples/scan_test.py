@@ -67,10 +67,12 @@ def scan_test(arch, datestring, scanned_expected=False):
                         "main/functests/test_resources/telephone.jpg"
                     ),
                     "content_type": "image/jpg",
+                    "attachment": "telephone1",
                 },
                 {
                     "url": "https://secure.eicar.org/eicarcom2.zip",
                     "content_type": "application/zip",
+                    "attachment": "zipfile",
                 },
             ],
         },
@@ -82,7 +84,7 @@ def scan_test(arch, datestring, scanned_expected=False):
     fails = []
 
     # first attachment should be clean....
-    attachment_id = asset["attributes"]["arc_attachments"][0]["arc_attachment_identity"]
+    attachment_id = asset["attributes"]["telephone1"]["arc_blob_identity"]
     info = arch.attachments.info(
         attachment_id,
         asset_or_event_id=asset["identity"],
@@ -100,7 +102,7 @@ def scan_test(arch, datestring, scanned_expected=False):
         fails.append("Yesterday's first attachment has not been scanned.")
 
     # second attachment should be bad when scanned....
-    attachment_id = asset["attributes"]["arc_attachments"][1]["arc_attachment_identity"]
+    attachment_id = asset["attributes"]["zipfile"]["arc_blob_identity"]
     info = arch.attachments.info(
         attachment_id,
         asset_or_event_id=asset["identity"],

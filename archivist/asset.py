@@ -21,6 +21,14 @@ class Asset(dict):
             :class:`Attachment` instance
 
         """
+
+        # try latest API
+        try:
+            return self["attributes"]["arc_primary_image"]
+        except (KeyError, TypeError):
+            pass
+
+        # try old API
         try:
             attachments = self["attributes"]["arc_attachments"]
         except (KeyError, TypeError):

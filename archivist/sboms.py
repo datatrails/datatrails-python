@@ -174,7 +174,7 @@ class _SBOMSClient:
             .. code-block:: yaml
 
                 arc_display_name: Acme Generation1 SBOM
-                arc_attachment_identity: sboms/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                arc_blob_identity: sboms/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
                 .....
 
         """
