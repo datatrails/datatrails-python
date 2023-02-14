@@ -212,10 +212,60 @@ RKVST_URL {URL}""",
 
     def test_find_asset_create_event(self):
         """
-        Test find_asste_create_event
+        Test find_asset_create_event
         """
         with testbook(
             "archivist/notebooks/Find Asset and Event Creation.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)
+
+    def test_create_compliance_since(self):
+        """
+        Test create_compliance_since
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance SINCE Policy.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)
+
+    def test_create_compliance_current_outstanding(self):
+        """
+        Test create_compliance_current_outstanding
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance CURRENT OUTSTANDING Policy.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)
+
+    def test_create_compliance_period_outstanding(self):
+        """
+        Test create_compliance_period_outstanding
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance PERIOD OUTSTANDING Policy.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)
+
+    def test_create_compliance_richness(self):
+        """
+        Test create_compliance_richness
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance RICHNESS Policy.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)
+
+    def test_create_compliance_dynamic_tolerance(self):
+        """
+        Test create_compliance_dynamic_tolerance
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance DYNAMIC TOLERANCE Policy.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)

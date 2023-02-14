@@ -187,3 +187,67 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 12)
             self.check_notebook_cell(notebook, 13)
             LOGGER.debug("=================================")
+
+    def test_create_compliance_since(self):
+        """
+        Test create_compliance_since
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance SINCE Policy.ipynb", execute=True
+        ) as notebook:
+            LOGGER.debug("\ncreate_compliance_since")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
+
+    def test_create_compliance_current_outstanding(self):
+        """
+        Test create_compliance_current_outstanding
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance CURRENT OUTSTANDING Policy.ipynb",
+            execute=True,
+        ) as notebook:
+            LOGGER.debug("\ncreate_compliance_current_outstanding")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
+
+    def test_create_compliance_period_outstanding(self):
+        """
+        Test create_compliance_period_outstanding
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance PERIOD OUTSTANDING Policy.ipynb",
+            execute=True,
+        ) as notebook:
+            LOGGER.debug("\ncreate_compliance_period_outstanding")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
+
+    def test_create_compliance_richness(self):
+        """
+        Test create_compliance_richness
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance RICHNESS Policy.ipynb",
+            execute=True,
+        ) as notebook:
+            LOGGER.debug("\ncreate_compliance_richness")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
+
+    def test_create_compliance_dynamic_tolerance(self):
+        """
+        Test create_compliance_dynamic_tolerance
+        """
+        with testbook(
+            "archivist/notebooks/Create Compliance DYNAMIC TOLERANCE Policy.ipynb",
+            execute=True,
+        ) as notebook:
+            LOGGER.debug("\ncreate_compliance_dynamic_tolerance")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
