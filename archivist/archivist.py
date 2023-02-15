@@ -222,7 +222,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         )
 
     def _add_headers(self, headers: dict[str, str] | None) -> dict[str, Any]:
-
         if isinstance(headers, dict):
             newheaders = {**headers}
         else:

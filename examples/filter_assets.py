@@ -39,7 +39,6 @@ def main():
         "https://app.rkvst.io",
         (client_id, client_secret),
     ) as arch:
-
         # list all assets with required attributes and properties
         props = {"confirmation_status": "CONFIRMED"}
         attrs = {"arc_display_type": "Traffic light"}

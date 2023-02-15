@@ -321,7 +321,6 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         ) as mock_location, mock.patch.object(
             self.arch.attachments, "create"
         ) as mock_attachments:
-
             mock_get.side_effect = ArchivistNotFoundError
             mock_post.return_value = MockResponse(200, **resp)
             if loc_resp is not None:

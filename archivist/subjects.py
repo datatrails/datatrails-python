@@ -267,7 +267,6 @@ class _SubjectsClient:
         wallet_pub_key: Optional[list[str]] = None,
         tessera_pub_key: Optional[list[str]] = None,
     ) -> dict[str, Any]:
-
         params = {}
 
         if display_name is not None:

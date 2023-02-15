@@ -38,7 +38,6 @@ def main():
         "https://app.rkvst.io",
         (client_id, client_secret),
     ) as arch:
-
         # subject_string is the base64 encoding of the self subject of the other organization
         subject_string = (
             "eyJpZGVudGl0eSI6ICJzdWJqZWN0cy8wMDAwMDAwMC0wMDAwLTAwMDAtMDA"

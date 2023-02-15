@@ -18,7 +18,6 @@ LOGGER = getLogger(__name__)
 
 
 def run(arch: "type_helper.Archivist", args):
-
     LOGGER.info("Using version %s of rkvst-archivist", about.__version__)
     LOGGER.info("Namespace %s", args.namespace)
 

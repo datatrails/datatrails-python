@@ -83,7 +83,6 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         verify: bool = True,
         max_time: float = MAX_TIME,
     ):
-
         self._verify = verify
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
         self._session = None

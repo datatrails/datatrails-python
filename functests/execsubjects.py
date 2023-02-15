@@ -59,7 +59,7 @@ class TestSubjects(TestCase):
             auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth)
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def tearDown(self):

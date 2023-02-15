@@ -87,7 +87,7 @@ class TestPublicAssetCreate(TestCase):
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
         self.url = getenv("RKVST_URL")
-        self.arch = Archivist(self.url, auth, verify=False, max_time=600)
+        self.arch = Archivist(self.url, auth, max_time=600)
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"

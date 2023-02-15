@@ -156,7 +156,6 @@ def main():
         "https://app.rkvst.io",
         (client_id, client_secret),
     ) as arch:
-
         # Create a new asset
         asset = create_asset(arch)
         print("Asset", json_dumps(asset, sort_keys=True, indent=4))

@@ -137,8 +137,7 @@ def main():
         client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
     )
 
-    with Archivist(getenv("RKVST_URL"), auth, verify=False, max_time=300) as arch:
-
+    with Archivist(getenv("RKVST_URL"), auth, max_time=300) as arch:
         print("##[group]Today")
         today = date.today()
         scan_test(arch, today.strftime("%Y-%m-%d"))

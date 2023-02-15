@@ -40,7 +40,7 @@ class TestRunner(TestCase):
             client_secret=getenv("RKVST_APPREG_SECRET"),
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False, max_time=300)
+        self.arch = Archivist(getenv("RKVST_URL"), auth, max_time=300)
 
     def tearDown(self):
         self.arch.close()
