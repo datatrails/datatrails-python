@@ -120,7 +120,7 @@ class TestAccessPoliciesBase(TestCase):
             client_secret=getenv("RKVST_APPREG_SECRET"),
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth)
 
         # these are for access_policies
         self.ac_props = deepcopy(PROPS)
@@ -301,7 +301,7 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         super().setUp()
         with open(getenv("RKVST_AUTHTOKEN_FILENAME_2"), encoding="utf-8") as fd:
             auth_2 = fd.read().strip()
-        self.arch_2 = Archivist(getenv("RKVST_URL"), auth_2, verify=False)
+        self.arch_2 = Archivist(getenv("RKVST_URL"), auth_2)
 
         # creates reciprocal subjects for arch 1 and arch 2.
         # subject 1 contains details of subject 2 to be shared

@@ -38,7 +38,6 @@ def main():
         "https://app.rkvst.io",
         (client_id, client_secret),
     ) as arch:
-
         props = {
             "display_name": "Friendly name of the policy",
             "description": "Description of the policy",

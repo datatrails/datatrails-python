@@ -32,7 +32,6 @@ def main():
         "https://app.rkvst.io",
         (client_id, client_secret),
     ) as arch:
-
         # count subjects...
         print("no.of subjects", arch.subjects.count(display_name="Some display name"))
 

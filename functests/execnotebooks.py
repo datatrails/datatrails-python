@@ -32,9 +32,7 @@ class TestNotebooks(TestCase):
         self.client_id = getenv("RKVST_APPREG_CLIENT")
         self.client_secret = getenv("RKVST_APPREG_SECRET")
         self.url = getenv("RKVST_URL")
-        self.arch = Archivist(
-            self.url, (self.client_id, self.client_secret), verify=False
-        )
+        self.arch = Archivist(self.url, (self.client_id, self.client_secret))
 
     def tearDown(self):
         self.arch.close()

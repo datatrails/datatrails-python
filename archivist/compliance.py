@@ -106,7 +106,6 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
 
         LOGGER.info("Compliant %s", compliance["compliant"])
         for outcome in compliance["compliance"]:
-
             if outcome["compliant"]:
                 continue
 

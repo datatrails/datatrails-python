@@ -162,7 +162,6 @@ class _ApplicationsClient:
         display_name: Optional[str] = None,
         custom_claims: Optional[dict[str, str]] = None,
     ) -> dict[str, Any]:
-
         params = {}
 
         if display_name is not None:

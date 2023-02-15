@@ -59,7 +59,7 @@ class TestPublic(TestCase):
             self.assertEqual(
                 public.public,
                 True,
-                msg="verify must be True",
+                msg="public must be True",
             )
             with self.assertRaises(AttributeError):
                 e = public.Illegal_endpoint

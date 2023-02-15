@@ -13,7 +13,6 @@ def main():
     """Main function of getting public events."""
     # Initialize connection to ArchivistPublic
     with ArchivistPublic() as public:
-
         # URL is the fully-attested URL returned by archivist
         event = public.events.read(
             "https://app.rkvst.io/archivist/"

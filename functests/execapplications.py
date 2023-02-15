@@ -55,7 +55,7 @@ class TestApplications(TestCase):
             client_secret=getenv("RKVST_APPREG_SECRET"),
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth)
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def tearDown(self):
@@ -231,9 +231,7 @@ class TestApplications(TestCase):
         with Archivist(
             getenv("RKVST_URL"),
             (application["client_id"], application["credentials"][0]["secret"]),
-            verify=False,
         ) as new_arch:
-
             # now we create an asset and add events 10 times with a 60s sleep
             # this should trigger a token refresh
             traffic_light = deepcopy(ATTRS)

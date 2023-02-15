@@ -280,7 +280,6 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
             label = self.get(f"{noun}_label")
             func = self.label("use", noun)
             if label is not None and func:
-
                 identity = self.identity_from_label(noun, identity_method)
                 if identity is None:
                     raise ArchivistInvalidOperationError(f"unknown {noun} '{label}'")

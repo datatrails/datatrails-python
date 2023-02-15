@@ -145,7 +145,6 @@ def common_parser(description: str):
 
 
 def endpoint(args):
-
     if args.verbose:
         set_logger("DEBUG")
     else:
@@ -190,7 +189,7 @@ def endpoint(args):
         LOGGER.error("Critical error.  Aborting.")
         sys_exit(1)
 
-    arch = Archivist(args.url, auth, verify=False, fixtures=fixtures)
+    arch = Archivist(args.url, auth, fixtures=fixtures)
     if arch is None:
         LOGGER.error("Critical error.  Aborting.")
         sys_exit(1)

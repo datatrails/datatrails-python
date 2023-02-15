@@ -15,7 +15,6 @@ def main():
     """
     # Initialize connection to ArchivistPublic
     with ArchivistPublic() as public:
-
         # Get all public events with required attributes and properties
         props = {"confirmation_status": "CONFIRMED"}
         attrs = {"arc_display_type": "Traffic light"}

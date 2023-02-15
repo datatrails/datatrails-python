@@ -41,7 +41,6 @@ class TestEventsConfirm(TestCase):
         with mock.patch.object(
             self.arch.session, "post"
         ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
 

@@ -33,7 +33,6 @@ def main():
         "https://app.rkvst.io",
         authtoken,
     ) as arch:
-
         # create application
         application = arch.applications.create(
             f"Application display name {uuid4()}",

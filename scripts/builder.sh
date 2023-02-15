@@ -14,7 +14,7 @@ then
 fi
 
 docker run \
-    --rm \
+    --rm -it \
     -v $(pwd):/home/builder \
     -u $(id -u):$(id -g) \
     -e FUNCTEST \

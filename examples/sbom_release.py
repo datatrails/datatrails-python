@@ -98,8 +98,7 @@ def main():
         client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
     )
 
-    with Archivist(rkvst_url, auth, verify=False, max_time=300) as arch:
-
+    with Archivist(rkvst_url, auth, max_time=300) as arch:
         asset, event = sbom_release(
             arch, getenv("BUILD_BUILDNUMBER"), getenv("SBOM_FILEPATH")
         )

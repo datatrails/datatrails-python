@@ -44,7 +44,7 @@ class TestAttachmentsCreate(TestCase):
             client_secret=getenv("RKVST_APPREG_SECRET"),
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth)
         self.file_uuid: str = ""
 
         with suppress(FileNotFoundError):
@@ -195,7 +195,7 @@ class TestAttachmentstMalware(TestCase):
             client_id=getenv("RKVST_APPREG_CLIENT"),
             client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth, verify=False)
+        self.arch = Archivist(getenv("RKVST_URL"), auth)
 
     def tearDown(self):
         self.arch.close()

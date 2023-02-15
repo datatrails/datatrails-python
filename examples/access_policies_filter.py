@@ -38,7 +38,6 @@ def main():
         "https://app.rkvst.io",
         auth,
     ) as arch:
-
         # count access_policies...
         print(
             "no.of access_policies",
