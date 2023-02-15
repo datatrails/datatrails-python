@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SBOMS Class &mdash; RKVST v0.20.0 documentation</title>
+  <title>SBOMS Class &mdash; RKVST v0.20.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -33,15 +33,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html">
-            <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.20.0
+                v0.20.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -93,7 +97,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Code Reference</a></li>
           <li class="breadcrumb-item"><a href="index.html">Software Bill of Materials (SBOM)</a></li>
       <li class="breadcrumb-item active">SBOMS Class</li>
@@ -155,7 +159,7 @@
 <p>Access to SBOMs entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
@@ -165,7 +169,7 @@ accessed as an attribute of the Archivist class.</p>
 <dd><p>Create an sbom and return struct suitable for use in an asset
 or event creation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) -- dictionary</p>
 </dd>
 </dl>
@@ -191,7 +195,7 @@ or event creation.</p>
 </div>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A dict suitable for adding to an asset or event creation</p>
 </dd>
 </dl>
@@ -213,13 +217,13 @@ or event creation.</p>
 Note that returns the response as the body will be consumed by the
 fd iterator</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>identity</strong> (<em>str</em>) -- SBOM identity e.g. sboms/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>fd</strong> (<em>file</em>) -- opened file descriptor or other file-type sink.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>REST response</p>
 </dd>
 </dl>
@@ -238,13 +242,13 @@ fd iterator</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>metadata</strong> (<em>dict</em>) -- optional e.g. {&quot;life_cycle_status&quot;: &quot;ACTIVE&quot; }</p></li>
 <li><p><strong>page_size</strong> (<em>int</em>) -- optional page size. (Rarely used).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>iterable that returns <code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instances</p>
 </dd>
 </dl>
@@ -255,7 +259,7 @@ fd iterator</p>
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/archivist/sboms.html#_SBOMSClient.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.sboms._SBOMSClient.parse" title="Permalink to this definition"></a></dt>
 <dd><p>parse the sbom and extract pertinent information</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) -- dictionary</p>
 </dd>
 </dl>
@@ -272,7 +276,7 @@ fd iterator</p>
 </div>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A dict suitable for adding to an asset or event creation</p>
 </dd>
 </dl>
@@ -284,13 +288,13 @@ fd iterator</p>
 <dd><p>Publish SBOMt</p>
 <p>Makes an SBOM public.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>identity</strong> (<em>str</em>) -- identity of SBOM</p></li>
 <li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for sbom to be published.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instance</p>
 </dd>
 </dl>
@@ -302,10 +306,10 @@ fd iterator</p>
 <dd><p>Read SBOM metadata</p>
 <p>Reads SBOM metadata.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- sbom identity e.g. sboms/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>BOM</p>
 </dd>
 </dl>
@@ -317,7 +321,7 @@ fd iterator</p>
 <dd><p>Create SBOM</p>
 <p>Creates SBOM from opened file or other data source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fd</strong> (<em>file</em>) -- opened file descriptor or other file-type iterable.</p></li>
 <li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for sbom to be uploaded.</p></li>
@@ -325,7 +329,7 @@ fd iterator</p>
 <li><p><strong>params</strong> (<em>dict</em>) -- optional e.g. {&quot;sbomType&quot;: &quot;cyclonedx-xml&quot;, &quot;privacy&quot;: &quot;PUBLIC&quot; }</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instance</p>
 </dd>
 </dl>
@@ -337,10 +341,10 @@ fd iterator</p>
 <dd><p>Wait for sbom to be published.</p>
 <p>Waits for sbom to be published.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- identity of sbom</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if sbom is confirmed.</p>
 </dd>
 </dl>
@@ -352,10 +356,10 @@ fd iterator</p>
 <dd><p>Wait for sbom to be uploaded.</p>
 <p>Waits for sbom to be uploaded.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- identity of sbom</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if sbom is uploaded.</p>
 </dd>
 </dl>
@@ -367,10 +371,10 @@ fd iterator</p>
 <dd><p>Wait for sbom to be withdrawn.</p>
 <p>Waits for sbom to be withdrawn.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- identity of sbom</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if sbom is confirmed.</p>
 </dd>
 </dl>
@@ -382,13 +386,13 @@ fd iterator</p>
 <dd><p>Withdraw SBOM</p>
 <p>Withdraws an SBOM.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>identity</strong> (<em>str</em>) -- identity of SBOM</p></li>
 <li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for sbom to be withdrawn.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SBOM</span></code> instance</p>
 </dd>
 </dl>

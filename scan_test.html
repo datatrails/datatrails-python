@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scan Test Example &mdash; RKVST v0.20.0 documentation</title>
+  <title>Scan Test Example &mdash; RKVST v0.20.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
@@ -33,15 +33,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html">
-            <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.20.0
+                v0.20.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -90,7 +94,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="getting_started.html">Getting started</a></li>
       <li class="breadcrumb-item active">Scan Test Example</li>
       <li class="wy-breadcrumbs-aside">
@@ -266,8 +270,7 @@
         <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET_FILENAME&quot;</span><span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">),</span> <span class="n">auth</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
-
+    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">),</span> <span class="n">auth</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;##[group]Today&quot;</span><span class="p">)</span>
         <span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
         <span class="n">scan_test</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>

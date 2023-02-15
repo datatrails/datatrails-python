@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generic Story Runner YAML &mdash; RKVST v0.20.0 documentation</title>
+  <title>Generic Story Runner YAML &mdash; RKVST v0.20.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -33,15 +33,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html">
-            <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.20.0
+                v0.20.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -121,7 +125,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../getting_started.html">Getting started</a></li>
           <li class="breadcrumb-item"><a href="../index.html">Story Runner</a></li>
           <li class="breadcrumb-item"><a href="index.html">Story Runner Components</a></li>
@@ -177,24 +181,24 @@ required, optional or required for a particular operation.</p>
 </pre></div>
 </div>
 <dl class="field-list">
-<dt class="field-odd">action</dt>
+<dt class="field-odd">action<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Required for every operation. This is a predefined constant that maps to
 a method e.g. &quot;ASSETS_CREATE&quot; will call the assets.create_from_data() method</p>
 </dd>
-<dt class="field-even">description</dt>
+<dt class="field-even">description<span class="colon">:</span></dt>
 <dd class="field-even"><p>Optional but recommended.
 Emits this string to stdout.</p>
 </dd>
-<dt class="field-odd">wait_time</dt>
+<dt class="field-odd">wait_time<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The story runner will pause for this number of seconds before execution.
 Primarily used to demonstrate compliance policy evaluation. One pauses
 before creating events and before evaluating compliance to allow
 (for example) the asset to become non-compliant. (demonstration)</p>
 </dd>
-<dt class="field-even">print_response</dt>
+<dt class="field-even">print_response<span class="colon">:</span></dt>
 <dd class="field-even"><p>Emit JSON representation of response. Useful for debugging purposes.</p>
 </dd>
-<dt class="field-odd">asset_label</dt>
+<dt class="field-odd">asset_label<span class="colon">:</span></dt>
 <dd class="field-odd"><p>For create type actions (ASSETS_CREATE, ASSETS_CREATE_IF_NOT_EXISTS) the label is used
 by the runner to keep track of assets.</p>
 <p>For other actions which require access to an asset, this value is used as a key to
@@ -206,7 +210,7 @@ obtain the identity of such a previously-created asset.</p>
 </div></blockquote>
 <p>when accessing a previously created asset. (i.e. not when creating an asset)</p>
 </dd>
-<dt class="field-even">location_label</dt>
+<dt class="field-even">location_label<span class="colon">:</span></dt>
 <dd class="field-even"><p>For location create type actions (LOCATIONS_CREATE_IF_NOT_EXISTS) the label is used
 by the runner to keep track of locations.</p>
 <p>For other actions which require access to an location, this value is used as a key to
@@ -218,7 +222,7 @@ obtain the identity of such a previously-created location.</p>
 </div></blockquote>
 <p>when accessing a previously created location. (i.e. not when creating a location)</p>
 </dd>
-<dt class="field-odd">subject_label</dt>
+<dt class="field-odd">subject_label<span class="colon">:</span></dt>
 <dd class="field-odd"><p>For subject create type actions (SUBJECTS_CREATE) the label is used
 by the runner to keep track of subjects.</p>
 <p>For other actions which require access to a subject, this value is used as a key to

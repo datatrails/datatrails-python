@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Attachments Class &mdash; RKVST v0.20.0 documentation</title>
+  <title>Attachments Class &mdash; RKVST v0.20.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -33,15 +33,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html">
-            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.20.0
+                v0.20.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -97,7 +101,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Code Reference</a></li>
       <li class="breadcrumb-item active">Attachments Class</li>
       <li class="wy-breadcrumbs-aside">
@@ -164,7 +168,7 @@
 <p>Access to attachments entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
@@ -174,7 +178,7 @@ accessed as an attribute of the Archivist class.</p>
 <dd><p>Create an attachment and return struct suitable for use in an asset
 or event creation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) -- dictionary</p>
 </dd>
 </dl>
@@ -196,7 +200,7 @@ or event creation.</p>
 </div>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A dict suitable for adding to an asset or event creation</p>
 </dd>
 </dl>
@@ -220,14 +224,14 @@ or event creation.</p>
 Note that returns the response as the body will be consumed by the
 fd iterator</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>identity</strong> (<em>str</em>) -- attachment identity e.g. blobs/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>fd</strong> (<em>file</em>) -- opened file descriptor or other file-type sink..</p></li>
 <li><p><strong>params</strong> (<em>dict</em>) -- e.g. {&quot;allow_insecure&quot;: &quot;true&quot;} OR {&quot;strict&quot;: &quot;true&quot; }</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>JSON as dict</p>
 </dd>
 </dl>
@@ -246,10 +250,10 @@ either use filename or url as one of them is required</p>
 <dd><p>Read attachment info</p>
 <p>Reads attachment info</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- attachment identity e.g. blobs/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>REST response</p>
 </dd>
 </dl>
@@ -261,13 +265,13 @@ either use filename or url as one of them is required</p>
 <dd><p>Create attachment</p>
 <p>Creates attachment from opened file or other data source.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fd</strong> (<em>file</em>) -- opened file descriptor or other file-type iterable.</p></li>
 <li><p><strong>mtype</strong> (<em>str</em>) -- mimetype of data.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.attachments.Attachment" title="archivist.attachments.Attachment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Attachment</span></code></a> instance</p>
 </dd>
 </dl>

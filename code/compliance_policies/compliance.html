@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compliance &mdash; RKVST v0.20.0 documentation</title>
+  <title>Compliance &mdash; RKVST v0.20.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -33,15 +33,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html">
-            <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.20.0
+                v0.20.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -96,7 +100,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Code Reference</a></li>
           <li class="breadcrumb-item"><a href="index.html">Compliance Policies</a></li>
       <li class="breadcrumb-item active">Compliance</li>
@@ -163,7 +167,7 @@
 <p>Access to compliance entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="../archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
@@ -172,7 +176,7 @@ accessed as an attribute of the Archivist class.</p>
 <span class="sig-name descname"><span class="pre">compliant_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compliant_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#archivist.compliance.Compliance" title="archivist.compliance.Compliance"><span class="pre">Compliance</span></a></span></span><a class="reference internal" href="../../_modules/archivist/compliance.html#_ComplianceClient.compliant_at"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance._ComplianceClient.compliant_at" title="Permalink to this definition"></a></dt>
 <dd><p>Reads compliance of a particular asset.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>asset_id</strong> (<em>str</em>) -- asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>compliant_at</strong> (<em>str</em>) -- datetime to check compliance at a particular time (optional).
@@ -182,7 +186,7 @@ format: rfc3339 - UTC only
 <li><p><strong>page_size</strong> (<em>int</em>) -- optional page size. (Rarely used).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.compliance.Compliance" title="archivist.compliance.Compliance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compliance</span></code></a> instance</p>
 </dd>
 </dl>
@@ -193,7 +197,7 @@ format: rfc3339 - UTC only
 <span class="sig-name descname"><span class="pre">compliant_at_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compliance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/archivist/compliance.html#_ComplianceClient.compliant_at_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.compliance._ComplianceClient.compliant_at_report" title="Permalink to this definition"></a></dt>
 <dd><p>Prints report of compliance_at request</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>compliance</strong> (<em>dict</em>) -- compliance object encapsulating response from compliant_at</p>
 </dd>
 </dl>

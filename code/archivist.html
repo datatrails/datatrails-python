@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archivist Class &mdash; RKVST v0.20.0 documentation</title>
+  <title>Archivist Class &mdash; RKVST v0.20.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -33,15 +33,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html">
-            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.20.0
+                v0.20.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -100,7 +104,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Code Reference</a></li>
       <li class="breadcrumb-item active">Archivist Class</li>
       <li class="wy-breadcrumbs-aside">
@@ -168,7 +172,7 @@ parameters (the max_time parameter is optional):</p>
 <p>This class manages the connection to an Archivist instance and provides
 basic methods that represent the underlying REST interface.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>url</strong> (<em>str</em>) -- URL of archivist endpoint</p></li>
 <li><p><strong>auth</strong> -- string representing JWT token, or a Tuple pair representing an</p></li>
@@ -189,7 +193,7 @@ basic methods that represent the underlying REST interface.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#archivist.archivist.Archivist.auth" title="Permalink to this definition"></a></dt>
 <dd><p>authorization token</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -201,13 +205,13 @@ basic methods that represent the underlying REST interface.</p>
 <dd><p>DELETE method (REST)</p>
 <p>Deletes an entity</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>url</strong> (<em>str</em>) -- e.g. v2/assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
 <li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict representing the response body (entity).</p>
 </dd>
 </dl>
@@ -219,14 +223,14 @@ basic methods that represent the underlying REST interface.</p>
 <dd><p>PATCH method (REST)</p>
 <p>Updates the specified entity.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>url</strong> (<em>str</em>) -- e.g. v2/assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`</p></li>
 <li><p><strong>request</strong> (<em>dict</em>) -- request body defining the entity changes.</p></li>
 <li><p><strong>headers</strong> (<em>dict</em>) -- optional REST headers</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict representing the response body (entity).</p>
 </dd>
 </dl>
@@ -238,7 +242,7 @@ basic methods that represent the underlying REST interface.</p>
 <dd><p>POST method (REST)</p>
 <p>Creates an entity</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>url</strong> (<em>str</em>) -- e.g. v2/assets</p></li>
 <li><p><strong>request</strong> (<em>dict</em>) -- request body defining the entity</p></li>
@@ -246,7 +250,7 @@ basic methods that represent the underlying REST interface.</p>
 <li><p><strong>data</strong> (<em>bool</em>) -- send as form-encoded and not as json</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict representing the response body (entity).</p>
 </dd>
 </dl>
@@ -258,7 +262,7 @@ basic methods that represent the underlying REST interface.</p>
 <dd><p>POST method (REST) - upload binary</p>
 <p>Uploads a file to an endpoint</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>url</strong> (<em>str</em>) -- e.g. v2/assets</p></li>
 <li><p><strong>fd</strong> -- iterable representing the contents of a file.</p></li>
@@ -266,7 +270,7 @@ basic methods that represent the underlying REST interface.</p>
 <li><p><strong>params</strong> (<em>dict</em>) -- dictionary of optional path params</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>dict representing the response body (entity).</p>
 </dd>
 </dl>
@@ -283,7 +287,7 @@ basic methods that represent the underlying REST interface.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#archivist.archivist.Archivist.root" title="Permalink to this definition"></a></dt>
 <dd><p>ROOT of Archivist endpoint</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -294,7 +298,7 @@ basic methods that represent the underlying REST interface.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#archivist.archivist.Archivist.url" title="Permalink to this definition"></a></dt>
 <dd><p>URL of Archivist endpoint</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assets Class &mdash; RKVST v0.20.0 documentation</title>
+  <title>Assets Class &mdash; RKVST v0.20.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -33,15 +33,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html">
-            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.20.0
+                v0.20.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -105,7 +109,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Code Reference</a></li>
       <li class="breadcrumb-item active">Assets Class</li>
       <li class="wy-breadcrumbs-aside">
@@ -165,7 +169,7 @@
 <p>Access to assets entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist or Public class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
@@ -182,10 +186,10 @@ If public then expect a full url as argument</p>
 <dd><p>Read asset</p>
 <p>Reads asset.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- assets identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code> instance</p>
 </dd>
 </dl>
@@ -200,7 +204,7 @@ If public then expect a full url as argument</p>
 <p>Access to assets entities using CRUD interface. This class is usually
 accessed as an attribute of the Archivist or Public class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
@@ -210,13 +214,13 @@ accessed as an attribute of the Archivist or Public class.</p>
 <dd><p>Count assets.</p>
 <p>Counts number of assets that match criteria.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;confirmation_status&quot;: &quot;CONFIRMED&quot; }</p></li>
 <li><p><strong>attrs</strong> (<em>dict</em>) -- e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>integer count of assets.</p>
 </dd>
 </dl>
@@ -228,14 +232,14 @@ accessed as an attribute of the Archivist or Public class.</p>
 <dd><p>Create asset</p>
 <p>Creates asset with defined properties and attributes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>props</strong> (<em>dict</em>) -- Properties - usually only the proof_mechanism setting</p></li>
 <li><p><strong>attrs</strong> (<em>dict</em>) -- attributes of created asset.</p></li>
 <li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for asset to be confirmed.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code> instance</p>
 </dd>
 </dl>
@@ -248,13 +252,13 @@ accessed as an attribute of the Archivist or Public class.</p>
 <p>Creates asset with request body from data stream.
 Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<em>dict</em>) -- request body of asset.</p></li>
 <li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for asset to be confirmed on DLT.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code> instance</p>
 </dd>
 </dl>
@@ -266,7 +270,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dd><p>Creates an asset and associated locations and attachments if asset
 does not already exist.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<em>dict</em>) -- request body of asset.</p></li>
 <li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for asset to be confirmed on DLT.</p></li>
@@ -313,7 +317,7 @@ secondary key. Likewise the secondary key must exist in the attributes of the lo
 are shown - choose one.</p>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple of <code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code> instance, Boolean is True if asset already existed</p>
 </dd>
 </dl>
@@ -325,14 +329,14 @@ are shown - choose one.</p>
 <dd><p>List assets.</p>
 <p>Lists assets that match criteria.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>props</strong> (<em>dict</em>) -- optional e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
 <li><p><strong>attrs</strong> (<em>dict</em>) -- optional e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 <li><p><strong>page_size</strong> (<em>int</em>) -- optional page size. (Rarely used).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>iterable that returns <code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code> instances</p>
 </dd>
 </dl>
@@ -344,10 +348,10 @@ are shown - choose one.</p>
 <dd><p>Read asset public url</p>
 <p>Reads assets public url.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- assets identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxx</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>str: publicurl as string</p>
 </dd>
 </dl>
@@ -359,13 +363,13 @@ are shown - choose one.</p>
 <dd><p>Read Asset by signature.</p>
 <p>Reads asset that meets criteria. Only one asset is expected.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
 <li><p><strong>attrs</strong> (<em>dict</em>) -- e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Asset</span></code> instance</p>
 </dd>
 </dl>
@@ -377,10 +381,10 @@ are shown - choose one.</p>
 <dd><p>Wait for asset to be confirmed.</p>
 <p>Waits asset to be confirmed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- identity of asset</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if asset is confirmed.</p>
 </dd>
 </dl>
@@ -392,13 +396,13 @@ are shown - choose one.</p>
 <dd><p>Wait for assets to be confirmed.</p>
 <p>Waits for all assets that match criteria to be confirmed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
 <li><p><strong>attrs</strong> (<em>dict</em>) -- e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if all assets are confirmed.</p>
 </dd>
 </dl>

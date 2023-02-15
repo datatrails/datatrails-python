@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Events Class &mdash; RKVST v0.20.0 documentation</title>
+  <title>Events Class &mdash; RKVST v0.20.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -33,15 +33,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html">
-            <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.20.0
+                v0.20.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -109,7 +113,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Code Reference</a></li>
       <li class="breadcrumb-item active">Events Class</li>
       <li class="wy-breadcrumbs-aside">
@@ -188,7 +192,7 @@
 <p>Access to events entities using the CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
@@ -205,7 +209,7 @@ If public then expect a full url as argument</p>
 <dd><p>Count events.</p>
 <p>Counts number of events that match criteria.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>asset_id</strong> (<em>str</em>) -- optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>props</strong> (<em>dict</em>) -- optional properties e.g. {&quot;confirmation_status&quot;: &quot;CONFIRMED&quot; }</p></li>
@@ -213,7 +217,7 @@ If public then expect a full url as argument</p>
 <li><p><strong>asset_attrs</strong> (<em>dict</em>) -- optional asset_attributes e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>integer count of assets.</p>
 </dd>
 </dl>
@@ -225,7 +229,7 @@ If public then expect a full url as argument</p>
 <dd><p>List events.</p>
 <p>Lists events that match criteria.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>asset_id</strong> (<em>str</em>) -- optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
@@ -234,7 +238,7 @@ If public then expect a full url as argument</p>
 <li><p><strong>page_size</strong> (<em>int</em>) -- optional page size. (Rarely used).</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>iterable that returns <a class="reference internal" href="#archivist.events.Event" title="archivist.events.Event"><code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code></a> instances</p>
 </dd>
 </dl>
@@ -246,10 +250,10 @@ If public then expect a full url as argument</p>
 <dd><p>Read event</p>
 <p>Reads event.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- events identity e.g. assets/xxxxxxx.../events/yyyyyyy...</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.events.Event" title="archivist.events.Event"><code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code></a> instance</p>
 </dd>
 </dl>
@@ -261,7 +265,7 @@ If public then expect a full url as argument</p>
 <dd><p>Read event by signature.</p>
 <p>Reads event that meets criteria. Only one event is expected.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>asset_id</strong> (<em>str</em>) -- optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
@@ -269,7 +273,7 @@ If public then expect a full url as argument</p>
 <li><p><strong>asset_attrs</strong> (<em>dict</em>) -- optional asset_attributes e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.events.Event" title="archivist.events.Event"><code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code></a> instance</p>
 </dd>
 </dl>
@@ -284,7 +288,7 @@ If public then expect a full url as argument</p>
 <p>Access to events entities using the CRUD interface. This class is usually
 accessed as an attribute of the Archivist class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>archivist</strong> (<a class="reference internal" href="archivist.html#archivist.archivist.Archivist" title="archivist.archivist.Archivist"><em>Archivist</em></a>) -- <code class="xref py py-class docutils literal notranslate"><span class="pre">Archivist</span></code> instance</p>
 </dd>
 </dl>
@@ -294,7 +298,7 @@ accessed as an attribute of the Archivist class.</p>
 <dd><p>Create event</p>
 <p>Creates event for given asset.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>asset_id</strong> (<em>str</em>) -- asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>props</strong> (<em>dict</em>) -- properties for this event.</p></li>
@@ -303,7 +307,7 @@ accessed as an attribute of the Archivist class.</p>
 <li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for event to be confirmed on DLT.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.events.Event" title="archivist.events.Event"><code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code></a> instance</p>
 </dd>
 </dl>
@@ -316,14 +320,14 @@ accessed as an attribute of the Archivist class.</p>
 <p>Creates event for given asset from data.
 Suitable for reading data from json.load or yaml.load from a file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>asset_id</strong> (<em>str</em>) -- asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>data</strong> (<em>dict</em>) -- request body of event.</p></li>
 <li><p><strong>confirm</strong> (<em>bool</em>) -- if True wait for event to be confirmed.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#archivist.events.Event" title="archivist.events.Event"><code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code></a> instance</p>
 </dd>
 </dl>
@@ -335,10 +339,10 @@ Suitable for reading data from json.load or yaml.load from a file</p>
 <dd><p>Read event public url</p>
 <p>Reads event public url.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- events identity e.g. assets/xxxxxxx.../events/yyyyyyy...</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>str:public url as a string</p>
 </dd>
 </dl>
@@ -350,10 +354,10 @@ Suitable for reading data from json.load or yaml.load from a file</p>
 <dd><p>Wait for event to be confirmed.</p>
 <p>Waits for event to be confirmed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>identity</strong> (<em>str</em>) -- identity of event</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if event is confirmed.</p>
 </dd>
 </dl>
@@ -365,7 +369,7 @@ Suitable for reading data from json.load or yaml.load from a file</p>
 <dd><p>Wait for events to be confirmed.</p>
 <p>Waits for all events that match criteria to be confirmed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>asset_id</strong> (<em>str</em>) -- optional asset identity e.g. assets/xxxxxxxxxxxxxxxxxxxxxxxxxx</p></li>
 <li><p><strong>props</strong> (<em>dict</em>) -- e.g. {&quot;tracked&quot;: &quot;TRACKED&quot; }</p></li>
@@ -373,7 +377,7 @@ Suitable for reading data from json.load or yaml.load from a file</p>
 <li><p><strong>asset_attrs</strong> (<em>dict</em>) -- optional asset_attributes e.g. {&quot;arc_display_type&quot;: &quot;door&quot; }</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>True if all events are confirmed.</p>
 </dd>
 </dl>
