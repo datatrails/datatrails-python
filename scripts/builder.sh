@@ -13,8 +13,13 @@ then
     exit 0
 fi
 
+if [ -t 1 ]
+then
+    USE_TTY="-it"
+fi
+
 docker run \
-    --rm -it \
+    --rm ${USE_TTY} \
     -v $(pwd):/home/builder \
     -u $(id -u):$(id -g) \
     -e FUNCTEST \
