@@ -22,19 +22,20 @@
 """
 
 from __future__ import annotations
+
 from logging import getLogger
-from typing import Any, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
+if TYPE_CHECKING:
+    from . import archivist
 
 from .constants import (
-    APPLICATIONS_SUBPATH,
     APPLICATIONS_LABEL,
     APPLICATIONS_REGENERATE,
+    APPLICATIONS_SUBPATH,
 )
 from .dictmerge import _deepmerge
-
 
 LOGGER = getLogger(__name__)
 

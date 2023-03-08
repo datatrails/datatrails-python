@@ -5,7 +5,7 @@ Test archivist list
 from os import environ
 from unittest import mock
 
-from archivist.constants import HEADERS_TOTAL_COUNT, HEADERS_RETRY_AFTER
+from archivist.constants import HEADERS_RETRY_AFTER, HEADERS_TOTAL_COUNT
 from archivist.errors import (
     ArchivistBadFieldError,
     ArchivistBadRequestError,
@@ -15,7 +15,6 @@ from archivist.logger import set_logger
 
 from .mock_response import MockResponse
 from .testarchivist import TestArchivistMethods
-
 
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
@@ -79,7 +78,7 @@ class TestArchivistList(TestArchivistMethods):
                 ],
             )
             with self.assertRaises(ArchivistBadRequestError):
-                responses = list(self.arch.list("path/path", "things"))
+                list(self.arch.list("path/path", "things"))
 
     def test_list_with_bad_field(self):
         """
@@ -95,7 +94,7 @@ class TestArchivistList(TestArchivistMethods):
                 ],
             )
             with self.assertRaises(ArchivistBadFieldError):
-                responses = list(self.arch.list("path/path", "badthings"))
+                list(self.arch.list("path/path", "badthings"))
 
     def test_list_with_headers(self):
         """
@@ -378,7 +377,7 @@ class TestArchivistList(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
-                things = list(self.arch.list("path/path", "things"))
+                list(self.arch.list("path/path", "things"))
 
     def test_list_with_429_retry_and_fail(self):
         """
@@ -390,7 +389,7 @@ class TestArchivistList(TestArchivistMethods):
                 MockResponse(429),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                things = list(self.arch.list("path/path", "things"))
+                list(self.arch.list("path/path", "things"))
 
     def test_list_with_429_retry_and_retries_fail(self):
         """
@@ -404,7 +403,7 @@ class TestArchivistList(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                things = list(self.arch.list("path/path", "things"))
+                list(self.arch.list("path/path", "things"))
 
     def test_list_with_429_retry_and_success(self):
         """

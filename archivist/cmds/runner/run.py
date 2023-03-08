@@ -1,17 +1,15 @@
 # pylint:  disable=missing-docstring
 
 from __future__ import annotations
+
 from logging import getLogger
 from os import environ
 from sys import exit as sys_exit
 
 from pyaml_env import parse_config
 
-from ... import about
-
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from ... import archivist
-
+from ... import about, archivist
 
 LOGGER = getLogger(__name__)
 

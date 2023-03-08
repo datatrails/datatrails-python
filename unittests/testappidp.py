@@ -6,14 +6,13 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
-    ROOT,
-    APPIDP_SUBPATH,
     APPIDP_LABEL,
+    APPIDP_SUBPATH,
     APPIDP_TOKEN,
+    ROOT,
 )
 
 from .mock_response import MockResponse
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access

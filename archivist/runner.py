@@ -4,20 +4,23 @@ Base runner class for interpreting yaml story files.
 """
 
 from __future__ import annotations
+
 from collections import defaultdict
 from functools import partialmethod
 from json import dumps as json_dumps
 from logging import getLogger
 from time import sleep as time_sleep
 from types import GeneratorType
-from typing import Any, Callable, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Callable, Optional, Tuple
 from uuid import UUID
+
+from .errors import ArchivistError, ArchivistInvalidOperationError
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 # pylint:disable=missing-function-docstring
 # pylint:disable=protected-access
-from . import archivist
-from .errors import ArchivistError, ArchivistInvalidOperationError
+if TYPE_CHECKING:
+    from . import archivist
 
 LOGGER = getLogger(__name__)
 

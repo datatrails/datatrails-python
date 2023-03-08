@@ -22,22 +22,20 @@
 """
 
 from __future__ import annotations
+
 from base64 import b64decode
 from json import loads as json_loads
 from logging import getLogger
 from typing import Any, Optional, Tuple
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
-
+from . import archivist, subjects_confirmer
 from .constants import (
     SUBJECTS_LABEL,
     SUBJECTS_SELF_ID,
     SUBJECTS_SUBPATH,
 )
-from . import subjects_confirmer
 from .dictmerge import _deepmerge
-
 
 LOGGER = getLogger(__name__)
 

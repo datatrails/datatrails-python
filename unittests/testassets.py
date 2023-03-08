@@ -5,7 +5,6 @@ Test assets
 from copy import copy
 from logging import getLogger
 from os import environ
-
 from unittest import mock
 
 from archivist.constants import (
@@ -18,35 +17,34 @@ from archivist.logger import set_logger
 
 from .mock_response import MockResponse
 from .testassetsconstants import (
-    TestAssetsBase,
-    TestAssetsBaseConfirm,
-    PRIMARY_IMAGE,
     ASSET_NAME,
     ATTRS,
-    SUBPATH,
-    PROPS,
     FIXTURES,
+    PRIMARY_IMAGE,
+    PROPS,
     REQUEST_EXISTS,
     REQUEST_EXISTS_ATTACHMENTS,
-    REQUEST_EXISTS_LOCATION,
-    REQUEST_EXISTS_LOCATION_IDENTITY,
     REQUEST_EXISTS_KWARGS,
     REQUEST_EXISTS_KWARGS_ATTACHMENTS,
     REQUEST_EXISTS_KWARGS_LOCATION,
-    REQUEST_KWARGS,
+    REQUEST_EXISTS_LOCATION,
+    REQUEST_EXISTS_LOCATION_IDENTITY,
     REQUEST_FIXTURES_KWARGS,
+    REQUEST_KWARGS,
     RESPONSE,
     RESPONSE_ATTACHMENTS,
-    RESPONSE_LOCATION,
     RESPONSE_EXISTS,
     RESPONSE_EXISTS_ATTACHMENTS,
     RESPONSE_EXISTS_LOCATION,
+    RESPONSE_FAILED,
     RESPONSE_FIXTURES,
+    RESPONSE_LOCATION,
     RESPONSE_NO_CONFIRMATION,
     RESPONSE_PENDING,
-    RESPONSE_FAILED,
+    SUBPATH,
+    TestAssetsBase,
+    TestAssetsBaseConfirm,
 )
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -151,7 +149,7 @@ class TestAssetsCreate(TestAssetsBase):
             mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
 
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
+                self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
 
     def test_assets_create_with_confirmation_failed_status(self):
         """
@@ -166,7 +164,7 @@ class TestAssetsCreate(TestAssetsBase):
                 MockResponse(200, **RESPONSE_FAILED),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
+                self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
 
     def test_assets_create_with_confirmation_always_pending_status(self):
         """
@@ -186,7 +184,7 @@ class TestAssetsCreate(TestAssetsBase):
                 MockResponse(200, **RESPONSE_PENDING),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                asset = self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
+                self.arch.assets.create(props=PROPS, attrs=ATTRS, confirm=True)
 
 
 class TestAssetsCreateConfirm(TestAssetsBaseConfirm):

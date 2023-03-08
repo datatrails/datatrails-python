@@ -22,21 +22,23 @@
 """
 
 from __future__ import annotations
-from logging import getLogger
+
 from copy import deepcopy
-from typing import Any, Generator, Optional
+from logging import getLogger
+from typing import TYPE_CHECKING, Any, Generator, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
+
+if TYPE_CHECKING:
+    from . import archivist
 
 from .assets import Asset
 from .constants import (
-    ACCESS_POLICIES_SUBPATH,
     ACCESS_POLICIES_LABEL,
+    ACCESS_POLICIES_SUBPATH,
     ASSETS_LABEL,
 )
 from .dictmerge import _deepmerge
-
 
 LOGGER = getLogger(__name__)
 

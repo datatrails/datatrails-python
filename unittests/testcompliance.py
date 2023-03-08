@@ -8,10 +8,10 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
-    ROOT,
-    COMPLIANCE_SUBPATH,
     COMPLIANCE_LABEL,
     COMPLIANCE_POLICIES_LABEL,
+    COMPLIANCE_SUBPATH,
+    ROOT,
 )
 from archivist.logger import set_logger
 

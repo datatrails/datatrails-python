@@ -4,7 +4,6 @@ Test assets wait
 
 from logging import getLogger
 from os import environ
-
 from unittest import mock
 
 from archivist.constants import (
@@ -17,12 +16,11 @@ from archivist.logger import set_logger
 
 from .mock_response import MockResponse
 from .testassetsconstants import (
-    TestAssetsBase,
-    SUBPATH,
-    RESPONSE_PENDING,
     RESPONSE_FAILED,
+    RESPONSE_PENDING,
+    SUBPATH,
+    TestAssetsBase,
 )
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access

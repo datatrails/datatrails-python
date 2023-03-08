@@ -6,13 +6,12 @@ from os import environ
 from unittest import TestCase
 
 from archivist.archivist import Archivist
+from archivist.logger import set_logger
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
-
 from archivist.runner import _Step
-from archivist.logger import set_logger
 
 ASSET_ID = "assets/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
 LOCATION_ID = "locations/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"

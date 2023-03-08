@@ -5,7 +5,8 @@
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, asdict
+
+from dataclasses import asdict, dataclass
 
 from .compliance_policy_type import CompliancePolicyType
 from .or_dict import and_list

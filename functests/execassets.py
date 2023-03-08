@@ -7,12 +7,11 @@ from json import dumps as json_dumps
 from os import getenv
 from uuid import uuid4
 
+from archivist import logger
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
-
-from archivist import logger
 
 from .constants import TestCase
 
@@ -161,7 +160,7 @@ class TestAssetCreate(TestCase):
                 },
             },
         }
-        traffic_light = traffic_lights.assets.create(
+        traffic_lights.assets.create(
             attrs=self.attrs,
             confirm=True,
         )
@@ -180,7 +179,7 @@ class TestAssetCreate(TestCase):
                 },
             },
         }
-        fancy_traffic_light = fancy_traffic_lights.assets.create(
+        fancy_traffic_lights.assets.create(
             attrs=self.attrs,
             confirm=True,
         )

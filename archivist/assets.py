@@ -22,21 +22,20 @@
 """
 
 from __future__ import annotations
+
+from copy import deepcopy
 from logging import getLogger
 from typing import Any, Optional, Tuple
-from copy import deepcopy
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
-
+from . import archivist, confirmer
 from .asset import Asset
 from .constants import (
     ASSET_BEHAVIOURS,
-    ASSETS_SUBPATH,
     ASSETS_LABEL,
+    ASSETS_SUBPATH,
     CONFIRMATION_STATUS,
 )
-from . import confirmer
 from .dictmerge import _deepmerge
 from .errors import ArchivistBadFieldError, ArchivistNotFoundError
 from .utils import selector_signature

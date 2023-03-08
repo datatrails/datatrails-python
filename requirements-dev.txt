@@ -6,8 +6,9 @@ black[jupyter]~=23.1
 coverage[toml]~=7.1
 pip-audit~=2.4
 pycodestyle~=2.10
-pylint~=2.16
+pylint~=2.17
 pyright~=1.1
+ruff~=0.0.254
 unittest-xml-reporting~=3.2
 testbook~=0.4
 

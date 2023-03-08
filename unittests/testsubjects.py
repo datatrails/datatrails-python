@@ -7,11 +7,11 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
-    ROOT,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
-    SUBJECTS_SUBPATH,
+    ROOT,
     SUBJECTS_LABEL,
+    SUBJECTS_SUBPATH,
 )
 from archivist.errors import ArchivistBadRequestError, ArchivistUnconfirmedError
 from archivist.logger import set_logger
@@ -315,7 +315,7 @@ class TestSubjects(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
-            subject = self.arch.subjects.read(IDENTITY)
+            self.arch.subjects.read(IDENTITY)
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -338,7 +338,7 @@ class TestSubjects(TestCase):
         with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
-            subject = self.arch.subjects.delete(IDENTITY)
+            self.arch.subjects.delete(IDENTITY)
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
@@ -360,7 +360,7 @@ class TestSubjects(TestCase):
         with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, **RESPONSE)
 
-            subject = self.arch.subjects.update(
+            self.arch.subjects.update(
                 IDENTITY,
                 display_name=DISPLAY_NAME,
             )
@@ -389,7 +389,7 @@ class TestSubjects(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.subjects.read(IDENTITY)
+                self.arch.subjects.read(IDENTITY)
 
     def test_subjects_count(self):
         """
@@ -439,7 +439,7 @@ class TestSubjects(TestCase):
                 ],
             )
 
-            count = self.arch.subjects.count(
+            self.arch.subjects.count(
                 display_name="Subject display name",
             )
             self.assertEqual(

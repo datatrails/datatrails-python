@@ -14,7 +14,6 @@ from archivist.errors import (
 
 from .mock_response import MockResponse
 
-
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -43,7 +42,7 @@ class TestArchivistGet(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200)
-            resp = self.arch.get("path/path/entity/xxxxxxxx")
+            self.arch.get("path/path/entity/xxxxxxxx")
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -65,7 +64,7 @@ class TestArchivistGet(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200)
-            resp = self.arch.get("path/path/entity/xxxxxxxx")
+            self.arch.get("path/path/entity/xxxxxxxx")
             last_response = self.arch.last_response()
             self.assertEqual(last_response, [mock_get.return_value])
 
@@ -76,7 +75,7 @@ class TestArchivistGet(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(404, identity="entity/xxxxxxxx")
             with self.assertRaises(ArchivistNotFoundError):
-                resp = self.arch.get("path/path/entity/xxxxxxxx")
+                self.arch.get("path/path/entity/xxxxxxxx")
 
     def test_get_with_headers(self):
         """
@@ -84,7 +83,7 @@ class TestArchivistGet(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200)
-            resp = self.arch.get(
+            self.arch.get(
                 "path/path/id/xxxxxxxx",
                 headers={"headerfield1": "headervalue1"},
             )
@@ -111,7 +110,7 @@ class TestArchivistGet(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.get(
+                self.arch.get(
                     "path/path/id/xxxxxxxx",
                     headers={"headerfield1": "headervalue1"},
                 )
@@ -126,7 +125,7 @@ class TestArchivistGet(TestArchivistMethods):
                 MockResponse(429),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.get("path/path/entity/xxxxxxxx")
+                self.arch.get("path/path/entity/xxxxxxxx")
 
     def test_get_with_429_retry_and_retries_fail(self):
         """
@@ -140,7 +139,7 @@ class TestArchivistGet(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.get("path/path/entity/xxxxxxxx")
+                self.arch.get("path/path/entity/xxxxxxxx")
 
     def test_get_with_429_retry_and_success(self):
         """
@@ -152,7 +151,7 @@ class TestArchivistGet(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(200),
             )
-            resp = self.arch.get("path/path/entity/xxxxxxxx")
+            self.arch.get("path/path/entity/xxxxxxxx")
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -202,7 +201,7 @@ class TestArchivistGetFile(TestArchivistMethods):
                 iter_content=iter_content(),
             )
             with BytesIO() as fd:
-                resp = self.arch.get_file("path/path/entity/xxxxxxxx", fd)
+                self.arch.get_file("path/path/entity/xxxxxxxx", fd)
                 self.assertEqual(
                     tuple(mock_get.call_args),
                     (
@@ -225,9 +224,8 @@ class TestArchivistGetFile(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(404, identity="entity/xxxxxxxx")
-            with self.assertRaises(ArchivistNotFoundError):
-                with BytesIO() as fd:
-                    resp = self.arch.get_file("path/path/entity/xxxxxxxx", fd)
+            with self.assertRaises(ArchivistNotFoundError), BytesIO() as fd:
+                self.arch.get_file("path/path/entity/xxxxxxxx", fd)
 
     def test_get_file_with_429(self):
         """
@@ -235,9 +233,8 @@ class TestArchivistGetFile(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(429)
-            with self.assertRaises(ArchivistTooManyRequestsError):
-                with BytesIO() as fd:
-                    resp = self.arch.get_file("path/path/entity/xxxxxxxx", fd)
+            with self.assertRaises(ArchivistTooManyRequestsError), BytesIO() as fd:
+                self.arch.get_file("path/path/entity/xxxxxxxx", fd)
 
     def test_get_file_with_429_retry_and_fail(self):
         """
@@ -248,9 +245,8 @@ class TestArchivistGetFile(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429),
             )
-            with self.assertRaises(ArchivistTooManyRequestsError):
-                with BytesIO() as fd:
-                    resp = self.arch.get_file("path/path/entity/xxxxxxxx", fd)
+            with self.assertRaises(ArchivistTooManyRequestsError), BytesIO() as fd:
+                self.arch.get_file("path/path/entity/xxxxxxxx", fd)
 
     def test_get_file_with_429_retry_and_retries_fail(self):
         """
@@ -263,9 +259,8 @@ class TestArchivistGetFile(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
             )
-            with self.assertRaises(ArchivistTooManyRequestsError):
-                with BytesIO() as fd:
-                    resp = self.arch.get_file("path/path/entity/xxxxxxxx", fd)
+            with self.assertRaises(ArchivistTooManyRequestsError), BytesIO() as fd:
+                self.arch.get_file("path/path/entity/xxxxxxxx", fd)
 
     def test_get_file_with_429_retry_and_success(self):
         """
@@ -299,7 +294,7 @@ class TestArchivistGetFile(TestArchivistMethods):
                 ),
             )
             with BytesIO() as fd:
-                resp = self.arch.get_file("path/path/entity/xxxxxxxx", fd)
+                self.arch.get_file("path/path/entity/xxxxxxxx", fd)
                 self.assertEqual(
                     tuple(mock_get.call_args),
                     (

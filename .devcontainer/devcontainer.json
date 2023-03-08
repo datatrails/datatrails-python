@@ -39,6 +39,7 @@
 
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
+				"charliermarsh.ruff",
 				"ms-python.python",
 				"ms-python.vscode-pylance"
 			]

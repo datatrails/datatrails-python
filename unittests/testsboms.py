@@ -9,10 +9,10 @@ from unittest import TestCase, mock
 from archivist.archivist import Archivist
 from archivist.constants import (
     ROOT,
-    SBOMS_SUBPATH,
     SBOMS_LABEL,
     SBOMS_METADATA,
     SBOMS_PUBLISH,
+    SBOMS_SUBPATH,
     SBOMS_WILDCARD,
     SBOMS_WITHDRAW,
 )
@@ -327,7 +327,7 @@ class TestSBOMSUploadDownload(TestSBOMSBase):
                 ArchivistNotFoundError("sbom not found"),
             ]
             with self.assertRaises(ArchivistNotFoundError):
-                sbom = self.arch.sboms.upload(self.mockstream, confirm=True)
+                self.arch.sboms.upload(self.mockstream, confirm=True)
 
     def test_sboms_download(self):
         """
@@ -389,7 +389,7 @@ class TestSBOMSUploadDownload(TestSBOMSBase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
-            sbom = self.arch.sboms.read(IDENTITY)
+            self.arch.sboms.read(IDENTITY)
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -412,7 +412,7 @@ class TestSBOMSUploadDownload(TestSBOMSBase):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            sbom = self.arch.sboms.publish(IDENTITY, confirm=False)
+            self.arch.sboms.publish(IDENTITY, confirm=False)
             self.assertEqual(
                 tuple(mock_post.call_args),
                 (
@@ -446,7 +446,7 @@ class TestSBOMSUploadDownload(TestSBOMSBase):
                 MockResponse(200, **RESPONSE),
             ]
             with self.assertRaises(ArchivistUnpublishedError):
-                sbom = self.arch.sboms.publish(IDENTITY, confirm=True)
+                self.arch.sboms.publish(IDENTITY, confirm=True)
 
     def test_sbom_withdraw(self):
         """
@@ -455,7 +455,7 @@ class TestSBOMSUploadDownload(TestSBOMSBase):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            sbom = self.arch.sboms.withdraw(IDENTITY, confirm=False)
+            self.arch.sboms.withdraw(IDENTITY, confirm=False)
             self.assertEqual(
                 tuple(mock_post.call_args),
                 (
@@ -489,7 +489,7 @@ class TestSBOMSUploadDownload(TestSBOMSBase):
                 MockResponse(200, **RESPONSE),
             ]
             with self.assertRaises(ArchivistUnwithdrawnError):
-                sbom = self.arch.sboms.withdraw(IDENTITY, confirm=True)
+                self.arch.sboms.withdraw(IDENTITY, confirm=True)
 
     def test_sboms_list(self):
         """

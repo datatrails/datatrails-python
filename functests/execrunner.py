@@ -2,16 +2,15 @@
 Test runner
 """
 
-from os import getenv, environ
+from os import environ, getenv
 
+import yaml
 from jinja2 import Environment, FileSystemLoader
 from pyaml_env import parse_config
-import yaml
-
-from archivist.archivist import Archivist
-from archivist.utils import get_auth
 
 from archivist import logger
+from archivist.archivist import Archivist
+from archivist.utils import get_auth
 
 from .constants import TestCase
 

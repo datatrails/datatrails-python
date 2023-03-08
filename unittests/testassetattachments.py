@@ -7,11 +7,11 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
-    ROOT,
-    ASSETS_LABEL,
-    ATTACHMENTS_LABEL,
     ASSETATTACHMENTS_LABEL,
     ASSETATTACHMENTS_SUBPATH,
+    ASSETS_LABEL,
+    ATTACHMENTS_LABEL,
+    ROOT,
 )
 
 from .mock_response import MockResponse

@@ -7,13 +7,11 @@ Test errors
 # pylint: disable=too-few-public-methods
 
 import json
-
 from unittest import TestCase
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from archivist.errors import (
-    _parse_response,
     Archivist4xxError,
     Archivist5xxError,
     ArchivistBadRequestError,
@@ -25,6 +23,7 @@ from archivist.errors import (
     ArchivistTooManyRequestsError,
     ArchivistUnauthenticatedError,
     ArchivistUnavailableError,
+    _parse_response,
 )
 
 from .mock_response import MockResponse

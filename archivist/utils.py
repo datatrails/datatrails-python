@@ -2,9 +2,12 @@
 """
 
 from __future__ import annotations
-from io import BytesIO
+
 from logging import getLogger
-from typing import Tuple
+from typing import TYPE_CHECKING, Tuple
+
+if TYPE_CHECKING:
+    from io import BytesIO
 
 from requests import get as requests_get
 
@@ -38,7 +41,7 @@ def backoff_handler(details):
 
 
 # download arbitrary files from a url.
-def get_url(url: str, fd: BytesIO):  # pragma no cover
+def get_url(url: str, fd: BytesIO):  # pragma: no cover
     """GET method (REST) - chunked
 
     Downloads a binary object from upstream storage.
@@ -61,7 +64,7 @@ def get_auth(
     client_id=None,
     client_secret_filename=None,
     client_secret=None,
-):  # pragma no cover
+):  # pragma: no cover
     """
     Return auth as either stuntidp token or client_id,client_secret tuple
     """

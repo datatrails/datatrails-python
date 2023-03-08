@@ -5,23 +5,22 @@ Test events read
 from unittest import mock
 
 from archivist.constants import (
-    ROOT,
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     EVENTS_LABEL,
+    ROOT,
 )
 from archivist.errors import ArchivistBadFieldError
 
 from .mock_response import MockResponse
 from .testeventsconstants import (
-    TestEventsBase,
-    RESPONSE,
     IDENTITY,
     PUBLICURL,
-    RESPONSE_PUBLICURL,
+    RESPONSE,
     RESPONSE_BAD_PUBLICURL,
+    RESPONSE_PUBLICURL,
+    TestEventsBase,
 )
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -104,4 +103,4 @@ class TestEventsRead(TestEventsBase):
             mock_get.return_value = MockResponse(200, **RESPONSE_BAD_PUBLICURL)
 
             with self.assertRaises(ArchivistBadFieldError):
-                publicurl = self.arch.events.publicurl(IDENTITY)
+                self.arch.events.publicurl(IDENTITY)

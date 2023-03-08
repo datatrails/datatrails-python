@@ -6,11 +6,11 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
-    ROOT,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
-    LOCATIONS_SUBPATH,
     LOCATIONS_LABEL,
+    LOCATIONS_SUBPATH,
+    ROOT,
 )
 from archivist.errors import ArchivistBadRequestError, ArchivistNotFoundError
 from archivist.locations import Location
@@ -340,7 +340,7 @@ class TestLocations(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
-            asset = self.arch.locations.read(IDENTITY)
+            self.arch.locations.read(IDENTITY)
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -363,7 +363,7 @@ class TestLocations(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.locations.read(IDENTITY)
+                self.arch.locations.read(IDENTITY)
 
     def test_locations_count(self):
         """
@@ -413,7 +413,7 @@ class TestLocations(TestCase):
                 ],
             )
 
-            count = self.arch.locations.count(
+            self.arch.locations.count(
                 props={"display_name": "Macclesfield, Cheshire"},
             )
             self.assertEqual(
@@ -448,7 +448,7 @@ class TestLocations(TestCase):
                 ],
             )
 
-            count = self.arch.locations.count(
+            self.arch.locations.count(
                 attrs={"director": "John Smith"},
             )
             self.assertEqual(

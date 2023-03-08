@@ -7,12 +7,11 @@ from json import dumps as json_dumps
 from os import getenv, remove
 from time import sleep
 
+from archivist import logger
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
 from archivist.timestamp import now_timestamp
 from archivist.utils import get_auth
-
-from archivist import logger
 
 from .constants import TestCase
 
@@ -92,11 +91,10 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         LOGGER.debug("Illegal Upload Title: %s %s", self.title, now)
-        with open(RKVST_SBOM_PATH, "rb") as fd:
-            with self.assertRaises(ArchivistBadRequestError):
-                metadata = self.arch.sboms.upload(
-                    fd, confirm=True, params={"privacy": "XXXXXX"}
-                )
+        with open(RKVST_SBOM_PATH, "rb") as fd, self.assertRaises(
+            ArchivistBadRequestError
+        ):
+            self.arch.sboms.upload(fd, confirm=True, params={"privacy": "XXXXXX"})
 
     def test_sbom_upload_with_spdx(self):
         """
@@ -131,11 +129,10 @@ class TestSBOM(TestCase):
         """
         now = now_timestamp()
         LOGGER.debug("SPDX Upload Title: %s %s", self.title, now)
-        with open(RKVST_SBOM_SPDX_PATH, "rb") as fd:
-            with self.assertRaises(ArchivistBadRequestError):
-                metadata = self.arch.sboms.upload(
-                    fd, confirm=True, params={"sbomType": "xxxxxxxx"}
-                )
+        with open(RKVST_SBOM_SPDX_PATH, "rb") as fd, self.assertRaises(
+            ArchivistBadRequestError
+        ):
+            self.arch.sboms.upload(fd, confirm=True, params={"sbomType": "xxxxxxxx"})
 
     def test_sbom_upload_with_confirmation(self):
         """

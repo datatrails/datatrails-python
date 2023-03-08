@@ -5,10 +5,10 @@ Test events create
 from unittest import mock
 
 from archivist.constants import (
-    ROOT,
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     EVENTS_LABEL,
+    ROOT,
 )
 from archivist.errors import (
     ArchivistUnconfirmedError,
@@ -16,34 +16,34 @@ from archivist.errors import (
 
 from .mock_response import MockResponse
 from .testeventsconstants import (
-    TestEventsBase,
-    ASSET_ID,
-    PROPS,
-    LOCATION,
-    EVENT_ATTRS,
     ASSET_ATTRS,
+    ASSET_ID,
     ATTACHMENTS,
+    EVENT_ATTRS,
     EVENT_ATTRS_ATTACHMENTS,
-    REQUEST_WITH_ATTACHMENTS,
-    RESPONSE_WITH_ATTACHMENTS,
-    SBOM_RESULT,
-    EVENT_ATTRS_SBOM,
-    REQUEST_WITH_SBOM,
-    RESPONSE_WITH_SBOM,
-    EVENT_ATTRS_SBOMATTACHMENT,
-    REQUEST_WITH_SBOMATTACHMENT,
-    RESPONSE_WITH_SBOMATTACHMENT,
     EVENT_ATTRS_LOCATION,
     EVENT_ATTRS_LOCATION_IDENTITY,
-    REQUEST_WITH_LOCATION,
-    RESPONSE_WITH_LOCATION,
+    EVENT_ATTRS_SBOM,
+    EVENT_ATTRS_SBOMATTACHMENT,
+    LOCATION,
+    PROPS,
     REQUEST,
     REQUEST_WITH_ASSET_ATTRS,
+    REQUEST_WITH_ATTACHMENTS,
+    REQUEST_WITH_LOCATION,
+    REQUEST_WITH_SBOM,
+    REQUEST_WITH_SBOMATTACHMENT,
     RESPONSE,
-    RESPONSE_WITH_ASSET_ATTRS,
+    RESPONSE_FAILED,
     RESPONSE_NO_CONFIRMATION,
     RESPONSE_PENDING,
-    RESPONSE_FAILED,
+    RESPONSE_WITH_ASSET_ATTRS,
+    RESPONSE_WITH_ATTACHMENTS,
+    RESPONSE_WITH_LOCATION,
+    RESPONSE_WITH_SBOM,
+    RESPONSE_WITH_SBOMATTACHMENT,
+    SBOM_RESULT,
+    TestEventsBase,
 )
 
 # pylint: disable=missing-docstring
@@ -289,9 +289,7 @@ class TestEventsCreate(TestEventsBase):
         """
         with mock.patch.object(
             self.arch.session, "post"
-        ) as mock_post, mock.patch.object(
-            self.arch.locations, "create_if_not_exists"
-        ) as mock_location_create:
+        ) as mock_post, mock.patch.object(self.arch.locations, "create_if_not_exists"):
             mock_post.return_value = MockResponse(200, **RESPONSE_WITH_LOCATION)
 
             event = self.arch.events.create_from_data(
@@ -398,9 +396,7 @@ class TestEventsCreate(TestEventsBase):
             mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
 
             with self.assertRaises(ArchivistUnconfirmedError):
-                event = self.arch.events.create(
-                    ASSET_ID, PROPS, EVENT_ATTRS, confirm=True
-                )
+                self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
 
     def test_events_create_with_confirmation_failed_status(self):
         """
@@ -415,9 +411,7 @@ class TestEventsCreate(TestEventsBase):
                 MockResponse(200, **RESPONSE_FAILED),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                event = self.arch.events.create(
-                    ASSET_ID, PROPS, EVENT_ATTRS, confirm=True
-                )
+                self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)
 
     def test_events_create_with_confirmation_always_pending_status(self):
         """
@@ -438,6 +432,4 @@ class TestEventsCreate(TestEventsBase):
             ]
 
             with self.assertRaises(ArchivistUnconfirmedError):
-                event = self.arch.events.create(
-                    ASSET_ID, PROPS, EVENT_ATTRS, confirm=True
-                )
+                self.arch.events.create(ASSET_ID, PROPS, EVENT_ATTRS, confirm=True)

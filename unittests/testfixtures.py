@@ -3,11 +3,9 @@ Test archivist fixtures
 """
 
 from copy import copy
-
 from unittest import TestCase
 
 from archivist.archivist import Archivist
-
 
 # pylint: disable=missing-docstring
 

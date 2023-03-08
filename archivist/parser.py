@@ -17,7 +17,6 @@ from .logger import set_logger
 from .proof_mechanism import ProofMechanism
 from .utils import get_auth
 
-
 filterwarnings("ignore", message="Unverified HTTPS request")
 
 

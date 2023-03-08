@@ -6,17 +6,14 @@ from os import environ
 from unittest import TestCase, mock
 
 # from archivist.errors import ArchivistBadRequestError
-
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
-
 from archivist.archivist import Archivist
-from archivist.locations import Location
 from archivist.constants import (
     LOCATIONS_LABEL,
 )
-
+from archivist.locations import Location
 from archivist.logger import set_logger
 
 if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:

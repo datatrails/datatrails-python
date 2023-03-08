@@ -1,12 +1,16 @@
 """uploader interface
 """
 from __future__ import annotations
+
 from logging import getLogger
+from typing import TYPE_CHECKING
 
 import backoff
 
 from .errors import ArchivistNotFoundError
-from . import sboms
+
+if TYPE_CHECKING:
+    from . import sboms
 
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature

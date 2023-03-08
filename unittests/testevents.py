@@ -5,22 +5,22 @@ Test events
 from unittest import TestCase, mock
 
 from archivist.constants import (
-    ROOT,
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     EVENTS_LABEL,
+    ROOT,
 )
 from archivist.events import Event
 
 from .mock_response import MockResponse
 from .testeventsconstants import (
-    TestEventsBase,
     IDENTITY,
     RESPONSE,
     RESPONSE_WITH_NO_PRINCIPAL,
+    RESPONSE_WITH_NO_TIMESTAMP,
     RESPONSE_WITH_PRINCIPAL_DECLARED,
     RESPONSE_WITH_TIMESTAMP_ACCEPTED,
-    RESPONSE_WITH_NO_TIMESTAMP,
+    TestEventsBase,
 )
 
 # pylint: disable=missing-docstring

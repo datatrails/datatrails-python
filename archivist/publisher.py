@@ -4,13 +4,17 @@
 """
 
 from __future__ import annotations
+
 from logging import getLogger
+from typing import TYPE_CHECKING
 
 import backoff
 
-from .utils import backoff_handler
 from .errors import ArchivistUnpublishedError
-from . import sboms
+from .utils import backoff_handler
+
+if TYPE_CHECKING:
+    from . import sboms
 
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature

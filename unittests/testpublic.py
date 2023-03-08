@@ -6,17 +6,16 @@ from copy import copy
 from os import environ
 from unittest import TestCase, mock
 
-from archivist.constants import HEADERS_TOTAL_COUNT, HEADERS_RETRY_AFTER
+from archivist.archivistpublic import ArchivistPublic
+from archivist.constants import HEADERS_RETRY_AFTER, HEADERS_TOTAL_COUNT
 from archivist.errors import (
     ArchivistBadRequestError,
     ArchivistHeaderError,
     ArchivistTooManyRequestsError,
 )
 from archivist.logger import set_logger
-from archivist.archivistpublic import ArchivistPublic
 
 from .mock_response import MockResponse
-
 
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
@@ -62,7 +61,7 @@ class TestPublic(TestCase):
                 msg="public must be True",
             )
             with self.assertRaises(AttributeError):
-                e = public.Illegal_endpoint
+                public.Illegal_endpoint
 
     def test_public_copy(self):
         """
@@ -149,7 +148,7 @@ class TestPublicCount(TestPublicMethods):
                 ],
             )
             with self.assertRaises(ArchivistBadRequestError):
-                count = self.public.count("path/path")
+                self.public.count("path/path")
 
     def test_count_with_missing_count_error(self):
         """
@@ -166,7 +165,7 @@ class TestPublicCount(TestPublicMethods):
                 ],
             )
             with self.assertRaises(ArchivistHeaderError):
-                count = self.public.count("path/path")
+                self.public.count("path/path")
 
     def test_count_with_429(self):
         """
@@ -175,7 +174,7 @@ class TestPublicCount(TestPublicMethods):
         with mock.patch.object(self.public.session, "get") as mock_get:
             mock_get.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
-                count = self.public.count("path/path")
+                self.public.count("path/path")
 
     def test_count_with_429_retry_and_fail(self):
         """
@@ -187,7 +186,7 @@ class TestPublicCount(TestPublicMethods):
                 MockResponse(429),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                count = self.public.count("path/path")
+                self.public.count("path/path")
 
     def test_count_with_429_retry_and_retries_fail(self):
         """
@@ -201,7 +200,7 @@ class TestPublicCount(TestPublicMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                count = self.public.count("path/path")
+                self.public.count("path/path")
 
     def test_count_with_429_retry_and_success(self):
         """
