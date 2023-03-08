@@ -3,16 +3,15 @@ Tests the upload and download functionality of the SDK
 """
 from contextlib import suppress
 from filecmp import clear_cache, cmp
-from json import dumps as json_dumps
 from io import BytesIO
+from json import dumps as json_dumps
 from os import getenv, remove
 from unittest import skipIf
 
+from archivist import logger
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistBadRequestError
 from archivist.utils import get_auth, get_url
-
-from archivist import logger
 
 from .constants import TestCase
 
@@ -156,11 +155,12 @@ class TestAttachmentsCreate(TestCase):
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        with open(self.RKVST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
-            with self.assertRaises(ArchivistBadRequestError):
-                attachment = self.arch.attachments.download(
-                    file_uuid, fd, params={"strict": "true"}
-                )
+        with open(self.RKVST_IMAGE_DOWNLOAD_PATH, "wb") as fd, self.assertRaises(
+            ArchivistBadRequestError
+        ):
+            attachment = self.arch.attachments.download(
+                file_uuid, fd, params={"strict": "true"}
+            )
 
 
 class TestAttachmentstMalware(TestCase):

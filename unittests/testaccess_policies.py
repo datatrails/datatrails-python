@@ -6,19 +6,18 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
+    ACCESS_POLICIES_LABEL,
+    ACCESS_POLICIES_SUBPATH,
     ASSET_BEHAVIOURS,
-    ROOT,
+    ASSETS_LABEL,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
-    ACCESS_POLICIES_SUBPATH,
-    ACCESS_POLICIES_LABEL,
-    ASSETS_LABEL,
+    ROOT,
 )
 from archivist.errors import ArchivistBadRequestError
 
 from .mock_response import MockResponse
 from .testassets import RESPONSE as ASSET
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -150,7 +149,7 @@ class TestAccessPolicies(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
-            access_policy = self.arch.access_policies.read(IDENTITY)
+            self.arch.access_policies.read(IDENTITY)
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -173,7 +172,7 @@ class TestAccessPolicies(TestCase):
         with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
-            access_policy = self.arch.access_policies.delete(IDENTITY)
+            self.arch.access_policies.delete(IDENTITY)
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
@@ -195,7 +194,7 @@ class TestAccessPolicies(TestCase):
         with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, **RESPONSE)
 
-            access_policy = self.arch.access_policies.update(
+            self.arch.access_policies.update(
                 IDENTITY,
                 props=PROPS,
             )
@@ -224,7 +223,7 @@ class TestAccessPolicies(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.access_policies.read(IDENTITY)
+                self.arch.access_policies.read(IDENTITY)
 
     def test_access_policies_count(self):
         """
@@ -274,7 +273,7 @@ class TestAccessPolicies(TestCase):
                 ],
             )
 
-            count = self.arch.access_policies.count(
+            self.arch.access_policies.count(
                 display_name="Policy display name",
             )
             self.assertEqual(

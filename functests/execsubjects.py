@@ -5,14 +5,12 @@ from json import dumps as json_dumps
 from os import getenv
 from uuid import uuid4
 
-from archivist.archivist import Archivist
-from archivist.utils import get_auth
-
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
-
 from archivist import logger
+from archivist.archivist import Archivist
+from archivist.utils import get_auth
 
 from .constants import TestCase
 

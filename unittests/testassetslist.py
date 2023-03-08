@@ -4,7 +4,6 @@ Test assets list
 
 from logging import getLogger
 from os import environ
-
 from unittest import mock
 
 from archivist.constants import (
@@ -14,9 +13,9 @@ from archivist.logger import set_logger
 
 from .mock_response import MockResponse
 from .testassetsconstants import (
-    TestAssetsBase,
-    SUBPATH,
     RESPONSE,
+    SUBPATH,
+    TestAssetsBase,
 )
 
 # pylint: disable=missing-docstring

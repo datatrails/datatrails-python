@@ -5,23 +5,22 @@ Test compliance policies
 from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
-from archivist.constants import (
-    ROOT,
-    HEADERS_REQUEST_TOTAL_COUNT,
-    HEADERS_TOTAL_COUNT,
-    COMPLIANCE_POLICIES_SUBPATH,
-    COMPLIANCE_POLICIES_LABEL,
-)
-from archivist.errors import ArchivistBadRequestError
 from archivist.compliance_policies import (
     CompliancePolicy,
 )
 from archivist.compliance_policy_requests import (
     CompliancePolicySince,
 )
+from archivist.constants import (
+    COMPLIANCE_POLICIES_LABEL,
+    COMPLIANCE_POLICIES_SUBPATH,
+    HEADERS_REQUEST_TOTAL_COUNT,
+    HEADERS_TOTAL_COUNT,
+    ROOT,
+)
+from archivist.errors import ArchivistBadRequestError
 
 from .mock_response import MockResponse
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -142,7 +141,7 @@ class TestCompliancePolicies(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **SINCE_RESPONSE)
 
-            compliance_policy = self.arch.compliance_policies.read(IDENTITY)
+            self.arch.compliance_policies.read(IDENTITY)
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -165,7 +164,7 @@ class TestCompliancePolicies(TestCase):
         with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
-            compliance_policy = self.arch.compliance_policies.delete(IDENTITY)
+            self.arch.compliance_policies.delete(IDENTITY)
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
@@ -187,7 +186,7 @@ class TestCompliancePolicies(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.compliance_policies.read(IDENTITY)
+                self.arch.compliance_policies.read(IDENTITY)
 
     def test_compliance_policies_count(self):
         """
@@ -237,7 +236,7 @@ class TestCompliancePolicies(TestCase):
                 ],
             )
 
-            count = self.arch.compliance_policies.count(
+            self.arch.compliance_policies.count(
                 props={"compliance_type": "SINCE"},
             )
             self.assertEqual(

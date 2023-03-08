@@ -6,7 +6,8 @@
 # pylint:disable=too-many-instance-attributes
 
 from __future__ import annotations
-from dataclasses import dataclass, asdict
+
+from dataclasses import asdict, dataclass
 from inspect import signature as inspect_signature
 from logging import getLogger
 

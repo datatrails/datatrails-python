@@ -9,11 +9,11 @@ from unittest import TestCase, mock
 
 from archivist.archivistpublic import ArchivistPublic
 from archivist.constants import (
-    ROOT,
-    ASSETS_LABEL,
-    ATTACHMENTS_LABEL,
     ASSETATTACHMENTS_LABEL,
     ASSETATTACHMENTS_SUBPATH,
+    ASSETS_LABEL,
+    ATTACHMENTS_LABEL,
+    ROOT,
 )
 from archivist.logger import set_logger
 

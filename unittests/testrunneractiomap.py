@@ -5,15 +5,13 @@ from logging import getLogger
 from os import environ
 from unittest import TestCase
 
-from archivist.errors import ArchivistInvalidOperationError
-
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
-
 from archivist.archivist import Archivist
-from archivist.runner import _ActionMap
+from archivist.errors import ArchivistInvalidOperationError
 from archivist.logger import set_logger
+from archivist.runner import _ActionMap
 
 if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
     set_logger(environ["RKVST_LOGLEVEL"])

@@ -23,15 +23,20 @@
 """
 
 from __future__ import annotations
-from logging import getLogger
+
 from collections import deque
 from copy import deepcopy
-from typing import Any, BinaryIO, Optional
+from logging import getLogger
+from typing import TYPE_CHECKING, Any, BinaryIO, Optional
 
 import requests
-from requests.models import Response
+
+if TYPE_CHECKING:
+    from requests.models import Response
 
 
+from .assetattachments import _AssetAttachmentsClient
+from .assets import _AssetsPublic
 from .confirmer import MAX_TIME
 from .constants import (
     HEADERS_REQUEST_TOTAL_COUNT,
@@ -39,18 +44,15 @@ from .constants import (
 )
 from .dictmerge import _deepmerge, _dotdict
 from .errors import (
-    _parse_response,
     ArchivistBadFieldError,
     ArchivistDuplicateError,
     ArchivistHeaderError,
     ArchivistNotFoundError,
+    _parse_response,
 )
+from .events import _EventsPublic
 from .headers import _headers_get
 from .retry429 import retry_429
-
-from .assets import _AssetsPublic
-from .events import _EventsPublic
-from .assetattachments import _AssetAttachmentsClient
 
 LOGGER = getLogger(__name__)
 
@@ -168,10 +170,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         )
 
     def _add_headers(self, headers: Optional[dict]) -> dict[str, str]:
-        if headers is not None:
-            newheaders = {**headers}
-        else:
-            newheaders = {}
+        newheaders = {**headers} if headers is not None else {}
 
         return newheaders
 

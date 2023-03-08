@@ -4,7 +4,7 @@ Test tenancies read
 
 from logging import getLogger
 from os import environ
-from unittest import mock, TestCase
+from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (

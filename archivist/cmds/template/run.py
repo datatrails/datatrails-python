@@ -5,14 +5,13 @@ from os import environ
 from pathlib import PurePath
 from sys import exit as sys_exit
 
-from jinja2 import Environment, FileSystemLoader
 import yaml
+from jinja2 import Environment, FileSystemLoader
 
 from ... import about
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from ... import archivist as type_helper  # pylint:disable=unused-import
-
 
 LOGGER = getLogger(__name__)
 

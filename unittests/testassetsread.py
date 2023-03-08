@@ -4,7 +4,6 @@ Test assets read
 
 from logging import getLogger
 from os import environ
-
 from unittest import mock
 
 from archivist.constants import (
@@ -17,11 +16,11 @@ from archivist.logger import set_logger
 
 from .mock_response import MockResponse
 from .testassetsconstants import (
-    TestAssetsBase,
     IDENTITY,
-    SUBPATH,
     RESPONSE,
     RESPONSE_NO_ATTACHMENTS,
+    SUBPATH,
+    TestAssetsBase,
 )
 
 PUBLICURL = (
@@ -93,7 +92,7 @@ class TestAssetsRead(TestAssetsBase):
             mock_get.return_value = MockResponse(200, **RESPONSE_BAD_PUBLICURL)
 
             with self.assertRaises(ArchivistBadFieldError):
-                publicurl = self.arch.assets.publicurl(IDENTITY)
+                self.arch.assets.publicurl(IDENTITY)
 
 
 class TestAssetsCount(TestAssetsBase):
@@ -149,7 +148,7 @@ class TestAssetsCount(TestAssetsBase):
                 ],
             )
 
-            count = self.arch.assets.count(
+            self.arch.assets.count(
                 props={
                     "confirmation_status": "CONFIRMED",
                 },
@@ -186,7 +185,7 @@ class TestAssetsCount(TestAssetsBase):
                 ],
             )
 
-            count = self.arch.assets.count(
+            self.arch.assets.count(
                 attrs={"arc_firmware_version": "1.0"},
             )
             self.assertEqual(

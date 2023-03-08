@@ -3,6 +3,8 @@
 """
 from __future__ import annotations
 
+from contextlib import suppress
+
 
 class Asset(dict):
     """Asset
@@ -50,9 +52,7 @@ class Asset(dict):
     def name(self) -> str | None:
         """str: name of the asset"""
         name = None
-        try:
+        with suppress(KeyError, TypeError):
             name = self["attributes"]["arc_display_name"]
-        except (KeyError, TypeError):
-            pass
 
         return name

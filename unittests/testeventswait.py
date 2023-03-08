@@ -5,12 +5,12 @@ Test events wait
 from unittest import mock
 
 from archivist.constants import (
-    ROOT,
-    ASSETS_WILDCARD,
     ASSETS_SUBPATH,
+    ASSETS_WILDCARD,
     EVENTS_LABEL,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
+    ROOT,
 )
 from archivist.errors import (
     ArchivistNotFoundError,
@@ -18,8 +18,8 @@ from archivist.errors import (
 
 from .mock_response import MockResponse
 from .testeventsconstants import (
-    TestEventsBase,
     RESPONSE_PENDING,
+    TestEventsBase,
 )
 
 # pylint: disable=missing-docstring

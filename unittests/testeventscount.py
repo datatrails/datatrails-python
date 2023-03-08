@@ -5,20 +5,20 @@ Test events count
 from unittest import mock
 
 from archivist.constants import (
-    ROOT,
     ASSETS_LABEL,
-    ASSETS_WILDCARD,
     ASSETS_SUBPATH,
+    ASSETS_WILDCARD,
     EVENTS_LABEL,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
+    ROOT,
 )
 
 from .mock_response import MockResponse
 from .testeventsconstants import (
-    TestEventsBase,
     ASSET_ID,
     RESPONSE,
+    TestEventsBase,
 )
 
 # pylint: disable=missing-docstring
@@ -86,7 +86,7 @@ class TestEventsCount(TestEventsBase):
                 ],
             )
 
-            count = self.arch.events.count(
+            self.arch.events.count(
                 asset_id=ASSET_ID,
                 props={
                     "confirmation_status": "CONFIRMED",
@@ -127,7 +127,7 @@ class TestEventsCount(TestEventsBase):
                 ],
             )
 
-            count = self.arch.events.count(
+            self.arch.events.count(
                 asset_id=ASSET_ID,
                 attrs={"arc_firmware_version": "1.0"},
             )
@@ -169,7 +169,7 @@ class TestEventsCount(TestEventsBase):
                 ],
             )
 
-            count = self.arch.events.count(
+            self.arch.events.count(
                 attrs={"arc_firmware_version": "1.0"},
             )
             self.assertEqual(

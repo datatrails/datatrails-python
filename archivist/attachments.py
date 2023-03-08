@@ -25,20 +25,22 @@
 # pylint:disable=too-few-public-methods
 
 from __future__ import annotations
+
 from copy import deepcopy
 from io import BytesIO
 from logging import getLogger
 from os import path
-from typing import BinaryIO, Optional, Any
+from typing import TYPE_CHECKING, Any, BinaryIO, Optional
 
-from requests.models import Response
+if TYPE_CHECKING:
+    from requests.models import Response
 
-# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
+    # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+    from . import archivist
 
 from .constants import (
-    ATTACHMENTS_SUBPATH,
     ATTACHMENTS_LABEL,
+    ATTACHMENTS_SUBPATH,
 )
 from .dictmerge import _deepmerge
 from .utils import get_url

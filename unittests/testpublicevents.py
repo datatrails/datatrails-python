@@ -4,7 +4,7 @@ Test public events
 
 from logging import getLogger
 from os import environ
-from unittest import mock, TestCase
+from unittest import TestCase, mock
 
 from archivist.archivistpublic import ArchivistPublic
 from archivist.constants import (
@@ -16,13 +16,13 @@ from archivist.constants import (
 )
 from archivist.logger import set_logger
 
+from .mock_response import MockResponse
+from .testevents import IDENTITY
 from .testeventsconstants import (
     ASSET_ATTRS,
     ASSET_ID,
     RESPONSE,
 )
-from .mock_response import MockResponse
-from .testevents import IDENTITY
 
 if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
     set_logger(environ["RKVST_LOGLEVEL"])

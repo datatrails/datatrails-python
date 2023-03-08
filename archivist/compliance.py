@@ -22,17 +22,18 @@
 """
 
 from __future__ import annotations
-from logging import getLogger
-from typing import Any, Optional
 
-# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
+from logging import getLogger
+from typing import TYPE_CHECKING, Any, Optional
+
+if TYPE_CHECKING:
+    # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+    from . import archivist
 
 from .constants import (
-    COMPLIANCE_SUBPATH,
     COMPLIANCE_LABEL,
+    COMPLIANCE_SUBPATH,
 )
-
 
 LOGGER = getLogger(__name__)
 

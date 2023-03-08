@@ -30,13 +30,24 @@
 
 """
 from __future__ import annotations
-from logging import getLogger
+
 from copy import deepcopy
+from logging import getLogger
 from time import time
 from typing import Any, BinaryIO, Optional, Tuple
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
+from .access_policies import _AccessPoliciesClient
+from .appidp import _AppIDPClient
+from .applications import _ApplicationsClient
+from .archivistpublic import ArchivistPublic
+from .assetattachments import _AssetAttachmentsClient
+from .assets import _AssetsRestricted
+from .attachments import _AttachmentsClient
+from .compliance import _ComplianceClient
+from .compliance_policies import _CompliancePoliciesClient
+from .composite import _CompositeClient
 from .confirmer import MAX_TIME
 from .constants import (
     ROOT,
@@ -44,28 +55,16 @@ from .constants import (
 )
 from .dictmerge import _dotdict
 from .errors import (
-    _parse_response,
     ArchivistError,
+    _parse_response,
 )
-from .archivistpublic import ArchivistPublic
-from .retry429 import retry_429
-
-from .access_policies import _AccessPoliciesClient
-from .appidp import _AppIDPClient
-from .applications import _ApplicationsClient
-from .assets import _AssetsRestricted
-from .assetattachments import _AssetAttachmentsClient
-from .attachments import _AttachmentsClient
-from .compliance import _ComplianceClient
-from .compliance_policies import _CompliancePoliciesClient
-from .composite import _CompositeClient
 from .events import _EventsRestricted
 from .locations import _LocationsClient
+from .retry429 import retry_429
 from .runner import _Runner
 from .sboms import _SBOMSClient
 from .subjects import _SubjectsClient
 from .tenancies import _TenanciesClient
-
 
 LOGGER = getLogger(__name__)
 
@@ -222,10 +221,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         )
 
     def _add_headers(self, headers: dict[str, str] | None) -> dict[str, Any]:
-        if isinstance(headers, dict):
-            newheaders = {**headers}
-        else:
-            newheaders = {}
+        newheaders = {**headers} if isinstance(headers, dict) else {}
 
         auth = self.auth  # this may trigger a refetch so only do it once here
         # for appidp endpoint there may not be an authtoken

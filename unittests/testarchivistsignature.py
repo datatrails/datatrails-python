@@ -15,7 +15,6 @@ from archivist.logger import set_logger
 from .mock_response import MockResponse
 from .testarchivist import TestArchivistMethods
 
-
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -42,9 +41,7 @@ class TestArchivistSignature(TestArchivistMethods):
                     },
                 ],
             )
-            entity = self.arch.get_by_signature(
-                "path/path", "things", {"field1": "value1"}
-            )
+            self.arch.get_by_signature("path/path", "things", {"field1": "value1"})
             for a in mock_get.call_args_list:
                 self.assertEqual(
                     tuple(a),
@@ -71,9 +68,7 @@ class TestArchivistSignature(TestArchivistMethods):
                 things=[],
             )
             with self.assertRaises(ArchivistNotFoundError):
-                entity = self.arch.get_by_signature(
-                    "path/path", "things", {"field1": "value1"}
-                )
+                self.arch.get_by_signature("path/path", "things", {"field1": "value1"})
 
     def test_get_by_signature_duplicate(self):
         """
@@ -92,9 +87,7 @@ class TestArchivistSignature(TestArchivistMethods):
                 ],
             )
             with self.assertRaises(ArchivistDuplicateError):
-                entity = self.arch.get_by_signature(
-                    "path/path", "things", {"field1": "value1"}
-                )
+                self.arch.get_by_signature("path/path", "things", {"field1": "value1"})
 
     def test_get_by_signature_with_bad_field(self):
         """
@@ -110,6 +103,6 @@ class TestArchivistSignature(TestArchivistMethods):
                 ],
             )
             with self.assertRaises(ArchivistBadFieldError):
-                entity = self.arch.get_by_signature(
+                self.arch.get_by_signature(
                     "path/path", "badthings", {"field1": "value1"}
                 )

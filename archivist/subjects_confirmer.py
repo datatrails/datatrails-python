@@ -2,17 +2,20 @@
 """
 
 from __future__ import annotations
+
 from logging import getLogger
+from typing import TYPE_CHECKING
+
 import backoff
 
-from . import subjects
+if TYPE_CHECKING:
+    from . import subjects
 
 from .constants import (
     CONFIRMATION_CONFIRMED,
     CONFIRMATION_STATUS,
 )
 from .errors import ArchivistUnconfirmedError
-
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from .utils import backoff_handler

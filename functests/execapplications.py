@@ -8,12 +8,11 @@ from time import sleep
 from unittest import skipIf
 from uuid import uuid4
 
+from archivist import logger
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistUnauthenticatedError
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
-
-from archivist import logger
 
 from .constants import TestCase
 
@@ -200,7 +199,7 @@ class TestApplications(TestCase):
         client_id = application["client_id"]
         client_secret = "X" + application["credentials"][0]["secret"][1:]
         with self.assertRaises(ArchivistUnauthenticatedError):
-            appidp = self.arch.appidp.token(
+            self.arch.appidp.token(
                 client_id,
                 client_secret,
             )

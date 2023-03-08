@@ -5,7 +5,6 @@ from sys import exit as sys_exit
 from sys import stdout as sys_stdout
 
 from ...parser import common_parser, endpoint
-
 from .run import run
 
 LOGGER = getLogger(__name__)

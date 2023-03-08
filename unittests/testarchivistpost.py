@@ -14,7 +14,6 @@ from archivist.errors import (
 
 from .mock_response import MockResponse
 
-
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -44,7 +43,7 @@ class TestArchivistPost(TestArchivistMethods):
         request = {"field1": "value1"}
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, request=request)
-            resp = self.arch.post("path/path", request)
+            self.arch.post("path/path", request)
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
@@ -71,7 +70,7 @@ class TestArchivistPost(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(400, request=request, field1="value1")
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.post("path/path", request)
+                self.arch.post("path/path", request)
 
     def test_post_with_429(self):
         """
@@ -81,7 +80,7 @@ class TestArchivistPost(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(429, request=request, field1="value1")
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.post("path/path", request)
+                self.arch.post("path/path", request)
 
     def test_post_with_429_retry_and_fail(self):
         """
@@ -94,7 +93,7 @@ class TestArchivistPost(TestArchivistMethods):
                 MockResponse(429),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.post("path/path", request)
+                self.arch.post("path/path", request)
 
     def test_post_with_429_retry_and_retries_fail(self):
         """
@@ -109,7 +108,7 @@ class TestArchivistPost(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.post("path/path", request)
+                self.arch.post("path/path", request)
 
     def test_post_with_429_retry_and_success(self):
         """
@@ -122,7 +121,7 @@ class TestArchivistPost(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(200),
             )
-            resp = self.arch.post("path/path", request)
+            self.arch.post("path/path", request)
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
@@ -148,7 +147,7 @@ class TestArchivistPost(TestArchivistMethods):
         request = {"field1": "value1"}
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, request=request)
-            resp = self.arch.post(
+            self.arch.post(
                 "path/path",
                 request,
                 headers={"headerfield1": "headervalue1"},
@@ -178,7 +177,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200)
-            resp = self.arch.post_file(
+            self.arch.post_file(
                 "path/path",
                 BytesIO(b"lotsofbytes"),
                 "image/jpg",
@@ -242,7 +241,7 @@ class TestArchivistPost(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200)
-            resp = self.arch.post_file(
+            self.arch.post_file(
                 "path/path",
                 BytesIO(b"lotsofbytes"),
                 "image/jpg",
@@ -308,7 +307,7 @@ class TestArchivistPost(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.post_file(
+                self.arch.post_file(
                     "path/path",
                     BytesIO(b"lotsofbytes"),
                     "image/jpg",
@@ -321,7 +320,7 @@ class TestArchivistPost(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.post_file(
+                self.arch.post_file(
                     "path/path",
                     BytesIO(b"lotsofbytes"),
                     "image/jpg",
@@ -337,7 +336,7 @@ class TestArchivistPost(TestArchivistMethods):
                 MockResponse(429),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.post_file(
+                self.arch.post_file(
                     "path/path",
                     BytesIO(b"lotsofbytes"),
                     "image/jpg",
@@ -355,7 +354,7 @@ class TestArchivistPost(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.post_file(
+                self.arch.post_file(
                     "path/path",
                     BytesIO(b"lotsofbytes"),
                     "image/jpg",
@@ -372,7 +371,7 @@ class TestArchivistPost(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(200),
             )
-            resp = self.arch.post_file(
+            self.arch.post_file(
                 "path/path",
                 BytesIO(b"lotsofbytes"),
                 "image/jpg",
@@ -446,7 +445,7 @@ class TestArchivistPostWithoutAuth(TestCase):
         request = {"field1": "value1"}
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, request=request)
-            resp = self.arch.post("path/path", request)
+            self.arch.post("path/path", request)
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,

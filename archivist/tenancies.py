@@ -22,17 +22,19 @@
 """
 
 from __future__ import annotations
-from logging import getLogger
 
-# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
+from logging import getLogger
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+    from . import archivist
 
 from .constants import (
     TENANCIES_LABEL,
     TENANCIES_PREFIX,
     TENANCIES_SUBPATH,
 )
-
 
 LOGGER = getLogger(__name__)
 

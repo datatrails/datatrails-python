@@ -2,12 +2,16 @@
 """
 
 from __future__ import annotations
-from logging import getLogger
 
 from copy import deepcopy
-from typing import Any, Optional, overload, Union
+from logging import getLogger
+from typing import TYPE_CHECKING, Any, Optional, Union, overload
 
 import backoff
+
+if TYPE_CHECKING:
+    # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+    from . import assets, events
 
 from .constants import (
     CONFIRMATION_CONFIRMED,
@@ -16,23 +20,18 @@ from .constants import (
     CONFIRMATION_STATUS,
 )
 from .errors import ArchivistUnconfirmedError
-
-
-# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import assets
-from . import events
 from .utils import backoff_handler
-
 
 MAX_TIME = 1200
 LOGGER = getLogger(__name__)
 
-# pylint: disable=protected-access
-PublicManagers = Union[assets._AssetsPublic, events._EventsPublic]
-PrivateManagers = Union[assets._AssetsRestricted, events._EventsRestricted]
-Managers = Union[PublicManagers, PrivateManagers]
+if TYPE_CHECKING:
+    # pylint: disable=protected-access
+    PublicManagers = Union[assets._AssetsPublic, events._EventsPublic]
+    PrivateManagers = Union[assets._AssetsRestricted, events._EventsRestricted]
+    Managers = Union[PublicManagers, PrivateManagers]
 
-ReturnTypes = Union[assets.Asset, events.Event]
+    ReturnTypes = Union[assets.Asset, events.Event]
 
 
 def __lookup_max_time():

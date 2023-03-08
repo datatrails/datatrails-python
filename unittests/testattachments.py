@@ -7,9 +7,9 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
-    ROOT,
-    ATTACHMENTS_SUBPATH,
     ATTACHMENTS_LABEL,
+    ATTACHMENTS_SUBPATH,
+    ROOT,
 )
 
 from .mock_response import MockResponse

@@ -22,15 +22,20 @@
 """
 
 from __future__ import annotations
+
 from logging import getLogger
+from typing import TYPE_CHECKING
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 # pylint:disable=too-few-public-methods
-from . import archivist
+
+# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+if TYPE_CHECKING:
+    from . import archivist
 
 from .constants import (
-    APPIDP_SUBPATH,
     APPIDP_LABEL,
+    APPIDP_SUBPATH,
     APPIDP_TOKEN,
 )
 

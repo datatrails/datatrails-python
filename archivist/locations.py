@@ -23,18 +23,20 @@
 """
 
 from __future__ import annotations
+
+from contextlib import suppress
 from copy import deepcopy
 from logging import getLogger
-from typing import Any, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Optional, Tuple
 
-# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
+if TYPE_CHECKING:
+    # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+    from . import archivist
 
-from .constants import LOCATIONS_SUBPATH, LOCATIONS_LABEL
+from .constants import LOCATIONS_LABEL, LOCATIONS_SUBPATH
 from .dictmerge import _deepmerge
 from .errors import ArchivistNotFoundError
 from .utils import selector_signature
-
 
 LOGGER = getLogger(__name__)
 
@@ -50,10 +52,8 @@ class Location(dict):
     def name(self) -> str | None:
         """str: name of the location"""
         name = None
-        try:
+        with suppress(KeyError):
             name = self["display_name"]
-        except KeyError:
-            pass
 
         return name
 

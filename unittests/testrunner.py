@@ -6,11 +6,9 @@ from os import environ
 from unittest import TestCase
 
 # from archivist.errors import ArchivistBadRequestError
-
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
-
 from archivist.archivist import Archivist
 from archivist.assets import Asset
 from archivist.constants import ASSET_BEHAVIOURS

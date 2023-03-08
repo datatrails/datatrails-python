@@ -6,11 +6,9 @@ from os import environ
 from unittest import TestCase, mock
 
 # from archivist.errors import ArchivistBadRequestError
-
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
-
 from archivist.archivist import Archivist
 from archivist.compliance import Compliance
 from archivist.compliance_policies import CompliancePolicy

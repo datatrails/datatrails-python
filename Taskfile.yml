@@ -44,9 +44,22 @@ tasks:
     deps: [about]
     cmds:
       - ./scripts/builder.sh python3 --version
+      - ./scripts/builder.sh ruff check archivist examples functests unittests
       - ./scripts/builder.sh python3 -m pyright archivist
       - ./scripts/builder.sh pycodestyle --format=pylint archivist examples functests unittests
       - ./scripts/builder.sh python3 -m pylint archivist examples functests unittests
+
+  check-fixes:
+    desc: Show proposed fixes from ruff
+    deps: [about]
+    cmds:
+      - ./scripts/builder.sh ruff check --show-fixes archivist examples functests unittests
+
+  check-fixes-apply:
+    desc: Apply  proposed fixes from ruff
+    deps: [about]
+    cmds:
+      - ./scripts/builder.sh ruff check --fix archivist examples functests unittests
 
   clean:
     desc: Clean git repo

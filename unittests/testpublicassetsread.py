@@ -4,7 +4,6 @@ Test public assets read
 
 from logging import getLogger
 from os import environ
-
 from unittest import mock
 
 from archivist.constants import (
@@ -20,7 +19,6 @@ from .testassetsconstants import (
 from .testpublicassets import (
     TestPublicAssetsBase,
 )
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access

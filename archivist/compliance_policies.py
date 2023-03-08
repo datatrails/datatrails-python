@@ -26,26 +26,27 @@
 """
 
 from __future__ import annotations
+
 from copy import deepcopy
 from logging import getLogger
-from typing import Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
+if TYPE_CHECKING:
+    # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+    from . import archivist
+    from .compliance_policy_requests import (
+        CompliancePolicyCurrentOutstanding,
+        CompliancePolicyDynamicTolerance,
+        CompliancePolicyPeriodOutstanding,
+        CompliancePolicyRichness,
+        CompliancePolicySince,
+    )
 
-from .compliance_policy_requests import (
-    CompliancePolicySince,
-    CompliancePolicyCurrentOutstanding,
-    CompliancePolicyPeriodOutstanding,
-    CompliancePolicyDynamicTolerance,
-    CompliancePolicyRichness,
-)
 from .constants import (
-    COMPLIANCE_POLICIES_SUBPATH,
     COMPLIANCE_POLICIES_LABEL,
+    COMPLIANCE_POLICIES_SUBPATH,
 )
 from .dictmerge import _deepmerge
-
 
 LOGGER = getLogger(__name__)
 

@@ -25,26 +25,26 @@
 # pylint:disable=too-few-public-methods
 
 from __future__ import annotations
-from typing import BinaryIO, Optional, Any
+
 from copy import deepcopy
 from io import BytesIO
 from logging import getLogger
+from typing import TYPE_CHECKING, Any, BinaryIO, Optional
 
-from requests.models import Response
+if TYPE_CHECKING:
+    from requests.models import Response
 from xmltodict import parse as xmltodict_parse
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
-
+from . import archivist, publisher, uploader, withdrawer
 from .constants import (
-    SBOMS_SUBPATH,
     SBOMS_LABEL,
     SBOMS_METADATA,
+    SBOMS_PUBLISH,
+    SBOMS_SUBPATH,
     SBOMS_WILDCARD,
     SBOMS_WITHDRAW,
-    SBOMS_PUBLISH,
 )
-from . import publisher, uploader, withdrawer
 from .dictmerge import _deepmerge
 from .sbommetadata import SBOM
 from .utils import get_url

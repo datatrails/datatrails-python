@@ -9,12 +9,11 @@ from time import sleep
 from unittest import skipIf
 from uuid import uuid4
 
+from archivist import logger
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
 from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
-
-from archivist import logger
 
 from .constants import TestCase
 

@@ -10,7 +10,7 @@ from os import getenv
 from warnings import filterwarnings
 
 from archivist.archivist import Archivist
-from archivist.errors import ArchivistNotFoundError, ArchivistDuplicateError
+from archivist.errors import ArchivistDuplicateError, ArchivistNotFoundError
 
 filterwarnings("ignore", message="Unverified HTTPS request")
 

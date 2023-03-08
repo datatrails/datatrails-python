@@ -7,13 +7,12 @@ from json import dumps as json_dumps
 from os import getenv
 from time import sleep
 
+from archivist import logger
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
 from archivist.proof_mechanism import ProofMechanism
 from archivist.timestamp import now_timestamp
 from archivist.utils import get_auth
-
-from archivist import logger
 
 from .constants import TestCase
 
@@ -175,7 +174,7 @@ class TestPublicAssetCreate(TestCase):
             identity,
             msg="Identity is None",
         )
-        asset_publicurl = self.arch.assets.publicurl(asset["identity"])
+        self.arch.assets.publicurl(asset["identity"])
         # different behaviours are also different.
         props = {
             "operation": "Record",

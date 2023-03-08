@@ -23,13 +23,13 @@
 """
 
 from __future__ import annotations
+
 from copy import deepcopy
 from logging import getLogger
 from typing import Any, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
-
+from . import archivist, confirmer
 from .constants import (
     ASSETS_SUBPATH,
     ASSETS_WILDCARD,
@@ -37,10 +37,8 @@ from .constants import (
     EVENTS_LABEL,
     SBOM_RELEASE,
 )
-from . import confirmer
 from .dictmerge import _deepmerge
 from .errors import ArchivistBadFieldError, ArchivistNotFoundError
-
 
 LOGGER = getLogger(__name__)
 

@@ -25,21 +25,23 @@
 # pylint:disable=too-few-public-methods
 
 from __future__ import annotations
+
 from copy import deepcopy
 from logging import getLogger
-from typing import Any, BinaryIO, Optional
+from typing import TYPE_CHECKING, Any, BinaryIO, Optional
 from urllib.parse import urlparse
 
-from requests.models import Response
+if TYPE_CHECKING:
+    from requests.models import Response
 
-# pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist
+    # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+    from . import archivist
 
 from .constants import (
-    SEP,
-    ASSETATTACHMENTS_SUBPATH,
     ASSETATTACHMENTS_LABEL,
+    ASSETATTACHMENTS_SUBPATH,
     ATTACHMENTS_LABEL,
+    SEP,
 )
 from .dictmerge import _deepmerge
 

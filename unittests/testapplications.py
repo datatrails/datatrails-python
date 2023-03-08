@@ -6,15 +6,14 @@ from unittest import TestCase, mock
 
 from archivist.archivist import Archivist
 from archivist.constants import (
-    ROOT,
-    APPLICATIONS_SUBPATH,
     APPLICATIONS_LABEL,
     APPLICATIONS_REGENERATE,
+    APPLICATIONS_SUBPATH,
+    ROOT,
 )
 from archivist.errors import ArchivistBadRequestError
 
 from .mock_response import MockResponse
-
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -113,7 +112,7 @@ class TestApplications(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
-            application = self.arch.applications.read(IDENTITY)
+            self.arch.applications.read(IDENTITY)
             self.assertEqual(
                 tuple(mock_get.call_args),
                 (
@@ -136,7 +135,7 @@ class TestApplications(TestCase):
         with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200, {})
 
-            application = self.arch.applications.delete(IDENTITY)
+            self.arch.applications.delete(IDENTITY)
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
@@ -158,7 +157,7 @@ class TestApplications(TestCase):
         with mock.patch.object(self.arch.session, "patch") as mock_patch:
             mock_patch.return_value = MockResponse(200, **RESPONSE)
 
-            application = self.arch.applications.update(
+            self.arch.applications.update(
                 IDENTITY,
                 display_name=DISPLAY_NAME,
             )
@@ -184,7 +183,7 @@ class TestApplications(TestCase):
         with mock.patch.object(self.arch.session, "get") as mock_get:
             mock_get.return_value = MockResponse(400)
             with self.assertRaises(ArchivistBadRequestError):
-                resp = self.arch.applications.read(IDENTITY)
+                self.arch.applications.read(IDENTITY)
 
     def test_applications_list(self):
         """
@@ -281,7 +280,7 @@ class TestApplications(TestCase):
         with mock.patch.object(self.arch.session, "post") as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            sbom = self.arch.applications.regenerate(IDENTITY)
+            self.arch.applications.regenerate(IDENTITY)
             self.assertEqual(
                 tuple(mock_post.call_args),
                 (

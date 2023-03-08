@@ -5,13 +5,11 @@ from os import getenv
 
 from testbook import testbook
 
-from archivist.archivist import Archivist
-
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
-
 from archivist import logger
+from archivist.archivist import Archivist
 
 from .constants import TestCase
 

@@ -13,7 +13,6 @@ from archivist.errors import (
 
 from .mock_response import MockResponse
 
-
 # pylint: disable=unused-variable
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
@@ -42,7 +41,7 @@ class TestArchivistDelete(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200)
-            resp = self.arch.delete("path/path/entity/xxxxxxxx")
+            self.arch.delete("path/path/entity/xxxxxxxx")
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (
@@ -64,7 +63,7 @@ class TestArchivistDelete(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(404, identity="entity/xxxxxxxx")
             with self.assertRaises(ArchivistNotFoundError):
-                resp = self.arch.delete("path/path/entity/xxxxxxxx")
+                self.arch.delete("path/path/entity/xxxxxxxx")
 
     def test_delete_with_headers(self):
         """
@@ -72,7 +71,7 @@ class TestArchivistDelete(TestArchivistMethods):
         """
         with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(200)
-            resp = self.arch.delete(
+            self.arch.delete(
                 "path/path/id/xxxxxxxx",
                 headers={"headerfield1": "headervalue1"},
             )
@@ -98,7 +97,7 @@ class TestArchivistDelete(TestArchivistMethods):
         with mock.patch.object(self.arch.session, "delete") as mock_delete:
             mock_delete.return_value = MockResponse(429)
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.delete(
+                self.arch.delete(
                     "path/path/id/xxxxxxxx",
                     headers={"headerfield1": "headervalue1"},
                 )
@@ -113,7 +112,7 @@ class TestArchivistDelete(TestArchivistMethods):
                 MockResponse(429),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.delete("path/path/entity/xxxxxxxx")
+                self.arch.delete("path/path/entity/xxxxxxxx")
 
     def test_delete_with_429_retry_and_retries_fail(self):
         """
@@ -127,7 +126,7 @@ class TestArchivistDelete(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
             )
             with self.assertRaises(ArchivistTooManyRequestsError):
-                resp = self.arch.delete("path/path/entity/xxxxxxxx")
+                self.arch.delete("path/path/entity/xxxxxxxx")
 
     def test_delete_with_429_retry_and_success(self):
         """
@@ -139,7 +138,7 @@ class TestArchivistDelete(TestArchivistMethods):
                 MockResponse(429, headers={HEADERS_RETRY_AFTER: 0.1}),
                 MockResponse(200),
             )
-            resp = self.arch.delete("path/path/entity/xxxxxxxx")
+            self.arch.delete("path/path/entity/xxxxxxxx")
             self.assertEqual(
                 tuple(mock_delete.call_args),
                 (

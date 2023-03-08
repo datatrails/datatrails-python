@@ -6,6 +6,7 @@ from os import getenv
 from time import sleep
 from uuid import uuid4
 
+from archivist import logger
 from archivist.archivist import Archivist
 from archivist.compliance_policy_requests import (
     CompliancePolicyCurrentOutstanding,
@@ -16,8 +17,6 @@ from archivist.compliance_policy_requests import (
 )
 from archivist.compliance_policy_type import CompliancePolicyType
 from archivist.utils import get_auth
-
-from archivist import logger
 
 from .constants import TestCase
 
