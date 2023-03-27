@@ -25,6 +25,14 @@ enabled = true
 [tool.pyright]
 include = ["archivist"]
 typeCheckingMode = "basic"
+#
+# from v1.1.300 an error 'archivist/cmds/runner/run.py:27:21 - error: Module is not callable'
+# was generated. Similar code in cmds/templare/run.py did not generate this error
+# and no combination of settings would work so had to resort to 
+# suppressing this general error. Issues have been raised at pyright about this 
+# being too general. There is not enough time or patience to fix linting apps which 
+# are faulty.
+reportGeneralTypeIssues = false
 
 [tool.pylint.main]
 # Analyse import fallback blocks. This can be used to support both Python 2 and 3
