@@ -187,10 +187,11 @@ class _EventsPublic:
         # asset_id will cause issues in the _identity function and the count function
         LOGGER.debug("asset_id %s", asset_id)
         LOGGER.debug(
-            "event_id %s", f"{self._identity(asset_id)}/{EVENTS_LABEL}"  # type:ignore
+            "event_id %s",
+            f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # pyright: ignore
         )
         return self._archivist.count(
-            f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # type:ignore
+            f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # pyright: ignore
             params=self._params(props, attrs, asset_attrs),
         )
 
@@ -226,7 +227,7 @@ class _EventsPublic:
         return (
             Event(**a)
             for a in self._archivist.list(
-                f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # type:ignore
+                f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # pyright: ignore
                 EVENTS_LABEL,
                 page_size=page_size,
                 params=self._params(props, attrs, asset_attrs),
@@ -262,7 +263,7 @@ class _EventsPublic:
 
         return Event(
             **self._archivist.get_by_signature(
-                f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # type:ignore
+                f"{self._identity(asset_id)}/{EVENTS_LABEL}",  # pyright: ignore
                 EVENTS_LABEL,
                 params=self._params(props, attrs, asset_attrs),
             )

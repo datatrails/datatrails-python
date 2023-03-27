@@ -308,7 +308,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
 
         response = self.session.post(
             url,
-            data=multipart,  # type: ignore    https://github.com/requests/toolbelt/issues/312
+            data=multipart,  # pyright: ignore    https://github.com/requests/toolbelt/issues/312
             headers=self._add_headers(headers),
             verify=self.verify,
             params=_dotdict(params),

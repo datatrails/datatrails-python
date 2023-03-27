@@ -39,7 +39,7 @@ def __on_giveup_confirmation(details):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,  # type: ignore
+    logger=None,  # pyright: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_confirmation,
@@ -50,9 +50,9 @@ def _wait_for_confirmation(
     """Return None until subjects is confirmed"""
     subject = self.read(identity)
     if CONFIRMATION_STATUS not in subject:
-        return None  # type: ignore
+        return None  # pyright: ignore
 
     if subject[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
         return subject
 
-    return None  # type: ignore
+    return None  # pyright: ignore
