@@ -206,7 +206,7 @@ class _ActionMap(dict):
         Get valid action in map
         """
         # if an exception occurs here then the dict initialized above is faulty.
-        return self.ops(action_name).get("action")  # type: ignore
+        return self.ops(action_name).get("action")  # pyright: ignore
 
     def keywords(self, action_name: str) -> Tuple | None:
         """
@@ -316,10 +316,10 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
 
     def identity_from_label(self, noun, identity_method):
         label = self.get(f"{noun}_label")
-        if not label.startswith(f"{noun}s/"):  # type: ignore
+        if not label.startswith(f"{noun}s/"):  # pyright: ignore
             return identity_method(label)
 
-        uid = label.split("/")[1]  # type: ignore
+        uid = label.split("/")[1]  # pyright: ignore
         try:
             _ = UUID(uid, version=4)
         except ValueError:

@@ -38,7 +38,7 @@ def __on_giveup_publication(details):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,  # type: ignore
+    logger=None,  # pyright: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_publication,
@@ -50,4 +50,4 @@ def _wait_for_publication(self: sboms._SBOMSClient, identity: str) -> sboms.SBOM
     if entity.published_date:
         return entity
 
-    return None  # type: ignore
+    return None  # pyright: ignore

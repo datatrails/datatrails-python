@@ -45,7 +45,7 @@ tasks:
     cmds:
       - ./scripts/builder.sh python3 --version
       - ./scripts/builder.sh ruff check archivist examples functests unittests
-      - ./scripts/builder.sh python3 -m pyright archivist
+      - ./scripts/builder.sh python3 -m pyright --stats archivist
       - ./scripts/builder.sh pycodestyle --format=pylint archivist examples functests unittests
       - ./scripts/builder.sh python3 -m pylint archivist examples functests unittests
 

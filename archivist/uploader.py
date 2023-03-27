@@ -35,7 +35,7 @@ def __on_giveup_uploading(details):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,  # type: ignore
+    logger=None,  # pyright: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_uploading,
@@ -46,6 +46,6 @@ def _wait_for_uploading(self: sboms._SBOMSClient, identity: str) -> sboms.SBOM:
         LOGGER.debug("Uploader Read %s", identity)
         entity = self.read(identity)
     except ArchivistNotFoundError:
-        return None  # type: ignore
+        return None  # pyright: ignore
 
     return entity

@@ -78,7 +78,7 @@ def _wait_for_confirmation(self: events._EventsPublic, identity: str) -> events.
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,  # type: ignore
+    logger=None,  # pyright: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_confirmation,
@@ -102,7 +102,7 @@ def _wait_for_confirmation(self: Managers, identity: str) -> ReturnTypes:
     if entity[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
         return entity
 
-    return None  # type: ignore
+    return None  # pyright: ignore
 
 
 def __on_giveup_confirmed(details: dict[str, Any]):
@@ -116,7 +116,7 @@ def __on_giveup_confirmed(details: dict[str, Any]):
 
 @backoff.on_predicate(
     backoff.expo,
-    logger=None,  # type: ignore
+    logger=None,  # pyright: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_confirmed,

@@ -44,7 +44,7 @@ jobs:
         ./scripts/version.sh
         pycodestyle --format=pylint archivist examples functests unittests
         python3 -m pylint archivist examples functests unittests
-        python3 -m pyright archivist
+        python3 -m pyright --stats archivist
         black archivist examples unittests functests
         ./scripts/zipnotebooks.sh
         (cd docs && make clean && make html)
