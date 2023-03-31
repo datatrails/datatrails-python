@@ -62,7 +62,6 @@ from .events import _EventsRestricted
 from .locations import _LocationsClient
 from .retry429 import retry_429
 from .runner import _Runner
-from .sboms import _SBOMSClient
 from .subjects import _SubjectsClient
 from .tenancies import _TenanciesClient
 
@@ -98,7 +97,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         "events": _EventsRestricted,
         "locations": _LocationsClient,
         "runner": _Runner,
-        "sboms": _SBOMSClient,
         "subjects": _SubjectsClient,
         "tenancies": _TenanciesClient,
     }
@@ -145,7 +143,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         self.events: _EventsRestricted
         self.locations: _LocationsClient
         self.runner: _Runner
-        self.sboms: _SBOMSClient
         self.subjects: _SubjectsClient
         self.tenancies: _TenanciesClient
 

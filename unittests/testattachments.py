@@ -90,8 +90,6 @@ class TestAttachmentsBase(TestCase):
         )
 
 
-# NB: Also applies to sboms.create() which has pragma no cover set as well...
-#
 # A bug in the python mock_open helper function prevents the successful
 # unittesting of the create method as it does not return an iterable for
 # binary data. This is fixed in 3.8.

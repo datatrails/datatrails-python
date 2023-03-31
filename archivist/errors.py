@@ -28,14 +28,6 @@ class ArchivistUnconfirmedError(ArchivistError):
     """asset or event failed to confirm after fixed timeout"""
 
 
-class ArchivistUnpublishedError(ArchivistError):
-    """Sbom failed to publish after fixed timeout"""
-
-
-class ArchivistUnwithdrawnError(ArchivistError):
-    """Sbom failed to be withdrawn after fixed timeout"""
-
-
 class ArchivistInvalidOperationError(ArchivistError):
     """Runner Operation is invalid"""
 

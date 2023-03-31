@@ -12,6 +12,5 @@ Story Runner Demos
    compliance_policies_demo_richness
    door_entry_demo
    estate_info_demo
-   sbom_demo
    synsation_demo
    wipp_demo

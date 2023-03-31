@@ -204,7 +204,7 @@ class _ApplicationsClient:
     def regenerate(self, identity: str) -> Application:
         """Regenerate secret
 
-        Makes an SBOM public.
+        Regenerate secret for app registration
 
         Args:
             identity (str): identity of application

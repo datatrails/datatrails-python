@@ -17,7 +17,6 @@ Shows all code
    attachments
    tenancies
    compliance_policies/index
-   sboms/index
    iam/index
    runner
 

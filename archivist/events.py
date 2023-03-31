@@ -39,6 +39,7 @@ from .constants import (
 )
 from .dictmerge import _deepmerge
 from .errors import ArchivistBadFieldError, ArchivistNotFoundError
+from .sboms import sboms_parse
 
 LOGGER = getLogger(__name__)
 
@@ -351,18 +352,12 @@ class _EventsRestricted(_EventsPublic):
                 )
                 event_attributes["arc_location_identity"] = loc["identity"]
 
-        sbom = data.pop("sbom", None)
-        if sbom is not None:
-            sbom_result = self._archivist.sboms.create(sbom)
-            for k, v in sbom_result.items():
-                event_attributes[f"sbom_{k}"] = v
-
         attachments = data.pop("attachments", None)
         if attachments is not None:
             for a in attachments:
                 result = self._archivist.attachments.create(a)
                 if a.get("type") == SBOM_RELEASE:
-                    sbom_result = self._archivist.sboms.parse(a)
+                    sbom_result = sboms_parse(a)
                     for k, v in sbom_result.items():
                         event_attributes[f"sbom_{k}"] = v
 
