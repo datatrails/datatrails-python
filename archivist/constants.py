@@ -57,12 +57,6 @@ COMPLIANCE_POLICIES_LABEL = "compliance_policies"
 LOCATIONS_SUBPATH = "v2"
 LOCATIONS_LABEL = "locations"
 
-SBOMS_SUBPATH = "v1"
-SBOMS_LABEL = "sboms"
-SBOMS_WILDCARD = "-/metadata"
-SBOMS_METADATA = "metadata"
-SBOMS_PUBLISH = "publish"
-SBOMS_WITHDRAW = "withdraw"
 SBOM_PACKAGE = "Software Package"
 SBOM_RELEASE = "Software Package Release"
 

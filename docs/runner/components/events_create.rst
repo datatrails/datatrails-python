@@ -60,32 +60,6 @@ An example when opening a door in Paris:
         confirm: true
 
 
-An example when releasing a software package as an sbom:
-
-.. code-block:: yaml
-    
-    ---
-    steps:
-      - step:
-          action: EVENTS_CREATE
-          description: Release YYYYMMDD.1 of Test SBOM for YAML story
-          asset_label: ACME Corporation Detector SAAS
-          print_response: true
-        operation: Record
-        behaviour: RecordEvidence
-        confirm: true
-        event_attributes:
-          arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.1
-          arc_display_type: Software Package Release
-        sbom:
-          filename: functests/test_resources/sbom/gen1.xml
-          content_type: text/xml
-          display_name: ACME Generation1 SBOM
-          confirm: True
-          params:
-            privacy: PRIVATE
-
-
 An example when releasing a software package as an sbom attachment:
 
 .. code-block:: yaml

@@ -125,11 +125,6 @@ class TestArchivist(TestCase):
                 msg="Incorrect runner",
             )
             self.assertEqual(
-                str(arch.sboms),
-                "SBOMSClient(https://app.rkvst.io)",
-                msg="Incorrect sboms",
-            )
-            self.assertEqual(
                 str(arch.subjects),
                 "SubjectsClient(https://app.rkvst.io)",
                 msg="Incorrect subjects",
