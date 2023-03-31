@@ -61,6 +61,12 @@ Download the notebooks into a suitable folder:
 
 .. toctree::
    :maxdepth: 2
+   :caption: Access Policy Examples
+
+   notebooks/Create Access Policy -- User Read Only
+
+.. toctree::
+   :maxdepth: 2
    :caption: Compliance Policies Examples
 
    notebooks/Create Compliance SINCE Policy

@@ -269,3 +269,13 @@ RKVST_URL {URL}""",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
+
+    def test_create_access_policy_user_read_only(self):
+        """
+        Test create_access_policy_user_read_only
+        """
+        with testbook(
+            "archivist/notebooks/Create Access Policy -- User Read Only.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)
