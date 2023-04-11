@@ -248,15 +248,15 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
 
-    def test_create_access_policy_user_read_only(self):
+    def test_share_artist_asset_user(self):
         """
-        Test create_access_policy_user_read_only
+        Test share_artist_asset_user
         """
         with testbook(
-            "archivist/notebooks/Create Access Policy -- User Read Only.ipynb",
+            "archivist/notebooks/Sharing Artist Asset with User.ipynb",
             execute=True,
         ) as notebook:
-            LOGGER.debug("\ncreate_access_policy_user_read_only")
+            LOGGER.debug("\nshare_artist_asset_user")
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")

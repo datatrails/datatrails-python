@@ -270,12 +270,12 @@ RKVST_URL {URL}""",
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_create_access_policy_user_read_only(self):
+    def test_share_artist_asset_user(self):
         """
-        Test create_access_policy_user_read_only
+        Test share_artist_asset_user
         """
         with testbook(
-            "archivist/notebooks/Create Access Policy -- User Read Only.ipynb",
+            "archivist/notebooks/Sharing Artist Asset with User.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)

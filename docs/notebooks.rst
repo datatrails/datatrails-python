@@ -63,7 +63,7 @@ Download the notebooks into a suitable folder:
    :maxdepth: 2
    :caption: Access Policy Examples
 
-   notebooks/Create Access Policy -- User Read Only
+   notebooks/Sharing Artist Asset with User
 
 .. toctree::
    :maxdepth: 2
