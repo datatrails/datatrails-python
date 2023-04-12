@@ -279,3 +279,13 @@ RKVST_URL {URL}""",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
+
+    def test_share_album_release_user(self):
+        """
+        Test share_album_release_user
+        """
+        with testbook(
+            "archivist/notebooks/Sharing Album Release Info with User.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)

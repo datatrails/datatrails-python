@@ -260,3 +260,16 @@ RKVST_URL {self.url}""",
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
+
+    def test_share_album_release_user(self):
+        """
+        Test share_album_release_user
+        """
+        with testbook(
+            "archivist/notebooks/Sharing Album Release Info with User.ipynb",
+            execute=True,
+        ) as notebook:
+            LOGGER.debug("\nshare_album_release_user")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
