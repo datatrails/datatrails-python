@@ -247,3 +247,16 @@ RKVST_URL {self.url}""",
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
+
+    def test_share_artist_asset_user(self):
+        """
+        Test share_artist_asset_user
+        """
+        with testbook(
+            "archivist/notebooks/Sharing Artist Asset with User.ipynb",
+            execute=True,
+        ) as notebook:
+            LOGGER.debug("\nshare_artist_asset_user")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
