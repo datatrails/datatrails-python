@@ -261,6 +261,7 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
 
+    @skip("Requires root access credentials -- see #7742")
     def test_share_album_release_user(self):
         """
         Test share_album_release_user
