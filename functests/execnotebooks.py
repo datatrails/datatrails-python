@@ -2,6 +2,7 @@
 Test subjects
 """
 from os import getenv
+from unittest import skip
 
 from testbook import testbook
 
@@ -248,6 +249,7 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
 
+    @skip("Requires root access credentials - see #7742")
     def test_share_artist_asset_user(self):
         """
         Test share_artist_asset_user
