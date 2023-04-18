@@ -64,6 +64,7 @@ Download the notebooks into a suitable folder:
    :caption: Access Policy Examples
 
    notebooks/Sharing Artist Asset with User
+   notebooks/Sharing Album Release Info with User
 
 .. toctree::
    :maxdepth: 2
