@@ -276,3 +276,17 @@ RKVST_URL {self.url}""",
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
+
+    @skip("Requires root access credentials -- see #7742")
+    def test_share_artist_asset_recordlabel(self):
+        """
+        Test share_artist_asset_recordlabel
+        """
+        with testbook(
+            "archivist/notebooks/Sharing Artist Asset with Record Labels.ipynb",
+            execute=True,
+        ) as notebook:
+            LOGGER.debug("\nshare_artist_asset_recordlabel")
+            self.basic_notebook_test(notebook)
+            self.check_notebook_cell(notebook, 7)
+            LOGGER.debug("=================================")
