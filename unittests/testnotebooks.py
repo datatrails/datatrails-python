@@ -299,3 +299,13 @@ RKVST_URL {URL}""",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
+
+    def test_share_album_release_recordlabel(self):
+        """
+        Test share_album_release_recordlabel
+        """
+        with testbook(
+            "archivist/notebooks/Sharing Album Release Info with Record Labels.ipynb",
+            execute=range(1, 6),
+        ) as notebook:
+            self.basic_notebook_test(notebook)

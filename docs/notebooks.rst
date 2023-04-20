@@ -66,6 +66,7 @@ Download the notebooks into a suitable folder:
    notebooks/Sharing Artist Asset with User
    notebooks/Sharing Album Release Info with User
    notebooks/Sharing Artist Asset with Record Labels
+   notebooks/Sharing Album Release Info with Record Labels
 
 .. toctree::
    :maxdepth: 2
