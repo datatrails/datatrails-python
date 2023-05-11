@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Compliance CURRENT OUTSTANDING Policy &mdash; RKVST v0.22.0 documentation</title>
+  <title>Sharing Artist Asset with Record Labels &mdash; RKVST v0.22.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -27,8 +27,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Create Compliance PERIOD OUTSTANDING Policy" href="Create%20Compliance%20PERIOD%20OUTSTANDING%20Policy.html" />
-    <link rel="prev" title="Create Compliance SINCE Policy" href="Create%20Compliance%20SINCE%20Policy.html" /> 
+    <link rel="next" title="Sharing Album Release Info with Record Labels" href="Sharing%20Album%20Release%20Info%20with%20Record%20Labels.html" />
+    <link rel="prev" title="Sharing Album Release Info with User" href="Sharing%20Album%20Release%20Info%20with%20User.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -68,10 +68,10 @@
 <li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Artist%20Asset%20with%20User.html">Sharing Artist Asset with User</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Album%20Release%20Info%20with%20User.html">Sharing Album Release Info with User</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Sharing%20Artist%20Asset%20with%20Record%20Labels.html">Sharing Artist Asset with Record Labels</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Sharing Artist Asset with Record Labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Album%20Release%20Info%20with%20Record%20Labels.html">Sharing Album Release Info with Record Labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20SINCE%20Policy.html">Create Compliance SINCE Policy</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Create Compliance CURRENT OUTSTANDING Policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20CURRENT%20OUTSTANDING%20Policy.html">Create Compliance CURRENT OUTSTANDING Policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20PERIOD%20OUTSTANDING%20Policy.html">Create Compliance PERIOD OUTSTANDING Policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20DYNAMIC%20TOLERANCE%20Policy.html">Create Compliance DYNAMIC TOLERANCE Policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20RICHNESS%20Policy.html">Create Compliance RICHNESS Policy</a></li>
@@ -103,7 +103,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../notebooks.html">Note Books (BETA)</a></li>
-      <li class="breadcrumb-item active">Create Compliance CURRENT OUTSTANDING Policy</li>
+      <li class="breadcrumb-item active">Sharing Artist Asset with Record Labels</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -112,16 +112,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Create-Compliance-CURRENT-OUTSTANDING-Policy">
-<h1>Create Compliance CURRENT OUTSTANDING Policy<a class="headerlink" href="#Create-Compliance-CURRENT-OUTSTANDING-Policy" title="Permalink to this heading"></a></h1>
+  <section id="Sharing-Artist-Asset-with-Record-Labels">
+<h1>Sharing Artist Asset with Record Labels<a class="headerlink" href="#Sharing-Artist-Asset-with-Record-Labels" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create Compliance CURRENT OUTSTANDING Policy</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creates an Access Policy that shares &quot;read-only&quot; permission across RKVST tenancies.</span>
 <span class="c1">#</span>
 <span class="c1"># Main function, establishes a connection to RKVST using an App Registration then uses that</span>
-<span class="c1"># to create a Compliance CURRENT OUTSTANDING Policy.</span>
+<span class="c1"># to create an Access Policy.</span>
 <span class="c1">#</span>
 <span class="c1"># Note: The purpose of RKVST Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.</span>
 <span class="c1"># The RKVST Python SDK is authored to work cleanly with more advanced coding techniques.</span>
@@ -145,11 +145,9 @@
 <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
 
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
-<span class="kn">from</span> <span class="nn">archivist.compliance_policy_requests</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CompliancePolicyCurrentOutstanding</span><span class="p">,</span>
-<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
 <span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
+<span class="kn">from</span> <span class="nn">archivist.constants</span> <span class="kn">import</span> <span class="n">ASSET_BEHAVIOURS</span>
 </pre></div>
 </div>
 </div>
@@ -182,10 +180,11 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Main function of CURRENT OUTSTANDING policy creation.</span>
+<span class="sd">Main function of Access Policy creation.</span>
 
 <span class="sd">* Connect to RKVST with client ID and client secret</span>
-<span class="sd">* Creates a Compliance CURRENT OUTSTANDING Policy</span>
+<span class="sd">* Creates an Access Policy</span>
+<span class="sd">* Prints response of Access Policy creation</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c1"># Optional call to set the logger level.  The argument can be either</span>
@@ -213,26 +212,29 @@ RKVST_URL https://app.rkvst.io
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_compliance_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_access</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a CURRENT OUTSTANDING compliance policy for feeding one&#39;s dog. If RKVST sees a &quot;Feed&quot;</span>
-<span class="sd">    event without a closing &quot;Fed&quot; event, then Golden Retriever Asset is out of compliance.</span>
+<span class="sd">    Creates an Access Policy that shares read only data for Artists with other RKVST tenancies</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">current_outstanding_policy</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">compliance_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">CompliancePolicyCurrentOutstanding</span><span class="p">(</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Ensuring my dog is fed&quot;</span><span class="p">,</span>
-            <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Feeding My Dog&quot;</span><span class="p">,</span>
-            <span class="n">asset_filter</span><span class="o">=</span><span class="p">[</span>
-                <span class="p">[</span><span class="s2">&quot;attributes.arc_display_type=Golden Retriever&quot;</span><span class="p">],</span>
-            <span class="p">],</span>
-            <span class="n">event_display_type</span><span class="o">=</span><span class="s2">&quot;Feed&quot;</span><span class="p">,</span>
-            <span class="n">closing_event_display_type</span><span class="o">=</span><span class="s2">&quot;Fed&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="s2">&quot;CURRENT_OUTSTANDING_POLICY:&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">current_outstanding_policy</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">current_outstanding_policy</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sharing Artist Asset with Record Labels&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Sharing Artist Asset with Record Labels&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">filters</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;attributes.arc_display_type=Artists&quot;</span><span class="p">]}]</span>
+    <span class="n">access_permissions</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;asset_attributes_read&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;asset_attributes_write&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
+            <span class="s2">&quot;event_arc_display_type_read&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;event_arc_display_type_write&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;include_attributes&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;subjects&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subjects/34b291c3-30f4-4d89-9ec7-85f57354f798&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;user_attributes&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">access_policies</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">access_permissions</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -240,9 +242,9 @@ RKVST_URL https://app.rkvst.io
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creates CURRENT OUTSTANDING compliance policy and prints result</span>
-<span class="n">compliance_policy</span> <span class="o">=</span> <span class="n">create_compliance_policy</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Compliance_Policy&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">compliance_policy</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creates an Access Policy and prints result</span>
+<span class="n">access_policy</span> <span class="o">=</span> <span class="n">create_access</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ACCESS_POLICY&quot;</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">access_policy</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -259,43 +261,39 @@ Refresh token
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CURRENT_OUTSTANDING_POLICY: {
-    &#34;identity&#34;: &#34;compliance_policies/f896247e-bca5-4410-8c30-09adf81e9244&#34;,
-    &#34;compliance_type&#34;: &#34;COMPLIANCE_CURRENT_OUTSTANDING&#34;,
-    &#34;description&#34;: &#34;Ensuring my dog is fed&#34;,
-    &#34;display_name&#34;: &#34;Feeding My Dog&#34;,
-    &#34;asset_filter&#34;: [
+ACCESS_POLICY {
+    &#34;identity&#34;: &#34;access_policies/df5f0048-ba9b-43b2-a7bf-82b8d2f603a3&#34;,
+    &#34;display_name&#34;: &#34;Sharing Artist Asset with Record Labels&#34;,
+    &#34;filters&#34;: [
         {
             &#34;or&#34;: [
-                &#34;attributes.arc_display_type=Golden Retriever&#34;
+                &#34;attributes.arc_display_type=Artists&#34;
             ]
         }
     ],
-    &#34;event_display_type&#34;: &#34;Feed&#34;,
-    &#34;closing_event_display_type&#34;: &#34;Fed&#34;,
-    &#34;time_period_seconds&#34;: &#34;0&#34;,
-    &#34;dynamic_window&#34;: &#34;0&#34;,
-    &#34;dynamic_variability&#34;: 0,
-    &#34;richness_assertions&#34;: []
-}
-Compliance_Policy {
-    &#34;identity&#34;: &#34;compliance_policies/f896247e-bca5-4410-8c30-09adf81e9244&#34;,
-    &#34;compliance_type&#34;: &#34;COMPLIANCE_CURRENT_OUTSTANDING&#34;,
-    &#34;description&#34;: &#34;Ensuring my dog is fed&#34;,
-    &#34;display_name&#34;: &#34;Feeding My Dog&#34;,
-    &#34;asset_filter&#34;: [
+    &#34;access_permissions&#34;: [
         {
-            &#34;or&#34;: [
-                &#34;attributes.arc_display_type=Golden Retriever&#34;
-            ]
+            &#34;subjects&#34;: [
+                &#34;subjects/34b291c3-30f4-4d89-9ec7-85f57354f798&#34;
+            ],
+            &#34;behaviours&#34;: [
+                &#34;Attachments&#34;,
+                &#34;RecordEvidence&#34;
+            ],
+            &#34;include_attributes&#34;: [],
+            &#34;user_attributes&#34;: [],
+            &#34;asset_attributes_read&#34;: [
+                &#34;*&#34;
+            ],
+            &#34;asset_attributes_write&#34;: [],
+            &#34;event_arc_display_type_read&#34;: [
+                &#34;*&#34;
+            ],
+            &#34;event_arc_display_type_write&#34;: []
         }
     ],
-    &#34;event_display_type&#34;: &#34;Feed&#34;,
-    &#34;closing_event_display_type&#34;: &#34;Fed&#34;,
-    &#34;time_period_seconds&#34;: &#34;0&#34;,
-    &#34;dynamic_window&#34;: &#34;0&#34;,
-    &#34;dynamic_variability&#34;: 0,
-    &#34;richness_assertions&#34;: []
+    &#34;tenant&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;,
+    &#34;description&#34;: &#34;Sharing Artist Asset with Record Labels&#34;
 }
 </pre></div></div>
 </div>
@@ -305,8 +303,8 @@ Compliance_Policy {
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Create%20Compliance%20SINCE%20Policy.html" class="btn btn-neutral float-left" title="Create Compliance SINCE Policy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Create%20Compliance%20PERIOD%20OUTSTANDING%20Policy.html" class="btn btn-neutral float-right" title="Create Compliance PERIOD OUTSTANDING Policy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Sharing%20Album%20Release%20Info%20with%20User.html" class="btn btn-neutral float-left" title="Sharing Album Release Info with User" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Sharing%20Album%20Release%20Info%20with%20Record%20Labels.html" class="btn btn-neutral float-right" title="Sharing Album Release Info with Record Labels" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
