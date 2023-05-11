@@ -2,9 +2,9 @@
 
 # code quality
 autopep8~=2.0
-black[jupyter]~=23.1
+black[jupyter]~=23.3
 coverage[toml]~=7.1
-pip-audit~=2.4
+pip-audit~=2.5
 pycodestyle~=2.10
 pylint~=2.17
 pyright~=1.1
