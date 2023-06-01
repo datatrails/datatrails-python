@@ -74,14 +74,15 @@ RKVST_URL {self.url}""",
         )
         LOGGER.debug(out)
 
-    def test_01_create_asset_and_events(self):
+    def test_01_create_artist_albuminfo(self):
         """
-        Test create_asset_and_events
+        Test create_artist_albuminfo
         """
         with testbook(
-            "archivist/notebooks/Create Asset and Events.ipynb", execute=True
+            "archivist/notebooks/Create Artist and Album Release Info.ipynb",
+            execute=True,
         ) as notebook:
-            LOGGER.debug("\ncreate_asset_and_events")
+            LOGGER.debug("\ncreate_artist_albuminfo")
             self.basic_notebook_test(notebook)
             self.assertGreater(
                 int(notebook.ref("RKVST_UNIQUE_ID")),

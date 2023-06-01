@@ -54,7 +54,7 @@ Download the notebooks into a suitable folder:
    :maxdepth: 2
    :caption: Basic Asset and Event Examples
 
-   notebooks/Create Asset and Events
+   notebooks/Create Artist and Album Release Info
    notebooks/Find Asset and Event Creation
    notebooks/Find Asset and Create Attachment
    notebooks/Create Event with Verified Domain
