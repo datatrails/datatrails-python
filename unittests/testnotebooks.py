@@ -146,12 +146,13 @@ RKVST_URL {URL}""",
             msg="Incorrect cell output",
         )
 
-    def test_create_asset_and_events(self):
+    def test_create_artist_albuminfo(self):
         """
-        Test create_asset_and_events
+        Test create_artist_albuminfo
         """
         with testbook(
-            "archivist/notebooks/Create Asset and Events.ipynb", execute=(1, 2, 4, 5)
+            "archivist/notebooks/Create Artist and Album Release Info.ipynb",
+            execute=(1, 2, 4, 5),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
