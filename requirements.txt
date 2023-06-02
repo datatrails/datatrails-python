@@ -9,14 +9,8 @@ flatten-dict~=0.4
 iso8601~=1.1
 Jinja2~=3.1
 pyaml-env~=1.2
-
-# TODO: these 2 dependencies are interdependent. Underlying changes to the
-#       urllib3 packages require they must both be upgraded to 2.30 and 1.0.0
-#       respectively. This cannot be done just yet as other pacakages (such
-#       as pip-audit) will break until all other python packages have also
-#       moved to the new requests. For now we pin to 2.29...
-requests~=2.29.0
-requests-toolbelt~=0.10
+requests~=2.31.0
+requests-toolbelt~=1.0
 rfc3339~=6.2
 xmltodict~=0.13
 

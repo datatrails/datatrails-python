@@ -38,7 +38,6 @@ jobs:
         sudo rm -rf /var/lib/apt/lists/*
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements-dev.txt
-        python3 -m pip install setuptools wheel
     - name: Run integrity checks
       run: |
         ./scripts/version.sh
@@ -55,7 +54,7 @@ jobs:
             exit 1
         fi
         ./scripts/unittests.sh
-    - uses: pypa/gh-action-pip-audit@v1.0.0
+    - uses: pypa/gh-action-pip-audit@v1.0.8
       with:
         inputs: requirements.txt
 
