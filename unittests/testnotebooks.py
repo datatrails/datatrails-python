@@ -201,22 +201,22 @@ RKVST_URL {URL}""",
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_find_asset_create_attachment(self):
+    def test_find_artist_cover_art(self):
         """
-        Test find_asset_create_attachment
+        Test find_artist_cover_art
         """
         with testbook(
-            "archivist/notebooks/Find Asset and Create Attachment.ipynb",
+            "archivist/notebooks/Find Artist and Create Cover Art.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_find_asset_create_event(self):
+    def test_find_asset_addtl_albuminfo(self):
         """
-        Test find_asset_create_event
+        Test find_asset_addtl_albuminfo
         """
         with testbook(
-            "archivist/notebooks/Find Asset and Event Creation.ipynb",
+            "archivist/notebooks/Find Artist and Additional Album Release.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
