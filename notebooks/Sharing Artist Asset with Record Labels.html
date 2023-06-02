@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sharing Artist Asset with Record Labels &mdash; RKVST v0.22.0 documentation</title>
+  <title>Sharing Artist Asset with Record Labels &mdash; RKVST v0.23.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -44,7 +44,7 @@
               <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.22.0
+                v0.23.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -62,7 +62,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../notebooks.html#download-notebooks">Download Notebooks</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="Initialization%20and%20Credentials.html">Initialization and Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Manage_Credentials.html">Manage Credentials</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Asset%20and%20Events.html">Create Asset and Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Create%20Artist%20and%20Album%20Release%20Info.html">Create Artist and Album Release Info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Event%20Creation.html">Find Asset and Event Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Create%20Attachment.html">Find Asset and Create Attachment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
@@ -118,7 +118,13 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creates an Access Policy that shares &quot;read-only&quot; permission across RKVST tenancies.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pre-requisite: Ensure that RKVST Subject IDS have been exchanged with parties that one</span>
+<span class="c1"># wants to share with BEFORE creating this Access Policy.</span>
+<span class="c1">#</span>
+<span class="c1"># How to exchange RKVST Subject IDs:</span>
+<span class="c1"># https://docs.rkvst.com/docs/rkvst-basics/sharing-assets-with-obac/</span>
+<span class="c1">#</span>
+<span class="c1"># Creates an Access Policy that shares &quot;read-only&quot; permission across RKVST tenancies.</span>
 <span class="c1">#</span>
 <span class="c1"># Main function, establishes a connection to RKVST using an App Registration then uses that</span>
 <span class="c1"># to create an Access Policy.</span>
@@ -214,6 +220,12 @@ RKVST_URL https://app.rkvst.io
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_access</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pre-requisite: Ensure that RKVST Subject IDS have been exchanged with parties that one</span>
+<span class="sd">    wants to share with BEFORE creating this Access Policy.</span>
+
+<span class="sd">    How to exchange RKVST Subject IDs:</span>
+<span class="sd">    https://docs.rkvst.com/docs/rkvst-basics/sharing-assets-with-obac/</span>
+
 <span class="sd">    Creates an Access Policy that shares read only data for Artists with other RKVST tenancies</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>

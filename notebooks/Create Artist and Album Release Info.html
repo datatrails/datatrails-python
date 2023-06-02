@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Asset and Events &mdash; RKVST v0.22.0 documentation</title>
+  <title>Create Artist and Album Release Info &mdash; RKVST v0.23.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -44,7 +44,7 @@
               <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.22.0
+                v0.23.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -62,7 +62,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../notebooks.html#download-notebooks">Download Notebooks</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="Initialization%20and%20Credentials.html">Initialization and Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Manage_Credentials.html">Manage Credentials</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Create Asset and Events</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Create Artist and Album Release Info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Event%20Creation.html">Find Asset and Event Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Create%20Attachment.html">Find Asset and Create Attachment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
@@ -103,7 +103,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../notebooks.html">Note Books (BETA)</a></li>
-      <li class="breadcrumb-item active">Create Asset and Events</li>
+      <li class="breadcrumb-item active">Create Artist and Album Release Info</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -112,8 +112,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Create-Asset-and-Events">
-<h1>Create Asset and Events<a class="headerlink" href="#Create-Asset-and-Events" title="Permalink to this heading"></a></h1>
+  <section id="Create-Artist-and-Album-Release-Info">
+<h1>Create Artist and Album Release Info<a class="headerlink" href="#Create-Artist-and-Album-Release-Info" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -292,7 +292,7 @@ Refresh token
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Asset {
-    &#34;identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802&#34;,
+    &#34;identity&#34;: &#34;assets/63b6c2ae-c8f8-4e3b-93ae-e78339f56647&#34;,
     &#34;behaviours&#34;: [
         &#34;RecordEvidence&#34;,
         &#34;Builtin&#34;,
@@ -300,22 +300,22 @@ Asset {
         &#34;Attachments&#34;
     ],
     &#34;attributes&#34;: {
-        &#34;arc_display_type&#34;: &#34;Artists&#34;,
-        &#34;artistid&#34;: &#34;666769323&#34;,
-        &#34;genre&#34;: &#34;Soul&#34;,
-        &#34;stage_name&#34;: &#34;Adele&#34;,
         &#34;arc_description&#34;: &#34;British Soul Singer&#34;,
-        &#34;arc_display_name&#34;: &#34;Adele Laurie Blue Adkins&#34;
+        &#34;arc_display_name&#34;: &#34;Adele Laurie Blue Adkins&#34;,
+        &#34;arc_display_type&#34;: &#34;Artists&#34;,
+        &#34;artistid&#34;: &#34;973434267&#34;,
+        &#34;genre&#34;: &#34;Soul&#34;,
+        &#34;stage_name&#34;: &#34;Adele&#34;
     },
     &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
     &#34;tracked&#34;: &#34;TRACKED&#34;,
-    &#34;owner&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;at_time&#34;: &#34;2023-01-16T11:50:50Z&#34;,
+    &#34;owner&#34;: &#34;0x5284e740A744F075E402f7fB0c4485532ddf4Af8&#34;,
+    &#34;at_time&#34;: &#34;2023-06-01T19:55:06Z&#34;,
     &#34;storage_integrity&#34;: &#34;TENANT_STORAGE&#34;,
     &#34;proof_mechanism&#34;: &#34;SIMPLE_HASH&#34;,
-    &#34;chain_id&#34;: &#34;827586838445807967&#34;,
+    &#34;chain_id&#34;: &#34;8275868384&#34;,
     &#34;public&#34;: false,
-    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
+    &#34;tenant_identity&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;
 }
 </pre></div></div>
 </div>
@@ -339,82 +339,74 @@ Asset {
 <div class="highlight"><pre>
 Creating Events
 Event for Album 19 {
-    &#34;identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802/events/dff5e8e1-0933-4dbb-a122-a6a422b5a27e&#34;,
-    &#34;asset_identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802&#34;,
+    &#34;identity&#34;: &#34;assets/63b6c2ae-c8f8-4e3b-93ae-e78339f56647/events/58483156-1c9c-4e9e-be57-d65672ea70d9&#34;,
+    &#34;asset_identity&#34;: &#34;assets/63b6c2ae-c8f8-4e3b-93ae-e78339f56647&#34;,
     &#34;event_attributes&#34;: {
-        &#34;relase_year&#34;: &#34;2008&#34;,
         &#34;album_name&#34;: &#34;19&#34;,
         &#34;arc_description&#34;: &#34;Artist Information&#34;,
-        &#34;arc_display_type&#34;: &#34;Album Release&#34;
+        &#34;arc_display_type&#34;: &#34;Album Release&#34;,
+        &#34;relase_year&#34;: &#34;2008&#34;
     },
     &#34;asset_attributes&#34;: {},
     &#34;operation&#34;: &#34;Record&#34;,
     &#34;behaviour&#34;: &#34;RecordEvidence&#34;,
-    &#34;timestamp_declared&#34;: &#34;2023-01-16T11:50:56Z&#34;,
-    &#34;timestamp_accepted&#34;: &#34;2023-01-16T11:50:56Z&#34;,
-    &#34;timestamp_committed&#34;: &#34;2023-01-16T11:50:56.619910777Z&#34;,
+    &#34;timestamp_declared&#34;: &#34;2023-06-01T19:55:12Z&#34;,
+    &#34;timestamp_accepted&#34;: &#34;2023-06-01T19:55:12Z&#34;,
+    &#34;timestamp_committed&#34;: &#34;2023-06-01T19:55:12.467938549Z&#34;,
     &#34;principal_declared&#34;: {
         &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
         &#34;email&#34;: &#34;&#34;
     },
     &#34;principal_accepted&#34;: {
         &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
         &#34;email&#34;: &#34;&#34;
     },
     &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
     &#34;transaction_id&#34;: &#34;&#34;,
     &#34;block_number&#34;: 0,
     &#34;transaction_index&#34;: 0,
-    &#34;from&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
+    &#34;from&#34;: &#34;0x5284e740A744F075E402f7fB0c4485532ddf4Af8&#34;,
+    &#34;tenant_identity&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;
 }
 Event for Album 21 {
-    &#34;identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802/events/f74099ab-aab4-48aa-9654-0a09ad324d9b&#34;,
-    &#34;asset_identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802&#34;,
+    &#34;identity&#34;: &#34;assets/63b6c2ae-c8f8-4e3b-93ae-e78339f56647/events/c637cfca-df4e-48ae-b434-6a04e9bf2a50&#34;,
+    &#34;asset_identity&#34;: &#34;assets/63b6c2ae-c8f8-4e3b-93ae-e78339f56647&#34;,
     &#34;event_attributes&#34;: {
-        &#34;arc_description&#34;: &#34;Artist Information&#34;,
         &#34;arc_display_type&#34;: &#34;Album Release&#34;,
         &#34;relase_year&#34;: &#34;2011&#34;,
-        &#34;album_name&#34;: &#34;21&#34;
+        &#34;album_name&#34;: &#34;21&#34;,
+        &#34;arc_description&#34;: &#34;Artist Information&#34;
     },
     &#34;asset_attributes&#34;: {},
     &#34;operation&#34;: &#34;Record&#34;,
     &#34;behaviour&#34;: &#34;RecordEvidence&#34;,
-    &#34;timestamp_declared&#34;: &#34;2023-01-16T11:50:57Z&#34;,
-    &#34;timestamp_accepted&#34;: &#34;2023-01-16T11:50:57Z&#34;,
-    &#34;timestamp_committed&#34;: &#34;2023-01-16T11:50:57.963815260Z&#34;,
+    &#34;timestamp_declared&#34;: &#34;2023-06-01T19:55:13Z&#34;,
+    &#34;timestamp_accepted&#34;: &#34;2023-06-01T19:55:13Z&#34;,
+    &#34;timestamp_committed&#34;: &#34;2023-06-01T19:55:13.931375941Z&#34;,
     &#34;principal_declared&#34;: {
         &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
         &#34;email&#34;: &#34;&#34;
     },
     &#34;principal_accepted&#34;: {
         &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
         &#34;email&#34;: &#34;&#34;
     },
     &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
     &#34;transaction_id&#34;: &#34;&#34;,
     &#34;block_number&#34;: 0,
     &#34;transaction_index&#34;: 0,
-    &#34;from&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
+    &#34;from&#34;: &#34;0x5284e740A744F075E402f7fB0c4485532ddf4Af8&#34;,
+    &#34;tenant_identity&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;
 }
 </pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </section>
 
