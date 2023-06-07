@@ -93,15 +93,15 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 9)
             LOGGER.debug("=================================")
 
-    def test_02_find_asset_create_attachment(self):
+    def test_02_find_artist_create_coverart(self):
         """
-        Test find_asset_create_attachment
+        Test find_artist_create_coverart
         """
         with testbook(
-            "archivist/notebooks/Find Asset and Create Attachment.ipynb",
+            "archivist/notebooks/Find Artist and Create Cover Art.ipynb",
             execute=True,
         ) as notebook:
-            LOGGER.debug("\nfind_asset_create_attachment")
+            LOGGER.debug("\nfind_artist_create_coverart")
             self.basic_notebook_test(notebook)
             self.assertGreater(
                 int(notebook.ref("RKVST_UNIQUE_ID")),
@@ -117,15 +117,15 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 10)
             LOGGER.debug("=================================")
 
-    def test_03_find_asset_create_event(self):
+    def test_03_find_artist_addtl_albuminfo(self):
         """
-        Test find_asste_create_event
+        Test find_artist_addtl_albuminfo
         """
         with testbook(
-            "archivist/notebooks/Find Asset and Event Creation.ipynb",
+            "archivist/notebooks/Find Artist and Additional Album Release Info.ipynb",
             execute=True,
         ) as notebook:
-            LOGGER.debug("\nfind_asset_create_event")
+            LOGGER.debug("\nfind_asset_addtl_albuminfo")
             self.basic_notebook_test(notebook)
             self.assertGreater(
                 int(notebook.ref("RKVST_UNIQUE_ID")),

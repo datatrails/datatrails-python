@@ -55,8 +55,8 @@ Download the notebooks into a suitable folder:
    :caption: Basic Asset and Event Examples
 
    notebooks/Create Artist and Album Release Info
-   notebooks/Find Asset and Event Creation
-   notebooks/Find Asset and Create Attachment
+   notebooks/Find Artist and Additional Album Release Info
+   notebooks/Find Artist and Create Cover Art
    notebooks/Create Event with Verified Domain
 
 .. toctree::
