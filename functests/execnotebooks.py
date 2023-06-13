@@ -186,37 +186,37 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 13)
             LOGGER.debug("=================================")
 
-    def test_create_compliance_since(self):
+    def test_playing_fetch_fiveminutes(self):
         """
-        Test create_compliance_since
+        Test playing_fetch_fiveminutes
         """
         with testbook(
-            "archivist/notebooks/Create Compliance SINCE Policy.ipynb", execute=True
+            "archivist/notebooks/PLaying Fetch Every 5 Minutes.ipynb", execute=True
         ) as notebook:
-            LOGGER.debug("\ncreate_compliance_since")
+            LOGGER.debug("\nplaying_fetch_fiveminutes")
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
 
-    def test_create_compliance_current_outstanding(self):
+    def test_feed_the_dog(self):
         """
-        Test create_compliance_current_outstanding
+        Test feed_the_dog
         """
         with testbook(
-            "archivist/notebooks/Create Compliance CURRENT OUTSTANDING Policy.ipynb",
+            "archivist/notebooks/Feeding the Dog.ipynb",
             execute=True,
         ) as notebook:
-            LOGGER.debug("\ncreate_compliance_current_outstanding")
+            LOGGER.debug("\nfeed_the_dog")
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
 
-    def test_create_compliance_period_outstanding(self):
+    def test_feed_the_doghourly(self):
         """
-        Test create_compliance_period_outstanding
+        Test feed_the_doghourly
         """
         with testbook(
-            "archivist/notebooks/Create Compliance PERIOD OUTSTANDING Policy.ipynb",
+            "archivist/notebooks/Feeding the Dog Hourly.ipynb",
             execute=True,
         ) as notebook:
             LOGGER.debug("\ncreate_compliance_period_outstanding")
@@ -224,28 +224,28 @@ RKVST_URL {self.url}""",
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
 
-    def test_create_compliance_richness(self):
+    def test_check_dogs_weight(self):
         """
-        Test create_compliance_richness
+        Test check_dogs_weight
         """
         with testbook(
-            "archivist/notebooks/Create Compliance RICHNESS Policy.ipynb",
+            "archivist/notebooks/Checking the Dog's Weight.ipynb",
             execute=True,
         ) as notebook:
-            LOGGER.debug("\ncreate_compliance_richness")
+            LOGGER.debug("\ncheck_dogs_weight")
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")
 
-    def test_create_compliance_dynamic_tolerance(self):
+    def test_feed_dog_timelymanner(self):
         """
-        Test create_compliance_dynamic_tolerance
+        Test feed_dog_timelymanner
         """
         with testbook(
-            "archivist/notebooks/Create Compliance DYNAMIC TOLERANCE Policy.ipynb",
+            "archivist/notebooks/Feeding the Dog in a Timely Manner.ipynb",
             execute=True,
         ) as notebook:
-            LOGGER.debug("\ncreate_compliance_dynamic_tolerance")
+            LOGGER.debug("\nfeed_dog_timelymanner")
             self.basic_notebook_test(notebook)
             self.check_notebook_cell(notebook, 7)
             LOGGER.debug("=================================")

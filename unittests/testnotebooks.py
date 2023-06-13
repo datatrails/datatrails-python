@@ -221,52 +221,52 @@ RKVST_URL {URL}""",
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_create_compliance_since(self):
+    def test_playing_fetch_fiveminutes(self):
         """
-        Test create_compliance_since
+        Test playing_fetch_fiveminutes
         """
         with testbook(
-            "archivist/notebooks/Create Compliance SINCE Policy.ipynb",
+            "archivist/notebooks/Playing Fetch Every 5 Minutes.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_create_compliance_current_outstanding(self):
+    def test_feed_the_dog(self):
         """
-        Test create_compliance_current_outstanding
+        Test feed_the_dog
         """
         with testbook(
-            "archivist/notebooks/Create Compliance CURRENT OUTSTANDING Policy.ipynb",
+            "archivist/notebooks/Feeding the Dog.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_create_compliance_period_outstanding(self):
+    def test_feed_the_doghourly(self):
         """
-        Test create_compliance_period_outstanding
+        Test feed_the_doghourly
         """
         with testbook(
-            "archivist/notebooks/Create Compliance PERIOD OUTSTANDING Policy.ipynb",
+            "archivist/notebooks/Feeding the Dog Hourly.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_create_compliance_richness(self):
+    def test_checking_dogs_weight(self):
         """
-        Test create_compliance_richness
+        Test checking_dogs_weight
         """
         with testbook(
-            "archivist/notebooks/Create Compliance RICHNESS Policy.ipynb",
+            "archivist/notebooks/Checking the Dog's Weight.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_create_compliance_dynamic_tolerance(self):
+    def test_feed_dog_timelymanner(self):
         """
-        Test create_compliance_dynamic_tolerance
+        Test feed_dog_timelymanner
         """
         with testbook(
-            "archivist/notebooks/Create Compliance DYNAMIC TOLERANCE Policy.ipynb",
+            "archivist/notebooks/Feeding the Dog in a Timely Manner.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)
