@@ -72,11 +72,11 @@ Download the notebooks into a suitable folder:
    :maxdepth: 2
    :caption: Compliance Policies Examples
 
-   notebooks/Create Compliance SINCE Policy
-   notebooks/Create Compliance CURRENT OUTSTANDING Policy
-   notebooks/Create Compliance PERIOD OUTSTANDING Policy
-   notebooks/Create Compliance DYNAMIC TOLERANCE Policy
-   notebooks/Create Compliance RICHNESS Policy
+   notebooks/Playing Fetch Every 5 Minutes
+   notebooks/Feeding the Dog
+   notebooks/Feeding the Dog Hourly
+   notebooks/Feeding the Dog in a Timely Manner
+   notebooks/Checking the Dog's Weight
    notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy
    notebooks/Check Asset Compliance using SINCE Policy
 
