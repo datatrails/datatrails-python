@@ -191,7 +191,7 @@ RKVST_URL {self.url}""",
         Test playing_fetch_fiveminutes
         """
         with testbook(
-            "archivist/notebooks/PLaying Fetch Every 5 Minutes.ipynb", execute=True
+            "archivist/notebooks/Playing Fetch Every 5 Minutes.ipynb", execute=True
         ) as notebook:
             LOGGER.debug("\nplaying_fetch_fiveminutes")
             self.basic_notebook_test(notebook)
