@@ -80,11 +80,4 @@ Download the notebooks into a suitable folder:
    notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy
    notebooks/Check Asset Compliance using SINCE Policy
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Asset Sharing
-
-   notebooks/Share_Asset
-  
-   
 
