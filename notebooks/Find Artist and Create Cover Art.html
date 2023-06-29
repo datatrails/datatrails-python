@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Find Asset and Create Attachment &mdash; RKVST v0.23.0 documentation</title>
+  <title>Find Artist and Create Cover Art &mdash; RKVST v0.24.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -28,7 +28,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Create Event With Verified Domain" href="Create%20Event%20with%20Verified%20Domain.html" />
-    <link rel="prev" title="Find Asset and Event Creation" href="Find%20Asset%20and%20Event%20Creation.html" /> 
+    <link rel="prev" title="Find Artist and Additional Album Release Info" href="Find%20Artist%20and%20Additional%20Album%20Release%20Info.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,7 +44,7 @@
               <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.23.0
+                v0.24.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -63,21 +63,20 @@
 <li class="toctree-l3"><a class="reference internal" href="Initialization%20and%20Credentials.html">Initialization and Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Manage_Credentials.html">Manage Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Artist%20and%20Album%20Release%20Info.html">Create Artist and Album Release Info</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Event%20Creation.html">Find Asset and Event Creation</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Find Asset and Create Attachment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Find%20Artist%20and%20Additional%20Album%20Release%20Info.html">Find Artist and Additional Album Release Info</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Find Artist and Create Cover Art</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Artist%20Asset%20with%20User.html">Sharing Artist Asset with User</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Album%20Release%20Info%20with%20User.html">Sharing Album Release Info with User</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Artist%20Asset%20with%20Record%20Labels.html">Sharing Artist Asset with Record Labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Album%20Release%20Info%20with%20Record%20Labels.html">Sharing Album Release Info with Record Labels</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20SINCE%20Policy.html">Create Compliance SINCE Policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20CURRENT%20OUTSTANDING%20Policy.html">Create Compliance CURRENT OUTSTANDING Policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20PERIOD%20OUTSTANDING%20Policy.html">Create Compliance PERIOD OUTSTANDING Policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20DYNAMIC%20TOLERANCE%20Policy.html">Create Compliance DYNAMIC TOLERANCE Policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20RICHNESS%20Policy.html">Create Compliance RICHNESS Policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Playing%20Fetch%20Every%205%20Minutes.html">Playing Fetch Every 5 Minutes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Feeding%20the%20Dog.html">Feeding the Dog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Feeding%20the%20Dog%20Hourly.html">Feeding the Dog Hourly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Feeding%20the%20Dog%20in%20a%20Timely%20Manner.html">Feeding the Dog in a Timely Manner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Checking%20the%20Dog%27s%20Weight.html">Checking the Dog's Weight</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Share_Asset.html">Sharing an Asset</a></li>
 </ul>
 </li>
 </ul>
@@ -103,7 +102,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../notebooks.html">Note Books (BETA)</a></li>
-      <li class="breadcrumb-item active">Find Asset and Create Attachment</li>
+      <li class="breadcrumb-item active">Find Artist and Create Cover Art</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -112,8 +111,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Find-Asset-and-Create-Attachment">
-<h1>Find Asset and Create Attachment<a class="headerlink" href="#Find-Asset-and-Create-Attachment" title="Permalink to this heading"></a></h1>
+  <section id="Find-Artist-and-Create-Cover-Art">
+<h1>Find Artist and Create Cover Art<a class="headerlink" href="#Find-Artist-and-Create-Cover-Art" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -225,6 +224,8 @@ RKVST_URL https://app.rkvst.io
         <span class="n">blob</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">attachments</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
         <span class="n">attachment</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;arc_attribute_type&quot;</span><span class="p">:</span> <span class="s2">&quot;arc_attachment&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arc_file_name&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
             <span class="s2">&quot;arc_blob_identity&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span>
             <span class="s2">&quot;arc_blob_hash_value&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">],</span>
             <span class="s2">&quot;arc_blob_hash_alg&quot;</span><span class="p">:</span> <span class="n">blob</span><span class="p">[</span><span class="s2">&quot;hash&quot;</span><span class="p">][</span><span class="s2">&quot;alg&quot;</span><span class="p">],</span>
@@ -269,7 +270,7 @@ RKVST_URL https://app.rkvst.io
         <span class="s2">&quot;arc_display_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Primary image&quot;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">asset_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pexels-andrea-turner-707697&quot;</span><span class="p">:</span> <span class="n">attachments</span><span class="p">}</span>
+    <span class="n">asset_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;arc_primary_image&quot;</span><span class="p">:</span> <span class="n">attachments</span><span class="p">}</span>
 
     <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
         <span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span> <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">asset_attrs</span><span class="o">=</span><span class="n">asset_attrs</span>
@@ -310,30 +311,30 @@ Refresh token
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Asset {
-    &#34;identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802&#34;,
+    &#34;identity&#34;: &#34;assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f&#34;,
     &#34;behaviours&#34;: [
+        &#34;RecordEvidence&#34;,
         &#34;Builtin&#34;,
         &#34;AssetCreator&#34;,
-        &#34;Attachments&#34;,
-        &#34;RecordEvidence&#34;
+        &#34;Attachments&#34;
     ],
     &#34;attributes&#34;: {
         &#34;arc_display_name&#34;: &#34;Adele Laurie Blue Adkins&#34;,
         &#34;arc_display_type&#34;: &#34;Artists&#34;,
-        &#34;artistid&#34;: &#34;666769323&#34;,
+        &#34;artistid&#34;: &#34;989130159&#34;,
         &#34;genre&#34;: &#34;Soul&#34;,
         &#34;stage_name&#34;: &#34;Adele&#34;,
         &#34;arc_description&#34;: &#34;British Soul Singer&#34;
     },
     &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
     &#34;tracked&#34;: &#34;TRACKED&#34;,
-    &#34;owner&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;at_time&#34;: &#34;2023-01-16T11:53:49Z&#34;,
+    &#34;owner&#34;: &#34;0x5284e740A744F075E402f7fB0c4485532ddf4Af8&#34;,
+    &#34;at_time&#34;: &#34;2023-06-02T21:01:56Z&#34;,
     &#34;storage_integrity&#34;: &#34;TENANT_STORAGE&#34;,
     &#34;proof_mechanism&#34;: &#34;SIMPLE_HASH&#34;,
-    &#34;chain_id&#34;: &#34;827586838445807967&#34;,
+    &#34;chain_id&#34;: &#34;8275868384&#34;,
     &#34;public&#34;: false,
-    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
+    &#34;tenant_identity&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;
 }
 </pre></div></div>
 </div>
@@ -355,46 +356,47 @@ Asset {
 <div class="highlight"><pre>
 Creating Events for existing Asset
 Event for Image {
-    &#34;identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802/events/bfeed91b-cf10-4b88-9b46-9ad4f6994551&#34;,
-    &#34;asset_identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802&#34;,
+    &#34;identity&#34;: &#34;assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f/events/11065c00-fd3b-4a76-9935-0703bcf30d68&#34;,
+    &#34;asset_identity&#34;: &#34;assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f&#34;,
     &#34;event_attributes&#34;: {
-        &#34;arc_description&#34;: &#34;Attaching an image&#34;,
-        &#34;arc_display_type&#34;: &#34;Primary image&#34;
+        &#34;arc_display_type&#34;: &#34;Primary image&#34;,
+        &#34;arc_description&#34;: &#34;Attaching an image&#34;
     },
-    &#34;asset_attributes&#34;: {},
+    &#34;asset_attributes&#34;: {
+        &#34;arc_primary_image&#34;: {
+            &#34;arc_blob_hash_value&#34;: &#34;cf0dd630dcfb6e2eac65c362bf7d5ff382a4241ebf45a69a2541ee43320d4af6&#34;,
+            &#34;arc_blob_identity&#34;: &#34;blobs/a39ed534-d1b3-4b23-84e0-01a2cceea9a2&#34;,
+            &#34;arc_display_name&#34;: &#34;arc_primary_image&#34;,
+            &#34;arc_file_name&#34;: &#34;pexels-andrea-turner-707697.jpeg&#34;,
+            &#34;arc_attribute_type&#34;: &#34;arc_attachment&#34;,
+            &#34;arc_blob_hash_alg&#34;: &#34;SHA256&#34;
+        }
+    },
     &#34;operation&#34;: &#34;Record&#34;,
     &#34;behaviour&#34;: &#34;RecordEvidence&#34;,
-    &#34;timestamp_declared&#34;: &#34;2023-01-16T11:53:56Z&#34;,
-    &#34;timestamp_accepted&#34;: &#34;2023-01-16T11:53:56Z&#34;,
-    &#34;timestamp_committed&#34;: &#34;2023-01-16T11:53:56.424622960Z&#34;,
+    &#34;timestamp_declared&#34;: &#34;2023-06-02T21:02:01Z&#34;,
+    &#34;timestamp_accepted&#34;: &#34;2023-06-02T21:02:01Z&#34;,
+    &#34;timestamp_committed&#34;: &#34;2023-06-02T21:02:01.738900240Z&#34;,
     &#34;principal_declared&#34;: {
         &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
         &#34;email&#34;: &#34;&#34;
     },
     &#34;principal_accepted&#34;: {
         &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
         &#34;email&#34;: &#34;&#34;
     },
     &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
     &#34;transaction_id&#34;: &#34;&#34;,
     &#34;block_number&#34;: 0,
     &#34;transaction_index&#34;: 0,
-    &#34;from&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
+    &#34;from&#34;: &#34;0x5284e740A744F075E402f7fB0c4485532ddf4Af8&#34;,
+    &#34;tenant_identity&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;
 }
 </pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </section>
 
@@ -402,7 +404,7 @@ Event for Image {
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Find%20Asset%20and%20Event%20Creation.html" class="btn btn-neutral float-left" title="Find Asset and Event Creation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Find%20Artist%20and%20Additional%20Album%20Release%20Info.html" class="btn btn-neutral float-left" title="Find Artist and Additional Album Release Info" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="Create%20Event%20with%20Verified%20Domain.html" class="btn btn-neutral float-right" title="Create Event With Verified Domain" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

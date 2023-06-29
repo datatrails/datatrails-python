@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Find Asset and Event Creation &mdash; RKVST v0.23.0 documentation</title>
+  <title>Find Artist and Additional Album Release Info &mdash; RKVST v0.24.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -27,7 +27,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Find Asset and Create Attachment" href="Find%20Asset%20and%20Create%20Attachment.html" />
+    <link rel="next" title="Find Artist and Create Cover Art" href="Find%20Artist%20and%20Create%20Cover%20Art.html" />
     <link rel="prev" title="Create Artist and Album Release Info" href="Create%20Artist%20and%20Album%20Release%20Info.html" /> 
 </head>
 
@@ -44,7 +44,7 @@
               <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.23.0
+                v0.24.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -63,21 +63,20 @@
 <li class="toctree-l3"><a class="reference internal" href="Initialization%20and%20Credentials.html">Initialization and Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Manage_Credentials.html">Manage Credentials</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Artist%20and%20Album%20Release%20Info.html">Create Artist and Album Release Info</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Find Asset and Event Creation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Find%20Asset%20and%20Create%20Attachment.html">Find Asset and Create Attachment</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Find Artist and Additional Album Release Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Find%20Artist%20and%20Create%20Cover%20Art.html">Find Artist and Create Cover Art</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Create%20Event%20with%20Verified%20Domain.html">Create Event With Verified Domain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Artist%20Asset%20with%20User.html">Sharing Artist Asset with User</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Album%20Release%20Info%20with%20User.html">Sharing Album Release Info with User</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Artist%20Asset%20with%20Record%20Labels.html">Sharing Artist Asset with Record Labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Sharing%20Album%20Release%20Info%20with%20Record%20Labels.html">Sharing Album Release Info with Record Labels</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20SINCE%20Policy.html">Create Compliance SINCE Policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20CURRENT%20OUTSTANDING%20Policy.html">Create Compliance CURRENT OUTSTANDING Policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20PERIOD%20OUTSTANDING%20Policy.html">Create Compliance PERIOD OUTSTANDING Policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20DYNAMIC%20TOLERANCE%20Policy.html">Create Compliance DYNAMIC TOLERANCE Policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Create%20Compliance%20RICHNESS%20Policy.html">Create Compliance RICHNESS Policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Playing%20Fetch%20Every%205%20Minutes.html">Playing Fetch Every 5 Minutes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Feeding%20the%20Dog.html">Feeding the Dog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Feeding%20the%20Dog%20Hourly.html">Feeding the Dog Hourly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Feeding%20the%20Dog%20in%20a%20Timely%20Manner.html">Feeding the Dog in a Timely Manner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Checking%20the%20Dog%27s%20Weight.html">Checking the Dog's Weight</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20CURRENT%20OUTSTANDING%20Policy.html">Create Asset Compliance: CURRENT_OUTSTANDING policy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Check%20Asset%20Compliance%20using%20SINCE%20Policy.html">Check Asset Compliance: SINCE policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Share_Asset.html">Sharing an Asset</a></li>
 </ul>
 </li>
 </ul>
@@ -103,7 +102,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../notebooks.html">Note Books (BETA)</a></li>
-      <li class="breadcrumb-item active">Find Asset and Event Creation</li>
+      <li class="breadcrumb-item active">Find Artist and Additional Album Release Info</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -112,8 +111,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="Find-Asset-and-Event-Creation">
-<h1>Find Asset and Event Creation<a class="headerlink" href="#Find-Asset-and-Event-Creation" title="Permalink to this heading"></a></h1>
+  <section id="Find-Artist-and-Additional-Album-Release-Info">
+<h1>Find Artist and Additional Album Release Info<a class="headerlink" href="#Find-Artist-and-Additional-Album-Release-Info" title="Permalink to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -279,7 +278,7 @@ Refresh token
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Asset {
-    &#34;identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802&#34;,
+    &#34;identity&#34;: &#34;assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f&#34;,
     &#34;behaviours&#34;: [
         &#34;RecordEvidence&#34;,
         &#34;Builtin&#34;,
@@ -287,30 +286,30 @@ Asset {
         &#34;Attachments&#34;
     ],
     &#34;attributes&#34;: {
+        &#34;genre&#34;: &#34;Soul&#34;,
+        &#34;stage_name&#34;: &#34;Adele&#34;,
         &#34;arc_description&#34;: &#34;British Soul Singer&#34;,
         &#34;arc_display_name&#34;: &#34;Adele Laurie Blue Adkins&#34;,
         &#34;arc_display_type&#34;: &#34;Artists&#34;,
-        &#34;artistid&#34;: &#34;666769323&#34;,
-        &#34;genre&#34;: &#34;Soul&#34;,
-        &#34;stage_name&#34;: &#34;Adele&#34;,
-        &#34;arc_attachments&#34;: [
-            {
-                &#34;arc_hash_alg&#34;: &#34;SHA256&#34;,
-                &#34;arc_hash_value&#34;: &#34;cf0dd630dcfb6e2eac65c362bf7d5ff382a4241ebf45a69a2541ee43320d4af6&#34;,
-                &#34;arc_attachment_identity&#34;: &#34;blobs/9bfee457-b0ef-4fe9-a51f-16f96ddf8a8a&#34;,
-                &#34;arc_display_name&#34;: &#34;arc_primary_image&#34;
-            }
-        ]
+        &#34;arc_primary_image&#34;: {
+            &#34;arc_blob_identity&#34;: &#34;blobs/a39ed534-d1b3-4b23-84e0-01a2cceea9a2&#34;,
+            &#34;arc_display_name&#34;: &#34;arc_primary_image&#34;,
+            &#34;arc_file_name&#34;: &#34;pexels-andrea-turner-707697.jpeg&#34;,
+            &#34;arc_attribute_type&#34;: &#34;arc_attachment&#34;,
+            &#34;arc_blob_hash_alg&#34;: &#34;SHA256&#34;,
+            &#34;arc_blob_hash_value&#34;: &#34;cf0dd630dcfb6e2eac65c362bf7d5ff382a4241ebf45a69a2541ee43320d4af6&#34;
+        },
+        &#34;artistid&#34;: &#34;989130159&#34;
     },
     &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
     &#34;tracked&#34;: &#34;TRACKED&#34;,
-    &#34;owner&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;at_time&#34;: &#34;2023-01-16T11:54:18Z&#34;,
+    &#34;owner&#34;: &#34;0x5284e740A744F075E402f7fB0c4485532ddf4Af8&#34;,
+    &#34;at_time&#34;: &#34;2023-06-02T21:33:34Z&#34;,
     &#34;storage_integrity&#34;: &#34;TENANT_STORAGE&#34;,
     &#34;proof_mechanism&#34;: &#34;SIMPLE_HASH&#34;,
-    &#34;chain_id&#34;: &#34;827586838445807967&#34;,
+    &#34;chain_id&#34;: &#34;8275868384&#34;,
     &#34;public&#34;: false,
-    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
+    &#34;tenant_identity&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;
 }
 </pre></div></div>
 </div>
@@ -334,82 +333,74 @@ Asset {
 <div class="highlight"><pre>
 Creating Events for existing Asset
 Event for Album 25 {
-    &#34;identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802/events/676e0177-c7a8-488e-adda-89438f2e3380&#34;,
-    &#34;asset_identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802&#34;,
+    &#34;identity&#34;: &#34;assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f/events/90c34f0f-79c5-41c9-9ff7-76deaaaa4f64&#34;,
+    &#34;asset_identity&#34;: &#34;assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f&#34;,
     &#34;event_attributes&#34;: {
-        &#34;arc_description&#34;: &#34;Artist Information for existing Artist&#34;,
-        &#34;arc_display_type&#34;: &#34;Album Release for existing Artist&#34;,
         &#34;relase_year&#34;: &#34;2015&#34;,
-        &#34;album_name&#34;: &#34;25&#34;
-    },
-    &#34;asset_attributes&#34;: {},
-    &#34;operation&#34;: &#34;Record&#34;,
-    &#34;behaviour&#34;: &#34;RecordEvidence&#34;,
-    &#34;timestamp_declared&#34;: &#34;2023-01-16T11:54:23Z&#34;,
-    &#34;timestamp_accepted&#34;: &#34;2023-01-16T11:54:23Z&#34;,
-    &#34;timestamp_committed&#34;: &#34;2023-01-16T11:54:23.062210882Z&#34;,
-    &#34;principal_declared&#34;: {
-        &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
-        &#34;email&#34;: &#34;&#34;
-    },
-    &#34;principal_accepted&#34;: {
-        &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
-        &#34;email&#34;: &#34;&#34;
-    },
-    &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
-    &#34;transaction_id&#34;: &#34;&#34;,
-    &#34;block_number&#34;: 0,
-    &#34;transaction_index&#34;: 0,
-    &#34;from&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
-}
-Event for Album 30 {
-    &#34;identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802/events/d20eb860-bd6b-4d29-951c-dbebb17e2839&#34;,
-    &#34;asset_identity&#34;: &#34;assets/cbd21a61-c126-4c02-b525-add1a74fb802&#34;,
-    &#34;event_attributes&#34;: {
-        &#34;relase_year&#34;: &#34;2021&#34;,
-        &#34;album_name&#34;: &#34;30&#34;,
+        &#34;album_name&#34;: &#34;25&#34;,
         &#34;arc_description&#34;: &#34;Artist Information for existing Artist&#34;,
         &#34;arc_display_type&#34;: &#34;Album Release for existing Artist&#34;
     },
     &#34;asset_attributes&#34;: {},
     &#34;operation&#34;: &#34;Record&#34;,
     &#34;behaviour&#34;: &#34;RecordEvidence&#34;,
-    &#34;timestamp_declared&#34;: &#34;2023-01-16T11:54:23Z&#34;,
-    &#34;timestamp_accepted&#34;: &#34;2023-01-16T11:54:23Z&#34;,
-    &#34;timestamp_committed&#34;: &#34;2023-01-16T11:54:24.009826690Z&#34;,
+    &#34;timestamp_declared&#34;: &#34;2023-06-02T21:33:40Z&#34;,
+    &#34;timestamp_accepted&#34;: &#34;2023-06-02T21:33:40Z&#34;,
+    &#34;timestamp_committed&#34;: &#34;2023-06-02T21:33:40.813694893Z&#34;,
     &#34;principal_declared&#34;: {
         &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
         &#34;email&#34;: &#34;&#34;
     },
     &#34;principal_accepted&#34;: {
         &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
-        &#34;subject&#34;: &#34;437bd138-dade-4346-aadd-dfdfee51ddf4&#34;,
-        &#34;display_name&#34;: &#34;Test Notebooks&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
         &#34;email&#34;: &#34;&#34;
     },
     &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
     &#34;transaction_id&#34;: &#34;&#34;,
     &#34;block_number&#34;: 0,
     &#34;transaction_index&#34;: 0,
-    &#34;from&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
+    &#34;from&#34;: &#34;0x5284e740A744F075E402f7fB0c4485532ddf4Af8&#34;,
+    &#34;tenant_identity&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;
+}
+Event for Album 30 {
+    &#34;identity&#34;: &#34;assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f/events/69145272-d3a8-4590-810c-49a6419d8fc0&#34;,
+    &#34;asset_identity&#34;: &#34;assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f&#34;,
+    &#34;event_attributes&#34;: {
+        &#34;arc_display_type&#34;: &#34;Album Release for existing Artist&#34;,
+        &#34;relase_year&#34;: &#34;2021&#34;,
+        &#34;album_name&#34;: &#34;30&#34;,
+        &#34;arc_description&#34;: &#34;Artist Information for existing Artist&#34;
+    },
+    &#34;asset_attributes&#34;: {},
+    &#34;operation&#34;: &#34;Record&#34;,
+    &#34;behaviour&#34;: &#34;RecordEvidence&#34;,
+    &#34;timestamp_declared&#34;: &#34;2023-06-02T21:33:42Z&#34;,
+    &#34;timestamp_accepted&#34;: &#34;2023-06-02T21:33:42Z&#34;,
+    &#34;timestamp_committed&#34;: &#34;2023-06-02T21:33:42.205724430Z&#34;,
+    &#34;principal_declared&#34;: {
+        &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
+        &#34;email&#34;: &#34;&#34;
+    },
+    &#34;principal_accepted&#34;: {
+        &#34;issuer&#34;: &#34;https://app.rkvst.io/appidpv1&#34;,
+        &#34;subject&#34;: &#34;43a271b9-5b25-4740-aa9f-1cbd51ed3625&#34;,
+        &#34;display_name&#34;: &#34;mwilder26&#34;,
+        &#34;email&#34;: &#34;&#34;
+    },
+    &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
+    &#34;transaction_id&#34;: &#34;&#34;,
+    &#34;block_number&#34;: 0,
+    &#34;transaction_index&#34;: 0,
+    &#34;from&#34;: &#34;0x5284e740A744F075E402f7fB0c4485532ddf4Af8&#34;,
+    &#34;tenant_identity&#34;: &#34;tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1&#34;
 }
 </pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </section>
 
@@ -418,7 +409,7 @@ Event for Album 30 {
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="Create%20Artist%20and%20Album%20Release%20Info.html" class="btn btn-neutral float-left" title="Create Artist and Album Release Info" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Find%20Asset%20and%20Create%20Attachment.html" class="btn btn-neutral float-right" title="Find Asset and Create Attachment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Find%20Artist%20and%20Create%20Cover%20Art.html" class="btn btn-neutral float-right" title="Find Artist and Create Cover Art" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,24 +1,25 @@
 {
  "cells": [
   {
+   "attachments": {},
    "cell_type": "markdown",
-   "id": "11b1628e-4543-4fd6-a74c-a468d5c27d38",
+   "id": "55d0e5a9-040a-4441-af39-438d66f14f65",
    "metadata": {},
    "source": [
-    "## Create Compliance SINCE Policy"
+    "## Checking the Dog's Weight"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "3118a079-251e-4e4e-bead-a8849eb684c6",
+   "id": "5c6fb7af-c701-42e1-b3b3-7e1bd845ffcf",
    "metadata": {},
    "outputs": [],
    "source": [
-    "# Create Compliance SINCE Policy\n",
+    "# Create Compliance RICHNESS Policy\n",
     "#\n",
     "# Main function, establishes a connection to RKVST using an App Registration then uses that\n",
-    "# to create a Compliance SINCE Policy.\n",
+    "# to create a Compliance RICHNESS Policy.\n",
     "#\n",
     "# Note: The purpose of RKVST Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.\n",
     "# The RKVST Python SDK is authored to work cleanly with more advanced coding techniques.\n",
@@ -30,7 +31,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "36a65c0e-9425-4c9e-848b-6ad6f761ad19",
+   "id": "123b4c7e-ecb2-439f-b8d7-b94036936efd",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -45,7 +46,7 @@
     "\n",
     "from archivist.archivist import Archivist\n",
     "from archivist.compliance_policy_requests import (\n",
-    "    CompliancePolicySince,\n",
+    "    CompliancePolicyRichness,\n",
     ")\n",
     "from archivist.proof_mechanism import ProofMechanism\n",
     "from archivist.logger import set_logger"
@@ -54,7 +55,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "a49e804f-ddde-4f0b-a20f-85c41a3ea544",
+   "id": "da924db9-8182-4254-9b70-5f07d985961f",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -65,7 +66,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "5826421d-1a9d-4ccf-b820-9055c10c6035",
+   "id": "0109a24e-2ddf-4cb9-8347-91cdc0cf6631",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -82,7 +83,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "609cd663-86e8-4bce-8642-6ed6a3afdbfc",
+   "id": "1192eef6-6f8e-4bc0-9d52-889e0ef09ec3",
    "metadata": {},
    "outputs": [
     {
@@ -96,10 +97,10 @@
    ],
    "source": [
     "\"\"\"\n",
-    "Main function of SINCE policy creation.\n",
+    "Main function of RICHNESS policy creation.\n",
     "\n",
     "* Connect to RKVST with client ID and client secret\n",
-    "* Creates a Compliance SINCE Policy\n",
+    "* Creates a Compliance RICHNESS Policy\n",
     "\"\"\"\n",
     "\n",
     "# Optional call to set the logger level.  The argument can be either\n",
@@ -116,34 +117,35 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "dc1adbe6-558c-4ef1-8939-9107ece96f95",
+   "id": "271f947d-b9aa-43db-97fc-dfe372a3b551",
    "metadata": {},
    "outputs": [],
    "source": [
     "def create_compliance_policy(arch):\n",
     "    \"\"\"\n",
-    "    Creates a SINCE compliance policy for playing fetch every 5 minutes. If RKVST does not see\n",
-    "    a \"Fetch\" event within 5 minutes then Golden Retriever Asset is out of compliance.\n",
+    "    Creates a RICHNESS compliance policy for a dog's weight. If the dog's weight is\n",
+    "    over 60lbs then Golden Retriever Asset is out of compliance.\n",
     "    \"\"\"\n",
-    "    since_policy = arch.compliance_policies.create(\n",
-    "        CompliancePolicySince(\n",
-    "            description=\"Playing fetch with my dog every 5 minutes\",\n",
-    "            display_name=\"Playing Fetch\",\n",
+    "    richness_policy = arch.compliance_policies.create(\n",
+    "        CompliancePolicyRichness(\n",
+    "            description=\"Dog's weight not over 60lbs\",\n",
+    "            display_name=\"Dog's weight not over 60lbs\",\n",
     "            asset_filter=[\n",
     "                [\"attributes.arc_display_type=Golden Retriever\"],\n",
     "            ],\n",
-    "            event_display_type=\"Fetch\",\n",
-    "            time_period_seconds=300,\n",
+    "            richness_assertions=[\n",
+    "                [\"Weight<61\"],\n",
+    "            ],\n",
     "        )\n",
     "    )\n",
-    "    print(\"SINCE_POLICY:\", json_dumps(since_policy, indent=4))\n",
-    "    return since_policy"
+    "    print(\"RICHNESS_POLICY:\", json_dumps(richness_policy, indent=4))\n",
+    "    return richness_policy"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "2dfa472a-4e3a-42f2-a273-9bd8d512cf21",
+   "id": "99eb566c-4006-4ed1-b427-1b7e5657a7f0",
    "metadata": {},
    "outputs": [
     {
@@ -157,11 +159,11 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "SINCE_POLICY: {\n",
-      "    \"identity\": \"compliance_policies/246d2406-5fea-4869-b4e6-516a5aada609\",\n",
-      "    \"compliance_type\": \"COMPLIANCE_SINCE\",\n",
-      "    \"description\": \"Playing fetch with my dog every 5 minutes\",\n",
-      "    \"display_name\": \"Playing Fetch\",\n",
+      "RICHNESS_POLICY: {\n",
+      "    \"identity\": \"compliance_policies/c459c04d-4664-4ce1-9855-b64ed03dbec1\",\n",
+      "    \"compliance_type\": \"COMPLIANCE_RICHNESS\",\n",
+      "    \"description\": \"Dog's weight not over 60lbs\",\n",
+      "    \"display_name\": \"Dog's weight not over 60lbs\",\n",
       "    \"asset_filter\": [\n",
       "        {\n",
       "            \"or\": [\n",
@@ -169,18 +171,24 @@
       "            ]\n",
       "        }\n",
       "    ],\n",
-      "    \"event_display_type\": \"Fetch\",\n",
+      "    \"event_display_type\": \"\",\n",
       "    \"closing_event_display_type\": \"\",\n",
-      "    \"time_period_seconds\": \"300\",\n",
+      "    \"time_period_seconds\": \"0\",\n",
       "    \"dynamic_window\": \"0\",\n",
       "    \"dynamic_variability\": 0,\n",
-      "    \"richness_assertions\": []\n",
+      "    \"richness_assertions\": [\n",
+      "        {\n",
+      "            \"or\": [\n",
+      "                \"Weight<61\"\n",
+      "            ]\n",
+      "        }\n",
+      "    ]\n",
       "}\n",
       "Compliance_Policy {\n",
-      "    \"identity\": \"compliance_policies/246d2406-5fea-4869-b4e6-516a5aada609\",\n",
-      "    \"compliance_type\": \"COMPLIANCE_SINCE\",\n",
-      "    \"description\": \"Playing fetch with my dog every 5 minutes\",\n",
-      "    \"display_name\": \"Playing Fetch\",\n",
+      "    \"identity\": \"compliance_policies/c459c04d-4664-4ce1-9855-b64ed03dbec1\",\n",
+      "    \"compliance_type\": \"COMPLIANCE_RICHNESS\",\n",
+      "    \"description\": \"Dog's weight not over 60lbs\",\n",
+      "    \"display_name\": \"Dog's weight not over 60lbs\",\n",
       "    \"asset_filter\": [\n",
       "        {\n",
       "            \"or\": [\n",
@@ -188,18 +196,24 @@
       "            ]\n",
       "        }\n",
       "    ],\n",
-      "    \"event_display_type\": \"Fetch\",\n",
+      "    \"event_display_type\": \"\",\n",
       "    \"closing_event_display_type\": \"\",\n",
-      "    \"time_period_seconds\": \"300\",\n",
+      "    \"time_period_seconds\": \"0\",\n",
       "    \"dynamic_window\": \"0\",\n",
       "    \"dynamic_variability\": 0,\n",
-      "    \"richness_assertions\": []\n",
+      "    \"richness_assertions\": [\n",
+      "        {\n",
+      "            \"or\": [\n",
+      "                \"Weight<61\"\n",
+      "            ]\n",
+      "        }\n",
+      "    ]\n",
       "}\n"
      ]
     }
    ],
    "source": [
-    "# Creates SINCE compliance policy and prints result\n",
+    "# Creates RICHNESS compliance policy and prints result\n",
     "compliance_policy = create_compliance_policy(arch)\n",
     "print(\"Compliance_Policy\", json_dumps(compliance_policy, indent=4))"
    ]
