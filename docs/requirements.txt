@@ -1,10 +1,10 @@
 #
 # this is used for pushing to github pages
 #
-sphinx~=5.3
-sphinx-rtd-theme~=1.1
-sphinxcontrib-spelling~=7.7
-sphinx-gallery~=0.11
-nbsphinx~=0.8
+sphinx~=6.2
+sphinx-rtd-theme~=1.2
+sphinxcontrib-spelling~=8.0
+sphinx-gallery~=0.13
+nbsphinx~=0.9
 
 -r notebooks/requirements.txt

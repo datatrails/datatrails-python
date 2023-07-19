@@ -11,7 +11,10 @@ import backoff
 
 if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
+    from backoff._typing import Details
+
     from . import assets, events
+
 
 from .constants import (
     CONFIRMATION_CONFIRMED,
@@ -38,9 +41,9 @@ def __lookup_max_time():
     return MAX_TIME
 
 
-def __on_giveup_confirmation(details: dict[str, Any]):
+def __on_giveup_confirmation(details: "Details"):
     identity: str = details["args"][1]
-    elapsed: str = details["elapsed"]
+    elapsed: float = details["elapsed"]
     raise ArchivistUnconfirmedError(
         f"confirmation for {identity} timed out after {elapsed} seconds"
     )
@@ -105,10 +108,10 @@ def _wait_for_confirmation(self: Managers, identity: str) -> ReturnTypes:
     return None  # pyright: ignore
 
 
-def __on_giveup_confirmed(details: dict[str, Any]):
+def __on_giveup_confirmed(details: "Details"):
     self: PrivateManagers = details["args"][0]
     count = self.pending_count
-    elapsed: int = details["elapsed"]
+    elapsed: float = details["elapsed"]
     raise ArchivistUnconfirmedError(
         f"{count} pending assets still present after {elapsed} seconds"
     )

@@ -183,28 +183,11 @@ RKVST_REFRESH_TOKEN=anything
 
 #### Testing Other Python Versions
 
-##### Python 3.7 (default)
+##### Python 3.8 (default)
 
-To build the docker builder image with default Python 3.7:
+To build the docker builder image with default Python 3.8:
 ```bash
 task builder
-```
-
-To check the style
-```bash
-task check
-```
-
-To run the unittests:
-```bash
-task unittests
-```
-
-##### Python 3.8
-
-To build the docker builder image with Python 3.8:
-```bash
-task builder-3.8
 ```
 
 To check the style

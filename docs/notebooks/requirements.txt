@@ -1,9 +1,9 @@
 #
 # jupyter notebooks
-ipython~=7.34
+ipython~=8.12
 jupyter~=1.0
-jupyterlab~=3.5
-jupyter-console~=6.4
+jupyterlab~=4.0
+jupyter-console~=6.6
 jupyter-contrib-nbextensions~=0.7
-python-dotenv[cli]~=0.21.0
-wheel
+python-dotenv[cli]~=1.0
+
