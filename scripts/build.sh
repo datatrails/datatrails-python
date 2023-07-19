@@ -4,7 +4,7 @@
 #
 # Usage Examples
 #
-#     ./scripts/build.sh "3.7"
+#     ./scripts/build.sh "3.8"
 
 if [ "$USER" = "builder" -o "$USER" = "vscode" ]
 then

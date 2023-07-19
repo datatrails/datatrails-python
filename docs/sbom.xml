@@ -1,137 +1,122 @@
-<bom xmlns="http://cyclonedx.org/schema/bom/1.4" serialNumber="urn:uuid:318c39a2-b163-4e4b-8564-ecfcbd41f822" version="1">
-  <metadata>
-    <timestamp>2022-12-16T16:29:00.460158+00:00</timestamp>
-    <tools>
-      <tool>
-        <vendor>CycloneDX</vendor>
-        <name>cyclonedx-python-lib</name>
-        <version>3.1.1</version>
-        <externalReferences>
-          <reference type="build-system">
-            <url>https://github.com/CycloneDX/cyclonedx-python-lib/actions</url>
-          </reference>
-          <reference type="distribution">
-            <url>https://pypi.org/project/cyclonedx-python-lib/</url>
-          </reference>
-          <reference type="documentation">
-            <url>https://cyclonedx.github.io/cyclonedx-python-lib/</url>
-          </reference>
-          <reference type="issue-tracker">
-            <url>https://github.com/CycloneDX/cyclonedx-python-lib/issues</url>
-          </reference>
-          <reference type="license">
-            <url>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/LICENSE</url>
-          </reference>
-          <reference type="release-notes">
-            <url>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/CHANGELOG.md</url>
-          </reference>
-          <reference type="vcs">
-            <url>https://github.com/CycloneDX/cyclonedx-python-lib</url>
-          </reference>
-          <reference type="website">
-            <url>https://cyclonedx.org</url>
-          </reference>
-        </externalReferences>
-      </tool>
-    </tools>
-  </metadata>
-  <components>
-    <component bom-ref="6ab2b6ca-c2a0-44e3-89b1-4285b610b973" type="library">
-      <name>backoff</name>
-      <version>1.11.1</version>
-    </component>
-    <component bom-ref="78779d95-9c46-4435-ac7b-6d648be9180a" type="library">
-      <name>certifi</name>
-      <version>2022.12.7</version>
-    </component>
-    <component bom-ref="e0ac1cb3-4b0e-4ac8-b325-991db61dfb40" type="library">
-      <name>charset-normalizer</name>
-      <version>2.1.1</version>
-    </component>
-    <component bom-ref="ef2f88b6-e60e-43fa-b21c-1c43a0e2d278" type="library">
-      <name>flatten-dict</name>
-      <version>0.4.2</version>
-    </component>
-    <component bom-ref="7e92bcc6-9115-43d9-ab59-8534c9e39839" type="library">
-      <name>idna</name>
-      <version>3.4</version>
-    </component>
-    <component bom-ref="f5dcf665-246c-45a3-ba9a-63d3f312ecfa" type="library">
-      <name>importlib-metadata</name>
-      <version>5.1.0</version>
-    </component>
-    <component bom-ref="af82500b-bd6c-42c1-adc0-7f5732fa78f4" type="library">
-      <name>iso8601</name>
-      <version>1.1.0</version>
-    </component>
-    <component bom-ref="5fe0a734-7c88-49cd-b225-6b351f067b2c" type="library">
-      <name>jinja2</name>
-      <version>3.1.2</version>
-    </component>
-    <component bom-ref="8ffa8329-b645-4975-a522-f595f636ec48" type="library">
-      <name>markupsafe</name>
-      <version>2.1.1</version>
-    </component>
-    <component bom-ref="c9654fa2-645f-4dd3-ad9d-166366f59ff7" type="library">
-      <name>pyaml-env</name>
-      <version>1.2.1</version>
-    </component>
-    <component bom-ref="22fd58a5-af09-41bd-b518-b2026fc2a7d0" type="library">
-      <name>pyyaml</name>
-      <version>6.0</version>
-    </component>
-    <component bom-ref="f652360e-712a-4ee5-9689-8076319fc8a9" type="library">
-      <name>requests</name>
-      <version>2.28.1</version>
-    </component>
-    <component bom-ref="710ca8be-ad82-44eb-a5d2-6ebd3e26b7a4" type="library">
-      <name>requests-toolbelt</name>
-      <version>0.10.1</version>
-    </component>
-    <component bom-ref="1526c0ff-0505-46eb-a5c1-ad2799bd54b4" type="library">
-      <name>rfc3339</name>
-      <version>6.2</version>
-    </component>
-    <component bom-ref="dae668f9-42b1-476c-be9b-23f3250ffaf2" type="library">
-      <name>six</name>
-      <version>1.16.0</version>
-    </component>
-    <component bom-ref="6ccde6f4-5b09-4134-8a4f-2dc97300411d" type="library">
-      <name>typing-extensions</name>
-      <version>4.4.0</version>
-    </component>
-    <component bom-ref="b55cb2a5-272a-4655-a04b-cc80e8dde6d8" type="library">
-      <name>urllib3</name>
-      <version>1.26.13</version>
-    </component>
-    <component bom-ref="b86267ac-cff1-4d4a-86b0-a345f361b546" type="library">
-      <name>xmltodict</name>
-      <version>0.13.0</version>
-    </component>
-    <component bom-ref="f28a9812-83f2-424f-8f3f-b676c52cbc57" type="library">
-      <name>zipp</name>
-      <version>3.11.0</version>
-    </component>
-  </components>
-  <dependencies>
-    <dependency ref="6ab2b6ca-c2a0-44e3-89b1-4285b610b973"/>
-    <dependency ref="78779d95-9c46-4435-ac7b-6d648be9180a"/>
-    <dependency ref="e0ac1cb3-4b0e-4ac8-b325-991db61dfb40"/>
-    <dependency ref="ef2f88b6-e60e-43fa-b21c-1c43a0e2d278"/>
-    <dependency ref="7e92bcc6-9115-43d9-ab59-8534c9e39839"/>
-    <dependency ref="f5dcf665-246c-45a3-ba9a-63d3f312ecfa"/>
-    <dependency ref="af82500b-bd6c-42c1-adc0-7f5732fa78f4"/>
-    <dependency ref="5fe0a734-7c88-49cd-b225-6b351f067b2c"/>
-    <dependency ref="8ffa8329-b645-4975-a522-f595f636ec48"/>
-    <dependency ref="c9654fa2-645f-4dd3-ad9d-166366f59ff7"/>
-    <dependency ref="22fd58a5-af09-41bd-b518-b2026fc2a7d0"/>
-    <dependency ref="f652360e-712a-4ee5-9689-8076319fc8a9"/>
-    <dependency ref="710ca8be-ad82-44eb-a5d2-6ebd3e26b7a4"/>
-    <dependency ref="1526c0ff-0505-46eb-a5c1-ad2799bd54b4"/>
-    <dependency ref="dae668f9-42b1-476c-be9b-23f3250ffaf2"/>
-    <dependency ref="6ccde6f4-5b09-4134-8a4f-2dc97300411d"/>
-    <dependency ref="b55cb2a5-272a-4655-a04b-cc80e8dde6d8"/>
-    <dependency ref="b86267ac-cff1-4d4a-86b0-a345f361b546"/>
-    <dependency ref="f28a9812-83f2-424f-8f3f-b676c52cbc57"/>
-  </dependencies>
-</bom>
+<ns0:bom xmlns:ns0="http://cyclonedx.org/schema/bom/1.4" serialNumber="urn:uuid:8a3539e7-6e24-4059-88ac-a2b4315e20e5" version="1">
+  <ns0:metadata>
+    <ns0:timestamp>2023-07-19T10:28:54.412300+00:00</ns0:timestamp>
+    <ns0:tools>
+      <ns0:tool>
+        <ns0:vendor>CycloneDX</ns0:vendor>
+        <ns0:name>cyclonedx-python-lib</ns0:name>
+        <ns0:version>4.0.1</ns0:version>
+        <ns0:externalReferences>
+          <ns0:reference type="build-system">
+            <ns0:url>https://github.com/CycloneDX/cyclonedx-python-lib/actions</ns0:url>
+          </ns0:reference>
+          <ns0:reference type="distribution">
+            <ns0:url>https://pypi.org/project/cyclonedx-python-lib/</ns0:url>
+          </ns0:reference>
+          <ns0:reference type="documentation">
+            <ns0:url>https://cyclonedx.github.io/cyclonedx-python-lib/</ns0:url>
+          </ns0:reference>
+          <ns0:reference type="issue-tracker">
+            <ns0:url>https://github.com/CycloneDX/cyclonedx-python-lib/issues</ns0:url>
+          </ns0:reference>
+          <ns0:reference type="license">
+            <ns0:url>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/LICENSE</ns0:url>
+          </ns0:reference>
+          <ns0:reference type="release-notes">
+            <ns0:url>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/CHANGELOG.md</ns0:url>
+          </ns0:reference>
+          <ns0:reference type="vcs">
+            <ns0:url>https://github.com/CycloneDX/cyclonedx-python-lib</ns0:url>
+          </ns0:reference>
+          <ns0:reference type="website">
+            <ns0:url>https://cyclonedx.org</ns0:url>
+          </ns0:reference>
+        </ns0:externalReferences>
+      </ns0:tool>
+    </ns0:tools>
+  </ns0:metadata>
+  <ns0:components>
+    <ns0:component type="library" bom-ref="5cc798ec-3fb8-4c63-b632-94fc44919175">
+      <ns0:name>Jinja2</ns0:name>
+      <ns0:version>3.1.2</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="c56dedc5-2f96-4160-9467-26cf24fcea6e">
+      <ns0:name>MarkupSafe</ns0:name>
+      <ns0:version>2.1.3</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="2f9cbf12-1f7f-4ac7-8d1d-aa40c4395134">
+      <ns0:name>PyYAML</ns0:name>
+      <ns0:version>6.0.1</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="ab0fcd29-bb81-4bba-8807-0d79177e0ec2">
+      <ns0:name>backoff</ns0:name>
+      <ns0:version>1.11.1</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="725c6de3-8f5e-496a-8ad8-ea10d0854c56">
+      <ns0:name>certifi</ns0:name>
+      <ns0:version>2023.5.7</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="bd400ba6-9fcf-4832-899a-895339b7558b">
+      <ns0:name>charset-normalizer</ns0:name>
+      <ns0:version>3.2.0</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="5e6b4bd9-bb68-4ab3-86da-60666bb8a724">
+      <ns0:name>flatten-dict</ns0:name>
+      <ns0:version>0.4.2</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="91ceaeff-04b6-4a0b-b956-dde96de6a7e3">
+      <ns0:name>idna</ns0:name>
+      <ns0:version>3.4</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="7ebb0e1b-f6e0-4e0b-801c-fc82013dbd44">
+      <ns0:name>iso8601</ns0:name>
+      <ns0:version>2.0.0</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="7c12c8b1-3148-41cf-a48c-6318f0cb0897">
+      <ns0:name>pyaml-env</ns0:name>
+      <ns0:version>1.2.1</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="47bbb034-87ec-4ab2-9af1-f84ebb8d2292">
+      <ns0:name>requests</ns0:name>
+      <ns0:version>2.31.0</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="270f0753-b62e-4c87-9f8c-d7dfaf38dead">
+      <ns0:name>requests-toolbelt</ns0:name>
+      <ns0:version>1.0.0</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="c6109be3-5df5-41a7-99ab-c65953477bb0">
+      <ns0:name>rfc3339</ns0:name>
+      <ns0:version>6.2</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="8d6ba9d4-4a2f-49f1-bae1-33a970ebef7b">
+      <ns0:name>six</ns0:name>
+      <ns0:version>1.16.0</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="3e857991-f43d-4e0b-beec-4785d2c52134">
+      <ns0:name>urllib3</ns0:name>
+      <ns0:version>2.0.3</ns0:version>
+    </ns0:component>
+    <ns0:component type="library" bom-ref="1c21d7d0-7eb2-474a-93c1-5216bfec5f5f">
+      <ns0:name>xmltodict</ns0:name>
+      <ns0:version>0.13.0</ns0:version>
+    </ns0:component>
+  </ns0:components>
+  <ns0:dependencies>
+    <ns0:dependency ref="1c21d7d0-7eb2-474a-93c1-5216bfec5f5f"/>
+    <ns0:dependency ref="270f0753-b62e-4c87-9f8c-d7dfaf38dead"/>
+    <ns0:dependency ref="2f9cbf12-1f7f-4ac7-8d1d-aa40c4395134"/>
+    <ns0:dependency ref="3e857991-f43d-4e0b-beec-4785d2c52134"/>
+    <ns0:dependency ref="47bbb034-87ec-4ab2-9af1-f84ebb8d2292"/>
+    <ns0:dependency ref="5cc798ec-3fb8-4c63-b632-94fc44919175"/>
+    <ns0:dependency ref="5e6b4bd9-bb68-4ab3-86da-60666bb8a724"/>
+    <ns0:dependency ref="725c6de3-8f5e-496a-8ad8-ea10d0854c56"/>
+    <ns0:dependency ref="7c12c8b1-3148-41cf-a48c-6318f0cb0897"/>
+    <ns0:dependency ref="7ebb0e1b-f6e0-4e0b-801c-fc82013dbd44"/>
+    <ns0:dependency ref="8d6ba9d4-4a2f-49f1-bae1-33a970ebef7b"/>
+    <ns0:dependency ref="91ceaeff-04b6-4a0b-b956-dde96de6a7e3"/>
+    <ns0:dependency ref="ab0fcd29-bb81-4bba-8807-0d79177e0ec2"/>
+    <ns0:dependency ref="bd400ba6-9fcf-4832-899a-895339b7558b"/>
+    <ns0:dependency ref="c56dedc5-2f96-4160-9467-26cf24fcea6e"/>
+    <ns0:dependency ref="c6109be3-5df5-41a7-99ab-c65953477bb0"/>
+  </ns0:dependencies>
+</ns0:bom>

@@ -2,18 +2,18 @@
 
 # code quality
 autopep8~=2.0
-black[jupyter]~=23.3
-coverage[toml]~=7.1
-pip-audit~=2.5
+black[jupyter]~=23.7
+coverage[toml]~=7.2
+pip-audit~=2.6
 pycodestyle~=2.10
 pylint~=2.17
 pyright~=1.1
-ruff~=0.0.254
+ruff~=0.0
 unittest-xml-reporting~=3.2
 testbook~=0.4
 
 # analyze dependencies
-pipdeptree~=2.3
+pipdeptree~=2.10
 
 # uploading to pypi
 build~=0.10

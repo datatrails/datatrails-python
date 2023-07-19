@@ -92,6 +92,7 @@ class TestCompliancePoliciesBase(TestCase):
 
     def setUp(self):
         auth = get_auth(
+            auth_token=getenv("RKVST_AUTHTOKEN"),
             auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
             client_id=getenv("RKVST_APPREG_CLIENT"),
             client_secret=getenv("RKVST_APPREG_SECRET"),

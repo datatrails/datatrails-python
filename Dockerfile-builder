@@ -1,5 +1,5 @@
-ARG VERSION=3.7
-FROM python:${VERSION}-bullseye
+ARG VERSION=3.8
+FROM python:${VERSION}-bookworm
 
 # Note that any deps installed here must also be installed in the
 # github actions workflows:

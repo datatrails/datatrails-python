@@ -216,7 +216,7 @@ RKVST_URL {URL}""",
         Test find_asset_addtl_albuminfo
         """
         with testbook(
-            "archivist/notebooks/Find Artist and Additional Album Release.ipynb",
+            "archivist/notebooks/Find Artist and Additional Album Release Info.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)

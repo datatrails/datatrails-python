@@ -2,11 +2,12 @@
 # for the published wheel - the file docs/requirements.txt
 # must be kept in sync with this file.
 #
-# We can only upgrade to 2.2 of backoff when support for py3.7 is dropped
-backoff~=1.11
+# upgrading to 2.2 of backoff raises all kinds of type hint errors so
+# this will require more work - stick to 1.11 for now.
+backoff~=2.2.1
 certifi
 flatten-dict~=0.4
-iso8601~=1.1
+iso8601~=2.0
 Jinja2~=3.1
 pyaml-env~=1.2
 requests~=2.31.0
