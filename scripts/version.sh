@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 #
 # inserts version into python package
 #
 if [ -n "${GITHUB_REF}" ]
 then
-    version=$(echo ${GITHUB_REF} | rev | cut -d'/' -f1 | rev )
+    version=${GITHUB_REF##*/}
 else
     version=$(git describe --tags --long --dirty)
 fi
