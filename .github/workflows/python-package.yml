@@ -7,20 +7,20 @@ on: [pull_request]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11" ]
-
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Install C dependencies
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         export DEBIAN_FRONTEND=noninteractive
         # https://github.com/community/community/discussions/47863
@@ -36,8 +36,12 @@ jobs:
         sudo apt-get autoclean
         sudo apt-get clean
         sudo rm -rf /var/lib/apt/lists/*
+      shell: bash
+    - name: Install dependencies
+      run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements-dev.txt
+      shell: bash
     - name: Run integrity checks
       run: |
         ./scripts/version.sh
@@ -45,8 +49,6 @@ jobs:
         python3 -m pylint archivist examples functests unittests
         python3 -m pyright --stats archivist
         black archivist examples unittests functests
-        ./scripts/zipnotebooks.sh
-        (cd docs && make clean && make html)
         modified=$(git status -s | wc -l)
         if [ $modified -gt 0 ]
         then
@@ -54,7 +56,21 @@ jobs:
             exit 1
         fi
         ./scripts/unittests.sh
+      shell: bash
+    - name: Run zip notebooks
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
+        ./scripts/zipnotebooks.sh
+      shell: bash
+    - name: Run docs generation
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
+        cd docs
+        make clean
+        make html
+      shell: bash
     - uses: pypa/gh-action-pip-audit@v1.0.8
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       with:
         inputs: requirements.txt
 
