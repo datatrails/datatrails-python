@@ -30,7 +30,7 @@ from typing import TYPE_CHECKING, Any, Generator, Optional
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 
 if TYPE_CHECKING:
-    from . import archivist
+    from .archivist import Archivist
 
 from .assets import Asset
 from .constants import (
@@ -63,7 +63,7 @@ class _AccessPoliciesClient:
 
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{ACCESS_POLICIES_SUBPATH}"
         self._label = f"{self._subpath}/{ACCESS_POLICIES_LABEL}"

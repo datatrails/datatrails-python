@@ -36,7 +36,7 @@ if TYPE_CHECKING:
     from requests.models import Response
 
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-    from . import archivist
+    from .archivist import Archivist
 
 from .constants import (
     ATTACHMENTS_LABEL,
@@ -67,7 +67,7 @@ class _AttachmentsClient:
 
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{ATTACHMENTS_SUBPATH}"
         self._label = f"{self._subpath}/{ATTACHMENTS_LABEL}"

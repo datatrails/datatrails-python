@@ -20,7 +20,7 @@ from .errors import ArchivistError, ArchivistInvalidOperationError
 # pylint:disable=missing-function-docstring
 # pylint:disable=protected-access
 if TYPE_CHECKING:
-    from . import archivist
+    from .archivist import Archivist
 
 LOGGER = getLogger(__name__)
 
@@ -50,7 +50,7 @@ class _ActionMap(dict):
     #                                    a dictionary
     # similarly for location and subjects labels
     #
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         super().__init__()
         self._archivist = archivist_instance
 
@@ -228,7 +228,7 @@ class _ActionMap(dict):
 
 
 class _Step(dict):  # pylint:disable=too-many-instance-attributes
-    def __init__(self, archivist_instance: archivist.Archivist, **kwargs):
+    def __init__(self, archivist_instance: Archivist, **kwargs):
         super().__init__(**kwargs)
         self._archivist = archivist_instance
         self._args: list[Any] = []
@@ -397,7 +397,7 @@ class _Runner:
     ArchivistRunner takes a url, token_file.
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self.entities: defaultdict
         self.deletions = {}

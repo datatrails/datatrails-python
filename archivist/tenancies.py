@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-    from . import archivist
+    from .archivist import Archivist
 
 from .constants import (
     TENANCIES_LABEL,
@@ -56,7 +56,7 @@ class _TenanciesClient:
 
     maxDiff = None
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{TENANCIES_SUBPATH}"
         self._label = f"{self._subpath}/{TENANCIES_LABEL}"

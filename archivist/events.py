@@ -26,10 +26,10 @@ from __future__ import annotations
 
 from copy import deepcopy
 from logging import getLogger
-from typing import Any, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist, confirmer
+from . import confirmer
 from .constants import (
     ASSETS_SUBPATH,
     ASSETS_WILDCARD,
@@ -40,6 +40,9 @@ from .constants import (
 from .dictmerge import _deepmerge
 from .errors import ArchivistBadFieldError, ArchivistNotFoundError
 from .sboms import sboms_parse
+
+if TYPE_CHECKING:
+    from .archivist import Archivist
 
 LOGGER = getLogger(__name__)
 
@@ -110,7 +113,7 @@ class _EventsPublic:
 
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self._public = archivist_instance.public
         self._subpath = f"{archivist_instance.root}/{ASSETS_SUBPATH}"
@@ -282,7 +285,7 @@ class _EventsRestricted(_EventsPublic):
 
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         super().__init__(archivist_instance)
         self.pending_count: int = 0
 

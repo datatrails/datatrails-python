@@ -26,16 +26,19 @@ from __future__ import annotations
 from base64 import b64decode
 from json import loads as json_loads
 from logging import getLogger
-from typing import Any, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Optional, Tuple
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from . import archivist, subjects_confirmer
+from . import subjects_confirmer
 from .constants import (
     SUBJECTS_LABEL,
     SUBJECTS_SELF_ID,
     SUBJECTS_SUBPATH,
 )
 from .dictmerge import _deepmerge
+
+if TYPE_CHECKING:
+    from .archivist import Archivist
 
 LOGGER = getLogger(__name__)
 
@@ -57,7 +60,7 @@ class _SubjectsClient:
 
     maxDiff = None
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{SUBJECTS_SUBPATH}"
         self._label = f"{self._subpath}/{SUBJECTS_LABEL}"
@@ -91,7 +94,7 @@ class _SubjectsClient:
         )
 
     def share(
-        self, name: str, other_name: str, other_archivist: archivist.Archivist
+        self, name: str, other_name: str, other_archivist: Archivist
     ) -> Tuple[Subject, Subject]:
         """Import the self subjects from the foreign archivist connection
            from another organization - mutually share.
