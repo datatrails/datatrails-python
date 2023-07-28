@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-    from . import archivist
+    from .archivist import Archivist
 
 
 LOGGER = getLogger(__name__)
@@ -46,7 +46,7 @@ class _CompositeClient:
     These mthods are not unittested and provided as a convenience.
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
 
     def __str__(self) -> str:

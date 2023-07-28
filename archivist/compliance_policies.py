@@ -33,7 +33,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-    from . import archivist
+    from .archivist import Archivist
     from .compliance_policy_requests import (
         CompliancePolicyCurrentOutstanding,
         CompliancePolicyDynamicTolerance,
@@ -75,7 +75,7 @@ class _CompliancePoliciesClient:
 
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{COMPLIANCE_POLICIES_SUBPATH}"
         self._label = f"{self._subpath}/{COMPLIANCE_POLICIES_LABEL}"

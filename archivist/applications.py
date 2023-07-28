@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING, Any, Optional
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 if TYPE_CHECKING:
-    from . import archivist
+    from .archivist import Archivist
 
 from .constants import (
     APPLICATIONS_LABEL,
@@ -55,7 +55,7 @@ class _ApplicationsClient:
 
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{APPLICATIONS_SUBPATH}"
         self._label = f"{self._subpath}/{APPLICATIONS_LABEL}"

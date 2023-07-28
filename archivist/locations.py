@@ -31,7 +31,7 @@ from typing import TYPE_CHECKING, Any, Optional, Tuple
 
 if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-    from . import archivist
+    from .archivist import Archivist
 
 from .constants import LOCATIONS_LABEL, LOCATIONS_SUBPATH
 from .dictmerge import _deepmerge
@@ -69,7 +69,7 @@ class _LocationsClient:
 
     """
 
-    def __init__(self, archivist_instance: archivist.Archivist):
+    def __init__(self, archivist_instance: Archivist):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{LOCATIONS_SUBPATH}"
         self._label = f"{self._subpath}/{LOCATIONS_LABEL}"

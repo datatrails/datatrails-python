@@ -5,16 +5,21 @@ from __future__ import annotations
 from logging import getLogger
 from os import environ
 from sys import exit as sys_exit
+from typing import TYPE_CHECKING
 
 from pyaml_env import parse_config
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
-from ... import about, archivist
+from ... import about
+
+if TYPE_CHECKING:
+    from ..archivist import Archivist
+
 
 LOGGER = getLogger(__name__)
 
 
-def run(arch: archivist.Archivist, args):
+def run(arch: Archivist, args):
     LOGGER.info("Using version %s of rkvst-archivist", about.__version__)
     LOGGER.info("Namespace %s", args.namespace)
 
