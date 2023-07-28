@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.runner &mdash; RKVST v0.25.0 documentation</title>
+  <title>archivist.runner &mdash; RKVST v0.25.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -37,7 +37,7 @@
               <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.25.0
+                v0.25.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -105,7 +105,7 @@
 <span class="c1"># pylint:disable=missing-function-docstring</span>
 <span class="c1"># pylint:disable=protected-access</span>
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">archivist</span>
+    <span class="kn">from</span> <span class="nn">.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -135,7 +135,7 @@
     <span class="c1">#                                    a dictionary</span>
     <span class="c1"># similarly for location and subjects labels</span>
     <span class="c1">#</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">Archivist</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="n">Archivist</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist_instance</span>
 
@@ -313,7 +313,7 @@
 
 
 <div class="viewcode-block" id="_Step"><a class="viewcode-back" href="../../code/runner.html#archivist.runner._Step">[docs]</a><span class="k">class</span> <span class="nc">_Step</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>  <span class="c1"># pylint:disable=too-many-instance-attributes</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">Archivist</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="n">Archivist</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist_instance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -482,7 +482,7 @@
 <span class="sd">    ArchivistRunner takes a url, token_file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="n">archivist</span><span class="o">.</span><span class="n">Archivist</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="n">Archivist</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist_instance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">entities</span><span class="p">:</span> <span class="n">defaultdict</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">deletions</span> <span class="o">=</span> <span class="p">{}</span>
