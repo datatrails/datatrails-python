@@ -1,11 +1,10 @@
 """assets confirmer interface
 """
 
-from __future__ import annotations
 
 from copy import deepcopy
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Optional, Union, overload
+from typing import TYPE_CHECKING, Any, Union, overload
 
 import backoff
 
@@ -13,7 +12,8 @@ if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
     from backoff._typing import Details
 
-    from . import assets, events
+    from .assets import Asset, _AssetsPublic, _AssetsRestricted
+    from .events import Event, _EventsPublic, _EventsRestricted
 
 
 from .constants import (
@@ -28,13 +28,11 @@ from .utils import backoff_handler
 MAX_TIME = 1200
 LOGGER = getLogger(__name__)
 
-if TYPE_CHECKING:
-    # pylint: disable=protected-access
-    PublicManagers = Union[assets._AssetsPublic, events._EventsPublic]
-    PrivateManagers = Union[assets._AssetsRestricted, events._EventsRestricted]
-    Managers = Union[PublicManagers, PrivateManagers]
-
-    ReturnTypes = Union[assets.Asset, events.Event]
+# pylint: disable=protected-access
+PublicManagers = Union["_AssetsPublic", "_EventsPublic"]
+PrivateManagers = Union["_AssetsRestricted", "_EventsRestricted"]
+Managers = Union[PublicManagers, PrivateManagers]
+ReturnTypes = Union["Asset", "Event"]
 
 
 def __lookup_max_time():
@@ -56,26 +54,22 @@ def __on_giveup_confirmation(details: "Details"):
 
 
 @overload
-def _wait_for_confirmation(
-    self: assets._AssetsRestricted, identity: str
-) -> assets.Asset:
+def _wait_for_confirmation(self: "_AssetsRestricted", identity: str) -> "Asset":
     ...  # pragma: no cover
 
 
 @overload
-def _wait_for_confirmation(self: assets._AssetsPublic, identity: str) -> assets.Asset:
+def _wait_for_confirmation(self: "_AssetsPublic", identity: str) -> "Asset":
     ...  # pragma: no cover
 
 
 @overload
-def _wait_for_confirmation(
-    self: events._EventsRestricted, identity: str
-) -> events.Event:
+def _wait_for_confirmation(self: "_EventsRestricted", identity: str) -> "Event":
     ...  # pragma: no cover
 
 
 @overload
-def _wait_for_confirmation(self: events._EventsPublic, identity: str) -> events.Event:
+def _wait_for_confirmation(self: "_EventsPublic", identity: str) -> "Event":
     ...  # pragma: no cover
 
 
@@ -125,7 +119,7 @@ def __on_giveup_confirmed(details: "Details"):
     on_giveup=__on_giveup_confirmed,
 )
 def _wait_for_confirmed(
-    self: PrivateManagers, *, props: Optional[dict[str, Any]] = None, **kwargs: Any
+    self: PrivateManagers, *, props: "dict[str, Any]|None" = None, **kwargs: Any
 ) -> bool:
     """Return False until all entities are confirmed"""
 

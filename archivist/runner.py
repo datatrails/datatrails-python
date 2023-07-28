@@ -3,7 +3,6 @@ Base runner class for interpreting yaml story files.
 
 """
 
-from __future__ import annotations
 
 from collections import defaultdict
 from functools import partialmethod
@@ -11,7 +10,7 @@ from json import dumps as json_dumps
 from logging import getLogger
 from time import sleep as time_sleep
 from types import GeneratorType
-from typing import TYPE_CHECKING, Any, Callable, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Callable
 from uuid import UUID
 
 from .errors import ArchivistError, ArchivistInvalidOperationError
@@ -50,7 +49,7 @@ class _ActionMap(dict):
     #                                    a dictionary
     # similarly for location and subjects labels
     #
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         super().__init__()
         self._archivist = archivist_instance
 
@@ -192,7 +191,7 @@ class _ActionMap(dict):
             "use_subject_label": "add_arg_identity",
         }
 
-    def ops(self, action_name: str) -> dict[str, Any]:
+    def ops(self, action_name: str) -> "dict[str, Any]":
         """
         Get valid entry in map
         """
@@ -208,7 +207,7 @@ class _ActionMap(dict):
         # if an exception occurs here then the dict initialized above is faulty.
         return self.ops(action_name).get("action")  # pyright: ignore
 
-    def keywords(self, action_name: str) -> Tuple | None:
+    def keywords(self, action_name: str) -> "tuple | None":
         """
         Get keywords in map
         """
@@ -228,11 +227,11 @@ class _ActionMap(dict):
 
 
 class _Step(dict):  # pylint:disable=too-many-instance-attributes
-    def __init__(self, archivist_instance: Archivist, **kwargs):
+    def __init__(self, archivist_instance: "Archivist", **kwargs):
         super().__init__(**kwargs)
         self._archivist = archivist_instance
-        self._args: list[Any] = []
-        self._kwargs: dict[str, Any] = {}
+        self._args: "list[Any]" = []
+        self._kwargs: "dict[str, Any]" = {}
         self._actions = None
         self._action = None
         self._action_name = None
@@ -397,7 +396,7 @@ class _Runner:
     ArchivistRunner takes a url, token_file.
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self.entities: defaultdict
         self.deletions = {}
@@ -405,7 +404,7 @@ class _Runner:
     def __str__(self) -> str:
         return f"Runner({self._archivist.url})"
 
-    def __call__(self, config: dict[str, Any]):
+    def __call__(self, config: "dict[str, Any]"):
         """
         The dict config contains a list of `steps` to be performed serially, e.g.
 
@@ -441,7 +440,7 @@ class _Runner:
         except (ArchivistError, KeyError) as ex:
             LOGGER.info("Runner exception %s", ex)
 
-    def run_steps(self, config: dict[str, Any]):
+    def run_steps(self, config: "dict[str, Any]"):
         """Runs all defined steps in self.config."""
         self.entities = tree()
         for step in config["steps"]:
@@ -450,7 +449,7 @@ class _Runner:
         self.delete()
         self._archivist.close()
 
-    def run_step(self, step: dict[str, Any]):
+    def run_step(self, step: "dict[str, Any]"):
         """Runs a step given parameters and the type of step.
 
         Args:
@@ -480,7 +479,7 @@ class _Runner:
             if s.label("set", noun) and label is not None:
                 self.entities[label] = response
 
-    def set_deletions(self, response: dict[str, Any], delete_method):
+    def set_deletions(self, response: "dict[str, Any]", delete_method):
         """sets entry to be deleted"""
 
         if delete_method is not None:
@@ -493,7 +492,7 @@ class _Runner:
             LOGGER.info("Delete %s", identity)
             delete_method(identity)
 
-    def identity(self, name: str) -> Optional[str]:
+    def identity(self, name: str) -> "str|None":
         """Gets entity id"""
 
         identity = self.entities[name]["identity"]

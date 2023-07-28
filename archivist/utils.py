@@ -1,10 +1,9 @@
 """Some convenience stuff
 """
 
-from __future__ import annotations
 
 from logging import getLogger
-from typing import TYPE_CHECKING, Tuple
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from io import BytesIO
@@ -41,7 +40,7 @@ def backoff_handler(details):
 
 
 # download arbitrary files from a url.
-def get_url(url: str, fd: BytesIO):  # pragma: no cover
+def get_url(url: str, fd: "BytesIO"):  # pragma: no cover
     """GET method (REST) - chunked
 
     Downloads a binary object from upstream storage.
@@ -90,7 +89,7 @@ def get_auth(
     return None
 
 
-def selector_signature(selector: list, data: dict) -> Tuple[dict, dict | None]:
+def selector_signature(selector: list, data: dict) -> "tuple[dict, dict | None]":
     """
     Convert a selector to a signature for list and count methods
 

@@ -6,7 +6,6 @@
 
 # pylint:disable=too-few-public-methods
 
-from __future__ import annotations
 
 from io import BytesIO
 from logging import getLogger
@@ -19,7 +18,7 @@ from .utils import get_url
 LOGGER = getLogger(__name__)
 
 
-def sboms_parse(data: dict[str, Any]) -> dict[str, Any]:  # pragma: no cover
+def sboms_parse(data: "dict[str, Any]") -> "dict[str, Any]":  # pragma: no cover
     """
     parse the sbom and extract pertinent information
 

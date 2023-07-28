@@ -24,11 +24,10 @@
 
 # pylint:disable=too-few-public-methods
 
-from __future__ import annotations
 
 from copy import deepcopy
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, BinaryIO, Optional
+from typing import TYPE_CHECKING, Any, BinaryIO
 from urllib.parse import urlparse
 
 if TYPE_CHECKING:
@@ -59,7 +58,7 @@ class _AssetAttachmentsClient:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._public = archivist_instance.public
         self._subpath = f"{archivist_instance.root}/{ASSETATTACHMENTS_SUBPATH}"
@@ -99,7 +98,7 @@ class _AssetAttachmentsClient:
 
         return f"{self._label}/{identity}/{uuid}"
 
-    def __params(self, params: Optional[dict[str, Any]]) -> dict[str, Any]:
+    def __params(self, params: "dict[str, Any]|None") -> "dict[str, Any]":
         params = deepcopy(params) if params else {}
         # pylint: disable=protected-access
         return _deepmerge(self._archivist.fixtures.get(ATTACHMENTS_LABEL), params)
@@ -110,8 +109,8 @@ class _AssetAttachmentsClient:
         attachment_id: str,
         fd: BinaryIO,
         *,
-        params: Optional[dict[str, Any]] = None,
-    ) -> Response:
+        params: "dict[str, Any]|None" = None,
+    ) -> "Response":
         """Read attachment
 
         Reads attachment into data sink (usually a file opened for write).
@@ -145,7 +144,7 @@ class _AssetAttachmentsClient:
         self,
         identity: str,
         attachment_id: str,
-    ) -> dict[str, Any]:
+    ) -> "dict[str, Any]":
         """Read asset attachment info
 
         Reads asset attachment info

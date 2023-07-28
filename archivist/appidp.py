@@ -21,8 +21,6 @@
 
 """
 
-from __future__ import annotations
-
 from logging import getLogger
 from typing import TYPE_CHECKING
 
@@ -57,7 +55,7 @@ class _AppIDPClient:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{APPIDP_SUBPATH}"
         self._label = f"{self._subpath}/{APPIDP_LABEL}"

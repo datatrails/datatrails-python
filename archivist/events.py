@@ -22,11 +22,10 @@
 
 """
 
-from __future__ import annotations
 
 from copy import deepcopy
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from . import confirmer
@@ -55,7 +54,7 @@ class Event(dict):
     """
 
     @property
-    def when(self) -> str | None:
+    def when(self) -> "str | None":
         """when
 
         Timestamp of event
@@ -78,7 +77,7 @@ class Event(dict):
         return None
 
     @property
-    def who(self) -> str | None:
+    def who(self) -> "str | None":
         """who
 
         Principal identity.
@@ -113,7 +112,7 @@ class _EventsPublic:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._public = archivist_instance.public
         self._subpath = f"{archivist_instance.root}/{ASSETS_SUBPATH}"
@@ -147,10 +146,10 @@ class _EventsPublic:
 
     def _params(
         self,
-        props: Optional[dict[str, Any]],
-        attrs: Optional[dict[str, Any]],
-        asset_attrs: Optional[dict[str, Any]],
-    ) -> dict[str, Any]:
+        props: "dict[str, Any]|None",
+        attrs: "dict[str, Any]|None",
+        asset_attrs: "dict[str, Any]|None",
+    ) -> "dict[str, Any]":
         params = deepcopy(props) if props else {}
         if attrs:
             params["event_attributes"] = attrs
@@ -162,10 +161,10 @@ class _EventsPublic:
     def count(
         self,
         *,
-        asset_id: Optional[str] = None,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
-        asset_attrs: Optional[dict[str, Any]] = None,
+        asset_id: "str|None" = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
+        asset_attrs: "dict[str, Any]|None" = None,
     ) -> int:
         """Count events.
 
@@ -202,11 +201,11 @@ class _EventsPublic:
     def list(
         self,
         *,
-        asset_id: Optional[str] = None,
-        page_size: Optional[int] = None,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
-        asset_attrs: Optional[dict[str, Any]] = None,
+        asset_id: "str|None" = None,
+        page_size: "int|None" = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
+        asset_attrs: "dict[str, Any]|None" = None,
     ):
         """List events.
 
@@ -241,10 +240,10 @@ class _EventsPublic:
     def read_by_signature(
         self,
         *,
-        asset_id: Optional[str] = None,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
-        asset_attrs: Optional[dict[str, Any]] = None,
+        asset_id: "str|None" = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
+        asset_attrs: "dict[str, Any]|None" = None,
     ) -> Event:
         """Read event by signature.
 
@@ -285,7 +284,7 @@ class _EventsRestricted(_EventsPublic):
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         super().__init__(archivist_instance)
         self.pending_count: int = 0
 
@@ -295,10 +294,10 @@ class _EventsRestricted(_EventsPublic):
     def create(
         self,
         asset_id: str,
-        props: dict[str, Any],
-        attrs: dict[str, Any],
+        props: "dict[str, Any]",
+        attrs: "dict[str, Any]",
         *,
-        asset_attrs: Optional[dict[str, Any]] = None,
+        asset_attrs: "dict[str, Any]|None" = None,
         confirm: bool = True,
     ) -> Event:
         """Create event
@@ -325,7 +324,7 @@ class _EventsRestricted(_EventsPublic):
         )
 
     def create_from_data(
-        self, asset_id: str, data: dict[str, Any], *, confirm: bool = True
+        self, asset_id: str, data: "dict[str, Any]", *, confirm: bool = True
     ) -> Event:
         """Create event
 
@@ -402,10 +401,10 @@ class _EventsRestricted(_EventsPublic):
     def wait_for_confirmed(
         self,
         *,
-        asset_id: Optional[str] = None,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
-        asset_attrs: Optional[dict[str, Any]] = None,
+        asset_id: "str|None" = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
+        asset_attrs: "dict[str, Any]|None" = None,
     ) -> bool:
         """Wait for events to be confirmed.
 

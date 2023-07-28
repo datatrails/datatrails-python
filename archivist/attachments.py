@@ -24,13 +24,12 @@
 
 # pylint:disable=too-few-public-methods
 
-from __future__ import annotations
 
 from copy import deepcopy
 from io import BytesIO
 from logging import getLogger
 from os import path
-from typing import TYPE_CHECKING, Any, BinaryIO, Optional
+from typing import TYPE_CHECKING, Any, BinaryIO
 
 if TYPE_CHECKING:
     from requests.models import Response
@@ -67,7 +66,7 @@ class _AttachmentsClient:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{ATTACHMENTS_SUBPATH}"
         self._label = f"{self._subpath}/{ATTACHMENTS_LABEL}"
@@ -75,7 +74,7 @@ class _AttachmentsClient:
     def __str__(self) -> str:
         return f"AttachmentsClient({self._archivist.url})"
 
-    def get_default_key(self, data: dict[str, str]) -> str:
+    def get_default_key(self, data: "dict[str, str]") -> str:
         """
         Return a key to use if no key was provided
         either use filename or url as one of them is required
@@ -87,7 +86,7 @@ class _AttachmentsClient:
         )
         return attachment_key.replace(".", "_")
 
-    def create(self, data: dict[str, Any]) -> dict[str, Any]:  # pragma: no cover
+    def create(self, data: "dict[str, Any]") -> "dict[str, Any]":  # pragma: no cover
         """
         Create an attachment and return struct suitable for use in an asset
         or event creation.
@@ -159,7 +158,7 @@ class _AttachmentsClient:
 
         return result
 
-    def upload(self, fd: BinaryIO, *, mtype: Optional[str] = None) -> Attachment:
+    def upload(self, fd: BinaryIO, *, mtype: "str|None" = None) -> Attachment:
         """Create attachment
 
         Creates attachment from opened file or other data source.
@@ -182,7 +181,7 @@ class _AttachmentsClient:
             )
         )
 
-    def __params(self, params: Optional[dict[str, Any]]) -> dict[str, Any]:
+    def __params(self, params: "dict[str, Any]|None") -> "dict[str, Any]":
         params = deepcopy(params) if params else {}
         # pylint: disable=protected-access
         return _deepmerge(self._archivist.fixtures.get(ATTACHMENTS_LABEL), params)
@@ -192,8 +191,8 @@ class _AttachmentsClient:
         identity: str,
         fd: BinaryIO,
         *,
-        params: Optional[dict[str, Any]] = None,
-    ) -> Response:
+        params: "dict[str, Any]|None" = None,
+    ) -> "Response":
         """Read attachment
 
         Reads attachment into data sink (usually a file opened for write)..
@@ -218,7 +217,7 @@ class _AttachmentsClient:
     def info(
         self,
         identity: str,
-    ) -> dict[str, Any]:
+    ) -> "dict[str, Any]":
         """Read attachment info
 
         Reads attachment info

@@ -1,16 +1,16 @@
 """Archivist dict deep merge
 """
-from __future__ import annotations
+
 
 from copy import deepcopy
-from typing import Any, Optional
+from typing import Any
 
 from flatten_dict import flatten, unflatten
 
 
 def _deepmerge(
-    dct1: Optional[dict[str, Any]], dct2: Optional[dict[str, Any]]
-) -> dict[str, Any]:
+    dct1: "dict[str, Any]|None", dct2: "dict[str, Any]|None"
+) -> "dict[str, Any]":
     """Deep merge 2 dictionaries
 
     The settings from dct2 overwrite or add to dct1
@@ -26,7 +26,7 @@ def _deepmerge(
     return unflatten({**flatten(dct1), **flatten(dct2)})
 
 
-def _dotdict(dct: Optional[dict[str, Any]]) -> dict[str, str] | None:
+def _dotdict(dct: "dict[str, Any]|None") -> "dict[str, str] | None":
     """Emit nested dictionary as dot delimited dict with one level"""
     if dct is None:
         return None

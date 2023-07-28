@@ -21,12 +21,11 @@
 
 """
 
-from __future__ import annotations
 
 from base64 import b64decode
 from json import loads as json_loads
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Optional, Tuple
+from typing import TYPE_CHECKING, Any
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from . import subjects_confirmer
@@ -60,7 +59,7 @@ class _SubjectsClient:
 
     maxDiff = None
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{SUBJECTS_SUBPATH}"
         self._label = f"{self._subpath}/{SUBJECTS_LABEL}"
@@ -69,7 +68,10 @@ class _SubjectsClient:
         return f"SubjectsClient({self._archivist.url})"
 
     def create(
-        self, display_name: str, wallet_pub_key: list[str], tessera_pub_key: list[str]
+        self,
+        display_name: str,
+        wallet_pub_key: "list[str]",
+        tessera_pub_key: "list[str]",
     ) -> Subject:
         """Create subject
 
@@ -94,8 +96,8 @@ class _SubjectsClient:
         )
 
     def share(
-        self, name: str, other_name: str, other_archivist: Archivist
-    ) -> Tuple[Subject, Subject]:
+        self, name: str, other_name: str, other_archivist: "Archivist"
+    ) -> "tuple[Subject, Subject]":
         """Import the self subjects from the foreign archivist connection
            from another organization - mutually share.
 
@@ -137,7 +139,7 @@ class _SubjectsClient:
             subject["tessera_pub_key"],
         )
 
-    def create_from_data(self, data: dict[str, Any]) -> Subject:
+    def create_from_data(self, data: "dict[str, Any]") -> Subject:
         """Create subject
 
         Creates subject with request body from data stream.
@@ -153,7 +155,7 @@ class _SubjectsClient:
         LOGGER.debug("Create Subject from data %s", data)
         return Subject(**self._archivist.post(self._label, data))
 
-    def create_from_b64(self, data: dict[str, Any]) -> Subject:
+    def create_from_b64(self, data: "dict[str, Any]") -> Subject:
         """Create subject
 
         Creates subject with request body from b64 encoded string
@@ -218,9 +220,9 @@ class _SubjectsClient:
         self,
         identity: str,
         *,
-        display_name: Optional[str] = None,
-        wallet_pub_key: Optional[list[str]] = None,
-        tessera_pub_key: Optional[list[str]] = None,
+        display_name: "str|None" = None,
+        wallet_pub_key: "list[str]|None" = None,
+        tessera_pub_key: "list[str]|None" = None,
     ) -> Subject:
         """Update Subject
 
@@ -247,7 +249,7 @@ class _SubjectsClient:
             )
         )
 
-    def delete(self, identity: str) -> dict[str, Any]:
+    def delete(self, identity: str) -> "dict[str, Any]":
         """Delete Subject
 
         Deletes subject.
@@ -264,10 +266,10 @@ class _SubjectsClient:
     def __params(
         self,
         *,
-        display_name: Optional[str] = None,
-        wallet_pub_key: Optional[list[str]] = None,
-        tessera_pub_key: Optional[list[str]] = None,
-    ) -> dict[str, Any]:
+        display_name: "str|None" = None,
+        wallet_pub_key: "list[str]|None" = None,
+        tessera_pub_key: "list[str]|None" = None,
+    ) -> "dict[str, Any]":
         params = {}
 
         if display_name is not None:
@@ -281,7 +283,7 @@ class _SubjectsClient:
 
         return _deepmerge(self._archivist.fixtures.get(SUBJECTS_LABEL), params)
 
-    def count(self, *, display_name: Optional[str] = None) -> int:
+    def count(self, *, display_name: "str|None" = None) -> int:
         """Count subjects.
 
         Counts number of subjects that match criteria.
@@ -301,8 +303,8 @@ class _SubjectsClient:
     def list(
         self,
         *,
-        page_size: Optional[int] = None,
-        display_name: Optional[str] = None,
+        page_size: "int|None" = None,
+        display_name: "str|None" = None,
     ):
         """List subjects.
 

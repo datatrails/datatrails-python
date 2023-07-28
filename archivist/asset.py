@@ -1,8 +1,6 @@
 """Asset data class
 
 """
-from __future__ import annotations
-
 from contextlib import suppress
 
 
@@ -14,7 +12,7 @@ class Asset(dict):
     """
 
     @property
-    def primary_image(self) -> str | None:
+    def primary_image(self) -> "str|None":
         """Primary Image
 
         Attachment that is the primary image of the asset.
@@ -49,7 +47,7 @@ class Asset(dict):
         return None
 
     @property
-    def name(self) -> str | None:
+    def name(self) -> "str|None":
         """str: name of the asset"""
         name = None
         with suppress(KeyError, TypeError):

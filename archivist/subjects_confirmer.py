@@ -1,7 +1,6 @@
 """assets confirmer interface
 """
 
-from __future__ import annotations
 
 from logging import getLogger
 from typing import TYPE_CHECKING
@@ -9,7 +8,7 @@ from typing import TYPE_CHECKING
 import backoff
 
 if TYPE_CHECKING:
-    from . import subjects
+    from .subjects import Subject, _SubjectsClient
 
 from .constants import (
     CONFIRMATION_CONFIRMED,
@@ -44,9 +43,7 @@ def __on_giveup_confirmation(details):
     on_backoff=backoff_handler,
     on_giveup=__on_giveup_confirmation,
 )
-def _wait_for_confirmation(
-    self: subjects._SubjectsClient, identity: str
-) -> subjects.Subject:
+def _wait_for_confirmation(self: "_SubjectsClient", identity: str) -> "Subject":
     """Return None until subjects is confirmed"""
     subject = self.read(identity)
     if CONFIRMATION_STATUS not in subject:

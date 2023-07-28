@@ -21,7 +21,6 @@
 
 """
 
-from __future__ import annotations
 
 from logging import getLogger
 from typing import TYPE_CHECKING
@@ -46,7 +45,7 @@ class _CompositeClient:
     These mthods are not unittested and provided as a convenience.
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
 
     def __str__(self) -> str:
