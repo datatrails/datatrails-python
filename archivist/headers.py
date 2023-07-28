@@ -4,12 +4,10 @@
 """
 
 
-from typing import Optional
-
 from requests import models
 
 
-def _headers_get(headers: models.CaseInsensitiveDict, key: str) -> Optional[str]:
+def _headers_get(headers: models.CaseInsensitiveDict, key: str) -> "str|None":
     if headers is not None:
         ret = headers.get(key)
         if ret is not None:

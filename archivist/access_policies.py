@@ -21,11 +21,9 @@
 
 """
 
-from __future__ import annotations
-
 from copy import deepcopy
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Generator, Optional
+from typing import TYPE_CHECKING, Any, Generator
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 
@@ -47,7 +45,7 @@ class AccessPolicy(dict):
     """AccessPolicy object"""
 
     @property
-    def name(self) -> str | None:
+    def name(self) -> "str | None":
         """str: name of the access policy"""
         return self.get("display_name")
 
@@ -63,7 +61,7 @@ class _AccessPoliciesClient:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{ACCESS_POLICIES_SUBPATH}"
         self._label = f"{self._subpath}/{ACCESS_POLICIES_LABEL}"
@@ -73,9 +71,9 @@ class _AccessPoliciesClient:
 
     def create(
         self,
-        props: dict[str, Any],
-        filters: list[dict[str, Any]],
-        access_permissions: list[dict[str, Any]],
+        props: "dict[str, Any]",
+        filters: "list[dict[str, Any]]",
+        access_permissions: "list[dict[str, Any]]",
     ) -> AccessPolicy:
         """Create access policy
 
@@ -97,7 +95,7 @@ class _AccessPoliciesClient:
             ),
         )
 
-    def create_from_data(self, data: dict[str, Any]) -> AccessPolicy:
+    def create_from_data(self, data: "dict[str, Any]") -> AccessPolicy:
         """Create access policy
 
         Creates access policy with request body from data stream.
@@ -135,9 +133,9 @@ class _AccessPoliciesClient:
         self,
         identity,
         *,
-        props: Optional[dict[str, Any]] = None,
-        filters: Optional[list[dict]] = None,
-        access_permissions: Optional[list[dict]] = None,
+        props: "dict[str, Any] | None " = None,
+        filters: "list[dict] | None " = None,
+        access_permissions: "list[dict] | None " = None,
     ) -> AccessPolicy:
         """Update Access Policy
 
@@ -162,7 +160,7 @@ class _AccessPoliciesClient:
             )
         )
 
-    def delete(self, identity: str) -> dict[str, Any]:
+    def delete(self, identity: str) -> "dict[str, Any]":
         """Delete Access Policy
 
         Deletes access policy.
@@ -178,11 +176,11 @@ class _AccessPoliciesClient:
 
     def __params(
         self,
-        props: Optional[dict[str, Any]],
+        props: "dict[str, Any] | None",
         *,
-        filters: list[dict] | None = None,
-        access_permissions: list[dict] | None = None,
-    ) -> dict[str, Any]:
+        filters: "list[dict] | None" = None,
+        access_permissions: "list[dict] | None" = None,
+    ) -> "dict[str, Any]":
         params = deepcopy(props) if props else {}
         if filters is not None:
             params["filters"] = filters
@@ -192,7 +190,7 @@ class _AccessPoliciesClient:
 
         return _deepmerge(self._archivist.fixtures.get(ACCESS_POLICIES_LABEL), params)
 
-    def count(self, *, display_name: Optional[str] = None) -> int:
+    def count(self, *, display_name: "str | None" = None) -> int:
         """Count access policies.
 
         Counts number of access policies that match criteria.
@@ -208,7 +206,7 @@ class _AccessPoliciesClient:
         return self._archivist.count(self._label, params=params)
 
     def list(
-        self, *, page_size: Optional[int] = None, display_name: Optional[str] = None
+        self, *, page_size: "int|None" = None, display_name: "str|None" = None
     ) -> Generator[AccessPolicy, None, None]:
         """List access policies.
 
@@ -235,7 +233,7 @@ class _AccessPoliciesClient:
 
     # additional queries on different endpoints
     def list_matching_assets(
-        self, access_policy_id: str, *, page_size: Optional[int] = None
+        self, access_policy_id: str, *, page_size: "int|None" = None
     ) -> Generator[Asset, None, None]:
         """List matching assets.
 
@@ -259,7 +257,7 @@ class _AccessPoliciesClient:
         )
 
     def list_matching_access_policies(
-        self, asset_id: str, *, page_size: Optional[int] = None
+        self, asset_id: str, *, page_size: "int|None" = None
     ) -> Generator[AccessPolicy, None, None]:
         """List matching access policies.
 

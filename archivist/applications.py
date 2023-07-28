@@ -21,10 +21,8 @@
 
 """
 
-from __future__ import annotations
-
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 if TYPE_CHECKING:
@@ -55,7 +53,7 @@ class _ApplicationsClient:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{APPLICATIONS_SUBPATH}"
         self._label = f"{self._subpath}/{APPLICATIONS_LABEL}"
@@ -63,7 +61,7 @@ class _ApplicationsClient:
     def __str__(self) -> str:
         return f"ApplicationsClient({self._archivist.url})"
 
-    def create(self, display_name: str, custom_claims: dict[str, str]) -> Application:
+    def create(self, display_name: str, custom_claims: "dict[str, str]") -> Application:
         """Create application
 
         Creates application with defined attributes.
@@ -84,7 +82,7 @@ class _ApplicationsClient:
             ),
         )
 
-    def create_from_data(self, data: dict[str, Any]) -> Application:
+    def create_from_data(self, data: "dict[str, Any]") -> Application:
         """Create application
 
         Creates application with request body from data stream.
@@ -117,8 +115,8 @@ class _ApplicationsClient:
         self,
         identity: str,
         *,
-        display_name: Optional[str] = None,
-        custom_claims: Optional[dict[str, str]] = None,
+        display_name: "str|None" = None,
+        custom_claims: "dict[str,str]|None" = None,
     ) -> Application:
         """Update Application
 
@@ -143,7 +141,7 @@ class _ApplicationsClient:
             )
         )
 
-    def delete(self, identity: str) -> dict[str, Any]:
+    def delete(self, identity: str) -> "dict[str, Any]":
         """Delete Application
 
         Deletes application.
@@ -160,9 +158,9 @@ class _ApplicationsClient:
     def __params(
         self,
         *,
-        display_name: Optional[str] = None,
-        custom_claims: Optional[dict[str, str]] = None,
-    ) -> dict[str, Any]:
+        display_name: "str|None" = None,
+        custom_claims: "dict[str,str] | None" = None,
+    ) -> "dict[str, Any]":
         params = {}
 
         if display_name is not None:
@@ -176,8 +174,8 @@ class _ApplicationsClient:
     def list(
         self,
         *,
-        page_size: Optional[int] = None,
-        display_name: Optional[str] = None,
+        page_size: "int|None" = None,
+        display_name: "str|None" = None,
     ):
         """List applications.
 

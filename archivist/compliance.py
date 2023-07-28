@@ -21,10 +21,9 @@
 
 """
 
-from __future__ import annotations
 
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -58,7 +57,7 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{COMPLIANCE_SUBPATH}"
         self._label = f"{self._subpath}/{COMPLIANCE_LABEL}"
@@ -70,8 +69,8 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
         self,
         asset_id,
         *,
-        compliant_at: Optional[bool] = None,
-        report: Optional[str] = None,
+        compliant_at: "bool|None" = None,
+        report: "str|None" = None,
     ) -> Compliance:
         """
         Reads compliance of a particular asset.
@@ -97,7 +96,7 @@ class _ComplianceClient:  # pylint: disable=too-few-public-methods
             self.compliant_at_report(response)
         return Compliance(**response)
 
-    def compliant_at_report(self, compliance: dict[str, Any]):
+    def compliant_at_report(self, compliance: "dict[str, Any]"):
         """
         Prints report of compliance_at request
 

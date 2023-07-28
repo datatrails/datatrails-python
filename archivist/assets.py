@@ -21,11 +21,10 @@
 
 """
 
-from __future__ import annotations
 
 from copy import deepcopy
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Optional, Tuple
+from typing import TYPE_CHECKING, Any
 
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from . import confirmer
@@ -57,7 +56,7 @@ class _AssetsPublic:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._public = archivist_instance.public
         self._subpath = f"{archivist_instance.root}/{ASSETS_SUBPATH}"
@@ -100,7 +99,7 @@ class _AssetsRestricted(_AssetsPublic):
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         super().__init__(archivist_instance)
         self._label = f"{self._subpath}/{ASSETS_LABEL}"
         self.pending_count: int = 0
@@ -109,8 +108,8 @@ class _AssetsRestricted(_AssetsPublic):
         return f"AssetsRestricted({self._archivist.url})"
 
     def __params(
-        self, props: Optional[dict[str, Any]], attrs: Optional[dict[str, Any]]
-    ) -> dict[str, Any]:
+        self, props: "dict[str, Any]|None", attrs: "dict[str, Any]|None"
+    ) -> "dict[str, Any]":
         params = deepcopy(props) if props else {}
         if attrs:
             params["attributes"] = attrs
@@ -120,8 +119,8 @@ class _AssetsRestricted(_AssetsPublic):
     def create(
         self,
         *,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
         confirm: bool = True,
     ) -> Asset:
         """Create asset
@@ -144,7 +143,9 @@ class _AssetsRestricted(_AssetsPublic):
         data = self.__params(newprops, attrs)
         return self.create_from_data(data, confirm=confirm)
 
-    def create_from_data(self, data: dict[str, Any], *, confirm: bool = True) -> Asset:
+    def create_from_data(
+        self, data: "dict[str, Any]", *, confirm: bool = True
+    ) -> Asset:
         """Create asset
 
         Creates asset with request body from data stream.
@@ -165,8 +166,8 @@ class _AssetsRestricted(_AssetsPublic):
         return self.wait_for_confirmation(asset["identity"])
 
     def create_if_not_exists(
-        self, data: dict[str, Any], *, confirm: bool = True
-    ) -> Tuple[Asset, bool]:
+        self, data: "dict[str, Any]", *, confirm: bool = True
+    ) -> "tuple[Asset, bool]":
         """
         Creates an asset and associated locations and attachments if asset
         does not already exist.
@@ -289,8 +290,8 @@ class _AssetsRestricted(_AssetsPublic):
     def wait_for_confirmed(
         self,
         *,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
     ) -> bool:
         """Wait for assets to be confirmed.
 
@@ -320,8 +321,8 @@ class _AssetsRestricted(_AssetsPublic):
     def count(
         self,
         *,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
     ) -> int:
         """Count assets.
 
@@ -340,9 +341,9 @@ class _AssetsRestricted(_AssetsPublic):
     def list(
         self,
         *,
-        page_size: Optional[int] = None,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
+        page_size: "int|None" = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
     ):
         """List assets.
 
@@ -370,8 +371,8 @@ class _AssetsRestricted(_AssetsPublic):
     def read_by_signature(
         self,
         *,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
     ) -> Asset:
         """Read Asset by signature.
 

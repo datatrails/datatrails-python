@@ -25,11 +25,10 @@
 
 """
 
-from __future__ import annotations
 
 from copy import deepcopy
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Union
 
 if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -75,7 +74,7 @@ class _CompliancePoliciesClient:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{COMPLIANCE_POLICIES_SUBPATH}"
         self._label = f"{self._subpath}/{COMPLIANCE_POLICIES_LABEL}"
@@ -86,11 +85,11 @@ class _CompliancePoliciesClient:
     def create(
         self,
         policy: Union[
-            CompliancePolicySince,
-            CompliancePolicyCurrentOutstanding,
-            CompliancePolicyPeriodOutstanding,
-            CompliancePolicyDynamicTolerance,
-            CompliancePolicyRichness,
+            "CompliancePolicySince",
+            "CompliancePolicyCurrentOutstanding",
+            "CompliancePolicyPeriodOutstanding",
+            "CompliancePolicyDynamicTolerance",
+            "CompliancePolicyRichness",
         ],
     ) -> CompliancePolicy:
         """Create A compliance policy
@@ -110,7 +109,7 @@ class _CompliancePoliciesClient:
         """
         return self.create_from_data(policy.dict())
 
-    def create_from_data(self, data: dict[str, Any]) -> CompliancePolicy:
+    def create_from_data(self, data: "dict[str, Any]") -> "CompliancePolicy":
         """Create compliance_policy
 
         Creates compliance_policy with request body from data stream.
@@ -140,7 +139,7 @@ class _CompliancePoliciesClient:
         """
         return CompliancePolicy(**self._archivist.get(f"{self._subpath}/{identity}"))
 
-    def delete(self, identity: str) -> dict[str, Any]:
+    def delete(self, identity: str) -> "dict[str, Any]":
         """Delete Compliance Policy
 
         Deletes compliance policy.
@@ -155,14 +154,14 @@ class _CompliancePoliciesClient:
         """
         return self._archivist.delete(f"{self._subpath}/{identity}")
 
-    def __params(self, props: Optional[dict[str, Any]]) -> dict[str, Any]:
+    def __params(self, props: "dict[str, Any]|None") -> "dict[str, Any]":
         params = deepcopy(props) if props else {}
         # pylint: disable=protected-access
         return _deepmerge(
             self._archivist.fixtures.get(COMPLIANCE_POLICIES_LABEL), params
         )
 
-    def count(self, *, props: Optional[dict[str, Any]] = None) -> int:
+    def count(self, *, props: "dict[str, Any]|None" = None) -> int:
         """Count compliance policies.
 
         Counts number of compliance policies that match criteria.
@@ -180,7 +179,7 @@ class _CompliancePoliciesClient:
         )
 
     def list(
-        self, *, page_size: Optional[int] = None, props: Optional[dict[str, Any]] = None
+        self, *, page_size: "int|None" = None, props: "dict[str, Any]|None" = None
     ):
         """List compliance policies.
 
@@ -204,7 +203,7 @@ class _CompliancePoliciesClient:
             )
         )
 
-    def read_by_signature(self, *, props: Optional[dict[str, Any]] = None):
+    def read_by_signature(self, *, props: "dict[str, Any]|None" = None):
         """Read compliance policy by signature.
 
         Reads compliance policy that meets criteria. Only one compliance policy is expected.

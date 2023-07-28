@@ -22,12 +22,11 @@
 
 """
 
-from __future__ import annotations
 
 from contextlib import suppress
 from copy import deepcopy
 from logging import getLogger
-from typing import TYPE_CHECKING, Any, Optional, Tuple
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
@@ -49,7 +48,7 @@ class Location(dict):
     """
 
     @property
-    def name(self) -> str | None:
+    def name(self) -> "str | None":
         """str: name of the location"""
         name = None
         with suppress(KeyError):
@@ -69,7 +68,7 @@ class _LocationsClient:
 
     """
 
-    def __init__(self, archivist_instance: Archivist):
+    def __init__(self, archivist_instance: "Archivist"):
         self._archivist = archivist_instance
         self._subpath = f"{archivist_instance.root}/{LOCATIONS_SUBPATH}"
         self._label = f"{self._subpath}/{LOCATIONS_LABEL}"
@@ -78,7 +77,7 @@ class _LocationsClient:
         return f"LocationsClient({self._archivist.url})"
 
     def create(
-        self, props: dict[str, Any], *, attrs: Optional[dict[str, Any]] = None
+        self, props: "dict[str, Any]", *, attrs: "dict[str, Any]|None" = None
     ) -> Location:
         """Create location
 
@@ -95,7 +94,7 @@ class _LocationsClient:
         LOGGER.debug("Create Location %s", props)
         return self.create_from_data(self.__params(props, attrs))
 
-    def create_from_data(self, data: dict[str, Any]) -> Location:
+    def create_from_data(self, data: "dict[str, Any]") -> Location:
         """Create location
 
         Creates location with request body from data stream.
@@ -110,7 +109,7 @@ class _LocationsClient:
         """
         return Location(**self._archivist.post(self._label, data))
 
-    def create_if_not_exists(self, data: dict[str, Any]) -> Tuple[Location, bool]:
+    def create_if_not_exists(self, data: "dict[str, Any]") -> "tuple[Location, bool]":
         """
         Create a location if not already exists
 
@@ -172,8 +171,8 @@ class _LocationsClient:
         return Location(**self._archivist.get(f"{self._subpath}/{identity}"))
 
     def __params(
-        self, props: Optional[dict[str, Any]], attrs: Optional[dict[str, Any]]
-    ) -> dict[str, Any]:
+        self, props: "dict[str, Any]|None", attrs: "dict[str, Any]|None"
+    ) -> "dict[str, Any]":
         params = deepcopy(props) if props else {}
         if attrs:
             params["attributes"] = attrs
@@ -183,8 +182,8 @@ class _LocationsClient:
     def count(
         self,
         *,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
     ) -> int:
         """Count locations.
 
@@ -203,9 +202,9 @@ class _LocationsClient:
     def list(
         self,
         *,
-        page_size: Optional[int] = None,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
+        page_size: "int|None" = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
     ):
         """List locations.
 
@@ -234,8 +233,8 @@ class _LocationsClient:
     def read_by_signature(
         self,
         *,
-        props: Optional[dict[str, Any]] = None,
-        attrs: Optional[dict[str, Any]] = None,
+        props: "dict[str, Any]|None" = None,
+        attrs: "dict[str, Any]|None" = None,
     ) -> Location:
         """Read location by signature.
 

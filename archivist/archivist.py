@@ -29,12 +29,10 @@
     attachments, IAM subjects and IAM access policies documented elsewhere.
 
 """
-from __future__ import annotations
-
 from copy import deepcopy
 from logging import getLogger
 from time import time
-from typing import Any, BinaryIO, Optional, Tuple
+from typing import Any, BinaryIO
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
@@ -104,9 +102,9 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     def __init__(
         self,
         url: str,
-        auth: str | Tuple[str, str] | None,
+        auth: "str|tuple[str,str]|None",
         *,
-        fixtures: Optional[dict[str, dict[Any, Any]]] = None,
+        fixtures: "dict[str,dict[Any,Any]]|None" = None,
         verify: bool = True,
         max_time: float = MAX_TIME,
     ):
@@ -183,7 +181,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         return self._root
 
     @property
-    def auth(self) -> str | None:
+    def auth(self) -> "str | None":
         """str: authorization token"""
 
         if self._auth is None and self._machine_auth is None:
@@ -208,7 +206,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             max_time=self._max_time,
         )
 
-    def __copy__(self) -> Archivist:
+    def __copy__(self) -> "Archivist":
         return Archivist(
             self._url,
             self.auth,
@@ -217,7 +215,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             max_time=self._max_time,
         )
 
-    def _add_headers(self, headers: dict[str, str] | None) -> dict[str, Any]:
+    def _add_headers(self, headers: "dict[str,str]|None") -> "dict[str,Any]":
         newheaders = {**headers} if isinstance(headers, dict) else {}
 
         auth = self.auth  # this may trigger a refetch so only do it once here
@@ -233,11 +231,11 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     def post(
         self,
         url: str,
-        request: dict[str, Any] | None,
+        request: "dict[str,Any]|None",
         *,
-        headers: Optional[dict[str, Any]] = None,
-        data: dict[str, Any] | bool = False,
-    ) -> dict[str, Any]:
+        headers: "dict[str,Any]|None" = None,
+        data: "dict[str, Any] | bool" = False,
+    ) -> "dict[str, Any]":
         """POST method (REST)
 
         Creates an entity
@@ -276,11 +274,11 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         self,
         url: str,
         fd: BinaryIO,
-        mtype: str | None,
+        mtype: "str|None",
         *,
         form: str = "file",
-        params: Optional[dict] = None,
-    ) -> dict[str, Any]:
+        params: "dict[str, Any]|None" = None,
+    ) -> "dict[str, Any]":
         """POST method (REST) - upload binary
 
         Uploads a file to an endpoint
@@ -321,8 +319,8 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
 
     @retry_429
     def delete(
-        self, url: str, *, headers: Optional[dict[str, Any]] = None
-    ) -> dict[str, Any]:
+        self, url: str, *, headers: "dict[str, Any]|None" = None
+    ) -> "dict[str, Any]":
         """DELETE method (REST)
 
         Deletes an entity
@@ -352,10 +350,10 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     def patch(
         self,
         url: str,
-        request: dict[str, Any],
+        request: "dict[str, Any]",
         *,
-        headers: Optional[dict[str, Any]] = None,
-    ) -> dict[str, Any]:
+        headers: "dict[str, Any]| None" = None,
+    ) -> "dict[str, Any]":
         """PATCH method (REST)
 
         Updates the specified entity.

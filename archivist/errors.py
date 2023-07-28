@@ -6,7 +6,6 @@
 
 import json
 from logging import getLogger
-from typing import Optional
 
 from requests import Response
 
@@ -59,7 +58,7 @@ class ArchivistNotFoundError(ArchivistError):
 class ArchivistTooManyRequestsError(ArchivistError):
     """Too many requests in too short a time (429)"""
 
-    def __init__(self, retry: Optional[str], *args):
+    def __init__(self, retry: "str|None", *args):
         self.retry = float(retry) if retry is not None else 0
         super().__init__(*args)
 
