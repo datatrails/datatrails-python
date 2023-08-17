@@ -226,7 +226,7 @@ To use the :code:`archivist_runner` command you will need the following:
     - The YAML file with the operations you wish to run
     - The URL of your RKVST instance, this is typically `https://app.rkvst.io`
 
-.. _App Registration: https://docs.rkvst.com/docs/setup-and-administration/getting-access-tokens-using-app-registrations/
+.. _App Registration: https://docs.rkvst.com/developers/developer-patterns/getting-access-tokens-using-app-registrations/
 
 Example usage:
 
