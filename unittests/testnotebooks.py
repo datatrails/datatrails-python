@@ -27,7 +27,7 @@ ARTIST_ID = "123456789abc"
 
 ARTIST_RESPONSE = {
     "identity": "assets/0c8c04b1-05e1-4653-b438-fd912b0c61b7",
-    "behaviours": ["Attachments", "RecordEvidence", "Builtin", "AssetCreator"],
+    "behaviours": ["RecordEvidence", "Builtin", "AssetCreator"],
     "attributes": {
         "arc_description": "British Soul Singer",
         "arc_display_name": ARTIST_NAME,

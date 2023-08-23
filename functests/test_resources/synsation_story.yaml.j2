@@ -55,7 +55,6 @@ steps:
         - arc_namespace
     behaviours:
       - RecordEvidence
-      - Attachments
     attributes:
       arc_display_name: {{ asset.type }} in {{ asset.location_label }}
       arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"

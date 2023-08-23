@@ -281,7 +281,6 @@ asset or event is confirmed before returning.
           description: Create an empty radiation bag with id 1.
           asset_label: radiation bag 1
         behaviours:
-          - Attachments
           - RecordEvidence
         attributes:
           arc_display_name: radiation bag 1
