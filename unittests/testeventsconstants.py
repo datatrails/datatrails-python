@@ -44,31 +44,31 @@ PRINCIPAL_ACCEPTED = {
     "display_name": "Accepted",
 }
 PROPS = {
-    "operation": "Attach",
-    "behaviour": "Attachments",
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
     "timestamp_declared": "2019-11-27T14:44:19Z",
     "principal_accepted": PRINCIPAL_ACCEPTED,
 }
 PROPS_WITH_NO_TIMESTAMP = {
-    "operation": "Attach",
-    "behaviour": "Attachments",
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
     "principal_accepted": PRINCIPAL_ACCEPTED,
 }
 PROPS_WITH_TIMESTAMP_ACCEPTED = {
-    "operation": "Attach",
-    "behaviour": "Attachments",
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
     "timestamp_accepted": "2021-04-08T14:44:19Z",
     "principal_accepted": PRINCIPAL_ACCEPTED,
 }
 PROPS_WITH_PRINCIPAL_DECLARED = {
-    "operation": "Attach",
-    "behaviour": "Attachments",
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
     "timestamp_declared": "2019-11-27T14:44:19Z",
     "principal_declared": PRINCIPAL_DECLARED,
 }
 PROPS_WITH_NO_PRINCIPAL = {
-    "operation": "Attach",
-    "behaviour": "Attachments",
+    "operation": "Record",
+    "behaviour": "RecordEvidence",
     "timestamp_declared": "2019-11-27T14:44:19Z",
 }
 

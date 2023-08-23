@@ -16,7 +16,6 @@ steps:
       asset_label: ev pump 1
     behaviours:
       - RecordEvidence
-      - Attachments
     attributes:
       arc_display_name: ev pump 1
       arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}

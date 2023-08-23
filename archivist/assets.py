@@ -185,7 +185,6 @@ class _AssetsRestricted(_AssetsPublic):
                     - arc_display_name
                 behaviours
                   - RecordEvidence
-                  - Attachments
                 attributes:
                   arc_display_name: RKVST Front Door
                   arc_firmware_version: "1.0"

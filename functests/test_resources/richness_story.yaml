@@ -13,7 +13,6 @@ steps:
       asset_label: radiation bag 1
     behaviours:
       - RecordEvidence
-      - Attachments
     attributes:
       arc_display_name: radiation bag 1
       arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
@@ -28,7 +27,6 @@ steps:
       asset_label: radiation bag 2
     behaviours:
       - RecordEvidence
-      - Attachments
     attributes:
       arc_display_name: radiation bag 2
       arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
@@ -43,7 +41,6 @@ steps:
       asset_label: radiation bag 3
     behaviours:
       - RecordEvidence
-      - Attachments
     attributes:
       arc_display_name: radiation bag 3
       arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}

@@ -35,7 +35,6 @@ Usually these field values are derived from an environment variable
             - arc_namespace
         behaviours:
           - RecordEvidence
-          - Attachments
         attributes:
           arc_display_name: RKVST Paris Front Door
           arc_namespace: door entry

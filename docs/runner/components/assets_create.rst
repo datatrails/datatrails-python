@@ -25,7 +25,6 @@ The optional :code:`confirm: true` entry means that the step will wait for the a
           description: Create new EV Pump with id 1.
           asset_label: ev pump 1
         behaviours:
-          - Attachments
           - RecordEvidence
         attributes:
           arc_display_name: ev pump 1

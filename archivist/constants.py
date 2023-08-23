@@ -10,7 +10,6 @@ VERBSEP = ":"
 # These are now hardcoded and not user-selectable. Eventually they will be removed from
 # the backend API and removed from this package.
 ASSET_BEHAVIOURS = [
-    "Attachments",
     "RecordEvidence",
 ]
 
