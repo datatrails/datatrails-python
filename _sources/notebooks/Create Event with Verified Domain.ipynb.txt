@@ -268,7 +268,6 @@
       "    \"behaviours\": [\n",
       "        \"Builtin\",\n",
       "        \"AssetCreator\",\n",
-      "        \"Attachments\",\n",
       "        \"RecordEvidence\"\n",
       "    ],\n",
       "    \"chain_id\": \"827586838445807967\",\n",

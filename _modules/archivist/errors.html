@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.errors &mdash; RKVST v0.25.1 documentation</title>
+  <title>archivist.errors &mdash; RKVST v0.25.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -37,7 +37,7 @@
               <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.25.1
+                v0.25.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -91,7 +91,6 @@
 
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">Response</span>
 
@@ -144,7 +143,7 @@
 <div class="viewcode-block" id="ArchivistTooManyRequestsError"><a class="viewcode-back" href="../../code/errors.html#archivist.errors.ArchivistTooManyRequestsError">[docs]</a><span class="k">class</span> <span class="nc">ArchivistTooManyRequestsError</span><span class="p">(</span><span class="n">ArchivistError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Too many requests in too short a time (429)&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">retry</span><span class="p">:</span> <span class="s2">&quot;str|None&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">retry</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">retry</span><span class="p">)</span> <span class="k">if</span> <span class="n">retry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 

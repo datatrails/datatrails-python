@@ -188,7 +188,6 @@
       "Asset {\n",
       "    \"identity\": \"assets/17a59a16-3d5c-4d58-8ea6-1b86465ff32f\",\n",
       "    \"behaviours\": [\n",
-      "        \"Attachments\",\n",
       "        \"RecordEvidence\",\n",
       "        \"Builtin\",\n",
       "        \"AssetCreator\"\n",

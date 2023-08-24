@@ -190,7 +190,6 @@
       "                \"subjects/34b291c3-30f4-4d89-9ec7-85f57354f798\"\n",
       "            ],\n",
       "            \"behaviours\": [\n",
-      "                \"Attachments\",\n",
       "                \"RecordEvidence\"\n",
       "            ],\n",
       "            \"include_attributes\": [],\n",
