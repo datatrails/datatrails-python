@@ -126,37 +126,6 @@ class TestPublicAssetCreate(TestCase):
         events = public.events.list(asset_id=asset_publicurl)
         LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
 
-    def test_public_asset_create_khipu(self):
-        """
-        Test public asset creation using khipu proof mechanism
-        """
-        asset = self.arch.assets.create(
-            attrs=self.traffic_light,
-            props={
-                "proof_mechanism": ProofMechanism.KHIPU.name,
-                "public": True,
-            },
-            confirm=True,
-        )
-        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
-        self.assertEqual(
-            asset["proof_mechanism"],
-            ProofMechanism.KHIPU.name,
-            msg="Incorrect asset proof mechanism",
-        )
-        self.assertEqual(
-            asset["public"],
-            True,
-            msg="Asset is not public",
-        )
-        asset_publicurl = self.arch.assets.publicurl(asset["identity"])
-        LOGGER.debug("publicurl %s", asset_publicurl)
-        public = self.arch.Public
-        count = public.events.count(asset_id=asset_publicurl)
-        LOGGER.debug("count %s", count)
-        events = public.events.list(asset_id=asset_publicurl)
-        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
-
     def test_public_asset_create_event(self):
         """
         Test list

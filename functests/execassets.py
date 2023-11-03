@@ -112,32 +112,6 @@ class TestAssetCreate(TestCase):
         tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
         LOGGER.debug("tenancy %s", json_dumps(tenancy, sort_keys=True, indent=4))
 
-    def test_asset_create_khipu(self):
-        """
-        Test asset creation using khipu proof mechanism
-        """
-        asset = self.arch.assets.create(
-            props={
-                "proof_mechanism": ProofMechanism.KHIPU.name,
-            },
-            attrs=self.traffic_light,
-        )
-        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
-        self.assertEqual(
-            asset["proof_mechanism"],
-            ProofMechanism.KHIPU.name,
-            msg="Incorrect asset proof mechanism",
-        )
-        tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
-        LOGGER.debug("tenancy %s", json_dumps(tenancy, sort_keys=True, indent=4))
-
-        events = self.arch.events.list(asset_id=asset["identity"])
-        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
-        asset = self.arch.events.wait_for_confirmation(asset["identity"])
-        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
-        events = self.arch.events.list(asset_id=asset["identity"])
-        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
-
     def test_asset_create_with_fixtures(self):
         """
         Test creation with fixtures

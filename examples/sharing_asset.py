@@ -40,10 +40,9 @@ def create_example_asset(arch, label):
     # Select the mechanism used to prove evidence for the asset.  If the selected proof
     # mechanism is not enabled for your tenant then an error will occur.
     # If unspecified then SIMPLE_HASH is used.
-    # proof_mechanism = ProofMechanism.KHIPU.name
     #
     props = {
-        "proof_mechanism": ProofMechanism.KHIPU.name,
+        "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     }
 
     # The first argument is the properties of the asset
@@ -68,7 +67,7 @@ def create_archivist(label):
     # Initialize connection to Archivist. max_time is the time to wait for confirmation
     # of an asset or event creation - the default is 1200 seconds but one can optionally
     # specify a different value here particularly when creating assets on SIMPLE_HASH
-    # (rather than KHIPU) as confirmation times are much shorter in this case.
+    # as confirmation times are much shorter in this case.
     return Archivist(
         "https://app.rkvst.io",
         auth,
