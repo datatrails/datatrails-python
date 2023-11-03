@@ -2,21 +2,21 @@
 
 # code quality
 autopep8~=2.0
-black[jupyter]~=23.7
-coverage[toml]~=7.2
+black[jupyter]~=23.9
+coverage[toml]~=7.3
 pip-audit~=2.6
 pycodestyle~=2.10
-pylint~=2.17
+pylint~=3.0
 pyright~=1.1
-ruff~=0.0
+ruff~=0.1
 unittest-xml-reporting~=3.2
 testbook~=0.4
 
 # analyze dependencies
-pipdeptree~=2.10
+pipdeptree~=2.13
 
 # uploading to pypi
-build~=0.10
+build~=1.0
 twine~=4.0
 
 # for sbom.xml file

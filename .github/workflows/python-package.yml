@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11" ]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12" ]
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -47,7 +47,6 @@ jobs:
         ./scripts/version.sh
         pycodestyle --format=pylint archivist examples functests unittests
         python3 -m pylint archivist examples functests unittests
-        python3 -m pyright --stats archivist
         black archivist examples unittests functests
         modified=$(git status -s | wc -l)
         if [ $modified -gt 0 ]
@@ -56,6 +55,12 @@ jobs:
             exit 1
         fi
         ./scripts/unittests.sh
+      shell: bash
+    - name: Run type-hint checks
+      if: ${{ matrix.python-version != '3.12' }}
+      run: |
+        ./scripts/version.sh
+        python3 -m pyright --stats archivist
       shell: bash
     - name: Run zip notebooks
       if: ${{ matrix.os == 'ubuntu-latest' }}

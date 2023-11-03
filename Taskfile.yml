@@ -1,5 +1,9 @@
 version: '3'
 
+vars:
+  PYVERSION:
+    sh: echo $(./scripts/builder.sh python3 --version | cut -d' ' -f2| cut -d'.' -f1-2)
+
 tasks:
 
   about:
@@ -34,15 +38,28 @@ tasks:
     cmds:
       - ./scripts/build.sh "3.11"
 
+  builder-3.12:
+    desc: Build a docker environment with the right dependencies and utilities
+    cmds:
+      - ./scripts/build.sh "3.12"
+
   check:
     desc: Check the style, bug and quality of the code
     deps: [about]
     cmds:
-      - ./scripts/builder.sh python3 --version
+      - echo {{.PYVERSION}}
       - ./scripts/builder.sh ruff check archivist examples functests unittests
-      - ./scripts/builder.sh python3 -m pyright --stats archivist
       - ./scripts/builder.sh pycodestyle --format=pylint archivist examples functests unittests
       - ./scripts/builder.sh python3 -m pylint archivist examples functests unittests
+      - task: check-pyright
+
+  check-pyright:
+    desc: Execute pyright conditinally - currently does not work in 3.12 (https://github.com/ekalinin/nodeenv/issues/341)
+    cmds:
+      - |
+        if [ "{{.PYVERSION}}" != "3.12" ]; then
+            ./scripts/builder.sh python3 -m pyright --stats archivist
+        fi
 
   check-fixes:
     desc: Show proposed fixes from ruff

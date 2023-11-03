@@ -251,6 +251,23 @@ To run the unittests:
 task unittests
 ```
 
+##### Python 3.12
+
+To build the docker builder image with Python 3.12:
+```bash
+task builder-3.12
+```
+
+To check the style
+```bash
+task check
+```
+
+To run the unittests:
+```bash
+task unittests
+```
+
 ### Seeking a review
 
 #### Synchronizing the upstream
