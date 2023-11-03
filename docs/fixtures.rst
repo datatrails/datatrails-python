@@ -24,7 +24,7 @@ and locations.
         authtoken,
         fixtures = {
             "assets": {
-                "proof_mechanism": ProofMechanism.KHIPU.name,
+                "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             }
         },
     )

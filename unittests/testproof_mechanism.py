@@ -2,9 +2,7 @@
 Test proof mechanism
 """
 
-# pylint: disable=attribute-defined-outside-init
-# pylint: disable=missing-docstring
-# pylint: disable=too-few-public-methods
+# pylint: disable=protected-access
 
 from unittest import TestCase
 
@@ -20,11 +18,22 @@ class TestProofMechanism(TestCase):
         """
         Test proof_mechanism
         """
-        self.assertEqual(ProofMechanism.KHIPU.value, 1, msg="Incorrect value")
-        self.assertEqual(ProofMechanism.KHIPU.name, "KHIPU", msg="Incorrect value")
         self.assertEqual(ProofMechanism.SIMPLE_HASH.value, 2, msg="Incorrect value")
+
         self.assertEqual(
             ProofMechanism.SIMPLE_HASH.name,
             "SIMPLE_HASH",
             msg="Incorrect value",
         )
+
+    def test_proof_mechanism_reserved(self):
+        """
+        Test proof_mechanism
+        """
+        with self.assertRaises(AttributeError):
+            self.assertEqual(ProofMechanism.__RESERVED.value, 1, msg="Incorrect value")
+
+        with self.assertRaises(AttributeError):
+            self.assertEqual(
+                ProofMechanism.__RESERVED.name, "__RESERVED", msg="Incorrect value"
+            )
