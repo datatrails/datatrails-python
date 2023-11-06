@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.events &mdash; RKVST v0.25.2 documentation</title>
+  <title>archivist.events &mdash; RKVST  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -13,11 +13,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -36,9 +36,6 @@
             
               <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                v0.25.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -131,7 +128,9 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Event"><a class="viewcode-back" href="../../code/events.html#archivist.events.Event">[docs]</a><span class="k">class</span> <span class="nc">Event</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="Event">
+<a class="viewcode-back" href="../../code/events.html#archivist.events.Event">[docs]</a>
+<span class="k">class</span> <span class="nc">Event</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Event</span>
 
 <span class="sd">    Event object has dictionary attributes and properties.</span>
@@ -186,7 +185,10 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="_EventsPublic"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic">[docs]</a><span class="k">class</span> <span class="nc">_EventsPublic</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_EventsPublic">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic">[docs]</a>
+<span class="k">class</span> <span class="nc">_EventsPublic</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;EventsPublic</span>
 
 <span class="sd">    Access to events entities using the CRUD interface. This class is usually</span>
@@ -205,7 +207,9 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;EventsPublic()&quot;</span>
 
-<div class="viewcode-block" id="_EventsPublic._identity"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic._identity">[docs]</a>    <span class="k">def</span> <span class="nf">_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="_EventsPublic._identity">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic._identity">[docs]</a>
+    <span class="k">def</span> <span class="nf">_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return fully qualified identity</span>
 <span class="sd">        If public then expect a full url as argument</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -215,7 +219,10 @@
 
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
-<div class="viewcode-block" id="_EventsPublic.read"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Event</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_EventsPublic.read">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic.read">[docs]</a>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Event</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read event</span>
 
 <span class="sd">        Reads event.</span>
@@ -228,6 +235,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Event</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_identity</span><span class="p">(</span><span class="n">identity</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span></div>
+
 
     <span class="k">def</span> <span class="nf">_params</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -243,7 +251,9 @@
 
         <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">EVENTS_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 
-<div class="viewcode-block" id="_EventsPublic.count"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+<div class="viewcode-block" id="_EventsPublic.count">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic.count">[docs]</a>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">asset_id</span><span class="p">:</span> <span class="s2">&quot;str|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -283,7 +293,10 @@
             <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">asset_attrs</span><span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_EventsPublic.list"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_EventsPublic.list">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic.list">[docs]</a>
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">asset_id</span><span class="p">:</span> <span class="s2">&quot;str|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -322,7 +335,10 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_EventsPublic.read_by_signature"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic.read_by_signature">[docs]</a>    <span class="k">def</span> <span class="nf">read_by_signature</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_EventsPublic.read_by_signature">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsPublic.read_by_signature">[docs]</a>
+    <span class="k">def</span> <span class="nf">read_by_signature</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">asset_id</span><span class="p">:</span> <span class="s2">&quot;str|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -355,10 +371,14 @@
                 <span class="n">EVENTS_LABEL</span><span class="p">,</span>
                 <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">(</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">asset_attrs</span><span class="p">),</span>
             <span class="p">)</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="_EventsRestricted"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted">[docs]</a><span class="k">class</span> <span class="nc">_EventsRestricted</span><span class="p">(</span><span class="n">_EventsPublic</span><span class="p">):</span>
+
+<div class="viewcode-block" id="_EventsRestricted">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted">[docs]</a>
+<span class="k">class</span> <span class="nc">_EventsRestricted</span><span class="p">(</span><span class="n">_EventsPublic</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;EventsRestricted</span>
 
 <span class="sd">    Access to events entities using the CRUD interface. This class is usually</span>
@@ -376,7 +396,9 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;EventsRestricted(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-<div class="viewcode-block" id="_EventsRestricted.create"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
+<div class="viewcode-block" id="_EventsRestricted.create">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.create">[docs]</a>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">asset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">props</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">,</span>
@@ -408,7 +430,10 @@
             <span class="n">confirm</span><span class="o">=</span><span class="n">confirm</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_EventsRestricted.create_from_data"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_EventsRestricted.create_from_data">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.create_from_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Event</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create event</span>
@@ -467,7 +492,10 @@
         <span class="n">event_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_confirmation</span><span class="p">(</span><span class="n">event_id</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="_EventsRestricted.wait_for_confirmation"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.wait_for_confirmation">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Event</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_EventsRestricted.wait_for_confirmation">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.wait_for_confirmation">[docs]</a>
+    <span class="k">def</span> <span class="nf">wait_for_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Event</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait for event to be confirmed.</span>
 
 <span class="sd">        Waits for event to be confirmed.</span>
@@ -483,7 +511,10 @@
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="k">return</span> <span class="n">confirmer</span><span class="o">.</span><span class="n">_wait_for_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="_EventsRestricted.wait_for_confirmed"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.wait_for_confirmed">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_confirmed</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_EventsRestricted.wait_for_confirmed">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.wait_for_confirmed">[docs]</a>
+    <span class="k">def</span> <span class="nf">wait_for_confirmed</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">asset_id</span><span class="p">:</span> <span class="s2">&quot;str|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -527,7 +558,10 @@
             <span class="n">asset_attrs</span><span class="o">=</span><span class="n">asset_attrs</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_EventsRestricted.publicurl"><a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.publicurl">[docs]</a>    <span class="k">def</span> <span class="nf">publicurl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_EventsRestricted.publicurl">
+<a class="viewcode-back" href="../../code/events.html#archivist.events._EventsRestricted.publicurl">[docs]</a>
+    <span class="k">def</span> <span class="nf">publicurl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read event public url</span>
 
 <span class="sd">        Reads event public url.</span>
@@ -544,7 +578,9 @@
         <span class="k">if</span> <span class="n">publicurl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ArchivistBadFieldError</span><span class="p">(</span><span class="s2">&quot;No publicurl found in response&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">publicurl</span></div></div>
+        <span class="k">return</span> <span class="n">publicurl</span></div>
+</div>
+
 </pre></div>
 
            </div>

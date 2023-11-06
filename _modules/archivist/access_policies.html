@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.access_policies &mdash; RKVST v0.25.2 documentation</title>
+  <title>archivist.access_policies &mdash; RKVST  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -13,11 +13,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -36,9 +36,6 @@
             
               <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                v0.25.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -126,7 +123,9 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="AccessPolicy"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies.AccessPolicy">[docs]</a><span class="k">class</span> <span class="nc">AccessPolicy</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="AccessPolicy">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies.AccessPolicy">[docs]</a>
+<span class="k">class</span> <span class="nc">AccessPolicy</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;AccessPolicy object&quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -135,7 +134,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;display_name&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_AccessPoliciesClient"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient">[docs]</a><span class="k">class</span> <span class="nc">_AccessPoliciesClient</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient">[docs]</a>
+<span class="k">class</span> <span class="nc">_AccessPoliciesClient</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;AccessPoliciesClient</span>
 
 <span class="sd">    Access to access_policies entities using CRUD interface. This class is usually</span>
@@ -154,7 +156,9 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AccessPoliciesClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-<div class="viewcode-block" id="_AccessPoliciesClient.create"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
+<div class="viewcode-block" id="_AccessPoliciesClient.create">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create">[docs]</a>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">props</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">,</span>
         <span class="n">filters</span><span class="p">:</span> <span class="s2">&quot;list[dict[str, Any]]&quot;</span><span class="p">,</span>
@@ -180,7 +184,10 @@
             <span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_AccessPoliciesClient.create_from_data"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.create_from_data">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.create_from_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create access policy</span>
 
 <span class="sd">        Creates access policy with request body from data stream.</span>
@@ -200,7 +207,10 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_AccessPoliciesClient.read"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.read">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.read">[docs]</a>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AccessPolicy</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read Access Policy</span>
 
 <span class="sd">        Reads access policy.</span>
@@ -214,7 +224,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">AccessPolicy</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="_AccessPoliciesClient.update"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.update">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">identity</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
@@ -245,7 +258,10 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_AccessPoliciesClient.delete"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.delete">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.delete">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete Access Policy</span>
 
 <span class="sd">        Deletes access policy.</span>
@@ -258,6 +274,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="nf">__params</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -275,7 +292,9 @@
 
         <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ACCESS_POLICIES_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 
-<div class="viewcode-block" id="_AccessPoliciesClient.count"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="s2">&quot;str | None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="_AccessPoliciesClient.count">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.count">[docs]</a>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="s2">&quot;str | None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Count access policies.</span>
 
 <span class="sd">        Counts number of access policies that match criteria.</span>
@@ -290,7 +309,10 @@
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">}</span> <span class="k">if</span> <span class="n">display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="_AccessPoliciesClient.list"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.list">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list">[docs]</a>
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="s2">&quot;int|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">display_name</span><span class="p">:</span> <span class="s2">&quot;str|None&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">AccessPolicy</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List access policies.</span>
@@ -316,8 +338,11 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
+
     <span class="c1"># additional queries on different endpoints</span>
-<div class="viewcode-block" id="_AccessPoliciesClient.list_matching_assets"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list_matching_assets">[docs]</a>    <span class="k">def</span> <span class="nf">list_matching_assets</span><span class="p">(</span>
+<div class="viewcode-block" id="_AccessPoliciesClient.list_matching_assets">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list_matching_assets">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_matching_assets</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">access_policy_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="s2">&quot;int|None&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Asset</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List matching assets.</span>
@@ -341,7 +366,10 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_AccessPoliciesClient.list_matching_access_policies"><a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list_matching_access_policies">[docs]</a>    <span class="k">def</span> <span class="nf">list_matching_access_policies</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_AccessPoliciesClient.list_matching_access_policies">
+<a class="viewcode-back" href="../../code/iam/access_policies.html#archivist.access_policies._AccessPoliciesClient.list_matching_access_policies">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_matching_access_policies</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">asset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">page_size</span><span class="p">:</span> <span class="s2">&quot;int|None&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">AccessPolicy</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List matching access policies.</span>
@@ -363,7 +391,9 @@
                 <span class="n">ACCESS_POLICIES_LABEL</span><span class="p">,</span>
                 <span class="n">page_size</span><span class="o">=</span><span class="n">page_size</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

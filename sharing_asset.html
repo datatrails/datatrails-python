@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sharing Asset Example &mdash; RKVST v0.25.2 documentation</title>
+  <title>Sharing Asset Example &mdash; RKVST  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
@@ -14,11 +14,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -39,9 +39,6 @@
             
               <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                v0.25.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -105,7 +102,7 @@
            <div itemprop="articleBody">
              
   <section id="sharing-asset-example">
-<span id="sharing-assetref"></span><h1>Sharing Asset Example<a class="headerlink" href="#sharing-asset-example" title="Permalink to this heading"></a></h1>
+<span id="sharing-assetref"></span><h1>Sharing Asset Example<a class="headerlink" href="#sharing-asset-example" title="Link to this heading"></a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Create an asset for Archivist with token.</span>
 
 <span class="sd">   Create an access_policy that shares an asset when certain criteria are met.</span>
@@ -148,10 +145,9 @@
     <span class="c1"># Select the mechanism used to prove evidence for the asset.  If the selected proof</span>
     <span class="c1"># mechanism is not enabled for your tenant then an error will occur.</span>
     <span class="c1"># If unspecified then SIMPLE_HASH is used.</span>
-    <span class="c1"># proof_mechanism = ProofMechanism.KHIPU.name</span>
     <span class="c1">#</span>
     <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">KHIPU</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">SIMPLE_HASH</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="c1"># The first argument is the properties of the asset</span>
@@ -176,7 +172,7 @@
     <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
     <span class="c1"># of an asset or event creation - the default is 1200 seconds but one can optionally</span>
     <span class="c1"># specify a different value here particularly when creating assets on SIMPLE_HASH</span>
-    <span class="c1"># (rather than KHIPU) as confirmation times are much shorter in this case.</span>
+    <span class="c1"># as confirmation times are much shorter in this case.</span>
     <span class="k">return</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
         <span class="n">auth</span><span class="p">,</span>

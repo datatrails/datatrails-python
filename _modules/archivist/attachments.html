@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.attachments &mdash; RKVST v0.25.2 documentation</title>
+  <title>archivist.attachments &mdash; RKVST  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -13,11 +13,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -36,9 +36,6 @@
             
               <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                v0.25.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -132,7 +129,9 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Attachment"><a class="viewcode-back" href="../../code/attachments.html#archivist.attachments.Attachment">[docs]</a><span class="k">class</span> <span class="nc">Attachment</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="Attachment">
+<a class="viewcode-back" href="../../code/attachments.html#archivist.attachments.Attachment">[docs]</a>
+<span class="k">class</span> <span class="nc">Attachment</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Attachment</span>
 
 <span class="sd">    Attachment object has dictionary attributes.</span>
@@ -140,7 +139,10 @@
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="_AttachmentsClient"><a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient">[docs]</a><span class="k">class</span> <span class="nc">_AttachmentsClient</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_AttachmentsClient">
+<a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient">[docs]</a>
+<span class="k">class</span> <span class="nc">_AttachmentsClient</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;AttachmentsClient</span>
 
 <span class="sd">    Access to attachments entities using CRUD interface. This class is usually</span>
@@ -159,7 +161,9 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AttachmentsClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-<div class="viewcode-block" id="_AttachmentsClient.get_default_key"><a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.get_default_key">[docs]</a>    <span class="k">def</span> <span class="nf">get_default_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, str]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="_AttachmentsClient.get_default_key">
+<a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.get_default_key">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_default_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, str]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a key to use if no key was provided</span>
 <span class="sd">        either use filename or url as one of them is required</span>
@@ -171,7 +175,10 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">attachment_key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="_AttachmentsClient.create"><a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+
+<div class="viewcode-block" id="_AttachmentsClient.create">
+<a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.create">[docs]</a>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an attachment and return struct suitable for use in an asset</span>
 <span class="sd">        or event creation.</span>
@@ -243,7 +250,10 @@
 
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="_AttachmentsClient.upload"><a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.upload">[docs]</a>    <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">mtype</span><span class="p">:</span> <span class="s2">&quot;str|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Attachment</span><span class="p">:</span>
+
+<div class="viewcode-block" id="_AttachmentsClient.upload">
+<a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.upload">[docs]</a>
+    <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">mtype</span><span class="p">:</span> <span class="s2">&quot;str|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Attachment</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create attachment</span>
 
 <span class="sd">        Creates attachment from opened file or other data source.</span>
@@ -266,12 +276,15 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
+
     <span class="k">def</span> <span class="nf">__params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]|None&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">:</span>
         <span class="n">params</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="p">{}</span>
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="k">return</span> <span class="n">_deepmerge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">fixtures</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ATTACHMENTS_LABEL</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
 
-<div class="viewcode-block" id="_AttachmentsClient.download"><a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span>
+<div class="viewcode-block" id="_AttachmentsClient.download">
+<a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.download">[docs]</a>
+    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">fd</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span>
@@ -299,7 +312,10 @@
             <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_AttachmentsClient.info"><a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_AttachmentsClient.info">
+<a class="viewcode-back" href="../../code/attachments.html#archivist.attachments._AttachmentsClient.info">[docs]</a>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">:</span>
@@ -314,7 +330,9 @@
 <span class="sd">            REST response</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">/info&quot;</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">identity</span><span class="si">}</span><span class="s2">/info&quot;</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>
