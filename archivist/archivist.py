@@ -2,7 +2,7 @@
 """Archivist connection interface
 
    This module contains the base Archivist class which manages
-   the connection parameters to a RKVST instance and
+   the connection parameters to a DATATRAILS instance and
    the basic REST verbs to GET, POST, PATCH and DELETE entities..
 
    The REST methods in this class should only be used directly when
@@ -20,7 +20,7 @@
 
       # Initialize connection to Archivist
       arch = Archivist(
-          "https://app.rkvst.io",
+          "https://app.datatrails.ai",
           authtoken,
           max_time=300.0,
       )

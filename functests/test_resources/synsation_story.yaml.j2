@@ -23,7 +23,7 @@ steps:
     latitude: {{ location.latitude }}
     longitude: {{ location.longitude }}
     attributes:
-      namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
+      namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
       address: {{ location.attributes.address }}
       facility_type: {{ location.attributes.facility_type }}
       reception_email: {{ location.attributes.reception_email }}
@@ -34,14 +34,14 @@ steps:
       description: Count locations in namespace
       LOGGER.debug_response: true
     attrs:
-      namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
+      namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
 
   - step:
       action: LOCATIONS_LIST
       description: List locations in namespace
       LOGGER.debug_response: true
     attrs:
-      namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
+      namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
 
   {% for asset in assets %} 
   - step:
@@ -57,7 +57,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: {{ asset.type }} in {{ asset.location_label }}
-      arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
+      arc_namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
       arc_display_type: {{ asset.type }}
       arc_firmware_version: {{ asset.firmware_version }}
       arc_serial_number: {{ asset.serial_number }}
@@ -74,7 +74,7 @@ steps:
       description: Wait for all assets to be confirmed
       LOGGER.debug_response: true
     attrs:
-      arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
+      arc_namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
 
   - step:
       action: ASSETS_LIST
@@ -82,7 +82,7 @@ steps:
       LOGGER.debug_response: true
     attrs:
       arc_display_type: LOGGER.debuger
-      arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
+      arc_namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
 
   - step:
       action: ASSETS_LIST
@@ -90,7 +90,7 @@ steps:
       LOGGER.debug_response: true
     attrs:
       arc_display_type: coffee machine
-      arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
+      arc_namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
 
   - step:
       action: ASSETS_LIST
@@ -98,5 +98,5 @@ steps:
       LOGGER.debug_response: true
     attrs:
       arc_display_type: security camera
-      arc_namespace: "{{ env['RKVST_UNIQUE_ID'] or 'namespace' }}"
+      arc_namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
 

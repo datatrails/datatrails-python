@@ -1,3 +1,4 @@
+ai
 api
 appidp
 args
@@ -8,6 +9,7 @@ config
 cyclonedx
 dataclass
 dataclasses
+datatrails
 dialogs
 dicts
 distros
@@ -32,7 +34,6 @@ onwards
 params
 publicurl
 py
-rkvst
 sbom
 sboms
 sbomType

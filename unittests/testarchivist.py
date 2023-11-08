@@ -22,17 +22,17 @@ from .mock_response import MockResponse
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access
 
-if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
-    set_logger(environ["RKVST_LOGLEVEL"])
+if "DATATRAILS_LOGLEVEL" in environ and environ["DATATRAILS_LOGLEVEL"]:
+    set_logger(environ["DATATRAILS_LOGLEVEL"])
 
 
-RKVST_APPREG_CLIENT = "client_id-2f78-4fa0-9425-d59314845bc5"
-RKVST_APPREG_SECRET = "client_secret-388f5187e32d930d83"
+DATATRAILS_APPREG_CLIENT = "client_id-2f78-4fa0-9425-d59314845bc5"
+DATATRAILS_APPREG_SECRET = "client_secret-388f5187e32d930d83"
 ACCESS_TOKEN = "access_token-xbXATAWrEpepR7TklOxRB-yud92AsD6DGGasiEGN7MZKT0AIQ4Rw9s"
 REQUEST = {
     "grant_type": "client_credentials",
-    "client_id": RKVST_APPREG_CLIENT,
-    "client_secret": RKVST_APPREG_SECRET,
+    "client_id": DATATRAILS_APPREG_CLIENT,
+    "client_secret": DATATRAILS_APPREG_SECRET,
 }
 
 RESPONSE = {
@@ -57,76 +57,76 @@ class TestArchivist(TestCase):
         Test illegal url
         """
         with self.assertRaises(ArchivistError):
-            Archivist("https://app.rkvst.io/", "authauthauth")
+            Archivist("https://app.datatrails.ai/", "authauthauth")
 
     def test_archivist(self):
         """
         Test default archivist creation
         """
-        with Archivist("https://app.rkvst.io", "authauthauth") as arch:
+        with Archivist("https://app.datatrails.ai", "authauthauth") as arch:
             self.assertEqual(
                 str(arch),
-                "Archivist(https://app.rkvst.io)",
+                "Archivist(https://app.datatrails.ai)",
                 msg="Incorrect str",
             )
             self.assertEqual(
                 str(arch.access_policies),
-                "AccessPoliciesClient(https://app.rkvst.io)",
+                "AccessPoliciesClient(https://app.datatrails.ai)",
                 msg="Incorrect access_policies",
             )
             self.assertEqual(
                 str(arch.appidp),
-                "AppIDPClient(https://app.rkvst.io)",
+                "AppIDPClient(https://app.datatrails.ai)",
                 msg="Incorrect appidp",
             )
             self.assertEqual(
                 str(arch.applications),
-                "ApplicationsClient(https://app.rkvst.io)",
+                "ApplicationsClient(https://app.datatrails.ai)",
                 msg="Incorrect applications",
             )
             self.assertEqual(
                 str(arch.assets),
-                "AssetsRestricted(https://app.rkvst.io)",
+                "AssetsRestricted(https://app.datatrails.ai)",
                 msg="Incorrect assets",
             )
             self.assertEqual(
                 str(arch.assetattachments),
-                "AssetAttachmentsClient(https://app.rkvst.io)",
+                "AssetAttachmentsClient(https://app.datatrails.ai)",
                 msg="Incorrect assets",
             )
             self.assertEqual(
                 str(arch.attachments),
-                "AttachmentsClient(https://app.rkvst.io)",
+                "AttachmentsClient(https://app.datatrails.ai)",
                 msg="Incorrect attachments",
             )
             self.assertEqual(
                 str(arch.compliance),
-                "ComplianceClient(https://app.rkvst.io)",
+                "ComplianceClient(https://app.datatrails.ai)",
                 msg="Incorrect compliance",
             )
             self.assertEqual(
                 str(arch.compliance_policies),
-                "CompliancePoliciesClient(https://app.rkvst.io)",
+                "CompliancePoliciesClient(https://app.datatrails.ai)",
                 msg="Incorrect compliance_policies",
             )
             self.assertEqual(
                 str(arch.events),
-                "EventsRestricted(https://app.rkvst.io)",
+                "EventsRestricted(https://app.datatrails.ai)",
                 msg="Incorrect events",
             )
             self.assertEqual(
                 str(arch.locations),
-                "LocationsClient(https://app.rkvst.io)",
+                "LocationsClient(https://app.datatrails.ai)",
                 msg="Incorrect locations",
             )
             self.assertEqual(
                 str(arch.runner),
-                "Runner(https://app.rkvst.io)",
+                "Runner(https://app.datatrails.ai)",
                 msg="Incorrect runner",
             )
             self.assertEqual(
                 str(arch.subjects),
-                "SubjectsClient(https://app.rkvst.io)",
+                "SubjectsClient(https://app.datatrails.ai)",
                 msg="Incorrect subjects",
             )
             self.assertEqual(
@@ -136,7 +136,7 @@ class TestArchivist(TestCase):
             )
             self.assertEqual(
                 arch.url,
-                "https://app.rkvst.io",
+                "https://app.datatrails.ai",
                 msg="Incorrect url",
             )
             self.assertEqual(
@@ -146,7 +146,7 @@ class TestArchivist(TestCase):
             )
             self.assertEqual(
                 arch.root,
-                "https://app.rkvst.io/archivist",
+                "https://app.datatrails.ai/archivist",
                 msg="Incorrect root",
             )
             self.assertEqual(
@@ -162,7 +162,8 @@ class TestArchivist(TestCase):
         Test archivist creation with app registration
         """
         with Archivist(
-            "https://app.rkvst.io", (RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET)
+            "https://app.datatrails.ai",
+            (DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET),
         ) as arch, mock.patch.object(arch.appidp, "token") as mock_token:
             mock_token.return_value = RESPONSE
             self.assertEqual(
@@ -175,7 +176,7 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with no token
         """
-        with Archivist("https://app.rkvst.io", None) as arch:
+        with Archivist("https://app.datatrails.ai", None) as arch:
             self.assertIsNone(
                 arch.auth,
                 msg="Incorrect auth",
@@ -186,7 +187,8 @@ class TestArchivist(TestCase):
         Test archivist creation with appidp token
         """
         with Archivist(
-            "https://app.rkvst.io", (RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET)
+            "https://app.datatrails.ai",
+            (DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET),
         ) as arch, mock.patch.object(arch.appidp, "token") as mock_token:
             mock_token.return_value = NONE_RESPONSE
             with self.assertRaises(ArchivistError):
@@ -196,7 +198,9 @@ class TestArchivist(TestCase):
         """
         Test archivist copy
         """
-        with Archivist("https://app.rkvst.io", "authauthauth", verify=False) as arch:
+        with Archivist(
+            "https://app.datatrails.ai", "authauthauth", verify=False
+        ) as arch:
             arch1 = copy(arch)
             self.assertEqual(
                 arch.url,
@@ -218,7 +222,9 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with no verify
         """
-        with Archivist("https://app.rkvst.io", "authauthauth", verify=False) as arch:
+        with Archivist(
+            "https://app.datatrails.ai", "authauthauth", verify=False
+        ) as arch:
             self.assertFalse(
                 arch.verify,
                 msg="verify must be False",
@@ -231,7 +237,7 @@ class TestArchivistMethods(TestCase):
     """
 
     def setUp(self):
-        self.arch = Archivist("https://app.rkvst.io", "authauthauth")
+        self.arch = Archivist("https://app.datatrails.ai", "authauthauth")
 
     def tearDown(self):
         self.arch.close()

@@ -14,8 +14,8 @@ from archivist.compliance import Compliance
 from archivist.compliance_policies import CompliancePolicy
 from archivist.logger import set_logger
 
-if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
-    set_logger(environ["RKVST_LOGLEVEL"])
+if "DATATRAILS_LOGLEVEL" in environ and environ["DATATRAILS_LOGLEVEL"]:
+    set_logger(environ["DATATRAILS_LOGLEVEL"])
 
 LOGGER = getLogger(__name__)
 

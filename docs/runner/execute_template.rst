@@ -8,7 +8,7 @@ A more sophisticated usage using templated yaml files:
 .. code-block:: shell
 
     archivist_template \
-         -u https://app.rkvst.io \
+         -u https://app.datatrails.ai \
          --auth-token credentials/token \
          --namespace 1234567 \
          functests/test_resources/synsation_story.values.yaml \

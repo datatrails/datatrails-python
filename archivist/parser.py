@@ -78,7 +78,7 @@ def common_parser(description: str):
         type=str,
         dest="url",
         action="store",
-        default="https://app.rkvst.io",
+        default="https://app.datatrails.ai",
         help="url of Archivist service",
     )
     parser.add_argument(
@@ -150,7 +150,7 @@ def endpoint(args):
         set_logger("INFO")
 
     arch = None
-    LOGGER.info("Initializing connection to RKVST...")
+    LOGGER.info("Initializing connection to DATATRAILS...")
     fixtures = {}
     if args.proof_mechanism is not None:
         fixtures = {

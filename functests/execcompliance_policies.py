@@ -24,8 +24,8 @@ from .constants import TestCase
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
-if getenv("RKVST_LOGLEVEL") is not None:
-    logger.set_logger(getenv("RKVST_LOGLEVEL"))
+if getenv("DATATRAILS_LOGLEVEL") is not None:
+    logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -92,13 +92,13 @@ class TestCompliancePoliciesBase(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("RKVST_AUTHTOKEN"),
-            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("RKVST_APPREG_CLIENT"),
-            client_secret=getenv("RKVST_APPREG_SECRET"),
-            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
+            auth_token=getenv("DATATRAILS_AUTHTOKEN"),
+            auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
+            client_id=getenv("DATATRAILS_APPREG_CLIENT"),
+            client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+            client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth)
+        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
 
     def tearDown(self):
         self.arch.close()

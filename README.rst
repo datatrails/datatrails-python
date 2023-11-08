@@ -1,13 +1,13 @@
 
 .. _readme:
 
-RKVST Python Client
+DATATRAILS Python Client
 =========================
 
-The standard RKVST Python Client.
+The standard DATATRAILS Python Client.
 
-Please note that the canonical API for RKVST is always the REST API
-documented at https://docs.rkvst.com
+Please note that the canonical API for DATATRAILS is always the REST API
+documented at https://docs.datatrails.ai
 
 Support
 =======
@@ -28,14 +28,14 @@ Use standard python pip utility:
 
 .. code:: bash
 
-    python3 -m pip install rkvst-archivist
+    python3 -m pip install datatrails-archivist
 
 If your version of python3 is too old an error of this type or similar will be emitted:
 
 .. note:: 
 
-    ERROR: Could not find a version that satisfies the requirement rkvst-archivist (from versions: none)
-    ERROR: No matching distribution found for rkvst-archivist
+    ERROR: Could not find a version that satisfies the requirement datatrails-archivist (from versions: none)
+    ERROR: No matching distribution found for datatrails-archivist
 
 Example
 =============
@@ -44,7 +44,7 @@ You can then use the examples code to create assets (see examples directory):
 
 .. code:: python
 
-    """Create an asset in RKVST with User Token.
+    """Create an asset in DATATRAILS with User Token.
 
     The module contains two functions: main and create_asset. Main function parses in
     a url to the Archivist and credentials, which is a user authorization.
@@ -125,8 +125,8 @@ You can then use the examples code to create assets (see examples directory):
         # client id is an environment variable. client_secret is stored in a file in a
         # directory that has 0700 permissions. The location of this file is set in
         # the client_secret_filename environment variable.
-        client_id = getenv("RKVST_APPREG_CLIENT")
-        client_secret_file = getenv("RKVST_APPREG_SECRET_FILENAME")
+        client_id = getenv("DATATRAILS_APPREG_CLIENT")
+        client_secret_file = getenv("DATATRAILS_APPREG_SECRET_FILENAME")
         with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
             client_secret = tokenfile.read().strip()
 
@@ -135,7 +135,7 @@ You can then use the examples code to create assets (see examples directory):
         # specify a different value here particularly when creating assets on SIMPLE_HASH
         # as confirmation times are much shorter in this case.
         with arch = Archivist(
-            "https://app.rkvst.io",
+            "https://app.datatrails.ai",
             (client_id, client_secret),
             max_time=300,
         ) as arch:
@@ -152,10 +152,10 @@ Notebooks
 =================
 
 Some jupyter notebooks are available to exercise the examples code.
-These examples can be downloaded from python.rkvst.com and run in a local install
+These examples can be downloaded from python.datatrails.ai and run in a local install
 of jupyter notebook such as jupyterLabDesktop.
 
-Please consult https://python.rkvst.com/notebooks.html for details.
+Please consult https://python.datatrails.ai/notebooks.html for details.
 
 
 File Story Runner
@@ -182,7 +182,7 @@ Python
 
     def run(arch: Archivist, args):
 
-        LOGGER.info("Using version %s of rkvst-archivist", about.__version__)
+        LOGGER.info("Using version %s of datatrails-archivist", about.__version__)
         LOGGER.info("Namespace %s", args.namespace)
 
         with open(args.yamlfile, "r", encoding="utf-8") as y:
@@ -209,7 +209,7 @@ Python
 Command Line
 ------------
 
-This functionality is also available with the CLI tool :code:`archivist_runner`, which is bundled with version v0.10 onwards of the :code:`rkvst-archivist`.
+This functionality is also available with the CLI tool :code:`archivist_runner`, which is bundled with version v0.10 onwards of the :code:`datatrails-archivist`.
 
 You can verify the installation by running the following:
 
@@ -223,16 +223,16 @@ To use the :code:`archivist_runner` command you will need the following:
 
     - A Client ID and Client Secret by creating an `App Registration`_
     - The YAML file with the operations you wish to run
-    - The URL of your RKVST instance, this is typically `https://app.rkvst.io`
+    - The URL of your DATATRAILS instance, this is typically `https://app.datatrails.ai`
 
-.. _App Registration: https://docs.rkvst.com/developers/developer-patterns/getting-access-tokens-using-app-registrations/
+.. _App Registration: https://docs.datatrails.ai/developers/developer-patterns/getting-access-tokens-using-app-registrations/
 
 Example usage:
 
 .. code-block:: shell
 
    archivist_runner \
-         -u https://app.rkvst.io \
+         -u https://app.datatrails.ai \
          --client-id <your-client-id> \
          --client-secret <your-client-secret> \
          functests/test_resources/richness_story.yaml
@@ -354,13 +354,13 @@ which should be called before anything else:
     from archivist.archivist import Archivist
 
     set_logger("DEBUG")
-    client_id = getenv("RKVST_APPREG_CLIENT")
-    client_secret_file = getenv("RKVST_APPREG_SECRET_FILENAME")
+    client_id = getenv("DATATRAILS_APPREG_CLIENT")
+    client_secret_file = getenv("DATATRAILS_APPREG_SECRET_FILENAME")
     with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
         client_secret = tokenfile.read().strip()
 
     arch = Archivist(
-        "https://app.rkvst.io",
+        "https://app.datatrails.ai",
         (client_id, client_secret),
         max_time=300,
     )
@@ -368,4 +368,4 @@ which should be called before anything else:
 Development
 ===========
 
-For instructions on contributing to the RKVST SDK see DEVELOPMENT.md.
+For instructions on contributing to the DATATRAILS SDK see DEVELOPMENT.md.

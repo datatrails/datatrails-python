@@ -16,8 +16,8 @@ from archivist.errors import ArchivistInvalidOperationError
 from archivist.events import Event
 from archivist.logger import set_logger
 
-if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
-    set_logger(environ["RKVST_LOGLEVEL"])
+if "DATATRAILS_LOGLEVEL" in environ and environ["DATATRAILS_LOGLEVEL"]:
+    set_logger(environ["DATATRAILS_LOGLEVEL"])
 
 LOGGER = getLogger(__name__)
 
@@ -185,7 +185,7 @@ class TestRunnerAssetsCreate(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("https://app.rkvst.io", "authauthauth")
+        self.arch = Archivist("https://app.datatrails.ai", "authauthauth")
 
     def tearDown(self):
         self.arch.close()

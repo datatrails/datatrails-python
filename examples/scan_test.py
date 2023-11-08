@@ -63,7 +63,7 @@ def scan_test(arch, datestring, scanned_expected=False):
             "attachments": [
                 {
                     "url": (
-                        "https://raw.githubusercontent.com/rkvst/rkvst-python/"
+                        "https://raw.githubusercontent.com/datatrails/datatrails-python/"
                         "main/functests/test_resources/telephone.jpg"
                     ),
                     "content_type": "image/jpg",
@@ -130,14 +130,14 @@ def main():
     main entry point
     """
     auth = get_auth(
-        auth_token=getenv("RKVST_AUTHTOKEN"),
-        auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-        client_id=getenv("RKVST_APPREG_CLIENT"),
-        client_secret=getenv("RKVST_APPREG_SECRET"),
-        client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
+        auth_token=getenv("DATATRAILS_AUTHTOKEN"),
+        auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
+        client_id=getenv("DATATRAILS_APPREG_CLIENT"),
+        client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+        client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
     )
 
-    with Archivist(getenv("RKVST_URL"), auth, max_time=300) as arch:
+    with Archivist(getenv("DATATRAILS_URL"), auth, max_time=300) as arch:
         print("##[group]Today")
         today = date.today()
         scan_test(arch, today.strftime("%Y-%m-%d"))

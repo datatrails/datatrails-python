@@ -14,8 +14,8 @@ from archivist.archivist import Archivist
 
 from .constants import TestCase
 
-if getenv("RKVST_LOGLEVEL") is not None:
-    logger.set_logger(getenv("RKVST_LOGLEVEL"))
+if getenv("DATATRAILS_LOGLEVEL") is not None:
+    logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -28,9 +28,9 @@ class TestNotebooks(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.client_id = getenv("RKVST_APPREG_CLIENT")
-        self.client_secret = getenv("RKVST_APPREG_SECRET")
-        self.url = getenv("RKVST_URL")
+        self.client_id = getenv("DATATRAILS_APPREG_CLIENT")
+        self.client_secret = getenv("DATATRAILS_APPREG_SECRET")
+        self.url = getenv("DATATRAILS_URL")
         self.arch = Archivist(self.url, (self.client_id, self.client_secret))
 
     def tearDown(self):
@@ -41,24 +41,24 @@ class TestNotebooks(TestCase):
         common test for all notebooks
         """
         self.assertEqual(
-            notebook.ref("RKVST_URL"),
+            notebook.ref("DATATRAILS_URL"),
             self.url,
             msg="Incorrect URL",
         )
         self.assertEqual(
-            notebook.ref("RKVST_APPREG_CLIENT"),
+            notebook.ref("DATATRAILS_APPREG_CLIENT"),
             self.client_id,
-            msg="Incorrect RKVST_APPREG_CLIENT",
+            msg="Incorrect DATATRAILS_APPREG_CLIENT",
         )
         self.assertEqual(
-            notebook.ref("RKVST_APPREG_SECRET"),
+            notebook.ref("DATATRAILS_APPREG_SECRET"),
             self.client_secret,
-            msg="Incorrect RKVST_APPREG_SECRET",
+            msg="Incorrect DATATRAILS_APPREG_SECRET",
         )
         self.assertEqual(
             notebook.cell_output_text(5),
-            f"""Connecting to RKVST
-RKVST_URL {self.url}""",
+            f"""Connecting to DATATRAILS
+DATATRAILS_URL {self.url}""",
             msg="Incorrect cell output",
         )
 
@@ -85,9 +85,9 @@ RKVST_URL {self.url}""",
             LOGGER.debug("\ncreate_artist_albuminfo")
             self.basic_notebook_test(notebook)
             self.assertGreater(
-                int(notebook.ref("RKVST_UNIQUE_ID")),
+                int(notebook.ref("DATATRAILS_UNIQUE_ID")),
                 0,
-                msg="Incorrect RKVST_UNIQUE_ID",
+                msg="Incorrect DATATRAILS_UNIQUE_ID",
             )
             self.check_notebook_cell(notebook, 8)
             self.check_notebook_cell(notebook, 9)
@@ -104,14 +104,14 @@ RKVST_URL {self.url}""",
             LOGGER.debug("\nfind_artist_create_coverart")
             self.basic_notebook_test(notebook)
             self.assertGreater(
-                int(notebook.ref("RKVST_UNIQUE_ID")),
+                int(notebook.ref("DATATRAILS_UNIQUE_ID")),
                 0,
-                msg="Incorrect RKVST_UNIQUE_ID",
+                msg="Incorrect DATATRAILS_UNIQUE_ID",
             )
             self.assertGreater(
-                len(notebook.ref("RKVST_ARTIST_ATTACHMENT")),
+                len(notebook.ref("DATATRAILS_ARTIST_ATTACHMENT")),
                 0,
-                msg="Incorrect RKVST_ARTIST_ATTACHMENT",
+                msg="Incorrect DATATRAILS_ARTIST_ATTACHMENT",
             )
             self.check_notebook_cell(notebook, 9)
             self.check_notebook_cell(notebook, 10)
@@ -128,9 +128,9 @@ RKVST_URL {self.url}""",
             LOGGER.debug("\nfind_asset_addtl_albuminfo")
             self.basic_notebook_test(notebook)
             self.assertGreater(
-                int(notebook.ref("RKVST_UNIQUE_ID")),
+                int(notebook.ref("DATATRAILS_UNIQUE_ID")),
                 0,
-                msg="Incorrect RKVST_UNIQUE_ID",
+                msg="Incorrect DATATRAILS_UNIQUE_ID",
             )
             self.check_notebook_cell(notebook, 8)
             self.check_notebook_cell(notebook, 9)

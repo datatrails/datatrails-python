@@ -19,8 +19,8 @@ from .constants import TestCase
 # pylint: disable=unused-variable
 
 
-if getenv("RKVST_LOGLEVEL") is not None:
-    logger.set_logger(getenv("RKVST_LOGLEVEL"))
+if getenv("DATATRAILS_LOGLEVEL") is not None:
+    logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -34,13 +34,13 @@ class TestRunner(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("RKVST_AUTHTOKEN"),
-            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("RKVST_APPREG_CLIENT"),
-            client_secret=getenv("RKVST_APPREG_SECRET"),
-            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
+            auth_token=getenv("DATATRAILS_AUTHTOKEN"),
+            auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
+            client_id=getenv("DATATRAILS_APPREG_CLIENT"),
+            client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+            client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth, max_time=300)
+        self.arch = Archivist(getenv("DATATRAILS_URL"), auth, max_time=300)
 
     def tearDown(self):
         self.arch.close()
@@ -49,7 +49,7 @@ class TestRunner(TestCase):
         """
         Test runner with dynamic tolerance story
 
-        uses RKVST_UNIQUE_ID to set namespace value
+        uses DATATRAILS_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -70,7 +70,7 @@ class TestRunner(TestCase):
         """
         Test runner with synsation story
 
-        uses RKVST_UNIQUE_ID to set namespace value
+        uses DATATRAILS_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -111,7 +111,7 @@ class TestRunner(TestCase):
         """
         Test runner with richness story
 
-        uses RKVST_UNIQUE_ID to set namespace value
+        uses DATATRAILS_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -133,7 +133,7 @@ class TestRunner(TestCase):
         """
         Test runner with door_entry story
 
-        uses RKVST_UNIQUE_ID to set namespace value
+        uses DATATRAILS_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """
@@ -169,7 +169,7 @@ class TestRunner(TestCase):
         """
         Test runner with wipp story
 
-        uses RKVST_UNIQUE_ID to set namespace value
+        uses DATATRAILS_UNIQUE_ID to set namespace value
 
         run_steps is used so that exceptions are shown
         """

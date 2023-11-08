@@ -17,7 +17,7 @@ from archivist.utils import get_auth
 
 filterwarnings("ignore", message="Unverified HTTPS request")
 
-ASSET_NAME = "RKVST SaaS Software Package"
+ASSET_NAME = "DATATRAILS SaaS Software Package"
 
 
 def sbom_release(arch, release, sbom_filename):
@@ -47,7 +47,7 @@ def sbom_release(arch, release, sbom_filename):
             "attributes": {
                 "arc_display_name": ASSET_NAME,
                 "arc_display_type": SBOM_PACKAGE,
-                "arc_description": "Software Package for RKVST SaaS",
+                "arc_description": "Software Package for DATATRAILS SaaS",
             },
         },
         confirm=True,
@@ -64,14 +64,14 @@ def sbom_release(arch, release, sbom_filename):
             "operation": "Record",
             "behaviour": "RecordEvidence",
             "event_attributes": {
-                "arc_description": f"RKVST Inc RKVST SAAS Release {release}",
+                "arc_description": f"DATATRAILS Inc DATATRAILS SAAS Release {release}",
                 "arc_display_type": SBOM_RELEASE,
             },
             "attachments": [
                 {
                     "filename": f"{sbom_filename}",
                     "content_type": "text/xml",
-                    "display_name": f"RKVST {release} SBOM",
+                    "display_name": f"DATATRAILS {release} SBOM",
                     "type": SBOM_RELEASE,
                 },
             ],
@@ -88,28 +88,28 @@ def main():
     main entry point
     """
 
-    rkvst_url = getenv("RKVST_URL")
+    datatrails_url = getenv("DATATRAILS_URL")
 
     auth = get_auth(
-        auth_token=getenv("RKVST_AUTHTOKEN"),
-        auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-        client_id=getenv("RKVST_APPREG_CLIENT"),
-        client_secret=getenv("RKVST_APPREG_SECRET"),
-        client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
+        auth_token=getenv("DATATRAILS_AUTHTOKEN"),
+        auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
+        client_id=getenv("DATATRAILS_APPREG_CLIENT"),
+        client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+        client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
     )
 
-    with Archivist(rkvst_url, auth, max_time=300) as arch:
+    with Archivist(datatrails_url, auth, max_time=300) as arch:
         asset, event = sbom_release(
             arch, getenv("BUILD_BUILDNUMBER"), getenv("SBOM_FILEPATH")
         )
 
-        rkvst_path = "archivist/v2"
+        datatrails_path = "archivist/v2"
 
-        asset_url = f"{rkvst_url}/{rkvst_path}/{asset['identity']}"
-        event_url = f"{rkvst_url}/{rkvst_path}/{event['identity']}"
+        asset_url = f"{datatrails_url}/{datatrails_path}/{asset['identity']}"
+        event_url = f"{datatrails_url}/{datatrails_path}/{event['identity']}"
 
-        print(f"##vso[task.setvariable variable=RKVST_ASSET_URL]{asset_url}")
-        print(f"##vso[task.setvariable variable=RKVST_EVENT_URL]{event_url}")
+        print(f"##vso[task.setvariable variable=DATATRAILS_ASSET_URL]{asset_url}")
+        print(f"##vso[task.setvariable variable=DATATRAILS_EVENT_URL]{event_url}")
         print(f"##[debug]Asset url: {asset_url}")
         print(f"##[debug]Event url: {event_url}")
 

@@ -16,7 +16,7 @@ LS = """
 """
 
 
-URL = "https://app.rkvst-test.io"
+URL = "https://app.datatrails-test.io"
 AUTHTOKEN = "xxxxxxxxxxxxxxxxxxxx"
 APPREG_CLIENT = "yyyyyyyyyyyyyyyyyyyy"
 APPREG_SECRET = "zzzzzzzzzzzzzzzzzzzz"
@@ -70,16 +70,16 @@ class TestNotebooks(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.archivist = setenv("RKVST_URL", URL)
-        self.authtoken = setenv("RKVST_AUTHTOKEN", AUTHTOKEN)
-        self.client_id = setenv("RKVST_APPREG_CLIENT", APPREG_CLIENT)
-        self.client_secret = setenv("RKVST_APPREG_SECRET", APPREG_SECRET)
+        self.archivist = setenv("DATATRAILS_URL", URL)
+        self.authtoken = setenv("DATATRAILS_AUTHTOKEN", AUTHTOKEN)
+        self.client_id = setenv("DATATRAILS_APPREG_CLIENT", APPREG_CLIENT)
+        self.client_secret = setenv("DATATRAILS_APPREG_SECRET", APPREG_SECRET)
 
     def tearDown(self):
-        unsetenv("RKVST_URL", self.archivist)
-        unsetenv("RKVST_AUTHTOKEN", self.authtoken)
-        unsetenv("RKVST_APPREG_CLIENT", self.client_id)
-        unsetenv("RKVST_APPREG_SECRET", self.client_secret)
+        unsetenv("DATATRAILS_URL", self.archivist)
+        unsetenv("DATATRAILS_AUTHTOKEN", self.authtoken)
+        unsetenv("DATATRAILS_APPREG_CLIENT", self.client_id)
+        unsetenv("DATATRAILS_APPREG_SECRET", self.client_secret)
 
     def test_manage_credentials(self):
         """
@@ -89,7 +89,7 @@ class TestNotebooks(TestCase):
             "archivist/notebooks/Manage_Credentials.ipynb", execute=True
         ) as notebook:
             self.assertEqual(
-                notebook.ref("RKVST_URL"),
+                notebook.ref("DATATRAILS_URL"),
                 f"{URL}",
                 msg="Incorrect URL",
             )
@@ -105,8 +105,8 @@ class TestNotebooks(TestCase):
             )
             self.assertEqual(
                 notebook.cell_output_text(7),
-                f"""RKVST_APPREG_CLIENT {APPREG_CLIENT}
-RKVST_APPREG_SECRET {APPREG_SECRET}""",
+                f"""DATATRAILS_APPREG_CLIENT {APPREG_CLIENT}
+DATATRAILS_APPREG_SECRET {APPREG_SECRET}""",
                 msg="Incorrect appreg client id and secret",
             )
             self.assertEqual(
@@ -125,24 +125,24 @@ RKVST_APPREG_SECRET {APPREG_SECRET}""",
         common test for all notebooks
         """
         self.assertEqual(
-            notebook.ref("RKVST_URL"),
+            notebook.ref("DATATRAILS_URL"),
             f"{URL}",
             msg="Incorrect URL",
         )
         self.assertEqual(
-            notebook.ref("RKVST_APPREG_CLIENT"),
+            notebook.ref("DATATRAILS_APPREG_CLIENT"),
             f"{APPREG_CLIENT}",
             msg="Incorrect APPREG_CLIENT",
         )
         self.assertEqual(
-            notebook.ref("RKVST_APPREG_SECRET"),
+            notebook.ref("DATATRAILS_APPREG_SECRET"),
             f"{APPREG_SECRET}",
             msg="Incorrect APPREG_SECRET",
         )
         self.assertEqual(
             notebook.cell_output_text(5),
-            f"""Connecting to RKVST
-RKVST_URL {URL}""",
+            f"""Connecting to DATATRAILS
+DATATRAILS_URL {URL}""",
             msg="Incorrect cell output",
         )
 

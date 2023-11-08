@@ -2,38 +2,38 @@
 #
 # run functional tests
 #
-if [ -z "${RKVST_URL}" ]
+if [ -z "${DATATRAILS_URL}" ]
 then
-    echo "RKVST_URL is undefined"
+    echo "DATATRAILS_URL is undefined"
     exit 1
 fi
-if [ -n "${RKVST_APPREG_CLIENT}" ]
+if [ -n "${DATATRAILS_APPREG_CLIENT}" ]
 then
-    if [ -n "${RKVST_APPREG_SECRET_FILENAME}" ]
+    if [ -n "${DATATRAILS_APPREG_SECRET_FILENAME}" ]
     then
-        if [ ! -s "${RKVST_APPREG_SECRET_FILENAME}" ]
+        if [ ! -s "${DATATRAILS_APPREG_SECRET_FILENAME}" ]
         then
-            echo "${RKVST_APPREG_SECRET_FILENAME} does not exist"
+            echo "${DATATRAILS_APPREG_SECRET_FILENAME} does not exist"
             exit 1
         fi
-    elif [ -z "${RKVST_APPREG_SECRET}" ]
+    elif [ -z "${DATATRAILS_APPREG_SECRET}" ]
     then
-        echo "Both RKVST_APPREG_SECRET_FILENAME"
-        echo "and RKVST_APPREG_SECRET are undefined"
+        echo "Both DATATRAILS_APPREG_SECRET_FILENAME"
+        echo "and DATATRAILS_APPREG_SECRET are undefined"
         exit 1
     fi
 else
-    if [ -n "${RKVST_AUTHTOKEN_FILENAME}" ]
+    if [ -n "${DATATRAILS_AUTHTOKEN_FILENAME}" ]
     then
-        if [ ! -s "${RKVST_AUTHTOKEN_FILENAME}" ]
+        if [ ! -s "${DATATRAILS_AUTHTOKEN_FILENAME}" ]
         then
-            echo "${RKVST_AUTHTOKEN_FILENAME} does not exist"
+            echo "${DATATRAILS_AUTHTOKEN_FILENAME} does not exist"
             exit 1
         fi
-    elif [ -z "${RKVST_AUTHTOKEN}" ]
+    elif [ -z "${DATATRAILS_AUTHTOKEN}" ]
     then
-        echo "Both RKVST_AUTHTOKEN_FILENAME"
-        echo "and RKVST_AUTHTOKEN are undefined"
+        echo "Both DATATRAILS_AUTHTOKEN_FILENAME"
+        echo "and DATATRAILS_AUTHTOKEN are undefined"
         exit 1
     fi
 fi
@@ -52,8 +52,8 @@ python3 --version
 #       FUNCTEST=execapplications.TestApplications.test_appidp_token task functests
 #
 export PYTHONWARNINGS="ignore:Unverified HTTPS request"
-export RKVST_ARTIST_ATTACHMENT=archivist/notebooks/test_files/pexels-andrea-turner-707697.jpeg
-export RKVST_UNIQUE_ID=${SRANDOM}
+export DATATRAILS_ARTIST_ATTACHMENT=archivist/notebooks/test_files/pexels-andrea-turner-707697.jpeg
+export DATATRAILS_UNIQUE_ID=${SRANDOM}
 if [ -n "${FUNCTEST}" ]
 then
     python3 -m unittest -v functests.${FUNCTEST}

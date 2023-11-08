@@ -21,8 +21,8 @@ from .mock_response import MockResponse
 
 # pylint: disable=protected-access
 
-if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
-    set_logger(environ["RKVST_LOGLEVEL"])
+if "DATATRAILS_LOGLEVEL" in environ and environ["DATATRAILS_LOGLEVEL"]:
+    set_logger(environ["DATATRAILS_LOGLEVEL"])
 
 LOGGER = getLogger(__name__)
 
@@ -32,7 +32,7 @@ PROPS = {
     "timestamp_accepted": "2019-11-07T15:31:49Z",
     "size": 31424,
 }
-URL = "https://app.rkvst.io"
+URL = "https://app.datatrails.ai"
 ASSET_UUID = "b2678528-0136-4876-ad56-904e12c4b4c6"
 ASSET_ID = f"{URL}/{ROOT}/public{ASSETS_LABEL}/{ASSET_UUID}"
 ATTACHMENT_UUID = "abcdef28-0136-4876-ad56-904e12c4b4c6"

@@ -23,9 +23,7 @@ from .testassetsconstants import (
     TestAssetsBase,
 )
 
-PUBLICURL = (
-    "https://app.rkvst.io/archivist/publicassets/13f23360-14c7-4d00-ac29-0a862584060e"
-)
+PUBLICURL = "https://app.datatrails.ai/archivist/publicassets/13f23360-14c7-4d00-ac29-0a862584060e"
 RESPONSE_PUBLICURL = {
     "publicurl": PUBLICURL,
 }
@@ -37,8 +35,8 @@ RESPONSE_BAD_PUBLICURL = {
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
-if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
-    set_logger(environ["RKVST_LOGLEVEL"])
+if "DATATRAILS_LOGLEVEL" in environ and environ["DATATRAILS_LOGLEVEL"]:
+    set_logger(environ["DATATRAILS_LOGLEVEL"])
 
 LOGGER = getLogger(__name__)
 

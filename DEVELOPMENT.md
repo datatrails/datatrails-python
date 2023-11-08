@@ -43,21 +43,21 @@ Host *
 ```
 > i.e. 'githubUserHandle' viz:
 >
->    git clone ssh-githubUserHandle:githubUserHandle/rkvst-python.git
+>    git clone ssh-githubUserHandle:githubUserHandle/datatrails-python.git
 >
 
 
 ```bash
 mkdir githubUserHandle
 cd githubUserHandle
-git clone ssh-githubUserHandle:githubUserHandle/rkvst-python.git
+git clone ssh-githubUserHandle:githubUserHandle/datatrails-python.git
 ```
 
 Enter the new cloned fork and add the original upstream repo as a remote:
 
 ```bash
-cd rkvst-python
-git remote add upstream ssh-githubUserHandle:rkvst/rkvst-python.git
+cd datatrails-python
+git remote add upstream ssh-githubUserHandle:datatrails/datatrails-python.git
 git remote -v
 ```
 
@@ -121,8 +121,8 @@ they be run in a production environment.
 Set 2 environment variables and execute:
 
 ```bash
-export RKVST_URL="https://app.rkvst.io"
-export RKVST_AUTHTOKEN_FILENAME=credentials/authtoken
+export DATATRAILS_URL="https://app.datatrails.ai"
+export DATATRAILS_AUTHTOKEN_FILENAME=credentials/authtoken
 task functests
 ```
 
@@ -130,39 +130,39 @@ NOTE: For the access policy functional tests, two separate tenancy tokens are ne
       Therefore add a another env variable for the second tenancy's auth token:
 
 ```
-export RKVST_AUTHTOKEN_FILENAME_2=credentials/authtoken_tenant_2
+export DATATRAILS_AUTHTOKEN_FILENAME_2=credentials/authtoken_tenant_2
 ```
 
 Alternatively one can use a direct environment variable for the authtoken:
 ```bash
-export RKVST_AUTHTOKEN_FILENAME=
-export RKVST_AUTHTOKEN="ey.....==="
+export DATATRAILS_AUTHTOKEN_FILENAME=
+export DATATRAILS_AUTHTOKEN="ey.....==="
 task functests
 ```
 
 Alternatively one can use a client id and secret obtained from the appregistrations endpoint:
 ```bash
-export RKVST_AUTHTOKEN_FILENAME=
-export RKVST_AUTHTOKEN=
-export RKVST_APPREG_CLIENT=c5db8230-6e1c-4b80-9481-d70e647c0429
-export RKVST_APPREG_SECRET_FILENAME=credentials/client_secret
+export DATATRAILS_AUTHTOKEN_FILENAME=
+export DATATRAILS_AUTHTOKEN=
+export DATATRAILS_APPREG_CLIENT=c5db8230-6e1c-4b80-9481-d70e647c0429
+export DATATRAILS_APPREG_SECRET_FILENAME=credentials/client_secret
 task functests
 ```
 
 Additionally one set the appregistration directly in the environment:
 
 ```bash
-export RKVST_AUTHTOKEN_FILENAME=
-export RKVST_AUTHTOKEN=
-export RKVST_APPREG_CLIENT=c5db8230-6e1c-4b80-9481-d70e647c0429
-export RKVST_APPREG_SECRET_FILENAME=
-export RKVST_APPREG_SECRET="ey.....................ab=="
+export DATATRAILS_AUTHTOKEN_FILENAME=
+export DATATRAILS_AUTHTOKEN=
+export DATATRAILS_APPREG_CLIENT=c5db8230-6e1c-4b80-9481-d70e647c0429
+export DATATRAILS_APPREG_SECRET_FILENAME=
+export DATATRAILS_APPREG_SECRET="ey.....................ab=="
 task functests
 ```
 When running the runner tests one can specify a namespace to isolate instances of assets in differnt 
 runs:
 ```bash
-export RKVST_UNIQUE_ID=${RANDOM}
+export DATATRAILS_UNIQUE_ID=${RANDOM}
 FUNCTEST=execrunner task functests
 ```
 
@@ -171,14 +171,14 @@ Additional environment variables:
 For testing sharing via an access policy requires a second auth token:
 
 ```bash
-RKVST_AUTHTOKEN_FILENAME_2=
+DATATRAILS_AUTHTOKEN_FILENAME_2=
 ```
 
 Testing of the client token refresh logic can take 10 to 20 minutes to complete.
 To enable this test set:
 
 ```bash
-RKVST_REFRESH_TOKEN=anything
+DATATRAILS_REFRESH_TOKEN=anything
 ```
 
 #### Testing Other Python Versions
@@ -305,7 +305,7 @@ Push the changes upstream(the set-upstream option is only required the first tim
 git push --set-upstream origin dev/githubUserHandle/some-proposed-fix
 ```
 
-Enter the github ui at https://github.com/rkvst/rkvst-python and
+Enter the github ui at https://github.com/datatrails/datatrails-python and
 generate a pull request.
 
 Reviewers will be notified when a PR is generated and you will receive feedback.

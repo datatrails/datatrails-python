@@ -328,7 +328,7 @@ RESPONSE_WITH_NO_PRINCIPAL = {
 
 
 PUBLICURL = (
-    "https://app.rkvst.io/archivist/publicassets/13f23360-14c7-4d00-ac29-0a862584060e/"
+    "https://app.datatrails.ai/archivist/publicassets/13f23360-14c7-4d00-ac29-0a862584060e/"
     f"{EVENTS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
 )
 RESPONSE_PUBLICURL = {

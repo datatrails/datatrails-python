@@ -14,7 +14,7 @@
 
       # Initialize connection to Archivist
       arch = Archivist(
-          "https://app.rkvst.io",
+          "https://app.datatrails.ai",
           authtoken,
       )
       with open("something.jpg") as fd:
@@ -76,11 +76,11 @@ class _AssetAttachmentsClient:
 
         identity looks like:
 
-        [https://app.rkvst.io/archivist/public]assets/xxxxxxx
+        [https://app.datatrails.ai/archivist/public]assets/xxxxxxx
 
         OR
 
-        [https://app.rkvst.io/archivist/public]assets/xxxxxxx/events/yyyyyy
+        [https://app.datatrails.ai/archivist/public]assets/xxxxxxx/events/yyyyyy
 
         where the public URL is prefixed with the schema.
 
@@ -128,10 +128,10 @@ class _AssetAttachmentsClient:
 
         identity has one of the following 4 forms:
 
-            [https://app.rkvst.io/archivist/][v2/] - if public
+            [https://app.datatrails.ai/archivist/][v2/] - if public
             assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            [https://app.rkvst.io/archivist/][v2/] - if public
+            [https://app.datatrails.ai/archivist/][v2/] - if public
             assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
         """
@@ -158,10 +158,10 @@ class _AssetAttachmentsClient:
 
         identity has one of the following 4 forms:
 
-            [https://app.rkvst.io/archivist/][v2/] - if public
+            [https://app.datatrails.ai/archivist/][v2/] - if public
             assets/xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-            [https://app.rkvst.io/archivist/][v2/] - if public
+            [https://app.datatrails.ai/archivist/][v2/] - if public
             assets/xxxxxxxxxxxxxxxxxxxxxxxxxx/events/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
         """
 
