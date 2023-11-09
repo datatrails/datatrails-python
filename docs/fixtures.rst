@@ -20,7 +20,7 @@ and locations.
     
     # Initialize connection to Archivist - for assets on DLT.
     ledger = Archivist(
-        "https://app.rkvst.io",
+        "https://app.datatrails.ai",
         authtoken,
         fixtures = {
             "assets": {

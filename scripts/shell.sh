@@ -15,5 +15,5 @@ docker run \
     --rm -it \
     -v $(pwd):/home/builder \
     -u $(id -u):$(id -g) \
-    rkvst-python-builder \
+    datatrails-python-builder \
     "/bin/bash"

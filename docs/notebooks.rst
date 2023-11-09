@@ -7,7 +7,7 @@ Note Books (BETA)
 
    This feature is a Work-In-Progress
 
-These are a collection of jupyter notebooks that demonstrate typical use cases of the RKVST
+These are a collection of jupyter notebooks that demonstrate typical use cases of the DATATRAILS
 system.
 
 They can be downloaded and executed on Linux, Mac or Windows machines.

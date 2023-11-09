@@ -11,8 +11,8 @@
 steps:
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
-      description: Create a door in Paris at RKVST offices.
-      asset_label: RKVST Paris Front Door
+      description: Create a door in Paris at DATATRAILS offices.
+      asset_label: DATATRAILS Paris Front Door
     selector:
       - attributes:
         - arc_display_name
@@ -20,24 +20,24 @@ steps:
     behaviours:
       - RecordEvidence
     attributes:
-      arc_display_name: RKVST Paris Front Door
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_display_name: DATATRAILS Paris Front Door
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-j1-01
-      arc_description: Electronic door entry system to RKVST France
-      wavestone_asset_id: paris.france.rkvst.das
+      arc_description: Electronic door entry system to DATATRAILS France
+      wavestone_asset_id: paris.france.datatrails.das
     location:
       selector:
         - display_name
         - attributes:
           - namespace
-      display_name: RKVST Paris
+      display_name: DATATRAILS Paris
       description: Sales and sales support for the French region
       latitude: 48.8339211
       longitude: 2.371345
       attributes:
-        namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
         address: 5 Parvis Alan Turing, 75013 Paris, France
         wavestone_ext: managed
     attachments:
@@ -57,7 +57,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: City Hall Paris Front Door
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-01
@@ -73,7 +73,7 @@ steps:
       latitude: 48.856389
       longitude: 2.352222
       attributes:
-        namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
         address: Place de l'Hôtel de Ville, 75004 Paris, France
         wavestone_ext: managed
       attachments:
@@ -94,7 +94,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Courts of Justice Paris Front Door
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-02
@@ -110,7 +110,7 @@ steps:
       latitude: 48.855722
       longitude: 2.345051
       attributes:
-        namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
         address: 10 Boulevard du Palais, 75001 Paris, France
         wavestone_ext: managed
     attachments:
@@ -130,7 +130,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Bastille Paris Front Door
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-03
@@ -146,7 +146,7 @@ steps:
       latitude: 48.85333
       longitude: 2.36917
       attributes:
-        namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
         address: Place de la Bastille, 75011 Paris, France
         wavestone_ext: managed
     attachments:
@@ -166,7 +166,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Gare du Nord Apartments Paris Front Door
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-04
@@ -182,7 +182,7 @@ steps:
       latitude: 48.8809
       longitude: 2.3553
       attributes:
-        namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
         address: 18 Rue de Dunkerque, 75010 Paris, France
         wavestone_ext: managed
     attachments:
@@ -202,7 +202,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Gare du Nord Apartments Paris Side Door
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: door
       arc_firmware_version: "1.0"
       arc_serial_number: das-x4-05
@@ -218,7 +218,7 @@ steps:
       latitude: 48.8809
       longitude: 2.3553
       attributes:
-        namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
         address: 18 Rue de Dunkerque, 75010 Paris, France
         wavestone_ext: managed
     attachments:
@@ -245,7 +245,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Access Card 1
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: card
       arc_serial_number: sc-x5-1
       arc_description: Electronic door Access Card 1
@@ -264,7 +264,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Access Card 2
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: card
       arc_serial_number: sc-x5-2
       arc_description: Electronic door Access Card 2
@@ -282,7 +282,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Access Card 3
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_serial_number: sc-x5-3
       arc_description: Electronic door Access Card 3
     confirm: true
@@ -299,7 +299,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Access Card 4
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: card
       arc_serial_number: sc-x5-4
       arc_description: Electronic door Access Card 4
@@ -317,7 +317,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: Access Card 5
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       arc_display_type: card
       arc_serial_number: sc-x5-5
       arc_description: Electronic door Access Card 5
@@ -378,7 +378,7 @@ steps:
       LOGGER.debug_response: true
     attrs:
       arc_display_type: door
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
 
   - step:
       action: ASSETS_LIST
@@ -386,7 +386,7 @@ steps:
       LOGGER.debug_response: true
     attrs:
       arc_display_type: card
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
 
   - step:
       action: EVENTS_LIST

@@ -18,7 +18,7 @@ steps:
       - RecordEvidence
     attributes:
       arc_display_name: ev pump 1
-      arc_namespace: !ENV ${RKVST_UNIQUE_ID:namespace}
+      arc_namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
       ev_pump: "true"
     confirm: true
 

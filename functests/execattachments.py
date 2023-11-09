@@ -15,8 +15,8 @@ from archivist.utils import get_auth, get_url
 
 from .constants import TestCase
 
-if getenv("RKVST_LOGLEVEL") is not None:
-    logger.set_logger(getenv("RKVST_LOGLEVEL"))
+if getenv("DATATRAILS_LOGLEVEL") is not None:
+    logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -30,53 +30,59 @@ class TestAttachmentsCreate(TestCase):
     Test Archivist Attachment Create method
     """
 
-    RKVST_DOCX_PATH = "functests/test_resources/loremipsum.docx"
-    RKVST_DOCX_DOWNLOAD_PATH = "functests/test_resources/downloaded_loremipsum.docx"
-    RKVST_IMAGE_PATH = "functests/test_resources/rkvst_logo.png"
-    RKVST_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
+    DATATRAILS_DOCX_PATH = "functests/test_resources/loremipsum.docx"
+    DATATRAILS_DOCX_DOWNLOAD_PATH = (
+        "functests/test_resources/downloaded_loremipsum.docx"
+    )
+    DATATRAILS_IMAGE_PATH = "functests/test_resources/datatrails_logo.png"
+    DATATRAILS_IMAGE_DOWNLOAD_PATH = "functests/test_resources/downloaded_image.jpg"
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("RKVST_AUTHTOKEN"),
-            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("RKVST_APPREG_CLIENT"),
-            client_secret=getenv("RKVST_APPREG_SECRET"),
-            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
+            auth_token=getenv("DATATRAILS_AUTHTOKEN"),
+            auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
+            client_id=getenv("DATATRAILS_APPREG_CLIENT"),
+            client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+            client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth)
+        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
         self.file_uuid: str = ""
 
         with suppress(FileNotFoundError):
-            remove(self.RKVST_IMAGE_DOWNLOAD_PATH)
+            remove(self.DATATRAILS_IMAGE_DOWNLOAD_PATH)
 
         with suppress(FileNotFoundError):
-            remove(self.RKVST_DOCX_DOWNLOAD_PATH)
+            remove(self.DATATRAILS_DOCX_DOWNLOAD_PATH)
 
     def tearDown(self) -> None:
         """Remove the downloaded image for subsequent test runs"""
         self.arch.close()
         with suppress(FileNotFoundError):
-            remove(self.RKVST_IMAGE_DOWNLOAD_PATH)
+            remove(self.DATATRAILS_IMAGE_DOWNLOAD_PATH)
 
         with suppress(FileNotFoundError):
-            remove(self.RKVST_DOCX_DOWNLOAD_PATH)
+            remove(self.DATATRAILS_DOCX_DOWNLOAD_PATH)
 
     def test_attachment_upload_and_download(self):
         """
         Test file upload through the SDK
         Test file download through the SDK
         """
-        with open(self.RKVST_IMAGE_PATH, "rb") as fd:
+        with open(self.DATATRAILS_IMAGE_PATH, "rb") as fd:
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        with open(self.RKVST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
+        with open(self.DATATRAILS_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(file_uuid, fd)
 
         # Check the downloaded file is identical to the one that was uploaded
         clear_cache()
         self.assertTrue(
-            cmp(self.RKVST_IMAGE_PATH, self.RKVST_IMAGE_DOWNLOAD_PATH, shallow=False)
+            cmp(
+                self.DATATRAILS_IMAGE_PATH,
+                self.DATATRAILS_IMAGE_DOWNLOAD_PATH,
+                shallow=False,
+            )
         )
 
     def test_attachment_upload_and_download_docx(self):
@@ -84,7 +90,7 @@ class TestAttachmentsCreate(TestCase):
         Test file upload through the SDK
         Test file download through the SDK
         """
-        with open(self.RKVST_DOCX_PATH, "rb") as fd:
+        with open(self.DATATRAILS_DOCX_PATH, "rb") as fd:
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
@@ -96,7 +102,7 @@ class TestAttachmentsCreate(TestCase):
             msg="UPLOAD incorrect mimetype",
         )
 
-        with open(self.RKVST_DOCX_DOWNLOAD_PATH, "wb") as fd:
+        with open(self.DATATRAILS_DOCX_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(file_uuid, fd)
 
         LOGGER.debug("attachment %s", attachment.headers)
@@ -114,15 +120,15 @@ class TestAttachmentsCreate(TestCase):
         )
 
     @skipIf(
-        getenv("RKVST_BLOB_IDENTITY") is None,
-        "cannot run test as RKVST_BLOB_IDENTITY is not set",
+        getenv("DATATRAILS_BLOB_IDENTITY") is None,
+        "cannot run test as DATATRAILS_BLOB_IDENTITY is not set",
     )
     def test_attachment_info(self):
         """
         Test file info through the SDK
         Test file download through the SDK
         """
-        file_uuid = getenv("RKVST_BLOB_IDENTITY")
+        file_uuid = getenv("DATATRAILS_BLOB_IDENTITY")
         info = self.arch.attachments.info(file_uuid)
         LOGGER.debug("attachment info %s", json_dumps(info, indent=4))
 
@@ -131,11 +137,11 @@ class TestAttachmentsCreate(TestCase):
         Test file upload through the SDK
         Test file download through the SDK
         """
-        with open(self.RKVST_IMAGE_PATH, "rb") as fd:
+        with open(self.DATATRAILS_IMAGE_PATH, "rb") as fd:
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        with open(self.RKVST_IMAGE_DOWNLOAD_PATH, "wb") as fd:
+        with open(self.DATATRAILS_IMAGE_DOWNLOAD_PATH, "wb") as fd:
             attachment = self.arch.attachments.download(
                 file_uuid, fd, params={"allow_insecure": "true"}
             )
@@ -143,7 +149,11 @@ class TestAttachmentsCreate(TestCase):
         # Check the downloaded file is identical to the one that was uploaded
         clear_cache()
         self.assertTrue(
-            cmp(self.RKVST_IMAGE_PATH, self.RKVST_IMAGE_DOWNLOAD_PATH, shallow=False)
+            cmp(
+                self.DATATRAILS_IMAGE_PATH,
+                self.DATATRAILS_IMAGE_DOWNLOAD_PATH,
+                shallow=False,
+            )
         )
 
     def test_attachment_upload_and_download_strict(self):
@@ -151,11 +161,11 @@ class TestAttachmentsCreate(TestCase):
         Test file upload through the SDK
         Test file download through the SDK
         """
-        with open(self.RKVST_IMAGE_PATH, "rb") as fd:
+        with open(self.DATATRAILS_IMAGE_PATH, "rb") as fd:
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        with open(self.RKVST_IMAGE_DOWNLOAD_PATH, "wb") as fd, self.assertRaises(
+        with open(self.DATATRAILS_IMAGE_DOWNLOAD_PATH, "wb") as fd, self.assertRaises(
             ArchivistBadRequestError
         ):
             attachment = self.arch.attachments.download(
@@ -170,34 +180,34 @@ class TestAttachmentstMalware(TestCase):
 
     # we dont want to actually store these files in our repo so download
     # every time.
-    RKVST_MALWARE1 = "https://secure.eicar.org/eicar.com"
-    RKVST_MALWARE2 = "https://secure.eicar.org/eicar.com.txt"
-    RKVST_MALWARE3 = "https://secure.eicar.org/eicar.com.zip"
-    RKVST_MALWARE4 = "https://secure.eicar.org/eicarcom2.zip"
+    DATATRAILS_MALWARE1 = "https://secure.eicar.org/eicar.com"
+    DATATRAILS_MALWARE2 = "https://secure.eicar.org/eicar.com.txt"
+    DATATRAILS_MALWARE3 = "https://secure.eicar.org/eicar.com.zip"
+    DATATRAILS_MALWARE4 = "https://secure.eicar.org/eicarcom2.zip"
 
     @classmethod
     def setUpClass(cls):
         cls.malware1 = BytesIO()
-        get_url(cls.RKVST_MALWARE1, cls.malware1)
+        get_url(cls.DATATRAILS_MALWARE1, cls.malware1)
 
         cls.malware2 = BytesIO()
-        get_url(cls.RKVST_MALWARE2, cls.malware2)
+        get_url(cls.DATATRAILS_MALWARE2, cls.malware2)
 
         cls.malware3 = BytesIO()
-        get_url(cls.RKVST_MALWARE3, cls.malware3)
+        get_url(cls.DATATRAILS_MALWARE3, cls.malware3)
 
         cls.malware4 = BytesIO()
-        get_url(cls.RKVST_MALWARE4, cls.malware4)
+        get_url(cls.DATATRAILS_MALWARE4, cls.malware4)
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("RKVST_AUTHTOKEN"),
-            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("RKVST_APPREG_CLIENT"),
-            client_secret=getenv("RKVST_APPREG_SECRET"),
-            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
+            auth_token=getenv("DATATRAILS_AUTHTOKEN"),
+            auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
+            client_id=getenv("DATATRAILS_APPREG_CLIENT"),
+            client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+            client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth)
+        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
 
     def tearDown(self):
         self.arch.close()

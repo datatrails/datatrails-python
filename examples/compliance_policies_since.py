@@ -32,16 +32,16 @@ def get_archivist():
     # the client_secret_file environment variable.
     #
     auth = get_auth(
-        auth_token=getenv("RKVST_AUTHTOKEN"),
-        auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-        client_id=getenv("RKVST_APPREG_CLIENT"),
-        client_secret=getenv("RKVST_APPREG_SECRET"),
-        client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
+        auth_token=getenv("DATATRAILS_AUTHTOKEN"),
+        auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
+        client_id=getenv("DATATRAILS_APPREG_CLIENT"),
+        client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+        client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
     )
 
     # Initialize connection to Archivist
     arch = Archivist(
-        "https://app.rkvst.io",
+        "https://app.datatrails.ai",
         auth,
     )
     return arch

@@ -12,13 +12,13 @@ The first (optional) call from the archivist package is to set the logger.
     from archivist.archivist import Archivist
 
     set_logger("DEBUG")
-    client_id = getenv("RKVST_APPREG_CLIENT")
-    client_secret_file = getenv("RKVST_APPREG_SECRET_FILENAME")
+    client_id = getenv("DATATRAILS_APPREG_CLIENT")
+    client_secret_file = getenv("DATATRAILS_APPREG_SECRET_FILENAME")
     with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
         client_secret = tokenfile.read().strip()
 
     arch = Archivist(
-        "https://app.rkvst.io",
+        "https://app.datatrails.ai",
         (client_id, client_secret),
         max_time=300,
     )

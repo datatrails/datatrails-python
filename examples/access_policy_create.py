@@ -29,13 +29,13 @@ def main():
     # client id is an environment variable. client_secret is stored in a file in a
     # directory that has 0700 permissions. The location of this file is set in
     # the client_secret_file environment variable.
-    client_id = getenv("RKVST_APPREG_CLIENT")
-    client_secret_file = getenv("RKVST_APPREG_SECRET_FILENAME")
+    client_id = getenv("DATATRAILS_APPREG_CLIENT")
+    client_secret_file = getenv("DATATRAILS_APPREG_SECRET_FILENAME")
     with open(client_secret_file, mode="r", encoding="utf-8") as tokenfile:
         client_secret = tokenfile.read().strip()
 
     with Archivist(
-        "https://app.rkvst.io",
+        "https://app.datatrails.ai",
         (client_id, client_secret),
     ) as arch:
         props = {

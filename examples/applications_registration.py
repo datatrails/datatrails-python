@@ -30,7 +30,7 @@ def main():
 
     # Initialize connection to Archivist
     with Archivist(
-        "https://app.rkvst.io",
+        "https://app.datatrails.ai",
         authtoken,
     ) as arch:
         # create application
@@ -96,7 +96,7 @@ def main():
         # now create Archivist with automatically refreshed jwt token
         # this archivist does not allow app registrations.
         with Archivist(
-            "https://app.rkvst.io",
+            "https://app.datatrails.ai",
             (application["client_id"], application["credentials"][0]["secret"]),
         ) as arch1:
             # create an asset

@@ -24,13 +24,13 @@ from .testeventsconstants import (
     RESPONSE,
 )
 
-if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
-    set_logger(environ["RKVST_LOGLEVEL"])
+if "DATATRAILS_LOGLEVEL" in environ and environ["DATATRAILS_LOGLEVEL"]:
+    set_logger(environ["DATATRAILS_LOGLEVEL"])
 
 LOGGER = getLogger(__name__)
 
 
-URL = "https://app.rkvst.io"
+URL = "https://app.datatrails.ai"
 EVENT_IDENTITY = f"{URL}/{ROOT}/public{IDENTITY}"
 ASSET_IDENTITY = f"{URL}/{ROOT}/public{ASSET_ID}"
 

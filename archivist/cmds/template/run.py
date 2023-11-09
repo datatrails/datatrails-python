@@ -17,7 +17,7 @@ LOGGER = getLogger(__name__)
 
 
 def run(arch: "type_helper.Archivist", args):
-    LOGGER.info("Using version %s of rkvst-archivist", about.__version__)
+    LOGGER.info("Using version %s of datatrails-archivist", about.__version__)
     LOGGER.info("Namespace %s", args.namespace)
 
     path = PurePath(args.template)
@@ -31,7 +31,7 @@ def run(arch: "type_helper.Archivist", args):
     # if namespace is specified on the commandline then override any environment
     # setting...
     if args.namespace:
-        environ["RKVST_UNIQUE_ID"] = args.namespace
+        environ["DATATRAILS_UNIQUE_ID"] = args.namespace
 
     # environment is injected into the template
     with open(args.values, "r", encoding="utf-8") as fd:

@@ -62,14 +62,14 @@ def create_archivist(label):
     # could indicate different users in the same organization or membership of different
     # organiastions.
     auth = get_auth(
-        auth_token=getenv(f"RKVST_AUTHTOKEN_{label}"),
+        auth_token=getenv(f"DATATRAILS_AUTHTOKEN_{label}"),
     )
     # Initialize connection to Archivist. max_time is the time to wait for confirmation
     # of an asset or event creation - the default is 1200 seconds but one can optionally
     # specify a different value here particularly when creating assets on SIMPLE_HASH
     # as confirmation times are much shorter in this case.
     return Archivist(
-        "https://app.rkvst.io",
+        "https://app.datatrails.ai",
         auth,
         max_time=300,
     )

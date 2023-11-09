@@ -14,7 +14,7 @@
 
       # Initialize connection to Archivist
       arch = Archivist(
-          "https://app.rkvst.io",
+          "https://app.datatrails.ai",
           authtoken,
       )
       tenancy = arch.tenancies.read(...)

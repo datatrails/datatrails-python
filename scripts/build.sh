@@ -16,4 +16,4 @@ docker build \
     --build-arg VERSION="$1" \
     --no-cache \
     -f Dockerfile-builder \
-    -t rkvst-python-builder .
+    -t datatrails-python-builder .

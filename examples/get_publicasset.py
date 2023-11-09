@@ -13,7 +13,7 @@ def main():
     # Initialize connection to Archivist - no auth required
     with ArchivistPublic() as public:
         asset = public.assets.read(
-            "https://app.rkvst.io/archivist/publicassets/dc0dfc17-1d93-4b7a-8636-f740f40f7f52"
+            "https://app.datatrails.ai/archivist/publicassets/dc0dfc17-1d93-4b7a-8636-f740f40f7f52"
         )
         print("Asset", asset)
 

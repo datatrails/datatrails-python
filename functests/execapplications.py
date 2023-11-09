@@ -33,8 +33,8 @@ ATTRS = {
     "some_custom_attribute": "value",
 }
 
-if getenv("RKVST_LOGLEVEL") is not None:
-    logger.set_logger(getenv("RKVST_LOGLEVEL"))
+if getenv("DATATRAILS_LOGLEVEL") is not None:
+    logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
 
 LOGGER = logger.LOGGER
 
@@ -48,13 +48,13 @@ class TestApplications(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("RKVST_AUTHTOKEN"),
-            auth_token_filename=getenv("RKVST_AUTHTOKEN_FILENAME"),
-            client_id=getenv("RKVST_APPREG_CLIENT"),
-            client_secret=getenv("RKVST_APPREG_SECRET"),
-            client_secret_filename=getenv("RKVST_APPREG_SECRET_FILENAME"),
+            auth_token=getenv("DATATRAILS_AUTHTOKEN"),
+            auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
+            client_id=getenv("DATATRAILS_APPREG_CLIENT"),
+            client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+            client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("RKVST_URL"), auth)
+        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def tearDown(self):
@@ -205,8 +205,8 @@ class TestApplications(TestCase):
             )
 
     @skipIf(
-        getenv("RKVST_REFRESH_TOKEN") is None,
-        "cannot run test as RKVST_REFRESH_TOKEN is not set",
+        getenv("DATATRAILS_REFRESH_TOKEN") is None,
+        "cannot run test as DATATRAILS_REFRESH_TOKEN is not set",
     )
     def test_archivist_token(self):
         """
@@ -228,7 +228,7 @@ class TestApplications(TestCase):
         # archivist using app registration
         LOGGER.debug("New Arch")
         with Archivist(
-            getenv("RKVST_URL"),
+            getenv("DATATRAILS_URL"),
             (application["client_id"], application["credentials"][0]["secret"]),
         ) as new_arch:
             # now we create an asset and add events 10 times with a 60s sleep

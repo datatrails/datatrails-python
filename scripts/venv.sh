@@ -10,16 +10,16 @@ then
     exit 0
 fi
 
-if [ ! -s dist/rkvst_archivist-*.whl ]
+if [ ! -s dist/datatrails_archivist-*.whl ]
 then
     echo "no wheel found - execute 'task wheel'"
     exit 1
 fi
 
-rm -rf rkvst-venv
-python3 -m venv rkvst-venv
-source rkvst-venv/bin/activate
+rm -rf datatrails-venv
+python3 -m venv datatrails-venv
+source datatrails-venv/bin/activate
 python3 -m pip install --force-reinstall wheel
-python3 -m pip install --force-reinstall dist/rkvst_archivist-*.whl
+python3 -m pip install --force-reinstall dist/datatrails_archivist-*.whl
 python3 -m pip install --force-reinstall -r docs/notebooks/requirements.txt
 deactivate

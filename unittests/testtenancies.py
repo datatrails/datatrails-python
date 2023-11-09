@@ -29,8 +29,8 @@ RESPONSE_PUBLICINFO = {
 # pylint: disable=protected-access
 # pylint: disable=unused-variable
 
-if "RKVST_LOGLEVEL" in environ and environ["RKVST_LOGLEVEL"]:
-    set_logger(environ["RKVST_LOGLEVEL"])
+if "DATATRAILS_LOGLEVEL" in environ and environ["DATATRAILS_LOGLEVEL"]:
+    set_logger(environ["DATATRAILS_LOGLEVEL"])
 
 LOGGER = getLogger(__name__)
 

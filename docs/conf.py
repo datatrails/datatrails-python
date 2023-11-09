@@ -18,9 +18,9 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 from archivist import about
-project = 'RKVST'
-copyright = '2022, support@rkvst.com'
-author = 'support@rkvst.com'
+project = 'DATATRAILS'
+copyright = '2022, support@datatrails.ai'
+author = 'support@datatrails.ai'
 
 version = about.__version__
 release = about.__version__
@@ -71,10 +71,10 @@ source_suffix = [ '.md', '.rst']
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
 html_css_files = [ 
-    'css/rkvst_theme.css', 
+    'css/datatrails_theme.css', 
 ]
-html_favicon = "_static/favicon.ico"
-html_logo = '_static/RKVST_WhtLogo_RGB.png'
+html_favicon = "_static/DataTrails_Favicon.png"
+html_logo = '_static/DataTrails_Wordmark_White.png'
 html_show_sourcelink = False
 html_show_sphinx = False
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -97,4 +97,3 @@ spelling_lang = 'en_US'
 spelling_word_list_filename ='spelling_wordlist.txt'
 spelling_show_suggestions = True
 spelling_verbose = True
-

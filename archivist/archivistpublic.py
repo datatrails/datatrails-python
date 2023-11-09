@@ -2,7 +2,7 @@
 """Public connection interface
 
    This module contains the base Archivist class which manages
-   the public connection to an RKVST instance and
+   the public connection to an DATATRAILS instance and
    the basic REST verbs to GET, POST, PATCH and DELETE entities..
 
    The REST methods in this class should only be used directly when
@@ -186,7 +186,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         """GET method (REST)
 
         Args:
-            url (str): e.g. https://app.rkvst.io/archivist/v2/publicassets/xxxxxxxxxxxxxxxxxxxxxx
+            url (str): e.g. https://app.datatrails.ai/archivist/v2/publicassets/xxxxxxxxxxxxxxxxxx
             headers (dict): optional REST headers
             params (dict): optional params strings
 
@@ -313,7 +313,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         being found.
 
         Args:
-            url (str): e.g. https://app.rkvst.io/archivist/v2/assets
+            url (str): e.g. https://app.datatrails.ai/archivist/v2/assets
             field (str): name of collection of entities e.g assets
             params (dict): selector e.g. {"attributes": {"arc_display_name":"container no. 1"}}
             headers (dict): optional REST headers
@@ -356,7 +356,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         Returns the count of objects that match params
 
         Args:
-            url (str): e.g. https://app.rkvst.io/archivist/v2/assets
+            url (str): e.g. https://app.datatrails.ai/archivist/v2/assets
             params (dict): selector e.g. {"attributes":{"arc_display_name":"container no. 1"}}
 
         Returns:
@@ -401,7 +401,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         (different for each endpoint)
 
         Args:
-            url (str): e.g. https://app.rkvst.io/archivist/v2/assets
+            url (str): e.g. https://app.datatrails.ai/archivist/v2/assets
             field (str): name of collection of entities e.g assets
             page_size (int): optional number of items per request e.g. 500
             params (dict): selector e.g. {"confirmation_status": "CONFIRMED", }

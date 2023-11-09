@@ -17,13 +17,13 @@ LOGGER = getLogger(__name__)
 
 
 def run(arch: Archivist, args):
-    LOGGER.info("Using version %s of rkvst-archivist", about.__version__)
+    LOGGER.info("Using version %s of datatrails-archivist", about.__version__)
     LOGGER.info("Namespace %s", args.namespace)
 
     # if namespace is specified on the commandline then override any environment
     # setting...
     if args.namespace:
-        environ["RKVST_UNIQUE_ID"] = args.namespace
+        environ["DATATRAILS_UNIQUE_ID"] = args.namespace
 
     with open(args.yamlfile, "r", encoding="utf-8") as y:
         arch.runner(parse_config(data=y))
