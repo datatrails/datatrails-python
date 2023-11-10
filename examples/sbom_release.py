@@ -17,7 +17,7 @@ from archivist.utils import get_auth
 
 filterwarnings("ignore", message="Unverified HTTPS request")
 
-ASSET_NAME = "DATATRAILS SaaS Software Package"
+ASSET_NAME = "DataTrails SaaS Software Package"
 
 
 def sbom_release(arch, release, sbom_filename):
@@ -47,7 +47,7 @@ def sbom_release(arch, release, sbom_filename):
             "attributes": {
                 "arc_display_name": ASSET_NAME,
                 "arc_display_type": SBOM_PACKAGE,
-                "arc_description": "Software Package for DATATRAILS SaaS",
+                "arc_description": "Software Package for DataTrails SaaS",
             },
         },
         confirm=True,
@@ -64,14 +64,14 @@ def sbom_release(arch, release, sbom_filename):
             "operation": "Record",
             "behaviour": "RecordEvidence",
             "event_attributes": {
-                "arc_description": f"DATATRAILS Inc DATATRAILS SAAS Release {release}",
+                "arc_description": f"DataTrails Inc DataTrails SAAS Release {release}",
                 "arc_display_type": SBOM_RELEASE,
             },
             "attachments": [
                 {
                     "filename": f"{sbom_filename}",
                     "content_type": "text/xml",
-                    "display_name": f"DATATRAILS {release} SBOM",
+                    "display_name": f"DataTrails {release} SBOM",
                     "type": SBOM_RELEASE,
                 },
             ],
