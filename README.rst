@@ -1,12 +1,12 @@
 
 .. _readme:
 
-DATATRAILS Python Client
+DataTrails Python Client
 =========================
 
-The standard DATATRAILS Python Client.
+The standard DataTrails Python Client.
 
-Please note that the canonical API for DATATRAILS is always the REST API
+Please note that the canonical API for DataTrails is always the REST API
 documented at https://docs.datatrails.ai
 
 Support
@@ -44,7 +44,7 @@ You can then use the examples code to create assets (see examples directory):
 
 .. code:: python
 
-    """Create an asset in DATATRAILS with User Token.
+    """Create an asset in DataTrails with User Token.
 
     The module contains two functions: main and create_asset. Main function parses in
     a url to the Archivist and credentials, which is a user authorization.
@@ -223,7 +223,7 @@ To use the :code:`archivist_runner` command you will need the following:
 
     - A Client ID and Client Secret by creating an `App Registration`_
     - The YAML file with the operations you wish to run
-    - The URL of your DATATRAILS instance, this is typically `https://app.datatrails.ai`
+    - The URL of your DataTrails instance, this is typically `https://app.datatrails.ai`
 
 .. _App Registration: https://docs.datatrails.ai/developers/developer-patterns/getting-access-tokens-using-app-registrations/
 
@@ -368,4 +368,4 @@ which should be called before anything else:
 Development
 ===========
 
-For instructions on contributing to the DATATRAILS SDK see DEVELOPMENT.md.
+For instructions on contributing to the DataTrails SDK see DEVELOPMENT.md.

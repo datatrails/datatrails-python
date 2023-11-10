@@ -28,7 +28,7 @@ To use the :code:`archivist_runner` command you will need the following:
 
     - A Client ID and Client Secret by creating an `App Registration`_
     - The YAML file with the operations you wish to run
-    - The URL of your DATATRAILS instance, this is typically `https://app.datatrails.ai`
+    - The URL of your DataTrails instance, this is typically `https://app.datatrails.ai`
 
 .. _App Registration: https://docs.datatrails.ai/docs/setup-and-administration/getting-access-tokens-using-app-registrations/
 

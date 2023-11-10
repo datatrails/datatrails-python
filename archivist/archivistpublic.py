@@ -2,7 +2,7 @@
 """Public connection interface
 
    This module contains the base Archivist class which manages
-   the public connection to an DATATRAILS instance and
+   the public connection to an DataTrails instance and
    the basic REST verbs to GET, POST, PATCH and DELETE entities..
 
    The REST methods in this class should only be used directly when

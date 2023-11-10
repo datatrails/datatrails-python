@@ -186,17 +186,17 @@ class _AssetsRestricted(_AssetsPublic):
                 behaviours
                   - RecordEvidence
                 attributes:
-                  arc_display_name: DATATRAILS Front Door
+                  arc_display_name: DataTrails Front Door
                   arc_firmware_version: "1.0"
                   arc_serial_number: das-j1-01
-                  arc_description: Electronic door entry system to DATATRAILS France
+                  arc_description: Electronic door entry system to DataTrails France
                   wavestone_asset_id: paris.france.datatrails.das
                 location:
                   identity: locations/xxxxxxxxxxxxxxxxxxxxxxxxxx
                 location:
                   selector:
                     - display_name
-                  display_name: DATATRAILS Paris
+                  display_name: DataTrails Paris
                   description: Sales and sales support for the French region
                   latitude: 48.8339211,
                   longitude: 2.371345,
