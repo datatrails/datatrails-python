@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checking the Dog&#39;s Weight &mdash; DATATRAILS v0.27.0 documentation</title>
+  <title>Checking the Dog&#39;s Weight &mdash; DATATRAILS  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=905d1915"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -42,9 +42,6 @@
             
               <img src="../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                v0.27.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -118,13 +115,13 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create Compliance RICHNESS Policy</span>
 <span class="c1">#</span>
-<span class="c1"># Main function, establishes a connection to DATATRAILS using an App Registration then uses that</span>
+<span class="c1"># Main function, establishes a connection to DataTrails using an App Registration then uses that</span>
 <span class="c1"># to create a Compliance RICHNESS Policy.</span>
 <span class="c1">#</span>
-<span class="c1"># Note: The purpose of DATATRAILS Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.</span>
-<span class="c1"># The DATATRAILS Python SDK is authored to work cleanly with more advanced coding techniques.</span>
+<span class="c1"># Note: The purpose of DataTrails Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.</span>
+<span class="c1"># The DataTrails Python SDK is authored to work cleanly with more advanced coding techniques.</span>
 <span class="c1">#</span>
-<span class="c1"># DATATRAILS Python SDK: https://github.com/datatrails/datatrails-python</span>
+<span class="c1"># DataTrails Python SDK: https://github.com/datatrails/datatrails-python</span>
 <span class="c1">#</span>
 </pre></div>
 </div>
@@ -166,7 +163,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DATATRAILS_URL, DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET are environment variables that represent connection parameters.</span>
 <span class="c1">#</span>
-<span class="c1"># DATATRAILS_URL = represents the url to the DATATRAILS application</span>
+<span class="c1"># DATATRAILS_URL = represents the url to the DataTrails application</span>
 <span class="c1"># DATATRAILS_APPREG_CLIENT = represents the client ID from an Application Registration</span>
 <span class="c1"># DATATRAILS_APPREG_SECRET = represents the client secret from an Application Registration</span>
 <span class="n">DATATRAILS_URL</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_URL&quot;</span><span class="p">)</span>
@@ -182,7 +179,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Main function of RICHNESS policy creation.</span>
 
-<span class="sd">* Connect to DATATRAILS with client ID and client secret</span>
+<span class="sd">* Connect to DataTrails with client ID and client secret</span>
 <span class="sd">* Creates a Compliance RICHNESS Policy</span>
 <span class="sd">&quot;&quot;&quot;</span>
 

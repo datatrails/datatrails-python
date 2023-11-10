@@ -18,13 +18,13 @@
    "source": [
     "# Create Compliance SINCE Policy\n",
     "#\n",
-    "# Main function, establishes a connection to DATATRAILS using an App Registration then uses that\n",
+    "# Main function, establishes a connection to DataTrails using an App Registration then uses that\n",
     "# to create a Compliance SINCE Policy.\n",
     "#\n",
-    "# Note: The purpose of DATATRAILS Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.\n",
-    "# The DATATRAILS Python SDK is authored to work cleanly with more advanced coding techniques.\n",
+    "# Note: The purpose of DataTrails Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.\n",
+    "# The DataTrails Python SDK is authored to work cleanly with more advanced coding techniques.\n",
     "#\n",
-    "# DATATRAILS Python SDK: https://github.com/datatrails/datatrails-python\n",
+    "# DataTrails Python SDK: https://github.com/datatrails/datatrails-python\n",
     "#"
    ]
   },
@@ -72,7 +72,7 @@
    "source": [
     "# DATATRAILS_URL, DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET are environment variables that represent connection parameters.\n",
     "#\n",
-    "# DATATRAILS_URL = represents the url to the DATATRAILS application\n",
+    "# DATATRAILS_URL = represents the url to the DataTrails application\n",
     "# DATATRAILS_APPREG_CLIENT = represents the client ID from an Application Registration\n",
     "# DATATRAILS_APPREG_SECRET = represents the client secret from an Application Registration\n",
     "DATATRAILS_URL = getenv(\"DATATRAILS_URL\")\n",
@@ -99,7 +99,7 @@
     "\"\"\"\n",
     "Main function of SINCE policy creation.\n",
     "\n",
-    "* Connect to DATATRAILS with client ID and client secret\n",
+    "* Connect to DataTrails with client ID and client secret\n",
     "* Creates a Compliance SINCE Policy\n",
     "\"\"\"\n",
     "\n",
@@ -125,7 +125,7 @@
    "source": [
     "def create_compliance_policy(arch):\n",
     "    \"\"\"\n",
-    "    Creates a SINCE compliance policy for playing fetch every 5 minutes. If DATATRAILS does not see\n",
+    "    Creates a SINCE compliance policy for playing fetch every 5 minutes. If DataTrails does not see\n",
     "    a \"Fetch\" event within 5 minutes then Golden Retriever Asset is out of compliance.\n",
     "    \"\"\"\n",
     "    since_policy = arch.compliance_policies.create(\n",
