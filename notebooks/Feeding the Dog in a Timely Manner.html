@@ -4,20 +4,20 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Feeding the Dog in a Timely Manner &mdash; RKVST v0.26.0 documentation</title>
+  <title>Feeding the Dog in a Timely Manner &mdash; DATATRAILS v0.27.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
       <link rel="stylesheet" href="../_static/nbsphinx-code-cells.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <link rel="stylesheet" href="../_static/css/datatrails_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/DataTrails_Favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=e188534c"></script>
+        <script src="../_static/documentation_options.js?v=905d1915"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -40,10 +40,10 @@
           
           <a href="../index.html">
             
-              <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+              <img src="../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.26.0
+                v0.27.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -92,7 +92,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">RKVST</a>
+          <a href="../index.html">DATATRAILS</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -118,13 +118,13 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create Compliance DYNAMIC TOLERANCE Policy</span>
 <span class="c1">#</span>
-<span class="c1"># Main function, establishes a connection to RKVST using an App Registration then uses that</span>
+<span class="c1"># Main function, establishes a connection to DATATRAILS using an App Registration then uses that</span>
 <span class="c1"># to create a Compliance DYNAMIC TOLERANCE Policy.</span>
 <span class="c1">#</span>
-<span class="c1"># Note: The purpose of RKVST Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.</span>
-<span class="c1"># The RKVST Python SDK is authored to work cleanly with more advanced coding techniques.</span>
+<span class="c1"># Note: The purpose of DATATRAILS Jupyter Notebooks is to provide simplified examples that one can easily execute and digest.</span>
+<span class="c1"># The DATATRAILS Python SDK is authored to work cleanly with more advanced coding techniques.</span>
 <span class="c1">#</span>
-<span class="c1"># RKVST Python SDK: https://github.com/rkvst/rkvst-python</span>
+<span class="c1"># DATATRAILS Python SDK: https://github.com/datatrails/datatrails-python</span>
 <span class="c1">#</span>
 </pre></div>
 </div>
@@ -164,14 +164,14 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># RKVST_URL, RKVST_APPREG_CLIENT, RKVST_APPREG_SECRET are environment variables that represent connection parameters.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DATATRAILS_URL, DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET are environment variables that represent connection parameters.</span>
 <span class="c1">#</span>
-<span class="c1"># RKVST_URL = represents the url to the RKVST application</span>
-<span class="c1"># RKVST_APPREG_CLIENT = represents the client ID from an Application Registration</span>
-<span class="c1"># RKVST_APPREG_SECRET = represents the client secret from an Application Registration</span>
-<span class="n">RKVST_URL</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">)</span>
-<span class="n">RKVST_APPREG_CLIENT</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_CLIENT&quot;</span><span class="p">)</span>
-<span class="n">RKVST_APPREG_SECRET</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET&quot;</span><span class="p">)</span>
+<span class="c1"># DATATRAILS_URL = represents the url to the DATATRAILS application</span>
+<span class="c1"># DATATRAILS_APPREG_CLIENT = represents the client ID from an Application Registration</span>
+<span class="c1"># DATATRAILS_APPREG_SECRET = represents the client secret from an Application Registration</span>
+<span class="n">DATATRAILS_URL</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_URL&quot;</span><span class="p">)</span>
+<span class="n">DATATRAILS_APPREG_CLIENT</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_APPREG_CLIENT&quot;</span><span class="p">)</span>
+<span class="n">DATATRAILS_APPREG_SECRET</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_APPREG_SECRET&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -182,7 +182,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Main function of DYNAMIC TOLERANCE policy creation.</span>
 
-<span class="sd">* Connect to RKVST with client ID and client secret</span>
+<span class="sd">* Connect to DATATRAILS with client ID and client secret</span>
 <span class="sd">* Creates a Compliance DYNAMIC TOLERANCE Policy</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -191,10 +191,12 @@
 <span class="c1"># documentation.</span>
 <span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
 
-<span class="c1"># Initialize connection to RKVST</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to RKVST&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">,</span> <span class="n">RKVST_URL</span><span class="p">)</span>
-<span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">RKVST_URL</span><span class="p">,</span> <span class="p">(</span><span class="n">RKVST_APPREG_CLIENT</span><span class="p">,</span> <span class="n">RKVST_APPREG_SECRET</span><span class="p">),</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="c1"># Initialize connection to DATATRAILS</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to DATATRAILS&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_URL&quot;</span><span class="p">,</span> <span class="n">DATATRAILS_URL</span><span class="p">)</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
+    <span class="n">DATATRAILS_URL</span><span class="p">,</span> <span class="p">(</span><span class="n">DATATRAILS_APPREG_CLIENT</span><span class="p">,</span> <span class="n">DATATRAILS_APPREG_SECRET</span><span class="p">),</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -203,8 +205,8 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Connecting to RKVST
-RKVST_URL https://app.rkvst.io
+Connecting to DATATRAILS
+DATATRAILS_URL https://app.datatrails.ai
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -311,7 +313,7 @@ Compliance_Policy {
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+    <p>&#169; Copyright 2022, support@datatrails.ai.</p>
   </div>
 
    

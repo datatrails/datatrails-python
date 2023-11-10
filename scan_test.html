@@ -4,19 +4,19 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scan Test Example &mdash; RKVST v0.26.0 documentation</title>
+  <title>Scan Test Example &mdash; DATATRAILS v0.27.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/rkvst_theme.css" type="text/css" />
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+      <link rel="stylesheet" href="_static/css/datatrails_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/DataTrails_Favicon.png"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=e188534c"></script>
+        <script src="_static/documentation_options.js?v=905d1915"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -37,10 +37,10 @@
           
           <a href="index.html">
             
-              <img src="_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+              <img src="_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.26.0
+                v0.27.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -86,7 +86,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">RKVST</a>
+          <a href="index.html">DATATRAILS</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -171,7 +171,7 @@
             <span class="s2">&quot;attachments&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="p">{</span>
                     <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="p">(</span>
-                        <span class="s2">&quot;https://raw.githubusercontent.com/rkvst/rkvst-python/&quot;</span>
+                        <span class="s2">&quot;https://raw.githubusercontent.com/datatrails/datatrails-python/&quot;</span>
                         <span class="s2">&quot;main/functests/test_resources/telephone.jpg&quot;</span>
                     <span class="p">),</span>
                     <span class="s2">&quot;content_type&quot;</span><span class="p">:</span> <span class="s2">&quot;image/jpg&quot;</span><span class="p">,</span>
@@ -238,14 +238,14 @@
 <span class="sd">    main entry point</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">auth</span> <span class="o">=</span> <span class="n">get_auth</span><span class="p">(</span>
-        <span class="n">auth_token</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_AUTHTOKEN&quot;</span><span class="p">),</span>
-        <span class="n">auth_token_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_AUTHTOKEN_FILENAME&quot;</span><span class="p">),</span>
-        <span class="n">client_id</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_CLIENT&quot;</span><span class="p">),</span>
-        <span class="n">client_secret</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET&quot;</span><span class="p">),</span>
-        <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_APPREG_SECRET_FILENAME&quot;</span><span class="p">),</span>
+        <span class="n">auth_token</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_AUTHTOKEN&quot;</span><span class="p">),</span>
+        <span class="n">auth_token_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_AUTHTOKEN_FILENAME&quot;</span><span class="p">),</span>
+        <span class="n">client_id</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_APPREG_CLIENT&quot;</span><span class="p">),</span>
+        <span class="n">client_secret</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_APPREG_SECRET&quot;</span><span class="p">),</span>
+        <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_APPREG_SECRET_FILENAME&quot;</span><span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RKVST_URL&quot;</span><span class="p">),</span> <span class="n">auth</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_URL&quot;</span><span class="p">),</span> <span class="n">auth</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;##[group]Today&quot;</span><span class="p">)</span>
         <span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
         <span class="n">scan_test</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
@@ -275,7 +275,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+    <p>&#169; Copyright 2022, support@datatrails.ai.</p>
   </div>
 
    

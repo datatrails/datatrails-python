@@ -17,7 +17,7 @@ The :code:`arc_namespace` (for the asset) and the :code:`namespace` (for the loc
 to distinguish between assets and locations created between runs of the story.
 
 Usually these field values are derived from an environment variable 
-:code:`RKVST_UNIQUE_ID` (default value is :code:`namespace`).
+:code:`DATATRAILS_UNIQUE_ID` (default value is :code:`namespace`).
 
 :code:`confirm: true` means that the step will wait for the asset to be completely created before moving on to the next step.
 
@@ -27,8 +27,8 @@ Usually these field values are derived from an environment variable
     steps:
       - step:
           action: ASSETS_CREATE_IF_NOT_EXISTS
-          description: Create a door in Paris at RKVST offices.
-          asset_label: RKVST Paris Front Door
+          description: Create a door in Paris at DATATRAILS offices.
+          asset_label: DATATRAILS Paris Front Door
         selector:
           - attributes:
             - arc_display_name
@@ -36,19 +36,19 @@ Usually these field values are derived from an environment variable
         behaviours:
           - RecordEvidence
         attributes:
-          arc_display_name: RKVST Paris Front Door
+          arc_display_name: DATATRAILS Paris Front Door
           arc_namespace: door entry
           arc_display_type: door
           arc_firmware_version: v1.0
           arc_serial_number: das-j1-01
-          arc_description: Electronic door entry system to RKVST France
-          wavestone_asset_id: paris.france.rkvst.das
+          arc_description: Electronic door entry system to DATATRAILS France
+          wavestone_asset_id: paris.france.datatrails.das
         location:
           selector:
             - display_name
             - attributes:
               - namespace
-          display_name: RKVST Paris
+          display_name: DATATRAILS Paris
           description: Sales and sales support for the French region
           latitude: 48.8339211
           longitude: 2.371345

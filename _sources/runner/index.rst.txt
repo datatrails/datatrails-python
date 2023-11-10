@@ -14,7 +14,7 @@ This functionality is also available with the CLI tool :code:`archivist_runner`.
 
 See the `installation instructions`_ for more information.
 
-.. _installation instructions: https://python.rkvst.com/index.html#installation
+.. _installation instructions: https://python.datatrails.ai/index.html#installation
 
 You can verify the installation by running the following:
 
@@ -28,16 +28,16 @@ To use the :code:`archivist_runner` command you will need the following:
 
     - A Client ID and Client Secret by creating an `App Registration`_
     - The YAML file with the operations you wish to run
-    - The URL of your RKVST instance, this is typically `https://app.rkvst.io`
+    - The URL of your DATATRAILS instance, this is typically `https://app.datatrails.ai`
 
-.. _App Registration: https://docs.rkvst.com/docs/setup-and-administration/getting-access-tokens-using-app-registrations/
+.. _App Registration: https://docs.datatrails.ai/docs/setup-and-administration/getting-access-tokens-using-app-registrations/
 
 Example usage:
 
 .. code-block:: shell
 
    archivist_runner \
-         -u https://app.rkvst.io \
+         -u https://app.datatrails.ai \
          --client-id <your-client-id> \
          --client-secret <your-client-secret> \
          functests/test_resources/richness_story.yaml

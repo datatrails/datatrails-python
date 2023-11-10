@@ -3,9 +3,9 @@
 Features
 =============================================
 
-This package provides a python interface to RKVST.
+This package provides a python interface to DATATRAILS.
 
-The definitive guide to the REST API is defined here: https://docs.rkvst.com
+The definitive guide to the REST API is defined here: https://docs.datatrails.ai
 
 This python SDK offers a number of advantages over a simple 
 REST api (in any language):

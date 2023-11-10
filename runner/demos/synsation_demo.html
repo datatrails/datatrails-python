@@ -4,19 +4,19 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Synsation Demo &mdash; RKVST v0.26.0 documentation</title>
+  <title>Synsation Demo &mdash; DATATRAILS v0.27.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/rkvst_theme.css" type="text/css" />
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <link rel="stylesheet" href="../../_static/css/datatrails_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=e188534c"></script>
+        <script src="../../_static/documentation_options.js?v=905d1915"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -37,10 +37,10 @@
           
           <a href="../../index.html">
             
-              <img src="../../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+              <img src="../../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.26.0
+                v0.27.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -101,7 +101,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">RKVST</a>
+          <a href="../../index.html">DATATRAILS</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -229,7 +229,7 @@ templating engine.</p>
 <span class="x">    latitude: </span><span class="cp">{{</span> <span class="nv">location.latitude</span> <span class="cp">}}</span>
 <span class="x">    longitude: </span><span class="cp">{{</span> <span class="nv">location.longitude</span> <span class="cp">}}</span>
 <span class="x">    attributes:</span>
-<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;RKVST_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 <span class="x">      address: </span><span class="cp">{{</span> <span class="nv">location.attributes.address</span> <span class="cp">}}</span>
 <span class="x">      facility_type: </span><span class="cp">{{</span> <span class="nv">location.attributes.facility_type</span> <span class="cp">}}</span>
 <span class="x">      reception_email: </span><span class="cp">{{</span> <span class="nv">location.attributes.reception_email</span> <span class="cp">}}</span>
@@ -240,14 +240,14 @@ templating engine.</p>
 <span class="x">      description: Count locations in namespace</span>
 <span class="x">      LOGGER.debug_response: true</span>
 <span class="x">    attrs:</span>
-<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;RKVST_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 
 <span class="x">  - step:</span>
 <span class="x">      action: LOCATIONS_LIST</span>
 <span class="x">      description: List locations in namespace</span>
 <span class="x">      LOGGER.debug_response: true</span>
 <span class="x">    attrs:</span>
-<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;RKVST_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 
 <span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">asset</span> <span class="k">in</span> <span class="nv">assets</span> <span class="cp">%}</span><span class="x"> </span>
 <span class="x">  - step:</span>
@@ -263,7 +263,7 @@ templating engine.</p>
 <span class="x">      - RecordEvidence</span>
 <span class="x">    attributes:</span>
 <span class="x">      arc_display_name: </span><span class="cp">{{</span> <span class="nv">asset.type</span> <span class="cp">}}</span><span class="x"> in </span><span class="cp">{{</span> <span class="nv">asset.location_label</span> <span class="cp">}}</span>
-<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;RKVST_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 <span class="x">      arc_display_type: </span><span class="cp">{{</span> <span class="nv">asset.type</span> <span class="cp">}}</span>
 <span class="x">      arc_firmware_version: </span><span class="cp">{{</span> <span class="nv">asset.firmware_version</span> <span class="cp">}}</span>
 <span class="x">      arc_serial_number: </span><span class="cp">{{</span> <span class="nv">asset.serial_number</span> <span class="cp">}}</span>
@@ -280,7 +280,7 @@ templating engine.</p>
 <span class="x">      description: Wait for all assets to be confirmed</span>
 <span class="x">      LOGGER.debug_response: true</span>
 <span class="x">    attrs:</span>
-<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;RKVST_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 
 <span class="x">  - step:</span>
 <span class="x">      action: ASSETS_LIST</span>
@@ -288,7 +288,7 @@ templating engine.</p>
 <span class="x">      LOGGER.debug_response: true</span>
 <span class="x">    attrs:</span>
 <span class="x">      arc_display_type: LOGGER.debuger</span>
-<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;RKVST_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 
 <span class="x">  - step:</span>
 <span class="x">      action: ASSETS_LIST</span>
@@ -296,7 +296,7 @@ templating engine.</p>
 <span class="x">      LOGGER.debug_response: true</span>
 <span class="x">    attrs:</span>
 <span class="x">      arc_display_type: coffee machine</span>
-<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;RKVST_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 
 <span class="x">  - step:</span>
 <span class="x">      action: ASSETS_LIST</span>
@@ -304,7 +304,7 @@ templating engine.</p>
 <span class="x">      LOGGER.debug_response: true</span>
 <span class="x">    attrs:</span>
 <span class="x">      arc_display_type: security camera</span>
-<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;RKVST_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">      arc_namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -320,7 +320,7 @@ templating engine.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+    <p>&#169; Copyright 2022, support@datatrails.ai.</p>
   </div>
 
    

@@ -4,19 +4,19 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Story Runner &mdash; RKVST v0.26.0 documentation</title>
+  <title>Story Runner &mdash; DATATRAILS v0.27.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <link rel="stylesheet" href="../_static/css/datatrails_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/DataTrails_Favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=e188534c"></script>
+        <script src="../_static/documentation_options.js?v=905d1915"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -37,10 +37,10 @@
           
           <a href="../index.html">
             
-              <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+              <img src="../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.26.0
+                v0.27.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -92,7 +92,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">RKVST</a>
+          <a href="../index.html">DATATRAILS</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -133,13 +133,13 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
 
 
 <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">arch</span><span class="p">:</span> <span class="n">Archivist</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using version </span><span class="si">%s</span><span class="s2"> of rkvst-archivist&quot;</span><span class="p">,</span> <span class="n">about</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using version </span><span class="si">%s</span><span class="s2"> of datatrails-archivist&quot;</span><span class="p">,</span> <span class="n">about</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
     <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Namespace </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span><span class="p">)</span>
 
     <span class="c1"># if namespace is specified on the commandline then override any environment</span>
     <span class="c1"># setting...</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span><span class="p">:</span>
-        <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;RKVST_UNIQUE_ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span>
+        <span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATATRAILS_UNIQUE_ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">namespace</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">yamlfile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">y</span><span class="p">:</span>
         <span class="n">arch</span><span class="o">.</span><span class="n">runner</span><span class="p">(</span><span class="n">parse_config</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">y</span><span class="p">))</span>
@@ -148,7 +148,7 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
 </pre></div>
 </div>
 <p>This functionality is also available with the CLI tool <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code>.</p>
-<p>See the <a class="reference external" href="https://python.rkvst.com/index.html#installation">installation instructions</a> for more information.</p>
+<p>See the <a class="reference external" href="https://python.datatrails.ai/index.html#installation">installation instructions</a> for more information.</p>
 <p>You can verify the installation by running the following:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner<span class="w"> </span>-h
 </pre></div>
@@ -157,14 +157,14 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
 <p>To use the <code class="code docutils literal notranslate"><span class="pre">archivist_runner</span></code> command you will need the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>A Client ID and Client Secret by creating an <a class="reference external" href="https://docs.rkvst.com/docs/setup-and-administration/getting-access-tokens-using-app-registrations/">App Registration</a></p></li>
+<li><p>A Client ID and Client Secret by creating an <a class="reference external" href="https://docs.datatrails.ai/docs/setup-and-administration/getting-access-tokens-using-app-registrations/">App Registration</a></p></li>
 <li><p>The YAML file with the operations you wish to run</p></li>
-<li><p>The URL of your RKVST instance, this is typically <cite>https://app.rkvst.io</cite></p></li>
+<li><p>The URL of your DATATRAILS instance, this is typically <cite>https://app.datatrails.ai</cite></p></li>
 </ul>
 </div></blockquote>
 <p>Example usage:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>archivist_runner<span class="w"> </span><span class="se">\</span>
-<span class="w">      </span>-u<span class="w"> </span>https://app.rkvst.io<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-u<span class="w"> </span>https://app.datatrails.ai<span class="w"> </span><span class="se">\</span>
 <span class="w">      </span>--client-id<span class="w"> </span>&lt;your-client-id&gt;<span class="w"> </span><span class="se">\</span>
 <span class="w">      </span>--client-secret<span class="w"> </span>&lt;your-client-secret&gt;<span class="w"> </span><span class="se">\</span>
 <span class="w">      </span>functests/test_resources/richness_story.yaml
@@ -233,7 +233,7 @@ a dictionary. Usually the dictionary is read from a yaml or json file.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+    <p>&#169; Copyright 2022, support@datatrails.ai.</p>
   </div>
 
    

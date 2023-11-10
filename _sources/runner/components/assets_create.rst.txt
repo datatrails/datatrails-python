@@ -12,7 +12,7 @@ The :code:`arc_namespace` (for the asset) and the :code:`namespace` (for the loc
 to distinguish between assets and locations created between runs of the story.
 
 Usually these field values are derived from an environment variable 
-:code:`RKVST_UNIQUE_ID` (default value is :code:`namespace`).
+:code:`DATATRAILS_UNIQUE_ID` (default value is :code:`namespace`).
 
 The optional :code:`confirm: true` entry means that the step will wait for the asset to be completely created before moving on to the next step.
 

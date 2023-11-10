@@ -4,19 +4,19 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assets Class &mdash; RKVST v0.26.0 documentation</title>
+  <title>Assets Class &mdash; DATATRAILS v0.27.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/rkvst_theme.css" type="text/css" />
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <link rel="stylesheet" href="../_static/css/datatrails_theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/DataTrails_Favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=e188534c"></script>
+        <script src="../_static/documentation_options.js?v=905d1915"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -37,10 +37,10 @@
           
           <a href="../index.html">
             
-              <img src="../_static/RKVST_WhtLogo_RGB.png" class="logo" alt="Logo"/>
+              <img src="../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.26.0
+                v0.27.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -100,7 +100,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">RKVST</a>
+          <a href="../index.html">DATATRAILS</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -130,7 +130,7 @@
 
 <span class="c1"># Initialize connection to Archivist</span>
 <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
-    <span class="s2">&quot;https://app.rkvst.io&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;https://app.datatrails.ai&quot;</span><span class="p">,</span>
     <span class="n">authtoken</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">asset</span> <span class="o">=</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
@@ -259,17 +259,17 @@ does not already exist.</p>
 <span class="l l-Scalar l-Scalar-Plain">behaviours</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">- RecordEvidence</span>
 <span class="nt">attributes</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">arc_display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RKVST Front Door</span>
+<span class="w">  </span><span class="nt">arc_display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DATATRAILS Front Door</span>
 <span class="w">  </span><span class="nt">arc_firmware_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.0&quot;</span>
 <span class="w">  </span><span class="nt">arc_serial_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">das-j1-01</span>
-<span class="w">  </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to RKVST France</span>
-<span class="w">  </span><span class="nt">wavestone_asset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">paris.france.rkvst.das</span>
+<span class="w">  </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to DATATRAILS France</span>
+<span class="w">  </span><span class="nt">wavestone_asset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">paris.france.datatrails.das</span>
 <span class="nt">location</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">identity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">locations/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
 <span class="nt">location</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_name</span>
-<span class="w">  </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RKVST Paris</span>
+<span class="w">  </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DATATRAILS Paris</span>
 <span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sales and sales support for the French region</span>
 <span class="w">  </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48.8339211,</span>
 <span class="w">  </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.371345,</span>
@@ -396,7 +396,7 @@ are shown - choose one.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, support@rkvst.com.</p>
+    <p>&#169; Copyright 2022, support@datatrails.ai.</p>
   </div>
 
    
