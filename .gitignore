@@ -18,7 +18,7 @@ coverage.xml
 .pip-audit-cache/
 *.pyi
 .vscode
-rkvst-venv/
+datatrails-venv/
 stuntidp*
 .npm/
 functest-results/
