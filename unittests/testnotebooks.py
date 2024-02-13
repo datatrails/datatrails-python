@@ -1,8 +1,10 @@
 """
 Test notebooks
 """
+
 import os
-from unittest import TestCase
+from sys import version_info
+from unittest import TestCase, skipIf
 
 from testbook import testbook
 
@@ -61,7 +63,10 @@ def unsetenv(key, oldvalue):
         del os.environ[key]
 
 
-# Commented out code corresponds to
+@skipIf(
+    version_info >= (3, 12),
+    "cannot run test as notebooks unsupported in 3.12",
+)
 class TestNotebooks(TestCase):
     """
     Test notebooks

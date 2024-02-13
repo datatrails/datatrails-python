@@ -1,6 +1,7 @@
 """
 Unit tests
 """
+
 import unittest
 
 # Hides Docstring

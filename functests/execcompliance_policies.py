@@ -1,6 +1,7 @@
 """
 Test compliance policies
 """
+
 from json import dumps as json_dumps
 from os import getenv
 from time import sleep

@@ -4,7 +4,6 @@
 
 """
 
-
 from dataclasses import asdict, dataclass
 
 from .compliance_policy_type import CompliancePolicyType

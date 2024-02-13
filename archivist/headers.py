@@ -3,7 +3,6 @@
    Manage headers allowing for upper/lower/canonicalize form
 """
 
-
 from requests import models
 
 

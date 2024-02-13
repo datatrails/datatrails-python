@@ -40,7 +40,7 @@ def create_asset(arch):
         # their arc_display_type.
         # So a mistake here can result in asset data being
         # under- or over-shared.
-        "some_custom_attribute": "value"  # You can add any custom value as long as
+        "some_custom_attribute": "value",  # You can add any custom value as long as
         # it does not start with arc_
     }
     #

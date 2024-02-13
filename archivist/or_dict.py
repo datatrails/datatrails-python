@@ -5,7 +5,6 @@
    Dictionaries where key is always 'or' and value is a list of strings
 """
 
-
 from typing import Any
 
 

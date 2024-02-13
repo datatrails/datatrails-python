@@ -1,6 +1,7 @@
 """
 Test subjects
 """
+
 from json import dumps as json_dumps
 from os import getenv
 from uuid import uuid4

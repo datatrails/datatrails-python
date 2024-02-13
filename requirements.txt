@@ -7,7 +7,7 @@
 backoff~=2.2.1
 certifi
 flatten-dict~=0.4
-iso8601~=2.0
+iso8601~=2.1
 Jinja2~=3.1
 pyaml-env~=1.2
 requests~=2.31.0

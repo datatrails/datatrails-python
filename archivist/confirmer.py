@@ -1,7 +1,6 @@
 """assets confirmer interface
 """
 
-
 from copy import deepcopy
 from logging import getLogger
 from typing import TYPE_CHECKING, Any, Union, overload
@@ -54,23 +53,27 @@ def __on_giveup_confirmation(details: "Details"):
 
 
 @overload
-def _wait_for_confirmation(self: "_AssetsRestricted", identity: str) -> "Asset":
-    ...  # pragma: no cover
+def _wait_for_confirmation(
+    self: "_AssetsRestricted", identity: str
+) -> "Asset": ...  # pragma: no cover
 
 
 @overload
-def _wait_for_confirmation(self: "_AssetsPublic", identity: str) -> "Asset":
-    ...  # pragma: no cover
+def _wait_for_confirmation(
+    self: "_AssetsPublic", identity: str
+) -> "Asset": ...  # pragma: no cover
 
 
 @overload
-def _wait_for_confirmation(self: "_EventsRestricted", identity: str) -> "Event":
-    ...  # pragma: no cover
+def _wait_for_confirmation(
+    self: "_EventsRestricted", identity: str
+) -> "Event": ...  # pragma: no cover
 
 
 @overload
-def _wait_for_confirmation(self: "_EventsPublic", identity: str) -> "Event":
-    ...  # pragma: no cover
+def _wait_for_confirmation(
+    self: "_EventsPublic", identity: str
+) -> "Event": ...  # pragma: no cover
 
 
 @backoff.on_predicate(

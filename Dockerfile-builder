@@ -41,7 +41,6 @@ RUN python3 -m pip install --upgrade pip \
 ENV USER=builder
 ENV HOME=/home/${USER}
 ENV PATH=${HOME}/.local/bin:${PATH}
-ENV PYTHONPATH=${HOME}/archivist:${PYTHONPATH}
 RUN mkdir -p ${HOME}
 WORKDIR ${HOME}
 

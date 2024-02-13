@@ -1,6 +1,7 @@
 """Asset data class
 
 """
+
 from contextlib import suppress
 
 

@@ -1,7 +1,6 @@
 """assets confirmer interface
 """
 
-
 from logging import getLogger
 from typing import TYPE_CHECKING
 
