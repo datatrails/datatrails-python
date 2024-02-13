@@ -226,7 +226,7 @@
     "        # their arc_display_type.\n",
     "        # So a mistake here can result in asset data being\n",
     "        # under- or over-shared.\n",
-    "        \"some_custom_attribute\": \"value\"  # You can add any custom value as long as\n",
+    "        \"some_custom_attribute\": \"value\",  # You can add any custom value as long as\n",
     "        # it does not start with arc_\n",
     "    }\n",
     "    # The first argument is the attributes of the asset\n",
