@@ -1,6 +1,7 @@
 """
 Test runner assets
 """
+
 from logging import getLogger
 from os import environ
 from unittest import TestCase, mock

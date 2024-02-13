@@ -563,6 +563,10 @@ redefining-builtins-modules = ["six.moves", "past.builtins", "future.builtins", 
 # this will eventually be the de facto linter and pylint,pycodestyle etc will be removed.
 # we can add a host of checkers in extend-select but for now lets keep it simple
 [tool.ruff]
+show-fixes = true
+target-version = "py37"
+
+[tool.ruff.lint]
 extend-select = [
     "C4",
     "E",
@@ -571,7 +575,4 @@ extend-select = [
     "TCH",
 ]
 ignore = ["E501"]
-show-fixes = true
-target-version = "py37"
-
 

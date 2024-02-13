@@ -41,19 +41,28 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements-dev.txt
-      shell: bash
-    - name: Run integrity checks
-      run: |
         ./scripts/version.sh
+      shell: bash
+    - name: pycodestyle
+      run: |
         pycodestyle --format=pylint archivist examples functests unittests
+      shell: bash
+    - name: pylint
+      run: |
         python3 -m pylint archivist examples functests unittests
-        black archivist examples unittests functests
+      shell: bash
+    - name: black
+      run: |
         modified=$(git status -s | wc -l)
+        black archivist examples unittests functests
         if [ $modified -gt 0 ]
         then
             echo "there are $modified files that must be reformatted"
             exit 1
         fi
+      shell: bash
+    - name: unittests.sh
+      run: |
         ./scripts/unittests.sh
       shell: bash
     - name: Run type-hint checks

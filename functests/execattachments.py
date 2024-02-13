@@ -1,6 +1,7 @@
 """
 Tests the upload and download functionality of the SDK
 """
+
 from contextlib import suppress
 from filecmp import clear_cache, cmp
 from io import BytesIO

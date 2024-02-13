@@ -1,9 +1,16 @@
 #
 # jupyter notebooks
-ipython~=8.12
-jupyter~=1.0
-jupyterlab~=4.0
-jupyter-console~=6.6
-jupyter-contrib-nbextensions~=0.7
-python-dotenv[cli]~=1.0
+#
+# python 3.12 is unsupported as it reuires pyzmq 25.1.1 which
+# is a dependency of notebook. 
+ipython~=8.12.3; python_version < '3.12'
+# pin notebook at version 6. version7 does not support the various
+# extensions - upgrade to notebook v7 is a future PR when
+# it has stabilised.
+notebook~=6.4; python_version < '3.12'
+jupyter~=1.0; python_version < '3.12'
+jupyter-console~=6.6; python_version < '3.12'
+jupyter-contrib-nbextensions~=0.7; python_version < '3.12'
+jupyter-nbextensions-configurator~=0.6; python_version < '3.12'
+python-dotenv[cli]~=1.0; python_version < '3.12'
 

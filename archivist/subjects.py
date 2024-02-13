@@ -21,7 +21,6 @@
 
 """
 
-
 from base64 import b64decode
 from json import loads as json_loads
 from logging import getLogger

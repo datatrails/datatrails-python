@@ -1,7 +1,6 @@
 """Some convenience stuff
 """
 
-
 from logging import getLogger
 from typing import TYPE_CHECKING
 

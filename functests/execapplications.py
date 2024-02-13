@@ -1,6 +1,7 @@
 """
 Test applications
 """
+
 from copy import deepcopy
 from json import dumps as json_dumps
 from os import getenv

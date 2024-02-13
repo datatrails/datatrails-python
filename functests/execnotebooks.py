@@ -1,8 +1,10 @@
 """
 Test subjects
 """
+
 from os import getenv
-from unittest import skip
+from sys import version_info
+from unittest import skip, skipIf
 
 from testbook import testbook
 
@@ -20,6 +22,10 @@ if getenv("DATATRAILS_LOGLEVEL") is not None:
 LOGGER = logger.LOGGER
 
 
+@skipIf(
+    version_info >= (3, 12),
+    "cannot run test as notebooks unsupported in 3.12",
+)
 class TestNotebooks(TestCase):
     """
     Test Archivist Notebooks

@@ -7,6 +7,7 @@ the url and the credentials, called "arch".
 'arch' is then called with arch.subjects.create_from_b64() and the subject will
 be created.
 """
+
 from os import getenv
 from warnings import filterwarnings
 

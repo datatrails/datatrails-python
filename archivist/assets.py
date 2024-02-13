@@ -21,7 +21,6 @@
 
 """
 
-
 from copy import deepcopy
 from logging import getLogger
 from typing import TYPE_CHECKING, Any

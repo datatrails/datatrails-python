@@ -12,6 +12,7 @@ calls create_event and pass in "arch" and the created asset to create a new even
 
 In both cases the verified domain name is displayed.
 """
+
 from json import dumps as json_dumps
 from os import getenv
 from warnings import filterwarnings
@@ -112,7 +113,7 @@ def create_asset(arch):
         # their arc_display_type.
         # So a mistake here can result in asset data being
         # under- or over-shared.
-        "some_custom_attribute": "value"  # You can add any custom value as long as
+        "some_custom_attribute": "value",  # You can add any custom value as long as
         # it does not start with arc_
     }
     # The first argument is the attributes of the asset

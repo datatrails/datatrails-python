@@ -6,6 +6,7 @@ is a user authorization.
 The main function would then call arch.assets.read_by_signature() to get one asset from
 the instance.
 """
+
 from os import getenv
 from warnings import filterwarnings
 

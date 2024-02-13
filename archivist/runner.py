@@ -3,7 +3,6 @@ Base runner class for interpreting yaml story files.
 
 """
 
-
 from collections import defaultdict
 from functools import partialmethod
 from json import dumps as json_dumps
