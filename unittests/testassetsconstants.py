@@ -77,8 +77,11 @@ ATTRS_FIXTURES = {
 }
 
 # case 1 create
-PROPS = {
+SIMPLE_HASH = {
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
+}
+MERKLE_LOG = {
+    "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
 }
 ATTRS = {
     "arc_firmware_version": "1.0",
@@ -93,7 +96,7 @@ ATTRS = {
         PRIMARY_IMAGE,
     ],
 }
-REQUEST = {
+REQUEST_SIMPLE_HASH = {
     "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
@@ -110,7 +113,30 @@ REQUEST = {
         ],
     },
 }
-REQUEST_KWARGS = {
+REQUEST_KWARGS_MERKLE_LOG = {
+    "json": {
+        "behaviours": ASSET_BEHAVIOURS,
+        "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
+        "attributes": {
+            "arc_firmware_version": "1.0",
+            "arc_serial_number": "vtl-x4-07",
+            "arc_description": "Traffic flow control light at A603 North East",
+            "arc_display_type": "Traffic light with violation camera",
+            "some_custom_attribute": "value",
+            "arc_display_name": ASSET_NAME,
+            "arc_attachments": [
+                TERTIARY_IMAGE,
+                SECONDARY_IMAGE,
+                PRIMARY_IMAGE,
+            ],
+        },
+    },
+    "headers": {
+        "authorization": "Bearer authauthauth",
+    },
+    "verify": True,
+}
+REQUEST_KWARGS_SIMPLE_HASH = {
     "json": {
         "behaviours": ASSET_BEHAVIOURS,
         "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
@@ -153,7 +179,7 @@ RESPONSE = {
 }
 
 # case 2 create if not exists
-REQUEST_EXISTS = {
+REQUEST_EXISTS_SIMPLE_HASH = {
     "selector": [
         {
             "attributes": [
@@ -174,7 +200,7 @@ REQUEST_EXISTS = {
         "some_custom_attribute": "value",
     },
 }
-REQUEST_EXISTS_KWARGS = {
+REQUEST_EXISTS_KWARGS_SIMPLE_HASH = {
     "json": {
         "behaviours": ASSET_BEHAVIOURS,
         "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
@@ -210,7 +236,7 @@ RESPONSE_EXISTS = {
 }
 
 # case 3 create if not exists with attachments
-REQUEST_EXISTS_ATTACHMENTS = {
+REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH = {
     "selector": [
         {
             "attributes": [
@@ -242,7 +268,7 @@ REQUEST_EXISTS_ATTACHMENTS = {
         },
     ],
 }
-REQUEST_EXISTS_KWARGS_ATTACHMENTS = {
+REQUEST_EXISTS_KWARGS_ATTACHMENTS_SIMPLE_HASH = {
     "json": {
         "behaviours": ASSET_BEHAVIOURS,
         "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
@@ -317,7 +343,7 @@ RESPONSE_EXISTS_ATTACHMENTS = {
 }
 
 # case 4 create if not exists with location
-REQUEST_EXISTS_LOCATION = {
+REQUEST_EXISTS_LOCATION_SIMPLE_HASH = {
     "selector": [
         {
             "attributes": [
@@ -359,7 +385,7 @@ REQUEST_EXISTS_LOCATION = {
         },
     },
 }
-REQUEST_EXISTS_KWARGS_LOCATION = {
+REQUEST_EXISTS_KWARGS_LOCATION_SIMPLE_HASH = {
     "json": {
         "behaviours": ASSET_BEHAVIOURS,
         "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
@@ -410,7 +436,7 @@ RESPONSE_LOCATION = {
     },
 }
 # case 5 create if not exists with location identity
-REQUEST_EXISTS_LOCATION_IDENTITY = {
+REQUEST_EXISTS_LOCATION_IDENTITY_SIMPLE_HASH = {
     "selector": [
         {
             "attributes": [
@@ -437,13 +463,13 @@ REQUEST_EXISTS_LOCATION_IDENTITY = {
 
 # ---------------
 
-REQUEST_FIXTURES = {
+REQUEST_FIXTURES_SIMPLE_HASH = {
     "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": ATTRS_FIXTURES,
 }
-REQUEST_FIXTURES_KWARGS = {
-    "json": REQUEST_FIXTURES,
+REQUEST_FIXTURES_KWARGS_SIMPLE_HASH = {
+    "json": REQUEST_FIXTURES_SIMPLE_HASH,
     "headers": {
         "authorization": "Bearer authauthauth",
     },
