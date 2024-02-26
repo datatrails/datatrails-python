@@ -14,7 +14,7 @@ class TestProofMechanism(TestCase):
     Test proof mechanism for archivist
     """
 
-    def test_proof_mechanism(self):
+    def test_proof_mechanism_simple_hash(self):
         """
         Test proof_mechanism
         """
@@ -23,6 +23,18 @@ class TestProofMechanism(TestCase):
         self.assertEqual(
             ProofMechanism.SIMPLE_HASH.name,
             "SIMPLE_HASH",
+            msg="Incorrect value",
+        )
+
+    def test_proof_mechanism_metkle_log(self):
+        """
+        Test proof_mechanism
+        """
+        self.assertEqual(ProofMechanism.MERKLE_LOG.value, 3, msg="Incorrect value")
+
+        self.assertEqual(
+            ProofMechanism.MERKLE_LOG.name,
+            "MERKLE_LOG",
             msg="Incorrect value",
         )
 

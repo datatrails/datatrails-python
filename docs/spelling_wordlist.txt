@@ -29,6 +29,7 @@ jupyter
 jupyterLabDesktop
 kwargs
 macclesfield
+merkle
 mimetype
 onwards
 params

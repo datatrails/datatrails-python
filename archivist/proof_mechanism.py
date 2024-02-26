@@ -17,3 +17,5 @@ class ProofMechanism(Enum):
     __RESERVED = 1
     #: Assets and events are proven using a hash of the originator's evidence
     SIMPLE_HASH = 2
+    #: Assets and events are proven using a merkle log hash of the originator's evidence
+    MERKLE_LOG = 3

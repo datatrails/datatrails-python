@@ -34,7 +34,7 @@ ATTRS = {
 }
 
 ASSET_NAME = "Telephone with 2 attachments - one bad or not scanned 2022-03-01"
-REQUEST_EXISTS_ATTACHMENTS = {
+REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH = {
     "selector": [
         {
             "attributes": [
@@ -45,6 +45,39 @@ REQUEST_EXISTS_ATTACHMENTS = {
     ],
     "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
+    "attributes": {
+        "arc_display_name": ASSET_NAME,
+        "arc_namespace": getenv("DATATRAILS_UNIQUE_ID"),
+        "arc_firmware_version": "1.0",
+        "arc_serial_number": "vtl-x4-07",
+        "arc_description": "Traffic flow control light at A603 North East",
+        "arc_display_type": "Traffic light with violation camera",
+        "some_custom_attribute": "value",
+    },
+    "attachments": [
+        {
+            "filename": "functests/test_resources/telephone.jpg",
+            "content_type": "image/jpg",
+            "attachment": "telephone",
+        },
+        {
+            "url": "https://secure.eicar.org/eicarcom2.zip",
+            "content_type": "application/zip",
+            "attachment": "zipfile",
+        },
+    ],
+}
+REQUEST_EXISTS_ATTACHMENTS_MERKLE_LOG = {
+    "selector": [
+        {
+            "attributes": [
+                "arc_display_name",
+                "arc_namespace",
+            ]
+        },
+    ],
+    "behaviours": ASSET_BEHAVIOURS,
+    "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": getenv("DATATRAILS_UNIQUE_ID"),
@@ -163,12 +196,54 @@ class TestAssetCreate(TestCase):
             msg="Incorrect number of fancy_traffic_lights",
         )
 
-    def test_asset_create_event(self):
+    def test_asset_create_event_merkle_log(self):
         """
         Test list
         """
         asset, existed = self.arch.assets.create_if_not_exists(
-            REQUEST_EXISTS_ATTACHMENTS,
+            REQUEST_EXISTS_ATTACHMENTS_MERKLE_LOG,
+            confirm=True,
+        )
+        identity = asset["identity"]
+
+        # different behaviours are also different.
+        props = {
+            "operation": "Record",
+            # This event is used to record evidence.
+            "behaviour": "RecordEvidence",
+            # Optional Client-claimed time at which the maintenance was performed
+            "timestamp_declared": "2019-11-27T14:44:19Z",
+            # Optional Client-claimed identity of person performing the operation
+            "principal_declared": {
+                "issuer": "idp.synsation.io/1234",
+                "subject": "phil.b",
+                "email": "phil.b@synsation.io",
+            },
+        }
+        attrs = {
+            # Required Details of the RecordEvidence request
+            "arc_description": "Safety conformance approved for version 1.6.",
+            # Required The evidence to be retained in the asset history
+            "arc_evidence": "DVA Conformance Report attached",
+            # Example Client can add any additional information in further attributes,
+            # including free text or attachments
+            "conformance_report": "blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273",
+        }
+
+        event = self.arch.events.create(
+            identity, props=props, attrs=attrs, confirm=True
+        )
+        LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
+
+        tenancy = self.arch.tenancies.publicinfo(event["tenant_identity"])
+        LOGGER.debug("tenancy %s", json_dumps(tenancy, sort_keys=True, indent=4))
+
+    def test_asset_create_event_simple_hash(self):
+        """
+        Test list
+        """
+        asset, existed = self.arch.assets.create_if_not_exists(
+            REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH,
             confirm=True,
         )
         identity = asset["identity"]
@@ -239,7 +314,7 @@ class TestAssetCreateIfNotExists(TestCase):
 
         """
         asset, existed = self.arch.assets.create_if_not_exists(
-            REQUEST_EXISTS_ATTACHMENTS,
+            REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH,
             confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, indent=4))
@@ -291,7 +366,7 @@ class TestAssetCreateIfNotExists(TestCase):
 
         """
         asset, existed = self.arch.assets.create_if_not_exists(
-            REQUEST_EXISTS_ATTACHMENTS,
+            REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH,
             confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, indent=4))
