@@ -429,8 +429,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
             except KeyError as ex:
                 raise ArchivistBadFieldError(f"No {field} found") from ex
 
-            for record in records:
-                yield record
+            yield from records
 
             page_token = data.get("next_page_token")
             if not page_token:

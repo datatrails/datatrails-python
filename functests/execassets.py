@@ -46,12 +46,12 @@ REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH = {
     "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
-        "arc_display_name": ASSET_NAME,
-        "arc_namespace": getenv("DATATRAILS_UNIQUE_ID"),
-        "arc_firmware_version": "1.0",
-        "arc_serial_number": "vtl-x4-07",
         "arc_description": "Traffic flow control light at A603 North East",
+        "arc_display_name": f"{ASSET_NAME} (SIMPLE_HASH)",
         "arc_display_type": "Traffic light with violation camera",
+        "arc_firmware_version": "1.0",
+        "arc_namespace": getenv("DATATRAILS_UNIQUE_ID"),
+        "arc_serial_number": "vtl-x4-07",
         "some_custom_attribute": "value",
     },
     "attachments": [
@@ -79,12 +79,12 @@ REQUEST_EXISTS_ATTACHMENTS_MERKLE_LOG = {
     "behaviours": ASSET_BEHAVIOURS,
     "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
     "attributes": {
-        "arc_display_name": ASSET_NAME,
-        "arc_namespace": getenv("DATATRAILS_UNIQUE_ID"),
-        "arc_firmware_version": "1.0",
-        "arc_serial_number": "vtl-x4-07",
         "arc_description": "Traffic flow control light at A603 North East",
+        "arc_display_name": f"{ASSET_NAME} (MERKLE_LOG)",
         "arc_display_type": "Traffic light with violation camera",
+        "arc_firmware_version": "1.0",
+        "arc_namespace": getenv("DATATRAILS_UNIQUE_ID"),
+        "arc_serial_number": "vtl-x4-07",
         "some_custom_attribute": "value",
     },
     "attachments": [
@@ -117,7 +117,7 @@ class TestAssetCreate(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth, max_time=600)
+        self.arch = Archivist(getenv("DATATRAILS_URL"), auth, max_time=30)
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"

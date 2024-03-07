@@ -529,7 +529,7 @@ class TestAssetsBaseConfirm(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", "authauthauth", max_time=100)
+        self.arch = Archivist("url", "authauthauth", max_time=30)
 
     def tearDown(self):
         self.arch.close()
