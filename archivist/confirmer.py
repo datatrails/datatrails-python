@@ -15,12 +15,8 @@ if TYPE_CHECKING:
     from .events import Event, _EventsPublic, _EventsRestricted
 
 
-from .constants import (
-    CONFIRMATION_CONFIRMED,
-    CONFIRMATION_FAILED,
-    CONFIRMATION_PENDING,
-    CONFIRMATION_STATUS,
-)
+from .confirmation_status import ConfirmationStatus
+from .constants import CONFIRMATION_STATUS
 from .errors import ArchivistUnconfirmedError
 from .utils import backoff_handler
 
@@ -54,25 +50,29 @@ def __on_giveup_confirmation(details: "Details"):
 
 @overload
 def _wait_for_confirmation(
-    self: "_AssetsRestricted", identity: str
+    self: "_AssetsRestricted",
+    identity: str,
 ) -> "Asset": ...  # pragma: no cover
 
 
 @overload
 def _wait_for_confirmation(
-    self: "_AssetsPublic", identity: str
+    self: "_AssetsPublic",
+    identity: str,
 ) -> "Asset": ...  # pragma: no cover
 
 
 @overload
 def _wait_for_confirmation(
-    self: "_EventsRestricted", identity: str
+    self: "_EventsRestricted",
+    identity: str,
 ) -> "Event": ...  # pragma: no cover
 
 
 @overload
 def _wait_for_confirmation(
-    self: "_EventsPublic", identity: str
+    self: "_EventsPublic",
+    identity: str,
 ) -> "Event": ...  # pragma: no cover
 
 
@@ -94,12 +94,20 @@ def _wait_for_confirmation(self: Managers, identity: str) -> ReturnTypes:
             f"cannot confirm {identity} as confirmation_status is not present"
         )
 
-    if entity[CONFIRMATION_STATUS] == CONFIRMATION_FAILED:
+    if entity[CONFIRMATION_STATUS] == ConfirmationStatus.FAILED.name:
         raise ArchivistUnconfirmedError(
             f"confirmation for {identity} FAILED - this is unusable"
         )
 
-    if entity[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
+    # Simple hash
+    if entity[CONFIRMATION_STATUS] == ConfirmationStatus.CONFIRMED.name:
+        return entity
+
+    # merkle_log
+    if (
+        ConfirmationStatus[entity[CONFIRMATION_STATUS]].value
+        >= ConfirmationStatus.COMMITTED.value
+    ):
         return entity
 
     return None  # pyright: ignore
@@ -122,13 +130,16 @@ def __on_giveup_confirmed(details: "Details"):
     on_giveup=__on_giveup_confirmed,
 )
 def _wait_for_confirmed(
-    self: PrivateManagers, *, props: "dict[str, Any]|None" = None, **kwargs: Any
+    self: PrivateManagers,
+    *,
+    props: "dict[str, Any]|None" = None,
+    **kwargs: Any,
 ) -> bool:
     """Return False until all entities are confirmed"""
 
     # look for unconfirmed entities
     newprops = deepcopy(props) if props else {}
-    newprops[CONFIRMATION_STATUS] = CONFIRMATION_PENDING
+    newprops[CONFIRMATION_STATUS] = ConfirmationStatus.PENDING.name
 
     LOGGER.debug("Count unconfirmed entities %s", newprops)
     count = self.count(props=newprops, **kwargs)
@@ -136,7 +147,7 @@ def _wait_for_confirmed(
     if count == 0:
         # did any fail
         newprops = deepcopy(props) if props else {}
-        newprops[CONFIRMATION_STATUS] = CONFIRMATION_FAILED
+        newprops[CONFIRMATION_STATUS] = ConfirmationStatus.FAILED.name
         count = self.count(props=newprops, **kwargs)
         if count > 0:
             raise ArchivistUnconfirmedError(f"There are {count} FAILED entities")

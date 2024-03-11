@@ -159,7 +159,7 @@ REQUEST_KWARGS_SIMPLE_HASH = {
     },
     "verify": True,
 }
-RESPONSE = {
+RESPONSE_SIMPLE_HASH = {
     "identity": IDENTITY,
     "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
@@ -176,6 +176,44 @@ RESPONSE = {
         ],
     },
     "confirmation_status": "CONFIRMED",
+}
+
+RESPONSE_MERKLE_LOG = {
+    "identity": IDENTITY,
+    "behaviours": ASSET_BEHAVIOURS,
+    "attributes": {
+        "arc_firmware_version": "1.0",
+        "arc_serial_number": "vtl-x4-07",
+        "arc_description": "Traffic flow control light at A603 North East",
+        "arc_display_type": "Traffic light with violation camera",
+        "some_custom_attribute": "value",
+        "arc_display_name": ASSET_NAME,
+        "arc_attachments": [
+            TERTIARY_IMAGE,
+            SECONDARY_IMAGE,
+            PRIMARY_IMAGE,
+        ],
+    },
+    "confirmation_status": "COMMITTED",
+}
+
+RESPONSE_MERKLE_LOG_UNEQUIVOCAL = {
+    "identity": IDENTITY,
+    "behaviours": ASSET_BEHAVIOURS,
+    "attributes": {
+        "arc_firmware_version": "1.0",
+        "arc_serial_number": "vtl-x4-07",
+        "arc_description": "Traffic flow control light at A603 North East",
+        "arc_display_type": "Traffic light with violation camera",
+        "some_custom_attribute": "value",
+        "arc_display_name": ASSET_NAME,
+        "arc_attachments": [
+            TERTIARY_IMAGE,
+            SECONDARY_IMAGE,
+            PRIMARY_IMAGE,
+        ],
+    },
+    "confirmation_status": "UNEQUIVOCAL",
 }
 
 # case 2 create if not exists

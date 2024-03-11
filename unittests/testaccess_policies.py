@@ -17,7 +17,7 @@ from archivist.constants import (
 from archivist.errors import ArchivistBadRequestError
 
 from .mock_response import MockResponse
-from .testassets import RESPONSE as ASSET
+from .testassets import RESPONSE_SIMPLE_HASH as ASSET
 
 # pylint: disable=missing-docstring
 # pylint: disable=protected-access

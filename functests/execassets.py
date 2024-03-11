@@ -33,6 +33,13 @@ ATTRS = {
     "some_custom_attribute": "value",
 }
 
+SIMPLE_HASH = {
+    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
+}
+MERKLE_LOG = {
+    "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
+}
+
 ASSET_NAME = "Telephone with 2 attachments - one bad or not scanned 2022-03-01"
 REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH = {
     "selector": [
@@ -121,6 +128,10 @@ class TestAssetCreate(TestCase):
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
+        self.traffic_light_merkle_log = deepcopy(ATTRS)
+        self.traffic_light_merkle_log["arc_display_type"] = (
+            "Traffic light with violation camera (merkle_log)"
+        )
 
     def tearDown(self):
         self.arch.close()
@@ -132,6 +143,7 @@ class TestAssetCreate(TestCase):
         """
         Test asset creation uses simple hash proof mechanism
         """
+        # default is simple hash so it is unspecified
         asset = self.arch.assets.create(
             attrs=self.traffic_light,
             confirm=True,
@@ -145,7 +157,25 @@ class TestAssetCreate(TestCase):
         tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
         LOGGER.debug("tenancy %s", json_dumps(tenancy, sort_keys=True, indent=4))
 
-    def test_asset_create_with_fixtures(self):
+    def test_asset_create_merkle_log(self):
+        """
+        Test asset creation uses merkle_log proof mechanism
+        """
+        asset = self.arch.assets.create(
+            props=MERKLE_LOG,
+            attrs=self.traffic_light_merkle_log,
+            confirm=True,
+        )
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
+        self.assertEqual(
+            asset["proof_mechanism"],
+            ProofMechanism.MERKLE_LOG.name,
+            msg="Incorrect asset proof mechanism",
+        )
+        tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
+        LOGGER.debug("tenancy %s", json_dumps(tenancy, sort_keys=True, indent=4))
+
+    def test_asset_create_with_fixtures_simple_hash(self):
         """
         Test creation with fixtures
         """
@@ -187,6 +217,59 @@ class TestAssetCreate(TestCase):
             },
         }
         fancy_traffic_lights.assets.create(
+            attrs=self.attrs,
+            confirm=True,
+        )
+        self.assertEqual(
+            fancy_traffic_lights.assets.count(),
+            1,
+            msg="Incorrect number of fancy_traffic_lights",
+        )
+
+    def test_asset_create_with_fixtures_merkle_log(self):
+        """
+        Test creation with fixtures
+        """
+        # creates simple_hash endpoint
+        simple_hash = copy(self.arch)
+        simple_hash.fixtures = {
+            "assets": {
+                "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
+            },
+        }
+
+        # create traffic lights endpoint from simple_hash
+        traffic_lights = copy(simple_hash)
+        traffic_lights.fixtures = {
+            "assets": {
+                "attributes": {
+                    "arc_display_type": "Traffic light with violation camera (merkle_log)",
+                    "arc_namespace": f"functests {uuid4()}",
+                },
+            },
+        }
+        traffic_lights.assets.create(
+            props=MERKLE_LOG,
+            attrs=self.attrs,
+            confirm=True,
+        )
+        self.assertEqual(
+            traffic_lights.assets.count(),
+            1,
+            msg="Incorrect number of traffic_lights",
+        )
+
+        # create fancy traffic lights endpoint from traffic lights
+        fancy_traffic_lights = copy(traffic_lights)
+        fancy_traffic_lights.fixtures = {
+            "assets": {
+                "attributes": {
+                    "arc_namespace1": f"functests {uuid4()}",
+                },
+            },
+        }
+        fancy_traffic_lights.assets.create(
+            props=MERKLE_LOG,
             attrs=self.attrs,
             confirm=True,
         )
