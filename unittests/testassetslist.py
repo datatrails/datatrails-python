@@ -13,7 +13,7 @@ from archivist.logger import set_logger
 
 from .mock_response import MockResponse
 from .testassetsconstants import (
-    RESPONSE,
+    RESPONSE_SIMPLE_HASH,
     SUBPATH,
     TestAssetsBase,
 )
@@ -41,7 +41,7 @@ class TestAssetsList(TestAssetsBase):
             mock_get.return_value = MockResponse(
                 200,
                 assets=[
-                    RESPONSE,
+                    RESPONSE_SIMPLE_HASH,
                 ],
             )
 
@@ -54,7 +54,7 @@ class TestAssetsList(TestAssetsBase):
             for asset in assets:
                 self.assertEqual(
                     asset,
-                    RESPONSE,
+                    RESPONSE_SIMPLE_HASH,
                     msg="Incorrect asset listed",
                 )
 
@@ -82,7 +82,7 @@ class TestAssetsList(TestAssetsBase):
             mock_get.return_value = MockResponse(
                 200,
                 assets=[
-                    RESPONSE,
+                    RESPONSE_SIMPLE_HASH,
                 ],
             )
 
@@ -102,7 +102,7 @@ class TestAssetsList(TestAssetsBase):
             for asset in assets:
                 self.assertEqual(
                     asset,
-                    RESPONSE,
+                    RESPONSE_SIMPLE_HASH,
                     msg="Incorrect asset listed",
                 )
 
@@ -133,14 +133,14 @@ class TestAssetsList(TestAssetsBase):
             mock_get.return_value = MockResponse(
                 200,
                 assets=[
-                    RESPONSE,
+                    RESPONSE_SIMPLE_HASH,
                 ],
             )
 
             asset = self.arch.assets.read_by_signature()
             self.assertEqual(
                 asset,
-                RESPONSE,
+                RESPONSE_SIMPLE_HASH,
                 msg="Incorrect asset listed",
             )
 

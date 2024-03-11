@@ -7,35 +7,34 @@ then
     echo "DATATRAILS_URL is undefined"
     exit 1
 fi
+if [ -n "${DATATRAILS_APPREG_CLIENT_FILENAME}" ]
+then
+    if [ -s "${DATATRAILS_APPREG_CLIENT_FILENAME}" ]
+    then
+	export DATATRAILS_APPREG_CLIENT=$(cat ${DATATRAILS_APPREG_CLIENT_FILENAME})
+    fi
+fi
 if [ -n "${DATATRAILS_APPREG_CLIENT}" ]
 then
     if [ -n "${DATATRAILS_APPREG_SECRET_FILENAME}" ]
     then
-        if [ ! -s "${DATATRAILS_APPREG_SECRET_FILENAME}" ]
+        if [ -s "${DATATRAILS_APPREG_SECRET_FILENAME}" ]
         then
-            echo "${DATATRAILS_APPREG_SECRET_FILENAME} does not exist"
-            exit 1
+	    export DATATRAILS_APPREG_SECRET=$(cat ${DATATRAILS_APPREG_SECRET_FILENAME})
         fi
-    elif [ -z "${DATATRAILS_APPREG_SECRET}" ]
-    then
-        echo "Both DATATRAILS_APPREG_SECRET_FILENAME"
-        echo "and DATATRAILS_APPREG_SECRET are undefined"
-        exit 1
     fi
-else
-    if [ -n "${DATATRAILS_AUTHTOKEN_FILENAME}" ]
+fi
+if [ -n "${DATATRAILS_AUTHTOKEN_FILENAME}" ]
+then
+    if [ -s "${DATATRAILS_AUTHTOKEN_FILENAME}" ]
     then
-        if [ ! -s "${DATATRAILS_AUTHTOKEN_FILENAME}" ]
-        then
-            echo "${DATATRAILS_AUTHTOKEN_FILENAME} does not exist"
-            exit 1
-        fi
-    elif [ -z "${DATATRAILS_AUTHTOKEN}" ]
-    then
-        echo "Both DATATRAILS_AUTHTOKEN_FILENAME"
-        echo "and DATATRAILS_AUTHTOKEN are undefined"
-        exit 1
+	export DATATRAILS_AUTHTOKEN=$(cat ${DATATRAILS_AUTHTOKEN_FILENAME})
     fi
+fi
+if [ -z "${DATATRAILS_AUTHTOKEN}" -a -z "${DATATRAILS_APPREG_CLIENT}" -a -z "${DATATRAILS_APPREG_SECRET}" ]
+then
+    echo "No credentials found, DATATRAILS_AUTHTOKEN, DATATRAILS_APPREG_CLIENT,  DATATRAILS_APPREG_SECRET"
+    exit 1
 fi
 
 python3 --version

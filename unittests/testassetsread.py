@@ -17,8 +17,8 @@ from archivist.logger import set_logger
 from .mock_response import MockResponse
 from .testassetsconstants import (
     IDENTITY,
-    RESPONSE,
     RESPONSE_NO_ATTACHMENTS,
+    RESPONSE_SIMPLE_HASH,
     SUBPATH,
     TestAssetsBase,
 )
@@ -107,7 +107,7 @@ class TestAssetsCount(TestAssetsBase):
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
                 assets=[
-                    RESPONSE,
+                    RESPONSE_SIMPLE_HASH,
                 ],
             )
 
@@ -142,7 +142,7 @@ class TestAssetsCount(TestAssetsBase):
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
                 assets=[
-                    RESPONSE,
+                    RESPONSE_SIMPLE_HASH,
                 ],
             )
 
@@ -179,7 +179,7 @@ class TestAssetsCount(TestAssetsBase):
                 200,
                 headers={HEADERS_TOTAL_COUNT: 1},
                 assets=[
-                    RESPONSE,
+                    RESPONSE_SIMPLE_HASH,
                 ],
             )
 
