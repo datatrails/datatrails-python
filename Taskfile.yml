@@ -10,8 +10,6 @@ tasks:
     desc: Generate about.py
     cmds:
       - ./scripts/builder.sh ./scripts/version.sh
-    status:
-      - test -s archivist/about.py
 
   audit:
     desc: Audit the code
@@ -54,7 +52,7 @@ tasks:
       - task: check-pyright
 
   check-pyright:
-    desc: Execute pyright conditinally - currently does not work in 3.12 (https://github.com/ekalinin/nodeenv/issues/341)
+    desc: Execute pyright conditionally - currently does not work in 3.12 (https://github.com/ekalinin/nodeenv/issues/341)
     cmds:
       - |
         if [ "{{.PYVERSION}}" != "3.12" ]; then
