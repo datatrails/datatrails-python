@@ -9,8 +9,8 @@ import backoff
 if TYPE_CHECKING:
     from .subjects import Subject, _SubjectsClient
 
+from .confirmation_status import ConfirmationStatus
 from .constants import (
-    CONFIRMATION_CONFIRMED,
     CONFIRMATION_STATUS,
 )
 from .errors import ArchivistUnconfirmedError
@@ -48,7 +48,7 @@ def _wait_for_confirmation(self: "_SubjectsClient", identity: str) -> "Subject":
     if CONFIRMATION_STATUS not in subject:
         return None  # pyright: ignore
 
-    if subject[CONFIRMATION_STATUS] == CONFIRMATION_CONFIRMED:
+    if subject[CONFIRMATION_STATUS] == ConfirmationStatus.CONFIRMED.name:
         return subject
 
     return None  # pyright: ignore
