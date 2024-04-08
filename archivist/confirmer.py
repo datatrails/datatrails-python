@@ -137,12 +137,19 @@ def _wait_for_confirmed(
 ) -> bool:
     """Return False until all entities are confirmed"""
 
-    # look for unconfirmed entities
+    # look for pending entities
     newprops = deepcopy(props) if props else {}
     newprops[CONFIRMATION_STATUS] = ConfirmationStatus.PENDING.name
+    LOGGER.debug("Count pending entities %s", newprops)
+    pending_count = self.count(props=newprops, **kwargs)
 
-    LOGGER.debug("Count unconfirmed entities %s", newprops)
-    count = self.count(props=newprops, **kwargs)
+    # look for stored entities
+    newprops = deepcopy(props) if props else {}
+    newprops[CONFIRMATION_STATUS] = ConfirmationStatus.STORED.name
+    LOGGER.debug("Count stored entities %s", newprops)
+    stored_count = self.count(props=newprops, **kwargs)
+
+    count = pending_count + stored_count
 
     if count == 0:
         # did any fail
