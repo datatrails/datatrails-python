@@ -102,11 +102,11 @@ def _wait_for_confirmation(self: Managers, identity: str) -> ReturnTypes:
         )
 
     # Simple hash and merkleLog
-    if status == ConfirmationStatus.CONFIRMED.name:
-        return entity
-
-    # merkle_log
-    if ConfirmationStatus[status].value >= ConfirmationStatus.COMMITTED.value:
+    if status in (
+        ConfirmationStatus.CONFIRMED.name,
+        ConfirmationStatus.COMMITTED.name,
+        ConfirmationStatus.UNEQUIVOCAL.name,
+    ):
         return entity
 
     return None  # pyright: ignore
