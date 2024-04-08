@@ -2,8 +2,6 @@
 # for the published wheel - the file docs/requirements.txt
 # must be kept in sync with this file.
 #
-# upgrading to 2.2 of backoff raises all kinds of type hint errors so
-# this will require more work - stick to 1.11 for now.
 backoff~=2.2.1
 certifi
 flatten-dict~=0.4

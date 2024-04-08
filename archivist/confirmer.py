@@ -20,7 +20,7 @@ from .constants import CONFIRMATION_STATUS
 from .errors import ArchivistUnconfirmedError
 from .utils import backoff_handler
 
-MAX_TIME = 1200
+MAX_TIME = 300
 LOGGER = getLogger(__name__)
 
 # pylint: disable=protected-access
@@ -78,6 +78,7 @@ def _wait_for_confirmation(
 
 @backoff.on_predicate(
     backoff.expo,
+    max_value=30.0,
     logger=None,  # pyright: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
@@ -94,20 +95,18 @@ def _wait_for_confirmation(self: Managers, identity: str) -> ReturnTypes:
             f"cannot confirm {identity} as confirmation_status is not present"
         )
 
-    if entity[CONFIRMATION_STATUS] == ConfirmationStatus.FAILED.name:
+    status = entity[CONFIRMATION_STATUS]
+    if status == ConfirmationStatus.FAILED.name:
         raise ArchivistUnconfirmedError(
             f"confirmation for {identity} FAILED - this is unusable"
         )
 
     # Simple hash
-    if entity[CONFIRMATION_STATUS] == ConfirmationStatus.CONFIRMED.name:
+    if status == ConfirmationStatus.CONFIRMED.name:
         return entity
 
     # merkle_log
-    if (
-        ConfirmationStatus[entity[CONFIRMATION_STATUS]].value
-        >= ConfirmationStatus.COMMITTED.value
-    ):
+    if ConfirmationStatus[status].value >= ConfirmationStatus.COMMITTED.value:
         return entity
 
     return None  # pyright: ignore
@@ -124,6 +123,7 @@ def __on_giveup_confirmed(details: "Details"):
 
 @backoff.on_predicate(
     backoff.expo,
+    max_value=30.0,
     logger=None,  # pyright: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,
