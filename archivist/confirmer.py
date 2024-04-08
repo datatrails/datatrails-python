@@ -101,7 +101,7 @@ def _wait_for_confirmation(self: Managers, identity: str) -> ReturnTypes:
             f"confirmation for {identity} FAILED - this is unusable"
         )
 
-    # Simple hash
+    # Simple hash and merkleLog
     if status == ConfirmationStatus.CONFIRMED.name:
         return entity
 
