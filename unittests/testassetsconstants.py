@@ -537,6 +537,12 @@ RESPONSE_PENDING = {
     "attributes": ATTRS,
     "confirmation_status": "PENDING",
 }
+RESPONSE_STORED = {
+    "identity": IDENTITY,
+    "behaviours": ASSET_BEHAVIOURS,
+    "attributes": ATTRS,
+    "confirmation_status": "STORED",
+}
 RESPONSE_FAILED = {
     "identity": IDENTITY,
     "behaviours": ASSET_BEHAVIOURS,
@@ -553,7 +559,7 @@ class TestAssetsBase(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.arch = Archivist("url", "authauthauth", max_time=1)
+        self.arch = Archivist("url", "authauthauth", max_time=0.5)
 
     def tearDown(self):
         self.arch.close()

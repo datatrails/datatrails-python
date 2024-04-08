@@ -18,7 +18,7 @@ from .errors import ArchivistUnconfirmedError
 # pylint:disable=cyclic-import      # but pylint doesn't understand this feature
 from .utils import backoff_handler
 
-MAX_TIME = 1200
+MAX_TIME = 300
 
 LOGGER = getLogger(__name__)
 
@@ -37,6 +37,7 @@ def __on_giveup_confirmation(details):
 
 @backoff.on_predicate(
     backoff.expo,
+    max_value=30.0,
     logger=None,  # pyright: ignore
     max_time=__lookup_max_time,
     on_backoff=backoff_handler,

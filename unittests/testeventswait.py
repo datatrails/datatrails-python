@@ -35,12 +35,13 @@ class TestEventsWait(TestEventsBase):
 
     def test_events_wait_for_confirmed(self):
         """
-        Test event counting
+        Test event confirmation
         """
         ## last call to get looks for FAILED assets
         status = (
             {"page_size": 1},
             {"page_size": 1, "confirmation_status": "PENDING"},
+            {"page_size": 1, "confirmation_status": "STORED"},
             {"page_size": 1, "confirmation_status": "FAILED"},
         )
         with mock.patch.object(self.arch.session, "get") as mock_get:
@@ -51,6 +52,11 @@ class TestEventsWait(TestEventsBase):
                     assets=[
                         RESPONSE_PENDING,
                     ],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 0},
+                    assets=[],
                 ),
                 MockResponse(
                     200,

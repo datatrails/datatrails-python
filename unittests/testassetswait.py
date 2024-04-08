@@ -18,6 +18,7 @@ from .mock_response import MockResponse
 from .testassetsconstants import (
     RESPONSE_FAILED,
     RESPONSE_PENDING,
+    RESPONSE_STORED,
     SUBPATH,
     TestAssetsBase,
 )
@@ -45,9 +46,11 @@ class TestAssetsWait(TestAssetsBase):
         status = (
             {"page_size": 1},
             {"page_size": 1, "confirmation_status": "PENDING"},
+            {"page_size": 1, "confirmation_status": "STORED"},
             {"page_size": 1, "confirmation_status": "FAILED"},
         )
         with mock.patch.object(self.arch.session, "get") as mock_get:
+            # there are 2 gets for each retry - one for PENDING and one for STORED
             mock_get.side_effect = [
                 MockResponse(
                     200,
@@ -55,6 +58,16 @@ class TestAssetsWait(TestAssetsBase):
                     assets=[
                         RESPONSE_PENDING,
                     ],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 0},
+                    assets=[],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 0},
+                    assets=[],
                 ),
                 MockResponse(
                     200,
@@ -110,6 +123,8 @@ class TestAssetsWait(TestAssetsBase):
         """
         ## last call to get looks for FAILED assets
         with mock.patch.object(self.arch.session, "get") as mock_get:
+            # there are 2 gets for each retry - one for PENDING and one for STORED
+            # enough entries to be supplied so that timeout occurs
             mock_get.side_effect = [
                 MockResponse(
                     200,
@@ -122,7 +137,7 @@ class TestAssetsWait(TestAssetsBase):
                     200,
                     headers={HEADERS_TOTAL_COUNT: 2},
                     assets=[
-                        RESPONSE_PENDING,
+                        RESPONSE_STORED,
                     ],
                 ),
                 MockResponse(
@@ -136,7 +151,7 @@ class TestAssetsWait(TestAssetsBase):
                     200,
                     headers={HEADERS_TOTAL_COUNT: 2},
                     assets=[
-                        RESPONSE_PENDING,
+                        RESPONSE_STORED,
                     ],
                 ),
                 MockResponse(
@@ -150,7 +165,35 @@ class TestAssetsWait(TestAssetsBase):
                     200,
                     headers={HEADERS_TOTAL_COUNT: 2},
                     assets=[
+                        RESPONSE_STORED,
+                    ],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 2},
+                    assets=[
                         RESPONSE_PENDING,
+                    ],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 2},
+                    assets=[
+                        RESPONSE_STORED,
+                    ],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 2},
+                    assets=[
+                        RESPONSE_PENDING,
+                    ],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 2},
+                    assets=[
+                        RESPONSE_STORED,
                     ],
                 ),
             ]
@@ -171,6 +214,11 @@ class TestAssetsWait(TestAssetsBase):
                     assets=[
                         RESPONSE_PENDING,
                     ],
+                ),
+                MockResponse(
+                    200,
+                    headers={HEADERS_TOTAL_COUNT: 0},
+                    assets=[],
                 ),
                 MockResponse(
                     200,
