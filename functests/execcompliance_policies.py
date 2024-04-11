@@ -100,8 +100,14 @@ class TestCompliancePoliciesBase(TestCase):
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
         self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.identities = []
 
     def tearDown(self):
+        if self.identities:
+            for identity in self.identities:
+                LOGGER.debug("Delete %s", identity)
+                self.arch.compliance_policies.delete(identity)
+
         self.arch.close()
 
 
@@ -113,15 +119,13 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         compliance_policy = self.arch.compliance_policies.create(
             SINCE_POLICY,
         )
+        self.identities.append(compliance_policy["identity"])
         self.assertEqual(
             compliance_policy["display_name"],
             SINCE_POLICY.display_name,
             msg="Incorrect display name",
         )
         LOGGER.debug("SINCE_POLICY: %s", json_dumps(compliance_policy, indent=4))
-        self.arch.compliance_policies.delete(
-            compliance_policy["identity"],
-        )
 
     def test_compliancepolicies_create_richness(self):
         """
@@ -130,15 +134,13 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         compliance_policy = self.arch.compliance_policies.create(
             RICHNESS_POLICY,
         )
+        self.identities.append(compliance_policy["identity"])
         self.assertEqual(
             compliance_policy["display_name"],
             RICHNESS_POLICY.display_name,
             msg="Incorrect display name",
         )
         LOGGER.debug("RICHNESS_POLICY: %s", json_dumps(compliance_policy, indent=4))
-        self.arch.compliance_policies.delete(
-            compliance_policy["identity"],
-        )
 
     def test_compliancepolicies_create_dynamic_tolerance(self):
         """
@@ -147,6 +149,7 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         compliance_policy = self.arch.compliance_policies.create(
             DYNAMIC_TOLERANCE_POLICY,
         )
+        self.identities.append(compliance_policy["identity"])
         self.assertEqual(
             compliance_policy["display_name"],
             DYNAMIC_TOLERANCE_POLICY.display_name,
@@ -154,9 +157,6 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         )
         LOGGER.debug(
             "DYNAMIC_TOLERANCE_POLICY: %s", json_dumps(compliance_policy, indent=4)
-        )
-        self.arch.compliance_policies.delete(
-            compliance_policy["identity"],
         )
 
     def test_compliancepolicies_create_current_outstanding(self):
@@ -166,6 +166,7 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         compliance_policy = self.arch.compliance_policies.create(
             CURRENT_OUTSTANDING_POLICY,
         )
+        self.identities.append(compliance_policy["identity"])
         self.assertEqual(
             compliance_policy["display_name"],
             CURRENT_OUTSTANDING_POLICY.display_name,
@@ -173,9 +174,6 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         )
         LOGGER.debug(
             "CURRENT_OUTSTANDING_POLICY: %s", json_dumps(compliance_policy, indent=4)
-        )
-        self.arch.compliance_policies.delete(
-            compliance_policy["identity"],
         )
 
     def test_compliancepolicies_create_period_understanding(self):
@@ -185,6 +183,7 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         compliance_policy = self.arch.compliance_policies.create(
             PERIOD_OUTSTANDING_POLICY,
         )
+        self.identities.append(compliance_policy["identity"])
         self.assertEqual(
             compliance_policy["display_name"],
             PERIOD_OUTSTANDING_POLICY.display_name,
@@ -193,14 +192,28 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
         LOGGER.debug(
             "PERIOD_OUTSTANDING_POLICY: %s", json_dumps(compliance_policy, indent=4)
         )
-        self.arch.compliance_policies.delete(
-            compliance_policy["identity"],
-        )
 
     def test_compliance_policies_list(self):
         """
         Test compliance_policy list
         """
+        compliance_policy = self.arch.compliance_policies.create(
+            SINCE_POLICY,
+        )
+        self.identities.append(compliance_policy["identity"])
+        compliance_policy = self.arch.compliance_policies.create(
+            PERIOD_OUTSTANDING_POLICY,
+        )
+        self.identities.append(compliance_policy["identity"])
+        compliance_policy = self.arch.compliance_policies.create(
+            CURRENT_OUTSTANDING_POLICY,
+        )
+        self.identities.append(compliance_policy["identity"])
+        compliance_policy = self.arch.compliance_policies.create(
+            DYNAMIC_TOLERANCE_POLICY,
+        )
+        self.identities.append(compliance_policy["identity"])
+
         compliance_policies = list(self.arch.compliance_policies.list())
         for i, compliance_policy in enumerate(compliance_policies):
             LOGGER.debug("%d: %s", i, json_dumps(compliance_policy, indent=4))
@@ -209,14 +222,28 @@ class TestCompliancePolicies(TestCompliancePoliciesBase):
                 0,
                 msg="Incorrect display name",
             )
-            self.arch.compliance_policies.delete(
-                compliance_policy["identity"],
-            )
 
     def test_compliance_policies_count(self):
         """
         Test compliance_policy count
         """
+        compliance_policy = self.arch.compliance_policies.create(
+            SINCE_POLICY,
+        )
+        self.identities.append(compliance_policy["identity"])
+        compliance_policy = self.arch.compliance_policies.create(
+            PERIOD_OUTSTANDING_POLICY,
+        )
+        self.identities.append(compliance_policy["identity"])
+        compliance_policy = self.arch.compliance_policies.create(
+            CURRENT_OUTSTANDING_POLICY,
+        )
+        self.identities.append(compliance_policy["identity"])
+        compliance_policy = self.arch.compliance_policies.create(
+            DYNAMIC_TOLERANCE_POLICY,
+        )
+        self.identities.append(compliance_policy["identity"])
+
         count = self.arch.compliance_policies.count(
             props={"compliance_type": CompliancePolicyType.COMPLIANCE_SINCE.name}
         )
@@ -271,10 +298,11 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
                     ["attributes.arc_display_type=Traffic Light"],
                 ],
                 event_display_type=f"Maintenance Performed {tag}",
-                time_period_seconds=10,  # very short so we can test
+                time_period_seconds=20,
             )
         )
         LOGGER.debug("SINCE_POLICY: %s", json_dumps(compliance_policy, indent=4))
+        self.identities.append(compliance_policy["identity"])
 
         traffic_light = self.arch.assets.create(
             attrs=TRAFFIC_LIGHT,
@@ -301,24 +329,53 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
             traffic_light["identity"],
         )
         LOGGER.debug("COMPLIANCE (true): %s", json_dumps(compliance, indent=4))
-        self.assertTrue(
-            compliance["compliant"],
-            msg="Assets should be compliant",
+
+        policy_statements = [
+            c
+            for c in compliance["compliance"]
+            if c["compliance_policy_identity"] == compliance_policy["identity"]
+        ]
+        LOGGER.debug("COMPLIANCE (false): %s", json_dumps(policy_statements, indent=4))
+
+        self.assertEqual(
+            len(policy_statements),
+            1,
+            msg="Only one policy statement is expected",
         )
 
-        LOGGER.debug("Sleep 10 seconds ...")
-        sleep(10)
+        self.assertTrue(
+            policy_statements[0]["compliant"],
+            msg="Asset should be compliant",
+        )
+
+        LOGGER.debug(
+            "Sleep 15 seconds so that subsequent falls outside compliance_policy limits ..."
+        )
+        sleep(15)
         compliance = self.arch.compliance.compliant_at(
             traffic_light["identity"],
         )
         LOGGER.debug("COMPLIANCE (false): %s", json_dumps(compliance, indent=4))
-        self.assertFalse(
-            compliance["compliant"],
-            msg="Assets should not be compliant",
+
+        policy_statements = [
+            c
+            for c in compliance["compliance"]
+            if c["compliance_policy_identity"] == compliance_policy["identity"]
+        ]
+        LOGGER.debug("COMPLIANCE (false): %s", json_dumps(policy_statements, indent=4))
+
+        self.assertEqual(
+            len(policy_statements),
+            1,
+            msg="Only one policy statement is expected",
         )
 
-        compliance_policy = self.arch.compliance_policies.delete(
-            compliance_policy["identity"],
+        self.assertFalse(
+            policy_statements[0]["compliant"],
+            msg=(
+                "Asset should not be compliant as it was maintained"
+                "after the compliance policy expired"
+            ),
         )
 
     def test_compliancepolicies_current_outstanding(self):
@@ -337,6 +394,7 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
                 closing_event_display_type=f"Maintenance Performed {tag}",
             ),
         )
+        self.identities.append(compliance_policy["identity"])
         LOGGER.debug(
             "CURRENT_OUTSTANDING_POLICY: %s", json_dumps(compliance_policy, indent=4)
         )
@@ -367,10 +425,24 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
         compliance = self.arch.compliance.compliant_at(
             traffic_light["identity"],
         )
-        LOGGER.debug("COMPLIANCE (false): %s", json_dumps(compliance, indent=4))
+        LOGGER.debug("COMPLIANCE (true): %s", json_dumps(compliance, indent=4))
+
+        policy_statements = [
+            c
+            for c in compliance["compliance"]
+            if c["compliance_policy_identity"] == compliance_policy["identity"]
+        ]
+        LOGGER.debug("COMPLIANCE (false): %s", json_dumps(policy_statements, indent=4))
+
+        self.assertEqual(
+            len(policy_statements),
+            1,
+            msg="Only one policy statement is expected",
+        )
+
         self.assertFalse(
-            compliance["compliant"],
-            msg="Assets should not be compliant",
+            policy_statements[0]["compliant"],
+            msg="Asset should not be compliant",
         )
 
         maintenance_performed = self.arch.events.create(
@@ -394,11 +466,20 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
             traffic_light["identity"],
         )
         LOGGER.debug("COMPLIANCE (true): %s", json_dumps(compliance, indent=4))
-        self.assertTrue(
-            compliance["compliant"],
-            msg="Assets should be compliant",
-        )
 
-        compliance_policy = self.arch.compliance_policies.delete(
-            compliance_policy["identity"],
+        policy_statements = [
+            c
+            for c in compliance["compliance"]
+            if c["compliance_policy_identity"] == compliance_policy["identity"]
+        ]
+        LOGGER.debug("COMPLIANCE (true): %s", json_dumps(policy_statements, indent=4))
+
+        self.assertEqual(
+            len(policy_statements),
+            1,
+            msg="Only one policy statement is expected",
+        )
+        self.assertTrue(
+            policy_statements[0]["compliant"],
+            msg="Asset should be compliant",
         )
