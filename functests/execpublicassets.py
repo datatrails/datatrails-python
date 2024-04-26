@@ -98,12 +98,13 @@ class TestPublicAssetCreate(TestCase):
 
     def test_public_asset_create_simple_hash(self):
         """
-        Test asset creation uses simple hash proof mechanism
+        Test public asset creation with the simple hash proof mechanism
         """
         asset = self.arch.assets.create(
             attrs=self.traffic_light,
             props={
                 "public": True,
+                "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             },
             confirm=True,
         )
@@ -111,6 +112,37 @@ class TestPublicAssetCreate(TestCase):
         self.assertEqual(
             asset["proof_mechanism"],
             ProofMechanism.SIMPLE_HASH.name,
+            msg="Incorrect asset proof mechanism",
+        )
+        self.assertEqual(
+            asset["public"],
+            True,
+            msg="Asset is not public",
+        )
+        asset_publicurl = self.arch.assets.publicurl(asset["identity"])
+        LOGGER.debug("asset_publicurl %s", asset_publicurl)
+        public = self.arch.Public
+        count = public.events.count(asset_id=asset_publicurl)
+        LOGGER.debug("count %s", count)
+        events = public.events.list(asset_id=asset_publicurl)
+        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
+
+    def test_public_asset_create_merkle_log(self):
+        """
+        Test public asset creation with the merkle log proof mechanism
+        """
+        asset = self.arch.assets.create(
+            attrs=self.traffic_light,
+            props={
+                "public": True,
+                "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
+            },
+            confirm=True,
+        )
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
+        self.assertEqual(
+            asset["proof_mechanism"],
+            ProofMechanism.MERKLE_LOG.name,
             msg="Incorrect asset proof mechanism",
         )
         self.assertEqual(
