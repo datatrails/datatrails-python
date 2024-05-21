@@ -132,7 +132,6 @@ class TestCompliance(TestCase):
                             "headers": {
                                 "authorization": "Bearer authauthauth",
                             },
-                            "verify": True,
                             "params": None,
                         },
                     ),

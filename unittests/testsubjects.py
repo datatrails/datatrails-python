@@ -139,7 +139,6 @@ class TestSubjects(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -183,7 +182,6 @@ class TestSubjects(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -205,7 +203,6 @@ class TestSubjects(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -236,7 +233,6 @@ class TestSubjects(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -272,7 +268,6 @@ class TestSubjects(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -325,7 +320,6 @@ class TestSubjects(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -347,7 +341,6 @@ class TestSubjects(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="DELETE method called incorrectly",
@@ -377,7 +370,6 @@ class TestSubjects(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="PATCH method kwargs called incorrectly",
             )
@@ -415,7 +407,6 @@ class TestSubjects(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "params": {"page_size": 1},
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -455,7 +446,6 @@ class TestSubjects(TestCase):
                             "page_size": 1,
                             "display_name": "Subject display name",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -496,7 +486,6 @@ class TestSubjects(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "params": {},
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -541,7 +530,6 @@ class TestSubjects(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "params": {"display_name": "Subject display name"},
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",

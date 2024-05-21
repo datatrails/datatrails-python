@@ -50,7 +50,6 @@ class TestArchivistDelete(TestArchivistMethods):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="DELETE method called incorrectly",
@@ -84,7 +83,6 @@ class TestArchivistDelete(TestArchivistMethods):
                             "authorization": "Bearer authauthauth",
                             "headerfield1": "headervalue1",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="DELETE method called incorrectly",
@@ -147,7 +145,6 @@ class TestArchivistDelete(TestArchivistMethods):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="DELETE method called incorrectly",

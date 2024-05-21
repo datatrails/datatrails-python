@@ -84,7 +84,6 @@ class TestPublicEvents(TestCase):
                     {
                         "headers": {},
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -116,7 +115,6 @@ class TestPublicEvents(TestCase):
                     {
                         "headers": {},
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -169,7 +167,6 @@ class TestPublicEvents(TestCase):
                             "event_attributes.arc_firmware_version": "1.0",
                             "page_size": 1,
                         },
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -217,7 +214,6 @@ class TestPublicEvents(TestCase):
                             "event_attributes.arc_firmware_version": "1.0",
                             "page_size": 1,
                         },
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -262,7 +258,6 @@ class TestPublicEvents(TestCase):
                         {
                             "headers": {},
                             "params": {},
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -307,7 +302,6 @@ class TestPublicEvents(TestCase):
                         {
                             "headers": {},
                             "params": {},
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -345,7 +339,6 @@ class TestPublicEvents(TestCase):
                     {
                         "headers": {},
                         "params": {"page_size": 2},
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",

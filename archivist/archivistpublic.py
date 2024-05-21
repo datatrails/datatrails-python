@@ -122,6 +122,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         """creates and returns session"""
         if self._session is None:
             self._session = requests.Session()
+            self._session.verify = self.verify
         return self._session
 
     def close(self):
@@ -197,7 +198,6 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         response = self.session.get(
             url,
             headers=self._add_headers(headers),
-            verify=self.verify,
             params=_dotdict(params),
         )
 
@@ -237,7 +237,6 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         response = self.session.get(
             url,
             headers=self._add_headers(headers),
-            verify=self.verify,
             stream=True,
             params=_dotdict(params),
         )
@@ -272,7 +271,6 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         response = self.session.get(
             url,
             headers=self._add_headers(headers),
-            verify=self.verify,
             params=_dotdict(params),
         )
 

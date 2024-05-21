@@ -88,7 +88,6 @@ class TestEventsWait(TestEventsBase):
                                 HEADERS_REQUEST_TOTAL_COUNT: "true",
                             },
                             "params": status[i],
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",

@@ -85,7 +85,6 @@ class TestTenanciesRead(TestTenanciesBase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="GET method kwargs called incorrectly",
             )
@@ -116,7 +115,6 @@ class TestTenanciesRead(TestTenanciesBase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="GET method kwargs called incorrectly",
             )

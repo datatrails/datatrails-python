@@ -215,8 +215,8 @@ class TestAttachmentsUpload(TestAttachmentsBase):
                 msg="UPLOAD incorrect content-type",
             )
             self.assertEqual(
-                kwargs["verify"],
-                True,
+                kwargs.get("verify"),
+                None,
                 msg="UPLOAD method called incorrectly",
             )
             self.assertEqual(
@@ -304,7 +304,6 @@ class TestAttachmentsDownload(TestAttachmentsBase):
                         },
                         "params": expected_params,
                         "stream": True,
-                        "verify": True,
                     },
                     msg="DOWNLOAD method called incorrectly",
                 )
@@ -373,7 +372,6 @@ class TestAttachmentsInfo(TestAttachmentsBase):
                         "authorization": "Bearer authauthauth",
                     },
                     "params": None,
-                    "verify": True,
                 },
                 msg="INFO method called incorrectly",
             )

@@ -129,9 +129,9 @@ class TestAssetCreate(TestCase):
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
         self.traffic_light_merkle_log = deepcopy(ATTRS)
-        self.traffic_light_merkle_log[
-            "arc_display_type"
-        ] = "Traffic light with violation camera (merkle_log)"
+        self.traffic_light_merkle_log["arc_display_type"] = (
+            "Traffic light with violation camera (merkle_log)"
+        )
 
     def tearDown(self):
         self.arch.close()

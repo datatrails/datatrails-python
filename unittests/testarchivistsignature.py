@@ -52,7 +52,6 @@ class TestArchivistSignature(TestArchivistMethods):
                                 "authorization": "Bearer authauthauth",
                             },
                             "params": {"field1": "value1", "page_size": 2},
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",

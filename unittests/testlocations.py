@@ -189,7 +189,6 @@ class TestLocations(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -241,7 +240,6 @@ class TestLocations(TestCase):
                             "display_name": "Macclesfield, Cheshire",
                             "attributes.director": "John Smith",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -284,7 +282,6 @@ class TestLocations(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -328,7 +325,6 @@ class TestLocations(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -350,7 +346,6 @@ class TestLocations(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -389,7 +384,6 @@ class TestLocations(TestCase):
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
                         },
                         "params": {"page_size": 1},
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -429,7 +423,6 @@ class TestLocations(TestCase):
                             "page_size": 1,
                             "display_name": "Macclesfield, Cheshire",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -464,7 +457,6 @@ class TestLocations(TestCase):
                             "page_size": 1,
                             "attributes.director": "John Smith",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -505,7 +497,6 @@ class TestLocations(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "params": {},
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -554,7 +545,6 @@ class TestLocations(TestCase):
                                 "attributes.director": "John Smith",
                                 "display_name": "Macclesfield, Cheshire",
                             },
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -588,7 +578,6 @@ class TestLocations(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "params": {"page_size": 2},
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",

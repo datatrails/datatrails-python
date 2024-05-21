@@ -95,7 +95,6 @@ class TestApplications(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -122,7 +121,6 @@ class TestApplications(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -144,7 +142,6 @@ class TestApplications(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="DELETE method called incorrectly",
@@ -170,7 +167,6 @@ class TestApplications(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                         },
-                        "verify": True,
                     },
                 ),
                 msg="PATCH method called incorrectly",
@@ -220,7 +216,6 @@ class TestApplications(TestCase):
                                 "authorization": "Bearer authauthauth",
                             },
                             "params": {},
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -267,7 +262,6 @@ class TestApplications(TestCase):
                             "params": {
                                 "display_name": "Application display name",
                             },
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -295,7 +289,6 @@ class TestApplications(TestCase):
                             "authorization": "Bearer authauthauth",
                         },
                         "json": None,
-                        "verify": True,
                     },
                 ),
                 msg="POST method called incorrectly",

@@ -52,32 +52,28 @@ def __on_giveup_confirmation(details: "Details"):
 def _wait_for_confirmation(
     self: "_AssetsRestricted",
     identity: str,
-) -> "Asset":
-    ...  # pragma: no cover
+) -> "Asset": ...  # pragma: no cover
 
 
 @overload
 def _wait_for_confirmation(
     self: "_AssetsPublic",
     identity: str,
-) -> "Asset":
-    ...  # pragma: no cover
+) -> "Asset": ...  # pragma: no cover
 
 
 @overload
 def _wait_for_confirmation(
     self: "_EventsRestricted",
     identity: str,
-) -> "Event":
-    ...  # pragma: no cover
+) -> "Event": ...  # pragma: no cover
 
 
 @overload
 def _wait_for_confirmation(
     self: "_EventsPublic",
     identity: str,
-) -> "Event":
-    ...  # pragma: no cover
+) -> "Event": ...  # pragma: no cover
 
 
 @backoff.on_predicate(

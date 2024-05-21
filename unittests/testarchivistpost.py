@@ -57,7 +57,6 @@ class TestArchivistPost(TestArchivistMethods):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="POST method kwargs called incorrectly",
             )
@@ -135,7 +134,6 @@ class TestArchivistPost(TestArchivistMethods):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="POST method kwargs called incorrectly",
             )
@@ -166,7 +164,6 @@ class TestArchivistPost(TestArchivistMethods):
                         "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
                     },
-                    "verify": True,
                 },
                 msg="POST method kwargs called incorrectly",
             )
@@ -195,7 +192,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 len(kwargs),
-                4,
+                3,
                 msg="Incorrect number of keyword arguments",
             )
             headers = kwargs.get("headers")
@@ -260,7 +257,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 len(kwargs),
-                4,
+                3,
                 msg="Incorrect number of keyword arguments",
             )
             headers = kwargs.get("headers")
@@ -389,7 +386,7 @@ class TestArchivistPost(TestArchivistMethods):
             )
             self.assertEqual(
                 len(kwargs),
-                4,
+                3,
                 msg="Incorrect number of keyword arguments",
             )
             headers = kwargs.get("headers")
@@ -457,7 +454,6 @@ class TestArchivistPostWithoutAuth(TestCase):
                 {
                     "json": request,
                     "headers": {},
-                    "verify": True,
                 },
                 msg="POST method kwargs called incorrectly",
             )

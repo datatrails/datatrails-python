@@ -91,7 +91,6 @@ class TestEventsCreate(TestEventsBase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -135,7 +134,6 @@ class TestEventsCreate(TestEventsBase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -182,7 +180,6 @@ class TestEventsCreate(TestEventsBase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -226,7 +223,6 @@ class TestEventsCreate(TestEventsBase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -267,7 +263,6 @@ class TestEventsCreate(TestEventsBase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )
@@ -310,7 +305,6 @@ class TestEventsCreate(TestEventsBase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="CREATE method kwargs called incorrectly",
             )

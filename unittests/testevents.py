@@ -113,7 +113,6 @@ class TestEventsRead(TestEventsBase):
                             "authorization": "Bearer authauthauth",
                         },
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
