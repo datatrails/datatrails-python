@@ -50,7 +50,6 @@ class TestPublicGet(TestPublicMethods):
                     {
                         "headers": {},
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -94,7 +93,6 @@ class TestPublicGet(TestPublicMethods):
                             "headerfield1": "headervalue1",
                         },
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -156,7 +154,6 @@ class TestPublicGet(TestPublicMethods):
                     {
                         "headers": {},
                         "params": None,
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",
@@ -203,7 +200,6 @@ class TestPublicGetFile(TestPublicMethods):
                         ("https://path/path/entity/xxxxxxxx",),
                         {
                             "headers": {},
-                            "verify": True,
                             "stream": True,
                             "params": None,
                         },
@@ -294,7 +290,6 @@ class TestPublicGetFile(TestPublicMethods):
                         ("path/path/entity/xxxxxxxx",),
                         {
                             "headers": {},
-                            "verify": True,
                             "stream": True,
                             "params": None,
                         },

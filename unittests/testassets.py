@@ -411,7 +411,6 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
                             "attributes.arc_display_name": "tcl.ppj.003",
                             "page_size": 2,
                         },
-                        "verify": True,
                     },
                 ),
                 msg="GET method called incorrectly",

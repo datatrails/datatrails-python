@@ -1,34 +1,35 @@
 # -*- coding: utf-8 -*-
 """Archivist connection interface
 
-   This module contains the base Archivist class which manages
-   the connection parameters to a DataTrails instance and
-   the basic REST verbs to GET, POST, PATCH and DELETE entities..
+This module contains the base Archivist class which manages
+the connection parameters to a DataTrails instance and
+the basic REST verbs to GET, POST, PATCH and DELETE entities..
 
-   The REST methods in this class should only be used directly when
-   a CRUD endpoint for the specific type of entity is unavailable.
-   Current CRUD endpoints are assets, events, locations, attachments.
-   IAM subjects and IAM access policies.
+The REST methods in this class should only be used directly when
+a CRUD endpoint for the specific type of entity is unavailable.
+Current CRUD endpoints are assets, events, locations, attachments.
+IAM subjects and IAM access policies.
 
-   Instantiation of this class encapsulates the URL and authentication
-   parameters (the max_time parameter is optional):
+Instantiation of this class encapsulates the URL and authentication
+parameters (the max_time parameter is optional):
 
-   .. code-block:: python
+.. code-block:: python
 
-      with open(".auth_token", mode="r", encoding="utf-8") as tokenfile:
-          authtoken = tokenfile.read().strip()
+   with open(".auth_token", mode="r", encoding="utf-8") as tokenfile:
+       authtoken = tokenfile.read().strip()
 
-      # Initialize connection to Archivist
-      arch = Archivist(
-          "https://app.datatrails.ai",
-          authtoken,
-          max_time=300.0,
-      )
+   # Initialize connection to Archivist
+   arch = Archivist(
+       "https://app.datatrails.ai",
+       authtoken,
+       max_time=300.0,
+   )
 
-    The arch variable now has additional endpoints assets,events,locations,
-    attachments, IAM subjects and IAM access policies documented elsewhere.
+ The arch variable now has additional endpoints assets,events,locations,
+ attachments, IAM subjects and IAM access policies documented elsewhere.
 
 """
+
 from copy import deepcopy
 from logging import getLogger
 from time import time
@@ -253,14 +254,12 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             response = self.session.post(
                 url,
                 data=request,
-                verify=self.verify,
             )
         else:
             response = self.session.post(
                 url,
                 json=request,
                 headers=self._add_headers(headers),
-                verify=self.verify,
             )
 
         error = _parse_response(response)
@@ -305,7 +304,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             url,
             data=multipart,  # pyright: ignore    https://github.com/requests/toolbelt/issues/312
             headers=self._add_headers(headers),
-            verify=self.verify,
             params=_dotdict(params),
         )
 
@@ -335,7 +333,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         response = self.session.delete(
             url,
             headers=self._add_headers(headers),
-            verify=self.verify,
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -371,7 +368,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             url,
             json=request,
             headers=self._add_headers(headers),
-            verify=self.verify,
         )
 
         self._response_ring_buffer.appendleft(response)

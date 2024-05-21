@@ -145,7 +145,6 @@ class TestPublicAssetAttachmentsDownload(TestPublicAssetAttachmentsBase):
                         "headers": {},
                         "params": expected_params,
                         "stream": True,
-                        "verify": True,
                     },
                     msg="DOWNLOAD method called incorrectly",
                 )
@@ -212,7 +211,6 @@ class TestPublicAssetAttachmentsInfo(TestPublicAssetAttachmentsBase):
                 {
                     "headers": {},
                     "params": None,
-                    "verify": True,
                 },
                 msg="INFO method called incorrectly",
             )

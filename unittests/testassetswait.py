@@ -93,7 +93,6 @@ class TestAssetsWait(TestAssetsBase):
                                 HEADERS_REQUEST_TOTAL_COUNT: "true",
                             },
                             "params": status[i],
-                            "verify": True,
                         },
                     ),
                     msg="GET method called incorrectly",
@@ -140,63 +139,7 @@ class TestAssetsWait(TestAssetsBase):
                         RESPONSE_STORED,
                     ],
                 ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_STORED,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_STORED,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_STORED,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_PENDING,
-                    ],
-                ),
-                MockResponse(
-                    200,
-                    headers={HEADERS_TOTAL_COUNT: 2},
-                    assets=[
-                        RESPONSE_STORED,
-                    ],
-                ),
-            ]
+            ] * 100
 
             with self.assertRaises(ArchivistUnconfirmedError):
                 self.arch.assets.wait_for_confirmed()
@@ -234,5 +177,7 @@ class TestAssetsWait(TestAssetsBase):
                 ),
             ]
 
-            with self.assertRaises(ArchivistUnconfirmedError):
+            with self.assertRaises(
+                ArchivistUnconfirmedError, msg="Failed to detect confirmation timeout"
+            ):
                 self.arch.assets.wait_for_confirmed()

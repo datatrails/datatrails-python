@@ -134,7 +134,6 @@ REQUEST_KWARGS_MERKLE_LOG = {
     "headers": {
         "authorization": "Bearer authauthauth",
     },
-    "verify": True,
 }
 REQUEST_KWARGS_SIMPLE_HASH = {
     "json": {
@@ -157,7 +156,6 @@ REQUEST_KWARGS_SIMPLE_HASH = {
     "headers": {
         "authorization": "Bearer authauthauth",
     },
-    "verify": True,
 }
 RESPONSE_SIMPLE_HASH = {
     "identity": IDENTITY,
@@ -255,7 +253,6 @@ REQUEST_EXISTS_KWARGS_SIMPLE_HASH = {
     "headers": {
         "authorization": "Bearer authauthauth",
     },
-    "verify": True,
 }
 RESPONSE_EXISTS = {
     "identity": IDENTITY,
@@ -343,7 +340,6 @@ REQUEST_EXISTS_KWARGS_ATTACHMENTS_SIMPLE_HASH = {
     "headers": {
         "authorization": "Bearer authauthauth",
     },
-    "verify": True,
 }
 RESPONSE_ATTACHMENTS = {
     "arc_attribute_type": "arc_attachment",
@@ -441,7 +437,6 @@ REQUEST_EXISTS_KWARGS_LOCATION_SIMPLE_HASH = {
     "headers": {
         "authorization": "Bearer authauthauth",
     },
-    "verify": True,
 }
 RESPONSE_EXISTS_LOCATION = {
     "identity": IDENTITY,
@@ -511,7 +506,6 @@ REQUEST_FIXTURES_KWARGS_SIMPLE_HASH = {
     "headers": {
         "authorization": "Bearer authauthauth",
     },
-    "verify": True,
 }
 
 RESPONSE_FIXTURES = {

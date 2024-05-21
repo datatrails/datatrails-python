@@ -269,7 +269,6 @@ class TestArchivistPatch(TestArchivistMethods):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="POST method kwargs called incorrectly",
             )
@@ -312,7 +311,6 @@ class TestArchivistPatch(TestArchivistMethods):
                         "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
                     },
-                    "verify": True,
                 },
                 msg="PATCH method kwargs called incorrectly",
             )
@@ -389,7 +387,6 @@ class TestArchivistPatch(TestArchivistMethods):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                     },
-                    "verify": True,
                 },
                 msg="PATCH method kwargs called incorrectly",
             )

@@ -65,7 +65,6 @@ class TestPublicAssetsRead(TestPublicAssetsBase):
                 kwargs,
                 {
                     "headers": {},
-                    "verify": True,
                     "params": None,
                 },
                 msg="GET method kwargs called incorrectly",
