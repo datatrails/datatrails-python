@@ -12,7 +12,6 @@ from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS, SBOM_PACKAGE, SBOM_RELEASE
-from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
 filterwarnings("ignore", message="Unverified HTTPS request")
@@ -43,7 +42,6 @@ def sbom_release(arch, release, sbom_filename):
                 },
             ],
             "behaviours": ASSET_BEHAVIOURS,
-            "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             "attributes": {
                 "arc_display_name": ASSET_NAME,
                 "arc_display_type": SBOM_PACKAGE,

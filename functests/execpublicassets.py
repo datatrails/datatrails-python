@@ -10,7 +10,6 @@ from time import sleep
 from archivist import logger
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
-from archivist.proof_mechanism import ProofMechanism
 from archivist.timestamp import now_timestamp
 from archivist.utils import get_auth
 
@@ -44,7 +43,6 @@ REQUEST_EXISTS_ATTACHMENTS = {
         },
     ],
     "behaviours": ASSET_BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": getenv("DATATRAILS_UNIQUE_ID"),
@@ -96,55 +94,18 @@ class TestPublicAssetCreate(TestCase):
         self.attrs = None
         self.traffic_light = None
 
-    def test_public_asset_create_simple_hash(self):
+    def test_public_asset_create(self):
         """
-        Test public asset creation with the simple hash proof mechanism
-        """
-        asset = self.arch.assets.create(
-            attrs=self.traffic_light,
-            props={
-                "public": True,
-                "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-            },
-            confirm=True,
-        )
-        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
-        self.assertEqual(
-            asset["proof_mechanism"],
-            ProofMechanism.SIMPLE_HASH.name,
-            msg="Incorrect asset proof mechanism",
-        )
-        self.assertEqual(
-            asset["public"],
-            True,
-            msg="Asset is not public",
-        )
-        asset_publicurl = self.arch.assets.publicurl(asset["identity"])
-        LOGGER.debug("asset_publicurl %s", asset_publicurl)
-        public = self.arch.Public
-        count = public.events.count(asset_id=asset_publicurl)
-        LOGGER.debug("count %s", count)
-        events = public.events.list(asset_id=asset_publicurl)
-        LOGGER.debug("events %s", json_dumps(list(events), sort_keys=True, indent=4))
-
-    def test_public_asset_create_merkle_log(self):
-        """
-        Test public asset creation with the merkle log proof mechanism
+        Test public asset creation
         """
         asset = self.arch.assets.create(
             attrs=self.traffic_light,
             props={
                 "public": True,
-                "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
             },
             confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
-        self.assertEqual(
-            asset["proof_mechanism"],
-            ProofMechanism.MERKLE_LOG.name,
-            msg="Incorrect asset proof mechanism",
-        )
         self.assertEqual(
             asset["public"],
             True,

@@ -14,7 +14,6 @@ from warnings import filterwarnings
 from .archivist import Archivist
 from .dictmerge import _deepmerge
 from .logger import set_logger
-from .proof_mechanism import ProofMechanism
 from .utils import get_auth
 
 filterwarnings("ignore", message="Unverified HTTPS request")
@@ -82,15 +81,6 @@ def common_parser(description: str):
         help="url of Archivist service",
     )
     parser.add_argument(
-        "-p",
-        "--proof-mechanism",
-        type=ProofMechanism,
-        action=EnumAction,
-        dest="proof_mechanism",
-        default=None,
-        help="mechanism for proving the evidence for events on the Asset",
-    )
-    parser.add_argument(
         "--auth-token",
         type=str,
         dest="auth_token",
@@ -152,13 +142,6 @@ def endpoint(args):
     arch = None
     LOGGER.info("Initializing connection to DATATRAILS...")
     fixtures = {}
-    if args.proof_mechanism is not None:
-        fixtures = {
-            "assets": {
-                "proof_mechanism": args.proof_mechanism.name,
-            },
-        }
-
     if args.namespace is not None:
         fixtures = _deepmerge(
             fixtures,

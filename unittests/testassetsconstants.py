@@ -76,13 +76,11 @@ ATTRS_FIXTURES = {
     ],
 }
 
-# case 1 create
-SIMPLE_HASH = {
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-}
 MERKLE_LOG = {
     "proof_mechanism": ProofMechanism.MERKLE_LOG.name,
 }
+
+# case 1 create
 ATTRS = {
     "arc_firmware_version": "1.0",
     "arc_serial_number": "vtl-x4-07",
@@ -96,9 +94,8 @@ ATTRS = {
         PRIMARY_IMAGE,
     ],
 }
-REQUEST_SIMPLE_HASH = {
+REQUEST = {
     "behaviours": ASSET_BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_firmware_version": "1.0",
         "arc_serial_number": "vtl-x4-07",
@@ -113,6 +110,28 @@ REQUEST_SIMPLE_HASH = {
         ],
     },
 }
+REQUEST_KWARGS = {
+    "json": {
+        "behaviours": ASSET_BEHAVIOURS,
+        "attributes": {
+            "arc_firmware_version": "1.0",
+            "arc_serial_number": "vtl-x4-07",
+            "arc_description": "Traffic flow control light at A603 North East",
+            "arc_display_type": "Traffic light with violation camera",
+            "some_custom_attribute": "value",
+            "arc_display_name": ASSET_NAME,
+            "arc_attachments": [
+                TERTIARY_IMAGE,
+                SECONDARY_IMAGE,
+                PRIMARY_IMAGE,
+            ],
+        },
+    },
+    "headers": {
+        "authorization": "Bearer authauthauth",
+    },
+}
+
 REQUEST_KWARGS_MERKLE_LOG = {
     "json": {
         "behaviours": ASSET_BEHAVIOURS,
@@ -135,48 +154,8 @@ REQUEST_KWARGS_MERKLE_LOG = {
         "authorization": "Bearer authauthauth",
     },
 }
-REQUEST_KWARGS_SIMPLE_HASH = {
-    "json": {
-        "behaviours": ASSET_BEHAVIOURS,
-        "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-        "attributes": {
-            "arc_firmware_version": "1.0",
-            "arc_serial_number": "vtl-x4-07",
-            "arc_description": "Traffic flow control light at A603 North East",
-            "arc_display_type": "Traffic light with violation camera",
-            "some_custom_attribute": "value",
-            "arc_display_name": ASSET_NAME,
-            "arc_attachments": [
-                TERTIARY_IMAGE,
-                SECONDARY_IMAGE,
-                PRIMARY_IMAGE,
-            ],
-        },
-    },
-    "headers": {
-        "authorization": "Bearer authauthauth",
-    },
-}
-RESPONSE_SIMPLE_HASH = {
-    "identity": IDENTITY,
-    "behaviours": ASSET_BEHAVIOURS,
-    "attributes": {
-        "arc_firmware_version": "1.0",
-        "arc_serial_number": "vtl-x4-07",
-        "arc_description": "Traffic flow control light at A603 North East",
-        "arc_display_type": "Traffic light with violation camera",
-        "some_custom_attribute": "value",
-        "arc_display_name": ASSET_NAME,
-        "arc_attachments": [
-            TERTIARY_IMAGE,
-            SECONDARY_IMAGE,
-            PRIMARY_IMAGE,
-        ],
-    },
-    "confirmation_status": "CONFIRMED",
-}
 
-RESPONSE_MERKLE_LOG = {
+RESPONSE = {
     "identity": IDENTITY,
     "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
@@ -195,7 +174,7 @@ RESPONSE_MERKLE_LOG = {
     "confirmation_status": "COMMITTED",
 }
 
-RESPONSE_MERKLE_LOG_UNEQUIVOCAL = {
+RESPONSE_UNEQUIVOCAL = {
     "identity": IDENTITY,
     "behaviours": ASSET_BEHAVIOURS,
     "attributes": {
@@ -215,7 +194,7 @@ RESPONSE_MERKLE_LOG_UNEQUIVOCAL = {
 }
 
 # case 2 create if not exists
-REQUEST_EXISTS_SIMPLE_HASH = {
+REQUEST_EXISTS = {
     "selector": [
         {
             "attributes": [
@@ -225,7 +204,6 @@ REQUEST_EXISTS_SIMPLE_HASH = {
         },
     ],
     "behaviours": ASSET_BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": "namespace",
@@ -236,10 +214,9 @@ REQUEST_EXISTS_SIMPLE_HASH = {
         "some_custom_attribute": "value",
     },
 }
-REQUEST_EXISTS_KWARGS_SIMPLE_HASH = {
+REQUEST_EXISTS_KWARGS = {
     "json": {
         "behaviours": ASSET_BEHAVIOURS,
-        "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
         "attributes": {
             "arc_display_name": ASSET_NAME,
             "arc_namespace": "namespace",
@@ -271,7 +248,7 @@ RESPONSE_EXISTS = {
 }
 
 # case 3 create if not exists with attachments
-REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH = {
+REQUEST_EXISTS_ATTACHMENTS = {
     "selector": [
         {
             "attributes": [
@@ -281,7 +258,6 @@ REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH = {
         },
     ],
     "behaviours": ASSET_BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": "namespace",
@@ -303,10 +279,9 @@ REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH = {
         },
     ],
 }
-REQUEST_EXISTS_KWARGS_ATTACHMENTS_SIMPLE_HASH = {
+REQUEST_EXISTS_KWARGS_ATTACHMENTS = {
     "json": {
         "behaviours": ASSET_BEHAVIOURS,
-        "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
         "attributes": {
             "arc_display_name": ASSET_NAME,
             "arc_namespace": "namespace",
@@ -377,7 +352,7 @@ RESPONSE_EXISTS_ATTACHMENTS = {
 }
 
 # case 4 create if not exists with location
-REQUEST_EXISTS_LOCATION_SIMPLE_HASH = {
+REQUEST_EXISTS_LOCATION = {
     "selector": [
         {
             "attributes": [
@@ -387,7 +362,6 @@ REQUEST_EXISTS_LOCATION_SIMPLE_HASH = {
         },
     ],
     "behaviours": ASSET_BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": "namespace",
@@ -419,10 +393,9 @@ REQUEST_EXISTS_LOCATION_SIMPLE_HASH = {
         },
     },
 }
-REQUEST_EXISTS_KWARGS_LOCATION_SIMPLE_HASH = {
+REQUEST_EXISTS_KWARGS_LOCATION = {
     "json": {
         "behaviours": ASSET_BEHAVIOURS,
-        "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
         "attributes": {
             "arc_display_name": ASSET_NAME,
             "arc_namespace": "namespace",
@@ -469,7 +442,7 @@ RESPONSE_LOCATION = {
     },
 }
 # case 5 create if not exists with location identity
-REQUEST_EXISTS_LOCATION_IDENTITY_SIMPLE_HASH = {
+REQUEST_EXISTS_LOCATION_IDENTITY = {
     "selector": [
         {
             "attributes": [
@@ -479,7 +452,6 @@ REQUEST_EXISTS_LOCATION_IDENTITY_SIMPLE_HASH = {
         },
     ],
     "behaviours": ASSET_BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": "namespace",
@@ -496,13 +468,12 @@ REQUEST_EXISTS_LOCATION_IDENTITY_SIMPLE_HASH = {
 
 # ---------------
 
-REQUEST_FIXTURES_SIMPLE_HASH = {
+REQUEST_FIXTURES = {
     "behaviours": ASSET_BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": ATTRS_FIXTURES,
 }
-REQUEST_FIXTURES_KWARGS_SIMPLE_HASH = {
-    "json": REQUEST_FIXTURES_SIMPLE_HASH,
+REQUEST_FIXTURES_KWARGS = {
+    "json": REQUEST_FIXTURES,
     "headers": {
         "authorization": "Bearer authauthauth",
     },

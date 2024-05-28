@@ -22,16 +22,17 @@ from .testassetsconstants import (
     FIXTURES,
     MERKLE_LOG,
     PRIMARY_IMAGE,
-    REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH,
-    REQUEST_EXISTS_KWARGS_ATTACHMENTS_SIMPLE_HASH,
-    REQUEST_EXISTS_KWARGS_LOCATION_SIMPLE_HASH,
-    REQUEST_EXISTS_KWARGS_SIMPLE_HASH,
-    REQUEST_EXISTS_LOCATION_IDENTITY_SIMPLE_HASH,
-    REQUEST_EXISTS_LOCATION_SIMPLE_HASH,
-    REQUEST_EXISTS_SIMPLE_HASH,
-    REQUEST_FIXTURES_KWARGS_SIMPLE_HASH,
+    REQUEST_EXISTS,
+    REQUEST_EXISTS_ATTACHMENTS,
+    REQUEST_EXISTS_KWARGS,
+    REQUEST_EXISTS_KWARGS_ATTACHMENTS,
+    REQUEST_EXISTS_KWARGS_LOCATION,
+    REQUEST_EXISTS_LOCATION,
+    REQUEST_EXISTS_LOCATION_IDENTITY,
+    REQUEST_FIXTURES_KWARGS,
+    REQUEST_KWARGS,
     REQUEST_KWARGS_MERKLE_LOG,
-    REQUEST_KWARGS_SIMPLE_HASH,
+    RESPONSE,
     RESPONSE_ATTACHMENTS,
     RESPONSE_EXISTS,
     RESPONSE_EXISTS_ATTACHMENTS,
@@ -39,12 +40,9 @@ from .testassetsconstants import (
     RESPONSE_FAILED,
     RESPONSE_FIXTURES,
     RESPONSE_LOCATION,
-    RESPONSE_MERKLE_LOG,
-    RESPONSE_MERKLE_LOG_UNEQUIVOCAL,
     RESPONSE_NO_CONFIRMATION,
     RESPONSE_PENDING,
-    RESPONSE_SIMPLE_HASH,
-    SIMPLE_HASH,
+    RESPONSE_UNEQUIVOCAL,
     SUBPATH,
     TestAssetsBase,
     TestAssetsBaseConfirm,
@@ -86,11 +84,9 @@ class TestAssetsCreate(TestAssetsBase):
         Test asset creation
         """
         with mock.patch.object(self.arch.session, "post", autospec=True) as mock_post:
-            mock_post.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
+            mock_post.return_value = MockResponse(200, **RESPONSE)
 
-            asset = self.arch.assets.create(
-                props=SIMPLE_HASH, attrs=ATTRS, confirm=False
-            )
+            asset = self.arch.assets.create(attrs=ATTRS, confirm=False)
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
@@ -99,12 +95,12 @@ class TestAssetsCreate(TestAssetsBase):
             )
             self.assertEqual(
                 kwargs,
-                REQUEST_KWARGS_SIMPLE_HASH,
+                REQUEST_KWARGS,
                 msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
                 asset,
-                RESPONSE_SIMPLE_HASH,
+                RESPONSE,
                 msg="CREATE incorrect response",
             )
             self.assertEqual(
@@ -120,10 +116,10 @@ class TestAssetsCreate(TestAssetsBase):
 
     def test_assets_create_merkle_log(self):
         """
-        Test asset creation
+        Test asset creation specifying merkle log mechanism
         """
         with mock.patch.object(self.arch.session, "post", autospec=True) as mock_post:
-            mock_post.return_value = MockResponse(200, **RESPONSE_MERKLE_LOG)
+            mock_post.return_value = MockResponse(200, **RESPONSE)
 
             asset = self.arch.assets.create(
                 props=MERKLE_LOG, attrs=ATTRS, confirm=False
@@ -141,7 +137,7 @@ class TestAssetsCreate(TestAssetsBase):
             )
             self.assertEqual(
                 asset,
-                RESPONSE_MERKLE_LOG,
+                RESPONSE,
                 msg="CREATE incorrect response",
             )
             self.assertEqual(
@@ -163,7 +159,7 @@ class TestAssetsCreate(TestAssetsBase):
         arch.fixtures = FIXTURES
         with mock.patch.object(arch.session, "post", autospec=True) as mock_post:
             mock_post.return_value = MockResponse(200, **RESPONSE_FIXTURES)
-            asset = arch.assets.create(props=SIMPLE_HASH, attrs=ATTRS, confirm=False)
+            asset = arch.assets.create(attrs=ATTRS, confirm=False)
             args, kwargs = mock_post.call_args
             self.assertEqual(
                 args,
@@ -172,7 +168,7 @@ class TestAssetsCreate(TestAssetsBase):
             )
             self.assertEqual(
                 kwargs,
-                REQUEST_FIXTURES_KWARGS_SIMPLE_HASH,
+                REQUEST_FIXTURES_KWARGS,
                 msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
@@ -188,11 +184,11 @@ class TestAssetsCreate(TestAssetsBase):
         with mock.patch.object(
             self.arch.session, "post"
         ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
+            mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
 
             with self.assertRaises(ArchivistUnconfirmedError):
-                self.arch.assets.create(props=SIMPLE_HASH, attrs=ATTRS, confirm=True)
+                self.arch.assets.create(attrs=ATTRS, confirm=True)
 
     def test_assets_create_with_confirmation_failed_status(self):
         """
@@ -201,28 +197,13 @@ class TestAssetsCreate(TestAssetsBase):
         with mock.patch.object(
             self.arch.session, "post"
         ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
+            mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),
                 MockResponse(200, **RESPONSE_FAILED),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                self.arch.assets.create(props=SIMPLE_HASH, attrs=ATTRS, confirm=True)
-
-    def test_assets_create_with_confirmation_failed_status_merkle_log(self):
-        """
-        Test asset confirmation
-        """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_MERKLE_LOG)
-            mock_get.side_effect = [
-                MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE_FAILED),
-            ]
-            with self.assertRaises(ArchivistUnconfirmedError):
-                self.arch.assets.create(props=MERKLE_LOG, attrs=ATTRS, confirm=True)
+                self.arch.assets.create(attrs=ATTRS, confirm=True)
 
     def test_assets_create_with_confirmation_always_pending_status(self):
         """
@@ -231,7 +212,7 @@ class TestAssetsCreate(TestAssetsBase):
         with mock.patch.object(
             self.arch.session, "post"
         ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
+            mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),
                 MockResponse(200, **RESPONSE_PENDING),
@@ -242,27 +223,7 @@ class TestAssetsCreate(TestAssetsBase):
                 MockResponse(200, **RESPONSE_PENDING),
             ]
             with self.assertRaises(ArchivistUnconfirmedError):
-                self.arch.assets.create(props=SIMPLE_HASH, attrs=ATTRS, confirm=True)
-
-    def test_assets_create_with_confirmation_always_pending_status_merkle_log(self):
-        """
-        Test asset confirmation
-        """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_MERKLE_LOG)
-            mock_get.side_effect = [
-                MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE_PENDING),
-            ]
-            with self.assertRaises(ArchivistUnconfirmedError):
-                self.arch.assets.create(props=MERKLE_LOG, attrs=ATTRS, confirm=True)
+                self.arch.assets.create(attrs=ATTRS, confirm=True)
 
 
 class TestAssetsCreateConfirm(TestAssetsBaseConfirm):
@@ -270,55 +231,35 @@ class TestAssetsCreateConfirm(TestAssetsBaseConfirm):
     Test Archivist Assets methods with expected confirmation
     """
 
-    def test_assets_create_with_confirmation_simple_hash(self):
+    def test_assets_create_with_confirmation(self):
         """
         Test asset creation
         """
         with mock.patch.object(
             self.arch.session, "post"
         ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
-            mock_get.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
-            asset = self.arch.assets.create(
-                props=SIMPLE_HASH, attrs=ATTRS, confirm=True
-            )
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+            asset = self.arch.assets.create(attrs=ATTRS, confirm=True)
             self.assertEqual(
                 asset,
-                RESPONSE_SIMPLE_HASH,
+                RESPONSE,
                 msg="CREATE method called incorrectly",
             )
 
-    def test_assets_create_with_confirmation_merkle_log(self):
+    def test_assets_create_with_confirmation_unequivocal(self):
         """
         Test asset creation
         """
         with mock.patch.object(
             self.arch.session, "post"
         ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_MERKLE_LOG)
-            mock_get.return_value = MockResponse(200, **RESPONSE_MERKLE_LOG)
-            asset = self.arch.assets.create(props=MERKLE_LOG, attrs=ATTRS, confirm=True)
+            mock_post.return_value = MockResponse(200, **RESPONSE_UNEQUIVOCAL)
+            mock_get.return_value = MockResponse(200, **RESPONSE_UNEQUIVOCAL)
+            asset = self.arch.assets.create(attrs=ATTRS, confirm=True)
             self.assertEqual(
                 asset,
-                RESPONSE_MERKLE_LOG,
-                msg="CREATE method called incorrectly",
-            )
-
-    def test_assets_create_with_confirmation_merkle_log_unequivocal(self):
-        """
-        Test asset creation
-        """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(
-                200, **RESPONSE_MERKLE_LOG_UNEQUIVOCAL
-            )
-            mock_get.return_value = MockResponse(200, **RESPONSE_MERKLE_LOG_UNEQUIVOCAL)
-            asset = self.arch.assets.create(props=MERKLE_LOG, attrs=ATTRS, confirm=True)
-            self.assertEqual(
-                asset,
-                RESPONSE_MERKLE_LOG_UNEQUIVOCAL,
+                RESPONSE_UNEQUIVOCAL,
                 msg="CREATE method called incorrectly",
             )
 
@@ -329,15 +270,13 @@ class TestAssetsCreateConfirm(TestAssetsBaseConfirm):
         with mock.patch.object(
             self.arch.session, "post"
         ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
-            mock_get.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
-            asset = self.arch.assets.create(
-                props=SIMPLE_HASH, attrs=ATTRS, confirm=False
-            )
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+            mock_get.return_value = MockResponse(200, **RESPONSE)
+            asset = self.arch.assets.create(attrs=ATTRS, confirm=False)
             self.arch.assets.wait_for_confirmation(asset["identity"])
             self.assertEqual(
                 asset,
-                RESPONSE_SIMPLE_HASH,
+                RESPONSE,
                 msg="CREATE method called incorrectly",
             )
 
@@ -348,17 +287,15 @@ class TestAssetsCreateConfirm(TestAssetsBaseConfirm):
         with mock.patch.object(
             self.arch.session, "post"
         ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
-            mock_post.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
+            mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),
-                MockResponse(200, **RESPONSE_SIMPLE_HASH),
+                MockResponse(200, **RESPONSE),
             ]
-            asset = self.arch.assets.create(
-                props=SIMPLE_HASH, attrs=ATTRS, confirm=True
-            )
+            asset = self.arch.assets.create(attrs=ATTRS, confirm=True)
             self.assertEqual(
                 asset,
-                RESPONSE_SIMPLE_HASH,
+                RESPONSE,
                 msg="CREATE method called incorrectly",
             )
 
@@ -381,10 +318,10 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
                     RESPONSE_EXISTS,
                 ],
             )
-            mock_post.return_value = MockResponse(200, **RESPONSE_SIMPLE_HASH)
+            mock_post.return_value = MockResponse(200, **RESPONSE)
 
             asset, existed = self.arch.assets.create_if_not_exists(
-                data=REQUEST_EXISTS_SIMPLE_HASH,
+                data=REQUEST_EXISTS,
                 confirm=False,
             )
             mock_post.assert_not_called()
@@ -506,8 +443,8 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         Test asset creation
         """
         self.common_assets_create_if_not_exists_nonexistent_asset(
-            REQUEST_EXISTS_SIMPLE_HASH,
-            REQUEST_EXISTS_KWARGS_SIMPLE_HASH,
+            REQUEST_EXISTS,
+            REQUEST_EXISTS_KWARGS,
             RESPONSE_EXISTS,
         )
 
@@ -516,8 +453,8 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         Test asset creation
         """
         self.common_assets_create_if_not_exists_nonexistent_asset(
-            REQUEST_EXISTS_LOCATION_SIMPLE_HASH,
-            REQUEST_EXISTS_KWARGS_LOCATION_SIMPLE_HASH,
+            REQUEST_EXISTS_LOCATION,
+            REQUEST_EXISTS_KWARGS_LOCATION,
             RESPONSE_EXISTS_LOCATION,
             loc_resp=RESPONSE_LOCATION,
         )
@@ -527,8 +464,8 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         Test asset creation
         """
         self.common_assets_create_if_not_exists_nonexistent_asset(
-            REQUEST_EXISTS_LOCATION_IDENTITY_SIMPLE_HASH,
-            REQUEST_EXISTS_KWARGS_LOCATION_SIMPLE_HASH,
+            REQUEST_EXISTS_LOCATION_IDENTITY,
+            REQUEST_EXISTS_KWARGS_LOCATION,
             RESPONSE_EXISTS_LOCATION,
         )
 
@@ -537,8 +474,8 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         Test asset creation
         """
         self.common_assets_create_if_not_exists_nonexistent_asset(
-            REQUEST_EXISTS_ATTACHMENTS_SIMPLE_HASH,
-            REQUEST_EXISTS_KWARGS_ATTACHMENTS_SIMPLE_HASH,
+            REQUEST_EXISTS_ATTACHMENTS,
+            REQUEST_EXISTS_KWARGS_ATTACHMENTS,
             RESPONSE_EXISTS_ATTACHMENTS,
             attachments_resp=RESPONSE_ATTACHMENTS,
         )

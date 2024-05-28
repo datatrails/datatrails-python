@@ -12,7 +12,6 @@ and locations.
 
     from archivist.archivist import Archivist
     from archivist.errors import ArchivistError
-    from archivist.proof_mechanism import ProofMechanism
     
     # Oauth2 token that grants access
     with open(".auth_token", mode='r', encoding="utf-8") as tokenfile:
@@ -22,11 +21,6 @@ and locations.
     ledger = Archivist(
         "https://app.datatrails.ai",
         authtoken,
-        fixtures = {
-            "assets": {
-                "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-            }
-        },
     )
     
     # lets define doors in our namespace that reside on the ledger...

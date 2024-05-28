@@ -13,7 +13,6 @@ from uuid import uuid4
 from warnings import filterwarnings
 
 from archivist.archivist import Archivist
-from archivist.proof_mechanism import ProofMechanism
 
 filterwarnings("ignore", message="Unverified HTTPS request")
 
@@ -101,9 +100,6 @@ def main():
         ) as arch1:
             # create an asset
             asset = arch1.assets.create(
-                props={
-                    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-                },
                 attrs={
                     "arc_display_name": "display_name",
                     "arc_description": "display_description",
