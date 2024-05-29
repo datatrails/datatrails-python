@@ -53,7 +53,7 @@ def create_asset(arch):
     # The second argument are the attributes of the asset
     # The third argument is wait for confirmation:
     #   If @confirm@ is True then this function will not
-    #   return until the asset is confirmed on the blockchain and ready
+    #   return until the asset is confirmed and ready
     #   to accept events (or an error occurs)
     #
     return arch.assets.create(props=props, attrs=attrs, confirm=True)

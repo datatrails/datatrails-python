@@ -87,7 +87,7 @@ You can then use the examples code to create assets (see examples directory):
         # The first argument are the attributes of the asset
         # The second argument is wait for confirmation:
         #   If @confirm@ is True then this function will not
-        #   return until the asset is confirmed on the blockchain and ready
+        #   return until the asset is confirmed and ready
         #   to accept events (or an error occurs)
         #
         return arch.assets.create(attrs=attrs, confirm=True)
