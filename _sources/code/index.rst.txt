@@ -22,4 +22,3 @@ Shows all code
 
    timestamp
    errors
-   proof_mechanism

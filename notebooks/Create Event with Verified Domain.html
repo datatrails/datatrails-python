@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Event With Verified Domain &mdash; DATATRAILS v0.30.1 documentation</title>
+  <title>Create Event With Verified Domain &mdash; DATATRAILS v0.31.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=a8b850d8"></script>
+        <script src="../_static/documentation_options.js?v=7d159e98"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -43,7 +43,7 @@
               <img src="../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.30.1
+                v0.31.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -318,11 +318,8 @@ DATATRAILS_URL https://app.datatrails.ai
     <span class="c1"># The first argument is the attributes of the asset</span>
     <span class="c1"># The second argument is wait for confirmation:</span>
     <span class="c1">#   If @confirm@ is True then this function will not</span>
-    <span class="c1">#   return until the asset is confirmed on the blockchain and ready</span>
+    <span class="c1">#   return until the asset is confirmed and ready</span>
     <span class="c1">#   to accept events (or an error occurs)</span>
-    <span class="c1">#   After an asset is submitted to the blockchain (submitted),</span>
-    <span class="c1">#   it will be in the &quot;Pending&quot; status.</span>
-    <span class="c1">#   Once it is added to the blockchain, the status will be changed to &quot;Confirmed&quot;</span>
     <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -368,7 +365,6 @@ Asset {
     &#34;confirmation_status&#34;: &#34;CONFIRMED&#34;,
     &#34;identity&#34;: &#34;assets/0047715f-368e-4a62-aa04-48e6fa974e85&#34;,
     &#34;owner&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
-    &#34;proof_mechanism&#34;: &#34;SIMPLE_HASH&#34;,
     &#34;public&#34;: false,
     &#34;storage_integrity&#34;: &#34;TENANT_STORAGE&#34;,
     &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;,

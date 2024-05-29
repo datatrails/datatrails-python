@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Asset Compliance: CURRENT_OUTSTANDING policy &mdash; DATATRAILS v0.30.1 documentation</title>
+  <title>Create Asset Compliance: CURRENT_OUTSTANDING policy &mdash; DATATRAILS v0.31.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=a8b850d8"></script>
+        <script src="../_static/documentation_options.js?v=7d159e98"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -43,7 +43,7 @@
               <img src="../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.30.1
+                v0.31.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -138,7 +138,6 @@
 <span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
 <span class="kn">from</span> <span class="nn">archivist.compliance_policy_requests</span> <span class="kn">import</span> <span class="n">CompliancePolicyCurrentOutstanding</span>
 <span class="kn">from</span> <span class="nn">archivist.constants</span> <span class="kn">import</span> <span class="n">ASSET_BEHAVIOURS</span>
-<span class="kn">from</span> <span class="nn">archivist.proof_mechanism</span> <span class="kn">import</span> <span class="n">ProofMechanism</span>
 <span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
 
 <span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Unverified HTTPS request&quot;</span><span class="p">)</span>
@@ -252,7 +251,6 @@ DATATRAILS_URL https://app.datatrails.ai
                 <span class="p">},</span>
             <span class="p">],</span>
             <span class="s2">&quot;behaviours&quot;</span><span class="p">:</span> <span class="n">ASSET_BEHAVIOURS</span><span class="p">,</span>
-            <span class="s2">&quot;proof_mechanism&quot;</span><span class="p">:</span> <span class="n">ProofMechanism</span><span class="o">.</span><span class="n">SIMPLE_HASH</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
             <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;arc_display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Gringott&#39;s Vault 2&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arc_description&quot;</span><span class="p">:</span> <span class="s2">&quot;Main door to the second level security vault in Gringott&#39;s Wizarding Bank&quot;</span><span class="p">,</span>
@@ -442,7 +440,6 @@ DOOR: {
     &#34;owner&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
     &#34;at_time&#34;: &#34;2023-01-16T11:51:30Z&#34;,
     &#34;storage_integrity&#34;: &#34;TENANT_STORAGE&#34;,
-    &#34;proof_mechanism&#34;: &#34;SIMPLE_HASH&#34;,
     &#34;chain_id&#34;: &#34;827586838445807967&#34;,
     &#34;public&#34;: false,
     &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;
@@ -464,7 +461,6 @@ gringotts_vault {
     &#34;owner&#34;: &#34;0xe889E67FdBa658C6f27ccBDa98D9d1B5500Dbbce&#34;,
     &#34;at_time&#34;: &#34;2023-01-16T11:51:30Z&#34;,
     &#34;storage_integrity&#34;: &#34;TENANT_STORAGE&#34;,
-    &#34;proof_mechanism&#34;: &#34;SIMPLE_HASH&#34;,
     &#34;chain_id&#34;: &#34;827586838445807967&#34;,
     &#34;public&#34;: false,
     &#34;tenant_identity&#34;: &#34;tenant/9bfb80ee-81f6-40dc-b5c7-1c7fb2fb9866&#34;

@@ -50,7 +50,6 @@
     "from dotenv import load_dotenv\n",
     "\n",
     "from archivist.archivist import Archivist\n",
-    "from archivist.proof_mechanism import ProofMechanism\n",
     "from archivist.logger import set_logger\n",
     "from archivist.constants import ASSET_BEHAVIOURS"
    ]
