@@ -14,19 +14,7 @@ class TestProofMechanism(TestCase):
     Test proof mechanism for archivist
     """
 
-    def test_proof_mechanism_simple_hash(self):
-        """
-        Test proof_mechanism
-        """
-        self.assertEqual(ProofMechanism.SIMPLE_HASH.value, 2, msg="Incorrect value")
-
-        self.assertEqual(
-            ProofMechanism.SIMPLE_HASH.name,
-            "SIMPLE_HASH",
-            msg="Incorrect value",
-        )
-
-    def test_proof_mechanism_metkle_log(self):
+    def test_proof_mechanism_merkle_log(self):
         """
         Test proof_mechanism
         """
@@ -38,14 +26,26 @@ class TestProofMechanism(TestCase):
             msg="Incorrect value",
         )
 
-    def test_proof_mechanism_reserved(self):
+    def test_proof_mechanism_reserved1(self):
         """
         Test proof_mechanism
         """
         with self.assertRaises(AttributeError):
-            self.assertEqual(ProofMechanism.__RESERVED.value, 1, msg="Incorrect value")
+            self.assertEqual(ProofMechanism.__RESERVED1.value, 1, msg="Incorrect value")
 
         with self.assertRaises(AttributeError):
             self.assertEqual(
-                ProofMechanism.__RESERVED.name, "__RESERVED", msg="Incorrect value"
+                ProofMechanism.__RESERVED1.name, "__RESERVED1", msg="Incorrect value"
+            )
+
+    def test_proof_mechanism_reserved2(self):
+        """
+        Test proof_mechanism
+        """
+        with self.assertRaises(AttributeError):
+            self.assertEqual(ProofMechanism.__RESERVED2.value, 2, msg="Incorrect value")
+
+        with self.assertRaises(AttributeError):
+            self.assertEqual(
+                ProofMechanism.__RESERVED2.name, "__RESERVED2", msg="Incorrect value"
             )

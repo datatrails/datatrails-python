@@ -43,7 +43,6 @@ ARTIST_RESPONSE = {
     "owner": "0x5284e740A744F075E402f7fB0c4485532ddf4Af8",
     "at_time": "2023-01-06T17:41:26Z",
     "storage_integrity": "TENANT_STORAGE",
-    "proof_mechanism": "SIMPLE_HASH",
     "chain_id": "8275868384",
     "public": False,
     "tenant_identity": "tenant/0a62f7c9-fd7b-4791-8041-01218d839ec1",

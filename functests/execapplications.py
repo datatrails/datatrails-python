@@ -12,7 +12,6 @@ from uuid import uuid4
 from archivist import logger
 from archivist.archivist import Archivist
 from archivist.errors import ArchivistUnauthenticatedError
-from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
 from .constants import TestCase
@@ -237,18 +236,10 @@ class TestApplications(TestCase):
             traffic_light = deepcopy(ATTRS)
             traffic_light["arc_display_type"] = "Traffic light with violation camera"
             asset = new_arch.assets.create(
-                props={
-                    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
-                },
                 attrs=traffic_light,
                 confirm=True,
             )
             LOGGER.debug("create asset %s", json_dumps(asset, indent=4))
-            self.assertEqual(
-                asset["proof_mechanism"],
-                ProofMechanism.SIMPLE_HASH.name,
-                msg="Incorrect asset proof mechanism",
-            )
             identity = asset["identity"]
             props = {
                 "operation": "Record",

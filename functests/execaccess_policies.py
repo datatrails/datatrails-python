@@ -12,7 +12,6 @@ from uuid import uuid4
 from archivist import logger
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
-from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
 from .constants import TestCase
@@ -76,7 +75,6 @@ REQUEST_EXISTS_ATTACHMENTS = {
         },
     ],
     "behaviours": ASSET_BEHAVIOURS,
-    "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
     "attributes": {
         "arc_display_name": ASSET_NAME,
         "arc_namespace": "namespace",

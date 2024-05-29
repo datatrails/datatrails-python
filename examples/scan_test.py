@@ -10,7 +10,6 @@ from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
-from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
 filterwarnings("ignore", message="Unverified HTTPS request")
@@ -50,7 +49,6 @@ def scan_test(arch, datestring, scanned_expected=False):
                 },
             ],
             "behaviours": ASSET_BEHAVIOURS,
-            "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
             "attributes": {
                 "arc_display_name": asset_name,
                 "arc_namespace": "namespace",

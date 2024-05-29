@@ -11,7 +11,6 @@ from warnings import filterwarnings
 
 from archivist.archivist import Archivist
 from archivist.logger import set_logger
-from archivist.proof_mechanism import ProofMechanism
 from archivist.utils import get_auth
 
 filterwarnings("ignore", message="Unverified HTTPS request")
@@ -44,14 +43,9 @@ def create_asset(arch):
         # it does not start with arc_
     }
     #
-    # Select the mechanism used to prove evidence for the asset.  If the selected proof
-    # mechanism is not enabled for your tenant then an error will occur.
-    # If unspecified then SIMPLE_HASH is used.
-    #
     # Optionally one can create a publicasset by specifying public as True
     # If unspecified a private asset wll be created.
     props = {
-        "proof_mechanism": ProofMechanism.SIMPLE_HASH.name,
         "public": True,
     }
 
@@ -59,7 +53,7 @@ def create_asset(arch):
     # The second argument are the attributes of the asset
     # The third argument is wait for confirmation:
     #   If @confirm@ is True then this function will not
-    #   return until the asset is confirmed on the blockchain and ready
+    #   return until the asset is confirmed and ready
     #   to accept events (or an error occurs)
     #
     return arch.assets.create(props=props, attrs=attrs, confirm=True)
@@ -101,9 +95,8 @@ def main():
     )
 
     # Initialize connection to Archivist. max_time is the time to wait for confirmation
-    # of an asset or event creation - the default is 1200 seconds but one can optionally
-    # specify a different value here particularly when creating assets on SIMPLE_HASH
-    # as confirmation times are much shorter in this case.
+    # of an asset or event creation - the default is 300 seconds but one can optionally
+    # specify a different value.
     with Archivist(
         "https://app.datatrails.ai",
         auth,
