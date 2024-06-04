@@ -19,7 +19,11 @@ from archivist.compliance_policy_requests import (
 from archivist.compliance_policy_type import CompliancePolicyType
 from archivist.utils import get_auth
 
-from .constants import TestCase
+from .constants import (
+    PARTNER_ID_VALUE,
+    USER_AGENT_VALUE,
+    TestCase,
+)
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -99,7 +103,12 @@ class TestCompliancePoliciesBase(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            partner_id=PARTNER_ID_VALUE,
+            user_agent=USER_AGENT_VALUE,
+        )
         self.identities = []
 
     def tearDown(self):

@@ -6,12 +6,15 @@ from logging import getLogger
 from os import environ
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     COMPLIANCE_LABEL,
     COMPLIANCE_POLICIES_LABEL,
     COMPLIANCE_SUBPATH,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.logger import set_logger
 
@@ -131,6 +134,7 @@ class TestCompliance(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": None,
                         },

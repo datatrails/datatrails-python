@@ -14,7 +14,11 @@ from archivist.archivist import Archivist
 from archivist.constants import ASSET_BEHAVIOURS
 from archivist.utils import get_auth
 
-from .constants import TestCase
+from .constants import (
+    PARTNER_ID_VALUE,
+    USER_AGENT_VALUE,
+    TestCase,
+)
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -117,7 +121,12 @@ class TestAccessPoliciesBase(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            partner_id=PARTNER_ID_VALUE,
+            user_agent=USER_AGENT_VALUE,
+        )
 
         # these are for access_policies
         self.ac_props = deepcopy(PROPS)
@@ -298,8 +307,12 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         super().setUp()
         with open(getenv("DATATRAILS_AUTHTOKEN_FILENAME_2"), encoding="utf-8") as fd:
             auth_2 = fd.read().strip()
-        self.arch_2 = Archivist(getenv("DATATRAILS_URL"), auth_2)
-
+        self.arch_2 = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth_2,
+            partner_id=PARTNER_ID_VALUE,
+            user_agent=USER_AGENT_VALUE,
+        )
         # creates reciprocal subjects for arch 1 and arch 2.
         # subject 1 contains details of subject 2 to be shared
         self.subject_1, self.subject_2 = self.arch.subjects.share(

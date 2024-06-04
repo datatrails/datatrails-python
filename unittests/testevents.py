@@ -4,11 +4,14 @@ Test events
 
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     EVENTS_LABEL,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.events import Event
 
@@ -111,6 +114,7 @@ class TestEventsRead(TestEventsBase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": None,
                     },

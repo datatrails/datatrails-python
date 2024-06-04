@@ -6,6 +6,7 @@ from logging import getLogger
 from os import environ
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivistpublic import ArchivistPublic
 from archivist.constants import (
     EVENTS_LABEL,
@@ -13,6 +14,8 @@ from archivist.constants import (
     HEADERS_TOTAL_COUNT,
     PUBLICASSETS_LABEL,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.logger import set_logger
 
@@ -82,7 +85,9 @@ class TestPublicEvents(TestCase):
                         ),
                     ),
                     {
-                        "headers": {},
+                        "headers": {
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                        },
                         "params": None,
                     },
                 ),
@@ -113,7 +118,9 @@ class TestPublicEvents(TestCase):
                         ),
                     ),
                     {
-                        "headers": {},
+                        "headers": {
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                        },
                         "params": None,
                     },
                 ),
@@ -161,6 +168,7 @@ class TestPublicEvents(TestCase):
                     {
                         "headers": {
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "asset_attributes.external_container": "assets/xxxx",
@@ -208,6 +216,7 @@ class TestPublicEvents(TestCase):
                     {
                         "headers": {
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "asset_attributes.external_container": "assets/xxxx",
@@ -256,7 +265,9 @@ class TestPublicEvents(TestCase):
                             ),
                         ),
                         {
-                            "headers": {},
+                            "headers": {
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                            },
                             "params": {},
                         },
                     ),
@@ -300,7 +311,9 @@ class TestPublicEvents(TestCase):
                             ),
                         ),
                         {
-                            "headers": {},
+                            "headers": {
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                            },
                             "params": {},
                         },
                     ),
@@ -337,7 +350,9 @@ class TestPublicEvents(TestCase):
                         ),
                     ),
                     {
-                        "headers": {},
+                        "headers": {
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                        },
                         "params": {"page_size": 2},
                     },
                 ),

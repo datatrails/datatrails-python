@@ -13,7 +13,11 @@ from archivist import logger
 from archivist.archivist import Archivist
 from archivist.utils import get_auth
 
-from .constants import TestCase
+from .constants import (
+    PARTNER_ID_VALUE,
+    USER_AGENT_VALUE,
+    TestCase,
+)
 
 if getenv("DATATRAILS_LOGLEVEL") is not None:
     logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
@@ -61,7 +65,12 @@ class TestSubjects(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            partner_id=PARTNER_ID_VALUE,
+            user_agent=USER_AGENT_VALUE,
+        )
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def tearDown(self):

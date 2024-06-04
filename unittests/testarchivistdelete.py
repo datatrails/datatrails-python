@@ -4,8 +4,13 @@ Test archivist delete
 
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
-from archivist.constants import HEADERS_RETRY_AFTER
+from archivist.constants import (
+    HEADERS_RETRY_AFTER,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
+)
 from archivist.errors import (
     ArchivistNotFoundError,
     ArchivistTooManyRequestsError,
@@ -49,6 +54,7 @@ class TestArchivistDelete(TestArchivistMethods):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                     },
                 ),
@@ -72,7 +78,10 @@ class TestArchivistDelete(TestArchivistMethods):
             mock_delete.return_value = MockResponse(200)
             self.arch.delete(
                 "path/path/id/xxxxxxxx",
-                headers={"headerfield1": "headervalue1"},
+                headers={
+                    "headerfield1": "headervalue1",
+                    USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                },
             )
             self.assertEqual(
                 tuple(mock_delete.call_args),
@@ -82,6 +91,7 @@ class TestArchivistDelete(TestArchivistMethods):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             "headerfield1": "headervalue1",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                     },
                 ),
@@ -97,7 +107,10 @@ class TestArchivistDelete(TestArchivistMethods):
             with self.assertRaises(ArchivistTooManyRequestsError):
                 self.arch.delete(
                     "path/path/id/xxxxxxxx",
-                    headers={"headerfield1": "headervalue1"},
+                    headers={
+                        "headerfield1": "headervalue1",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                    },
                 )
 
     def test_delete_with_429_retry_and_fail(self):
@@ -144,6 +157,7 @@ class TestArchivistDelete(TestArchivistMethods):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                     },
                 ),

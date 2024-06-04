@@ -5,6 +5,7 @@ Test restricted asset attachments
 from io import BytesIO
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     ASSETATTACHMENTS_LABEL,
@@ -12,6 +13,8 @@ from archivist.constants import (
     ASSETS_LABEL,
     ATTACHMENTS_LABEL,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 
 from .mock_response import MockResponse
@@ -134,6 +137,7 @@ class TestAssetAttachmentsDownload(TestAssetAttachmentsBase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": expected_params,
                         "stream": True,
@@ -203,6 +207,7 @@ class TestAssetAttachmentsInfo(TestAssetAttachmentsBase):
                 {
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                     "params": None,
                 },

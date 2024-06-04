@@ -129,6 +129,15 @@ def common_parser(description: str):
         default=None,
         help="namespace of item population",
     )
+    parser.add_argument(
+        "-p",
+        "--partner_id",
+        type=str,
+        dest="partner_id",
+        action="store",
+        default=None,
+        help="partner id",
+    )
 
     return parser
 
@@ -171,7 +180,12 @@ def endpoint(args):
         LOGGER.error("Critical error.  Aborting.")
         sys_exit(1)
 
-    arch = Archivist(args.url, auth, fixtures=fixtures)
+    arch = Archivist(
+        args.url,
+        auth,
+        fixtures=fixtures,
+        partner_id=args.partner_id,
+    )
     if arch is None:
         LOGGER.error("Critical error.  Aborting.")
         sys_exit(1)

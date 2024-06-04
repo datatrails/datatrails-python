@@ -4,6 +4,7 @@ Test events count
 
 from unittest import mock
 
+from archivist.about import __version__ as VERSION
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
@@ -12,6 +13,8 @@ from archivist.constants import (
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 
 from .mock_response import MockResponse
@@ -65,6 +68,7 @@ class TestEventsCount(TestEventsBase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 1},
                     },
@@ -105,6 +109,7 @@ class TestEventsCount(TestEventsBase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 1, "confirmation_status": "CONFIRMED"},
                     },
@@ -143,6 +148,7 @@ class TestEventsCount(TestEventsBase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "page_size": 1,
@@ -183,6 +189,7 @@ class TestEventsCount(TestEventsBase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "page_size": 1,

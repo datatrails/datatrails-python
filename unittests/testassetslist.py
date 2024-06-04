@@ -6,8 +6,11 @@ from logging import getLogger
 from os import environ
 from unittest import mock
 
+from archivist.about import __version__ as VERSION
 from archivist.constants import (
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.logger import set_logger
 
@@ -66,6 +69,7 @@ class TestAssetsList(TestAssetsBase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {},
                         },
@@ -113,6 +117,7 @@ class TestAssetsList(TestAssetsBase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {
                                 "confirmation_status": "CONFIRMED",
@@ -149,6 +154,7 @@ class TestAssetsList(TestAssetsBase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 2},
                     },

@@ -4,6 +4,7 @@ Test events wait
 
 from unittest import mock
 
+from archivist.about import __version__ as VERSION
 from archivist.constants import (
     ASSETS_SUBPATH,
     ASSETS_WILDCARD,
@@ -11,6 +12,8 @@ from archivist.constants import (
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.errors import (
     ArchivistNotFoundError,
@@ -86,6 +89,7 @@ class TestEventsWait(TestEventsBase):
                             "headers": {
                                 "authorization": "Bearer authauthauth",
                                 HEADERS_REQUEST_TOTAL_COUNT: "true",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": status[i],
                         },
