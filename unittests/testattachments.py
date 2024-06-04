@@ -5,11 +5,14 @@ Test attachments
 from io import BytesIO
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     ATTACHMENTS_LABEL,
     ATTACHMENTS_SUBPATH,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 
 from .mock_response import MockResponse
@@ -301,6 +304,7 @@ class TestAttachmentsDownload(TestAttachmentsBase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": expected_params,
                         "stream": True,
@@ -370,6 +374,7 @@ class TestAttachmentsInfo(TestAttachmentsBase):
                 {
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                     "params": None,
                 },

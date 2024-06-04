@@ -6,12 +6,15 @@ from logging import getLogger
 from os import environ
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     ROOT,
     TENANCIES_LABEL,
     TENANCIES_PREFIX,
     TENANCIES_SUBPATH,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.logger import set_logger
 
@@ -84,6 +87,7 @@ class TestTenanciesRead(TestTenanciesBase):
                     "params": None,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="GET method kwargs called incorrectly",
@@ -114,6 +118,7 @@ class TestTenanciesRead(TestTenanciesBase):
                     "params": None,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="GET method kwargs called incorrectly",

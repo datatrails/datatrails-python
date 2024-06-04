@@ -5,6 +5,11 @@ Test archivist signature
 from os import environ
 from unittest import mock
 
+from archivist.about import __version__ as VERSION
+from archivist.constants import (
+    USER_AGENT,
+    USER_AGENT_PREFIX,
+)
 from archivist.errors import (
     ArchivistBadFieldError,
     ArchivistDuplicateError,
@@ -50,6 +55,7 @@ class TestArchivistSignature(TestArchivistMethods):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {"field1": "value1", "page_size": 2},
                         },

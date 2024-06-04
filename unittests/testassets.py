@@ -2,15 +2,18 @@
 Test assets
 """
 
-from copy import copy
+from copy import copy, deepcopy
 from logging import getLogger
 from os import environ
 from unittest import mock
 
+from archivist.about import __version__ as VERSION
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.errors import ArchivistNotFoundError, ArchivistUnconfirmedError
 from archivist.logger import set_logger
@@ -93,9 +96,11 @@ class TestAssetsCreate(TestAssetsBase):
                 (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
                 msg="CREATE method args called incorrectly",
             )
+            req_kwargs = deepcopy(REQUEST_KWARGS)
+            req_kwargs["headers"][USER_AGENT] = f"{USER_AGENT_PREFIX}{VERSION}"
             self.assertEqual(
                 kwargs,
-                REQUEST_KWARGS,
+                req_kwargs,
                 msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
@@ -130,9 +135,11 @@ class TestAssetsCreate(TestAssetsBase):
                 (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
                 msg="CREATE method args called incorrectly",
             )
+            req_kwargs = deepcopy(REQUEST_KWARGS_MERKLE_LOG)
+            req_kwargs["headers"][USER_AGENT] = f"{USER_AGENT_PREFIX}{VERSION}"
             self.assertEqual(
                 kwargs,
-                REQUEST_KWARGS_MERKLE_LOG,
+                req_kwargs,
                 msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
@@ -166,9 +173,11 @@ class TestAssetsCreate(TestAssetsBase):
                 (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
                 msg="CREATE method args called incorrectly",
             )
+            req_kwargs = deepcopy(REQUEST_FIXTURES_KWARGS)
+            req_kwargs["headers"][USER_AGENT] = f"{USER_AGENT_PREFIX}{VERSION}"
             self.assertEqual(
                 kwargs,
-                REQUEST_FIXTURES_KWARGS,
+                req_kwargs,
                 msg="CREATE method kwargs called incorrectly",
             )
             self.assertEqual(
@@ -342,6 +351,7 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "attributes.arc_namespace": "namespace",
@@ -399,6 +409,7 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
                 (f"url/{ROOT}/{ASSETS_SUBPATH}/{ASSETS_LABEL}",),
                 msg="CREATE method args called incorrectly",
             )
+            req_kwargs["headers"][USER_AGENT] = f"{USER_AGENT_PREFIX}{VERSION}"
             self.assertEqual(
                 kwargs,
                 req_kwargs,

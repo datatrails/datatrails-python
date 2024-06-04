@@ -44,6 +44,7 @@ SUBJECT_STRING = (
     "0aW9uX3N0YXR1cyI6ICJDT05GSVJNQVRJT05fU1RBVFVTX1VOU1BFQ0lGSU"
     "VEIn0="
 )
+PARTNER_IDENTIFIER = "datatrails/1234567890"
 
 
 class TestSubjects(TestCase):
@@ -61,7 +62,11 @@ class TestSubjects(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            partner_id=PARTNER_IDENTIFIER,
+        )
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def tearDown(self):

@@ -16,6 +16,8 @@ from archivist.archivist import Archivist
 
 from .constants import TestCase
 
+PARTNER_IDENTIFIER = "datatrails/1234567890"
+
 if getenv("DATATRAILS_LOGLEVEL") is not None:
     logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
 
@@ -37,7 +39,11 @@ class TestNotebooks(TestCase):
         self.client_id = getenv("DATATRAILS_APPREG_CLIENT")
         self.client_secret = getenv("DATATRAILS_APPREG_SECRET")
         self.url = getenv("DATATRAILS_URL")
-        self.arch = Archivist(self.url, (self.client_id, self.client_secret))
+        self.arch = Archivist(
+            self.url,
+            (self.client_id, self.client_secret),
+            partner_id=PARTNER_IDENTIFIER,
+        )
 
     def tearDown(self):
         self.arch.close()

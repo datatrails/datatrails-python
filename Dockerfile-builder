@@ -7,7 +7,7 @@ FROM python:${VERSION}-bookworm
 #      .github/workflows/python-package.yml
 #      .github/workflows/python-publish.yml
 #
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN curl -fsSOL https://taskfile.dev/install.sh \
   && sh install.sh \

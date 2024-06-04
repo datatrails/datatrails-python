@@ -16,6 +16,8 @@ from archivist.utils import get_auth, get_url
 
 from .constants import TestCase
 
+PARTNER_IDENTIFIER = "datatrails/1234567890"
+
 if getenv("DATATRAILS_LOGLEVEL") is not None:
     logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
 
@@ -46,7 +48,11 @@ class TestAttachmentsCreate(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            partner_id=PARTNER_IDENTIFIER,
+        )
         self.file_uuid: str = ""
 
         with suppress(FileNotFoundError):
@@ -208,7 +214,11 @@ class TestAttachmentstMalware(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            partner_id=PARTNER_IDENTIFIER,
+        )
 
     def tearDown(self):
         self.arch.close()

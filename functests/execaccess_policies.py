@@ -95,6 +95,7 @@ REQUEST_EXISTS_ATTACHMENTS = {
         },
     ],
 }
+PARTNER_IDENTIFIER = "datatrails/1234567890"
 
 if getenv("DATATRAILS_LOGLEVEL") is not None:
     logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
@@ -117,7 +118,11 @@ class TestAccessPoliciesBase(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            partner_id=PARTNER_IDENTIFIER,
+        )
 
         # these are for access_policies
         self.ac_props = deepcopy(PROPS)
@@ -298,8 +303,11 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         super().setUp()
         with open(getenv("DATATRAILS_AUTHTOKEN_FILENAME_2"), encoding="utf-8") as fd:
             auth_2 = fd.read().strip()
-        self.arch_2 = Archivist(getenv("DATATRAILS_URL"), auth_2)
-
+        self.arch_2 = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth_2,
+            partner_id=PARTNER_IDENTIFIER,
+        )
         # creates reciprocal subjects for arch 1 and arch 2.
         # subject 1 contains details of subject 2 to be shared
         self.subject_1, self.subject_2 = self.arch.subjects.share(
