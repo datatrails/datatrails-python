@@ -17,6 +17,6 @@ class ProofMechanism(Enum):
 
     # previously used but now removed
     __RESERVED1 = 1
-    __RESERVED2 = 2
+    SIMPLE_HASH = 2
     #: Assets and events are proven using a merkle log hash of the originator's evidence
     MERKLE_LOG = 3
