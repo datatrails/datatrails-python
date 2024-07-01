@@ -38,14 +38,14 @@ class TestProofMechanism(TestCase):
                 ProofMechanism.__RESERVED1.name, "__RESERVED1", msg="Incorrect value"
             )
 
-    def test_proof_mechanism_reserved2(self):
+    def test_proof_mechanism_simple_hash(self):
         """
         Test proof_mechanism
         """
-        with self.assertRaises(AttributeError):
-            self.assertEqual(ProofMechanism.__RESERVED2.value, 2, msg="Incorrect value")
+        self.assertEqual(ProofMechanism.SIMPLE_HASH.value, 2, msg="Incorrect value")
 
-        with self.assertRaises(AttributeError):
-            self.assertEqual(
-                ProofMechanism.__RESERVED2.name, "__RESERVED2", msg="Incorrect value"
-            )
+        self.assertEqual(
+            ProofMechanism.SIMPLE_HASH.name,
+            "SIMPLE_HASH",
+            msg="Incorrect value",
+        )
