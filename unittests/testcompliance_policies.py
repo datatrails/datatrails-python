@@ -4,6 +4,7 @@ Test compliance policies
 
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.compliance_policies import (
     CompliancePolicy,
@@ -17,6 +18,8 @@ from archivist.constants import (
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.errors import ArchivistBadRequestError
 
@@ -123,6 +126,7 @@ class TestCompliancePolicies(TestCase):
                     "json": SINCE_REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -148,6 +152,7 @@ class TestCompliancePolicies(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": None,
                     },
@@ -170,6 +175,7 @@ class TestCompliancePolicies(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                     },
                 ),
@@ -207,6 +213,7 @@ class TestCompliancePolicies(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 1},
                     },
@@ -243,6 +250,7 @@ class TestCompliancePolicies(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 1, "compliance_type": "SINCE"},
                     },
@@ -283,6 +291,7 @@ class TestCompliancePolicies(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {},
                         },
@@ -327,6 +336,7 @@ class TestCompliancePolicies(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {"compliance_type": "SINCE"},
                         },
@@ -360,6 +370,7 @@ class TestCompliancePolicies(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 2},
                     },

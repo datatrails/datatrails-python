@@ -82,6 +82,7 @@ RICHNESS_POLICY = CompliancePolicyRichness(
         ["rad<7"],
     ],
 )
+PARTNER_IDENTIFIER = "datatrails/1234567890"
 
 
 class TestCompliancePoliciesBase(TestCase):
@@ -99,7 +100,11 @@ class TestCompliancePoliciesBase(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            partner_id=PARTNER_IDENTIFIER,
+        )
         self.identities = []
 
     def tearDown(self):

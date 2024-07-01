@@ -66,6 +66,7 @@ REQUEST_EXISTS_ATTACHMENTS = {
     ],
     "public": True,
 }
+PARTNER_IDENTIFIER = "datatrails/1234567890"
 
 
 class TestPublicAssetCreate(TestCase):
@@ -84,7 +85,12 @@ class TestPublicAssetCreate(TestCase):
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
         self.url = getenv("DATATRAILS_URL")
-        self.arch = Archivist(self.url, auth, max_time=600)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            max_time=30,
+            partner_id=PARTNER_IDENTIFIER,
+        )
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"

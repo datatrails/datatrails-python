@@ -70,6 +70,7 @@ REQUEST_EXISTS_ATTACHMENTS = {
         },
     ],
 }
+PARTNER_IDENTIFIER = "datatrails/1234567890"
 
 
 class TestAssetCreate(TestCase):
@@ -87,7 +88,12 @@ class TestAssetCreate(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth, max_time=30)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            max_time=30,
+            partner_id=PARTNER_IDENTIFIER,
+        )
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
@@ -233,7 +239,12 @@ class TestAssetCreateIfNotExists(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth, max_time=600)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            max_time=30,
+            partner_id=PARTNER_IDENTIFIER,
+        )
 
     def tearDown(self):
         self.arch.close()

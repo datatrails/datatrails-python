@@ -4,12 +4,15 @@ Test events list
 
 from unittest import mock
 
+from archivist.about import __version__ as VERSION
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     ASSETS_WILDCARD,
     EVENTS_LABEL,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 
 from .mock_response import MockResponse
@@ -69,6 +72,7 @@ class TestEventsList(TestEventsBase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {},
                         },
@@ -123,6 +127,7 @@ class TestEventsList(TestEventsBase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {
                                 "confirmation_status": "CONFIRMED",
@@ -179,6 +184,7 @@ class TestEventsList(TestEventsBase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {
                                 "confirmation_status": "CONFIRMED",
@@ -221,6 +227,7 @@ class TestEventsList(TestEventsBase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 2},
                     },

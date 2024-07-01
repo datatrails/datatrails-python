@@ -18,6 +18,7 @@ from .constants import TestCase
 # pylint: disable=missing-docstring
 # pylint: disable=unused-variable
 
+PARTNER_IDENTIFIER = "datatrails/1234567890"
 
 if getenv("DATATRAILS_LOGLEVEL") is not None:
     logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
@@ -40,7 +41,12 @@ class TestRunner(TestCase):
             client_secret=getenv("DATATRAILS_APPREG_SECRET"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
-        self.arch = Archivist(getenv("DATATRAILS_URL"), auth, max_time=300)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            max_time=30,
+            partner_id=PARTNER_IDENTIFIER,
+        )
 
     def tearDown(self):
         self.arch.close()

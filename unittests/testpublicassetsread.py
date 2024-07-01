@@ -6,8 +6,11 @@ from logging import getLogger
 from os import environ
 from unittest import mock
 
+from archivist.about import __version__ as VERSION
 from archivist.constants import (
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.logger import set_logger
 
@@ -64,7 +67,9 @@ class TestPublicAssetsRead(TestPublicAssetsBase):
             self.assertEqual(
                 kwargs,
                 {
-                    "headers": {},
+                    "headers": {
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                    },
                     "params": None,
                 },
                 msg="GET method kwargs called incorrectly",

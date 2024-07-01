@@ -75,7 +75,7 @@ def main():
     create an example archivist connection and create an asset.
 
     """
-    # optional call to set the logger level for all subsystems. The argumant can
+    # optional call to set the logger level for all subsystems. The argument can
     # be either "INFO" or "DEBUG". For more sophisticated logging control see the
     # documentation.
     set_logger("INFO")
@@ -97,10 +97,14 @@ def main():
     # Initialize connection to Archivist. max_time is the time to wait for confirmation
     # of an asset or event creation - the default is 300 seconds but one can optionally
     # specify a different value.
+    # The optional partner id field is allocated by Datatrails to partners - partners are then
+    # expected to specify this value when submitting any request to the archivist product.
+    # Leave blank if if you do not have a partner ID.
     with Archivist(
         "https://app.datatrails.ai",
         auth,
         max_time=300,
+        partner_id="acme/f7a6beef-f01c-4b39-a494-3fa6b45d6bf4",
     ) as arch:
         # Create a new asset
         asset = create_asset(arch)

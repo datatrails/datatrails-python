@@ -7,6 +7,7 @@ from logging import getLogger
 from os import environ
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivistpublic import ArchivistPublic
 from archivist.constants import (
     ASSETATTACHMENTS_LABEL,
@@ -14,6 +15,8 @@ from archivist.constants import (
     ASSETS_LABEL,
     ATTACHMENTS_LABEL,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.logger import set_logger
 
@@ -142,7 +145,9 @@ class TestPublicAssetAttachmentsDownload(TestPublicAssetAttachmentsBase):
                 self.assertEqual(
                     kwargs,
                     {
-                        "headers": {},
+                        "headers": {
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                        },
                         "params": expected_params,
                         "stream": True,
                     },
@@ -209,7 +214,9 @@ class TestPublicAssetAttachmentsInfo(TestPublicAssetAttachmentsBase):
             self.assertEqual(
                 kwargs,
                 {
-                    "headers": {},
+                    "headers": {
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                    },
                     "params": None,
                 },
                 msg="INFO method called incorrectly",

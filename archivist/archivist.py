@@ -108,11 +108,15 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         fixtures: "dict[str,dict[Any,Any]]|None" = None,
         verify: bool = True,
         max_time: float = MAX_TIME,
+        partner_id: str = "",
+        user_agent: str = "",
     ):
         super().__init__(
             fixtures=fixtures,
             verify=verify,
             max_time=max_time,
+            partner_id=partner_id,
+            user_agent=user_agent,
         )
 
         if isinstance(auth, tuple):
@@ -214,10 +218,12 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             fixtures=deepcopy(self._fixtures),
             verify=self._verify,
             max_time=self._max_time,
+            partner_id=self._partner_id,
+            user_agent=self._user_agent,
         )
 
     def _add_headers(self, headers: "dict[str,str]|None") -> "dict[str,Any]":
-        newheaders = {**headers} if isinstance(headers, dict) else {}
+        newheaders = super()._add_headers(headers)
 
         auth = self.auth  # this may trigger a refetch so only do it once here
         # for appidp endpoint there may not be an authtoken
