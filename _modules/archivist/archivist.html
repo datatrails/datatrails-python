@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.archivist &mdash; DATATRAILS v0.31.1 documentation</title>
+  <title>archivist.archivist &mdash; DATATRAILS v0.31.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=d96d1a81"></script>
+        <script src="../../_static/documentation_options.js?v=ee9590eb"></script>
         <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -37,7 +37,7 @@
               <img src="../../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.31.1
+                v0.31.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -195,11 +195,15 @@
         <span class="n">fixtures</span><span class="p">:</span> <span class="s2">&quot;dict[str,dict[Any,Any]]|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verify</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">max_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">MAX_TIME</span><span class="p">,</span>
+        <span class="n">partner_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">user_agent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">fixtures</span><span class="o">=</span><span class="n">fixtures</span><span class="p">,</span>
             <span class="n">verify</span><span class="o">=</span><span class="n">verify</span><span class="p">,</span>
             <span class="n">max_time</span><span class="o">=</span><span class="n">max_time</span><span class="p">,</span>
+            <span class="n">partner_id</span><span class="o">=</span><span class="n">partner_id</span><span class="p">,</span>
+            <span class="n">user_agent</span><span class="o">=</span><span class="n">user_agent</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
@@ -301,10 +305,12 @@
             <span class="n">fixtures</span><span class="o">=</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fixtures</span><span class="p">),</span>
             <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_verify</span><span class="p">,</span>
             <span class="n">max_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span><span class="p">,</span>
+            <span class="n">partner_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_partner_id</span><span class="p">,</span>
+            <span class="n">user_agent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_user_agent</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_add_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str,str]|None&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str,Any]&quot;</span><span class="p">:</span>
-        <span class="n">newheaders</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">headers</span><span class="p">}</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="n">newheaders</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
 
         <span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span>  <span class="c1"># this may trigger a refetch so only do it once here</span>
         <span class="c1"># for appidp endpoint there may not be an authtoken</span>

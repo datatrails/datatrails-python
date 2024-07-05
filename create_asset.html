@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Asset Example &mdash; DATATRAILS v0.31.1 documentation</title>
+  <title>Create Asset Example &mdash; DATATRAILS v0.31.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
@@ -16,7 +16,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d96d1a81"></script>
+        <script src="_static/documentation_options.js?v=ee9590eb"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -40,7 +40,7 @@
               <img src="_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.31.1
+                v0.31.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -183,7 +183,7 @@
 <span class="sd">    create an example archivist connection and create an asset.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># optional call to set the logger level for all subsystems. The argumant can</span>
+    <span class="c1"># optional call to set the logger level for all subsystems. The argument can</span>
     <span class="c1"># be either &quot;INFO&quot; or &quot;DEBUG&quot;. For more sophisticated logging control see the</span>
     <span class="c1"># documentation.</span>
     <span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
@@ -205,10 +205,14 @@
     <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
     <span class="c1"># of an asset or event creation - the default is 300 seconds but one can optionally</span>
     <span class="c1"># specify a different value.</span>
+    <span class="c1"># The optional partner id field is allocated by Datatrails to partners - partners are then</span>
+    <span class="c1"># expected to specify this value when submitting any request to the archivist product.</span>
+    <span class="c1"># Leave blank if if you do not have a partner ID.</span>
     <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.datatrails.ai&quot;</span><span class="p">,</span>
         <span class="n">auth</span><span class="p">,</span>
         <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+        <span class="n">partner_id</span><span class="o">=</span><span class="s2">&quot;acme/f7a6beef-f01c-4b39-a494-3fa6b45d6bf4&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
         <span class="c1"># Create a new asset</span>
         <span class="n">asset</span> <span class="o">=</span> <span class="n">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
