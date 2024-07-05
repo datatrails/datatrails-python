@@ -14,7 +14,11 @@ from testbook import testbook
 from archivist import logger
 from archivist.archivist import Archivist
 
-from .constants import TestCase
+from .constants import (
+    PARTNER_ID_VALUE,
+    USER_AGENT_VALUE,
+    TestCase,
+)
 
 if getenv("DATATRAILS_LOGLEVEL") is not None:
     logger.set_logger(getenv("DATATRAILS_LOGLEVEL"))
@@ -37,7 +41,12 @@ class TestNotebooks(TestCase):
         self.client_id = getenv("DATATRAILS_APPREG_CLIENT")
         self.client_secret = getenv("DATATRAILS_APPREG_SECRET")
         self.url = getenv("DATATRAILS_URL")
-        self.arch = Archivist(self.url, (self.client_id, self.client_secret))
+        self.arch = Archivist(
+            self.url,
+            (self.client_id, self.client_secret),
+            partner_id=PARTNER_ID_VALUE,
+            user_agent=USER_AGENT_VALUE,
+        )
 
     def tearDown(self):
         self.arch.close()

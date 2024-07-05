@@ -33,12 +33,16 @@ if TYPE_CHECKING:
     from requests.models import Response
 
 
+from .about import __version__ as VERSION
 from .assetattachments import _AssetAttachmentsClient
 from .assets import _AssetsPublic
 from .confirmer import MAX_TIME
 from .constants import (
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
+    PARTNER_ID,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from .dictmerge import _deepmerge, _dotdict
 from .errors import (
@@ -82,12 +86,16 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         fixtures: "dict[str, Any]|None" = None,
         verify: bool = True,
         max_time: float = MAX_TIME,
+        partner_id: str = "",
+        user_agent: str = "",
     ):
         self._verify = verify
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
         self._session = None
         self._max_time = max_time
         self._fixtures = fixtures or {}
+        self._partner_id = partner_id
+        self._user_agent = user_agent
 
         # Type hints for IDE autocomplete, keep in sync with CLIENTS map above
         self.assets: _AssetsPublic
@@ -152,6 +160,21 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         return self._max_time
 
     @property
+    def version(self) -> str:
+        """str: Returns version of the archivist package"""
+        return VERSION
+
+    @property
+    def partner_id(self) -> str:
+        """str: Returns partner id if set when initialising an instance of this class"""
+        return self._partner_id
+
+    @property
+    def user_agent(self) -> str:
+        """str: Returns partner id if set when initialising an instance of this class"""
+        return self._user_agent
+
+    @property
     def fixtures(self) -> "dict[str, Any]":
         """dict: Contains predefined attributes for each endpoint"""
         return self._fixtures
@@ -170,6 +193,18 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
 
     def _add_headers(self, headers: "dict[str, str]|None") -> "dict[str, str]":
         newheaders = {**headers} if headers is not None else {}
+        u = self.user_agent
+        if u:
+            newheaders[USER_AGENT] = (
+                f"{self.user_agent} "
+                f"{USER_AGENT_PREFIX}{self.version}"
+            )
+        else:
+            newheaders[USER_AGENT] = f"{USER_AGENT_PREFIX}{self.version}"
+
+        p = self.partner_id
+        if p:
+            newheaders[PARTNER_ID] = p
 
         return newheaders
 

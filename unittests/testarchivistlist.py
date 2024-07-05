@@ -5,7 +5,13 @@ Test archivist list
 from os import environ
 from unittest import mock
 
-from archivist.constants import HEADERS_RETRY_AFTER, HEADERS_TOTAL_COUNT
+from archivist.about import __version__ as VERSION
+from archivist.constants import (
+    HEADERS_RETRY_AFTER,
+    HEADERS_TOTAL_COUNT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
+)
 from archivist.errors import (
     ArchivistBadFieldError,
     ArchivistBadRequestError,
@@ -56,6 +62,7 @@ class TestArchivistList(TestArchivistMethods):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": None,
                         },
@@ -112,7 +119,10 @@ class TestArchivistList(TestArchivistMethods):
                 self.arch.list(
                     "path/path",
                     "things",
-                    headers={"headerfield1": "headervalue1"},
+                    headers={
+                        "headerfield1": "headervalue1",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                    },
                 )
             )
             self.assertEqual(
@@ -129,6 +139,7 @@ class TestArchivistList(TestArchivistMethods):
                             "headers": {
                                 "authorization": "Bearer authauthauth",
                                 "headerfield1": "headervalue1",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": None,
                         },
@@ -169,6 +180,7 @@ class TestArchivistList(TestArchivistMethods):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {"paramsfield1": "paramsvalue1"},
                         },
@@ -213,6 +225,7 @@ class TestArchivistList(TestArchivistMethods):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {"page_size": 2},
                         },
@@ -279,6 +292,7 @@ class TestArchivistList(TestArchivistMethods):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": paging[i],
                         },
@@ -350,6 +364,7 @@ class TestArchivistList(TestArchivistMethods):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": paging[i],
                         },
@@ -431,6 +446,7 @@ class TestArchivistList(TestArchivistMethods):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": None,
                         },

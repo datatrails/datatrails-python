@@ -4,6 +4,7 @@ Test access policies
 
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     ACCESS_POLICIES_LABEL,
@@ -12,10 +13,17 @@ from archivist.constants import (
     ASSETS_LABEL,
     HEADERS_REQUEST_TOTAL_COUNT,
     HEADERS_TOTAL_COUNT,
+    PARTNER_ID,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.errors import ArchivistBadRequestError
 
+from .constants import (
+    PARTNER_ID_VALUE,
+    USER_AGENT_VALUE,
+)
 from .mock_response import MockResponse
 from .testassets import RESPONSE as ASSET
 
@@ -81,6 +89,67 @@ REQUEST = {
 }
 
 
+class TestAccessPoliciesPartnerID(TestCase):
+    """
+    Test Archivist AccessPolicies Create method
+    """
+
+    maxDiff = None
+
+    def setUp(self):
+        self.arch = Archivist(
+            "url",
+            "authauthauth",
+            partner_id=PARTNER_ID_VALUE,
+            user_agent=USER_AGENT_VALUE,
+        )
+
+    def tearDown(self):
+        self.arch.close()
+
+    def test_access_policies_create(self):
+        """
+        Test access_policy creation
+        """
+        with mock.patch.object(self.arch.session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, **RESPONSE)
+
+            access_policy = self.arch.access_policies.create(
+                PROPS, FILTERS, ACCESS_PERMISSIONS
+            )
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                (f"url/{ROOT}/{SUBPATH}",),
+                msg="CREATE method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "json": REQUEST,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                        USER_AGENT: (
+                            f"{USER_AGENT_VALUE} "
+                            f"{USER_AGENT_PREFIX}{VERSION}"
+                        ),
+                        PARTNER_ID: PARTNER_ID_VALUE,
+                    },
+                },
+                msg="CREATE method called incorrectly",
+            )
+            self.assertEqual(
+                access_policy,
+                RESPONSE,
+                msg="CREATE method called incorrectly",
+            )
+            self.assertEqual(
+                access_policy.name,
+                ACCESS_POLICY_NAME,
+                msg="Incorrect name property",
+            )
+
+
 class TestAccessPolicies(TestCase):
     """
     Test Archivist AccessPolicies Create method
@@ -126,6 +195,7 @@ class TestAccessPolicies(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method called incorrectly",
@@ -156,6 +226,7 @@ class TestAccessPolicies(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": None,
                     },
@@ -178,6 +249,7 @@ class TestAccessPolicies(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                     },
                 ),
@@ -207,6 +279,7 @@ class TestAccessPolicies(TestCase):
                     "json": PROPS,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="PATCH method kwargs called incorrectly",
@@ -243,6 +316,7 @@ class TestAccessPolicies(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 1},
                     },
@@ -279,6 +353,7 @@ class TestAccessPolicies(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "page_size": 1,
@@ -322,6 +397,7 @@ class TestAccessPolicies(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": None,
                         },
@@ -366,6 +442,7 @@ class TestAccessPolicies(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {"display_name": "Policy display name"},
                         },
@@ -411,6 +488,7 @@ class TestAccessPolicies(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": None,
                         },
@@ -453,6 +531,7 @@ class TestAccessPolicies(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": None,
                         },

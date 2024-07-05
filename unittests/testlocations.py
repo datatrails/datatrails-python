@@ -4,6 +4,7 @@ Test locations
 
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     HEADERS_REQUEST_TOTAL_COUNT,
@@ -11,6 +12,8 @@ from archivist.constants import (
     LOCATIONS_LABEL,
     LOCATIONS_SUBPATH,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.errors import ArchivistBadRequestError, ArchivistNotFoundError
 from archivist.locations import Location
@@ -188,6 +191,7 @@ class TestLocations(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -234,6 +238,7 @@ class TestLocations(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "page_size": 2,
@@ -281,6 +286,7 @@ class TestLocations(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -324,6 +330,7 @@ class TestLocations(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -344,6 +351,7 @@ class TestLocations(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": None,
                     },
@@ -382,6 +390,7 @@ class TestLocations(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 1},
                     },
@@ -418,6 +427,7 @@ class TestLocations(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "page_size": 1,
@@ -452,6 +462,7 @@ class TestLocations(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "page_size": 1,
@@ -495,6 +506,7 @@ class TestLocations(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {},
                         },
@@ -540,6 +552,7 @@ class TestLocations(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {
                                 "attributes.director": "John Smith",
@@ -576,6 +589,7 @@ class TestLocations(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 2},
                     },

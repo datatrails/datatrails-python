@@ -5,8 +5,13 @@ Test archivist post
 from io import BytesIO
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
-from archivist.constants import HEADERS_RETRY_AFTER
+from archivist.constants import (
+    HEADERS_RETRY_AFTER,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
+)
 from archivist.errors import (
     ArchivistBadRequestError,
     ArchivistTooManyRequestsError,
@@ -56,6 +61,7 @@ class TestArchivistPost(TestArchivistMethods):
                     "json": request,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="POST method kwargs called incorrectly",
@@ -133,6 +139,7 @@ class TestArchivistPost(TestArchivistMethods):
                     "json": request,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="POST method kwargs called incorrectly",
@@ -148,7 +155,10 @@ class TestArchivistPost(TestArchivistMethods):
             self.arch.post(
                 "path/path",
                 request,
-                headers={"headerfield1": "headervalue1"},
+                headers={
+                    "headerfield1": "headervalue1",
+                    USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                },
             )
             args, kwargs = mock_post.call_args
             self.assertEqual(
@@ -163,6 +173,7 @@ class TestArchivistPost(TestArchivistMethods):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="POST method kwargs called incorrectly",
@@ -453,7 +464,9 @@ class TestArchivistPostWithoutAuth(TestCase):
                 kwargs,
                 {
                     "json": request,
-                    "headers": {},
+                    "headers": {
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                    },
                 },
                 msg="POST method kwargs called incorrectly",
             )

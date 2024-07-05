@@ -6,8 +6,14 @@ from copy import copy
 from os import environ
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
-from archivist.constants import HEADERS_RETRY_AFTER, HEADERS_TOTAL_COUNT
+from archivist.constants import (
+    HEADERS_RETRY_AFTER,
+    HEADERS_TOTAL_COUNT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
+)
 from archivist.errors import (
     ArchivistBadRequestError,
     ArchivistError,
@@ -268,6 +274,7 @@ class TestArchivistPatch(TestArchivistMethods):
                     "json": request,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="POST method kwargs called incorrectly",
@@ -295,7 +302,10 @@ class TestArchivistPatch(TestArchivistMethods):
             self.arch.patch(
                 "path/path/entity/xxxx",
                 request,
-                headers={"headerfield1": "headervalue1"},
+                headers={
+                    "headerfield1": "headervalue1",
+                    USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                },
             )
             args, kwargs = mock_patch.call_args
             self.assertEqual(
@@ -310,6 +320,7 @@ class TestArchivistPatch(TestArchivistMethods):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                         "headerfield1": "headervalue1",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="PATCH method kwargs called incorrectly",
@@ -386,6 +397,7 @@ class TestArchivistPatch(TestArchivistMethods):
                     "json": request,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="PATCH method kwargs called incorrectly",

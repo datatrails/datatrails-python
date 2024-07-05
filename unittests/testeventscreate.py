@@ -4,11 +4,14 @@ Test events create
 
 from unittest import mock
 
+from archivist.about import __version__ as VERSION
 from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     EVENTS_LABEL,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.errors import (
     ArchivistUnconfirmedError,
@@ -90,6 +93,7 @@ class TestEventsCreate(TestEventsBase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -133,6 +137,7 @@ class TestEventsCreate(TestEventsBase):
                     "json": REQUEST_WITH_ATTACHMENTS,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -179,6 +184,7 @@ class TestEventsCreate(TestEventsBase):
                     "json": REQUEST_WITH_SBOMATTACHMENT,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -222,6 +228,7 @@ class TestEventsCreate(TestEventsBase):
                     "json": REQUEST_WITH_LOCATION,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -262,6 +269,7 @@ class TestEventsCreate(TestEventsBase):
                     "json": REQUEST_WITH_LOCATION,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -304,6 +312,7 @@ class TestEventsCreate(TestEventsBase):
                     "json": REQUEST_WITH_ASSET_ATTRS,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",

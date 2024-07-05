@@ -5,6 +5,7 @@ Test subjects
 from os import environ
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     HEADERS_REQUEST_TOTAL_COUNT,
@@ -12,6 +13,8 @@ from archivist.constants import (
     ROOT,
     SUBJECTS_LABEL,
     SUBJECTS_SUBPATH,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.errors import ArchivistBadRequestError, ArchivistUnconfirmedError
 from archivist.logger import set_logger
@@ -138,6 +141,7 @@ class TestSubjects(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -181,6 +185,7 @@ class TestSubjects(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -202,6 +207,7 @@ class TestSubjects(TestCase):
                     "json": REQUEST2,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -232,6 +238,7 @@ class TestSubjects(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -267,6 +274,7 @@ class TestSubjects(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -318,6 +326,7 @@ class TestSubjects(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": None,
                     },
@@ -340,6 +349,7 @@ class TestSubjects(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                     },
                 ),
@@ -369,6 +379,7 @@ class TestSubjects(TestCase):
                     "json": UPDATE,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="PATCH method kwargs called incorrectly",
@@ -405,6 +416,7 @@ class TestSubjects(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {"page_size": 1},
                     },
@@ -441,6 +453,7 @@ class TestSubjects(TestCase):
                         "headers": {
                             "authorization": "Bearer authauthauth",
                             HEADERS_REQUEST_TOTAL_COUNT: "true",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": {
                             "page_size": 1,
@@ -484,6 +497,7 @@ class TestSubjects(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {},
                         },
@@ -528,6 +542,7 @@ class TestSubjects(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {"display_name": "Subject display name"},
                         },

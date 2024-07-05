@@ -4,12 +4,15 @@ Test applications
 
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     APPLICATIONS_LABEL,
     APPLICATIONS_REGENERATE,
     APPLICATIONS_SUBPATH,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 from archivist.errors import ArchivistBadRequestError
 
@@ -94,6 +97,7 @@ class TestApplications(TestCase):
                     "json": REQUEST,
                     "headers": {
                         "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                     },
                 },
                 msg="CREATE method kwargs called incorrectly",
@@ -119,6 +123,7 @@ class TestApplications(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "params": None,
                     },
@@ -141,6 +146,7 @@ class TestApplications(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                     },
                 ),
@@ -166,6 +172,7 @@ class TestApplications(TestCase):
                         "json": UPDATE_DATA,
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                     },
                 ),
@@ -214,6 +221,7 @@ class TestApplications(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {},
                         },
@@ -258,6 +266,7 @@ class TestApplications(TestCase):
                         {
                             "headers": {
                                 "authorization": "Bearer authauthauth",
+                                USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                             },
                             "params": {
                                 "display_name": "Application display name",
@@ -287,6 +296,7 @@ class TestApplications(TestCase):
                     {
                         "headers": {
                             "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
                         },
                         "json": None,
                     },

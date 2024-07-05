@@ -13,7 +13,11 @@ from archivist.constants import ASSET_BEHAVIOURS
 from archivist.timestamp import now_timestamp
 from archivist.utils import get_auth
 
-from .constants import TestCase
+from .constants import (
+    PARTNER_ID_VALUE,
+    USER_AGENT_VALUE,
+    TestCase,
+)
 
 # pylint: disable=fixme
 # pylint: disable=missing-docstring
@@ -84,7 +88,13 @@ class TestPublicAssetCreate(TestCase):
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
         self.url = getenv("DATATRAILS_URL")
-        self.arch = Archivist(self.url, auth, max_time=600)
+        self.arch = Archivist(
+            getenv("DATATRAILS_URL"),
+            auth,
+            max_time=30,
+            partner_id=PARTNER_ID_VALUE,
+            user_agent=USER_AGENT_VALUE,
+        )
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
