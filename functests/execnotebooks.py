@@ -45,8 +45,8 @@ class TestNotebooks(TestCase):
             self.url,
             (self.client_id, self.client_secret),
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
 
     def tearDown(self):
         self.arch.close()

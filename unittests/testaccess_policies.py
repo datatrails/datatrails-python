@@ -101,8 +101,8 @@ class TestAccessPoliciesPartnerID(TestCase):
             "url",
             "authauthauth",
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
 
     def tearDown(self):
         self.arch.close()
@@ -130,8 +130,7 @@ class TestAccessPoliciesPartnerID(TestCase):
                     "headers": {
                         "authorization": "Bearer authauthauth",
                         USER_AGENT: (
-                            f"{USER_AGENT_VALUE} "
-                            f"{USER_AGENT_PREFIX}{VERSION}"
+                            f"{USER_AGENT_VALUE} " f"{USER_AGENT_PREFIX}{VERSION}"
                         ),
                         PARTNER_ID: PARTNER_ID_VALUE,
                     },

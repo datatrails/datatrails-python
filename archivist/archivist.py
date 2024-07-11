@@ -109,14 +109,12 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         verify: bool = True,
         max_time: float = MAX_TIME,
         partner_id: str = "",
-        user_agent: str = "",
     ):
         super().__init__(
             fixtures=fixtures,
             verify=verify,
             max_time=max_time,
             partner_id=partner_id,
-            user_agent=user_agent,
         )
 
         if isinstance(auth, tuple):
@@ -205,22 +203,26 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
     @property
     def Public(self) -> ArchivistPublic:  # pylint: disable=invalid-name
         """Get a Public instance"""
-        return ArchivistPublic(
+        arch = ArchivistPublic(
             fixtures=deepcopy(self._fixtures),
             verify=self._verify,
             max_time=self._max_time,
+            partner_id=self._partner_id,
         )
+        arch._user_agent = self._user_agent  # pylint: disable=protected-access
+        return arch
 
     def __copy__(self) -> "Archivist":
-        return Archivist(
+        arch = Archivist(
             self._url,
             self.auth,
             fixtures=deepcopy(self._fixtures),
             verify=self._verify,
             max_time=self._max_time,
             partner_id=self._partner_id,
-            user_agent=self._user_agent,
         )
+        arch._user_agent = self._user_agent
+        return arch
 
     def _add_headers(self, headers: "dict[str,str]|None") -> "dict[str,Any]":
         newheaders = super()._add_headers(headers)
