@@ -189,12 +189,14 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         self._fixtures = _deepmerge(self._fixtures, fixtures)
 
     def __copy__(self):
-        return ArchivistPublic(
+        arch = ArchivistPublic(
             fixtures=deepcopy(self._fixtures),
             verify=self._verify,
             max_time=self._max_time,
             partner_id=self.partner_id,
         )
+        arch._user_agent = self._user_agent
+        return arch
 
     def _add_headers(self, headers: "dict[str, str]|None") -> "dict[str, str]":
         newheaders = {**headers} if headers is not None else {}
