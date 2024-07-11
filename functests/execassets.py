@@ -96,8 +96,8 @@ class TestAssetCreate(TestCase):
             auth,
             max_time=30,
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
         self.attrs = deepcopy(ATTRS)
         self.traffic_light = deepcopy(ATTRS)
         self.traffic_light["arc_display_type"] = "Traffic light with violation camera"
@@ -248,8 +248,8 @@ class TestAssetCreateIfNotExists(TestCase):
             auth,
             max_time=30,
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
 
     def tearDown(self):
         self.arch.close()

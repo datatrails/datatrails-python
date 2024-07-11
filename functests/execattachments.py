@@ -54,8 +54,8 @@ class TestAttachmentsCreate(TestCase):
             getenv("DATATRAILS_URL"),
             auth,
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
         self.file_uuid: str = ""
 
         with suppress(FileNotFoundError):
@@ -221,8 +221,8 @@ class TestAttachmentstMalware(TestCase):
             getenv("DATATRAILS_URL"),
             auth,
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
 
     def tearDown(self):
         self.arch.close()

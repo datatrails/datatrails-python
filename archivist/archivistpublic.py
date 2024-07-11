@@ -87,7 +87,6 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         verify: bool = True,
         max_time: float = MAX_TIME,
         partner_id: str = "",
-        user_agent: str = "",
     ):
         self._verify = verify
         self._response_ring_buffer = deque(maxlen=self.RING_BUFFER_MAX_LEN)
@@ -95,7 +94,7 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         self._max_time = max_time
         self._fixtures = fixtures or {}
         self._partner_id = partner_id
-        self._user_agent = user_agent
+        self._user_agent = f"{USER_AGENT_PREFIX}{self.version}"
 
         # Type hints for IDE autocomplete, keep in sync with CLIENTS map above
         self.assets: _AssetsPublic
@@ -171,8 +170,13 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
 
     @property
     def user_agent(self) -> str:
-        """str: Returns partner id if set when initialising an instance of this class"""
+        """str: Returns user agent"""
         return self._user_agent
+
+    @user_agent.setter
+    def user_agent(self, value):
+        """str: Prepends user agent to user_agent property"""
+        self._user_agent = f"{value} {self.user_agent}"
 
     @property
     def fixtures(self) -> "dict[str, Any]":
@@ -189,18 +193,12 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
             fixtures=deepcopy(self._fixtures),
             verify=self._verify,
             max_time=self._max_time,
+            partner_id=self.partner_id,
         )
 
     def _add_headers(self, headers: "dict[str, str]|None") -> "dict[str, str]":
         newheaders = {**headers} if headers is not None else {}
-        u = self.user_agent
-        if u:
-            newheaders[USER_AGENT] = (
-                f"{self.user_agent} "
-                f"{USER_AGENT_PREFIX}{self.version}"
-            )
-        else:
-            newheaders[USER_AGENT] = f"{USER_AGENT_PREFIX}{self.version}"
+        newheaders[USER_AGENT] = self.user_agent
 
         p = self.partner_id
         if p:

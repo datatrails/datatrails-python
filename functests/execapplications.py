@@ -62,8 +62,8 @@ class TestApplications(TestCase):
             getenv("DATATRAILS_URL"),
             auth,
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
         self.display_name = f"{DISPLAY_NAME} {uuid4()}"
 
     def tearDown(self):

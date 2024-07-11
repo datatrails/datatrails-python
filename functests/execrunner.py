@@ -48,8 +48,8 @@ class TestRunner(TestCase):
             auth,
             max_time=30,
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
 
     def tearDown(self):
         self.arch.close()

@@ -125,8 +125,8 @@ class TestAccessPoliciesBase(TestCase):
             getenv("DATATRAILS_URL"),
             auth,
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
 
         # these are for access_policies
         self.ac_props = deepcopy(PROPS)
@@ -311,8 +311,8 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
             getenv("DATATRAILS_URL"),
             auth_2,
             partner_id=PARTNER_ID_VALUE,
-            user_agent=USER_AGENT_VALUE,
         )
+        self.arch.user_agent = USER_AGENT_VALUE
         # creates reciprocal subjects for arch 1 and arch 2.
         # subject 1 contains details of subject 2 to be shared
         self.subject_1, self.subject_2 = self.arch.subjects.share(
