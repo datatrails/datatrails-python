@@ -76,11 +76,11 @@ class _AssetAttachmentsClient:
 
         identity looks like:
 
-        [https://app.datatrails.ai/archivist/public]assets/xxxxxxx
+        [https://app.datatrails.ai/archivist/v2/public]assets/xxxxxxx
 
         OR
 
-        [https://app.datatrails.ai/archivist/public]assets/xxxxxxx/events/yyyyyy
+        [https://app.datatrails.ai/archivist/v2/public]assets/xxxxxxx/events/yyyyyy
 
         where the public URL is prefixed with the schema.
 
@@ -89,8 +89,8 @@ class _AssetAttachmentsClient:
         if self._public:
             # the public URL for the asset or event has to be changed
             url = urlparse(identity)
-            root = "/".join(url.path.split(SEP)[:2])
-            asset_id = "/".join(url.path.split(SEP)[2:])
+            root = SEP.join(url.path.split(SEP)[:2])
+            asset_id = SEP.join(url.path.split(SEP)[3:])
             new_url = url._replace(
                 path=f"{root}/{ASSETATTACHMENTS_SUBPATH}/{ASSETATTACHMENTS_LABEL}/{asset_id}/{uuid}"
             )
