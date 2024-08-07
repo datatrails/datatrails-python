@@ -74,7 +74,6 @@ def scan_test(arch, datestring, scanned_expected=False):
                 },
             ],
         },
-        confirm=True,
     )
     print("asset", json_dumps(asset, indent=4))
     print("existed", existed)

@@ -76,18 +76,34 @@ def create_event(arch, asset):
         # including free text or attachments
         "conformance_report": "blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273",
     }
+    #
+    # There are 3 alternatives
+    #
+    # 1. Create the event:
+    return arch.events.create(asset["identity"], props=props, attrs=attrs)
+    #
+    # 2. alternatively one can wait for the asset to be confirmed in the
+    #    immutable store.
+    #    The second argument is wait for confirmation:
+    #      If @confirm@ is True then this function will not
+    #      return until the asset is confirmed.
+    #
+    # Confirmation guarantees that 3rd parties can retrieve and cryptographically
+    # verify your Events, which can take a few seconds to propagate. It is typically
+    # not necessary to wait unless your workflow involves near-real-time
+    # communication with 3rd parties and the 3rd party needs instant cryptographic
+    # verification of your new Asset.
+    # return arch.events.create(asset["identity"], props=props, attrs=attrs, confirm=True)
+    #
+    # 3. lastly if some work can be done whilst the asset is confirmed then this call
+    # can be replaced by a two-step alternative:
 
-    return arch.events.create(asset["identity"], props=props, attrs=attrs, confirm=True)
-
-    # alternatively if some work can be done whilst the event is confirmed then this call can be
-    # replaced by a two-step alternative:
-
-    # event = arch.events.create(asset["identity"], props=props, attrs=attrs, confirm=False)
+    # event = arch.events.create(asset["identity"], props=props, attrs=attrs)
 
     # ... do something else here
     # and then wait for confirmation
 
-    # self.arch.events.wait_for_confirmation(event['identity'])
+    # return arch.events.wait_for_confirmation(event["identity"])
 
 
 def create_asset(arch):
@@ -117,11 +133,7 @@ def create_asset(arch):
         # it does not start with arc_
     }
     # The first argument is the attributes of the asset
-    # The second argument is wait for confirmation:
-    #   If @confirm@ is True then this function will not
-    #   return until the asset is confirmed and ready
-    #   to accept events (or an error occurs)
-    return arch.assets.create(attrs=attrs, confirm=True)
+    return arch.assets.create(attrs=attrs)
 
 
 def main():

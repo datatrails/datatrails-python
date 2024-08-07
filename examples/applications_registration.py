@@ -106,7 +106,6 @@ def main():
                     "arc_display_type": "desplay_type",
                     "some_custom_attribute": "value",
                 },
-                confirm=True,
             )
             print("asset", json_dumps(asset, indent=4))
 

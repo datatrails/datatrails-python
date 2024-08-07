@@ -118,7 +118,6 @@ class TestAssetCreate(TestCase):
         """
         asset = self.arch.assets.create(
             attrs=self.traffic_light,
-            confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
@@ -131,7 +130,6 @@ class TestAssetCreate(TestCase):
         asset = self.arch.assets.create(
             props=MERKLE_LOG,
             attrs=self.traffic_light_merkle_log,
-            confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
@@ -158,7 +156,6 @@ class TestAssetCreate(TestCase):
         }
         traffic_lights.assets.create(
             attrs=self.attrs,
-            confirm=True,
         )
         self.assertEqual(
             traffic_lights.assets.count(),
@@ -177,7 +174,6 @@ class TestAssetCreate(TestCase):
         }
         fancy_traffic_lights.assets.create(
             attrs=self.attrs,
-            confirm=True,
         )
         self.assertEqual(
             fancy_traffic_lights.assets.count(),
@@ -191,7 +187,6 @@ class TestAssetCreate(TestCase):
         """
         asset, existed = self.arch.assets.create_if_not_exists(
             REQUEST_EXISTS_ATTACHMENTS,
-            confirm=True,
         )
         identity = asset["identity"]
 
@@ -220,7 +215,10 @@ class TestAssetCreate(TestCase):
         }
 
         event = self.arch.events.create(
-            identity, props=props, attrs=attrs, confirm=True
+            identity,
+            props=props,
+            attrs=attrs,
+            confirm=True,    # must wait for tenant_identity to be populated
         )
         LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
 
@@ -268,7 +266,6 @@ class TestAssetCreateIfNotExists(TestCase):
         """
         asset, existed = self.arch.assets.create_if_not_exists(
             REQUEST_EXISTS_ATTACHMENTS,
-            confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, indent=4))
         LOGGER.debug("existed %s", existed)
@@ -320,7 +317,6 @@ class TestAssetCreateIfNotExists(TestCase):
         """
         asset, existed = self.arch.assets.create_if_not_exists(
             REQUEST_EXISTS_ATTACHMENTS,
-            confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, indent=4))
         LOGGER.debug("existed %s", existed)

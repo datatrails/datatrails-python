@@ -53,14 +53,13 @@ def create_asset(arch):
     # The second argument are the attributes of the asset
     # The third argument is wait for confirmation:
     #   If @confirm@ is True then this function will not
-    #   return until the asset is confirmed and ready
-    #   to accept events (or an error occurs)
+    #   return until the asset is confirmed.
     #
     return arch.assets.create(props=props, attrs=attrs, confirm=True)
     # alternatively if some work can be done whilst the asset is confirmed then this call can be
     # replaced by a two-step alternative:
 
-    # asset = arch.assets.create(props=props, attrs=attrs, confirm=False)
+    # asset = arch.assets.create(props=props, attrs=attrs)
 
     # ... do something else here
     # and then wait for confirmation
@@ -95,8 +94,14 @@ def main():
     )
 
     # Initialize connection to Archivist. max_time is the time to wait for confirmation
-    # of an asset or event creation - the default is 300 seconds but one can optionally
+    # of an asset or event creation - the default is 30 seconds but one can optionally
     # specify a different value.
+    # Confirmation guarantees that 3rd parties can retrieve and cryptographically
+    # verify your Events, which can take a few seconds to propagate. It is typically
+    # not necessary to wait unless your workflow involves near-real-time
+    # communication with 3rd parties and the 3rd party needs instant cryptographic
+    # verification of your new Asset.
+
     # The optional partner id field is allocated by Datatrails to partners - partners are then
     # expected to specify this value when submitting any request to the archivist product.
     # Leave blank if if you do not have a partner ID.

@@ -120,7 +120,7 @@ class _AssetsRestricted(_AssetsPublic):
         *,
         props: "dict[str, Any]|None" = None,
         attrs: "dict[str, Any]|None" = None,
-        confirm: bool = True,
+        confirm: bool = False,
     ) -> Asset:
         """Create asset
 
@@ -143,7 +143,7 @@ class _AssetsRestricted(_AssetsPublic):
         return self.create_from_data(data, confirm=confirm)
 
     def create_from_data(
-        self, data: "dict[str, Any]", *, confirm: bool = True
+        self, data: "dict[str, Any]", *, confirm: bool = False
     ) -> Asset:
         """Create asset
 
@@ -152,7 +152,7 @@ class _AssetsRestricted(_AssetsPublic):
 
         Args:
             data (dict): request body of asset.
-            confirm (bool): if True wait for asset to be confirmed on DLT.
+            confirm (bool): if True wait for asset to be confirmed.
 
         Returns:
             :class:`Asset` instance
@@ -165,7 +165,7 @@ class _AssetsRestricted(_AssetsPublic):
         return self.wait_for_confirmation(asset["identity"])
 
     def create_if_not_exists(
-        self, data: "dict[str, Any]", *, confirm: bool = True
+        self, data: "dict[str, Any]", *, confirm: bool = False
     ) -> "tuple[Asset, bool]":
         """
         Creates an asset and associated locations and attachments if asset
@@ -173,7 +173,7 @@ class _AssetsRestricted(_AssetsPublic):
 
         Args:
             data (dict): request body of asset.
-            confirm (bool): if True wait for asset to be confirmed on DLT.
+            confirm (bool): if True wait for asset to be confirmed.
 
         A YAML representation of the data argument would be:
 

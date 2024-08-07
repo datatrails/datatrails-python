@@ -334,7 +334,6 @@ class TestAccessPoliciesShare(TestAccessPoliciesBase):
         asset_data["attributes"]["arc_display_name"] = f"{label} asset"
         asset, existed = arch.assets.create_if_not_exists(
             asset_data,
-            confirm=True,
         )
         LOGGER.debug(label, ": asset %s", json_dumps(asset, indent=4))
         LOGGER.debug(label, ": existed %s", existed)

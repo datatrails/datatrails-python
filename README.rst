@@ -84,22 +84,34 @@ You can then use the examples code to create assets (see examples directory):
             # it does not start with arc_
         }
         #
-        # The first argument are the attributes of the asset
-        # The second argument is wait for confirmation:
-        #   If @confirm@ is True then this function will not
-        #   return until the asset is confirmed and ready
-        #   to accept events (or an error occurs)
+        # There are 3 alternatives
         #
+        # 1. Create the asset:
+        #    The first argument is the attributes of the asset
+        return arch.assets.create(attrs=attrs)
+        #
+        # 2. alternatively one can wait for the asset to be confirmed in the
+        #    immutable store.
+        #    The second argument is wait for confirmation:
+        #      If @confirm@ is True then this function will not
+        #      return until the asset is confirmed.
+        #
+        # Confirmation guarantees that 3rd parties can retrieve and cryptographically
+        # verify your Assets, which can take a few seconds to propagate. It is typically
+        # not necessary to wait unless your workflow involves near-real-time
+        # communication with 3rd parties and the 3rd party needs instant cryptographic
+        # verification of your new Asset.
         return arch.assets.create(attrs=attrs, confirm=True)
-        # alternatively if some work can be done whilst the asset is confirmed then this call can be
-        # replaced by a two-step alternative:
+        #
+        # 3. lastly if some work can be done whilst the asset is confirmed then this call
+        # can be replaced by a two-step alternative:
 
-        # asset = arch.assets.create(props=props, attrs=attrs, confirm=False)
+        asset = arch.assets.create(props=props, attrs=attrs)
 
         # ... do something else here
         # and then wait for confirmation
 
-        # self.arch.assets.wait_for_confirmation(asset['identity']))
+        return arch.assets.wait_for_confirmation(asset['identity']))
 
 
     def main():
@@ -238,7 +250,12 @@ Each step consists of control parameters (specified in the 'step' dictionary) an
 the yaml representation of the request body for an asset or event.
 
 The confirm: field is a control variable for the PythonSDK that ensures that the
-asset or event is confirmed before returning.
+asset or event is confirmed before returning. This is optional and is only required
+if guarantees that 3rd parties can retrieve and cryptographically
+verify your Assets, which can take a few seconds to propagate. It is typically
+not necessary to wait unless your workflow involves near-real-time
+communication with 3rd parties and the 3rd party needs instant cryptographic
+verification of your new Asset.
 
 .. note::
 
@@ -276,7 +293,6 @@ asset or event is confirmed before returning.
           radioactive: "true"
           radiation_level: "0"
           weight: "0"
-        confirm: true
 
       # setup the radiation bags to have a varing amount of radiactive waste
       # note the values to the events.create method are string representations of boolean
@@ -294,7 +310,6 @@ asset or event is confirmed before returning.
         asset_attributes:
           radiation_level: "3"
           weight: "1"
-        confirm: true
 
 Logging
 ========
