@@ -133,7 +133,7 @@ class TestAssetCreate(TestCase):
             attrs=self.traffic_light_merkle_log,
         )
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
-        asset = self.arch.assets.wait_fo_confirmation(asset["identity"])
+        asset = self.arch.assets.wait_for_confirmation(asset["identity"])
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
             asset["proof_mechanism"],
