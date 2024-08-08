@@ -91,7 +91,7 @@ def create_event(arch, asset):
     # Confirmation guarantees that 3rd parties can retrieve and cryptographically
     # verify your Events, which can take a few seconds to propagate. It is typically
     # not necessary to wait unless your workflow involves near-real-time
-    # communication with 3rd parties and the 3rd party needs instant cryptographic
+    # communication with 3rd parties and the 3rd party needs immediate cryptographic
     # verification of your new Asset.
     # return arch.events.create(asset["identity"], props=props, attrs=attrs, confirm=True)
     #

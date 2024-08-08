@@ -99,7 +99,7 @@ def main():
     # Confirmation guarantees that 3rd parties can retrieve and cryptographically
     # verify your Events, which can take a few seconds to propagate. It is typically
     # not necessary to wait unless your workflow involves near-real-time
-    # communication with 3rd parties and the 3rd party needs instant cryptographic
+    # communication with 3rd parties and the 3rd party needs immediate cryptographic
     # verification of your new Asset.
 
     # The optional partner id field is allocated by Datatrails to partners - partners are then

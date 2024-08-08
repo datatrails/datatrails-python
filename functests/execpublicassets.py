@@ -113,7 +113,7 @@ class TestPublicAssetCreate(TestCase):
             props={
                 "public": True,
             },
-            confirm=True,   # must wait for publicurl to be available
+            confirm=True,  # must wait for publicurl to be available
         )
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
@@ -174,7 +174,7 @@ class TestPublicAssetCreate(TestCase):
             identity,
             props=props,
             attrs=attrs,
-            confirm=True,   # must wait for public access to be populated
+            confirm=True,  # must wait for public access to be populated
         )
         LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
         event_publicurl = self.arch.events.publicurl(event["identity"])

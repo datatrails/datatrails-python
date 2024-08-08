@@ -118,6 +118,7 @@ class TestAssetCreate(TestCase):
         """
         asset = self.arch.assets.create(
             attrs=self.traffic_light,
+            confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         tenancy = self.arch.tenancies.publicinfo(asset["tenant_identity"])
@@ -131,6 +132,8 @@ class TestAssetCreate(TestCase):
             props=MERKLE_LOG,
             attrs=self.traffic_light_merkle_log,
         )
+        LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
+        asset = self.arch.assets.wait_fo_confirmation(asset["identity"])
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
             asset["proof_mechanism"],
@@ -218,8 +221,11 @@ class TestAssetCreate(TestCase):
             identity,
             props=props,
             attrs=attrs,
-            confirm=True,    # must wait for tenant_identity to be populated
         )
+        LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
+
+        # must wait for tenant_identity to be populated
+        event = self.arch.events.wait_for_confirmation(event["identity"])
         LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
 
         tenancy = self.arch.tenancies.publicinfo(event["tenant_identity"])

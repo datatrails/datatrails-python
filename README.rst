@@ -99,7 +99,7 @@ You can then use the examples code to create assets (see examples directory):
         # Confirmation guarantees that 3rd parties can retrieve and cryptographically
         # verify your Assets, which can take a few seconds to propagate. It is typically
         # not necessary to wait unless your workflow involves near-real-time
-        # communication with 3rd parties and the 3rd party needs instant cryptographic
+        # communication with 3rd parties and the 3rd party needs immediate cryptographic
         # verification of your new Asset.
         return arch.assets.create(attrs=attrs, confirm=True)
         #
@@ -251,7 +251,7 @@ the yaml representation of the request body for an asset or event.
 
 The confirm: field is a control variable for the PythonSDK that ensures that the
 asset or event is confirmed before returning. This is optional and is only required
-if guarantees that 3rd parties can retrieve and cryptographically
+3rd parties need to immediately retrieve and cryptographically
 verify your Assets, which can take a few seconds to propagate. It is typically
 not necessary to wait unless your workflow involves near-real-time
 communication with 3rd parties and the 3rd party needs instant cryptographic

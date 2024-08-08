@@ -272,7 +272,7 @@ class _AssetsRestricted(_AssetsPublic):
     def wait_for_confirmation(self, identity: str) -> Asset:
         """Wait for asset to be confirmed.
 
-        Waits asset to be confirmed.
+        Waits for asset to be confirmed.
 
         Args:
             identity (str): identity of asset
