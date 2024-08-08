@@ -297,7 +297,7 @@ class _EventsRestricted(_EventsPublic):
         attrs: "dict[str, Any]",
         *,
         asset_attrs: "dict[str, Any]|None" = None,
-        confirm: bool = True,
+        confirm: bool = False,
     ) -> Event:
         """Create event
 
@@ -308,7 +308,7 @@ class _EventsRestricted(_EventsPublic):
             props (dict): properties for this event.
             attrs (dict): attributes of created event.
             asset_attrs (dict): attributes of referenced asset.
-            confirm (bool): if True wait for event to be confirmed on DLT.
+            confirm (bool): if True wait for event to be confirmed.
 
         Returns:
             :class:`Event` instance
@@ -323,7 +323,7 @@ class _EventsRestricted(_EventsPublic):
         )
 
     def create_from_data(
-        self, asset_id: str, data: "dict[str, Any]", *, confirm: bool = True
+        self, asset_id: str, data: "dict[str, Any]", *, confirm: bool = False
     ) -> Event:
         """Create event
 

@@ -36,14 +36,9 @@ def create_example_asset(arch, label):
         "ext_vendor_name": label,
     }
 
-    # The first argument is the properties of the asset
-    # The second argument is the attributes of the asset
-    # The third argument is wait for confirmation:
-    #   If @confirm@ is True then this function will not
-    #   return until the asset is confirmed and ready
-    #   to accept events (or an error occurs)
+    # The first argument is the attributes of the asset
     #
-    return arch.assets.create(attrs=attrs, confirm=True)
+    return arch.assets.create(attrs=attrs)
 
 
 def create_archivist(label):

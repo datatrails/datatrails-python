@@ -48,7 +48,6 @@ def sbom_release(arch, release, sbom_filename):
                 "arc_description": "Software Package for DataTrails SaaS",
             },
         },
-        confirm=True,
     )
     print("##[debug]Asset:\n", json_dumps(asset, indent=4))
     print("##[debug]Existed:", existed)
@@ -74,7 +73,6 @@ def sbom_release(arch, release, sbom_filename):
                 },
             ],
         },
-        confirm=True,
     )
     print("##[debug]Release:\n", json_dumps(event, indent=4))
 

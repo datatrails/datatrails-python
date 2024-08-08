@@ -315,7 +315,6 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
 
         traffic_light = self.arch.assets.create(
             attrs=TRAFFIC_LIGHT,
-            confirm=True,
         )
         LOGGER.debug("TRAFFIC_LIGHT: %s", json_dumps(traffic_light, indent=4))
 
@@ -326,7 +325,6 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
                 "arc_description": "Maintenance performed on traffic light",
                 "arc_display_type": f"Maintenance Performed {tag}",
             },
-            confirm=True,
         )
         LOGGER.debug(
             "MAINTENANCE_PERFORMED: %s", json_dumps(maintenance_performed, indent=4)
@@ -410,7 +408,6 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
 
         traffic_light = self.arch.assets.create(
             attrs=TRAFFIC_LIGHT,
-            confirm=True,
         )
         LOGGER.debug("TRAFFIC_LIGHT: %s", json_dumps(traffic_light, indent=4))
 
@@ -422,7 +419,6 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
                 "arc_display_type": f"Maintenance Request {tag}",
                 "arc_correlation_value": str(tag),
             },
-            confirm=True,
         )
         LOGGER.debug(
             "MAINTENANCE_REQUIRED: %s", json_dumps(maintenance_request, indent=4)
@@ -462,7 +458,6 @@ class TestCompliancePoliciesCompliantAt(TestCompliancePoliciesBase):
                 "arc_display_type": f"Maintenance Performed {tag}",
                 "arc_correlation_value": str(tag),
             },
-            confirm=True,
         )
         LOGGER.debug(
             "MAINTENANCE_PERFORMED: %s", json_dumps(maintenance_performed, indent=4)

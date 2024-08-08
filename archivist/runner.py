@@ -421,7 +421,6 @@ class _Runner:
                     "radiation_level": 0,
                     "weight": 0,
                 },
-                "confirm": True,
             }
         ]
         ```

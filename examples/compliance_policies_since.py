@@ -85,7 +85,6 @@ def create_traffic_light(arch):
             "arc_description": "Traffic flow control light at A603 North East",
             "arc_display_type": "Traffic Light",
         },
-        confirm=True,
     )
     print("TRAFFIC_LIGHT:", json_dumps(traffic_light, indent=4))
     return traffic_light
@@ -105,7 +104,6 @@ def perform_maintenance(arch, traffic_light, tag):
             "arc_description": "Maintenance performed on traffic light",
             "arc_display_type": f"Maintenance Performed {tag}",
         },
-        confirm=True,
     )
     print("MAINTENANCE_PERFORMED:", json_dumps(maintenance_performed, indent=4))
 

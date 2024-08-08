@@ -244,14 +244,11 @@ class TestRunnerAssetsCreate(TestCase):
                                 "asset_label": "Existing Asset",
                             },
                             **ASSETS_CREATE_IF_NOT_EXISTS,
-                            "confirm": True,
                         },
                     ],
                 }
             )
-            mock_assets_create.assert_called_once_with(
-                ASSETS_CREATE_IF_NOT_EXISTS, **ASSETS_CONFIRM
-            )
+            mock_assets_create.assert_called_once_with(ASSETS_CREATE_IF_NOT_EXISTS)
             self.assertEqual(
                 self.arch.runner.entities["Existing Asset"],
                 ASSETS_RESPONSE,

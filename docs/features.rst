@@ -13,7 +13,7 @@ REST api (in any language):
     *  versioned package for the python 3.8,3.9,3.10,3.11,3.12 ecosystem.
     *  automatic confirmation of assets and events: just set **confirm=True** when
        creating the asset or event and a sophisticated retry and exponential backoff
-       algorithm will take care of everything.
+       algorithm will take care of everything (optional).
     *  **list()** method: one can easily get an iterable of assets or events that
        correspond to a particular signature. The list method is optimized for use in
        loop (for a in arch.assets.list():...) but can easily be converted to a list
@@ -31,6 +31,6 @@ REST api (in any language):
     *  easily extensible - obeys the open-closed principle of SOLID where new endpoints 
        can be implemented by **extending** the package as opposed to modifying it.
     *  fully unittested - 100% coverage.
-    *  code style managed and enforced using **pycodestyle**, **pylint** and **black**. 
+    *  code style managed and enforced using **ruff**, **pycodestyle**, **pylint** and **black**. 
 
 See the **examples/** directory for example code.

@@ -6,6 +6,8 @@ boolean
 chmod
 comparator
 config
+cryptographic
+cryptographically
 cyclonedx
 dataclass
 dataclasses

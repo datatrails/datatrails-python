@@ -113,7 +113,7 @@ class TestPublicAssetCreate(TestCase):
             props={
                 "public": True,
             },
-            confirm=True,
+            confirm=True,  # must wait for publicurl to be available
         )
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         self.assertEqual(
@@ -138,7 +138,6 @@ class TestPublicAssetCreate(TestCase):
             props={
                 "public": True,
             },
-            confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, sort_keys=True, indent=4))
         identity = asset["identity"]
@@ -172,7 +171,10 @@ class TestPublicAssetCreate(TestCase):
         }
 
         event = self.arch.events.create(
-            identity, props=props, attrs=attrs, confirm=True
+            identity,
+            props=props,
+            attrs=attrs,
+            confirm=True,  # must wait for public access to be populated
         )
         LOGGER.debug("event %s", json_dumps(event, sort_keys=True, indent=4))
         event_publicurl = self.arch.events.publicurl(event["identity"])
@@ -197,7 +199,6 @@ class TestPublicAssetCreate(TestCase):
         LOGGER.debug("request_data %s", json_dumps(request_data, indent=4))
         asset, existed = self.arch.assets.create_if_not_exists(
             request_data,
-            confirm=True,
         )
         LOGGER.debug("asset %s", json_dumps(asset, indent=4))
         LOGGER.debug("existed %s", existed)
