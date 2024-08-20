@@ -62,7 +62,7 @@ class _TenanciesClient:
     def __str__(self) -> str:
         return f"TenanciesClient({self._archivist.url})"
 
-    def _identity(self, identity) -> str:
+    def _identity(self, identity: str) -> str:
         """Returns identity suitable for endpoint"""
         prefix, uuid = identity.split("/")
         if prefix == TENANCIES_PREFIX:

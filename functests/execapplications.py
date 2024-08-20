@@ -246,7 +246,6 @@ class TestApplications(TestCase):
             traffic_light["arc_display_type"] = "Traffic light with violation camera"
             asset = new_arch.assets.create(
                 attrs=traffic_light,
-                confirm=True,
             )
             LOGGER.debug("create asset %s", json_dumps(asset, indent=4))
             identity = asset["identity"]
@@ -264,6 +263,5 @@ class TestApplications(TestCase):
                     attrs={
                         "arc_description": f"Safety conformance approved for version {i}",
                     },
-                    confirm=True,
                 )
                 LOGGER.debug("%d: create event %s", i, json_dumps(event, indent=4))
