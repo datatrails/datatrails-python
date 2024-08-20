@@ -169,7 +169,6 @@
     "                \"arc_display_type\": \"Vault Door\",\n",
     "            },\n",
     "        },\n",
-    "        confirm=True,\n",
     "    )\n",
     "    print(\"DOOR:\", json_dumps(door, indent=4))\n",
     "    return door"
@@ -197,7 +196,6 @@
     "            \"arc_display_type\": \"Open\",\n",
     "            \"arc_correlation_value\": f\"{tag}\",\n",
     "        },\n",
-    "        confirm=True,\n",
     "    )\n",
     "    print(\"DOOR_OPENED:\", json_dumps(door_opened, indent=4))"
    ]
@@ -224,7 +222,6 @@
     "            \"arc_display_type\": \"Close\",\n",
     "            \"arc_correlation_value\": f\"{tag}\",\n",
     "        },\n",
-    "        confirm=True,\n",
     "    )\n",
     "    print(\"DOOR_CLOSED:\", json_dumps(door_closed, indent=4))"
    ]

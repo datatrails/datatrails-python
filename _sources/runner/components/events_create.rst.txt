@@ -16,6 +16,7 @@ The optional :code:`sbom` setting uploads the sbom to archivist and the response
 event before posting. (see second example below)
 
 :code:`confirm: true` means that the step will wait for the event to be completely created before moving on to the next step.
+This is optional.
 
 An example when opening a door in Paris:
 
@@ -73,7 +74,6 @@ An example when releasing a software package as an sbom attachment:
           print_response: true
         operation: Record
         behaviour: RecordEvidence
-        confirm: true
         event_attributes:
           arc_description: ACME Corporation Detector SAAS Released YYYYMMDD.1
           arc_display_type: Software Package Release

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Event Example &mdash; DATATRAILS v0.31.3 documentation</title>
+  <title>Create Event Example &mdash; DATATRAILS v0.32.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
@@ -16,7 +16,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=4aed14f2"></script>
+        <script src="_static/documentation_options.js?v=ef6a4073"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -40,7 +40,7 @@
               <img src="_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.31.3
+                v0.32.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -184,18 +184,34 @@
         <span class="c1"># including free text or attachments</span>
         <span class="s2">&quot;conformance_report&quot;</span><span class="p">:</span> <span class="s2">&quot;blobs/e2a1d16c-03cd-45a1-8cd0-690831df1273&quot;</span><span class="p">,</span>
     <span class="p">}</span>
+    <span class="c1">#</span>
+    <span class="c1"># There are 3 alternatives</span>
+    <span class="c1">#</span>
+    <span class="c1"># 1. Create the event:</span>
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span> <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">)</span>
+    <span class="c1">#</span>
+    <span class="c1"># 2. alternatively one can wait for the asset to be confirmed in the</span>
+    <span class="c1">#    immutable store.</span>
+    <span class="c1">#    The second argument is wait for confirmation:</span>
+    <span class="c1">#      If @confirm@ is True then this function will not</span>
+    <span class="c1">#      return until the asset is confirmed.</span>
+    <span class="c1">#</span>
+    <span class="c1"># Confirmation guarantees that 3rd parties can retrieve and cryptographically</span>
+    <span class="c1"># verify your Events, which can take a few seconds to propagate. It is typically</span>
+    <span class="c1"># not necessary to wait unless your workflow involves near-real-time</span>
+    <span class="c1"># communication with 3rd parties and the 3rd party needs immediate cryptographic</span>
+    <span class="c1"># verification of your new Asset.</span>
+    <span class="c1"># return arch.events.create(asset[&quot;identity&quot;], props=props, attrs=attrs, confirm=True)</span>
+    <span class="c1">#</span>
+    <span class="c1"># 3. lastly if some work can be done whilst the asset is confirmed then this call</span>
+    <span class="c1"># can be replaced by a two-step alternative:</span>
 
-    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">asset</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">],</span> <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="c1"># alternatively if some work can be done whilst the event is confirmed then this call can be</span>
-    <span class="c1"># replaced by a two-step alternative:</span>
-
-    <span class="c1"># event = arch.events.create(asset[&quot;identity&quot;], props=props, attrs=attrs, confirm=False)</span>
+    <span class="c1"># event = arch.events.create(asset[&quot;identity&quot;], props=props, attrs=attrs)</span>
 
     <span class="c1"># ... do something else here</span>
     <span class="c1"># and then wait for confirmation</span>
 
-    <span class="c1"># self.arch.events.wait_for_confirmation(event[&#39;identity&#39;])</span>
+    <span class="c1"># return arch.events.wait_for_confirmation(event[&quot;identity&quot;])</span>
 
 
 <span class="k">def</span> <span class="nf">create_asset</span><span class="p">(</span><span class="n">arch</span><span class="p">):</span>
@@ -225,11 +241,7 @@
         <span class="c1"># it does not start with arc_</span>
     <span class="p">}</span>
     <span class="c1"># The first argument is the attributes of the asset</span>
-    <span class="c1"># The second argument is wait for confirmation:</span>
-    <span class="c1">#   If @confirm@ is True then this function will not</span>
-    <span class="c1">#   return until the asset is confirmed and ready</span>
-    <span class="c1">#   to accept events (or an error occurs)</span>
-    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>

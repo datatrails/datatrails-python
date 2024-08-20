@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assets Create Story Runner YAML &mdash; DATATRAILS v0.31.3 documentation</title>
+  <title>Assets Create Story Runner YAML &mdash; DATATRAILS v0.32.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/sg_gallery.css" type="text/css" />
@@ -16,7 +16,7 @@
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=4aed14f2"></script>
+        <script src="../../_static/documentation_options.js?v=ef6a4073"></script>
         <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -40,7 +40,7 @@
               <img src="../../_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                v0.31.3
+                v0.32.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -146,7 +146,8 @@ not be accessible to later actions in the story.</p>
 to distinguish between assets and locations created between runs of the story.</p>
 <p>Usually these field values are derived from an environment variable
 <code class="code docutils literal notranslate"><span class="pre">DATATRAILS_UNIQUE_ID</span></code> (default value is <code class="code docutils literal notranslate"><span class="pre">namespace</span></code>).</p>
-<p>The optional <code class="code docutils literal notranslate"><span class="pre">confirm:</span> <span class="pre">true</span></code> entry means that the step will wait for the asset to be completely created before moving on to the next step.</p>
+<p>The optional <code class="code docutils literal notranslate"><span class="pre">confirm:</span> <span class="pre">true</span></code> entry means that the step will wait for the asset to be completely created before moving on to the next step.
+This is optional.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="nt">steps</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">step</span><span class="p">:</span>

@@ -40,7 +40,6 @@ and locations.
             "arc_display_name": "front door",
             "colour": "red",
         },
-        confirm=True,
     )
 
     # a green back door
@@ -49,7 +48,6 @@ and locations.
             "arc_display_name": "back door",
             "colour": "green",
         },
-        confirm=True,
     )
 
     # no need to specify arc_display_type...
