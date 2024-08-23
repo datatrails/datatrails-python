@@ -20,7 +20,6 @@ The first (optional) call from the archivist package is to set the logger.
     arch = Archivist(
         "https://app.datatrails.ai",
         (client_id, client_secret),
-        max_time=300,
     )
 
 

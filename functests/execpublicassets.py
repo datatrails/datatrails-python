@@ -91,7 +91,6 @@ class TestPublicAssetCreate(TestCase):
         self.arch = Archivist(
             getenv("DATATRAILS_URL"),
             auth,
-            max_time=30,
             partner_id=PARTNER_ID_VALUE,
         )
         self.arch.user_agent = USER_AGENT_VALUE
