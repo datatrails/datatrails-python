@@ -218,7 +218,8 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         *,
         headers: "dict[str, str]|None" = None,
         params: "dict[str, Any]|None" = None,
-    ) -> "dict[str, Any]":
+        return_raw: "bool" = False,
+    ) -> "dict[str, Any] | bytes":
         """GET method (REST)
 
         Args:
@@ -242,6 +243,8 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         if error is not None:
             raise error
 
+        if return_raw:
+            return response.content
         return response.json()
 
     @retry_429

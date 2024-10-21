@@ -224,13 +224,14 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         arch._user_agent = self._user_agent
         return arch
 
-    def _add_headers(self, headers: "dict[str,str]|None") -> "dict[str,Any]":
+    def _add_headers(self, headers: "dict[str,str]|None", add_auth: "bool" = True) -> "dict[str,Any]":
         newheaders = super()._add_headers(headers)
 
-        auth = self.auth  # this may trigger a refetch so only do it once here
-        # for appidp endpoint there may not be an authtoken
-        if auth is not None:
-            newheaders["authorization"] = "Bearer " + auth.strip()
+        if add_auth:
+            auth = self.auth  # this may trigger a refetch so only do it once here
+            # for appidp endpoint there may not be an authtoken
+            if auth is not None:
+                newheaders["authorization"] = "Bearer " + auth.strip()
 
         return newheaders
 
@@ -244,7 +245,9 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         *,
         headers: "dict[str,Any]|None" = None,
         data: "dict[str, Any] | bool" = False,
-    ) -> "dict[str, Any]":
+        response_data: "bool" = False,
+        auth: "bool" = True,
+    ) -> "dict[str, Any] | bytes":
         """POST method (REST)
 
         Creates an entity
@@ -254,6 +257,8 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             request (dict): request body defining the entity
             headers (dict): optional REST headers
             data (bool): send as form-encoded and not as json
+            response_data (bool): get response as raw bytes, not JSON
+            auth (bool): automatically add auth headers
 
         Returns:
             dict representing the response body (entity).
@@ -262,18 +267,21 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             response = self.session.post(
                 url,
                 data=request,
+                headers=self._add_headers(headers, auth),
             )
         else:
             response = self.session.post(
                 url,
                 json=request,
-                headers=self._add_headers(headers),
+                headers=self._add_headers(headers, auth),
             )
 
         error = _parse_response(response)
         if error is not None:
             raise error
 
+        if response_data:
+            return response.content
         return response.json()
 
     @retry_429
@@ -285,7 +293,9 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         *,
         form: str = "file",
         params: "dict[str, Any]|None" = None,
-    ) -> "dict[str, Any]":
+        response_data: "bool" = False,
+        auth: "bool" = True,
+    ) -> "dict[str, Any] | bytes":
         """POST method (REST) - upload binary
 
         Uploads a file to an endpoint
@@ -295,6 +305,8 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             fd : iterable representing the contents of a file.
             mtype (str): mime type e.g. image/jpg
             params (dict): dictionary of optional path params
+            response_data (bool): get response as raw bytes, not JSON
+            auth (bool): automatically add auth headers
 
         Returns:
             dict representing the response body (entity).
@@ -311,7 +323,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         response = self.session.post(
             url,
             data=multipart,  # pyright: ignore    https://github.com/requests/toolbelt/issues/312
-            headers=self._add_headers(headers),
+            headers=self._add_headers(headers, auth),
             params=_dotdict(params),
         )
 
@@ -321,12 +333,18 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         if error is not None:
             raise error
 
+        if response_data:
+            return response.content
         return response.json()
 
     @retry_429
     def delete(
-        self, url: str, *, headers: "dict[str, Any]|None" = None
-    ) -> "dict[str, Any]":
+        self, url: str, 
+        *,
+        headers: "dict[str, Any]|None" = None,
+        response_data: "bool" = False,
+        auth: "bool" = True,
+    ) -> "dict[str, Any] | bytes":
         """DELETE method (REST)
 
         Deletes an entity
@@ -334,13 +352,15 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         Args:
             url (str): e.g. v2/assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`
             headers (dict): optional REST headers
+            response_data (bool): get response as raw bytes, not JSON
+            auth (bool): automatically add auth headers
 
         Returns:
             dict representing the response body (entity).
         """
         response = self.session.delete(
             url,
-            headers=self._add_headers(headers),
+            headers=self._add_headers(headers, auth),
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -349,6 +369,8 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         if error is not None:
             raise error
 
+        if response_data:
+            return response.content
         return response.json()
 
     @retry_429
@@ -358,7 +380,9 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         request: "dict[str, Any]",
         *,
         headers: "dict[str, Any]| None" = None,
-    ) -> "dict[str, Any]":
+        response_data: "bool" = False,
+        auth: "bool" = True
+    ) -> "dict[str, Any] | bytes":
         """PATCH method (REST)
 
         Updates the specified entity.
@@ -367,6 +391,8 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             url (str): e.g. v2/assets/xxxxxxxxxxxxxxxxxxxxxxxxxxxx`
             request (dict): request body defining the entity changes.
             headers (dict): optional REST headers
+            response_data (bool): get response as raw bytes, not JSON
+            auth (bool): automatically add auth headers
 
         Returns:
             dict representing the response body (entity).
@@ -375,7 +401,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         response = self.session.patch(
             url,
             json=request,
-            headers=self._add_headers(headers),
+            headers=self._add_headers(headers, auth),
         )
 
         self._response_ring_buffer.appendleft(response)
@@ -384,4 +410,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         if error is not None:
             raise error
 
+        if response_data:
+            return response.content
         return response.json()

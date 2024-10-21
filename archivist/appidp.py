@@ -83,5 +83,6 @@ class _AppIDPClient:
                     "client_secret": client_secret,
                 },
                 data=True,
+                auth=False,
             )
         )
