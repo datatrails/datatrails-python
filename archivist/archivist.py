@@ -224,7 +224,9 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         arch._user_agent = self._user_agent
         return arch
 
-    def _add_headers(self, headers: "dict[str,str]|None", add_auth: "bool" = True) -> "dict[str,Any]":
+    def _add_headers(
+        self, headers: "dict[str,str]|None", add_auth: "bool" = True
+    ) -> "dict[str,Any]":
         newheaders = super()._add_headers(headers)
 
         if add_auth:
@@ -339,7 +341,8 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
 
     @retry_429
     def delete(
-        self, url: str, 
+        self,
+        url: str,
         *,
         headers: "dict[str, Any]|None" = None,
         response_data: "bool" = False,
@@ -381,7 +384,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         *,
         headers: "dict[str, Any]| None" = None,
         response_data: "bool" = False,
-        auth: "bool" = True
+        auth: "bool" = True,
     ) -> "dict[str, Any] | bytes":
         """PATCH method (REST)
 
