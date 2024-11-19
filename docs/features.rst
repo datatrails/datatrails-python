@@ -10,7 +10,7 @@ The definitive guide to the REST API is defined here: https://docs.datatrails.ai
 This python SDK offers a number of advantages over a simple 
 REST api (in any language):
 
-    *  versioned package for the python 3.8,3.9,3.10,3.11,3.12 ecosystem.
+    *  versioned package for the python 3.9,3.10,3.11,3.12,3.13 ecosystems.
     *  automatic confirmation of assets and events: just set **confirm=True** when
        creating the asset or event and a sophisticated retry and exponential backoff
        algorithm will take care of everything (optional).

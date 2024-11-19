@@ -175,8 +175,9 @@ class TestAttachmentsCreate(TestCase):
             attachment = self.arch.attachments.upload(fd)
             file_uuid = attachment["identity"]
 
-        with open(self.DATATRAILS_IMAGE_DOWNLOAD_PATH, "wb") as fd, self.assertRaises(
-            ArchivistBadRequestError
+        with (
+            open(self.DATATRAILS_IMAGE_DOWNLOAD_PATH, "wb") as fd,
+            self.assertRaises(ArchivistBadRequestError),
         ):
             attachment = self.arch.attachments.download(
                 file_uuid, fd, params={"strict": "true"}

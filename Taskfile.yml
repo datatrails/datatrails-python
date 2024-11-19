@@ -19,11 +19,6 @@ tasks:
   builder:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
-      - ./scripts/build.sh "3.8"
-
-  builder-3.9:
-    desc: Build a docker environment with the right dependencies and utilities
-    cmds:
       - ./scripts/build.sh "3.9"
 
   builder-3.10:
@@ -40,6 +35,11 @@ tasks:
     desc: Build a docker environment with the right dependencies and utilities
     cmds:
       - ./scripts/build.sh "3.12"
+
+  builder-3.13:
+    desc: Build a docker environment with the right dependencies and utilities
+    cmds:
+      - ./scripts/build.sh "3.13"
 
   check:
     desc: Check the style, bug and quality of the code

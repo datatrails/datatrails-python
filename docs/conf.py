@@ -35,6 +35,7 @@ extensions = [
     "nbsphinx",
     "sphinx_gallery.load_style",
     "sphinx_rtd_theme",
+    "sphinxcontrib.googleanalytics",
     "sphinxcontrib.spelling",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
@@ -62,6 +63,7 @@ exclude_patterns = [
 
 source_suffix = [ '.md', '.rst']
 
+googleanalytics_id = 'G-7K46H3KK7N'  #  Provided by Google in your dashboard
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -84,7 +86,6 @@ html_static_path = ['_static']
 
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-    'analytics_id': 'G-7K46H3KK7N',  #  Provided by Google in your dashboard
     'logo_only': True,
 }
 

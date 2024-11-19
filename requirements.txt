@@ -8,8 +8,8 @@ flatten-dict~=0.4
 iso8601~=2.1
 Jinja2~=3.1
 pyaml-env~=1.2
-requests~=2.32.0
+requests~=2.32
 requests-toolbelt~=1.0
 rfc3339~=6.2
-xmltodict~=0.13
+xmltodict~=0.14
 

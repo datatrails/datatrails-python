@@ -2,6 +2,9 @@
 requires = [ "setuptools>=61.0", "wheel", "setuptools-git-versioning", ]
 build-backend = "setuptools.build_meta"
 
+[tool.black]
+target-version = ["py39", "py310", "py311", "py312", "py313"]
+
 [tool.coverage.report]
 fail_under = 100
 exclude_lines = [
@@ -260,6 +263,7 @@ valid-metaclass-classmethod-first-arg = ["cls"]
 
 # Maximum number of arguments for function / method.
 max-args = 7
+max-positional-arguments = 6
 
 # Maximum number of attributes for a class (see R0902).
 max-attributes = 7

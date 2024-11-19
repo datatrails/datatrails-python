@@ -108,11 +108,12 @@ class TestEventsCreate(TestEventsBase):
         """
         Test event creation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(
-            self.arch.attachments, "create"
-        ) as mock_attachments_create:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(
+                self.arch.attachments, "create"
+            ) as mock_attachments_create,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE_WITH_ATTACHMENTS)
             mock_attachments_create.return_value = ATTACHMENTS
 
@@ -152,13 +153,13 @@ class TestEventsCreate(TestEventsBase):
         """
         Test event creation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(
-            self.arch.attachments, "create"
-        ) as mock_attachments_create, mock.patch(
-            "archivist.events.sboms_parse"
-        ) as mock_sboms_parse:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(
+                self.arch.attachments, "create"
+            ) as mock_attachments_create,
+            mock.patch("archivist.events.sboms_parse") as mock_sboms_parse,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE_WITH_SBOMATTACHMENT)
             mock_sboms_parse.return_value = SBOM_RESULT
             mock_attachments_create.return_value = ATTACHMENTS
@@ -199,11 +200,12 @@ class TestEventsCreate(TestEventsBase):
         """
         Test event creation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(
-            self.arch.locations, "create_if_not_exists"
-        ) as mock_location_create:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(
+                self.arch.locations, "create_if_not_exists"
+            ) as mock_location_create,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE_WITH_LOCATION)
             mock_location_create.return_value = LOCATION, True
 
@@ -243,9 +245,10 @@ class TestEventsCreate(TestEventsBase):
         """
         Test event creation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.locations, "create_if_not_exists"):
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(self.arch.locations, "create_if_not_exists"),
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE_WITH_LOCATION)
 
             event = self.arch.events.create_from_data(
@@ -327,9 +330,10 @@ class TestEventsCreate(TestEventsBase):
         """
         Test event creation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(self.arch.session, "get") as mock_get,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
@@ -345,9 +349,10 @@ class TestEventsCreate(TestEventsBase):
         """
         Test asset confirmation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(self.arch.session, "get") as mock_get,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE_NO_CONFIRMATION)
 
@@ -358,9 +363,10 @@ class TestEventsCreate(TestEventsBase):
         """
         Test asset confirmation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(self.arch.session, "get") as mock_get,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),
@@ -373,9 +379,10 @@ class TestEventsCreate(TestEventsBase):
         """
         Test asset confirmation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(self.arch.session, "get") as mock_get,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),

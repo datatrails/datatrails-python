@@ -12,10 +12,10 @@ documented at https://docs.datatrails.ai
 Support
 =======
 
-This package currently is tested against Python versions 3.8,3.9,3.10,3.11 and 3.12.
+This package currently is tested against Python versions 3.9,3.10,3.11, 3.12 and 3.13.
 
-The current default version is 3.8 - this means that this package will not
-use any features specific to versions 3.9 and later.
+The current default version is 3.9 - this means that this package will not
+use any features specific to versions 3.10 and later.
 
 After End of Life of a particular Python version, support is offered on a best effort
 basis. We may ask you to update your Python version to help solve the problem,

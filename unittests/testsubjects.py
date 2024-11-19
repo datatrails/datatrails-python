@@ -156,15 +156,12 @@ class TestSubjects(TestCase):
         """
         Test subject share
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post1, mock.patch.object(
-            self.arch.session, "get"
-        ) as mock_get1, mock.patch.object(
-            self.arch2.session, "post"
-        ) as mock_post2, mock.patch.object(
-            self.arch2.session, "get"
-        ) as mock_get2:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post1,
+            mock.patch.object(self.arch.session, "get") as mock_get1,
+            mock.patch.object(self.arch2.session, "post") as mock_post2,
+            mock.patch.object(self.arch2.session, "get") as mock_get2,
+        ):
             mock_post1.return_value = MockResponse(200, **RESPONSE_WITH_CONFIRMATION)
             mock_get1.return_value = MockResponse(200, **RESPONSE_WITH_CONFIRMATION)
             mock_post2.return_value = MockResponse(200, **RESPONSE2_WITH_CONFIRMATION)

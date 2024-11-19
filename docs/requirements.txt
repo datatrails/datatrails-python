@@ -1,11 +1,12 @@
 #
 # this is used for pushing to github pages
 #
-# sphinx 7.2 does not support 3.8
-sphinx~=7.1
-sphinx-rtd-theme~=1.3
+sphinx~=7.4; python_version < '3.10'
+sphinx~=8.1; python_version >= '3.10'
+sphinx-rtd-theme~=3.0
 sphinxcontrib-spelling~=8.0
-sphinx-gallery~=0.14
+sphinxcontrib-googleanalytics~=0.4
+sphinx-gallery~=0.18
 nbsphinx~=0.9
 
 -r notebooks/requirements.txt
