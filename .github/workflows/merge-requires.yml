@@ -12,7 +12,6 @@ jobs:
     secrets: inherit
     uses: ./.github/workflows/ci.yml
   release:
-    if: ${{ github.event_name == 'release' }}
     secrets: inherit
     uses: ./.github/workflows/package.yml
 
@@ -22,13 +21,14 @@ jobs:
     steps:
       - name: ok
         run: |
+          echo "event_name=${{ github.event_name}}" 
           echo "This code is mergeable"
 
   release-checks-ok:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'release' }}
     needs: [ci, release]
     steps:
       - name: ok
         run: |
+          echo "event_name=${{ github.event_name}}"
           echo "This code is releasable"
