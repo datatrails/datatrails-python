@@ -4,10 +4,11 @@
 name: Package and Publish
 
 on:
-  workflow_call:
+  release:
+    types: [created]
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
 
