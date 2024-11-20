@@ -1,23 +1,23 @@
 -r requirements.txt
 
 # code quality
-autopep8~=2.0
-black[jupyter]~=24.1
-coverage[toml]~=7.4
+autopep8~=2.3
+black[jupyter]~=24.10
+coverage[toml]~=7.6
 pip-audit~=2.7
-pycodestyle~=2.11
-pylint~=3.0
+pycodestyle~=2.12
+pylint~=3.3
 pyright~=1.1
-ruff~=0.2
+ruff~=0.7
 unittest-xml-reporting~=3.2
-testbook~=0.3
+testbook~=0.4
 
 # analyze dependencies
-pipdeptree~=2.13
+pipdeptree~=2.23
 
 # uploading to pypi
-build~=1.0
-twine~=5.0
+build~=1.2
+twine~=5.1
 
 # for sbom.xml file
 xq~=0.0

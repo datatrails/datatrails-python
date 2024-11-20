@@ -261,11 +261,10 @@ class TestRunnerAssetsCreate(TestCase):
         """
         Test runner operation
         """
-        with mock.patch.object(
-            self.arch.events, "list"
-        ) as mock_events_list, mock.patch.object(
-            self.arch.runner, "identity"
-        ) as mock_identity:
+        with (
+            mock.patch.object(self.arch.events, "list") as mock_events_list,
+            mock.patch.object(self.arch.runner, "identity") as mock_identity,
+        ):
             mock_identity.return_value = EVENTS_LIST_ASSET_ID
             mock_events_list.return_value = event_generator(2)
             self.arch.runner(
@@ -297,11 +296,10 @@ class TestRunnerAssetsCreate(TestCase):
         """
         Test runner operation
         """
-        with mock.patch.object(
-            self.arch.events, "count"
-        ) as mock_events_count, mock.patch.object(
-            self.arch.runner, "identity"
-        ) as mock_identity:
+        with (
+            mock.patch.object(self.arch.events, "count") as mock_events_count,
+            mock.patch.object(self.arch.runner, "identity") as mock_identity,
+        ):
             mock_identity.return_value = EVENTS_LIST_ASSET_ID
             mock_events_count.return_value = 2
             self.arch.runner(

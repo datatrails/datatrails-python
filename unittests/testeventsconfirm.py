@@ -38,9 +38,10 @@ class TestEventsConfirm(TestCase):
         """
         Test event creation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(self.arch.session, "get") as mock_get,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.return_value = MockResponse(200, **RESPONSE)
 
@@ -55,9 +56,10 @@ class TestEventsConfirm(TestCase):
         """
         Test asset confirmation
         """
-        with mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post, mock.patch.object(self.arch.session, "get") as mock_get:
+        with (
+            mock.patch.object(self.arch.session, "post") as mock_post,
+            mock.patch.object(self.arch.session, "get") as mock_get,
+        ):
             mock_post.return_value = MockResponse(200, **RESPONSE)
             mock_get.side_effect = [
                 MockResponse(200, **RESPONSE_PENDING),

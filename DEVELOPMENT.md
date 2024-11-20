@@ -200,23 +200,6 @@ To run the unittests:
 task unittests
 ```
 
-##### Python 3.9
-
-To build the docker builder image with Python 3.9:
-```bash
-task builder-3.9
-```
-
-To check the style
-```bash
-task check
-```
-
-To run the unittests:
-```bash
-task unittests
-```
-
 ##### Python 3.10
 
 To build the docker builder image with Python 3.10:
@@ -256,6 +239,23 @@ task unittests
 To build the docker builder image with Python 3.12:
 ```bash
 task builder-3.12
+```
+
+To check the style
+```bash
+task check
+```
+
+To run the unittests:
+```bash
+task unittests
+```
+
+##### Python 3.13
+
+To build the docker builder image with Python 3.13:
+```bash
+task builder-3.13
 ```
 
 To check the style

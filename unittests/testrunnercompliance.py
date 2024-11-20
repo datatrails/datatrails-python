@@ -113,11 +113,14 @@ class TestRunnerCompliance(TestCase):
         """
         Test runner operation
         """
-        with mock.patch.object(
-            self.arch.compliance_policies, "create_from_data"
-        ) as mock_compliance_policies_create, mock.patch.object(
-            self.arch.compliance_policies, "delete"
-        ) as mock_compliance_policies_delete:
+        with (
+            mock.patch.object(
+                self.arch.compliance_policies, "create_from_data"
+            ) as mock_compliance_policies_create,
+            mock.patch.object(
+                self.arch.compliance_policies, "delete"
+            ) as mock_compliance_policies_delete,
+        ):
             mock_compliance_policies_create.return_value = CompliancePolicy(
                 **COMPLIANCE_POLICIES_RESPONSE
             )
@@ -156,11 +159,12 @@ class TestRunnerCompliance(TestCase):
         """
         Test runner operation
         """
-        with mock.patch.object(
-            self.arch.compliance, "compliant_at"
-        ) as mock_compliance_compliant_at, mock.patch.object(
-            self.arch.runner, "identity"
-        ) as mock_identity:
+        with (
+            mock.patch.object(
+                self.arch.compliance, "compliant_at"
+            ) as mock_compliance_compliant_at,
+            mock.patch.object(self.arch.runner, "identity") as mock_identity,
+        ):
             mock_identity.return_value = COMPLIANCE_COMPLIANT_AT_ID
             mock_compliance_compliant_at.return_value = Compliance(
                 **COMPLIANCE_RESPONSE
@@ -198,11 +202,12 @@ class TestRunnerCompliance(TestCase):
         """
         Test runner operation
         """
-        with mock.patch.object(
-            self.arch.compliance, "compliant_at"
-        ) as mock_compliance_compliant_at, mock.patch.object(
-            self.arch.runner, "identity"
-        ) as mock_identity:
+        with (
+            mock.patch.object(
+                self.arch.compliance, "compliant_at"
+            ) as mock_compliance_compliant_at,
+            mock.patch.object(self.arch.runner, "identity") as mock_identity,
+        ):
             mock_identity.return_value = COMPLIANCE_COMPLIANT_AT_ID
             mock_compliance_compliant_at.return_value = Compliance(
                 **COMPLIANCE_FALSE_RESPONSE

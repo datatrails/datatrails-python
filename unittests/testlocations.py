@@ -206,9 +206,10 @@ class TestLocations(TestCase):
         """
         Test location creation
         """
-        with mock.patch.object(self.arch.session, "get") as mock_get, mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post:
+        with (
+            mock.patch.object(self.arch.session, "get") as mock_get,
+            mock.patch.object(self.arch.session, "post") as mock_post,
+        ):
             mock_get.return_value = MockResponse(
                 200,
                 locations=[
@@ -254,9 +255,10 @@ class TestLocations(TestCase):
         """
         Test location creation
         """
-        with mock.patch.object(self.arch.session, "get") as mock_get, mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post:
+        with (
+            mock.patch.object(self.arch.session, "get") as mock_get,
+            mock.patch.object(self.arch.session, "post") as mock_post,
+        ):
             mock_get.side_effect = ArchivistNotFoundError
             mock_post.return_value = MockResponse(200, **RESPONSE)
             location, existed = self.arch.locations.create_if_not_exists(
@@ -298,9 +300,10 @@ class TestLocations(TestCase):
         """
         Test location creation
         """
-        with mock.patch.object(self.arch.session, "get") as mock_get, mock.patch.object(
-            self.arch.session, "post"
-        ) as mock_post:
+        with (
+            mock.patch.object(self.arch.session, "get") as mock_get,
+            mock.patch.object(self.arch.session, "post") as mock_post,
+        ):
             mock_get.side_effect = ArchivistNotFoundError
             mock_post.return_value = MockResponse(200, **RESPONSE)
             location, existed = self.arch.locations.create_if_not_exists(

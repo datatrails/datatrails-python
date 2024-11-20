@@ -57,7 +57,7 @@ class TestRunnerStep(TestCase):
                 "description": "Testing runner events list",
                 "asset_label": "Existing Asset",
                 "delete": True,
-            }
+            },
         )
         self.assertEqual(
             step.action,
@@ -96,7 +96,7 @@ class TestRunnerStep(TestCase):
                 "description": "Testing runner events list",
                 "asset_label": "Existing Asset",
                 "delete": True,
-            }
+            },
         )
         self.assertEqual(
             step.action,
@@ -182,7 +182,7 @@ class TestRunnerStep(TestCase):
                 "print_response": True,
                 "description": "Testing runner events list",
                 "location_label": "Existing Location",
-            }
+            },
         )
         self.assertEqual(
             step.action,

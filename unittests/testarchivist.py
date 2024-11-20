@@ -167,10 +167,13 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with app registration
         """
-        with Archivist(
-            "https://app.datatrails.ai",
-            (DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET),
-        ) as arch, mock.patch.object(arch.appidp, "token") as mock_token:
+        with (
+            Archivist(
+                "https://app.datatrails.ai",
+                (DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET),
+            ) as arch,
+            mock.patch.object(arch.appidp, "token") as mock_token,
+        ):
             mock_token.return_value = RESPONSE
             self.assertEqual(
                 arch.auth,
@@ -192,10 +195,13 @@ class TestArchivist(TestCase):
         """
         Test archivist creation with appidp token
         """
-        with Archivist(
-            "https://app.datatrails.ai",
-            (DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET),
-        ) as arch, mock.patch.object(arch.appidp, "token") as mock_token:
+        with (
+            Archivist(
+                "https://app.datatrails.ai",
+                (DATATRAILS_APPREG_CLIENT, DATATRAILS_APPREG_SECRET),
+            ) as arch,
+            mock.patch.object(arch.appidp, "token") as mock_token,
+        ):
             mock_token.return_value = NONE_RESPONSE
             with self.assertRaises(ArchivistError):
                 _ = arch.auth
