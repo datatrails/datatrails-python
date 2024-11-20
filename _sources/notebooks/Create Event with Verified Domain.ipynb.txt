@@ -42,8 +42,6 @@
     "from os import getenv\n",
     "from warnings import filterwarnings\n",
     "\n",
-    "from dotenv import load_dotenv\n",
-    "\n",
     "from archivist.archivist import Archivist\n",
     "from archivist.logger import set_logger\n",
     "\n",

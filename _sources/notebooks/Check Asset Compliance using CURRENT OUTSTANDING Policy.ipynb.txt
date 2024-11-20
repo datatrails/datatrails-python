@@ -35,8 +35,6 @@
     "from uuid import uuid4\n",
     "from warnings import filterwarnings\n",
     "\n",
-    "from dotenv import load_dotenv\n",
-    "\n",
     "from archivist.archivist import Archivist\n",
     "from archivist.compliance_policy_requests import CompliancePolicyCurrentOutstanding\n",
     "from archivist.constants import ASSET_BEHAVIOURS\n",

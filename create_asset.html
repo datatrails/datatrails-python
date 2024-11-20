@@ -1,25 +1,34 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-7K46H3KK7N');
+    </script>
+    
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Asset Example &mdash; DATATRAILS v0.32.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/datatrails_theme.css" type="text/css" />
-    <link rel="shortcut icon" href="_static/DataTrails_Favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Create Asset Example &mdash; DATATRAILS v0.33.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+      <link rel="stylesheet" type="text/css" href="_static/css/datatrails_theme.css?v=4edd3201" />
+
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=ef6a4073"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="_static/DataTrails_Favicon.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9ebf0a2a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -39,9 +48,6 @@
             
               <img src="_static/DataTrails_Wordmark_White.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                v0.32.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -163,6 +169,12 @@
     <span class="c1">#   If @confirm@ is True then this function will not</span>
     <span class="c1">#   return until the asset is confirmed.</span>
     <span class="c1">#</span>
+    <span class="c1"># Confirmation guarantees that 3rd parties can retrieve and cryptographically</span>
+    <span class="c1"># verify your Events, which can take a few seconds to propagate. It is typically</span>
+    <span class="c1"># not necessary to wait unless your workflow involves near-real-time</span>
+    <span class="c1"># communication with 3rd parties and the 3rd party needs immediate cryptographic</span>
+    <span class="c1"># verification of your new Asset.</span>
+    <span class="c1">#</span>
     <span class="k">return</span> <span class="n">arch</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span> <span class="n">confirm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># alternatively if some work can be done whilst the asset is confirmed then this call can be</span>
     <span class="c1"># replaced by a two-step alternative:</span>
@@ -201,22 +213,16 @@
         <span class="n">client_secret_filename</span><span class="o">=</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_APPREG_SECRET_FILENAME&quot;</span><span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="c1"># Initialize connection to Archivist. max_time is the time to wait for confirmation</span>
-    <span class="c1"># of an asset or event creation - the default is 30 seconds but one can optionally</span>
+    <span class="c1"># Initialize connection to Archivist. max_time is the optional time to wait for confirmation</span>
+    <span class="c1"># of an asset or event creation - the default is 300 seconds but one can optionally</span>
     <span class="c1"># specify a different value.</span>
-    <span class="c1"># Confirmation guarantees that 3rd parties can retrieve and cryptographically</span>
-    <span class="c1"># verify your Events, which can take a few seconds to propagate. It is typically</span>
-    <span class="c1"># not necessary to wait unless your workflow involves near-real-time</span>
-    <span class="c1"># communication with 3rd parties and the 3rd party needs immediate cryptographic</span>
-    <span class="c1"># verification of your new Asset.</span>
-
     <span class="c1"># The optional partner id field is allocated by Datatrails to partners - partners are then</span>
     <span class="c1"># expected to specify this value when submitting any request to the archivist product.</span>
     <span class="c1"># Leave blank if if you do not have a partner ID.</span>
     <span class="k">with</span> <span class="n">Archivist</span><span class="p">(</span>
         <span class="s2">&quot;https://app.datatrails.ai&quot;</span><span class="p">,</span>
         <span class="n">auth</span><span class="p">,</span>
-        <span class="n">max_time</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
         <span class="n">partner_id</span><span class="o">=</span><span class="s2">&quot;acme/f7a6beef-f01c-4b39-a494-3fa6b45d6bf4&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="k">as</span> <span class="n">arch</span><span class="p">:</span>
         <span class="c1"># Create a new asset</span>
@@ -255,18 +261,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-    <!-- Theme Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K46H3KK7N"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-7K46H3KK7N', {
-          'anonymize_ip': false,
-      });
-    </script> 
+  </script> 
 
 </body>
 </html>
