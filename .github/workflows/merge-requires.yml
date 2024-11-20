@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: ok
         run: |
-          echo "It's working!"
+          echo "This code is mergeable"
 
   release-checks-ok:
     runs-on: ubuntu-latest
@@ -32,4 +32,4 @@ jobs:
     steps:
       - name: ok
         run: |
-          echo "Houston we have cleared the tower"
+          echo "This code is releasable"
