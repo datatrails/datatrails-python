@@ -1,20 +1,16 @@
 # This workflow configures the repository specific choices of which CI builds
-# must pass in order for a build to merge. This allows a sinlge global teraform
+# must pass in order for a build to merge. This allows a single global teraform
 # configured rule to require a "well known" check in each repository. Whilst
 # granting repository stakeholders the ability configure what workflows are
 # appropriate to satisfy that check.
 name: Merge Requires
-on:
-  push:
+
+on: [pull_request]
 
 jobs:
   ci:
     secrets: inherit
     uses: ./.github/workflows/ci.yml
-  release:
-    if: ${{ github.event_name == 'release' }}
-    secrets: inherit
-    uses: ./.github/workflows/package.yml
 
   merge-checks-ok:
     runs-on: ubuntu-latest
@@ -23,12 +19,3 @@ jobs:
       - name: ok
         run: |
           echo "This code is mergeable"
-
-  release-checks-ok:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'release' }}
-    needs: [ci, release]
-    steps:
-      - name: ok
-        run: |
-          echo "This code is releasable"
