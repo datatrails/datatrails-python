@@ -209,9 +209,30 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
         return newheaders
 
     # the public endpoint is currently readonly so only read-type methods are
-    # defined here. This may change - the Public endpoint may allow writes
-    # in future...
+    # defined here.
     @retry_429
+    def __get(
+        self,
+        url: str,
+        *,
+        headers: "dict[str, str]|None" = None,
+        params: "dict[str, Any]|None" = None,
+    ) -> "Response":
+
+        response = self.session.get(
+            url,
+            headers=self._add_headers(headers),
+            params=_dotdict(params),
+        )
+
+        self._response_ring_buffer.appendleft(response)
+
+        error = _parse_response(response)
+        if error is not None:
+            raise error
+
+        return response
+
     def get(
         self,
         url: str,
@@ -230,19 +251,29 @@ class ArchivistPublic:  # pylint: disable=too-many-instance-attributes
             dict representing the response body (entity).
 
         """
-        response = self.session.get(
-            url,
-            headers=self._add_headers(headers),
-            params=_dotdict(params),
-        )
-
-        self._response_ring_buffer.appendleft(response)
-
-        error = _parse_response(response)
-        if error is not None:
-            raise error
-
+        response = self.__get(url, headers=headers, params=params)
         return response.json()
+
+    def get_binary(
+        self,
+        url: str,
+        *,
+        headers: "dict[str, str]|None" = None,
+        params: "dict[str, Any]|None" = None,
+    ) -> bytes:
+        """GET method
+
+        Args:
+            url (str): e.g. https://app.datatrails.ai/archivist/v2/publicassets/xxxxxxxxxxxxxxxxxx
+            headers (dict): optional REST headers
+            params (dict): optional params strings
+
+        Returns:
+            bytes representing the response content.
+
+        """
+        response = self.__get(url, headers=headers, params=params)
+        return response.content
 
     @retry_429
     def get_file(

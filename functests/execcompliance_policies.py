@@ -97,10 +97,7 @@ class TestCompliancePoliciesBase(TestCase):
 
     def setUp(self):
         auth = get_auth(
-            auth_token=getenv("DATATRAILS_AUTHTOKEN"),
-            auth_token_filename=getenv("DATATRAILS_AUTHTOKEN_FILENAME"),
-            client_id=getenv("DATATRAILS_APPREG_CLIENT"),
-            client_secret=getenv("DATATRAILS_APPREG_SECRET"),
+            client_filename=getenv("DATATRAILS_APPREG_CLIENT_FILENAME"),
             client_secret_filename=getenv("DATATRAILS_APPREG_SECRET_FILENAME"),
         )
         self.arch = Archivist(

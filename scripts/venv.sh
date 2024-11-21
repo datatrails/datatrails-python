@@ -19,7 +19,7 @@ fi
 rm -rf datatrails-venv
 python3 -m venv datatrails-venv
 source datatrails-venv/bin/activate
+trap deactivate EXIT
 python3 -m pip install --force-reinstall wheel
 python3 -m pip install --force-reinstall dist/datatrails_archivist-*.whl
 python3 -m pip install --force-reinstall -r docs/notebooks/requirements.txt
-deactivate

@@ -63,6 +63,35 @@ class TestArchivistGet(TestArchivistMethods):
                 msg="GET method called incorrectly",
             )
 
+    def test_get_binary(self):
+        """
+        Test default get_binary method
+        """
+        content = bytearray()
+        content.extend(b"response")
+        with mock.patch.object(self.arch.session, "get") as mock_get:
+            mock_get.return_value = MockResponse(200, content=content)
+            result = self.arch.get_binary("path/path/entity/xxxxxxxx")
+            self.assertEqual(
+                tuple(mock_get.call_args),
+                (
+                    ("path/path/entity/xxxxxxxx",),
+                    {
+                        "headers": {
+                            "authorization": "Bearer authauthauth",
+                            USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                        },
+                        "params": None,
+                    },
+                ),
+                msg="GET method called incorrectly",
+            )
+            self.assertEqual(
+                result,
+                content,
+                msg="GET result is incorrect",
+            )
+
     def test_ring_buffer(self):
         """
         Test That the ring buffer for response objects works as expected
