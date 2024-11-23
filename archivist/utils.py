@@ -60,6 +60,7 @@ def get_auth(
     auth_token_filename=None,
     auth_token=None,
     client_id=None,
+    client_filename=None,
     client_secret_filename=None,
     client_secret=None,
 ):  # pragma: no cover
@@ -75,6 +76,10 @@ def get_auth(
             auth_token = tokenfile.read().strip()
 
         return auth_token
+
+    if client_id is None and client_filename is not None:
+        with open(client_filename, mode="r", encoding="utf-8") as tokenfile:
+            client_id = tokenfile.read().strip()
 
     if client_id is not None:
         if client_secret_filename is not None:

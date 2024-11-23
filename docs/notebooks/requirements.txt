@@ -1,12 +1,7 @@
 #
 # jupyter notebooks
 #
-ipython~=8.13.0; python_version < '3.10'
-ipython~=8.20; python_version >= '3.10'
-notebook~=7.2
-jupyter~=1.0
+jupyter~=1.1.1
 jupyter-console~=6.6
-jupyter-contrib-nbextensions~=0.7
-jupyter-nbextensions-configurator~=0.6
 python-dotenv[cli]~=1.0
 

@@ -17,17 +17,53 @@ then
     exit 1
 fi
 
-NOTEBOOKDIR=datatrails-venv/notebooks
+set -x
+if [ -z "${DATATRAILS_URL}" ]
+then
+    export DATATRAILS_URL="https://app.datatrails.ai"
+fi
+if [ -n "${DATATRAILS_APPREG_CLIENT_FILENAME}" ]
+then
+    if [ -s "${DATATRAILS_APPREG_CLIENT_FILENAME}" ]
+    then
+        export DATATRAILS_APPREG_CLIENT=$(cat ${DATATRAILS_APPREG_CLIENT_FILENAME})
+    fi
+fi
+if [ -z "${DATATRAILS_APPREG_CLIENT}" ]
+then
+    echo "DATATRAILS_APPREG_CLIENT is not set"
+    exit 1
+fi
+if [ -n "${DATATRAILS_APPREG_SECRET_FILENAME}" ]
+then
+    if [ -s "${DATATRAILS_APPREG_SECRET_FILENAME}" ]
+    then
+        export DATATRAILS_APPREG_SECRET=$(cat ${DATATRAILS_APPREG_SECRET_FILENAME})
+    fi
+fi
+if [ -z "${DATATRAILS_APPREG_SECRET}" ]
+then
+    echo "DATATRAILS_APPREG_SECRET is not set"
+    exit 1
+fi
+
+NOTEBOOKDIR=$(pwd)/datatrails-venv/notebooks
 
 export DATATRAILS_ARTIST_ATTACHMENT="test_files/pexels-andrea-turner-707697.jpeg"
 export DATATRAILS_UNIQUE_ID=${SRANDOM}
 
 source datatrails-venv/bin/activate
+trap deactivate EXIT
+
 mkdir -p "${NOTEBOOKDIR}"
 
 # The customer will download the notebooks from python.datatrails.ai but
 # we will copy locally
-cp archivist/notebooks/*.ipynb "${NOTEBOOKDIR}"/
-cp -r archivist/notebooks/test_files "${NOTEBOOKDIR}"/
+DIR=$(pwd)
+cd archivist/notebooks
+jupyter trust *.ipynb
+cp *.ipynb "${NOTEBOOKDIR}"/
+cp -r test_files "${NOTEBOOKDIR}"/
+cd $DIR
+jupyter notebook --help
 jupyter notebook --ip 0.0.0.0 --notebook-dir="${NOTEBOOKDIR}"
-deactivate

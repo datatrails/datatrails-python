@@ -52,12 +52,9 @@ tasks:
       - task: check-pyright
 
   check-pyright:
-    desc: Execute pyright conditionally - currently does not work in 3.12 (https://github.com/ekalinin/nodeenv/issues/341)
+    desc: Execute pyright
     cmds:
-      - |
-        if [ "{{.PYVERSION}}" != "3.12" ]; then
-            ./scripts/builder.sh python3 -m pyright --stats archivist
-        fi
+      - ./scripts/builder.sh python3 -m pyright --stats archivist
 
   check-fixes:
     desc: Show proposed fixes from ruff

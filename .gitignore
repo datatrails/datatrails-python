@@ -22,3 +22,4 @@ datatrails-venv/
 stuntidp*
 .npm/
 functest-results/
+.jupyter

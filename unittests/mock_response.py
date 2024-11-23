@@ -9,17 +9,28 @@ import json
 
 class MockResponse(dict):
     def __init__(
-        self, status_code, request=None, headers=None, iter_content=None, **kwargs
+        self,
+        status_code,
+        request=None,
+        headers=None,
+        content=None,
+        iter_content=None,
+        **kwargs,
     ):
         super().__init__(**kwargs)
         self.status_code = status_code
         self._headers = headers
         self._request = request
+        self._content = content
         self._iter_content = iter_content
 
     @property
     def url(self):
         return "url"
+
+    @property
+    def content(self):
+        return self._content
 
     @property
     def request(self):
