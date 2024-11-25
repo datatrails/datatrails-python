@@ -14,7 +14,7 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.archivist &mdash; DATATRAILS v0.33.2 documentation</title>
+  <title>archivist.archivist &mdash; DATATRAILS v0.33.3a0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -24,7 +24,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=0d3f0459"></script>
+      <script src="../../_static/documentation_options.js?v=b21b95e9"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -124,9 +124,12 @@
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">BinaryIO</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">BinaryIO</span>
 
 <span class="kn">from</span> <span class="nn">requests_toolbelt.multipart.encoder</span> <span class="kn">import</span> <span class="n">MultipartEncoder</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">requests.models</span> <span class="kn">import</span> <span class="n">Response</span>
 
 <span class="kn">from</span> <span class="nn">.access_policies</span> <span class="kn">import</span> <span class="n">_AccessPoliciesClient</span>
 <span class="kn">from</span> <span class="nn">.appidp</span> <span class="kn">import</span> <span class="n">_AppIDPClient</span>
@@ -140,6 +143,9 @@
 <span class="kn">from</span> <span class="nn">.composite</span> <span class="kn">import</span> <span class="n">_CompositeClient</span>
 <span class="kn">from</span> <span class="nn">.confirmer</span> <span class="kn">import</span> <span class="n">MAX_TIME</span>
 <span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AUTHORIZATION_KEY</span><span class="p">,</span>
+    <span class="n">BEARER_PREFIX</span><span class="p">,</span>
+    <span class="n">BINARY_CONTENT</span><span class="p">,</span>
     <span class="n">ROOT</span><span class="p">,</span>
     <span class="n">SEP</span><span class="p">,</span>
 <span class="p">)</span>
@@ -317,28 +323,60 @@
         <span class="n">arch</span><span class="o">.</span><span class="n">_user_agent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_agent</span>
         <span class="k">return</span> <span class="n">arch</span>
 
-    <span class="k">def</span> <span class="nf">_add_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str,str]|None&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str,Any]&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_add_headers</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str,str]|None&quot;</span><span class="p">,</span> <span class="n">no_auth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str,Any]&quot;</span><span class="p">:</span>
         <span class="n">newheaders</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
 
-        <span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span>  <span class="c1"># this may trigger a refetch so only do it once here</span>
-        <span class="c1"># for appidp endpoint there may not be an authtoken</span>
-        <span class="k">if</span> <span class="n">auth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">newheaders</span><span class="p">[</span><span class="s2">&quot;authorization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Bearer &quot;</span> <span class="o">+</span> <span class="n">auth</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="c1"># there may not be an authtoken required</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">no_auth</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span>  <span class="c1"># this may trigger a refetch so only do it once here</span>
+            <span class="k">if</span> <span class="n">auth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">newheaders</span><span class="p">[</span><span class="n">AUTHORIZATION_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="n">BEARER_PREFIX</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">auth</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">newheaders</span>
 
     <span class="c1"># currently only the archivist endpoint is allowed to create/modify data.</span>
     <span class="c1"># this may change...</span>
+    <span class="nd">@retry_429</span>
+    <span class="k">def</span> <span class="nf">__post</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">request</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any] | bytes | None&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any] | None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">no_auth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Response&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="n">url</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">no_auth</span><span class="o">=</span><span class="n">no_auth</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="n">url</span><span class="p">,</span>
+                <span class="n">json</span><span class="o">=</span><span class="n">request</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">no_auth</span><span class="o">=</span><span class="n">no_auth</span><span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">error</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+
 <div class="viewcode-block" id="Archivist.post">
 <a class="viewcode-back" href="../../code/archivist.html#archivist.archivist.Archivist.post">[docs]</a>
-    <span class="nd">@retry_429</span>
     <span class="k">def</span> <span class="nf">post</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">request</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any]|None&quot;</span><span class="p">,</span>
+        <span class="n">request</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any] | None&quot;</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any]|None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any] | bool&quot;</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any] | None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">no_auth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;POST method (REST)</span>
 
@@ -349,27 +387,46 @@
 <span class="sd">            request (dict): request body defining the entity</span>
 <span class="sd">            headers (dict): optional REST headers</span>
 <span class="sd">            data (bool): send as form-encoded and not as json</span>
+<span class="sd">            no_auth (bool): strip authorization from headers</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict representing the response body (entity).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-                <span class="n">url</span><span class="p">,</span>
-                <span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-                <span class="n">url</span><span class="p">,</span>
-                <span class="n">json</span><span class="o">=</span><span class="n">request</span><span class="p">,</span>
-                <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">),</span>
-            <span class="p">)</span>
-
-        <span class="n">error</span> <span class="o">=</span> <span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">error</span>
-
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__post</span><span class="p">(</span>
+            <span class="n">url</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">no_auth</span><span class="o">=</span><span class="n">no_auth</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Archivist.post_binary">
+<a class="viewcode-back" href="../../code/archivist.html#archivist.archivist.Archivist.post_binary">[docs]</a>
+    <span class="k">def</span> <span class="nf">post_binary</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">request</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any] | None&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">no_auth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;POST method</span>
+
+<span class="sd">        Creates an entity</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str): e.g. v1/publicscitt/entries</span>
+<span class="sd">            request (bytes): binary input data</span>
+<span class="sd">            headers (dict): optional REST headers</span>
+<span class="sd">            no_auth (bool): strip authorization from headers</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bytes representing the response data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">newheaders</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">headers</span><span class="p">}</span> <span class="k">if</span> <span class="n">headers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="n">newheaders</span><span class="p">[</span><span class="s2">&quot;content-type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BINARY_CONTENT</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__post</span><span class="p">(</span>
+            <span class="n">url</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">newheaders</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">no_auth</span><span class="o">=</span><span class="n">no_auth</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span></div>
 
 
 <div class="viewcode-block" id="Archivist.post_file">
