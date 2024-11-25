@@ -315,7 +315,7 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         Creates an entity
 
         Args:
-            url (str): e.g. publicxxxx
+            url (str): e.g. v1/publicscitt/entries
             request (bytes): binary input data
             headers (dict): optional REST headers
             no_auth (bool): strip authorization from headers
