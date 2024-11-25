@@ -4,12 +4,15 @@ Test appidp
 
 from unittest import TestCase, mock
 
+from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
     APPIDP_LABEL,
     APPIDP_SUBPATH,
     APPIDP_TOKEN,
     ROOT,
+    USER_AGENT,
+    USER_AGENT_PREFIX,
 )
 
 from .mock_response import MockResponse
@@ -78,6 +81,9 @@ class TestAppIDP(TestCase):
             self.assertEqual(
                 kwargs,
                 {
+                    "headers": {
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                    },
                     "data": REQUEST,
                 },
                 msg="CREATE method kwargs called incorrectly",

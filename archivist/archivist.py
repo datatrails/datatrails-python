@@ -33,9 +33,12 @@ parameters (the max_time parameter is optional):
 from copy import deepcopy
 from logging import getLogger
 from time import time
-from typing import Any, BinaryIO
+from typing import TYPE_CHECKING, Any, BinaryIO
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
+
+if TYPE_CHECKING:
+    from requests.models import Response
 
 from .access_policies import _AccessPoliciesClient
 from .appidp import _AppIDPClient
@@ -49,6 +52,9 @@ from .compliance_policies import _CompliancePoliciesClient
 from .composite import _CompositeClient
 from .confirmer import MAX_TIME
 from .constants import (
+    AUTHORIZATION_KEY,
+    BEARER_PREFIX,
+    BINARY_CONTENT,
     ROOT,
     SEP,
 )
@@ -224,26 +230,58 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         arch._user_agent = self._user_agent
         return arch
 
-    def _add_headers(self, headers: "dict[str,str]|None") -> "dict[str,Any]":
+    def _add_headers(
+        self, headers: "dict[str,str]|None", no_auth: bool = False
+    ) -> "dict[str,Any]":
         newheaders = super()._add_headers(headers)
 
-        auth = self.auth  # this may trigger a refetch so only do it once here
-        # for appidp endpoint there may not be an authtoken
-        if auth is not None:
-            newheaders["authorization"] = "Bearer " + auth.strip()
+        # there may not be an authtoken required
+        if not no_auth:
+            auth = self.auth  # this may trigger a refetch so only do it once here
+            if auth is not None:
+                newheaders[AUTHORIZATION_KEY] = BEARER_PREFIX + " " + auth.strip()
 
         return newheaders
 
     # currently only the archivist endpoint is allowed to create/modify data.
     # this may change...
     @retry_429
+    def __post(
+        self,
+        url: str,
+        request: "dict[str,Any] | bytes | None",
+        *,
+        headers: "dict[str,Any] | None" = None,
+        data: bool = False,
+        no_auth: bool = False,
+    ) -> "Response":
+        if data:
+            response = self.session.post(
+                url,
+                data=request,
+                headers=self._add_headers(headers, no_auth=no_auth),
+            )
+        else:
+            response = self.session.post(
+                url,
+                json=request,
+                headers=self._add_headers(headers, no_auth=no_auth),
+            )
+
+        error = _parse_response(response)
+        if error is not None:
+            raise error
+
+        return response
+
     def post(
         self,
         url: str,
-        request: "dict[str,Any]|None",
+        request: "dict[str,Any] | None",
         *,
-        headers: "dict[str,Any]|None" = None,
-        data: "dict[str, Any] | bool" = False,
+        headers: "dict[str,Any] | None" = None,
+        data: bool = False,
+        no_auth: bool = False,
     ) -> "dict[str, Any]":
         """POST method (REST)
 
@@ -254,27 +292,43 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
             request (dict): request body defining the entity
             headers (dict): optional REST headers
             data (bool): send as form-encoded and not as json
+            no_auth (bool): strip authorization from headers
 
         Returns:
             dict representing the response body (entity).
         """
-        if data:
-            response = self.session.post(
-                url,
-                data=request,
-            )
-        else:
-            response = self.session.post(
-                url,
-                json=request,
-                headers=self._add_headers(headers),
-            )
-
-        error = _parse_response(response)
-        if error is not None:
-            raise error
-
+        response = self.__post(
+            url, request, headers=headers, data=data, no_auth=no_auth
+        )
         return response.json()
+
+    def post_binary(
+        self,
+        url: str,
+        request: bytes,
+        *,
+        headers: "dict[str,Any] | None" = None,
+        no_auth: bool = False,
+    ) -> bytes:
+        """POST method
+
+        Creates an entity
+
+        Args:
+            url (str): e.g. v1/publicscitt/entries
+            request (bytes): binary input data
+            headers (dict): optional REST headers
+            no_auth (bool): strip authorization from headers
+
+        Returns:
+            bytes representing the response data.
+        """
+        newheaders = {**headers} if headers is not None else {}
+        newheaders["content-type"] = BINARY_CONTENT
+        response = self.__post(
+            url, request, headers=newheaders, data=True, no_auth=no_auth
+        )
+        return response.content
 
     @retry_429
     def post_file(

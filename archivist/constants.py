@@ -17,6 +17,12 @@ USER_AGENT = "DataTrails-User-Agent"
 USER_AGENT_PREFIX = "pysdk/"
 PARTNER_ID = "DataTrails-Partner-ID"
 
+# bearer token
+AUTHORIZATION_KEY = "authorization"
+BEARER_PREFIX = "Bearer"
+
+BINARY_CONTENT = "application/octet-stream"
+
 # define in MIME canonical form
 HEADERS_REQUEST_TOTAL_COUNT = "X-Request-Total-Count"
 HEADERS_TOTAL_COUNT = "X-Total-Count"

@@ -8,6 +8,7 @@ from unittest import TestCase, mock
 from archivist.about import __version__ as VERSION
 from archivist.archivist import Archivist
 from archivist.constants import (
+    BINARY_CONTENT,
     HEADERS_RETRY_AFTER,
     USER_AGENT,
     USER_AGENT_PREFIX,
@@ -65,6 +66,41 @@ class TestArchivistPost(TestArchivistMethods):
                     },
                 },
                 msg="POST method kwargs called incorrectly",
+            )
+
+    def test_post_binary(self):
+        """
+        Test default post method
+        """
+        request = bytearray()
+        request.extend(b"request")
+        content = bytearray()
+        content.extend(b"response")
+        with mock.patch.object(self.arch.session, "post") as mock_post:
+            mock_post.return_value = MockResponse(200, content=content)
+            result = self.arch.post_binary("path/path", request)
+            args, kwargs = mock_post.call_args
+            self.assertEqual(
+                args,
+                ("path/path",),
+                msg="POST method args called incorrectly",
+            )
+            self.assertEqual(
+                kwargs,
+                {
+                    "data": request,
+                    "headers": {
+                        "authorization": "Bearer authauthauth",
+                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
+                        "content-type": BINARY_CONTENT,
+                    },
+                },
+                msg="POST method kwargs called incorrectly",
+            )
+            self.assertEqual(
+                result,
+                content,
+                msg="POST result is incorrect",
             )
 
     def test_post_with_error(self):

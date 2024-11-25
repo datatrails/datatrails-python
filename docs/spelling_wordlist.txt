@@ -35,6 +35,7 @@ merkle
 mimetype
 onwards
 params
+publicscitt
 publicurl
 py
 sbom
