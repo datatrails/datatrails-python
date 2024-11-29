@@ -1,5 +1,9 @@
-# This workflow will upload a Python Package using Twine when a release is created
-# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+# This workflow will upload a Python Package using a release environment and a trusted publisher.
+# See PyPi management in the datatrails confluence service for an explanation.
+#
+# Create a trusted publisher for datatrails-python in pypi.org and delete any API tokens.
+# In github add an environment called release that is restricted to the main branch and
+# delete any PYPI secrets.
 
 name: Package and Publish
 
@@ -9,15 +13,19 @@ on:
 
 jobs:
   deploy:
+    environment: release
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
 
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
+
     - name: Install dependencies
       run: |
         export DEBIAN_FRONTEND=noninteractive
@@ -37,21 +45,28 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements-dev.txt
         python3 -m pip install setuptools wheel
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      shell: bash
+
+    - name: Create wheel
       run: |
         rm -f archivist/about.py
         ./scripts/version.sh
         python3 -m build --sdist
         python3 -m build --wheel
-        twine check dist/*
-        twine upload dist/*
+      shell: bash
+
+    - name: Publish to PyPi
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        verbose: true
+        attestations: true
+
     - name: Build docs
       run: |
         ./scripts/zipnotebooks.sh
         (cd docs && make clean && make html)
+      shell: bash
+
     - name: Publish docs
       uses: peaceiris/actions-gh-pages@v3
       with:
