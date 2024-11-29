@@ -1,4 +1,4 @@
-# This workflow will upload a Python Package using a release environmet and a trusted publisher.
+# This workflow will upload a Python Package using a release environment and a trusted publisher.
 # See PyPi management in the datatrails confluence service for an explanation.
 #
 # Create a trusted publisher for datatrails-python in pypi.org and delete any API tokens.
@@ -51,8 +51,8 @@ jobs:
       run: |
         rm -f archivist/about.py
         ./scripts/version.sh
-         python3 -m build --sdist
-         python3 -m build --wheel
+        python3 -m build --sdist
+        python3 -m build --wheel
       shell: bash
 
     - name: Publish to PyPi
