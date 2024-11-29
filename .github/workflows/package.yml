@@ -16,7 +16,7 @@ jobs:
     environment: release
     permissions:
       id-token: write # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
+      contents: write # This is required for actions/checkout and actions-gh-pages
 
     runs-on: ubuntu-latest
     steps:
@@ -68,7 +68,7 @@ jobs:
       shell: bash
 
     - name: Publish docs
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: "./docs/_build/html"
