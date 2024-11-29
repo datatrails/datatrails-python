@@ -60,7 +60,6 @@ jobs:
       with:
         verbose: true
         attestations: true
-        # skip-existing: true
 
     - name: Build docs
       run: |
