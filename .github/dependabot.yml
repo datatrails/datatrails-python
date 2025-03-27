@@ -1,0 +1,43 @@
+# refer: https://github.com/dependabot/dependabot-core/blob/main/.github/dependabot.yml
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      # Check for updates managed by Composer once a week
+      interval: "weekly"
+      day: "wednesday"
+      time: "03:00"
+      timezone: "Europe/London"
+
+  # python
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "03:00"
+      timezone: "Europe/London"
+    groups:
+      common:
+        patterns:
+          - hashin
+          - cython
+          - flake8
+      # Keep the package managers themselves separate because they are higher risk
+      # and also higher visibility--ie, users generally want latest, so we don't
+      # want breakage in the `common` group to prevent updating package manager versions
+      pip:
+        patterns:
+          - pip
+      pip-tools:
+        patterns:
+          - pip-tools
+      pipenv:
+        patterns:
+          - pipfile
+          - pipenv
+      poetry:
+        patterns:
+          - poetry

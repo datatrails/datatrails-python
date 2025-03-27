@@ -7,13 +7,13 @@ python3 --version
 # run single test from cmdline for example:
 #
 # all tests in a module (name of file in unittest directory):
-#       UNITTEST=testcompliance_policy_type task unittests
+#       UNITTEST=testRunnerstep task unittests
 #
 # all tests in a class
-#       UNITTEST=testcompliance_policy_type.TestCompliancePolicyType task unittests
+#       UNITTEST=testrunnerstep.TestRunnerStep task unittests
 #
 # single test
-#       UNITTEST=testcompliance_policy_type.TestCompliancePolicyType.test_compliance_policy_type task unittests
+#       UNITTEST=testrunnerstep.TestRunnerStep.test_runner_step task unittests
 #
 export DATATRAILS_ARTIST_ATTACHMENT=archivist/notebooks/test_files/pexels-andrea-turner-707697.jpeg
 export DATATRAILS_UNIQUE_ID=${SRANDOM}

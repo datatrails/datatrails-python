@@ -185,26 +185,6 @@ DATATRAILS_URL {URL}""",
         ) as notebook:
             self.basic_notebook_test(notebook)
 
-    def test_check_asset_compliance_current_outstanding(self):
-        """
-        Test check_asset_compliance_current_outstanding
-        """
-        with testbook(
-            "archivist/notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy.ipynb",
-            execute=range(1, 6),
-        ) as notebook:
-            self.basic_notebook_test(notebook)
-
-    def test_check_asset_compliance_since(self):
-        """
-        Test check_asset_compliance_since
-        """
-        with testbook(
-            "archivist/notebooks/Check Asset Compliance using SINCE Policy.ipynb",
-            execute=range(1, 6),
-        ) as notebook:
-            self.basic_notebook_test(notebook)
-
     def test_find_artist_cover_art(self):
         """
         Test find_artist_cover_art
@@ -221,56 +201,6 @@ DATATRAILS_URL {URL}""",
         """
         with testbook(
             "archivist/notebooks/Find Artist and Additional Album Release Info.ipynb",
-            execute=range(1, 6),
-        ) as notebook:
-            self.basic_notebook_test(notebook)
-
-    def test_playing_fetch_fiveminutes(self):
-        """
-        Test playing_fetch_fiveminutes
-        """
-        with testbook(
-            "archivist/notebooks/Playing Fetch Every 5 Minutes.ipynb",
-            execute=range(1, 6),
-        ) as notebook:
-            self.basic_notebook_test(notebook)
-
-    def test_feed_the_dog(self):
-        """
-        Test feed_the_dog
-        """
-        with testbook(
-            "archivist/notebooks/Feeding the Dog.ipynb",
-            execute=range(1, 6),
-        ) as notebook:
-            self.basic_notebook_test(notebook)
-
-    def test_feed_the_doghourly(self):
-        """
-        Test feed_the_doghourly
-        """
-        with testbook(
-            "archivist/notebooks/Feeding the Dog Hourly.ipynb",
-            execute=range(1, 6),
-        ) as notebook:
-            self.basic_notebook_test(notebook)
-
-    def test_checking_dogs_weight(self):
-        """
-        Test checking_dogs_weight
-        """
-        with testbook(
-            "archivist/notebooks/Checking the Dog's Weight.ipynb",
-            execute=range(1, 6),
-        ) as notebook:
-            self.basic_notebook_test(notebook)
-
-    def test_feed_dog_timelymanner(self):
-        """
-        Test feed_dog_timelymanner
-        """
-        with testbook(
-            "archivist/notebooks/Feeding the Dog in a Timely Manner.ipynb",
             execute=range(1, 6),
         ) as notebook:
             self.basic_notebook_test(notebook)

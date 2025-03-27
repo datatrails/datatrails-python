@@ -237,7 +237,7 @@ Example usage:
          -u https://app.datatrails.ai \
          --client-id <your-client-id> \
          --client-secret <your-client-secret> \
-         functests/test_resources/richness_story.yaml
+         functests/test_resources/subjects_story.yaml
 
 
 Example Yaml Snippet
@@ -251,7 +251,7 @@ the yaml representation of the request body for an asset or event.
 
 The confirm: field is a control variable for the PythonSDK that ensures that the
 asset or event is confirmed before returning. This is optional and is only required
-3rd parties need to immediately retrieve and cryptographically
+if 3rd parties need to immediately retrieve and cryptographically
 verify your Assets, which can take a few seconds to propagate. It is typically
 not necessary to wait unless your workflow involves near-real-time
 communication with 3rd parties and the 3rd party needs instant cryptographic
@@ -269,9 +269,6 @@ verification of your new Asset.
 .. code:: yaml
 
     ---
-    # Demonstration of applying a Richness compliance policy to an asset that undergoes
-    # events that may or may not make the asset compliant or non-compliant.
-    #
     # The operation field is a string that represents the method bound to an endpoint and
     # the args and kwargs correspond to the arguments to such a method.
     #

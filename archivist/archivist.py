@@ -47,8 +47,6 @@ from .archivistpublic import ArchivistPublic
 from .assetattachments import _AssetAttachmentsClient
 from .assets import _AssetsRestricted
 from .attachments import _AttachmentsClient
-from .compliance import _ComplianceClient
-from .compliance_policies import _CompliancePoliciesClient
 from .composite import _CompositeClient
 from .confirmer import MAX_TIME
 from .constants import (
@@ -96,8 +94,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         "appidp": _AppIDPClient,
         "applications": _ApplicationsClient,
         "attachments": _AttachmentsClient,
-        "compliance": _ComplianceClient,
-        "compliance_policies": _CompliancePoliciesClient,
         "composite": _CompositeClient,
         "events": _EventsRestricted,
         "locations": _LocationsClient,
@@ -144,8 +140,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         self.assets: _AssetsRestricted
         self.assetattachments: _AssetAttachmentsClient
         self.attachments: _AttachmentsClient
-        self.compliance: _ComplianceClient
-        self.compliance_policies: _CompliancePoliciesClient
         self.composite: _CompositeClient
         self.events: _EventsRestricted
         self.locations: _LocationsClient

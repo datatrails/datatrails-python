@@ -33,9 +33,6 @@ Each step follows the same pattern:
 
 :wait_time:
     The story runner will pause for this number of seconds before execution.
-    Primarily used to demonstrate compliance policy evaluation. One pauses
-    before creating events and before evaluating compliance to allow
-    (for example) the asset to become non-compliant. (demonstration)
 
 :print_response:
    Emit JSON representation of response. Useful for debugging purposes.

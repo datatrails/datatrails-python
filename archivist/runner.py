@@ -9,7 +9,7 @@ from json import dumps as json_dumps
 from logging import getLogger
 from time import sleep as time_sleep
 from types import GeneratorType
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
 from .errors import ArchivistError, ArchivistInvalidOperationError
@@ -91,15 +91,6 @@ class _ActionMap(dict):
         }
         self["COMPOSITE_ESTATE_INFO"] = {
             "action": self._archivist.composite.estate_info,
-        }
-        self["COMPLIANCE_POLICIES_CREATE"] = {
-            "action": self._archivist.compliance_policies.create_from_data,
-            "delete": self._archivist.compliance_policies.delete,
-        }
-        self["COMPLIANCE_COMPLIANT_AT"] = {
-            "action": self._archivist.compliance.compliant_at,
-            "keywords": ("report",),
-            "use_asset_label": "add_arg_identity",
         }
         self["EVENTS_CREATE"] = {
             "action": self._archivist.events.create_from_data,
@@ -190,7 +181,7 @@ class _ActionMap(dict):
             "use_subject_label": "add_arg_identity",
         }
 
-    def ops(self, action_name: str) -> "dict[str, Any]":
+    def ops(self, action_name: str):
         """
         Get valid entry in map
         """
@@ -199,14 +190,14 @@ class _ActionMap(dict):
             raise ArchivistInvalidOperationError(f"Illegal Action '{action_name}'")
         return ops
 
-    def action(self, action_name: str) -> Callable:
+    def action(self, action_name: str):
         """
         Get valid action in map
         """
         # if an exception occurs here then the dict initialized above is faulty.
         return self.ops(action_name).get("action")  # pyright: ignore
 
-    def keywords(self, action_name: str) -> "tuple | None":
+    def keywords(self, action_name: str):
         """
         Get keywords in map
         """
@@ -218,7 +209,7 @@ class _ActionMap(dict):
         """
         return self.ops(action_name).get("delete")
 
-    def label(self, noun: str, endpoint: str, action_name: str) -> bool:
+    def label(self, noun: str, endpoint: str, action_name: str):
         """
         Return whether this action uses or sets label
         """
@@ -230,7 +221,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         super().__init__(**kwargs)
         self._archivist = archivist_instance
         self._args: "list[Any]" = []
-        self._kwargs: "dict[str, Any]" = {}
+        self._kwargs = {}
         self._actions = None
         self._action = None
         self._action_name = None
@@ -255,7 +246,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
 
     add_data_location_identity = partialmethod(add_data_identity, "location")
 
-    def args(self, identity_method, step):
+    def init_args(self, identity_method, step):
         """
         Add args and kwargs to action.
         """
@@ -330,10 +321,6 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         if description is not None:
             LOGGER.info(description)
 
-    @property
-    def delete(self):
-        return self.get("delete")
-
     def print_response(self, response):
         print_response = self.get("print_response")
         if print_response:
@@ -358,7 +345,11 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
         return self._actions
 
     @property
-    def action(self) -> Callable:
+    def args(self):
+        return self._args
+
+    @property
+    def action(self):
         if self._action is None:
             self._action = self.actions.action(self.action_name)
 
@@ -366,16 +357,13 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
 
     @property
     def delete_method(self):
-        if self._delete_method is None:
-            self._delete_method = self.actions.delete(self.action_name)
+        self._delete_method = self.actions.delete(self.action_name)
 
         return self._delete_method
 
     @property
     def keywords(self):
-        if self._keywords is None:
-            self._keywords = self.actions.keywords(self.action_name)
-
+        self._keywords = self.actions.keywords(self.action_name)
         return self._keywords
 
     @property
@@ -444,7 +432,6 @@ class _Runner:
         for step in config["steps"]:
             self.run_step(step)
 
-        self.delete()
         self._archivist.close()
 
     def run_step(self, step: "dict[str, Any]"):
@@ -461,7 +448,7 @@ class _Runner:
         s.description()
 
         # this is a bit clunky...
-        s.args(self.identity, step)
+        s.init_args(self.identity, step)
 
         # wait for a number of seconds and then execute
         s.wait_time()
@@ -469,26 +456,10 @@ class _Runner:
 
         s.print_response(response)
 
-        if s.delete:
-            self.set_deletions(response, s.delete_method)
-
         for noun in NOUNS:
             label = s.get(f"{noun}_label")
             if s.label("set", noun) and label is not None:
                 self.entities[label] = response
-
-    def set_deletions(self, response: "dict[str, Any]", delete_method):
-        """sets entry to be deleted"""
-
-        if delete_method is not None:
-            identity = response["identity"]
-            self.deletions[identity] = delete_method
-
-    def delete(self):
-        """Deletes all entities"""
-        for identity, delete_method in self.deletions.items():
-            LOGGER.info("Delete %s", identity)
-            delete_method(identity)
 
     def identity(self, name: str) -> "str|None":
         """Gets entity id"""

@@ -16,7 +16,6 @@ Shows all code
    locations
    attachments
    tenancies
-   compliance_policies/index
    iam/index
    runner
 
