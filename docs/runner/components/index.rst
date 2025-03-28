@@ -13,8 +13,6 @@ Story Runner Components
    assets_create_if_not_exists
    assets_list
    assets_wait_for_confirmed
-   compliance_compliant_at
-   compliance_policies_create
    composite_estate_info
    events_count
    events_create

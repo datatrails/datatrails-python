@@ -44,60 +44,81 @@ class TestRunnerStep(TestCase):
     def tearDown(self):
         self.arch.close()
 
-    def test_runner_step_with_delete_method(self):
+    def test_runner_step_no_kwargs(self):
         """
         Test runner step
         """
+
+        # this action has no keywords and thsi will test the
+        # keywords is not None clause
+        steps = {
+            "action": "ASSETS_ATTACHMENT_INFO",
+        }
         step = _Step(
             self.arch,
-            **{
-                "action": "COMPLIANCE_POLICIES_CREATE",
-                "wait_time": 10,
-                "print_response": True,
-                "description": "Testing runner events list",
-                "asset_label": "Existing Asset",
-                "delete": True,
-            },
+            **steps,
         )
         self.assertEqual(
-            step.action,
-            self.arch.compliance_policies.create_from_data,
-            msg="Incorrect action",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.action,
-            self.arch.compliance_policies.create_from_data,
-            msg="Incorrect action",
+            step.args,
+            [],
+            msg="Incorrect args",
         )
 
+        def identity_method(_unused):
+            return "identity"
+
+        step.init_args(identity_method, steps)
         self.assertEqual(
-            step.delete_method,
-            self.arch.compliance_policies.delete,
-            msg="Incorrect delete_method",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.delete_method,
-            self.arch.compliance_policies.delete,
-            msg="Incorrect delete_method",
+            step.args,
+            [
+                steps,
+            ],
+            msg="Incorrect args",
         )
 
     def test_runner_step(self):
         """
         Test runner step
         """
+        steps = {
+            "action": "EVENTS_LIST",
+            "wait_time": 10,
+            "print_response": True,
+            "description": "Testing runner events list",
+            "asset_label": "Existing Asset",
+            "delete": True,
+        }
         step = _Step(
             self.arch,
-            **{
-                "action": "EVENTS_LIST",
-                "wait_time": 10,
-                "print_response": True,
-                "description": "Testing runner events list",
-                "asset_label": "Existing Asset",
-                "delete": True,
-            },
+            **steps,
         )
+        self.assertEqual(
+            step.args,
+            [],
+            msg="Incorrect args",
+        )
+
+        def identity_method(_unused):
+            return "identity"
+
+        step.init_args(identity_method, step)
+        self.assertEqual(
+            step.args,
+            [
+                steps,
+            ],
+            msg="Incorrect args",
+        )
+        step.add_arg_identity("another_identity")
+        self.assertEqual(
+            step.args,
+            [
+                steps,
+                "another_identity",
+            ],
+            msg="Incorrect args",
+        )
+
         self.assertEqual(
             step.action,
             self.arch.events.list,

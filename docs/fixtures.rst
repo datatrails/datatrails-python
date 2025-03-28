@@ -17,13 +17,13 @@ and locations.
     with open(".auth_token", mode='r', encoding="utf-8") as tokenfile:
         authtoken = tokenfile.read().strip()
     
-    # Initialize connection to Archivist - for assets on DLT.
+    # Initialize connection to Archivist - for assets on immutable ledger.
     ledger = Archivist(
         "https://app.datatrails.ai",
         authtoken,
     )
     
-    # lets define doors in our namespace that reside on the ledger...
+    # lets define doors in our namespace that reside on the immutable ledger...
     doors = copy(ledger)
     doors.fixtures = {
         "assets": {

@@ -67,17 +67,3 @@ Download the notebooks into a suitable folder:
    notebooks/Sharing Album Release Info with User
    notebooks/Sharing Artist Asset with Record Labels
    notebooks/Sharing Album Release Info with Record Labels
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Compliance Policies Examples
-
-   notebooks/Playing Fetch Every 5 Minutes
-   notebooks/Feeding the Dog
-   notebooks/Feeding the Dog Hourly
-   notebooks/Feeding the Dog in a Timely Manner
-   notebooks/Checking the Dog's Weight
-   notebooks/Check Asset Compliance using CURRENT OUTSTANDING Policy
-   notebooks/Check Asset Compliance using SINCE Policy
-
-

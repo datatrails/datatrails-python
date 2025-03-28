@@ -106,16 +106,6 @@ class TestArchivist(TestCase):
                 msg="Incorrect attachments",
             )
             self.assertEqual(
-                str(arch.compliance),
-                "ComplianceClient(https://app.datatrails.ai)",
-                msg="Incorrect compliance",
-            )
-            self.assertEqual(
-                str(arch.compliance_policies),
-                "CompliancePoliciesClient(https://app.datatrails.ai)",
-                msg="Incorrect compliance_policies",
-            )
-            self.assertEqual(
                 str(arch.events),
                 "EventsRestricted(https://app.datatrails.ai)",
                 msg="Incorrect events",

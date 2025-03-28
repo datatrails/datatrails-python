@@ -53,27 +53,6 @@ class TestRunner(TestCase):
     def tearDown(self):
         self.arch.close()
 
-    def test_runner_dynamic_tolerance(self):
-        """
-        Test runner with dynamic tolerance story
-
-        uses DATATRAILS_UNIQUE_ID to set namespace value
-
-        run_steps is used so that exceptions are shown
-        """
-        LOGGER.debug("...")
-        with open(
-            "functests/test_resources/dynamic_tolerance_story.yaml",
-            "r",
-            encoding="utf-8",
-        ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
-            self.assertEqual(
-                len(self.arch.runner.entities),
-                1,
-                msg="Incorrect number of entities",
-            )
-
     def test_runner_synsation(self):
         """
         Test runner with synsation story
@@ -112,28 +91,6 @@ class TestRunner(TestCase):
             self.assertEqual(
                 len(self.arch.runner.entities),
                 9,
-                msg="Incorrect number of entities",
-            )
-
-    def test_runner_richness(self):
-        """
-        Test runner with richness story
-
-        uses DATATRAILS_UNIQUE_ID to set namespace value
-
-        run_steps is used so that exceptions are shown
-        """
-
-        LOGGER.debug("...")
-        with open(
-            "functests/test_resources/richness_story.yaml",
-            "r",
-            encoding="utf-8",
-        ) as y:
-            self.arch.runner.run_steps(parse_config(data=y))
-            self.assertEqual(
-                len(self.arch.runner.entities),
-                3,
                 msg="Incorrect number of entities",
             )
 
