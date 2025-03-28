@@ -8,7 +8,7 @@ pip-audit~=2.7
 pycodestyle~=2.12
 pylint~=3.3
 pyright~=1.1
-ruff~=0.7
+ruff~=0.11
 unittest-xml-reporting~=3.2
 testbook~=0.4
 
