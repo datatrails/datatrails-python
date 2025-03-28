@@ -14,8 +14,8 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.appidp &mdash; DATATRAILS 0.33.3a2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+  <title>archivist.appidp &mdash; DATATRAILS v0.34.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/datatrails_theme.css?v=4edd3201" />
@@ -24,7 +24,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=0760020a"></script>
+      <script src="../../_static/documentation_options.js?v=10e4fbe4"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -112,17 +112,17 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">getLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
 <span class="c1"># pylint:disable=too-few-public-methods</span>
 
 <span class="c1"># pylint:disable=cyclic-import      # but pylint doesn&#39;t understand this feature</span>
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.archivist</span><span class="w"> </span><span class="kn">import</span> <span class="n">Archivist</span>
 
-<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">APPIDP_LABEL</span><span class="p">,</span>
     <span class="n">APPIDP_SUBPATH</span><span class="p">,</span>
     <span class="n">APPIDP_TOKEN</span><span class="p">,</span>
@@ -133,14 +133,14 @@
 
 <div class="viewcode-block" id="AppIDP">
 <a class="viewcode-back" href="../../code/iam/appidp.html#archivist.appidp.AppIDP">[docs]</a>
-<span class="k">class</span> <span class="nc">AppIDP</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AppIDP</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Appidp object&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="_AppIDPClient">
 <a class="viewcode-back" href="../../code/iam/appidp.html#archivist.appidp._AppIDPClient">[docs]</a>
-<span class="k">class</span> <span class="nc">_AppIDPClient</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_AppIDPClient</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;AppIDP Client</span>
 
 <span class="sd">    Access to appidp entities. This class is usually</span>
@@ -151,17 +151,17 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="s2">&quot;Archivist&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="s2">&quot;Archivist&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span> <span class="o">=</span> <span class="n">archivist_instance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">archivist_instance</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">APPIDP_SUBPATH</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_subpath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">APPIDP_LABEL</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AppIDPClient(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
 <div class="viewcode-block" id="_AppIDPClient.token">
 <a class="viewcode-back" href="../../code/iam/appidp.html#archivist.appidp._AppIDPClient.token">[docs]</a>
-    <span class="k">def</span> <span class="nf">token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AppIDP</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AppIDP</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create access token from client id and secret</span>
 
 <span class="sd">        Args:</span>

@@ -15,8 +15,8 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fixtures (Common Attributes) &mdash; DATATRAILS 0.33.3a2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <title>Fixtures (Common Attributes) &mdash; DATATRAILS v0.34.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="_static/css/datatrails_theme.css?v=4edd3201" />
@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="_static/DataTrails_Favicon.png"/>
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=0760020a"></script>
+      <script src="_static/documentation_options.js?v=10e4fbe4"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -33,7 +33,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Code Reference" href="code/index.html" />
-    <link rel="prev" title="Check Asset Compliance: SINCE policy" href="notebooks/Check%20Asset%20Compliance%20using%20SINCE%20Policy.html" /> 
+    <link rel="prev" title="Sharing Album Release Info with Record Labels" href="notebooks/Sharing%20Album%20Release%20Info%20with%20Record%20Labels.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -94,22 +94,22 @@
 <span id="fixturesref"></span><h1>Fixtures (Common Attributes)<a class="headerlink" href="#fixtures-common-attributes" title="Link to this heading"></a></h1>
 <p>One can specify common attributes when creating/counting/querying assets, events
 and locations.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy</span>
 
-<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
-<span class="kn">from</span> <span class="nn">archivist.errors</span> <span class="kn">import</span> <span class="n">ArchivistError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">archivist.archivist</span><span class="w"> </span><span class="kn">import</span> <span class="n">Archivist</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">archivist.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArchivistError</span>
 
 <span class="c1"># Oauth2 token that grants access</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;.auth_token&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tokenfile</span><span class="p">:</span>
     <span class="n">authtoken</span> <span class="o">=</span> <span class="n">tokenfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
-<span class="c1"># Initialize connection to Archivist - for assets on DLT.</span>
+<span class="c1"># Initialize connection to Archivist - for assets on immutable ledger.</span>
 <span class="n">ledger</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
     <span class="s2">&quot;https://app.datatrails.ai&quot;</span><span class="p">,</span>
     <span class="n">authtoken</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="c1"># lets define doors in our namespace that reside on the ledger...</span>
+<span class="c1"># lets define doors in our namespace that reside on the immutable ledger...</span>
 <span class="n">doors</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">ledger</span><span class="p">)</span>
 <span class="n">doors</span><span class="o">.</span><span class="n">fixtures</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;assets&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -148,7 +148,7 @@ and locations.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="notebooks/Check%20Asset%20Compliance%20using%20SINCE%20Policy.html" class="btn btn-neutral float-left" title="Check Asset Compliance: SINCE policy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="notebooks/Sharing%20Album%20Release%20Info%20with%20Record%20Labels.html" class="btn btn-neutral float-left" title="Sharing Album Release Info with Record Labels" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="code/index.html" class="btn btn-neutral float-right" title="Code Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

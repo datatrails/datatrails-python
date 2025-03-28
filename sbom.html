@@ -15,8 +15,8 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SBOM CDX for PySDK &mdash; DATATRAILS 0.33.3a2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <title>SBOM CDX for PySDK &mdash; DATATRAILS v0.34.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="_static/css/datatrails_theme.css?v=4edd3201" />
@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="_static/DataTrails_Favicon.png"/>
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=0760020a"></script>
+      <script src="_static/documentation_options.js?v=10e4fbe4"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -91,128 +91,95 @@
              
   <section id="sbom-cdx-for-pysdk">
 <span id="sbomxmlref"></span><h1>SBOM CDX for PySDK<a class="headerlink" href="#sbom-cdx-for-pysdk" title="Link to this heading"></a></h1>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ns0:bom</span><span class="w"> </span><span class="na">xmlns:ns0=</span><span class="s">&quot;http://cyclonedx.org/schema/bom/1.4&quot;</span><span class="w"> </span><span class="na">serialNumber=</span><span class="s">&quot;urn:uuid:3a0579f0-4046-4e0c-93b8-cc43418374c8&quot;</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
-<span class="w">  </span><span class="nt">&lt;ns0:metadata&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:timestamp&gt;</span>2023-10-18T08:27:07.469453+00:00<span class="nt">&lt;/ns0:timestamp&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:tools&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:tool&gt;</span>
-<span class="w">        </span><span class="nt">&lt;ns0:vendor&gt;</span>CycloneDX<span class="nt">&lt;/ns0:vendor&gt;</span>
-<span class="w">        </span><span class="nt">&lt;ns0:name&gt;</span>cyclonedx-python-lib<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">        </span><span class="nt">&lt;ns0:version&gt;</span>4.2.3<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">        </span><span class="nt">&lt;ns0:externalReferences&gt;</span>
-<span class="w">          </span><span class="nt">&lt;ns0:reference</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;build-system&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ns0:url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib/actions<span class="nt">&lt;/ns0:url&gt;</span>
-<span class="w">          </span><span class="nt">&lt;/ns0:reference&gt;</span>
-<span class="w">          </span><span class="nt">&lt;ns0:reference</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;distribution&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ns0:url&gt;</span>https://pypi.org/project/cyclonedx-python-lib/<span class="nt">&lt;/ns0:url&gt;</span>
-<span class="w">          </span><span class="nt">&lt;/ns0:reference&gt;</span>
-<span class="w">          </span><span class="nt">&lt;ns0:reference</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;documentation&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ns0:url&gt;</span>https://cyclonedx.github.io/cyclonedx-python-lib/<span class="nt">&lt;/ns0:url&gt;</span>
-<span class="w">          </span><span class="nt">&lt;/ns0:reference&gt;</span>
-<span class="w">          </span><span class="nt">&lt;ns0:reference</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;issue-tracker&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ns0:url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib/issues<span class="nt">&lt;/ns0:url&gt;</span>
-<span class="w">          </span><span class="nt">&lt;/ns0:reference&gt;</span>
-<span class="w">          </span><span class="nt">&lt;ns0:reference</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;license&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ns0:url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/LICENSE<span class="nt">&lt;/ns0:url&gt;</span>
-<span class="w">          </span><span class="nt">&lt;/ns0:reference&gt;</span>
-<span class="w">          </span><span class="nt">&lt;ns0:reference</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;release-notes&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ns0:url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/CHANGELOG.md<span class="nt">&lt;/ns0:url&gt;</span>
-<span class="w">          </span><span class="nt">&lt;/ns0:reference&gt;</span>
-<span class="w">          </span><span class="nt">&lt;ns0:reference</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;vcs&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ns0:url&gt;</span>https://github.com/CycloneDX/cyclonedx-python-lib<span class="nt">&lt;/ns0:url&gt;</span>
-<span class="w">          </span><span class="nt">&lt;/ns0:reference&gt;</span>
-<span class="w">          </span><span class="nt">&lt;ns0:reference</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;website&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;ns0:url&gt;</span>https://cyclonedx.org<span class="nt">&lt;/ns0:url&gt;</span>
-<span class="w">          </span><span class="nt">&lt;/ns0:reference&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/ns0:externalReferences&gt;</span>
-<span class="w">      </span><span class="nt">&lt;/ns0:tool&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:tools&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/ns0:metadata&gt;</span>
-<span class="w">  </span><span class="nt">&lt;ns0:components&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;cff268ae-0c68-4962-999e-70ad1da21803&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>Jinja2<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>3.1.2<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;26c8d8fd-a259-4b45-9195-10bf1f93cb9c&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>MarkupSafe<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>2.1.3<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;79370d31-3070-4629-9d8f-e53a07385200&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>PyYAML<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>6.0.1<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;55fb7a39-9381-478b-aab0-dbcb48a85ec4&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>backoff<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>2.2.1<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;1ba4da71-c87f-4b55-bdb3-eefd2e600e84&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>certifi<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>2023.7.22<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;306aba9f-bf80-4df0-87f2-e60b6afcbb01&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>charset-normalizer<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>3.3.0<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;8d97e2e2-060a-4386-9e41-eb9c213acac3&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>flatten-dict<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>0.4.2<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;d9096dbe-837d-4834-bb8e-880cf78b18e3&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>idna<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>3.4<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;2b459c33-c5b6-4f05-94ce-1e8820a3a268&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>iso8601<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>2.1.0<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;f875da11-4af0-4efb-9e4b-273ab197875b&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>pyaml-env<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>1.2.1<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;0450554a-63e3-442d-bde1-318d79dc110a&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>requests<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>2.31.0<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;7957cfe8-9c59-47db-ae86-eee234413123&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>requests-toolbelt<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>1.0.0<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;793d7bb0-6377-42db-932d-1d95ff0523e3&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>rfc3339<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>6.2<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;63d2ee34-a196-4e05-859f-8a68e07f1b6c&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>six<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>1.16.0<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;821e7105-fa28-40e3-81b5-3e1b855d0873&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>urllib3<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>2.0.7<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;d884b97f-3b8e-4e7b-9378-24fa9885a3b1&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:name&gt;</span>xmltodict<span class="nt">&lt;/ns0:name&gt;</span>
-<span class="w">      </span><span class="nt">&lt;ns0:version&gt;</span>0.13.0<span class="nt">&lt;/ns0:version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/ns0:component&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/ns0:components&gt;</span>
-<span class="w">  </span><span class="nt">&lt;ns0:dependencies&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;0450554a-63e3-442d-bde1-318d79dc110a&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;1ba4da71-c87f-4b55-bdb3-eefd2e600e84&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;26c8d8fd-a259-4b45-9195-10bf1f93cb9c&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;2b459c33-c5b6-4f05-94ce-1e8820a3a268&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;306aba9f-bf80-4df0-87f2-e60b6afcbb01&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;55fb7a39-9381-478b-aab0-dbcb48a85ec4&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;63d2ee34-a196-4e05-859f-8a68e07f1b6c&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;79370d31-3070-4629-9d8f-e53a07385200&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;793d7bb0-6377-42db-932d-1d95ff0523e3&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;7957cfe8-9c59-47db-ae86-eee234413123&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;821e7105-fa28-40e3-81b5-3e1b855d0873&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;8d97e2e2-060a-4386-9e41-eb9c213acac3&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;cff268ae-0c68-4962-999e-70ad1da21803&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;d884b97f-3b8e-4e7b-9378-24fa9885a3b1&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;d9096dbe-837d-4834-bb8e-880cf78b18e3&quot;</span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ns0:dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;f875da11-4af0-4efb-9e4b-273ab197875b&quot;</span><span class="nt">/&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/ns0:dependencies&gt;</span>
-<span class="nt">&lt;/ns0:bom&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;bom</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://cyclonedx.org/schema/bom/1.4&quot;</span><span class="w"> </span><span class="na">serialNumber=</span><span class="s">&quot;urn:uuid:e30dbba8-0bc4-4956-809f-70d9f4cc5d23&quot;</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;metadata&gt;</span>
+<span class="w">    </span><span class="nt">&lt;timestamp&gt;</span>2025-03-27T17:51:38.265997+00:00<span class="nt">&lt;/timestamp&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/metadata&gt;</span>
+<span class="w">  </span><span class="nt">&lt;components&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.8486282784110291.07091742244004684&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>Jinja2<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>3.1.6<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.0038342705426993584.254612793600721&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>MarkupSafe<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>3.0.2<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.8114752254227463.49788778686046686&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>PyYAML<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>6.0.2<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.5522004340908666.5590295025742295&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>backoff<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>2.2.1<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.4741727124105791.6858921602126462&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>certifi<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>2025.1.31<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.5814491352202279.7187924150122285&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>charset-normalizer<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>3.4.1<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.7337184835301064.6244908591403074&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>flatten-dict<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>0.4.2<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.4910101006356482.9450802685216564&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>idna<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>3.10<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.9699413055961744.4533362942787126&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>iso8601<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>2.1.0<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.052090832916671825.05844519570742135&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>pyaml_env<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>1.2.2<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.14883417596802118.8810958997480604&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>requests<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>2.32.3<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.43026489423211367.2038810922904577&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>requests-toolbelt<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.8360377944683339.016297286330544725&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>rfc3339<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>6.2<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.09803018384440298.6643639277885912&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>six<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>1.17.0<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.12687223696994365.27835678982843237&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>urllib3<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>2.3.0<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">    </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;library&quot;</span><span class="w"> </span><span class="na">bom-ref=</span><span class="s">&quot;BomRef.7782130354212201.3388567508620476&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;name&gt;</span>xmltodict<span class="nt">&lt;/name&gt;</span>
+<span class="w">      </span><span class="nt">&lt;version&gt;</span>0.14.2<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/component&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/components&gt;</span>
+<span class="w">  </span><span class="nt">&lt;dependencies&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.8486282784110291.07091742244004684&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.0038342705426993584.254612793600721&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.8114752254227463.49788778686046686&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.5522004340908666.5590295025742295&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.4741727124105791.6858921602126462&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.5814491352202279.7187924150122285&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.7337184835301064.6244908591403074&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.4910101006356482.9450802685216564&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.9699413055961744.4533362942787126&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.052090832916671825.05844519570742135&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.14883417596802118.8810958997480604&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.43026489423211367.2038810922904577&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.8360377944683339.016297286330544725&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.09803018384440298.6643639277885912&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.12687223696994365.27835678982843237&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dependency</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;BomRef.7782130354212201.3388567508620476&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/bom&gt;</span>
 </pre></div>
 </div>
 </section>

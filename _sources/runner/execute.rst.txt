@@ -10,5 +10,5 @@ A straightforward incantation of the yaml runner:
    archivist_runner \
          -u https://app.datatrails.ai \
          --auth-token credentials/token \
-         functests/test_resources/richness_story.yaml
+         functests/test_resources/subjects_story.yaml
 

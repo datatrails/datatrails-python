@@ -15,8 +15,8 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logger &mdash; DATATRAILS 0.33.3a2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <title>Logger &mdash; DATATRAILS v0.34.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="_static/css/datatrails_theme.css?v=4edd3201" />
@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="_static/DataTrails_Favicon.png"/>
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=0760020a"></script>
+      <script src="_static/documentation_options.js?v=10e4fbe4"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -96,8 +96,8 @@
   <section id="logger">
 <span id="loggerref"></span><h1>Logger<a class="headerlink" href="#logger" title="Link to this heading"></a></h1>
 <p>The first (optional) call from the archivist package is to set the logger.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">archivist.logger</span> <span class="kn">import</span> <span class="n">set_logger</span>
-<span class="kn">from</span> <span class="nn">archivist.archivist</span> <span class="kn">import</span> <span class="n">Archivist</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">archivist.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">archivist.archivist</span><span class="w"> </span><span class="kn">import</span> <span class="n">Archivist</span>
 
 <span class="n">set_logger</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
 <span class="n">client_id</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DATATRAILS_APPREG_CLIENT&quot;</span><span class="p">)</span>

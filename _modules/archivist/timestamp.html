@@ -14,8 +14,8 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.timestamp &mdash; DATATRAILS 0.33.3a2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+  <title>archivist.timestamp &mdash; DATATRAILS v0.34.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/datatrails_theme.css?v=4edd3201" />
@@ -24,7 +24,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=0760020a"></script>
+      <script src="../../_static/documentation_options.js?v=10e4fbe4"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -95,15 +95,15 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="kn">from</span> <span class="nn">iso8601</span> <span class="kn">import</span> <span class="n">parse_date</span>
-<span class="kn">from</span> <span class="nn">rfc3339</span> <span class="kn">import</span> <span class="n">rfc3339</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iso8601</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_date</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rfc3339</span><span class="w"> </span><span class="kn">import</span> <span class="n">rfc3339</span>
 
 
 <div class="viewcode-block" id="parse_timestamp">
 <a class="viewcode-back" href="../../code/timestamp.html#archivist.timestamp.parse_timestamp">[docs]</a>
-<span class="k">def</span> <span class="nf">parse_timestamp</span><span class="p">(</span><span class="n">date_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_timestamp</span><span class="p">(</span><span class="n">date_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse an Archivist timestamp to a datetime object</span>
 
 <span class="sd">    See https://pypi.org/project/iso8601/</span>
@@ -121,7 +121,7 @@
 
 <div class="viewcode-block" id="make_timestamp">
 <a class="viewcode-back" href="../../code/timestamp.html#archivist.timestamp.make_timestamp">[docs]</a>
-<span class="k">def</span> <span class="nf">make_timestamp</span><span class="p">(</span><span class="n">date_object</span><span class="p">:</span> <span class="n">datetime</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_timestamp</span><span class="p">(</span><span class="n">date_object</span><span class="p">:</span> <span class="n">datetime</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Format a datetime object into an Archivist format timestamp string</span>
 
 <span class="sd">    See https://pypi.org/project/rfc3339/</span>
@@ -139,7 +139,7 @@
 
 <div class="viewcode-block" id="now_timestamp">
 <a class="viewcode-back" href="../../code/timestamp.html#archivist.timestamp.now_timestamp">[docs]</a>
-<span class="k">def</span> <span class="nf">now_timestamp</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">now_timestamp</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return Now as an Archivist format timestamp string</span>
 
 <span class="sd">    See https://pypi.org/project/rfc3339/</span>

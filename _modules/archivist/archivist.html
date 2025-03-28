@@ -14,8 +14,8 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.archivist &mdash; DATATRAILS 0.33.3a2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+  <title>archivist.archivist &mdash; DATATRAILS v0.34.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/datatrails_theme.css?v=4edd3201" />
@@ -24,7 +24,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=0760020a"></script>
+      <script src="../../_static/documentation_options.js?v=10e4fbe4"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -121,52 +121,50 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">BinaryIO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">getLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">BinaryIO</span>
 
-<span class="kn">from</span> <span class="nn">requests_toolbelt.multipart.encoder</span> <span class="kn">import</span> <span class="n">MultipartEncoder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">requests_toolbelt.multipart.encoder</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultipartEncoder</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">requests.models</span> <span class="kn">import</span> <span class="n">Response</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">requests.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Response</span>
 
-<span class="kn">from</span> <span class="nn">.access_policies</span> <span class="kn">import</span> <span class="n">_AccessPoliciesClient</span>
-<span class="kn">from</span> <span class="nn">.appidp</span> <span class="kn">import</span> <span class="n">_AppIDPClient</span>
-<span class="kn">from</span> <span class="nn">.applications</span> <span class="kn">import</span> <span class="n">_ApplicationsClient</span>
-<span class="kn">from</span> <span class="nn">.archivistpublic</span> <span class="kn">import</span> <span class="n">ArchivistPublic</span>
-<span class="kn">from</span> <span class="nn">.assetattachments</span> <span class="kn">import</span> <span class="n">_AssetAttachmentsClient</span>
-<span class="kn">from</span> <span class="nn">.assets</span> <span class="kn">import</span> <span class="n">_AssetsRestricted</span>
-<span class="kn">from</span> <span class="nn">.attachments</span> <span class="kn">import</span> <span class="n">_AttachmentsClient</span>
-<span class="kn">from</span> <span class="nn">.compliance</span> <span class="kn">import</span> <span class="n">_ComplianceClient</span>
-<span class="kn">from</span> <span class="nn">.compliance_policies</span> <span class="kn">import</span> <span class="n">_CompliancePoliciesClient</span>
-<span class="kn">from</span> <span class="nn">.composite</span> <span class="kn">import</span> <span class="n">_CompositeClient</span>
-<span class="kn">from</span> <span class="nn">.confirmer</span> <span class="kn">import</span> <span class="n">MAX_TIME</span>
-<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.access_policies</span><span class="w"> </span><span class="kn">import</span> <span class="n">_AccessPoliciesClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.appidp</span><span class="w"> </span><span class="kn">import</span> <span class="n">_AppIDPClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.applications</span><span class="w"> </span><span class="kn">import</span> <span class="n">_ApplicationsClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.archivistpublic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArchivistPublic</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.assetattachments</span><span class="w"> </span><span class="kn">import</span> <span class="n">_AssetAttachmentsClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.assets</span><span class="w"> </span><span class="kn">import</span> <span class="n">_AssetsRestricted</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.attachments</span><span class="w"> </span><span class="kn">import</span> <span class="n">_AttachmentsClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.composite</span><span class="w"> </span><span class="kn">import</span> <span class="n">_CompositeClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.confirmer</span><span class="w"> </span><span class="kn">import</span> <span class="n">MAX_TIME</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">AUTHORIZATION_KEY</span><span class="p">,</span>
     <span class="n">BEARER_PREFIX</span><span class="p">,</span>
     <span class="n">BINARY_CONTENT</span><span class="p">,</span>
     <span class="n">ROOT</span><span class="p">,</span>
     <span class="n">SEP</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">.dictmerge</span> <span class="kn">import</span> <span class="n">_dotdict</span>
-<span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.dictmerge</span><span class="w"> </span><span class="kn">import</span> <span class="n">_dotdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.errors</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ArchivistError</span><span class="p">,</span>
     <span class="n">_parse_response</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">.events</span> <span class="kn">import</span> <span class="n">_EventsRestricted</span>
-<span class="kn">from</span> <span class="nn">.locations</span> <span class="kn">import</span> <span class="n">_LocationsClient</span>
-<span class="kn">from</span> <span class="nn">.retry429</span> <span class="kn">import</span> <span class="n">retry_429</span>
-<span class="kn">from</span> <span class="nn">.runner</span> <span class="kn">import</span> <span class="n">_Runner</span>
-<span class="kn">from</span> <span class="nn">.subjects</span> <span class="kn">import</span> <span class="n">_SubjectsClient</span>
-<span class="kn">from</span> <span class="nn">.tenancies</span> <span class="kn">import</span> <span class="n">_TenanciesClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.events</span><span class="w"> </span><span class="kn">import</span> <span class="n">_EventsRestricted</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.locations</span><span class="w"> </span><span class="kn">import</span> <span class="n">_LocationsClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.retry429</span><span class="w"> </span><span class="kn">import</span> <span class="n">retry_429</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">_Runner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.subjects</span><span class="w"> </span><span class="kn">import</span> <span class="n">_SubjectsClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tenancies</span><span class="w"> </span><span class="kn">import</span> <span class="n">_TenanciesClient</span>
 
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Archivist">
 <a class="viewcode-back" href="../../code/archivist.html#archivist.archivist.Archivist">[docs]</a>
-<span class="k">class</span> <span class="nc">Archivist</span><span class="p">(</span><span class="n">ArchivistPublic</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Archivist</span><span class="p">(</span><span class="n">ArchivistPublic</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for all Archivist endpoints.</span>
 
 <span class="sd">    This class manages the connection to an Archivist instance and provides</span>
@@ -189,8 +187,6 @@
         <span class="s2">&quot;appidp&quot;</span><span class="p">:</span> <span class="n">_AppIDPClient</span><span class="p">,</span>
         <span class="s2">&quot;applications&quot;</span><span class="p">:</span> <span class="n">_ApplicationsClient</span><span class="p">,</span>
         <span class="s2">&quot;attachments&quot;</span><span class="p">:</span> <span class="n">_AttachmentsClient</span><span class="p">,</span>
-        <span class="s2">&quot;compliance&quot;</span><span class="p">:</span> <span class="n">_ComplianceClient</span><span class="p">,</span>
-        <span class="s2">&quot;compliance_policies&quot;</span><span class="p">:</span> <span class="n">_CompliancePoliciesClient</span><span class="p">,</span>
         <span class="s2">&quot;composite&quot;</span><span class="p">:</span> <span class="n">_CompositeClient</span><span class="p">,</span>
         <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="n">_EventsRestricted</span><span class="p">,</span>
         <span class="s2">&quot;locations&quot;</span><span class="p">:</span> <span class="n">_LocationsClient</span><span class="p">,</span>
@@ -199,7 +195,7 @@
         <span class="s2">&quot;tenancies&quot;</span><span class="p">:</span> <span class="n">_TenanciesClient</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">auth</span><span class="p">:</span> <span class="s2">&quot;str|tuple[str,str]|None&quot;</span><span class="p">,</span>
@@ -237,8 +233,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">:</span> <span class="n">_AssetsRestricted</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assetattachments</span><span class="p">:</span> <span class="n">_AssetAttachmentsClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attachments</span><span class="p">:</span> <span class="n">_AttachmentsClient</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">compliance</span><span class="p">:</span> <span class="n">_ComplianceClient</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">compliance_policies</span><span class="p">:</span> <span class="n">_CompliancePoliciesClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">composite</span><span class="p">:</span> <span class="n">_CompositeClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">:</span> <span class="n">_EventsRestricted</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="p">:</span> <span class="n">_LocationsClient</span>
@@ -246,10 +240,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">subjects</span><span class="p">:</span> <span class="n">_SubjectsClient</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tenancies</span><span class="p">:</span> <span class="n">_TenanciesClient</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Archivist(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create endpoints on demand</span>
 
 <span class="sd">        This only gets called when an atribute is not found.</span>
@@ -268,22 +262,22 @@
         <span class="k">return</span> <span class="n">c</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">public</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">public</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not a public interface&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;str: URL of Archivist endpoint&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;str: ROOT of Archivist endpoint&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;str | None&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;str | None&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;str: authorization token&quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_machine_auth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -300,7 +294,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">Public</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArchivistPublic</span><span class="p">:</span>  <span class="c1"># pylint: disable=invalid-name</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Public</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArchivistPublic</span><span class="p">:</span>  <span class="c1"># pylint: disable=invalid-name</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a Public instance&quot;&quot;&quot;</span>
         <span class="n">arch</span> <span class="o">=</span> <span class="n">ArchivistPublic</span><span class="p">(</span>
             <span class="n">fixtures</span><span class="o">=</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fixtures</span><span class="p">),</span>
@@ -311,7 +305,7 @@
         <span class="n">arch</span><span class="o">.</span><span class="n">_user_agent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_agent</span>  <span class="c1"># pylint: disable=protected-access</span>
         <span class="k">return</span> <span class="n">arch</span>
 
-    <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Archivist&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Archivist&quot;</span><span class="p">:</span>
         <span class="n">arch</span> <span class="o">=</span> <span class="n">Archivist</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span>
@@ -323,7 +317,7 @@
         <span class="n">arch</span><span class="o">.</span><span class="n">_user_agent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_agent</span>
         <span class="k">return</span> <span class="n">arch</span>
 
-    <span class="k">def</span> <span class="nf">_add_headers</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_headers</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str,str]|None&quot;</span><span class="p">,</span> <span class="n">no_auth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str,Any]&quot;</span><span class="p">:</span>
         <span class="n">newheaders</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_add_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
@@ -339,7 +333,7 @@
     <span class="c1"># currently only the archivist endpoint is allowed to create/modify data.</span>
     <span class="c1"># this may change...</span>
     <span class="nd">@retry_429</span>
-    <span class="k">def</span> <span class="nf">__post</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">request</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any] | bytes | None&quot;</span><span class="p">,</span>
@@ -369,7 +363,7 @@
 
 <div class="viewcode-block" id="Archivist.post">
 <a class="viewcode-back" href="../../code/archivist.html#archivist.archivist.Archivist.post">[docs]</a>
-    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">request</span><span class="p">:</span> <span class="s2">&quot;dict[str,Any] | None&quot;</span><span class="p">,</span>
@@ -400,7 +394,7 @@
 
 <div class="viewcode-block" id="Archivist.post_binary">
 <a class="viewcode-back" href="../../code/archivist.html#archivist.archivist.Archivist.post_binary">[docs]</a>
-    <span class="k">def</span> <span class="nf">post_binary</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post_binary</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">request</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
@@ -432,7 +426,7 @@
 <div class="viewcode-block" id="Archivist.post_file">
 <a class="viewcode-back" href="../../code/archivist.html#archivist.archivist.Archivist.post_file">[docs]</a>
     <span class="nd">@retry_429</span>
-    <span class="k">def</span> <span class="nf">post_file</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">post_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">fd</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span>
@@ -482,7 +476,7 @@
 <div class="viewcode-block" id="Archivist.delete">
 <a class="viewcode-back" href="../../code/archivist.html#archivist.archivist.Archivist.delete">[docs]</a>
     <span class="nd">@retry_429</span>
-    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]|None&quot;</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;DELETE method (REST)</span>
@@ -513,7 +507,7 @@
 <div class="viewcode-block" id="Archivist.patch">
 <a class="viewcode-back" href="../../code/archivist.html#archivist.archivist.Archivist.patch">[docs]</a>
     <span class="nd">@retry_429</span>
-    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">patch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">request</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">,</span>

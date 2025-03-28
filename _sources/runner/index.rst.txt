@@ -40,7 +40,7 @@ Example usage:
          -u https://app.datatrails.ai \
          --client-id <your-client-id> \
          --client-secret <your-client-secret> \
-         functests/test_resources/richness_story.yaml
+         functests/test_resources/subjects_story.yaml
 
 For further reading:
 
