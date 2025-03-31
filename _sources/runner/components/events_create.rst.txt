@@ -39,7 +39,6 @@ An example when opening a door in Paris:
           arc_description: Opened Courts of Justice Paris Front Door
           arc_display_type: Door Open
           arc_evidence: ARQC 0x12345678
-          arc_correlation_value: be5c8061-236d-4400-a625-b74a34e5801b
           wavestone_door_name: Courts of Justice Paris Front Door
           wavestone_evt_type: door_open
         location:
