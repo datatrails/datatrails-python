@@ -312,9 +312,6 @@ steps:
       arc_serial_number: sc-x5-5
       arc_description: Electronic door Access Card 5
 
-  # opening a door requires 2 events to be created with the same
-  # correlation value "be5c8061-236d-4400-a625-b74a34e5801b" and the
-  # same principal declared..
   - step:
       action: EVENTS_CREATE
       description: Courts of justice front door opened with card 2
@@ -330,7 +327,6 @@ steps:
       arc_description: Door opened by authorized key card Access Card 2
       arc_display_type: Door Open
       arc_evidence: ARQC 0x12345678
-      arc_correlation_value: be5c8061-236d-4400-a625-b74a34e5801b
       wavestone_card_name: Access Card 2
       wavestone_evt_type: door_open
     attachments:
@@ -352,7 +348,6 @@ steps:
       arc_description: Opened Courts of Justice Paris Front Door
       arc_display_type: Door Open
       arc_evidence: ARQC 0x12345678
-      arc_correlation_value: be5c8061-236d-4400-a625-b74a34e5801b
       wavestone_door_name: Courts of Justice Paris Front Door
       wavestone_evt_type: door_open
     attachments:
