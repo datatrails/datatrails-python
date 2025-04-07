@@ -93,12 +93,15 @@ def get_auth(
     return None
 
 
-def selector_signature(selector: list, data: dict) -> "tuple[dict, dict | None]":
+def selector_signature(selector: list, data: dict) -> "tuple[dict | None, dict | None]":
     """
     Convert a selector to a signature for list and count methods
 
-    Used in locations.create_if_not_exists and assets.create_if_not_exists
+    Used in assets.create_if_not_exists
     """
+    if not (selector and data):
+        return None, None
+
     attrselector = []
     propselector = []
 

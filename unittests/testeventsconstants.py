@@ -72,15 +72,6 @@ PROPS_WITH_NO_PRINCIPAL = {
     "timestamp_declared": "2019-11-27T14:44:19Z",
 }
 
-LOCATION_IDENTITY = "locations/zzzzzzzzzzzzzzzzzzzzz"
-LOCATION = {
-    "identity": LOCATION_IDENTITY,
-    "display_name": "Somewhere",
-    "description": "somewhere",
-    "latitude": 0.0,
-    "longitude": 0.0,
-}
-
 EVENT_ATTRS = {
     "arc_append_attachments": [
         SECONDARY_IMAGE,
@@ -211,57 +202,6 @@ RESPONSE_WITH_SBOMATTACHMENT = {
     },
 }
 
-EVENT_ATTRS_LOCATION = {
-    "operation": "Record",
-    "behaviour": "RecordEvidence",
-    "timestamp_declared": "2019-11-27T14:44:19Z",
-    "principal_declared": PRINCIPAL_DECLARED,
-    "event_attributes": {
-        "arc_description": "event description",
-    },
-    "location": {
-        "selector": [
-            "display_name",
-        ],
-        "display_name": "Somewhere",
-        "description": "somewhere",
-        "latitude": 0.0,
-        "longitude": 0.0,
-    },
-}
-EVENT_ATTRS_LOCATION_IDENTITY = {
-    "operation": "Record",
-    "behaviour": "RecordEvidence",
-    "timestamp_declared": "2019-11-27T14:44:19Z",
-    "principal_declared": PRINCIPAL_DECLARED,
-    "event_attributes": {
-        "arc_description": "event description",
-    },
-    "location": {
-        "identity": LOCATION_IDENTITY,
-    },
-}
-REQUEST_WITH_LOCATION = {
-    "operation": "Record",
-    "behaviour": "RecordEvidence",
-    "timestamp_declared": "2019-11-27T14:44:19Z",
-    "principal_declared": PRINCIPAL_DECLARED,
-    "event_attributes": {
-        "arc_description": "event description",
-        "arc_location_identity": LOCATION_IDENTITY,
-    },
-}
-RESPONSE_WITH_LOCATION = {
-    "identity": IDENTITY,
-    "operation": "Record",
-    "behaviour": "RecordEvidence",
-    "timestamp_declared": "2019-11-27T14:44:19Z",
-    "principal_declared": PRINCIPAL_DECLARED,
-    "event_attributes": {
-        "arc_description": "event description",
-        "arc_location_identity": LOCATION_IDENTITY,
-    },
-}
 REQUEST = {
     **PROPS,
     "event_attributes": EVENT_ATTRS,

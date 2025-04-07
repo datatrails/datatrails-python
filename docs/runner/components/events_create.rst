@@ -9,9 +9,6 @@ creation step (action is either :code:`ASSETS_CREATE` or :code:`ASSETS_CREATE_IF
 The optional :code:`attachments` setting uploads the attachments to archivist and the response
 added to the event before posting.
 
-The optional :code:`location` setting creates the location if it does not exist and adds it to
-the event.
-
 The optional :code:`sbom` setting uploads the sbom to archivist and the response added to the
 event before posting. (see second example below)
 
@@ -41,19 +38,6 @@ An example when opening a door in Paris:
           arc_evidence: ARQC 0x12345678
           wavestone_door_name: Courts of Justice Paris Front Door
           wavestone_evt_type: door_open
-        location:
-          selector:
-            - display_name
-            - attributes:
-              - namespace
-          display_name: Paris Courts of Justice
-          description: Public museum in the former Palais de Justice
-          latitude: 48.855722
-          longitude: 2.345051
-          attributes:
-            namespace: door entry
-            address: 10 Boulevard du Palais, 75001 Paris, France
-            wavestone_ext: managed
         attachments:
           - filename: functests/test_resources/doors/events/door_open.png
             content_type: image/png

@@ -13,7 +13,6 @@ Shows all code
    archivist
    assets
    events
-   locations
    attachments
    tenancies
    iam/index
