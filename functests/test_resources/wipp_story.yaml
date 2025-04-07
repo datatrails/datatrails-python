@@ -216,17 +216,6 @@ steps:
       arc_evidence: "Signature: 0x1234abcd"
       wipp_sensors_shock: "0"
       wipp_sensors_rad: "45"
-    location:
-      selector:
-        - display_name
-        - attributes:
-          - namespace
-      display_name: Atlanta waypoint
-      description: Atlanta waypoint
-      latitude: 33.592177
-      longitude: -84.406064
-      attributes:
-        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
     attachments:
       - filename: functests/test_resources/wipp/truck_departure.jpg
         content_type: image/jpg
@@ -245,17 +234,6 @@ steps:
       arc_evidence: "Signature: 0x1234abcd"
       wipp_sensors_shock: "0"
       wipp_sensors_rad: "45"
-    location:
-      selector:
-        - display_name
-        - attributes:
-          - namespace
-      display_name: Talladega waypoint
-      description: Talladega waypoint
-      latitude: 33.592177
-      longitude: -86.248379
-      attributes:
-        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
     attachments:
       - filename: functests/test_resources/wipp/truck_departure.jpg
         content_type: image/jpg

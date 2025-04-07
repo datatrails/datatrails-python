@@ -111,11 +111,6 @@ class TestArchivist(TestCase):
                 msg="Incorrect events",
             )
             self.assertEqual(
-                str(arch.locations),
-                "LocationsClient(https://app.datatrails.ai)",
-                msg="Incorrect locations",
-            )
-            self.assertEqual(
                 str(arch.runner),
                 "Runner(https://app.datatrails.ai)",
                 msg="Incorrect runner",

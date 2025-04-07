@@ -3,7 +3,7 @@
 Estate Info Story Runner YAML
 .........................................
 
-Output report on current number of assets, events and locations.
+Output report on current number of assets and events.
 
 .. code-block:: yaml
     

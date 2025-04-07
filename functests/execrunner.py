@@ -90,7 +90,7 @@ class TestRunner(TestCase):
             )
             self.assertEqual(
                 len(self.arch.runner.entities),
-                9,
+                4,
                 msg="Incorrect number of entities",
             )
 

@@ -160,11 +160,6 @@ def endpoint(args):
                         "arc_namespace": args.namespace,
                     },
                 },
-                "locations": {
-                    "attributes": {
-                        "namespace": args.namespace,
-                    },
-                },
             },
         )
 

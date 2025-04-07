@@ -168,7 +168,7 @@ class _AssetsRestricted(_AssetsPublic):
         self, data: "dict[str, Any]", *, confirm: bool = False
     ) -> "tuple[Asset, bool]":
         """
-        Creates an asset and associated locations and attachments if asset
+        Creates an asset and associated attachments if asset
         does not already exist.
 
         Args:
@@ -190,18 +190,6 @@ class _AssetsRestricted(_AssetsPublic):
                   arc_serial_number: das-j1-01
                   arc_description: Electronic door entry system to DataTrails France
                   wavestone_asset_id: paris.france.datatrails.das
-                location:
-                  identity: locations/xxxxxxxxxxxxxxxxxxxxxxxxxx
-                location:
-                  selector:
-                    - display_name
-                  display_name: DataTrails Paris
-                  description: Sales and sales support for the French region
-                  latitude: 48.8339211,
-                  longitude: 2.371345,
-                  attributes:
-                    address: 5 Parvis Alan Turing, 75013 Paris, France
-                    wavestone_ext: managed
                 attachments:
                   - filename: functests/test_resources/doors/assets/entry-terminal.jpg
                     content_type: image/jpg
@@ -209,12 +197,6 @@ class _AssetsRestricted(_AssetsPublic):
 
             The 'selector' value is required and will usually specify the 'arc_display_name' as a
             secondary key. The keys in 'selector' must exist in the attributes of the asset.
-
-            If 'location' is specified then the 'selector' value is required and is used as a
-            secondary key. Likewise the secondary key must exist in the attributes of the location.
-
-            Alternatively the identity of the location is specified - both
-            are shown - choose one.
 
         Returns:
             tuple of :class:`Asset` instance, Boolean is True if asset already existed
@@ -225,7 +207,6 @@ class _AssetsRestricted(_AssetsPublic):
         existed = False
         data = deepcopy(data)
         attachments = data.pop("attachments", None)
-        location = data.pop("location", None)
         selector = data.pop("selector")  # must exist
         props, attrs = selector_signature(selector, data)
         try:
@@ -239,16 +220,6 @@ class _AssetsRestricted(_AssetsPublic):
         else:
             LOGGER.info("asset with selector %s,%s already exists", props, attrs)
             return asset, True
-
-        # is location present?
-        if location is not None:
-            if "identity" in location:
-                data["attributes"]["arc_home_location_identity"] = location["identity"]
-            else:
-                loc, _ = self._archivist.locations.create_if_not_exists(
-                    location,
-                )
-                data["attributes"]["arc_home_location_identity"] = loc["identity"]
 
         # any attachments ?
         if attachments is not None:

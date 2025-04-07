@@ -27,19 +27,6 @@ steps:
       arc_serial_number: das-j1-01
       arc_description: Electronic door entry system to DataTrails France
       wavestone_asset_id: paris.france.datatrails.das
-    location:
-      selector:
-        - display_name
-        - attributes:
-          - namespace
-      display_name: DataTrails Paris
-      description: Sales and sales support for the French region
-      latitude: 48.8339211
-      longitude: 2.371345
-      attributes:
-        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
-        address: 5 Parvis Alan Turing, 75013 Paris, France
-        wavestone_ext: managed
     attachments:
       - filename: functests/test_resources/doors/assets/entry_terminal.jpg
         content_type: image/jpg
@@ -62,22 +49,6 @@ steps:
       arc_serial_number: das-x4-01
       arc_description: Electronic door entry system controlling the main staff entrance to Paris City Hall
       wavestone_asset_id: cityhall.paris.wavestonedas
-    location:
-      selector:
-        - display_name
-        - attributes:
-          - namespace
-      display_name: Paris City Hall
-      description: Seat of Paris local city adminstration
-      latitude: 48.856389
-      longitude: 2.352222
-      attributes:
-        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
-        address: Place de l'Hôtel de Ville, 75004 Paris, France
-        wavestone_ext: managed
-      attachments:
-      - filename: functests/test_resources/doors/assets/cityhall.jpg
-        content_type: image/jpg
 
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS
@@ -98,19 +69,6 @@ steps:
       arc_serial_number: das-x4-02
       arc_description: Electronic door entry system controlling the main staff entrance to Paris Courts of Justice
       wavestone_asset_id: courts.paris.wavestonedas
-    location:
-      selector:
-        - display_name
-        - attributes:
-          - namespace
-      display_name: Paris Courts of Justice
-      description: Public museum in the former Palais de Justice
-      latitude: 48.855722
-      longitude: 2.345051
-      attributes:
-        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
-        address: 10 Boulevard du Palais, 75001 Paris, France
-        wavestone_ext: managed
     attachments:
       - filename: functests/test_resources/doors/assets/courts.jpg
         content_type: image/jpg
@@ -133,19 +91,6 @@ steps:
       arc_serial_number: das-x4-03
       arc_description: Electronic door entry system controlling the main staff entrance to Bastille
       wavestone_asset_id: bastille.paris.wavestonedas
-    location:
-      selector:
-        - display_name
-        - attributes:
-          - namespace
-      display_name: Bastille
-      description: Medieval fortress, made famous by the French Revolution
-      latitude: 48.85333
-      longitude: 2.36917
-      attributes:
-        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
-        address: Place de la Bastille, 75011 Paris, France
-        wavestone_ext: managed
     attachments:
       - filename: functests/test_resources/doors/assets/bastille.jpg
         content_type: image/jpg
@@ -168,19 +113,6 @@ steps:
       arc_serial_number: das-x4-04
       arc_description: Electronic door entry system controlling the front residential entrance to Apartements du Gare du Nord
       wavestone_asset_id: front.gdn.paris.wavestonedas
-    location:
-      selector:
-        - display_name
-        - attributes:
-          - namespace
-      display_name: Apartements du Gare du Nord
-      description: Residential apartment building in new complex above GdN station
-      latitude: 48.8809
-      longitude: 2.3553
-      attributes:
-        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
-        address: 18 Rue de Dunkerque, 75010 Paris, France
-        wavestone_ext: managed
     attachments:
       - filename: functests/test_resources/doors/assets/gdn_front.jpg
         content_type: image/jpg
@@ -203,26 +135,12 @@ steps:
       arc_serial_number: das-x4-05
       arc_description: Electronic door entry system controlling the side residential entrance to Apartements du Gare du Nord
       wavestone_asset_id: side.gdn.paris.wavestonedas
-    location:
-      selector:
-        - display_name
-        - attributes:
-          - namespace
-      display_name: Apartements du Gare du Nord
-      description: Residential apartment building in new complex above GdN station
-      latitude: 48.8809
-      longitude: 2.3553
-      attributes:
-        namespace: !ENV ${DATATRAILS_UNIQUE_ID:namespace}
-        address: 18 Rue de Dunkerque, 75010 Paris, France
-        wavestone_ext: managed
     attachments:
       - filename: functests/test_resources/doors/assets/gdn_side.jpg
         content_type: image/jpg
 
-# We don't create locations for cards - they float free.
 # If there's a natural affinity between cards and home
-# locations/owners in the real world then of course we
+# owners in the real world then of course we
 # can add this.
 # Similarly there's no real benefit to creating a
 # Primary_image for them so leave that empty too

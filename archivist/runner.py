@@ -10,7 +10,6 @@ from logging import getLogger
 from time import sleep as time_sleep
 from types import GeneratorType
 from typing import TYPE_CHECKING, Any
-from uuid import UUID
 
 from .errors import ArchivistError, ArchivistInvalidOperationError
 
@@ -23,7 +22,7 @@ if TYPE_CHECKING:
 LOGGER = getLogger(__name__)
 
 
-NOUNS = ("asset", "location", "subject")
+NOUNS = ("asset", "subject")
 
 
 def tree():
@@ -46,7 +45,7 @@ class _ActionMap(dict):
     #  use_asset_label = "asset_id"   = keyword argument
     #  use_asset_label = "-asset_id"   = keyword argument in first argumemt that is
     #                                    a dictionary
-    # similarly for location and subjects labels
+    # similarly for subjects labels
     #
     def __init__(self, archivist_instance: "Archivist"):
         super().__init__()
@@ -68,7 +67,6 @@ class _ActionMap(dict):
             "action": self._archivist.assets.create_if_not_exists,
             "keywords": ("confirm",),
             "set_asset_label": True,
-            "use_location_label": "add_data_location_identity",
         }
         self["ASSETS_CREATE"] = {
             "action": self._archivist.assets.create_from_data,
@@ -96,7 +94,6 @@ class _ActionMap(dict):
             "action": self._archivist.events.create_from_data,
             "keywords": ("confirm",),
             "use_asset_label": "add_arg_identity",
-            "use_location_label": "add_data_location_identity",
         }
         self["EVENTS_COUNT"] = {
             "action": self._archivist.events.count,
@@ -117,29 +114,6 @@ class _ActionMap(dict):
                 "asset_attrs",
             ),
             "use_asset_label": "add_kwarg_asset_identity",
-        }
-        self["LOCATIONS_COUNT"] = {
-            "action": self._archivist.locations.count,
-            "keywords": (
-                "props",
-                "attrs",
-            ),
-        }
-        self["LOCATIONS_CREATE_IF_NOT_EXISTS"] = {
-            "action": self._archivist.locations.create_if_not_exists,
-            "keywords": ("confirm",),
-            "set_location_label": True,
-        }
-        self["LOCATIONS_LIST"] = {
-            "action": self._archivist.locations.list,
-            "keywords": (
-                "props",
-                "attrs",
-            ),
-        }
-        self["LOCATIONS_READ"] = {
-            "action": self._archivist.locations.read,
-            "use_location_label": "add_arg_identity",
         }
         self["SUBJECTS_COUNT"] = {
             "action": self._archivist.subjects.count,
@@ -240,12 +214,6 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
 
     add_kwarg_asset_identity = partialmethod(add_kwarg_identity, "asset_id")
 
-    def add_data_identity(self, key, identity):
-        self._data[key] = {}
-        self._data[key]["identity"] = identity
-
-    add_data_location_identity = partialmethod(add_data_identity, "location")
-
     def init_args(self, identity_method, step):
         """
         Add args and kwargs to action.
@@ -305,16 +273,7 @@ class _Step(dict):  # pylint:disable=too-many-instance-attributes
 
     def identity_from_label(self, noun, identity_method):
         label = self.get(f"{noun}_label")
-        if not label.startswith(f"{noun}s/"):  # pyright: ignore
-            return identity_method(label)
-
-        uid = label.split("/")[1]  # pyright: ignore
-        try:
-            _ = UUID(uid, version=4)
-        except ValueError:
-            return None
-
-        return label
+        return identity_method(label)
 
     def description(self):
         description = self.get("description")

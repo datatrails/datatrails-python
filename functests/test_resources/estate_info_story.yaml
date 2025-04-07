@@ -6,4 +6,4 @@
 steps:
   - step:
       action: COMPOSITE_ESTATE_INFO
-      description: Check assets, events and locations
+      description: Check assets and events
