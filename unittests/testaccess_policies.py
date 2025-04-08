@@ -39,12 +39,6 @@ PROPS = {
 FILTERS = [
     {
         "or": [
-            "attributes.arc_home_location_identity=locations/5ea815f0-4de1-4a84-9377-701e880fe8ae",
-            "attributes.arc_home_location_identity=locations/27eed70b-9e2b-4db1-b8c4-e36505350dcc",
-        ]
-    },
-    {
-        "or": [
             "attributes.arc_display_type=Valve",
             "attributes.arc_display_type=Pump",
         ]

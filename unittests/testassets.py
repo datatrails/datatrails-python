@@ -29,9 +29,6 @@ from .testassetsconstants import (
     REQUEST_EXISTS_ATTACHMENTS,
     REQUEST_EXISTS_KWARGS,
     REQUEST_EXISTS_KWARGS_ATTACHMENTS,
-    REQUEST_EXISTS_KWARGS_LOCATION,
-    REQUEST_EXISTS_LOCATION,
-    REQUEST_EXISTS_LOCATION_IDENTITY,
     REQUEST_FIXTURES_KWARGS,
     REQUEST_KWARGS,
     REQUEST_KWARGS_MERKLE_LOG,
@@ -39,10 +36,8 @@ from .testassetsconstants import (
     RESPONSE_ATTACHMENTS,
     RESPONSE_EXISTS,
     RESPONSE_EXISTS_ATTACHMENTS,
-    RESPONSE_EXISTS_LOCATION,
     RESPONSE_FAILED,
     RESPONSE_FIXTURES,
-    RESPONSE_LOCATION,
     RESPONSE_NO_CONFIRMATION,
     RESPONSE_PENDING,
     RESPONSE_UNEQUIVOCAL,
@@ -376,7 +371,6 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         req,
         req_kwargs,
         resp,
-        loc_resp=None,
         attachments_resp=None,
     ):
         """
@@ -385,16 +379,10 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
         with (
             mock.patch.object(self.arch.session, "post", autospec=True) as mock_post,
             mock.patch.object(self.arch.session, "get") as mock_get,
-            mock.patch.object(
-                self.arch.locations, "create_if_not_exists"
-            ) as mock_location,
             mock.patch.object(self.arch.attachments, "create") as mock_attachments,
         ):
             mock_get.side_effect = ArchivistNotFoundError
             mock_post.return_value = MockResponse(200, **resp)
-            if loc_resp is not None:
-                mock_location.return_value = (MockResponse(200, **loc_resp), True)
-
             if attachments_resp is not None:
                 mock_attachments.return_value = MockResponse(200, **attachments_resp)
 
@@ -442,20 +430,6 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
                     msg="CREATE_ATTACHMENTS method kwargs called incorrectly",
                 )
 
-            if loc_resp is not None:
-                mock_location.assert_called_once()
-                args, kwargs = mock_location.call_args
-                self.assertEqual(
-                    args,
-                    (req.get("location"),),
-                    msg="CREATE_LOCATION method args called incorrectly",
-                )
-                self.assertEqual(
-                    kwargs,
-                    {},
-                    msg="CREATE_LOCATION method kwargs called incorrectly",
-                )
-
     def test_assets_create_if_not_exists_nonexistent_asset(self):
         """
         Test asset creation
@@ -464,27 +438,6 @@ class TestAssetsCreateIfNotExists(TestAssetsBase):
             REQUEST_EXISTS,
             REQUEST_EXISTS_KWARGS,
             RESPONSE_EXISTS,
-        )
-
-    def test_assets_create_if_not_exists_nonexistent_asset_location(self):
-        """
-        Test asset creation
-        """
-        self.common_assets_create_if_not_exists_nonexistent_asset(
-            REQUEST_EXISTS_LOCATION,
-            REQUEST_EXISTS_KWARGS_LOCATION,
-            RESPONSE_EXISTS_LOCATION,
-            loc_resp=RESPONSE_LOCATION,
-        )
-
-    def test_assets_create_if_not_exists_nonexistent_asset_location_identity(self):
-        """
-        Test asset creation
-        """
-        self.common_assets_create_if_not_exists_nonexistent_asset(
-            REQUEST_EXISTS_LOCATION_IDENTITY,
-            REQUEST_EXISTS_KWARGS_LOCATION,
-            RESPONSE_EXISTS_LOCATION,
         )
 
     def test_assets_create_if_not_exists_nonexistent_asset_attachments(self):

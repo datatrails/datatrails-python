@@ -121,7 +121,6 @@ EVENTS_CREATE = {
             "arc_blob_hash_alg": "sha256",
         },
     },
-    "location": {"identity": "locations/add30235-1424-4fda-840a-d5ef82c4c96f"},
 }
 EVENT_RESPONSE = {
     "identity": (
@@ -169,8 +168,6 @@ EVENT_RESPONSE = {
     "transaction_index": 5,
     "transaction_id": "0x07569",
 }
-LOCATION_IDENTITY = "locations/add30235-1424-4fda-840a-d5ef82c4c96f"
-LOCATION_IDENTITY_BAD_UUID = "locations/add30235-xxxx-xxxx-xxxx-d5ef82c4c96f"
 
 
 def event_generator(n: int):
@@ -397,86 +394,12 @@ class TestRunnerAssetsCreate(TestCase):
                                     "asset_label": "Nonexistent asset",
                                 },
                                 **EVENTS_CREATE,
-                            }
+                            },
                         ],
                     }
                 )
 
             self.assertEqual("unknown asset" in str(ex.exception), True)
-
-    def test_runner_events_create_illegal_location_label(self):
-        """
-        Test runner operation
-        """
-        with mock.patch.object(
-            self.arch.events, "create_from_data"
-        ) as mock_events_create:
-            mock_events_create.return_value = Event(**EVENT_RESPONSE)
-            with self.assertRaises(ArchivistInvalidOperationError) as ex:
-                self.arch.runner.run_steps(
-                    {
-                        "steps": [
-                            {
-                                "step": {
-                                    "action": "EVENTS_CREATE",
-                                    "wait_time": 10,
-                                    "location_label": "Nonexistent location",
-                                },
-                                **EVENTS_CREATE,
-                            }
-                        ],
-                    }
-                )
-
-            self.assertEqual("unknown location" in str(ex.exception), True)
-
-    def test_runner_events_create_location_identity(self):
-        """
-        Test runner operation
-        """
-        with mock.patch.object(
-            self.arch.events, "create_from_data"
-        ) as mock_events_create:
-            mock_events_create.return_value = Event(**EVENT_RESPONSE)
-            self.arch.runner.run_steps(
-                {
-                    "steps": [
-                        {
-                            "step": {
-                                "action": "EVENTS_CREATE",
-                                "location_label": LOCATION_IDENTITY,
-                            },
-                            **EVENTS_CREATE,
-                        }
-                    ],
-                }
-            )
-            mock_events_create.assert_called_once_with(EVENTS_CREATE)
-
-    def test_runner_events_create_location_bad_identity(self):
-        """
-        Test runner operation
-        """
-        with mock.patch.object(
-            self.arch.events, "create_from_data"
-        ) as mock_events_create:
-            mock_events_create.return_value = Event(**EVENT_RESPONSE)
-            with self.assertRaises(ArchivistInvalidOperationError) as ex:
-                self.arch.runner.run_steps(
-                    {
-                        "steps": [
-                            {
-                                "step": {
-                                    "action": "EVENTS_CREATE",
-                                    "location_label": LOCATION_IDENTITY_BAD_UUID,
-                                },
-                                **EVENTS_CREATE,
-                            }
-                        ],
-                    }
-                )
-
-            self.assertEqual("unknown location" in str(ex.exception), True)
 
     def test_runner_assets_create_invalid_action(self):
         """

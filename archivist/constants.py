@@ -56,9 +56,6 @@ ASSETATTACHMENTS_LABEL = "attachments"
 ACCESS_POLICIES_SUBPATH = "iam/v1"
 ACCESS_POLICIES_LABEL = "access_policies"
 
-LOCATIONS_SUBPATH = "v2"
-LOCATIONS_LABEL = "locations"
-
 SBOM_PACKAGE = "Software Package"
 SBOM_RELEASE = "Software Package Release"
 

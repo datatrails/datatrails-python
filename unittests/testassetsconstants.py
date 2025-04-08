@@ -10,7 +10,6 @@ from archivist.constants import (
     ASSETS_LABEL,
     ASSETS_SUBPATH,
     ATTACHMENTS_LABEL,
-    LOCATIONS_LABEL,
 )
 from archivist.proof_mechanism import ProofMechanism
 
@@ -349,121 +348,6 @@ RESPONSE_EXISTS_ATTACHMENTS = {
     },
     "confirmation_status": "CONFIRMED",
     "tracked": "TRACKED",
-}
-
-# case 4 create if not exists with location
-REQUEST_EXISTS_LOCATION = {
-    "selector": [
-        {
-            "attributes": [
-                "arc_display_name",
-                "arc_namespace",
-            ]
-        },
-    ],
-    "behaviours": ASSET_BEHAVIOURS,
-    "attributes": {
-        "arc_display_name": ASSET_NAME,
-        "arc_namespace": "namespace",
-        "arc_firmware_version": "1.0",
-        "arc_serial_number": "vtl-x4-07",
-        "arc_description": "Traffic flow control light at A603 North East",
-        "arc_display_type": "Traffic light with violation camera",
-        "some_custom_attribute": "value",
-    },
-    "location": {
-        "selector": [
-            "display_name",
-            {
-                "attributes": [
-                    "director",
-                ]
-            },
-        ],
-        "display_name": "Macclesfield, Cheshire",
-        "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
-        "latitude": "53.2546799",
-        "longitude": "-2.1213956,14.54",
-        "attributes": {
-            "director": "John Smith",
-            "address": "Bridgewater, Somerset",
-            "facility_type": "Manufacture",
-            "support_email": "support@macclesfield.com",
-            "support_phone": "123 456 789",
-        },
-    },
-}
-REQUEST_EXISTS_KWARGS_LOCATION = {
-    "json": {
-        "behaviours": ASSET_BEHAVIOURS,
-        "attributes": {
-            "arc_display_name": ASSET_NAME,
-            "arc_namespace": "namespace",
-            "arc_firmware_version": "1.0",
-            "arc_serial_number": "vtl-x4-07",
-            "arc_description": "Traffic flow control light at A603 North East",
-            "arc_display_type": "Traffic light with violation camera",
-            "some_custom_attribute": "value",
-            "arc_home_location_identity": f"{LOCATIONS_LABEL}/xxxxxxxx",
-        },
-    },
-    "headers": {
-        "authorization": "Bearer authauthauth",
-    },
-}
-RESPONSE_EXISTS_LOCATION = {
-    "identity": IDENTITY,
-    "behaviours": ASSET_BEHAVIOURS,
-    "attributes": {
-        "arc_display_name": ASSET_NAME,
-        "arc_namespace": "namespace",
-        "arc_firmware_version": "1.0",
-        "arc_serial_number": "vtl-x4-07",
-        "arc_description": "Traffic flow control light at A603 North East",
-        "arc_display_type": "Traffic light with violation camera",
-        "some_custom_attribute": "value",
-        "arc_home_location_identity": f"{LOCATIONS_LABEL}/xxxxxxxx",
-    },
-    "confirmation_status": "CONFIRMED",
-    "tracked": "TRACKED",
-}
-RESPONSE_LOCATION = {
-    "identity": f"{LOCATIONS_LABEL}/xxxxxxxx",
-    "display_name": "Macclesfield, Cheshire",
-    "description": "Manufacturing site, North West England, Macclesfield, Cheshire",
-    "latitude": "53.2546799",
-    "longitude": "-2.1213956,14.54",
-    "attributes": {
-        "director": "John Smith",
-        "address": "Bridgewater, Somerset",
-        "facility_type": "Manufacture",
-        "support_email": "support@macclesfield.com",
-        "support_phone": "123 456 789",
-    },
-}
-# case 5 create if not exists with location identity
-REQUEST_EXISTS_LOCATION_IDENTITY = {
-    "selector": [
-        {
-            "attributes": [
-                "arc_display_name",
-                "arc_namespace",
-            ]
-        },
-    ],
-    "behaviours": ASSET_BEHAVIOURS,
-    "attributes": {
-        "arc_display_name": ASSET_NAME,
-        "arc_namespace": "namespace",
-        "arc_firmware_version": "1.0",
-        "arc_serial_number": "vtl-x4-07",
-        "arc_description": "Traffic flow control light at A603 North East",
-        "arc_display_type": "Traffic light with violation camera",
-        "some_custom_attribute": "value",
-    },
-    "location": {
-        "identity": f"{LOCATIONS_LABEL}/xxxxxxxx",
-    },
 }
 
 # ---------------

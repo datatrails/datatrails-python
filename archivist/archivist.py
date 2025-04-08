@@ -7,7 +7,7 @@ the basic REST verbs to GET, POST, PATCH and DELETE entities..
 
 The REST methods in this class should only be used directly when
 a CRUD endpoint for the specific type of entity is unavailable.
-Current CRUD endpoints are assets, events, locations, attachments.
+Current CRUD endpoints are assets, events, attachments.
 IAM subjects and IAM access policies.
 
 Instantiation of this class encapsulates the URL and authentication
@@ -25,7 +25,7 @@ parameters (the max_time parameter is optional):
        max_time=300.0,
    )
 
- The arch variable now has additional endpoints assets,events,locations,
+ The arch variable now has additional endpoints assets,events,
  attachments, IAM subjects and IAM access policies documented elsewhere.
 
 """
@@ -62,7 +62,6 @@ from .errors import (
     _parse_response,
 )
 from .events import _EventsRestricted
-from .locations import _LocationsClient
 from .retry429 import retry_429
 from .runner import _Runner
 from .subjects import _SubjectsClient
@@ -96,7 +95,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         "attachments": _AttachmentsClient,
         "composite": _CompositeClient,
         "events": _EventsRestricted,
-        "locations": _LocationsClient,
         "runner": _Runner,
         "subjects": _SubjectsClient,
         "tenancies": _TenanciesClient,
@@ -142,7 +140,6 @@ class Archivist(ArchivistPublic):  # pylint: disable=too-many-instance-attribute
         self.attachments: _AttachmentsClient
         self.composite: _CompositeClient
         self.events: _EventsRestricted
-        self.locations: _LocationsClient
         self.runner: _Runner
         self.subjects: _SubjectsClient
         self.tenancies: _TenanciesClient

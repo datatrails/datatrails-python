@@ -3,5 +3,5 @@
 #
 jupyter~=1.1.1
 jupyter-console~=6.6
-python-dotenv[cli]~=1.0
+python-dotenv[cli]~=1.1
 
