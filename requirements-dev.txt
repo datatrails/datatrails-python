@@ -17,7 +17,7 @@ pipdeptree~=2.23
 
 # uploading to pypi
 build~=1.2
-twine~=5.1
+twine~=6.1
 
 # for sbom.xml file
 xq~=0.0
