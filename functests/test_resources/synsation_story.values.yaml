@@ -1,75 +1,24 @@
 ---
-locations:
-  - display_name: Cape Town
-    description: South Africa Office
-    latitude: -33.92527778
-    longitude: 18.42388889
-    attributes:
-      address: Cape Town Downtown
-      facility_type: Satellite Office
-      reception_email: reception_CT@synsation_io
-      reception_phone: +27 (21) 123-456
-  - display_name: Asia Regional Sales Office
-    description: Asia Regional Sales Headquarters
-    latitude: 18.52027778
-    longitude: 73.85666667
-    attributes:
-      address: "212, Late Govind Rambhau Taru Chowk Road, Shobhapur, Pune 411011"
-      facility_type: Sales
-      reception_email: reception_PN@synsation_io
-      reception_phone: +91 (20) 123-4567
-  - display_name: Baltimore Regional Sales Office
-    description: East Coast Regional Sales Headquarters
-    latitude: 39.28333333
-    longitude: -76.61666667
-    attributes:
-      address: Baltimore 21201, Maryland
-      facility_type: Sales
-      reception_email: reception_BLT@synsation_io
-      reception_phone: +1 (410) 123-4567
-  - display_name: European Regional Sales Office
-    description: European Regional Sales Headquarters
-    latitude: 52.20527778
-    longitude: 0.11916667
-    attributes:
-      address: Cambridge CB1 1BH, England
-      facility_type: Sales
-      reception_email: reception_CAM@synsation_io
-      reception_phone: +44 (1223) 123-456
-  - display_name: Grayslake HQ
-    description: Global Headquarters
-    latitude: 42.34833333
-    longitude: -88.03250000
-    attributes:
-      address: Grayslake 60030, Illinois
-      facility_type: Headquarters
-      reception_email: reception_GL@synsation_io
-      reception_phone: +1 (847) 765-4321
-
 assets:
   - asset_label: Multifunction Printer Cape Town
-    location_label: Cape Town
     type: printer
     firmware_version: v1.0
     serial_number: f867662g.1
     filename: multifunction_printer.jpg
 
   - asset_label: Coffee Machine Asia
-    location_label: Asia Regional Sales Office
     type: coffee machine
     firmware_version: v1.0
     serial_number: f867662g.1
     filename: coffee_machine.jpg
 
   - asset_label: Security Camera Baltimore
-    location_label: Baltimore Regional Sales Office
     type: security camera
     firmware_version: v1.0
     serial_number: f867662g.1
     filename: black_cctv.jpg
 
   - asset_label: Multifunction Printer England
-    location_label: European Regional Sales Office
     type: printer
     firmware_version: v1.0
     serial_number: f867662g.1

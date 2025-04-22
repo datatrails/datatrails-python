@@ -24,15 +24,11 @@ from .testeventsconstants import (
     ATTACHMENTS,
     EVENT_ATTRS,
     EVENT_ATTRS_ATTACHMENTS,
-    EVENT_ATTRS_LOCATION,
-    EVENT_ATTRS_LOCATION_IDENTITY,
     EVENT_ATTRS_SBOMATTACHMENT,
-    LOCATION,
     PROPS,
     REQUEST,
     REQUEST_WITH_ASSET_ATTRS,
     REQUEST_WITH_ATTACHMENTS,
-    REQUEST_WITH_LOCATION,
     REQUEST_WITH_SBOMATTACHMENT,
     RESPONSE,
     RESPONSE_FAILED,
@@ -40,7 +36,6 @@ from .testeventsconstants import (
     RESPONSE_PENDING,
     RESPONSE_WITH_ASSET_ATTRS,
     RESPONSE_WITH_ATTACHMENTS,
-    RESPONSE_WITH_LOCATION,
     RESPONSE_WITH_SBOMATTACHMENT,
     SBOM_RESULT,
     TestEventsBase,
@@ -193,93 +188,6 @@ class TestEventsCreate(TestEventsBase):
             self.assertEqual(
                 event,
                 RESPONSE_WITH_SBOMATTACHMENT,
-                msg="CREATE method called incorrectly",
-            )
-
-    def test_events_create_with_location(self):
-        """
-        Test event creation
-        """
-        with (
-            mock.patch.object(self.arch.session, "post") as mock_post,
-            mock.patch.object(
-                self.arch.locations, "create_if_not_exists"
-            ) as mock_location_create,
-        ):
-            mock_post.return_value = MockResponse(200, **RESPONSE_WITH_LOCATION)
-            mock_location_create.return_value = LOCATION, True
-
-            event = self.arch.events.create_from_data(
-                ASSET_ID, EVENT_ATTRS_LOCATION, confirm=False
-            )
-            args, kwargs = mock_post.call_args
-            self.assertEqual(
-                args,
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}"
-                    ),
-                ),
-                msg="CREATE method args called incorrectly",
-            )
-            self.assertEqual(
-                kwargs,
-                {
-                    "json": REQUEST_WITH_LOCATION,
-                    "headers": {
-                        "authorization": "Bearer authauthauth",
-                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
-                    },
-                },
-                msg="CREATE method kwargs called incorrectly",
-            )
-            self.assertEqual(
-                event,
-                RESPONSE_WITH_LOCATION,
-                msg="CREATE method called incorrectly",
-            )
-
-    def test_events_create_with_location_identity(self):
-        """
-        Test event creation
-        """
-        with (
-            mock.patch.object(self.arch.session, "post") as mock_post,
-            mock.patch.object(self.arch.locations, "create_if_not_exists"),
-        ):
-            mock_post.return_value = MockResponse(200, **RESPONSE_WITH_LOCATION)
-
-            event = self.arch.events.create_from_data(
-                ASSET_ID, EVENT_ATTRS_LOCATION_IDENTITY, confirm=False
-            )
-            args, kwargs = mock_post.call_args
-            self.assertEqual(
-                args,
-                (
-                    (
-                        f"url/{ROOT}/{ASSETS_SUBPATH}"
-                        f"/{ASSETS_LABEL}/xxxxxxxxxxxxxxxxxxxx"
-                        f"/{EVENTS_LABEL}"
-                    ),
-                ),
-                msg="CREATE method args called incorrectly",
-            )
-            self.assertEqual(
-                kwargs,
-                {
-                    "json": REQUEST_WITH_LOCATION,
-                    "headers": {
-                        "authorization": "Bearer authauthauth",
-                        USER_AGENT: f"{USER_AGENT_PREFIX}{VERSION}",
-                    },
-                },
-                msg="CREATE method kwargs called incorrectly",
-            )
-            self.assertEqual(
-                event,
-                RESPONSE_WITH_LOCATION,
                 msg="CREATE method called incorrectly",
             )
 

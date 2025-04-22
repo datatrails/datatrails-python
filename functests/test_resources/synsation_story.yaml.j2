@@ -6,43 +6,6 @@
 #
 steps:
 
-  # create locations for all offices - these are created separately as more than one asset
-  # can be located at an office and we dont want to duplicate code...
-  # refer to the locations using the location_label...
-  {% for location in locations %} 
-  - step:
-      action: LOCATIONS_CREATE_IF_NOT_EXISTS
-      description: Create {{ location.display_name }} Location
-      location_label: {{ location.display_name }}
-    selector:
-      - display_name
-      - attributes:
-        - namespace
-    display_name: {{ location.display_name }}
-    description: {{ location.description }}
-    latitude: {{ location.latitude }}
-    longitude: {{ location.longitude }}
-    attributes:
-      namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
-      address: {{ location.attributes.address }}
-      facility_type: {{ location.attributes.facility_type }}
-      reception_email: {{ location.attributes.reception_email }}
-      reception_phone: {{ location.attributes.reception_phone }}
-  {% endfor %} 
-  - step:
-      action: LOCATIONS_COUNT
-      description: Count locations in namespace
-      LOGGER.debug_response: true
-    attrs:
-      namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
-
-  - step:
-      action: LOCATIONS_LIST
-      description: List locations in namespace
-      LOGGER.debug_response: true
-    attrs:
-      namespace: "{{ env['DATATRAILS_UNIQUE_ID'] or 'namespace' }}"
-
   {% for asset in assets %} 
   - step:
       action: ASSETS_CREATE_IF_NOT_EXISTS

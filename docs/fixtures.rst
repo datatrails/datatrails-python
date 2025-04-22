@@ -3,8 +3,8 @@
 Fixtures (Common Attributes)
 =============================================
 
-One can specify common attributes when creating/counting/querying assets, events
-and locations.
+One can specify common attributes when creating/counting/querying assets and
+events.
 
 .. code-block:: python
     

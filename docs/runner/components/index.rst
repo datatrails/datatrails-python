@@ -17,9 +17,6 @@ Story Runner Components
    events_count
    events_create
    events_list
-   locations_count
-   locations_create
-   locations_list
    subjects_count
    subjects_create
    subjects_create_b64

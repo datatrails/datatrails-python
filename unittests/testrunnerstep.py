@@ -15,7 +15,6 @@ from archivist.logger import set_logger
 from archivist.runner import _Step
 
 ASSET_ID = "assets/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
-LOCATION_ID = "locations/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
 
 if "DATATRAILS_LOGLEVEL" in environ and environ["DATATRAILS_LOGLEVEL"]:
     set_logger(environ["DATATRAILS_LOGLEVEL"])
@@ -33,10 +32,6 @@ class TestRunnerStep(TestCase):
     @staticmethod
     def asset_id_method(unused_label):
         return ASSET_ID
-
-    @staticmethod
-    def location_id_method(unused_label):
-        return LOCATION_ID
 
     def setUp(self):
         self.arch = Archivist("url", "authauthauth")
@@ -165,114 +160,4 @@ class TestRunnerStep(TestCase):
             step.label("use", "asset"),
             "add_kwarg_asset_identity",
             msg="Incorrect use_asset_label",
-        )
-
-        self.assertEqual(
-            step.label("use", "location"),
-            False,
-            msg="Incorrect use_location_label",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.label("use", "location"),
-            False,
-            msg="Incorrect use_location_label",
-        )
-
-        self.assertEqual(
-            step.label("set", "location"),
-            False,
-            msg="Incorrect set_location_label",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.label("set", "location"),
-            False,
-            msg="Incorrect set_location_label",
-        )
-
-    def test_runner_step_location_label(self):
-        """
-        Test runner step
-        """
-        step = _Step(
-            self.arch,
-            **{
-                "action": "EVENTS_CREATE",
-                "wait_time": 10,
-                "print_response": True,
-                "description": "Testing runner events list",
-                "location_label": "Existing Location",
-            },
-        )
-        self.assertEqual(
-            step.action,
-            self.arch.events.create_from_data,
-            msg="Incorrect action",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.action,
-            self.arch.events.create_from_data,
-            msg="Incorrect action",
-        )
-
-        self.assertEqual(
-            step.keywords,
-            ("confirm",),
-            msg="Incorrect keywords",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.keywords,
-            ("confirm",),
-            msg="Incorrect keywords",
-        )
-
-        self.assertEqual(
-            step.delete_method,
-            None,
-            msg="Incorrect delete_method",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.delete_method,
-            None,
-            msg="Incorrect delete_method",
-        )
-
-        self.assertEqual(
-            step.label("set", "asset"),
-            False,
-            msg="Incorrect set_asset_label",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.label("set", "asset"),
-            False,
-            msg="Incorrect set_asset_label",
-        )
-
-        self.assertEqual(
-            step.label("use", "asset"),
-            "add_arg_identity",
-            msg="Incorrect use_asset_label",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.label("use", "asset"),
-            "add_arg_identity",
-            msg="Incorrect use_asset_label",
-        )
-
-        self.assertEqual(
-            step.label("use", "location"),
-            "add_data_location_identity",
-            msg="Incorrect use_location_label",
-        )
-        # a second time to prove memoization is working.
-        self.assertEqual(
-            step.label("use", "location"),
-            "add_data_location_identity",
-            msg="Incorrect use_location_label",
         )

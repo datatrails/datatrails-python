@@ -342,17 +342,6 @@ class _EventsRestricted(_EventsPublic):
         data = deepcopy(data)
 
         event_attributes = data["event_attributes"]
-        # is location present?
-        location = data.pop("location", None)
-        if location is not None:
-            if "identity" in location:
-                data["event_attributes"]["arc_location_identity"] = location["identity"]
-            else:
-                loc, _ = self._archivist.locations.create_if_not_exists(
-                    location,
-                )
-                event_attributes["arc_location_identity"] = loc["identity"]
-
         attachments = data.pop("attachments", None)
         if attachments is not None:
             for a in attachments:

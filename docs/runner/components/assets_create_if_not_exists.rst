@@ -9,12 +9,12 @@ otherwise it will create a new one with the given attributes.
 :code:`asset_label` is not required but if unspecified the created asset will
 not be accessible to later actions in the story.
 
-The :code:`selector` setting for both the asset and its associated location are required.
+The :code:`selector` setting for asset required.
 
-The :code:`location`, :code:`attachments` and :code:`confirm` entries are optional.
+The :code:`attachments` and :code:`confirm` entries are optional.
 
-The :code:`arc_namespace` (for the asset) and the :code:`namespace` (for the location) are used
-to distinguish between assets and locations created between runs of the story.
+The :code:`arc_namespace` (for the asset) is used
+to distinguish between assets created between runs of the story.
 
 Usually these field values are derived from an environment variable 
 :code:`DATATRAILS_UNIQUE_ID` (default value is :code:`namespace`).
@@ -44,19 +44,6 @@ This is optional.
           arc_serial_number: das-j1-01
           arc_description: Electronic door entry system to DataTrails France
           wavestone_asset_id: paris.france.datatrails.das
-        location:
-          selector:
-            - display_name
-            - attributes:
-              - namespace
-          display_name: DataTrails Paris
-          description: Sales and sales support for the French region
-          latitude: 48.8339211
-          longitude: 2.371345
-          attributes:
-            namespace: door entry
-            address: 5 Parvis Alan Turing, 75013 Paris, France
-            wavestone_ext: managed
         attachments:
           - filename: functests/test_resources/doors/assets/entry_terminal.jpg
             content_type: image/jpg

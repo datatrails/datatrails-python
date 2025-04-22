@@ -58,14 +58,9 @@ class _CompositeClient:
         """
         num_events = self._archivist.events.count()
         num_assets = self._archivist.assets.count()
-        num_locations = self._archivist.locations.count()
 
         LOGGER.info(
-            (
-                "There are %s events registered against %s assets"
-                " in the system spread over %s locations."
-            ),
+            "There are %s events registered against %s assets in the system",
             num_events,
             num_assets,
-            num_locations,
         )
