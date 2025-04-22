@@ -4,7 +4,7 @@
 autopep8~=2.3
 black[jupyter]~=24.10
 coverage[toml]~=7.8
-pip-audit~=2.7
+pip-audit~=2.9
 pycodestyle~=2.12
 pylint~=3.3
 pyright~=1.1
