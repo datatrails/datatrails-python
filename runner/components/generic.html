@@ -15,7 +15,7 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generic Story Runner YAML &mdash; DATATRAILS v0.34.1 documentation</title>
+  <title>Generic Story Runner YAML &mdash; DATATRAILS v0.35.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=b49c7ffd"></script>
+      <script src="../../_static/documentation_options.js?v=6131b1bd"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -86,9 +86,6 @@
 <li class="toctree-l4"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="locations_list.html">Locations List Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
@@ -153,7 +150,6 @@ required, optional or required for a particular operation.</p>
 <span class="w">      </span><span class="nt">wait_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 <span class="w">      </span><span class="nt">print_response</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Radiation bag 1</span>
-<span class="w">      </span><span class="nt">location_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cape Town</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">................definition of request body and other</span>
 <span class="w">                    </span><span class="l l-Scalar l-Scalar-Plain">parameters</span>
 </pre></div>
@@ -185,20 +181,8 @@ obtain the identity of such a previously-created asset.</p>
 </div></blockquote>
 <p>when accessing a previously created asset. (i.e. not when creating an asset)</p>
 </dd>
-<dt class="field-even">location_label<span class="colon">:</span></dt>
-<dd class="field-even"><p>For location create type actions (LOCATIONS_CREATE_IF_NOT_EXISTS) the label is used
-by the runner to keep track of locations.</p>
-<p>For other actions which require access to an location, this value is used as a key to
-obtain the identity of such a previously-created location.</p>
-<p>In this way one can create locations and then refer to them in later steps of the story.</p>
-<p>Additionally this label can be an explicit location identity of the form:</p>
-<blockquote>
-<div><p>locations/add30235-1424-4fda-840a-d5ef82c4c96fa</p>
-</div></blockquote>
-<p>when accessing a previously created location. (i.e. not when creating a location)</p>
-</dd>
-<dt class="field-odd">subject_label<span class="colon">:</span></dt>
-<dd class="field-odd"><p>For subject create type actions (SUBJECTS_CREATE) the label is used
+<dt class="field-even">subject_label<span class="colon">:</span></dt>
+<dd class="field-even"><p>For subject create type actions (SUBJECTS_CREATE) the label is used
 by the runner to keep track of subjects.</p>
 <p>For other actions which require access to a subject, this value is used as a key to
 obtain the identity of such a previously-created subject.</p>

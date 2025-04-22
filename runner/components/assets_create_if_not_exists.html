@@ -15,7 +15,7 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assets Create If not exists Story Runner YAML &mdash; DATATRAILS v0.34.1 documentation</title>
+  <title>Assets Create If not exists Story Runner YAML &mdash; DATATRAILS v0.35.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=b49c7ffd"></script>
+      <script src="../../_static/documentation_options.js?v=6131b1bd"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -86,9 +86,6 @@
 <li class="toctree-l4"><a class="reference internal" href="events_count.html">Events Count Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="events_create.html">Events Create Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="events_list.html">Events List Story Runner YAML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="locations_count.html">Locations Count Story Runner YAML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="locations_create.html">Locations Create Story Runner YAML</a></li>
-<li class="toctree-l4"><a class="reference internal" href="locations_list.html">Locations List Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="subjects_count.html">Subjects Count Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="subjects_create.html">Subjects Create Story Runner YAML</a></li>
 <li class="toctree-l4"><a class="reference internal" href="subjects_create_b64.html">Subjects Create From base64 Story Runner YAML</a></li>
@@ -146,10 +143,10 @@
 otherwise it will create a new one with the given attributes.</p>
 <p><code class="code docutils literal notranslate"><span class="pre">asset_label</span></code> is not required but if unspecified the created asset will
 not be accessible to later actions in the story.</p>
-<p>The <code class="code docutils literal notranslate"><span class="pre">selector</span></code> setting for both the asset and its associated location are required.</p>
-<p>The <code class="code docutils literal notranslate"><span class="pre">location</span></code>, <code class="code docutils literal notranslate"><span class="pre">attachments</span></code> and <code class="code docutils literal notranslate"><span class="pre">confirm</span></code> entries are optional.</p>
-<p>The <code class="code docutils literal notranslate"><span class="pre">arc_namespace</span></code> (for the asset) and the <code class="code docutils literal notranslate"><span class="pre">namespace</span></code> (for the location) are used
-to distinguish between assets and locations created between runs of the story.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">selector</span></code> setting for asset required.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">attachments</span></code> and <code class="code docutils literal notranslate"><span class="pre">confirm</span></code> entries are optional.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">arc_namespace</span></code> (for the asset) is used
+to distinguish between assets created between runs of the story.</p>
 <p>Usually these field values are derived from an environment variable
 <code class="code docutils literal notranslate"><span class="pre">DATATRAILS_UNIQUE_ID</span></code> (default value is <code class="code docutils literal notranslate"><span class="pre">namespace</span></code>).</p>
 <p><code class="code docutils literal notranslate"><span class="pre">confirm:</span> <span class="pre">true</span></code> means that the step will wait for the asset to be completely created before moving on to the next step.
@@ -174,19 +171,6 @@ This is optional.</p>
 <span class="w">      </span><span class="nt">arc_serial_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">das-j1-01</span>
 <span class="w">      </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to DataTrails France</span>
 <span class="w">      </span><span class="nt">wavestone_asset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">paris.france.datatrails.das</span>
-<span class="w">    </span><span class="nt">location</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_name</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">namespace</span>
-<span class="w">      </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DataTrails Paris</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sales and sales support for the French region</span>
-<span class="w">      </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48.8339211</span>
-<span class="w">      </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.371345</span>
-<span class="w">      </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">door entry</span>
-<span class="w">        </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5 Parvis Alan Turing, 75013 Paris, France</span>
-<span class="w">        </span><span class="nt">wavestone_ext</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">managed</span>
 <span class="w">    </span><span class="nt">attachments</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/doors/assets/entry_terminal.jpg</span>
 <span class="w">        </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span>

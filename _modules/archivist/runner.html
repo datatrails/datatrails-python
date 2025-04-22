@@ -14,7 +14,7 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.runner &mdash; DATATRAILS v0.34.1 documentation</title>
+  <title>archivist.runner &mdash; DATATRAILS v0.35.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -24,7 +24,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=b49c7ffd"></script>
+      <script src="../../_static/documentation_options.js?v=6131b1bd"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -101,7 +101,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">sleep</span> <span class="k">as</span> <span class="n">time_sleep</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeneratorType</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">UUID</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArchivistError</span><span class="p">,</span> <span class="n">ArchivistInvalidOperationError</span>
 
@@ -114,7 +113,7 @@
 <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="n">NOUNS</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;asset&quot;</span><span class="p">,</span> <span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="s2">&quot;subject&quot;</span><span class="p">)</span>
+<span class="n">NOUNS</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;asset&quot;</span><span class="p">,</span> <span class="s2">&quot;subject&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="tree">
@@ -142,7 +141,7 @@
     <span class="c1">#  use_asset_label = &quot;asset_id&quot;   = keyword argument</span>
     <span class="c1">#  use_asset_label = &quot;-asset_id&quot;   = keyword argument in first argumemt that is</span>
     <span class="c1">#                                    a dictionary</span>
-    <span class="c1"># similarly for location and subjects labels</span>
+    <span class="c1"># similarly for subjects labels</span>
     <span class="c1">#</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archivist_instance</span><span class="p">:</span> <span class="s2">&quot;Archivist&quot;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -164,7 +163,6 @@
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">,</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
             <span class="s2">&quot;set_asset_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">&quot;use_location_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_data_location_identity&quot;</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;ASSETS_CREATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
@@ -192,7 +190,6 @@
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">,</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
             <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_arg_identity&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;use_location_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_data_location_identity&quot;</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;EVENTS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
@@ -213,29 +210,6 @@
                 <span class="s2">&quot;asset_attrs&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;use_asset_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_kwarg_asset_identity&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
-            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
-                <span class="s2">&quot;props&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-        <span class="p">}</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_CREATE_IF_NOT_EXISTS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">,</span>
-            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;confirm&quot;</span><span class="p">,),</span>
-            <span class="s2">&quot;set_location_label&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_LIST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">list</span><span class="p">,</span>
-            <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">(</span>
-                <span class="s2">&quot;props&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;attrs&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-        <span class="p">}</span>
-        <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;LOCATIONS_READ&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">read</span><span class="p">,</span>
-            <span class="s2">&quot;use_location_label&quot;</span><span class="p">:</span> <span class="s2">&quot;add_arg_identity&quot;</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="p">[</span><span class="s2">&quot;SUBJECTS_COUNT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
@@ -354,12 +328,6 @@
 
     <span class="n">add_kwarg_asset_identity</span> <span class="o">=</span> <span class="n">partialmethod</span><span class="p">(</span><span class="n">add_kwarg_identity</span><span class="p">,</span> <span class="s2">&quot;asset_id&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_data_identity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">identity</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">identity</span>
-
-    <span class="n">add_data_location_identity</span> <span class="o">=</span> <span class="n">partialmethod</span><span class="p">(</span><span class="n">add_data_identity</span><span class="p">,</span> <span class="s2">&quot;location&quot;</span><span class="p">)</span>
-
 <div class="viewcode-block" id="_Step.init_args">
 <a class="viewcode-back" href="../../code/runner.html#archivist.runner._Step.init_args">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">init_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identity_method</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
@@ -422,16 +390,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">identity_from_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">noun</span><span class="p">,</span> <span class="n">identity_method</span><span class="p">):</span>
         <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2">_label&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">label</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">noun</span><span class="si">}</span><span class="s2">s/&quot;</span><span class="p">):</span>  <span class="c1"># pyright: ignore</span>
-            <span class="k">return</span> <span class="n">identity_method</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-
-        <span class="n">uid</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># pyright: ignore</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="k">return</span> <span class="n">label</span>
+        <span class="k">return</span> <span class="n">identity_method</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">)</span>

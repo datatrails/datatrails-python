@@ -15,7 +15,7 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archivist Class &mdash; DATATRAILS v0.34.1 documentation</title>
+  <title>Archivist Class &mdash; DATATRAILS v0.35.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="../_static/DataTrails_Favicon.png"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=b49c7ffd"></script>
+      <script src="../_static/documentation_options.js?v=6131b1bd"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -81,7 +81,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="assets.html">Assets Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events.html">Events Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
@@ -126,7 +125,7 @@ the connection parameters to a DataTrails instance and
 the basic REST verbs to GET, POST, PATCH and DELETE entities..</p>
 <p>The REST methods in this class should only be used directly when
 a CRUD endpoint for the specific type of entity is unavailable.
-Current CRUD endpoints are assets, events, locations, attachments.
+Current CRUD endpoints are assets, events, attachments.
 IAM subjects and IAM access policies.</p>
 <p>Instantiation of this class encapsulates the URL and authentication
 parameters (the max_time parameter is optional):</p>
@@ -140,7 +139,7 @@ parameters (the max_time parameter is optional):</p>
       <span class="n">max_time</span><span class="o">=</span><span class="mf">300.0</span><span class="p">,</span>
   <span class="p">)</span>
 
-<span class="n">The</span> <span class="n">arch</span> <span class="n">variable</span> <span class="n">now</span> <span class="n">has</span> <span class="n">additional</span> <span class="n">endpoints</span> <span class="n">assets</span><span class="p">,</span><span class="n">events</span><span class="p">,</span><span class="n">locations</span><span class="p">,</span>
+<span class="n">The</span> <span class="n">arch</span> <span class="n">variable</span> <span class="n">now</span> <span class="n">has</span> <span class="n">additional</span> <span class="n">endpoints</span> <span class="n">assets</span><span class="p">,</span><span class="n">events</span><span class="p">,</span>
 <span class="n">attachments</span><span class="p">,</span> <span class="n">IAM</span> <span class="n">subjects</span> <span class="ow">and</span> <span class="n">IAM</span> <span class="n">access</span> <span class="n">policies</span> <span class="n">documented</span> <span class="n">elsewhere</span><span class="o">.</span>
 </pre></div>
 </div>

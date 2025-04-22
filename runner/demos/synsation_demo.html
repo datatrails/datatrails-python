@@ -15,7 +15,7 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Synsation Demo &mdash; DATATRAILS v0.34.1 documentation</title>
+  <title>Synsation Demo &mdash; DATATRAILS v0.35.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=b49c7ffd"></script>
+      <script src="../../_static/documentation_options.js?v=6131b1bd"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -125,81 +125,30 @@
              
   <section id="synsation-demo">
 <span id="synsation-demo-ref"></span><h1>Synsation Demo<a class="headerlink" href="#synsation-demo" title="Link to this heading"></a></h1>
-<p>This story consists of 2 files one containing the definition of assets and locations and one
+<p>This story consists of 2 files one containing the definition of assets and one
 containing a template file from which the eventual story is generated using the Jinja2
 templating engine.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="nt">locations</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cape Town</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">South Africa Office</span>
-<span class="w">    </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-33.92527778</span>
-<span class="w">    </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">18.42388889</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cape Town Downtown</span>
-<span class="w">      </span><span class="nt">facility_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Satellite Office</span>
-<span class="w">      </span><span class="nt">reception_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reception_CT@synsation_io</span>
-<span class="w">      </span><span class="nt">reception_phone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">+27 (21) 123-456</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Asia Regional Sales Office</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Asia Regional Sales Headquarters</span>
-<span class="w">    </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">18.52027778</span>
-<span class="w">    </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">73.85666667</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;212,</span><span class="nv"> </span><span class="s">Late</span><span class="nv"> </span><span class="s">Govind</span><span class="nv"> </span><span class="s">Rambhau</span><span class="nv"> </span><span class="s">Taru</span><span class="nv"> </span><span class="s">Chowk</span><span class="nv"> </span><span class="s">Road,</span><span class="nv"> </span><span class="s">Shobhapur,</span><span class="nv"> </span><span class="s">Pune</span><span class="nv"> </span><span class="s">411011&quot;</span>
-<span class="w">      </span><span class="nt">facility_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sales</span>
-<span class="w">      </span><span class="nt">reception_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reception_PN@synsation_io</span>
-<span class="w">      </span><span class="nt">reception_phone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">+91 (20) 123-4567</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Baltimore Regional Sales Office</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">East Coast Regional Sales Headquarters</span>
-<span class="w">    </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">39.28333333</span>
-<span class="w">    </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-76.61666667</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Baltimore 21201, Maryland</span>
-<span class="w">      </span><span class="nt">facility_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sales</span>
-<span class="w">      </span><span class="nt">reception_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reception_BLT@synsation_io</span>
-<span class="w">      </span><span class="nt">reception_phone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">+1 (410) 123-4567</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">European Regional Sales Office</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">European Regional Sales Headquarters</span>
-<span class="w">    </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">52.20527778</span>
-<span class="w">    </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.11916667</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cambridge CB1 1BH, England</span>
-<span class="w">      </span><span class="nt">facility_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sales</span>
-<span class="w">      </span><span class="nt">reception_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reception_CAM@synsation_io</span>
-<span class="w">      </span><span class="nt">reception_phone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">+44 (1223) 123-456</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Grayslake HQ</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Global Headquarters</span>
-<span class="w">    </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">42.34833333</span>
-<span class="w">    </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-88.03250000</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Grayslake 60030, Illinois</span>
-<span class="w">      </span><span class="nt">facility_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Headquarters</span>
-<span class="w">      </span><span class="nt">reception_email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reception_GL@synsation_io</span>
-<span class="w">      </span><span class="nt">reception_phone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">+1 (847) 765-4321</span>
-
 <span class="nt">assets</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Multifunction Printer Cape Town</span>
-<span class="w">    </span><span class="nt">location_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cape Town</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">printer</span>
 <span class="w">    </span><span class="nt">firmware_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.0</span>
 <span class="w">    </span><span class="nt">serial_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">f867662g.1</span>
 <span class="w">    </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">multifunction_printer.jpg</span>
 
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Coffee Machine Asia</span>
-<span class="w">    </span><span class="nt">location_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Asia Regional Sales Office</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">coffee machine</span>
 <span class="w">    </span><span class="nt">firmware_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.0</span>
 <span class="w">    </span><span class="nt">serial_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">f867662g.1</span>
 <span class="w">    </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">coffee_machine.jpg</span>
 
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Security Camera Baltimore</span>
-<span class="w">    </span><span class="nt">location_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Baltimore Regional Sales Office</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security camera</span>
 <span class="w">    </span><span class="nt">firmware_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.0</span>
 <span class="w">    </span><span class="nt">serial_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">f867662g.1</span>
 <span class="w">    </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">black_cctv.jpg</span>
 
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">asset_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Multifunction Printer England</span>
-<span class="w">    </span><span class="nt">location_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">European Regional Sales Office</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">printer</span>
 <span class="w">    </span><span class="nt">firmware_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.0</span>
 <span class="w">    </span><span class="nt">serial_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">f867662g.1</span>
@@ -213,43 +162,6 @@ templating engine.</p>
 <span class="x"># cameras</span>
 <span class="x">#</span>
 <span class="x">steps:</span>
-
-<span class="x">  # create locations for all offices - these are created separately as more than one asset</span>
-<span class="x">  # can be located at an office and we dont want to duplicate code...</span>
-<span class="x">  # refer to the locations using the location_label...</span>
-<span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">location</span> <span class="k">in</span> <span class="nv">locations</span> <span class="cp">%}</span><span class="x"> </span>
-<span class="x">  - step:</span>
-<span class="x">      action: LOCATIONS_CREATE_IF_NOT_EXISTS</span>
-<span class="x">      description: Create </span><span class="cp">{{</span> <span class="nv">location.display_name</span> <span class="cp">}}</span><span class="x"> Location</span>
-<span class="x">      location_label: </span><span class="cp">{{</span> <span class="nv">location.display_name</span> <span class="cp">}}</span>
-<span class="x">    selector:</span>
-<span class="x">      - display_name</span>
-<span class="x">      - attributes:</span>
-<span class="x">        - namespace</span>
-<span class="x">    display_name: </span><span class="cp">{{</span> <span class="nv">location.display_name</span> <span class="cp">}}</span>
-<span class="x">    description: </span><span class="cp">{{</span> <span class="nv">location.description</span> <span class="cp">}}</span>
-<span class="x">    latitude: </span><span class="cp">{{</span> <span class="nv">location.latitude</span> <span class="cp">}}</span>
-<span class="x">    longitude: </span><span class="cp">{{</span> <span class="nv">location.longitude</span> <span class="cp">}}</span>
-<span class="x">    attributes:</span>
-<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">      address: </span><span class="cp">{{</span> <span class="nv">location.attributes.address</span> <span class="cp">}}</span>
-<span class="x">      facility_type: </span><span class="cp">{{</span> <span class="nv">location.attributes.facility_type</span> <span class="cp">}}</span>
-<span class="x">      reception_email: </span><span class="cp">{{</span> <span class="nv">location.attributes.reception_email</span> <span class="cp">}}</span>
-<span class="x">      reception_phone: </span><span class="cp">{{</span> <span class="nv">location.attributes.reception_phone</span> <span class="cp">}}</span>
-<span class="x">  </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"> </span>
-<span class="x">  - step:</span>
-<span class="x">      action: LOCATIONS_COUNT</span>
-<span class="x">      description: Count locations in namespace</span>
-<span class="x">      LOGGER.debug_response: true</span>
-<span class="x">    attrs:</span>
-<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
-
-<span class="x">  - step:</span>
-<span class="x">      action: LOCATIONS_LIST</span>
-<span class="x">      description: List locations in namespace</span>
-<span class="x">      LOGGER.debug_response: true</span>
-<span class="x">    attrs:</span>
-<span class="x">      namespace: &quot;</span><span class="cp">{{</span> <span class="nv">env</span><span class="o">[</span><span class="s1">&#39;DATATRAILS_UNIQUE_ID&#39;</span><span class="o">]</span> <span class="k">or</span> <span class="s1">&#39;namespace&#39;</span> <span class="cp">}}</span><span class="x">&quot;</span>
 
 <span class="x">  </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">asset</span> <span class="k">in</span> <span class="nv">assets</span> <span class="cp">%}</span><span class="x"> </span>
 <span class="x">  - step:</span>

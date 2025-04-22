@@ -65,7 +65,6 @@
     "# DATATRAILS_APPREG_CLIENT = represents the client ID from an Application Registration\n",
     "# DATATRAILS_APPREG_SECRET = represents the client secret from an Application Registration\n",
     "# DATATRAILS_UNIQUE_ID = is an environment variable that is a unique identifier\n",
-    "# DATATRAILS_ARTIST_ATTACHMENT = represents the location of the attachment\n",
     "DATATRAILS_URL = getenv(\"DATATRAILS_URL\")\n",
     "DATATRAILS_APPREG_CLIENT = getenv(\"DATATRAILS_APPREG_CLIENT\")\n",
     "DATATRAILS_APPREG_SECRET = getenv(\"DATATRAILS_APPREG_SECRET\")\n",

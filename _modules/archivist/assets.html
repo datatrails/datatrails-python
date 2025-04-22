@@ -14,7 +14,7 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>archivist.assets &mdash; DATATRAILS v0.34.1 documentation</title>
+  <title>archivist.assets &mdash; DATATRAILS v0.35.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -24,7 +24,7 @@
     <link rel="shortcut icon" href="../../_static/DataTrails_Favicon.png"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=b49c7ffd"></script>
+      <script src="../../_static/documentation_options.js?v=6131b1bd"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -278,7 +278,7 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s2">&quot;dict[str, Any]&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;tuple[Asset, bool]&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates an asset and associated locations and attachments if asset</span>
+<span class="sd">        Creates an asset and associated attachments if asset</span>
 <span class="sd">        does not already exist.</span>
 
 <span class="sd">        Args:</span>
@@ -300,18 +300,6 @@
 <span class="sd">                  arc_serial_number: das-j1-01</span>
 <span class="sd">                  arc_description: Electronic door entry system to DataTrails France</span>
 <span class="sd">                  wavestone_asset_id: paris.france.datatrails.das</span>
-<span class="sd">                location:</span>
-<span class="sd">                  identity: locations/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="sd">                location:</span>
-<span class="sd">                  selector:</span>
-<span class="sd">                    - display_name</span>
-<span class="sd">                  display_name: DataTrails Paris</span>
-<span class="sd">                  description: Sales and sales support for the French region</span>
-<span class="sd">                  latitude: 48.8339211,</span>
-<span class="sd">                  longitude: 2.371345,</span>
-<span class="sd">                  attributes:</span>
-<span class="sd">                    address: 5 Parvis Alan Turing, 75013 Paris, France</span>
-<span class="sd">                    wavestone_ext: managed</span>
 <span class="sd">                attachments:</span>
 <span class="sd">                  - filename: functests/test_resources/doors/assets/entry-terminal.jpg</span>
 <span class="sd">                    content_type: image/jpg</span>
@@ -319,12 +307,6 @@
 
 <span class="sd">            The &#39;selector&#39; value is required and will usually specify the &#39;arc_display_name&#39; as a</span>
 <span class="sd">            secondary key. The keys in &#39;selector&#39; must exist in the attributes of the asset.</span>
-
-<span class="sd">            If &#39;location&#39; is specified then the &#39;selector&#39; value is required and is used as a</span>
-<span class="sd">            secondary key. Likewise the secondary key must exist in the attributes of the location.</span>
-
-<span class="sd">            Alternatively the identity of the location is specified - both</span>
-<span class="sd">            are shown - choose one.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple of :class:`Asset` instance, Boolean is True if asset already existed</span>
@@ -335,7 +317,6 @@
         <span class="n">existed</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="n">attachments</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;attachments&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">location</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">selector</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;selector&quot;</span><span class="p">)</span>  <span class="c1"># must exist</span>
         <span class="n">props</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">selector_signature</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -349,16 +330,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;asset with selector </span><span class="si">%s</span><span class="s2">,</span><span class="si">%s</span><span class="s2"> already exists&quot;</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">asset</span><span class="p">,</span> <span class="kc">True</span>
-
-        <span class="c1"># is location present?</span>
-        <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;identity&quot;</span> <span class="ow">in</span> <span class="n">location</span><span class="p">:</span>
-                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_home_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">loc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archivist</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">create_if_not_exists</span><span class="p">(</span>
-                    <span class="n">location</span><span class="p">,</span>
-                <span class="p">)</span>
-                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">][</span><span class="s2">&quot;arc_home_location_identity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loc</span><span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">]</span>
 
         <span class="c1"># any attachments ?</span>
         <span class="k">if</span> <span class="n">attachments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

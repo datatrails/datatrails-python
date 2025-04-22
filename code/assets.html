@@ -15,7 +15,7 @@
     </script>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assets Class &mdash; DATATRAILS v0.34.1 documentation</title>
+  <title>Assets Class &mdash; DATATRAILS v0.35.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="../_static/DataTrails_Favicon.png"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=b49c7ffd"></script>
+      <script src="../_static/documentation_options.js?v=6131b1bd"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -85,7 +85,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="events.html">Events Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="locations.html">Locations Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="attachments.html">Attachments Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tenancies.html">Tenancies Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="iam/index.html">Identity and Access Management (IAM)</a></li>
@@ -245,7 +244,7 @@ Suitable for reading data from a file using json.load or yaml.load</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="archivist.assets._AssetsRestricted.create_if_not_exists">
 <span class="sig-name descname"><span class="pre">create_if_not_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Asset</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/archivist/assets.html#_AssetsRestricted.create_if_not_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#archivist.assets._AssetsRestricted.create_if_not_exists" title="Link to this definition"></a></dt>
-<dd><p>Creates an asset and associated locations and attachments if asset
+<dd><p>Creates an asset and associated attachments if asset
 does not already exist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -268,18 +267,6 @@ does not already exist.</p>
 <span class="w">  </span><span class="nt">arc_serial_number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">das-j1-01</span>
 <span class="w">  </span><span class="nt">arc_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Electronic door entry system to DataTrails France</span>
 <span class="w">  </span><span class="nt">wavestone_asset_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">paris.france.datatrails.das</span>
-<span class="nt">location</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">identity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">locations/xxxxxxxxxxxxxxxxxxxxxxxxxx</span>
-<span class="nt">location</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">display_name</span>
-<span class="w">  </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DataTrails Paris</span>
-<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sales and sales support for the French region</span>
-<span class="w">  </span><span class="nt">latitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">48.8339211,</span>
-<span class="w">  </span><span class="nt">longitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.371345,</span>
-<span class="w">  </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5 Parvis Alan Turing, 75013 Paris, France</span>
-<span class="w">    </span><span class="nt">wavestone_ext</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">managed</span>
 <span class="nt">attachments</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">filename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">functests/test_resources/doors/assets/entry-terminal.jpg</span>
 <span class="w">    </span><span class="nt">content_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpg</span>
@@ -288,10 +275,6 @@ does not already exist.</p>
 </div>
 <p>The 'selector' value is required and will usually specify the 'arc_display_name' as a
 secondary key. The keys in 'selector' must exist in the attributes of the asset.</p>
-<p>If 'location' is specified then the 'selector' value is required and is used as a
-secondary key. Likewise the secondary key must exist in the attributes of the location.</p>
-<p>Alternatively the identity of the location is specified - both
-are shown - choose one.</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
