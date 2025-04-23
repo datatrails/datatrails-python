@@ -13,7 +13,7 @@ unittest-xml-reporting~=3.2
 testbook~=0.4
 
 # analyze dependencies
-pipdeptree~=2.23
+pipdeptree~=2.26
 
 # uploading to pypi
 build~=1.2
