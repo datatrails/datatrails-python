@@ -6,7 +6,7 @@ sphinx~=8.1; python_version >= '3.10'
 sphinx-rtd-theme~=3.0
 sphinxcontrib-spelling~=8.0
 sphinxcontrib-googleanalytics~=0.4
-sphinx-gallery~=0.18
+sphinx-gallery~=0.19
 nbsphinx~=0.9
 
 -r notebooks/requirements.txt
